@@ -73,7 +73,7 @@ function RegisterRoute() {
       setIsLoading(true);
 
       setTimeout(() => {
-        if (Math.floor(Math.random() * 10) > 5) {
+        if (Math.floor(Math.random() * 10) >= 5) {
           const availableErrors = Object.keys(errors);
           setError(
             availableErrors[Math.floor(Math.random() * availableErrors.length)],
