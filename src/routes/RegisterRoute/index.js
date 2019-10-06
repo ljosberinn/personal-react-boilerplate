@@ -41,7 +41,7 @@ export const errors = {
 
 function RegisterRoute() {
   const [data, setData] = useState({
-    mail: 'a@b.de',
+    mail: '',
     password: '',
     confirmPassword: '',
     tos: false,
