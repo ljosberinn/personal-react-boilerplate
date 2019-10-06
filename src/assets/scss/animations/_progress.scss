@@ -1,0 +1,5 @@
+progress {
+  &::-webkit-progress-value {
+    transition: width 1s;
+  }
+}

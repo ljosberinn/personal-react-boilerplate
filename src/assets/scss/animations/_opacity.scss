@@ -1,0 +1,25 @@
+.anim-opacity-to-40 {
+  animation: opacity-f100-t40 0.75s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+
+  &:hover {
+    animation: opacity-f40-t100 0.5s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+  }
+}
+
+@keyframes opacity-f100-t40 {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.4;
+  }
+}
+
+@keyframes opacity-f40-t100 {
+  0% {
+    opacity: 0.4;
+  }
+  100% {
+    opacity: 1;
+  }
+}

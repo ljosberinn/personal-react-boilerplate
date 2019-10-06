@@ -1,0 +1,43 @@
+@import './animations/fade';
+@import './animations/progress';
+@import './animations/opacity';
+@import './animations/route';
+
+.is-fullpage {
+  display: flex;
+  flex: 100%;
+
+  &:not(.columns) {
+    min-height: 100vh;
+    overflow: hidden;
+    flex-direction: column;
+  }
+}
+
+.has-content-centered:not(.is-flex-row) {
+  justify-content: center;
+}
+
+.login-logo img,
+.login-logo svg {
+  max-height: 2.75rem;
+}
+
+.has-padding-large {
+  padding: 2.5rem !important;
+}
+
+.has-content-vspaced {
+  display: flex !important;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.has-background-white {
+  background-color: #fff !important;
+}
+
+.is-clickable {
+  pointer-events: all !important;
+  cursor: pointer;
+}
