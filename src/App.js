@@ -2,17 +2,18 @@ import React, { lazy, Suspense } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
+  Link,
   Route,
   Redirect,
 } from 'react-router-dom';
-import { Loader, Column } from 'rbx';
+import { Title, Loader, Column, Section } from 'rbx';
 import './assets/scss/app.scss';
 
 const RegisterRoute = lazy(() => import('./routes/RegisterRoute'));
 const LoginRoute = lazy(() => import('./routes/LoginRoute'));
 const ResetPasswordRoute = lazy(() => import('./routes/ResetPasswordRoute'));
-const AccountVerifiedRoute = lazy(() =>
-  import('./routes/AccountVerifiedRoute'),
+const AccountActivationRoute = lazy(() =>
+  import('./routes/AccountActivationRoute'),
 );
 
 function NullComponent() {
@@ -64,34 +65,56 @@ function App() {
           <Route
             path={[
               '/register',
-              '/login',
+              '/login/:mail?',
               '/reset-password',
-              '/verify-account/:token',
+              '/activate-account/:token',
             ]}
             exact
           >
             <UnauthenticatedContainer>
               <Suspense fallback={<NullComponent />}>
                 <Route path="/register" component={RegisterRoute} />
-                <Route path="/login" component={LoginRoute} />
+                <Route path="/login/:mail?" component={LoginRoute} />
                 <Route path="/reset-password" component={ResetPasswordRoute} />
                 <Route
-                  path="/verify-account/:token"
-                  component={AccountVerifiedRoute}
-                  exact
+                  path="/activate-account/:token"
+                  component={AccountActivationRoute}
                 />
               </Suspense>
             </UnauthenticatedContainer>
           </Route>
           <Suspense fallback={<Loader />}>
-            {/* 
-          <Route path="/" exact>
-            NYI
-          </Route>
-          */}
+            <Route path="/" exact>
+              <Section>
+                <Title>currently implemented routes</Title>
+                {[
+                  {
+                    path: '/register',
+                    description: 'best practices Registration form',
+                  },
+                  {
+                    path: '/activate-account/token',
+                    description: 'Account activation route',
+                  },
+                  {
+                    path: '/login',
+                    description:
+                      'Regular login form, optionally accepting a mail as url argument to prefill the form',
+                  },
+                  {
+                    path: '/reset-password',
+                    description: 'Form to request a password reset link',
+                  },
+                ].map(({ path, altPath, description }) => (
+                  <Title as="h2" subtitle key={path}>
+                    <Link to={path}>{path}</Link> - {description}
+                  </Title>
+                ))}
+              </Section>
+            </Route>
 
             <Route>
-              <Redirect to="/register" />
+              <Redirect to="/" />
             </Route>
           </Suspense>
         </Switch>
