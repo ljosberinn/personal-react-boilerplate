@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { validate, pattern } from '../../utils/validators';
 import { ValidityIconLeft, Checkbox, Required } from '../../components';
 import {
@@ -16,8 +16,10 @@ import {
 import { AuthSvg } from '../../assets/svg';
 
 function LoginRoute() {
+  const params = useParams();
+
   const [data, setData] = useState({
-    mail: '',
+    mail: params.mail && validate.mail(params.mail) ? params.mail : '',
     password: '',
     rememberMe: false,
   });
@@ -88,6 +90,7 @@ function LoginRoute() {
                     disabled={isLoading}
                     required
                     autoComplete="username"
+                    defaultValue={mail}
                   />
                   <ValidityIconLeft type="mail" value={mail} />
                 </Control>
