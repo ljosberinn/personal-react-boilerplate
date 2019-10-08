@@ -22,7 +22,7 @@ import {
 } from 'rbx';
 import { ProfileSvg, MailSvg } from '../../assets/svg';
 import Shake from 'react-reveal/Shake';
-import Fade from 'react-reveal/Fade';
+import { Fade } from 'react-reveal';
 
 export const errors = {
   'mail.duplicate': (

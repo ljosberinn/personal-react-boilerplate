@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { ConfirmationSvg, ErrorSvg, LoadingSvg } from '../../assets/svg';
 import { Column, Title, Section, Image } from 'rbx';
 import { Link } from 'react-router-dom';
-import Fade from 'react-reveal/Fade';
+import { Fade } from 'react-reveal';
 
 function AccountActivationRoute() {
   const { token } = useParams();
