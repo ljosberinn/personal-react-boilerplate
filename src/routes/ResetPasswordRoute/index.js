@@ -58,7 +58,7 @@ function ResetPasswordRoute() {
           </Title>
 
           <Section paddingless>
-            <form spellCheck="off" onSubmit={handleSubmit}>
+            <form spellCheck={false} onSubmit={handleSubmit}>
               <Field>
                 <Label htmlFor="mail">
                   Email address

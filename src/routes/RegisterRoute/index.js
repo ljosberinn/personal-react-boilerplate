@@ -171,7 +171,12 @@ function RegistrationForm({
   return (
     <Shake duration={500} when={error}>
       <Section paddingless>
-        <form spellCheck="off" onSubmit={handleSubmit}>
+        <form
+          spellCheck={false}
+          autoCorrect="off"
+          autoComplete="off"
+          onSubmit={handleSubmit}
+        >
           <Field>
             <Label htmlFor="mail">
               Email address
