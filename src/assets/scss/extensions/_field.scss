@@ -1,0 +1,45 @@
+.field.is-floating-label {
+  position: relative;
+  font-weight: 600;
+
+  .label {
+    position: absolute;
+    top: -0.775em;
+    left: 1em;
+    font-size: 0.75rem;
+    background-color: transparent;
+    padding-left: 0.125em;
+    padding-right: 0.125em;
+    z-index: 5;
+
+    &:before {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 0.775em;
+      left: 0;
+      right: 0;
+      height: 0.375em;
+      background-color: #fff;
+      z-index: -1;
+    }
+
+    &.is-small {
+      font-size: 0.5625rem;
+    }
+
+    &.is-medium {
+      font-size: 0.9375rem;
+    }
+
+    &.is-large {
+      font-size: 1.125rem;
+    }
+  }
+
+  .input:focus,
+  .select select:focus,
+  .textarea:focus {
+    box-shadow: none;
+  }
+}

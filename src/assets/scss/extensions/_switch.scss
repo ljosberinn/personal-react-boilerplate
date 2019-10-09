@@ -1,0 +1,192 @@
+$switch-width-number: 2.75 !default;
+$switch-width: $switch-width-number * 1em !default;
+$switch-padding: 0.2em !default;
+
+$switch-active-background-color: $primary !default;
+
+.switch {
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+
+  @include unselectable;
+
+  & + .switch {
+    margin-left: 0.5em;
+  }
+
+  input[type='checkbox'] {
+    position: absolute;
+    left: 0;
+    opacity: 0;
+    outline: none;
+    z-index: -1;
+    + .check {
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+      width: $switch-width;
+      height: #{$switch-width / 2 + $switch-padding};
+      padding: $switch-padding;
+      background: $grey-light;
+      border-radius: $radius;
+      transition: background $speed-slow $easing;
+
+      &:before {
+        content: '';
+        display: block;
+        border-radius: $radius;
+        width: #{($switch-width - $switch-padding * 2) / 2};
+        height: #{($switch-width - $switch-padding * 2) / 2};
+        background: $background;
+        box-shadow: 0 3px 1px 0 rgba(0, 0, 0, 0.05),
+          0 2px 2px 0 rgba(0, 0, 0, 0.1), 0 3px 3px 0 rgba(0, 0, 0, 0.05);
+        transition: transform $speed-slow $easing, width $speed-slow $easing;
+        will-change: transform;
+      }
+
+      &.is-elastic:before {
+        width: 1.75em;
+      }
+    }
+
+    &:checked + .check {
+      background: $switch-active-background-color;
+      @each $name, $pair in $colors {
+        $color: nth($pair, 1);
+        &.is-#{$name} {
+          background: $color;
+        }
+      }
+
+      &:before {
+        transform: translate3d(100%, 0, 0);
+      }
+
+      &.is-elastic:before {
+        // Might be a little offset if base font is not 16px
+        transform: translate3d(
+          percentage(16 / ($switch-width-number * 16)),
+          0,
+          0
+        );
+      }
+    }
+
+    &:focus {
+      outline: none;
+      + .check {
+        box-shadow: 0 0 0.5em rgba($grey, 0.6);
+      }
+
+      &:checked + .check {
+        box-shadow: 0 0 0.5em rgba($switch-active-background-color, 0.8);
+        @each $name, $pair in $colors {
+          $color: nth($pair, 1);
+          &.is-#{$name} {
+            box-shadow: 0 0 0.5em rgba($color, 0.8);
+          }
+        }
+      }
+    }
+  }
+  .control-label {
+    padding-left: 0.5em;
+  }
+
+  &:hover {
+    input[type='checkbox'] + .check {
+      background: rgba($grey-light, 0.9);
+    }
+
+    input[type='checkbox']:checked + .check {
+      background: rgba($switch-active-background-color, 0.9);
+      @each $name, $pair in $colors {
+        $color: nth($pair, 1);
+        &.is-#{$name} {
+          background: rgba($color, 0.9);
+        }
+      }
+    }
+  }
+
+  &.is-rounded {
+    input[type='checkbox'] {
+      + .check {
+        border-radius: $radius-rounded;
+        &:before {
+          border-radius: $radius-rounded;
+        }
+      }
+    }
+  }
+
+  &.is-outlined {
+    input[type='checkbox'] {
+      + .check {
+        background: transparent;
+        border: 0.1rem solid $grey-light;
+        &:before {
+          background: $grey-light;
+        }
+      }
+
+      &:checked + .check {
+        border-color: $switch-active-background-color;
+
+        @each $name, $pair in $colors {
+          $color: nth($pair, 1);
+          &.is-#{$name} {
+            background: transparent;
+            border-color: $color;
+            &:before {
+              background: $color;
+            }
+          }
+        }
+
+        &:before {
+          background: $switch-active-background-color;
+        }
+      }
+    }
+
+    &:hover {
+      input[type='checkbox'] + .check {
+        background: transparent;
+        border-color: rgba($grey-light, 0.9);
+      }
+
+      input[type='checkbox']:checked + .check {
+        background: transparent;
+        border-color: rgba($switch-active-background-color, 0.9);
+
+        @each $name, $pair in $colors {
+          $color: nth($pair, 1);
+          &.is-#{$name} {
+            border-color: rgba($color, 0.9);
+          }
+        }
+      }
+    }
+  }
+
+  &.is-small {
+    @include control-small;
+  }
+
+  &.is-medium {
+    @include control-medium;
+  }
+
+  &.is-large {
+    @include control-large;
+  }
+
+  &[disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
+    color: $grey;
+  }
+}

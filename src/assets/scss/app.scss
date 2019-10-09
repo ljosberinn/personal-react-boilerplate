@@ -1,7 +1,10 @@
-@import './animations/fade';
-@import './animations/progress';
-@import './animations/opacity';
-@import './animations/route';
+@import 'node_modules/bulma/bulma.sass';
+
+$speed-slow: 150ms !default;
+$speed-slower: 250ms !default;
+
+@import './animations';
+@import './extensions';
 
 .is-fullpage {
   display: flex;
