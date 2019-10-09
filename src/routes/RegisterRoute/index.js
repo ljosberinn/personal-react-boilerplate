@@ -1,12 +1,8 @@
 import React, { useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { validate } from '../../utils/validators';
-import {
-  PasswordSelection,
-  ValidityIconLeft,
-  Required,
-  Checkbox,
-} from '../../components';
+import { ValidityIconLeft, Required, Checkbox } from '../../components';
+import PasswordSelection from './PasswordSelection';
 import {
   Column,
   Tag,

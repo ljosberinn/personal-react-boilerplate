@@ -1,18 +1,18 @@
 import React, { useState, useEffect, memo } from 'react';
-import { ValidityIconLeft, Icon, Required } from '.';
-import { validate, pattern } from '../utils/validators';
+import { ValidityIconLeft, Icon, Required } from '../../../components';
+import { validate, pattern } from '../../../utils/validators';
 import { Field, Label, Help, Input, Control, Progress, Tag } from 'rbx';
 import {
   stringContainsNumber,
   stringContainsSpecialCharacter,
   sanitizeClassArray,
   allowedSpecialCharacters,
-} from '../utils';
+} from '../../../utils';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import Shake from 'react-reveal/Shake';
 import Fade from 'react-reveal/Fade';
 import styles from './PasswordSelection.module.scss';
-import { errors } from '../routes/RegisterRoute';
+import { errors } from '..';
 
 const criteria = [
   {
