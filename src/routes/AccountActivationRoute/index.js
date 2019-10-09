@@ -1,9 +1,33 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { ConfirmationSvg, ErrorSvg, LoadingSvg } from '../../assets/svg';
-import { Column, Title, Section, Image } from 'rbx';
+import { Column, Title, Image } from 'rbx';
 import { Link } from 'react-router-dom';
 import { Fade } from 'react-reveal';
+
+const headings = {
+  pending: 'Activating your account...',
+  successful: 'Account activated!',
+  rejected: 'Activation failure',
+};
+
+const icons = {
+  pending: <LoadingSvg />,
+  successful: <ConfirmationSvg />,
+  rejected: <ErrorSvg />,
+};
+
+const messages = {
+  pending: mail => null,
+  rejected: mail =>
+    'This link has been rejected. Either it is invalid or the window of registration expired.',
+  successful: mail => (
+    <span>
+      Your account has been successfully activate. You may now{' '}
+      <Link to={['/login', mail].filter(Boolean).join('/')}>login</Link>!
+    </span>
+  ),
+};
 
 function AccountActivationRoute() {
   const { token } = useParams();
@@ -12,7 +36,6 @@ function AccountActivationRoute() {
 
   useEffect(() => {
     setTimeout(() => {
-      console.log(token);
       setVerification(
         Math.floor(Math.random() * 10) >= 5 ? 'rejected' : 'successful',
       );
@@ -21,44 +44,15 @@ function AccountActivationRoute() {
     }, 1500);
   }, [token]);
 
-  const data = {
-    heading: {
-      pending: 'Activating your account...',
-      successful: 'Account activated!',
-      rejected: 'Activation failure',
-    },
-    icon: {
-      pending: <LoadingSvg />,
-      successful: <ConfirmationSvg />,
-      rejected: <ErrorSvg />,
-    },
-    message: {
-      pending: null,
-      rejected:
-        'This link has been rejected. Either it is invalid or the window of registration expired.',
-      successful: (
-        <span>
-          Your account has been successfully activate. You may now{' '}
-          <Link to={`/login/${mail}`}>login</Link>!
-        </span>
-      ),
-    },
-  };
-
   return (
-    <Column className="has-content-vspaced has-padding-large has-background-white fade-in">
-      <Title textAlign="centered">{data.heading[verification]}</Title>
+    <Column className="has-content-spaced-evenly has-padding-large fade-in">
+      <Title textAlign="centered">{headings[verification]}</Title>
       <Fade>
-        <Image.Container size="16by9">
-          {data.icon[verification]}
-        </Image.Container>
+        <Image.Container size="16by9">{icons[verification]}</Image.Container>
       </Fade>
       <Column.Group centered>
-        <Column size={10}>
-          <Section paddingless>{data.message[verification]}</Section>
-        </Column>
+        <Column size={10}>{messages[verification](mail)}</Column>
       </Column.Group>
-      <div />
     </Column>
   );
 }
