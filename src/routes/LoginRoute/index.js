@@ -5,7 +5,6 @@ import { ValidityIconLeft, Checkbox, Required } from '../../components';
 import {
   Column,
   Title,
-  Section,
   Field,
   Label,
   Help,
@@ -76,13 +75,18 @@ function LoginRoute() {
     !validate.password(password);
 
   return (
-    <Column className="has-content-vspaced has-padding-large has-background-white fade-in">
-      <div>
+    <Column
+      as="form"
+      spellCheck={false}
+      onSubmit={handleSubmit}
+      className="has-content-spaced-between has-padding-large fade-in"
+    >
+      <legend>
         <Title textAlign="centered">Sign in</Title>
         <Title subtitle textAlign="centered">
           or <Link to="/register">create account</Link>
         </Title>
-      </div>
+      </legend>
 
       <Image.Container size="16by9">
         <AuthSvg />
@@ -91,108 +95,104 @@ function LoginRoute() {
       <Column.Group centered>
         <Column size={10}>
           <Shake duration={500} when={error}>
-            <Section paddingless>
-              <form spellCheck={false} onSubmit={handleSubmit}>
-                <Field>
-                  <Label htmlFor="mail">
-                    Email address
-                    <Required />
-                  </Label>
+            <fieldset disabled={isLoading}>
+              <Field>
+                <Label htmlFor="mail">
+                  Email address
+                  <Required />
+                </Label>
 
-                  <Control iconLeft>
-                    <Input
-                      type="mail"
-                      placeholder="email@example.com"
-                      name="mail"
-                      id="mail"
-                      onInput={handleChange}
-                      autoFocus
-                      disabled={isLoading}
-                      required
-                      autoComplete="username"
-                      defaultValue={mail}
-                    />
-                    <ValidityIconLeft type="mail" value={mail} />
-                  </Control>
-
-                  {error && error.indexOf('mail') > -1 && (
-                    <Fade>
-                      <Help color="danger">{errors[error]}</Help>
-                    </Fade>
-                  )}
-                </Field>
-
-                <Field>
-                  <Label htmlFor="password">
-                    Password
-                    <Required />
-                  </Label>
-
-                  <Control iconLeft>
-                    <Input
-                      type="password"
-                      name="password"
-                      id="password"
-                      onInput={handleChange}
-                      pattern={pattern.password}
-                      disabled={isLoading}
-                      required
-                      autoComplete="current-password"
-                    />
-                    <ValidityIconLeft type="password" value={password} />
-                  </Control>
-
-                  {error && error.indexOf('password') > -1 && (
-                    <Fade>
-                      <Help color="danger">{errors[error]}</Help>
-                    </Fade>
-                  )}
-                </Field>
-
-                <Field>
-                  <Checkbox
-                    name="rememberMe"
-                    id="remember-me"
-                    onChange={handleChange}
-                    disabled={isLoading}
+                <Control iconLeft loading={isLoading}>
+                  <Input
+                    type="mail"
+                    placeholder="email@example.com"
+                    name="mail"
+                    id="mail"
+                    onInput={handleChange}
+                    autoFocus
+                    required
+                    autoComplete="username"
+                    defaultValue={mail}
                   />
-                  <Label htmlFor="remember-me">Remember me</Label>
-                </Field>
-
-                {error && error === 'data.invalid' && (
+                  <ValidityIconLeft type="mail" value={mail} />
+                </Control>
+                {error && error.indexOf('mail') > -1 && (
                   <Fade>
                     <Help color="danger">{errors[error]}</Help>
                   </Fade>
                 )}
+              </Field>
 
-                <Required.Hint />
+              <Field>
+                <Label htmlFor="password">
+                  Password
+                  <Required />
+                </Label>
 
-                <Field kind="grouped">
-                  <Button
-                    color="primary"
-                    state={isLoading ? 'loading' : undefined}
-                    fullwidth
-                    disabled={isDisabled}
-                  >
-                    Sign in
-                  </Button>
-                </Field>
+                <Control iconLeft loading={isLoading}>
+                  <Input
+                    type="password"
+                    name="password"
+                    id="password"
+                    onInput={handleChange}
+                    pattern={pattern.password}
+                    required
+                    autoComplete="current-password"
+                  />
+                  <ValidityIconLeft type="password" value={password} />
+                </Control>
 
-                <div className="has-text-centered">
-                  <Title
-                    className="has-text-grey"
-                    size={7}
-                    as={Link}
-                    to="/reset-password"
-                  >
-                    Forgot password?
-                  </Title>
-                </div>
-              </form>
-            </Section>
+                {error && error.indexOf('password') > -1 && (
+                  <Fade>
+                    <Help color="danger">{errors[error]}</Help>
+                  </Fade>
+                )}
+              </Field>
+
+              <Field>
+                <Checkbox
+                  name="rememberMe"
+                  id="remember-me"
+                  onChange={handleChange}
+                  disabled={isLoading}
+                />
+                <Label htmlFor="remember-me">Remember me</Label>
+              </Field>
+
+              {error && error === 'data.invalid' && (
+                <Fade>
+                  <Help color="danger">{errors[error]}</Help>
+                </Fade>
+              )}
+
+              <Required.Hint />
+
+              <Field kind="grouped">
+                <Button
+                  color="primary"
+                  state={isLoading ? 'loading' : undefined}
+                  fullwidth
+                  disabled={isDisabled}
+                >
+                  Sign in
+                </Button>
+              </Field>
+
+              <div className="has-text-centered">
+                <Title
+                  className="has-text-grey"
+                  size={7}
+                  as={Link}
+                  to="/reset-password"
+                >
+                  Forgot password?
+                </Title>
+              </div>
+            </fieldset>
           </Shake>
         </Column>
       </Column.Group>
+
       <p className="has-text-centered has-text-grey">
         Don't have an account? <Link to="/register">Sign up</Link>
       </p>

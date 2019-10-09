@@ -35,7 +35,7 @@ const criteria = [
 ];
 
 const PasswordSelection = memo(
-  ({ handleChange, isLoading, password, confirmPassword, error }) => {
+  ({ handleChange, password, confirmPassword, isLoading, error }) => {
     const [type, setType] = useState('password');
     const [infoOpacityIsReduced, setInfoOpacity] = useState(false);
 
@@ -79,7 +79,7 @@ const PasswordSelection = memo(
             Password
             <Required />
           </Label>
-          <Control iconLeft iconRight>
+          <Control iconLeft iconRight={!isLoading} loading={isLoading}>
             <Input
               type={type}
               name="password"
@@ -88,15 +88,18 @@ const PasswordSelection = memo(
               pattern={pattern.password}
               required
               autoComplete="new-password"
-              disabled={isLoading}
             />
             <ValidityIconLeft type="password" value={password} />
-            <Icon
-              className="is-clickable"
-              align="right"
-              icon={type === 'password' ? faEye : faEyeSlash}
-              onClick={() => setType(type === 'password' ? 'text' : 'password')}
-            />
+            {!isLoading && (
+              <Icon
+                className="is-clickable"
+                align="right"
+                icon={type === 'password' ? faEye : faEyeSlash}
+                onClick={() =>
+                  setType(type === 'password' ? 'text' : 'password')
+                }
+              />
+            )}
           </Control>
 
           {error && error === 'password.unsafe' && (
@@ -137,14 +140,14 @@ const PasswordSelection = memo(
             <Required />
           </Label>
 
-          <Control iconLeft>
+          <Control iconLeft loading={isLoading}>
             <Input
               type="password"
               name="confirmPassword"
               id="confirmPassword"
               onInput={handleChange}
               pattern={pattern.password}
-              disabled={isLoading || !isValidPassword}
+              disabled={!isValidPassword}
               placeholder={
                 isValidPassword ? '' : 'please first enter a valid password'
               }

@@ -27,10 +27,16 @@
   padding: 2.5rem !important;
 }
 
-.has-content-vspaced {
+.has-content-spaced-between {
   display: flex !important;
   flex-direction: column;
   justify-content: space-between;
+}
+
+.has-content-spaced-evenly {
+  display: flex !important;
+  flex-direction: column;
+  justify-content: space-evenly;
 }
 
 .is-clickable {

@@ -93,13 +93,19 @@ function RegisterRoute() {
   );
 
   return (
-    <Column className="has-content-vspaced has-padding-large has-background-white fade-in">
-      <div>
+    <Column
+      as="form"
+      spellCheck={false}
+      autoCorrect="off"
+      onSubmit={handleSubmit}
+      className="has-content-spaced-between has-padding-large fade-in"
+    >
+      <legend>
         <Title textAlign="centered">Create your account</Title>
         <Title subtitle textAlign="centered">
           or <Link to="/login">sign in</Link>
         </Title>
-      </div>
+      </legend>
 
       {!successfullyRegistered && (
         <Image.Container size="16by9">
@@ -115,7 +121,6 @@ function RegisterRoute() {
             <RegistrationForm
               {...{
                 handleChange,
-                handleSubmit,
                 error,
                 isLoading,
                 ...data,
@@ -150,7 +155,6 @@ function RegistrationSuccess({ mail }) {
 
 function RegistrationForm({
   error,
-  handleSubmit,
   handleChange,
   isLoading,
   mail,
@@ -170,85 +174,82 @@ function RegistrationForm({
 
   return (
     <Shake duration={500} when={error}>
-      <Section paddingless>
-        <form spellCheck={false} autoCorrect="off" onSubmit={handleSubmit}>
-          <Field>
-            <Label htmlFor="mail">
-              Email address
-              <Required />
+      <fieldset disabled={isLoading}>
+        <Field>
+          <Label htmlFor="mail">
+            Email address
+            <Required />
+          </Label>
+
+          <Control iconLeft loading={isLoading}>
+            <Input
+              type="mail"
+              placeholder="email@example.com"
+              name="mail"
+              id="mail"
+              onInput={handleChange}
+              required
+              autoComplete="username"
+              autoFocus
+            />
+            <ValidityIconLeft type="mail" value={mail} />
+          </Control>
+
+          {error && error.indexOf('mail') > -1 && (
+            <Fade>
+              <Help color="danger">{errors[error]}</Help>
+            </Fade>
+          )}
+        </Field>
+
+        <PasswordSelection
+          {...{
+            handleChange,
+            password,
+            confirmPassword,
+            isLoading,
+            error,
+          }}
+        />
+
+        <Field>
+          <Control>
+            <Checkbox
+              id="tos"
+              name="tos"
+              required
+              disabled={isLoading}
+              onChange={handleChange}
+            />
+            <Label htmlFor="tos">
+              I agree to the{' '}
+              <Link to="/tos">
+                Terms of Service.
+                <Required />
+              </Link>
             </Label>
+          </Control>
 
-            <Control iconLeft>
-              <Input
-                type="mail"
-                placeholder="email@example.com"
-                name="mail"
-                id="mail"
-                onInput={handleChange}
-                required
-                disabled={isLoading}
-                autoComplete="username"
-                autoFocus
-              />
-              <ValidityIconLeft type="mail" value={mail} />
-            </Control>
+          {error && error === 'tos' && (
+            <Fade>
+              <Help color="danger">{errors[error]}</Help>
+            </Fade>
+          )}
+        </Field>
 
-            {error && error.indexOf('mail') > -1 && (
-              <Fade>
-                <Help color="danger">{errors[error]}</Help>
-              </Fade>
-            )}
-          </Field>
+        <Required.Hint />
 
-          <PasswordSelection
-            {...{
-              handleChange,
-              isLoading,
-              password,
-              confirmPassword,
-              error,
-            }}
-          />
-
-          <Field>
-            <Control>
-              <Checkbox
-                id="tos"
-                name="tos"
-                required
-                onChange={handleChange}
-                disabled={isLoading}
-              />
-              <Label htmlFor="tos">
-                I agree to the{' '}
-                <Link to="/tos">
-                  Terms of Service.
-                  <Required />
-                </Link>
-              </Label>
-            </Control>
-
-            {error && error === 'tos' && (
-              <Fade>
-                <Help color="danger">{errors[error]}</Help>
-              </Fade>
-            )}
-          </Field>
-
-          <Required.Hint />
-
-          <Field kind="grouped">
-            <Button
-              color="primary"
-              state={isLoading ? 'loading' : undefined}
-              fullwidth
-              disabled={isDisabled}
-            >
-              Sign up
-            </Button>
-          </Field>
-        </form>
-      </Section>
+        <Field kind="grouped">
+          <Button
+            color="primary"
+            state={isLoading ? 'loading' : undefined}
+            fullwidth
+            disabled={isDisabled}
+          >
+            Sign up
+          </Button>
+        </Field>
+      </fieldset>
     </Shake>
   );
 }
