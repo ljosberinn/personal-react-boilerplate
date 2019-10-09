@@ -1,9 +1,5 @@
 import { allowedSpecialCharacters } from './validators';
 
-function FunctionThatReturnsTrue() {
-  return true;
-}
-
 /**
  *
  * @param {string} string
@@ -21,15 +17,17 @@ function stringContainsSpecialCharacter(string) {
 }
 
 /**
+ * @example className={sanitizeClassArray(['foo', somethingTruthy && 'bar', 'baz'])}
  *
  * @param {(string|false)[]} classes
+ *
+ * @returns {string}
  */
 function sanitizeClassArray(classes) {
   return classes.filter(Boolean).join(' ');
 }
 
 export {
-  FunctionThatReturnsTrue,
   stringContainsNumber,
   stringContainsSpecialCharacter,
   sanitizeClassArray,
