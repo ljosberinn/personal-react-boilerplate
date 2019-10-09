@@ -1,7 +1,12 @@
 import React, { useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
-import { validate } from '../../utils/validators';
-import { ValidityIconLeft, Required, Checkbox } from '../../components';
+import { validate } from '../../../utils/validators';
+import {
+  ValidityIconLeft,
+  Required,
+  Checkbox,
+  Field,
+} from '../../../components';
 import PasswordSelection from './PasswordSelection';
 import {
   Column,
@@ -9,14 +14,13 @@ import {
   Title,
   Section,
   Help,
-  Field,
   Label,
   Button,
   Image,
   Control,
   Input,
 } from 'rbx';
-import { ProfileSvg, MailSvg } from '../../assets/svg';
+import { ProfileSvg, MailSvg } from '../../../assets/svg';
 import Shake from 'react-reveal/Shake';
 import { Fade } from 'react-reveal';
 
@@ -89,12 +93,11 @@ function RegisterRoute() {
   );
 
   return (
-    <Column
-      as="form"
+    <form
+      className="has-content-spaced-between"
       spellCheck={false}
       autoCorrect="off"
       onSubmit={handleSubmit}
-      className="has-content-spaced-between has-padding-large fade-in"
     >
       <legend>
         <Title textAlign="centered">Create your account</Title>
@@ -128,7 +131,7 @@ function RegisterRoute() {
       <p className="has-text-centered has-text-grey">
         Already have an account? <Link to="/login">Sign in</Link>
       </p>
-    </Column>
+    </form>
   );
 }
 
@@ -168,10 +171,13 @@ function RegistrationForm({
     !validate.mail(mail) ||
     !tos;
 
+  const hasMailError =
+    error && error.indexOf('mail') > -1 ? 'danger' : undefined;
+
   return (
     <Shake duration={500} when={error}>
       <fieldset disabled={isLoading}>
-        <Field>
+        <Field isFloatingLabel>
           <Label htmlFor="mail">
             Email address
             <Required />
@@ -187,11 +193,12 @@ function RegistrationForm({
               required
               autoComplete="username"
               autoFocus
+              color={hasMailError ? 'danger' : undefined}
             />
             <ValidityIconLeft type="mail" value={mail} />
           </Control>
 
-          {error && error.indexOf('mail') > -1 && (
+          {hasMailError && (
             <Fade>
               <Help color="danger">{errors[error]}</Help>
             </Fade>

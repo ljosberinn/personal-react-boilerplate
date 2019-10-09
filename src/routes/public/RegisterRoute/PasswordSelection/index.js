@@ -1,16 +1,21 @@
 import React, { useState, useEffect, memo } from 'react';
-import { ValidityIconLeft, Icon, Required } from '../../../components';
-import { validate, pattern } from '../../../utils/validators';
-import { Field, Label, Help, Input, Control, Progress, Tag } from 'rbx';
+import {
+  ValidityIconLeft,
+  Icon,
+  Required,
+  Field,
+} from '../../../../components';
+import { validate, pattern } from '../../../../utils/validators';
+import { Label, Help, Input, Control, Progress, Tag } from 'rbx';
 import {
   stringContainsNumber,
   stringContainsSpecialCharacter,
   sanitizeClassArray,
   allowedSpecialCharacters,
-} from '../../../utils';
+} from '../../../../utils';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import Shake from 'react-reveal/Shake';
-import Fade from 'react-reveal/Fade';
+import { Fade } from 'react-reveal';
 import styles from './PasswordSelection.module.scss';
 import { errors } from '..';
 
@@ -34,10 +39,18 @@ const criteria = [
   },
 ];
 
+/**
+ * @param {{
+ *  handleChange: (e:React.ChangeEvent<HTMLInputElement>) => void,
+ *  password: string,
+ *  confirmPassword: string,
+ *  isLoading: boolean,
+ *  error: string|null
+ * }} props
+ */
 const PasswordSelection = memo(
   ({ handleChange, password, confirmPassword, isLoading, error }) => {
     const [type, setType] = useState('password');
-    const [infoOpacityIsReduced, setInfoOpacity] = useState(false);
 
     const fulfilledCriteriaArr = criteria.map(({ validate }) =>
       validate(password),
@@ -52,33 +65,27 @@ const PasswordSelection = memo(
         : 'success';
 
     useEffect(() => {
-      let isSubscribed = true;
-
-      if (progressColor !== 'success') {
-        setInfoOpacity(false);
-        return;
+      // hide password on submit
+      if (isLoading && type === 'text') {
+        setType('password');
       }
-
-      setTimeout(() => {
-        if (isSubscribed) {
-          setInfoOpacity(true);
-        }
-      }, 250);
-
-      return () => {
-        isSubscribed = false;
-      };
-    }, [progressColor]);
+    }, [isLoading, type]);
 
     const isValidPassword = validate.password(password);
 
+    const passwordIsUnsafe = error && error === 'password.unsafe';
+    const passwordsDoNotMatch =
+      (confirmPassword.length > 7 && password !== confirmPassword) ||
+      (error && error === 'password.mismatch');
+
     return (
       <>
-        <Field>
+        <Field isFloatingLabel>
           <Label htmlFor="password">
             Password
             <Required />
           </Label>
+
           <Control iconLeft iconRight={!isLoading} loading={isLoading}>
             <Input
               type={type}
@@ -88,8 +95,10 @@ const PasswordSelection = memo(
               pattern={pattern.password}
               required
               autoComplete="new-password"
+              color={passwordIsUnsafe ? 'danger' : undefined}
             />
             <ValidityIconLeft type="password" value={password} />
+
             {!isLoading && (
               <Icon
                 className="is-clickable"
@@ -102,7 +111,7 @@ const PasswordSelection = memo(
             )}
           </Control>
 
-          {error && error === 'password.unsafe' && (
+          {passwordIsUnsafe && (
             <Fade>
               <Help color="danger">{errors[error]}</Help>
             </Fade>
@@ -112,7 +121,7 @@ const PasswordSelection = memo(
         <div
           className={sanitizeClassArray([
             styles.smallBox,
-            infoOpacityIsReduced && 'anim-opacity-to-40',
+            progressColor === 'success' && 'anim-opacity-to-40',
           ])}
         >
           {criteria.map(({ info }, index) => (
@@ -134,7 +143,7 @@ const PasswordSelection = memo(
           </Help>
         </div>
 
-        <Field>
+        <Field isFloatingLabel>
           <Label htmlFor="confirmPassword">
             Confirm password
             <Required />
@@ -149,15 +158,16 @@ const PasswordSelection = memo(
               pattern={pattern.password}
               disabled={!isValidPassword}
               placeholder={
-                isValidPassword ? '' : 'please first enter a valid password'
+                !isValidPassword ? 'please first enter a valid password' : ''
               }
               required
               autoComplete="new-password"
+              color={passwordsDoNotMatch ? 'danger' : undefined}
             />
             <ValidityIconLeft type="password" value={confirmPassword} />
           </Control>
 
-          {confirmPassword.length > 7 && password !== confirmPassword && (
+          {passwordsDoNotMatch && (
             <Fade>
               <div>
                 <Shake>
@@ -167,7 +177,7 @@ const PasswordSelection = memo(
             </Fade>
           )}
 
-          {error && error === 'password.mismatch' && (
+          {passwordsDoNotMatch && (
             <Fade>
               <Help color="danger">{errors[error]}</Help>
             </Fade>

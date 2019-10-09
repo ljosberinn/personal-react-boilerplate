@@ -1,19 +1,14 @@
 import React, { useState, useCallback } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { validate, pattern } from '../../utils/validators';
-import { ValidityIconLeft, Checkbox, Required } from '../../components';
+import { validate, pattern } from '../../../utils/validators';
 import {
-  Column,
-  Title,
+  ValidityIconLeft,
+  Checkbox,
+  Required,
   Field,
-  Label,
-  Help,
-  Button,
-  Control,
-  Input,
-  Image,
-} from 'rbx';
-import { AuthSvg } from '../../assets/svg';
+} from '../../../components';
+import { Column, Title, Label, Help, Button, Control, Input, Image } from 'rbx';
+import { AuthSvg } from '../../../assets/svg';
 import { Fade } from 'react-reveal';
 import Shake from 'react-reveal/Shake';
 
@@ -75,11 +70,10 @@ function LoginRoute() {
     !validate.password(password);
 
   return (
-    <Column
-      as="form"
+    <form
+      className="has-content-spaced-between"
       spellCheck={false}
       onSubmit={handleSubmit}
-      className="has-content-spaced-between has-padding-large fade-in"
     >
       <legend>
         <Title textAlign="centered">Sign in</Title>
@@ -96,7 +90,7 @@ function LoginRoute() {
         <Column size={10}>
           <Shake duration={500} when={error}>
             <fieldset disabled={isLoading}>
-              <Field>
+              <Field isFloatingLabel>
                 <Label htmlFor="mail">
                   Email address
                   <Required />
@@ -123,7 +117,7 @@ function LoginRoute() {
                 )}
               </Field>
 
-              <Field>
+              <Field isFloatingLabel>
                 <Label htmlFor="password">
                   Password
                   <Required />
@@ -196,7 +190,7 @@ function LoginRoute() {
       <p className="has-text-centered has-text-grey">
         Don't have an account? <Link to="/register">Sign up</Link>
       </p>
-    </Column>
+    </form>
   );
 }
 

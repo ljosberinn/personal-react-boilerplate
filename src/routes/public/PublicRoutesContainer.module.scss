@@ -1,0 +1,7 @@
+.container {
+  position: relative;
+
+  > :first-child {
+    height: 100%;
+  }
+}

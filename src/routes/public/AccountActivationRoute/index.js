@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { ConfirmationSvg, ErrorSvg, LoadingSvg } from '../../assets/svg';
+import { ConfirmationSvg, ErrorSvg, LoadingSvg } from '../../../assets/svg';
 import { Column, Title, Image } from 'rbx';
 import { Link } from 'react-router-dom';
 import { Fade } from 'react-reveal';
@@ -45,7 +45,7 @@ function AccountActivationRoute() {
   }, [token]);
 
   return (
-    <Column className="has-content-spaced-evenly has-padding-large fade-in">
+    <div className="has-content-spaced-evenly">
       <Title textAlign="centered">{headings[verification]}</Title>
       <Fade>
         <Image.Container size="16by9">{icons[verification]}</Image.Container>
@@ -53,7 +53,7 @@ function AccountActivationRoute() {
       <Column.Group centered>
         <Column size={10}>{messages[verification](mail)}</Column>
       </Column.Group>
-    </Column>
+    </div>
   );
 }
 

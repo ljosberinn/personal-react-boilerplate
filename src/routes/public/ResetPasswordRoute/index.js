@@ -1,19 +1,18 @@
 import React, { useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
-import { validate } from '../../utils/validators';
-import { ValidityIconLeft, Required } from '../../components';
+import { validate } from '../../../utils/validators';
+import { ValidityIconLeft, Required, Field } from '../../../components';
 import {
   Column,
   Title,
   Section,
   Image,
-  Field,
   Label,
   Button,
   Control,
   Input,
 } from 'rbx';
-import { ForgotPasswordSvg } from '../../assets/svg';
+import { ForgotPasswordSvg } from '../../../assets/svg';
 
 function ResetPasswordRoute() {
   const [data, setData] = useState({
@@ -41,10 +40,14 @@ function ResetPasswordRoute() {
   const isDisabled = mail.length === 0 || !validate.mail(mail);
 
   return (
-    <Column className="has-content-vspaced has-padding-large has-background-white fade-in">
-      <div>
+    <form
+      className="has-content-spaced-between"
+      spellCheck={false}
+      onSubmit={handleSubmit}
+    >
+      <legend>
         <Title textAlign="centered">Reset Password</Title>
-      </div>
+      </legend>
 
       <Image.Container size="16by9">
         <ForgotPasswordSvg />
@@ -58,14 +61,14 @@ function ResetPasswordRoute() {
           </Title>
 
           <Section paddingless>
-            <form spellCheck={false} onSubmit={handleSubmit}>
-              <Field>
+            <fieldset disabled={isLoading}>
+              <Field isFloatingLabel>
                 <Label htmlFor="mail">
                   Email address
                   <Required />
                 </Label>
 
-                <Control iconLeft>
+                <Control iconLeft loading={isLoading}>
                   <Input
                     type="mail"
                     placeholder="email@example.com"
@@ -73,7 +76,6 @@ function ResetPasswordRoute() {
                     id="mail"
                     onInput={handleChange}
                     autoFocus
-                    disabled={isLoading}
                     required
                     autoComplete="username"
                   />
@@ -93,14 +95,14 @@ function ResetPasswordRoute() {
                   Send Password Reset Link
                 </Button>
               </Field>
-            </form>
+            </fieldset>
           </Section>
         </Column>
       </Column.Group>
       <p className="has-text-centered has-text-grey">
         Forget it, send me back to the <Link to="/login">Sign in</Link> screen.
       </p>
-    </Column>
+    </form>
   );
 }
 
