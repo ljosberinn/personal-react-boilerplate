@@ -4,17 +4,15 @@ import { allowedSpecialCharacters } from './validators';
  *
  * @param {string} string
  */
-function stringContainsNumber(string) {
-  return string.split('').filter(Number).length > 0;
-}
+const stringContainsNumber = string =>
+  string.split('').filter(Number).length > 0;
 
 /**
  *
  * @param {string} string
  */
-function stringContainsSpecialCharacter(string) {
-  return new RegExp(`[${allowedSpecialCharacters.join('')}]`).test(string);
-}
+const stringContainsSpecialCharacter = string =>
+  new RegExp(`[${allowedSpecialCharacters.join('')}]`).test(string);
 
 /**
  * @example className={sanitizeClassArray(['foo', somethingTruthy && 'bar', 'baz'])}
@@ -23,13 +21,20 @@ function stringContainsSpecialCharacter(string) {
  *
  * @returns {string}
  */
-function sanitizeClassArray(classes) {
-  return classes.filter(Boolean).join(' ');
-}
+const sanitizeClassArray = classes => classes.filter(Boolean).join(' ');
+
+/**
+ *
+ * @param {string} string
+ */
+
+const stringContainsUppercaseCharacter = string =>
+  new RegExp('[A-Z]').test(string);
 
 export {
   stringContainsNumber,
   stringContainsSpecialCharacter,
   sanitizeClassArray,
   allowedSpecialCharacters,
+  stringContainsUppercaseCharacter,
 };

@@ -12,6 +12,7 @@ import {
   stringContainsSpecialCharacter,
   sanitizeClassArray,
   allowedSpecialCharacters,
+  stringContainsUppercaseCharacter,
 } from '../../../../utils';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import Shake from 'react-reveal/Shake';
@@ -23,6 +24,10 @@ const criteria = [
   {
     validate: password => stringContainsNumber(password),
     info: '- must contain at least one number',
+  },
+  {
+    validate: password => stringContainsUppercaseCharacter(password),
+    info: '- must contain at least one upper case character',
   },
   {
     validate: password => password.length > 7,
