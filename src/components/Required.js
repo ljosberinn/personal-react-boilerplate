@@ -2,14 +2,13 @@ import React from 'react';
 import { Generic, Help } from 'rbx';
 import styles from './Required.module.scss';
 
-function Star() {
+function Star({ children }) {
   return (
-    <Generic
-      tooltip="This field is required."
-      as="sup"
-      className="has-text-danger"
-    >
-      *
+    <Generic as="span" tooltip="This field is required.">
+      {children}
+      <Generic as="sup" className="has-text-danger">
+        *
+      </Generic>
     </Generic>
   );
 }

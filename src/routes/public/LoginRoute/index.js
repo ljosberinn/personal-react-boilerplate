@@ -92,8 +92,7 @@ function LoginRoute() {
             <fieldset disabled={isLoading}>
               <Field isFloatingLabel>
                 <Label htmlFor="mail">
-                  Email address
-                  <Required />
+                  <Required>Email address</Required>
                 </Label>
 
                 <Control iconLeft loading={isLoading}>
@@ -119,8 +118,7 @@ function LoginRoute() {
 
               <Field isFloatingLabel>
                 <Label htmlFor="password">
-                  Password
-                  <Required />
+                  <Required>Password</Required>
                 </Label>
 
                 <Control iconLeft loading={isLoading}>

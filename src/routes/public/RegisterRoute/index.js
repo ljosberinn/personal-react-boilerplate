@@ -179,8 +179,7 @@ function RegistrationForm({
       <fieldset disabled={isLoading}>
         <Field isFloatingLabel>
           <Label htmlFor="mail">
-            Email address
-            <Required />
+            <Required>Email address</Required>
           </Label>
 
           <Control iconLeft loading={isLoading}>
@@ -225,11 +224,9 @@ function RegistrationForm({
               onChange={handleChange}
             />
             <Label htmlFor="tos">
-              I agree to the{' '}
-              <Link to="/tos">
-                Terms of Service.
-                <Required />
-              </Link>
+              <Required>
+                I agree to the <Link to="/tos">Terms of Service</Link>.
+              </Required>
             </Label>
           </Control>
 

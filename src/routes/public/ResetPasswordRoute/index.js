@@ -64,8 +64,7 @@ function ResetPasswordRoute() {
             <fieldset disabled={isLoading}>
               <Field isFloatingLabel>
                 <Label htmlFor="mail">
-                  Email address
-                  <Required />
+                  <Required>Email address</Required>
                 </Label>
 
                 <Control iconLeft loading={isLoading}>

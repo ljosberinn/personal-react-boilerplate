@@ -87,8 +87,7 @@ const PasswordSelection = memo(
       <>
         <Field isFloatingLabel>
           <Label htmlFor="password">
-            Password
-            <Required />
+            <Required>Password</Required>
           </Label>
 
           <Control iconLeft iconRight={!isLoading} loading={isLoading}>
@@ -150,8 +149,7 @@ const PasswordSelection = memo(
 
         <Field isFloatingLabel>
           <Label htmlFor="confirmPassword">
-            Confirm password
-            <Required />
+            <Required>Confirm password</Required>
           </Label>
 
           <Control iconLeft loading={isLoading}>
