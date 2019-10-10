@@ -65,7 +65,7 @@ const PasswordSelection = memo(
     const progressColor =
       fulfilledCriteria === 1
         ? 'danger'
-        : fulfilledCriteria < 3
+        : fulfilledCriteria < criteria.length
         ? 'warning'
         : 'success';
 
@@ -143,7 +143,7 @@ const PasswordSelection = memo(
               size="small"
               value={fulfilledCriteria}
               color={progressColor}
-              max={3}
+              max={criteria.length}
             />
           </Help>
         </div>
