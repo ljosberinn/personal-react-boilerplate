@@ -1,4 +1,4 @@
-import { allowedSpecialCharacters } from './validators';
+import { allowedSpecialCharacters, characterPattern } from './validators';
 
 /**
  *
@@ -27,14 +27,13 @@ const sanitizeClassArray = classes => classes.filter(Boolean).join(' ');
  *
  * @param {string} string
  */
-
-const stringContainsUppercaseCharacter = string =>
-  new RegExp('[A-Z]').test(string);
+const stringContainsLetter = string =>
+  new RegExp(characterPattern).test(string);
 
 export {
   stringContainsNumber,
   stringContainsSpecialCharacter,
   sanitizeClassArray,
   allowedSpecialCharacters,
-  stringContainsUppercaseCharacter,
+  stringContainsLetter,
 };

@@ -1,5 +1,5 @@
 // https://stackoverflow.com/a/32686261
-function isValidMail(mail) {
+const isValidMail = mail => {
   if (mail.length === 0) {
     return false;
   }
@@ -19,7 +19,7 @@ function isValidMail(mail) {
     // so the backend has to step in
     return true;
   }
-}
+};
 
 const allowedSpecialCharacters = [
   '!',
@@ -40,27 +40,21 @@ const allowedSpecialCharacters = [
   '_',
   '-',
 ];
-
-const passwordPattern = `^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[${allowedSpecialCharacters.join(
+const characterPattern = '[A-Za-z]';
+const passwordPattern = `^(?=.*${characterPattern})(?=.*[0-9])(?=.*[${allowedSpecialCharacters.join(
   '',
 )}])(?=.{8,}).*$`;
 
-function isValidPassword(password) {
-  return new RegExp(passwordPattern).test(password);
-}
+const isValidPassword = password => new RegExp(passwordPattern).test(password);
 
 const usernamePattern = '^[a-zA-Z0-9]+(?:[._ -]?[a-zA-Z0-9])*$';
 
-function isValidUsername(userName) {
-  return new RegExp(usernamePattern).test(userName);
-}
+const isValidUsername = userName => new RegExp(usernamePattern).test(userName);
 
 const namePattern =
   "^[a-zA-Z àáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð'-]+$";
 
-function isValidRealName(name) {
-  return new RegExp(namePattern).test(name);
-}
+const isValidRealName = name => new RegExp(namePattern).test(name);
 
 const validate = {
   mail: isValidMail,
@@ -76,4 +70,4 @@ const pattern = {
   realName: namePattern,
 };
 
-export { validate, pattern, allowedSpecialCharacters };
+export { validate, pattern, allowedSpecialCharacters, characterPattern };
