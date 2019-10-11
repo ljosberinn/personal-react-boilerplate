@@ -171,8 +171,7 @@ function RegistrationForm({
     !validate.mail(mail) ||
     !tos;
 
-  const hasMailError =
-    error && error.indexOf('mail') > -1 ? 'danger' : undefined;
+  const hasMailError = error && error.indexOf('mail') > -1;
 
   return (
     <Shake duration={500} when={error}>
