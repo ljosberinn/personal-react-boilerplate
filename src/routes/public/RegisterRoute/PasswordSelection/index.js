@@ -131,7 +131,7 @@ const PasswordSelection = memo(
           {criteria.map(({ info }, index) => (
             <Help
               color={fulfilledCriteriaArr[index] ? 'success' : undefined}
-              key={info}
+              key={index}
             >
               {info}
             </Help>
@@ -171,19 +171,11 @@ const PasswordSelection = memo(
           </Control>
 
           {passwordsDoNotMatch && (
-            <Fade>
-              <div>
-                <Shake>
-                  <Help color="danger">Passwords do not match!</Help>
-                </Shake>
-              </div>
-            </Fade>
-          )}
-
-          {passwordsDoNotMatch && (
-            <Fade>
-              <Help color="danger">{errors[error]}</Help>
-            </Fade>
+            <Shake>
+              <Fade>
+                <Help color="danger">{errors['password.mismatch']}</Help>
+              </Fade>
+            </Shake>
           )}
         </Field>
       </>
