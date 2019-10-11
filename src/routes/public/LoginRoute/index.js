@@ -21,8 +21,10 @@ const errors = {
 function LoginRoute() {
   const params = useParams();
 
+  const isValidMailParam = params.mail && validate.mail(params.mail);
+
   const [data, setData] = useState({
-    mail: params.mail && validate.mail(params.mail) ? params.mail : '',
+    mail: isValidMailParam ? params.mail : '',
     password: '',
     rememberMe: false,
   });
@@ -31,12 +33,13 @@ function LoginRoute() {
 
   const handleChange = useCallback(
     ({ target: { name, type, value, checked } }) => {
-      if (type === 'checkbox') {
-        setData(data => ({ ...data, [name]: checked }));
-        return;
+      switch (type) {
+        case 'checkbox':
+          setData(data => ({ ...data, [name]: checked }));
+          break;
+        default:
+          setData(data => ({ ...data, [name]: value }));
       }
-
-      setData(data => ({ ...data, [name]: value }));
     },
     [],
   );
@@ -102,7 +105,7 @@ function LoginRoute() {
                     name="mail"
                     id="mail"
                     onInput={handleChange}
-                    autoFocus
+                    autoFocus={!isValidMailParam}
                     required
                     autoComplete="username"
                     defaultValue={mail}
@@ -127,6 +130,7 @@ function LoginRoute() {
                     name="password"
                     id="password"
                     onInput={handleChange}
+                    autoFocus={isValidMailParam}
                     pattern={pattern.password}
                     required
                     autoComplete="current-password"
