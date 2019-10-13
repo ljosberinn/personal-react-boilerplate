@@ -1,6 +1,7 @@
 import React, { lazy } from 'react';
 import { Column } from 'rbx';
 import styles from './PublicRoutesContainer.module.scss';
+import * as ROUTES from '../../constants/routes';
 
 const imgs = [
   '//images.unsplash.com/photo-1491982883790-ead7c97a047e?crop&w=1300&q=100',
@@ -48,10 +49,10 @@ function PublicRoutesContainer({ children }) {
 }
 
 export const PUBLIC_ROUTES = {
-  '/register': lazy(() => import('./RegisterRoute')),
-  '/login/:mail?': lazy(() => import('./LoginRoute')),
-  '/reset-password': lazy(() => import('./ResetPasswordRoute')),
-  '/activate-account/:token': lazy(() => import('./AccountActivationRoute')),
+  [ROUTES.REGISTER]: lazy(() => import('./RegisterRoute')),
+  [ROUTES.LOGIN]: lazy(() => import('./LoginRoute')),
+  [ROUTES.RESET_PASSWORD]: lazy(() => import('./ResetPasswordRoute')),
+  [ROUTES.ACTIVATE_ACCOUNT]: lazy(() => import('./AccountActivationRoute')),
 };
 
 export default PublicRoutesContainer;
