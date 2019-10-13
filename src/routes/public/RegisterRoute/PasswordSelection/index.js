@@ -1,17 +1,10 @@
 import React, { useState, useEffect, memo } from 'react';
-import {
-  ValidityIconLeft,
-  Icon,
-  Required,
-  Field,
-} from '../../../../components';
+import { ValidityIconLeft, Icon, Field } from '../../../../components';
 import { validate, pattern } from '../../../../utils/validators';
-import { Label, Help, Input, Control, Progress, Tag } from 'rbx';
+import { Label, Help, Input, Control, Progress } from 'rbx';
 import {
   stringContainsNumber,
-  stringContainsSpecialCharacter,
   sanitizeClassArray,
-  allowedSpecialCharacters,
   stringContainsLetter,
 } from '../../../../utils';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
@@ -33,7 +26,7 @@ const criteria = [
     validate: password => password.length > 7,
     info: '- must be at least 8 characters long',
   },
-  {
+  /*{
     validate: password => stringContainsSpecialCharacter(password),
     info: (
       <span>
@@ -41,7 +34,7 @@ const criteria = [
         <Tag>{allowedSpecialCharacters.join(' ')}</Tag>
       </span>
     ),
-  },
+  },*/
 ];
 
 /**
@@ -86,9 +79,7 @@ const PasswordSelection = memo(
     return (
       <>
         <Field isFloatingLabel>
-          <Label htmlFor="password">
-            <Required>Password</Required>
-          </Label>
+          <Label htmlFor="password">Password</Label>
 
           <Control iconLeft iconRight={!isLoading} loading={isLoading}>
             <Input
@@ -148,9 +139,7 @@ const PasswordSelection = memo(
         </div>
 
         <Field isFloatingLabel>
-          <Label htmlFor="confirmPassword">
-            <Required>Confirm password</Required>
-          </Label>
+          <Label htmlFor="confirmPassword">Confirm password</Label>
 
           <Control iconLeft loading={isLoading}>
             <Input

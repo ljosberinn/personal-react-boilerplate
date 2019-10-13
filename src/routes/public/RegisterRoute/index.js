@@ -1,12 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { validate } from '../../../utils/validators';
-import {
-  ValidityIconLeft,
-  Required,
-  Checkbox,
-  Field,
-} from '../../../components';
+import { ValidityIconLeft, Checkbox, Field } from '../../../components';
 import PasswordSelection from './PasswordSelection';
 import {
   Column,
@@ -181,9 +176,7 @@ function RegistrationForm({
     <Shake duration={500} when={error}>
       <fieldset disabled={isLoading}>
         <Field isFloatingLabel>
-          <Label htmlFor="mail">
-            <Required>Email address</Required>
-          </Label>
+          <Label htmlFor="mail">Email address</Label>
 
           <Control iconLeft loading={isLoading}>
             <Input
@@ -227,9 +220,7 @@ function RegistrationForm({
               onChange={handleChange}
             />
             <Label htmlFor="tos">
-              <Required>
-                I agree to the <Link to="/tos">Terms of Service</Link>.
-              </Required>
+              I agree to the <Link to="/tos">Terms of Service</Link>.
             </Label>
           </Control>
 
@@ -239,8 +230,6 @@ function RegistrationForm({
             </Fade>
           )}
         </Field>
-
-        <Required.Hint />
 
         <Field kind="grouped">
           <Button

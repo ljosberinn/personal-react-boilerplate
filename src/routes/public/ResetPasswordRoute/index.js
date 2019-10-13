@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { validate } from '../../../utils/validators';
-import { ValidityIconLeft, Required, Field } from '../../../components';
+import { ValidityIconLeft, Field } from '../../../components';
 import {
   Column,
   Title,
@@ -67,9 +67,7 @@ function ResetPasswordRoute() {
           <Section paddingless>
             <fieldset disabled={isLoading}>
               <Field isFloatingLabel>
-                <Label htmlFor="mail">
-                  <Required>Email address</Required>
-                </Label>
+                <Label htmlFor="mail">Email address</Label>
 
                 <Control iconLeft loading={isLoading}>
                   <Input
@@ -85,8 +83,6 @@ function ResetPasswordRoute() {
                   <ValidityIconLeft type="mail" value={mail} />
                 </Control>
               </Field>
-
-              <Required.Hint />
 
               <Field kind="grouped">
                 <Button

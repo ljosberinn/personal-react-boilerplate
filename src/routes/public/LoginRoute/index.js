@@ -1,12 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { validate, pattern } from '../../../utils/validators';
-import {
-  ValidityIconLeft,
-  Checkbox,
-  Required,
-  Field,
-} from '../../../components';
+import { ValidityIconLeft, Checkbox, Field } from '../../../components';
 import { Column, Title, Label, Help, Button, Control, Input, Image } from 'rbx';
 import { AuthSvg } from '../../../assets/svg';
 import { Fade } from 'react-reveal';
@@ -98,9 +93,7 @@ function LoginRoute() {
           <Shake duration={500} when={error}>
             <fieldset disabled={isLoading}>
               <Field isFloatingLabel>
-                <Label htmlFor="mail">
-                  <Required>Email address</Required>
-                </Label>
+                <Label htmlFor="mail">Email address</Label>
 
                 <Control iconLeft loading={isLoading}>
                   <Input
@@ -124,9 +117,7 @@ function LoginRoute() {
               </Field>
 
               <Field isFloatingLabel>
-                <Label htmlFor="password">
-                  <Required>Password</Required>
-                </Label>
+                <Label htmlFor="password">Password</Label>
 
                 <Control iconLeft loading={isLoading}>
                   <Input
@@ -164,8 +155,6 @@ function LoginRoute() {
                   <Help color="danger">{errors[error]}</Help>
                 </Fade>
               )}
-
-              <Required.Hint />
 
               <Field kind="grouped">
                 <Button
