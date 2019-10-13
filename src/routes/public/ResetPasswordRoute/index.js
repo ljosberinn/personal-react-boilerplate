@@ -49,9 +49,13 @@ function ResetPasswordRoute() {
         <Title textAlign="centered">Reset Password</Title>
       </legend>
 
-      <Image.Container size="16by9">
-        <ForgotPasswordSvg />
-      </Image.Container>
+      <Column.Group centered>
+        <Column size={11}>
+          <Image.Container size="16by9">
+            <ForgotPasswordSvg />
+          </Image.Container>
+        </Column>
+      </Column.Group>
 
       <Column.Group centered>
         <Column size={10}>

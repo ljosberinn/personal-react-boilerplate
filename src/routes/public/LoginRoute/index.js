@@ -85,9 +85,13 @@ function LoginRoute() {
         </Title>
       </legend>
 
-      <Image.Container size="16by9">
-        <AuthSvg />
-      </Image.Container>
+      <Column.Group centered>
+        <Column size={11}>
+          <Image.Container size="16by9">
+            <AuthSvg />
+          </Image.Container>
+        </Column>
+      </Column.Group>
 
       <Column.Group centered>
         <Column size={10}>
