@@ -1,16 +1,12 @@
 import React from 'react';
 import { sanitizeClassArray } from '../utils';
-// eslint-disable-next-line
-import { DEFAULTS } from 'rbx/base/helpers/variables';
-// eslint-disable-next-line
-import { INPUT_DEFAULTS } from 'rbx/elements/form/input';
 
 /**
  * @see https://buefy.org/documentation/switch
  *
  * @param {{
- *  color: (typeof DEFAULTS.colors)[number],
- *  size: (typeof INPUT_DEFAULTS.sizes)[number],
+ *  color: (typeof rbx/base/helpers/variables/DEFAULTS.colors)[number],
+ *  size: (typeof rbx/elements/form/input/INPUT_DEFAULTS.sizes)[number],
  *  name: string,
  *  disabled: boolean,
  *  rounded: boolean,
@@ -18,7 +14,9 @@ import { INPUT_DEFAULTS } from 'rbx/elements/form/input';
  *  text: string|number,
  *  value: string|number|boolean,
  *  onChange: (e: React.ChangeEvent<HTMLInputElement />) => void
- * }} props
+ * }} Props
+ *
+ * @returns React.FC<Props>
  */
 function Switch({
   color,
