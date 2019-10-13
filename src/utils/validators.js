@@ -41,9 +41,7 @@ const allowedSpecialCharacters = [
   '-',
 ];
 const characterPattern = '[A-Za-z]';
-const passwordPattern = `^(?=.*${characterPattern})(?=.*[0-9])(?=.*[${allowedSpecialCharacters.join(
-  '',
-)}])(?=.{8,}).*$`;
+const passwordPattern = `^(?=.*${characterPattern})(?=.*[0-9])(?=.{8,}).*$`;
 
 const isValidPassword = password => new RegExp(passwordPattern).test(password);
 
