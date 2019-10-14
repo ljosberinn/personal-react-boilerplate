@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { validate } from '../../../utils/validators';
 import { ValidityIconLeft, Checkbox, Field } from '../../../components';
 import PasswordSelection from './PasswordSelection';
-import * as ROUTES from '../../../constants/routes';
 import {
   Column,
   Tag,
@@ -230,7 +229,7 @@ function RegistrationForm({
           </Button>
 
           <Button pull="right" className="is-borderless" size="small">
-            <Link to={ROUTES.LOGIN}>Sign in instead</Link>
+            <Link to="/login">Sign in instead</Link>
           </Button>
         </Field>
       </fieldset>
