@@ -45,19 +45,16 @@ function RegisterRoute() {
   const [error, setError] = useState(null);
   const [successfullyRegistered, setSuccsesfullyRegistered] = useState(false);
 
-  const handleChange = useCallback(
-    ({ target: { name, type, checked, value } }) => {
-      switch (type) {
-        case 'checkbox':
-          setData(data => ({ ...data, [name]: checked }));
-          break;
-        default:
-          setData(data => ({ ...data, [name]: value }));
-          break;
-      }
-    },
-    [],
-  );
+  const handleChange = useCallback(({ target: { name, type, value } }) => {
+    switch (type) {
+      case 'checkbox':
+        setData(data => ({ ...data, [name]: !data[name] }));
+        break;
+      default:
+        setData(data => ({ ...data, [name]: value }));
+        break;
+    }
+  }, []);
 
   const handleSubmit = useCallback(
     event => {
@@ -166,6 +163,7 @@ function RegistrationForm({
     mail.length === 0 ||
     password.length === 0 ||
     confirmPassword.length === 0 ||
+    !validate.password(password) ||
     !passwordsAreMatching ||
     !validate.mail(mail) ||
     !tos;
