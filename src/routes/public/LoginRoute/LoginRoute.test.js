@@ -1,9 +1,10 @@
 import React from 'react';
 import LoginRoute from '.';
-import { render, cleanup, fireEvent, wait } from '@testing-library/react';
+import { render, cleanup, fireEvent } from '@testing-library/react';
 import { Router, Route } from 'react-router-dom';
 import * as ROUTES from '../../../constants/routes';
 import { createMemoryHistory } from 'history';
+import { act } from 'react-dom/test-utils';
 
 const history = createMemoryHistory();
 
@@ -96,7 +97,7 @@ describe('<LoginRoute />', () => {
       },
       buttonDisabled: true,
     },
-  ].map(({ description, password, mail, buttonDisabled }) => {
+  ].forEach(({ description, password, mail, buttonDisabled }) => {
     it(description, () => {
       const { getByLabelText, getByText } = render(
         <Router history={history}>
@@ -110,14 +111,19 @@ describe('<LoginRoute />', () => {
 
       expect(submitButton.disabled).toBe(true);
 
-      fireEvent.input(mailInput, { target: { value: mail.value } });
+      act(() => {
+        fireEvent.input(mailInput, { target: { value: mail.value } });
+      });
+
       expect(submitButton.disabled).toBe(true);
-
-      fireEvent.input(passwordInput, { target: { value: password.value } });
-
       expect(
         mailInput.nextElementSibling.classList.contains('has-text-success'),
       ).toBe(mail.iconSuccess);
+
+      act(() => {
+        fireEvent.input(passwordInput, { target: { value: password.value } });
+      });
+
       expect(
         passwordInput.nextElementSibling.classList.contains('has-text-success'),
       ).toBe(password.iconSuccess);
