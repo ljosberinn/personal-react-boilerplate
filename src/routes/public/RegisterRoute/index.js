@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { validate } from '../../../utils/validators';
 import { ValidityIconLeft, Checkbox, Field } from '../../../components';
 import PasswordSelection from './PasswordSelection';
+import * as ROUTES from '../../../constants/routes';
 import {
   Column,
   Tag,
@@ -15,7 +16,7 @@ import {
   Control,
   Input,
 } from 'rbx';
-import { ProfileSvg, MailSvg } from '../../../assets/svg';
+import { MailSvg } from '../../../assets/svg';
 import Shake from 'react-reveal/Shake';
 import { Fade } from 'react-reveal';
 
@@ -98,16 +99,6 @@ function RegisterRoute() {
         </Title>
       </legend>
 
-      {!successfullyRegistered && (
-        <Column.Group centered>
-          <Column size={11}>
-            <Image.Container size="16by9">
-              <ProfileSvg />
-            </Image.Container>
-          </Column>
-        </Column.Group>
-      )}
-
       <Column.Group centered>
         <Column size={10}>
           {successfullyRegistered ? (
@@ -173,7 +164,7 @@ function RegistrationForm({
   return (
     <Shake duration={500} when={error}>
       <fieldset disabled={isLoading}>
-        <Field isFloatingLabel>
+        <Field>
           <Label htmlFor="mail">Email address</Label>
 
           <Control iconLeft loading={isLoading}>
@@ -233,10 +224,13 @@ function RegistrationForm({
           <Button
             color="primary"
             state={isLoading ? 'loading' : undefined}
-            fullwidth
             disabled={isDisabled}
           >
             Sign up
+          </Button>
+
+          <Button pull="right" className="is-borderless" size="small">
+            <Link to={ROUTES.LOGIN}>Sign in instead</Link>
           </Button>
         </Field>
       </fieldset>

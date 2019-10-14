@@ -1,7 +1,7 @@
 import React, { useState, useEffect, memo } from 'react';
 import { ValidityIconLeft, Icon, Field } from '../../../../components';
 import { validate, pattern } from '../../../../utils/validators';
-import { Label, Help, Input, Control, Progress } from 'rbx';
+import { Label, Help, Input, Control, Generic } from 'rbx';
 import {
   stringContainsNumber,
   sanitizeClassArray,
@@ -16,15 +16,15 @@ import { errors } from '..';
 const criteria = [
   {
     validate: password => stringContainsNumber(password),
-    info: '- must contain at least one number',
+    info: 'must contain at least one number',
   },
   {
     validate: password => stringContainsLetter(password),
-    info: '- must contain at least one letter',
+    info: 'must contain at least one letter',
   },
   {
     validate: password => password.length > 7,
-    info: '- must be at least 8 characters long',
+    info: 'must be at least 8 characters long',
   },
   /*{
     validate: password => stringContainsSpecialCharacter(password),
@@ -55,13 +55,6 @@ const PasswordSelection = memo(
     );
     const fulfilledCriteria = fulfilledCriteriaArr.filter(Boolean).length;
 
-    const progressColor =
-      fulfilledCriteria === 1
-        ? 'danger'
-        : fulfilledCriteria < criteria.length
-        ? 'warning'
-        : 'success';
-
     useEffect(() => {
       // hide password on submit
       if (isLoading && type === 'text') {
@@ -78,8 +71,25 @@ const PasswordSelection = memo(
 
     return (
       <>
-        <Field isFloatingLabel>
+        <Field>
           <Label htmlFor="password">Password</Label>
+
+          <Generic
+            className={sanitizeClassArray([
+              styles.smallBox,
+              fulfilledCriteria === criteria.length && 'anim-opacity-to-40',
+            ])}
+            tooltip="Password requirements"
+          >
+            {criteria.map(({ info }, index) => (
+              <Help
+                color={fulfilledCriteriaArr[index] ? 'success' : undefined}
+                key={index}
+              >
+                {fulfilledCriteriaArr[index] && '✓'} {info}
+              </Help>
+            ))}
+          </Generic>
 
           <Control iconLeft iconRight={!isLoading} loading={isLoading}>
             <Input
@@ -113,32 +123,7 @@ const PasswordSelection = memo(
           )}
         </Field>
 
-        <div
-          className={sanitizeClassArray([
-            styles.smallBox,
-            progressColor === 'success' && 'anim-opacity-to-40',
-          ])}
-        >
-          {criteria.map(({ info }, index) => (
-            <Help
-              color={fulfilledCriteriaArr[index] ? 'success' : undefined}
-              key={index}
-            >
-              {info}
-            </Help>
-          ))}
-
-          <Help>
-            <Progress
-              size="small"
-              value={fulfilledCriteria}
-              color={progressColor}
-              max={criteria.length}
-            />
-          </Help>
-        </div>
-
-        <Field isFloatingLabel>
+        <Field>
           <Label htmlFor="confirmPassword">Confirm password</Label>
 
           <Control iconLeft loading={isLoading}>

@@ -24,8 +24,13 @@ function PublicRoutesContainer({ children }) {
     <div className="is-fullpage has-content-centered">
       <Column.Group marginless className="is-fullpage">
         <Column
-          widescreen={{ size: 8 }}
-          desktop={{ size: 7 }}
+          className={`has-padding-large fade-in is-unauthenticated-container ${styles.container}`}
+        >
+          {children}
+        </Column>
+        <Column
+          widescreen={{ size: 7 }}
+          desktop={{ size: 'half' }}
           tablet={{ size: 'half' }}
           mobile={{ size: 'hidden' }}
           style={{
@@ -37,11 +42,6 @@ function PublicRoutesContainer({ children }) {
           <div className="has-text-centered login-logo">
             <LogoIpsumSvg />
           </div>
-        </Column>
-        <Column
-          className={`has-padding-large fade-in is-unauthenticated-container ${styles.container}`}
-        >
-          {children}
         </Column>
       </Column.Group>
     </div>
