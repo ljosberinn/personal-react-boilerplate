@@ -18,7 +18,7 @@ import { sanitizeClassArray } from '../utils';
  *
  * @returns React.FC<Props>
  */
-function Switch({
+export default function Switch({
   color,
   disabled,
   name,
@@ -47,5 +47,3 @@ function Switch({
     </label>
   );
 }
-
-export default Switch;

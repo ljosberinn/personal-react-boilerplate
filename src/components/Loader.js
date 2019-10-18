@@ -13,7 +13,7 @@ import { IconDefinition } from '@fortawesome/free-solid-svg-icons';
  *  isFullPage: boolean
  * }} props
  */
-function Loader({ icon = undefined, isFullPage = false }) {
+export default function Loader({ icon = undefined, isFullPage = false }) {
   return (
     <div
       className={sanitizeClassArray([
@@ -31,5 +31,3 @@ function Loader({ icon = undefined, isFullPage = false }) {
     </div>
   );
 }
-
-export default Loader;

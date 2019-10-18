@@ -8,12 +8,10 @@ import { IconDefinition } from '@fortawesome/free-solid-svg-icons';
  *
  * @param { { icon: IconDefinition } } props
  */
-function Icon({ icon, ...rest }) {
+export default function Icon({ icon, ...rest }) {
   return (
     <RBXIcon {...rest}>
       <FontAwesomeIcon icon={icon} />
     </RBXIcon>
   );
 }
-
-export default Icon;

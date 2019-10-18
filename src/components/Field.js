@@ -11,7 +11,12 @@ import { sanitizeClassArray } from '../utils';
  * }} props
  *
  */
-function Field({ children, isFloatingLabel, className, ...rest }) {
+export default function Field({
+  children,
+  isFloatingLabel,
+  className,
+  ...rest
+}) {
   return (
     <RBXField
       className={sanitizeClassArray([
@@ -24,5 +29,3 @@ function Field({ children, isFloatingLabel, className, ...rest }) {
     </RBXField>
   );
 }
-
-export default Field;

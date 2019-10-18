@@ -1,7 +1,7 @@
 import React from 'react';
 import { sanitizeClassArray } from '../utils';
 
-function Radio({ className, ...rest }) {
+export default function Radio({ className, ...rest }) {
   return (
     <input
       type="radio"
@@ -13,5 +13,3 @@ function Radio({ className, ...rest }) {
     />
   );
 }
-
-export default Radio;
