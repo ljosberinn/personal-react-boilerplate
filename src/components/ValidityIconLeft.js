@@ -5,71 +5,43 @@ import {
   faLockOpen,
   faIdCard,
   faEnvelope,
-  faUserAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import { validate } from '../utils/validators';
 
-function ValidityIconLeft({ type, value = '' }) {
-  let color = undefined;
-  let requiresSuccessColor = true;
-  let successIcon;
-  let errorIcon;
+const iconMap = {
+  password: {
+    success: faLock,
+    error: faLockOpen,
+  },
+  mail: {
+    success: faEnvelope,
+    error: undefined,
+  },
+  username: {
+    success: faIdCard,
+    error: undefined,
+  },
+};
 
-  switch (type) {
-    case 'password':
-      color =
-        value.length > 0
-          ? validate.password(value)
-            ? 'success'
-            : 'danger'
-          : undefined;
+export default function ValidityIconLeft({ type, value = '' }) {
+  const { success, error } = iconMap[type];
 
-      successIcon = faLock;
-      errorIcon = faLockOpen;
-      break;
-    case 'mail':
-      color =
-        value.length > 0
-          ? validate.mail(value)
-            ? 'success'
-            : 'danger'
-          : undefined;
+  const color =
+    value.length > 0
+      ? validate[type](value)
+        ? 'success'
+        : 'danger'
+      : undefined;
 
-      successIcon = faEnvelope;
-      requiresSuccessColor = false;
-      break;
-    case 'username':
-      color =
-        value.length > 0
-          ? validate.username(value)
-            ? 'success'
-            : 'danger'
-          : undefined;
-
-      requiresSuccessColor = false;
-      successIcon = faIdCard;
-      break;
-    case 'firstLastName':
-      color =
-        value.length > 0
-          ? validate.realName(value)
-            ? 'success'
-            : 'danger'
-          : undefined;
-      successIcon = faUserAlt;
-      requiresSuccessColor = false;
-      break;
-    default:
-      return null;
+  if (error) {
+    return (
+      <Icon
+        align="left"
+        color={color}
+        icon={color === 'success' ? success : error}
+      />
+    );
   }
 
-  const icon = requiresSuccessColor
-    ? color === 'success'
-      ? successIcon
-      : errorIcon
-    : successIcon;
-
-  return <Icon align="left" color={color} icon={icon} />;
+  return <Icon align="left" color={color} icon={success} />;
 }
-
-export default ValidityIconLeft;
