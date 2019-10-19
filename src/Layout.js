@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Navbar, Button, Column, Footer, Container, Generic } from 'rbx';
 import { NavLink } from 'react-router-dom';
 import { Icon, Loader } from './components';
 import { faGithub, faDiscord } from '@fortawesome/free-brands-svg-icons';
 import { faAdjust } from '@fortawesome/free-solid-svg-icons';
 import * as ROUTES from './constants/routes';
-import { useDetectColorScheme, useTheme } from './hooks/';
+import { useTheme } from './hooks/';
 
 const LogoIpsumSvg = () => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 144 39" height="32">

@@ -50,16 +50,14 @@ describe('<PasswordSelection />', () => {
     expect(passwordInput.type).toBe('password');
   });
 
-  it('changes progress state depending on password security', () => {
+  it('changes help state depending on password security', () => {
     const { container, getByLabelText, rerender } = render(
       <PasswordSelection {...defaultProps} />,
     );
 
     const passwordInput = getByLabelText('Password');
-    const progress = container.querySelector('progress');
 
-    expect(parseInt(progress.getAttribute('value'))).toBe(0);
-    expect(progress.classList.contains('is-warning')).toBe(true);
+    expect(container.querySelectorAll('.help.is-success').length).toBe(0);
 
     act(() => {
       fireEvent.input(passwordInput, {
@@ -75,8 +73,7 @@ describe('<PasswordSelection />', () => {
       />,
     );
 
-    expect(parseInt(progress.getAttribute('value'))).toBe(1);
-    expect(progress.classList.contains('is-danger')).toBe(true);
+    expect(container.querySelectorAll('.help.is-success').length).toBe(1);
 
     act(() => {
       fireEvent.input(passwordInput, {
@@ -92,8 +89,7 @@ describe('<PasswordSelection />', () => {
       />,
     );
 
-    expect(parseInt(progress.getAttribute('value'))).toBe(2);
-    expect(progress.classList.contains('is-warning')).toBe(true);
+    expect(container.querySelectorAll('.help.is-success').length).toBe(2);
 
     act(() => {
       fireEvent.input(passwordInput, {
@@ -107,7 +103,6 @@ describe('<PasswordSelection />', () => {
       <PasswordSelection {...{ ...defaultProps, password: validPassword }} />,
     );
 
-    expect(parseInt(progress.getAttribute('value'))).toBe(3);
-    expect(progress.classList.contains('is-success')).toBe(true);
+    expect(container.querySelectorAll('.help.is-success').length).toBe(3);
   });
 });
