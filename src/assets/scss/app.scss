@@ -7,6 +7,7 @@ $speed-slower: 250ms !default;
 
 @import './animations';
 @import './extensions';
+@import './dark-theme';
 
 .is-fullpage {
   display: flex;
@@ -47,4 +48,24 @@ $speed-slower: 250ms !default;
 .is-clickable {
   pointer-events: all !important;
   cursor: pointer;
+}
+
+.is-checkradio[type='radio'].is-circle + label,
+.is-checkradio[type='checkbox'].is-circle + label {
+  position: static;
+}
+
+.navbar-end .buttons {
+  margin-right: 0.75rem;
+  margin-left: 0.75rem;
+}
+
+.footer li.has-text-weight-semibold {
+  margin-bottom: 1rem;
+}
+
+@import '../../routes/public/LandingPage/LandingPage.module.scss';
+
+.card {
+  background-color: rgba($white, 0.95);
 }

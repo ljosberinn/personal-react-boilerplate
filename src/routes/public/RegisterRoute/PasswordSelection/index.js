@@ -1,7 +1,7 @@
 import React, { useState, useEffect, memo } from 'react';
 import { ValidityIconLeft, Icon, Field } from '../../../../components';
 import { validate, pattern } from '../../../../utils/validators';
-import { Label, Help, Input, Control, Generic } from 'rbx';
+import { Message, Label, Help, Input, Control, Block } from 'rbx';
 import {
   stringContainsNumber,
   sanitizeClassArray,
@@ -74,22 +74,22 @@ const PasswordSelection = memo(
         <Field>
           <Label htmlFor="password">Password</Label>
 
-          <Generic
-            className={sanitizeClassArray([
-              styles.smallBox,
-              fulfilledCriteria === criteria.length && 'anim-opacity-to-40',
-            ])}
-            tooltip="Password requirements"
-          >
-            {criteria.map(({ info }, index) => (
-              <Help
-                color={fulfilledCriteriaArr[index] ? 'success' : undefined}
-                key={index}
-              >
-                {fulfilledCriteriaArr[index] && '✓'} {info}
-              </Help>
-            ))}
-          </Generic>
+          <Message>
+            <Message.Body
+              className={sanitizeClassArray([
+                styles.smallBox,
+                fulfilledCriteria === criteria.length && 'anim-opacity-to-40',
+              ])}
+            >
+              {criteria.map(({ info }, index) => (
+                <PasswordCriteriaInformation
+                  info={info}
+                  isFulfilled={fulfilledCriteriaArr[index]}
+                  key={index}
+                />
+              ))}
+            </Message.Body>
+          </Message>
 
           <Control iconLeft iconRight={!isLoading} loading={isLoading}>
             <Input
@@ -123,38 +123,51 @@ const PasswordSelection = memo(
           )}
         </Field>
 
-        <Field>
-          <Label htmlFor="confirmPassword">Confirm password</Label>
+        <Block>
+          <Field>
+            <Label htmlFor="confirmPassword">Confirm password</Label>
 
-          <Control iconLeft loading={isLoading}>
-            <Input
-              type="password"
-              name="confirmPassword"
-              id="confirmPassword"
-              onInput={handleChange}
-              pattern={pattern.password}
-              disabled={!isValidPassword}
-              placeholder={
-                !isValidPassword ? 'please first enter a valid password' : ''
-              }
-              required
-              autoComplete="new-password"
-              color={passwordsDoNotMatch ? 'danger' : undefined}
-            />
-            <ValidityIconLeft type="password" value={confirmPassword} />
-          </Control>
+            <Control iconLeft loading={isLoading}>
+              <Input
+                type="password"
+                name="confirmPassword"
+                id="confirmPassword"
+                onInput={handleChange}
+                pattern={pattern.password}
+                disabled={!isValidPassword}
+                placeholder={
+                  !isValidPassword ? 'please first enter a valid password' : ''
+                }
+                required
+                autoComplete="new-password"
+                color={passwordsDoNotMatch ? 'danger' : undefined}
+              />
+              <ValidityIconLeft type="password" value={confirmPassword} />
+            </Control>
 
-          {passwordsDoNotMatch && (
-            <Shake>
-              <Fade>
-                <Help color="danger">{errors['password.mismatch']}</Help>
-              </Fade>
-            </Shake>
-          )}
-        </Field>
+            {passwordsDoNotMatch && (
+              <Shake>
+                <Fade>
+                  <Help color="danger">{errors['password.mismatch']}</Help>
+                </Fade>
+              </Shake>
+            )}
+          </Field>
+        </Block>
       </>
     );
   },
 );
+
+function PasswordCriteriaInformation({ isFulfilled, info }) {
+  return (
+    <Help
+      color={isFulfilled ? 'success' : undefined}
+      tooltip={isFulfilled ? undefined : 'Please fulfill this requirement'}
+    >
+      {isFulfilled && '✓'} {info}
+    </Help>
+  );
+}
 
 export default PasswordSelection;

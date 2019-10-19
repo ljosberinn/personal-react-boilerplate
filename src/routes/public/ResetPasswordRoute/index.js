@@ -66,7 +66,7 @@ function ResetPasswordRoute() {
 
           <Section paddingless>
             <fieldset disabled={isLoading}>
-              <Field isFloatingLabel>
+              <Field>
                 <Label htmlFor="mail">Email address</Label>
 
                 <Control iconLeft loading={isLoading}>

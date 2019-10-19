@@ -1,0 +1,13 @@
+$dark-base-color: #1d2a38;
+
+html.theme--dark {
+  @media (prefers-color-scheme: dark) {
+    .card {
+      background-color: rgba($dark-base-color, 0.95) !important;
+    }
+  }
+}
+
+* {
+  transition: background-color 350ms ease-in-out;
+}

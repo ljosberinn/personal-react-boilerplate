@@ -5,11 +5,14 @@ import { ValidityIconLeft, Checkbox, Field } from '../../../components';
 import PasswordSelection from './PasswordSelection';
 import {
   Column,
+  Content,
+  Block,
   Tag,
   Title,
   Section,
   Help,
   Label,
+  Card,
   Button,
   Image,
   Control,
@@ -18,6 +21,7 @@ import {
 import { MailSvg } from '../../../assets/svg';
 import Shake from 'react-reveal/Shake';
 import { Fade } from 'react-reveal';
+import styles from './Registration.module.scss';
 
 export const errors = {
   'mail.duplicate': (
@@ -34,7 +38,7 @@ export const errors = {
   tos: 'Please agree to the Terms of Service.',
 };
 
-function RegisterRoute() {
+export default function RegisterRoute() {
   const [data, setData] = useState({
     mail: '',
     password: '',
@@ -85,54 +89,66 @@ function RegisterRoute() {
   );
 
   return (
-    <form
-      className="has-content-spaced-between"
-      spellCheck={false}
-      autoCorrect="off"
-      onSubmit={handleSubmit}
-    >
-      <legend>
-        <Title textAlign="centered">Create your account</Title>
-        <Title subtitle textAlign="centered">
-          or <Link to="/login">sign in</Link>
-        </Title>
-      </legend>
-
+    <Section className={styles.container}>
       <Column.Group centered>
-        <Column size={10}>
-          {successfullyRegistered ? (
-            <RegistrationSuccess mail={data.mail} />
-          ) : (
-            <RegistrationForm
-              {...{
-                handleChange,
-                error,
-                isLoading,
-                ...data,
-              }}
-            />
-          )}
+        <Column size={7}>
+          <Card>
+            <Card.Content
+              as="form"
+              spellCheck={false}
+              autoCorrect="off"
+              onSubmit={handleSubmit}
+            >
+              <Column.Group centered>
+                <Column
+                  className="has-content-spaced-between"
+                  widescreen={{ size: 11 }}
+                >
+                  <legend>
+                    <Title>Create your account</Title>
+                  </legend>
+
+                  <br />
+
+                  <Content>
+                    {successfullyRegistered ? (
+                      <RegistrationSuccess mail={data.mail} />
+                    ) : (
+                      <RegistrationForm
+                        {...{
+                          handleChange,
+                          error,
+                          isLoading,
+                          ...data,
+                        }}
+                      />
+                    )}
+                  </Content>
+
+                  <p className="has-text-centered has-text-grey">
+                    Already have an account? <Link to="/login">Sign in</Link>
+                  </p>
+                </Column>
+              </Column.Group>
+            </Card.Content>
+          </Card>
         </Column>
       </Column.Group>
-      <p className="has-text-centered has-text-grey">
-        Already have an account? <Link to="/login">Sign in</Link>
-      </p>
-    </form>
+    </Section>
   );
 }
 
 function RegistrationSuccess({ mail }) {
   return (
-    <Fade right>
+    <Fade>
       <Image.Container size="16by9">
         <MailSvg />
       </Image.Container>
 
-      <Section>
-        <Title size={6}>
-          A mail was sent to <Tag color="info">{mail}</Tag> containing further
-          details!
-        </Title>
+      <Section textAlign="centered">
+        <p>A mail was sent to</p>
+        <Tag color="info">{mail}</Tag>
+        <p>containing further details!</p>
       </Section>
     </Fade>
   );
@@ -174,8 +190,8 @@ function RegistrationForm({
               id="mail"
               onInput={handleChange}
               required
-              autoComplete="username"
               autoFocus
+              autoComplete="username"
               color={hasMailError ? 'danger' : undefined}
             />
             <ValidityIconLeft type="mail" value={mail} />
@@ -198,43 +214,42 @@ function RegistrationForm({
           }}
         />
 
+        <Block>
+          <Field>
+            <Control>
+              <Checkbox
+                id="tos"
+                name="tos"
+                required
+                disabled={isLoading}
+                onChange={handleChange}
+                circled
+              />
+              <Label htmlFor="tos">
+                I agree to the <Link to="/tos">Terms of Service</Link>.
+              </Label>
+            </Control>
+
+            {error && error === 'tos' && (
+              <Fade>
+                <Help color="danger">{errors[error]}</Help>
+              </Fade>
+            )}
+          </Field>
+        </Block>
+
         <Field>
-          <Control>
-            <Checkbox
-              id="tos"
-              name="tos"
-              required
-              disabled={isLoading}
-              onChange={handleChange}
-            />
-            <Label htmlFor="tos">
-              I agree to the <Link to="/tos">Terms of Service</Link>.
-            </Label>
-          </Control>
-
-          {error && error === 'tos' && (
-            <Fade>
-              <Help color="danger">{errors[error]}</Help>
-            </Fade>
-          )}
-        </Field>
-
-        <Field kind="grouped">
           <Button
+            type="submit"
             color="primary"
             state={isLoading ? 'loading' : undefined}
             disabled={isDisabled}
+            fullwidth
           >
             Sign up
-          </Button>
-
-          <Button pull="right" className="is-borderless" size="small">
-            <Link to="/login">Sign in instead</Link>
           </Button>
         </Field>
       </fieldset>
     </Shake>
   );
 }
-
-export default RegisterRoute;
