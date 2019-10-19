@@ -68,4 +68,11 @@ $speed-slower: 250ms !default;
 
 .card {
   background-color: rgba($white, 0.95);
+  border-radius: 5px !important;
+}
+
+body {
+  //background-image: url();
+  background-repeat: repeat-y;
+  background-size: cover;
 }

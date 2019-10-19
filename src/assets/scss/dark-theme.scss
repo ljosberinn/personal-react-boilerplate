@@ -1,10 +1,14 @@
 $dark-base-color: #1d2a38;
 
 html.theme--dark {
-  @media (prefers-color-scheme: dark) {
-    .card {
-      background-color: rgba($dark-base-color, 0.95) !important;
-    }
+  .card {
+    background-color: rgba($dark-base-color, 0.95);
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .card {
+    background-color: rgba($dark-base-color, 0.95);
   }
 }
 

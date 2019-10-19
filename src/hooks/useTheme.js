@@ -1,10 +1,14 @@
 import { useState, useEffect } from 'react';
-
 import { useDetectColorScheme } from '.';
 
+/**
+ * Toggles .theme--light | .theme--dark on HTML tag
+ *
+ * @param {string} theme
+ */
 const changeThemeOnHTMLTag = theme => {
   const thisTheme = `theme--${theme}`;
-  const otherTheme = theme === 'light' ? 'theme--dark' : 'theme--light';
+  const otherTheme = `theme--${theme === 'light' ? 'dark' : 'light'}`;
 
   const htmlTagClassList = document.getElementsByTagName('html')[0].classList;
 
@@ -24,24 +28,24 @@ export default function useTheme() {
   const relevantTheme = usedTheme || theme;
 
   useEffect(() => {
-    setIsLoading(true);
-
     changeThemeOnHTMLTag(relevantTheme);
     const href = 'https://unpkg.com/bulmaswatch/superhero/bulmaswatch.min.css';
 
     if (relevantTheme === 'dark') {
+      setIsLoading(true);
+
       document.querySelector('head').append(
         Object.assign(document.createElement('link'), {
           rel: 'stylesheet',
-          href,
           onload: () => setIsLoading(false),
+          href,
         }),
       );
 
       return;
-    } else {
-      setIsLoading(false);
     }
+
+    setIsLoading(false);
 
     const darkTheme = document.querySelector(`link[href="${href}"]`);
 
