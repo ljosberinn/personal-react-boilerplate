@@ -22,12 +22,13 @@ import { MailSvg } from '../../../assets/svg';
 import Shake from 'react-reveal/Shake';
 import { Fade } from 'react-reveal';
 import styles from './Registration.module.scss';
-
+import * as ROUTES from '../../../constants/routes';
+import Helmet from 'react-helmet';
 export const errors = {
   'mail.duplicate': (
     <span>
       An account with this email already exists. Did you{' '}
-      <Link to="/reset-password">forget your password</Link>?
+      <Link to={ROUTES.RESET_PASSWORD}>forget your password</Link>?
     </span>
   ),
   'mail.registrationPending':
@@ -89,52 +90,63 @@ export default function RegisterRoute() {
   );
 
   return (
-    <Section className={styles.container}>
-      <Column.Group centered>
-        <Column size={7}>
-          <Card>
-            <Card.Content
-              as="form"
-              spellCheck={false}
-              autoCorrect="off"
-              onSubmit={handleSubmit}
-            >
-              <Column.Group centered>
-                <Column
-                  className="has-content-spaced-between"
-                  widescreen={{ size: 11 }}
+    <>
+      <Helmet>
+        <title>Registration | Brand Name</title>
+      </Helmet>
+      <Section className={styles.container}>
+        <Column.Group centered>
+          <Column widescreen={{ size: 5 }} tablet={{ size: 8 }}>
+            <Card>
+              <Card.Content>
+                <form
+                  spellCheck={false}
+                  autoCorrect="off"
+                  onSubmit={handleSubmit}
                 >
-                  <legend>
-                    <Title>Create your account</Title>
-                  </legend>
+                  <Column.Group centered>
+                    <Column
+                      className="has-content-spaced-between"
+                      widescreen={{ size: 11 }}
+                    >
+                      <legend>
+                        <Title textAlign="centered">Create your account</Title>
+                      </legend>
 
-                  <br />
+                      <br />
 
-                  <Content>
-                    {successfullyRegistered ? (
-                      <RegistrationSuccess mail={data.mail} />
-                    ) : (
-                      <RegistrationForm
-                        {...{
-                          handleChange,
-                          error,
-                          isLoading,
-                          ...data,
-                        }}
-                      />
-                    )}
-                  </Content>
+                      <Column.Group centered>
+                        <Column size={11}>
+                          <Content>
+                            {successfullyRegistered ? (
+                              <RegistrationSuccess mail={data.mail} />
+                            ) : (
+                              <RegistrationForm
+                                {...{
+                                  handleChange,
+                                  error,
+                                  isLoading,
+                                  ...data,
+                                }}
+                              />
+                            )}
+                          </Content>
+                        </Column>
+                      </Column.Group>
 
-                  <p className="has-text-centered has-text-grey">
-                    Already have an account? <Link to="/login">Sign in</Link>
-                  </p>
-                </Column>
-              </Column.Group>
-            </Card.Content>
-          </Card>
-        </Column>
-      </Column.Group>
-    </Section>
+                      <p className="has-text-centered has-text-grey">
+                        Already have an account?{' '}
+                        <Link to="/login">Sign in</Link>
+                      </p>
+                    </Column>
+                  </Column.Group>
+                </form>
+              </Card.Content>
+            </Card>
+          </Column>
+        </Column.Group>
+      </Section>
+    </>
   );
 }
 
@@ -226,7 +238,7 @@ function RegistrationForm({
                 circled
               />
               <Label htmlFor="tos">
-                I agree to the <Link to="/tos">Terms of Service</Link>.
+                I agree to the <Link to={ROUTES.TOS}>Terms of Service</Link>.
               </Label>
             </Control>
 

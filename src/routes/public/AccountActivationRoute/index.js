@@ -4,6 +4,7 @@ import { ConfirmationSvg, ErrorSvg, LoadingSvg } from '../../../assets/svg';
 import { Column, Title, Image } from 'rbx';
 import { Link } from 'react-router-dom';
 import { Fade } from 'react-reveal';
+import Helmet from 'react-helmet';
 
 const headings = {
   pending: 'Activating your account...',
@@ -29,7 +30,7 @@ const messages = {
   ),
 };
 
-function AccountActivationRoute() {
+export default function AccountActivationRoute() {
   const { token } = useParams();
   const [verification, setVerification] = useState('pending');
   const [mail, setMail] = useState(null);
@@ -45,16 +46,19 @@ function AccountActivationRoute() {
   }, [token]);
 
   return (
-    <div className="has-content-spaced-evenly">
-      <Title textAlign="centered">{headings[verification]}</Title>
-      <Fade>
-        <Image.Container size="16by9">{icons[verification]}</Image.Container>
-      </Fade>
-      <Column.Group centered>
-        <Column size={10}>{messages[verification](mail)}</Column>
-      </Column.Group>
-    </div>
+    <>
+      <Helmet>
+        <title>Account Activation | Brand Name</title>
+      </Helmet>
+      <div className="has-content-spaced-evenly">
+        <Title textAlign="centered">{headings[verification]}</Title>
+        <Fade>
+          <Image.Container size="16by9">{icons[verification]}</Image.Container>
+        </Fade>
+        <Column.Group centered>
+          <Column size={10}>{messages[verification](mail)}</Column>
+        </Column.Group>
+      </div>
+    </>
   );
 }
-
-export default AccountActivationRoute;

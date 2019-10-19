@@ -4,17 +4,18 @@ import { validate } from '../../../utils/validators';
 import { ValidityIconLeft, Field } from '../../../components';
 import {
   Column,
+  Card,
   Title,
   Section,
-  Image,
   Label,
   Button,
   Control,
   Input,
+  Content,
 } from 'rbx';
-import { ForgotPasswordSvg } from '../../../assets/svg';
-
-function ResetPasswordRoute() {
+import styles from './ResetPassword.module.scss';
+import Helmet from 'react-helmet';
+export default function ResetPasswordRoute() {
   const [data, setData] = useState({
     mail: '',
   });
@@ -40,69 +41,79 @@ function ResetPasswordRoute() {
   const isDisabled = mail.length === 0 || !validate.mail(mail);
 
   return (
-    <form
-      className="has-content-spaced-between"
-      spellCheck={false}
-      onSubmit={handleSubmit}
-    >
-      <legend>
-        <Title textAlign="centered">Reset Password</Title>
-      </legend>
+    <>
+      <Helmet>
+        <title>Reset Password | Brand Name</title>
+      </Helmet>
+      <Section className={styles.container}>
+        <Column.Group centered>
+          <Column widescreen={{ size: 5 }} tablet={{ size: 8 }}>
+            <Card>
+              <Card.Content>
+                <form spellCheck={false} onSubmit={handleSubmit}>
+                  <Column.Group centered>
+                    <Column
+                      className="has-content-spaced-between"
+                      widescreen={{ size: 11 }}
+                    >
+                      <legend>
+                        <Title textAlign="centered">Reset Password</Title>
+                      </legend>
 
-      <Column.Group centered>
-        <Column size={11}>
-          <Image.Container size="16by9">
-            <ForgotPasswordSvg />
-          </Image.Container>
-        </Column>
-      </Column.Group>
+                      <br />
 
-      <Column.Group centered>
-        <Column size={10}>
-          <Title size={5} as="p" textWeight="normal">
-            Enter your email address and we'll send you an email with
-            instructions to reset your password.
-          </Title>
+                      <Column.Group centered>
+                        <Column size={11}>
+                          <Title size={5} as="p" textWeight="normal">
+                            Enter your email address and we'll send you an email
+                            with instructions to reset your password.
+                          </Title>
+                          <Content>
+                            <fieldset disabled={isLoading}>
+                              <Field>
+                                <Label htmlFor="mail">Email address</Label>
 
-          <Section paddingless>
-            <fieldset disabled={isLoading}>
-              <Field>
-                <Label htmlFor="mail">Email address</Label>
+                                <Control iconLeft loading={isLoading}>
+                                  <Input
+                                    type="mail"
+                                    placeholder="email@example.com"
+                                    name="mail"
+                                    id="mail"
+                                    onInput={handleChange}
+                                    autoFocus
+                                    required
+                                    autoComplete="username"
+                                  />
+                                  <ValidityIconLeft type="mail" value={mail} />
+                                </Control>
+                              </Field>
 
-                <Control iconLeft loading={isLoading}>
-                  <Input
-                    type="mail"
-                    placeholder="email@example.com"
-                    name="mail"
-                    id="mail"
-                    onInput={handleChange}
-                    autoFocus
-                    required
-                    autoComplete="username"
-                  />
-                  <ValidityIconLeft type="mail" value={mail} />
-                </Control>
-              </Field>
-
-              <Field kind="grouped">
-                <Button
-                  color="primary"
-                  state={isLoading ? 'loading' : undefined}
-                  fullwidth
-                  disabled={isDisabled}
-                >
-                  Send Password Reset Link
-                </Button>
-              </Field>
-            </fieldset>
-          </Section>
-        </Column>
-      </Column.Group>
-      <p className="has-text-centered has-text-grey">
-        Forget it, send me back to the <Link to="/login">Sign in</Link> screen.
-      </p>
-    </form>
+                              <Field kind="grouped">
+                                <Button
+                                  color="primary"
+                                  state={isLoading ? 'loading' : undefined}
+                                  fullwidth
+                                  disabled={isDisabled}
+                                >
+                                  Send Password Reset Link
+                                </Button>
+                              </Field>
+                            </fieldset>
+                          </Content>
+                        </Column>
+                      </Column.Group>
+                      <p className="has-text-centered has-text-grey">
+                        Forget it, send me back to the{' '}
+                        <Link to="/login">Sign in</Link> screen.
+                      </p>
+                    </Column>
+                  </Column.Group>
+                </form>
+              </Card.Content>
+            </Card>
+          </Column>
+        </Column.Group>
+      </Section>
+    </>
   );
 }
-
-export default ResetPasswordRoute;

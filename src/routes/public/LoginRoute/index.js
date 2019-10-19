@@ -16,6 +16,7 @@ import {
 import { Fade } from 'react-reveal';
 import Shake from 'react-reveal/Shake';
 import styles from './Login.module.scss';
+import Helmet from 'react-helmet';
 
 const errors = {
   'mail.invalid': 'Please enter a valid mail.',
@@ -78,130 +79,142 @@ function LoginRoute() {
     !validate.password(password);
 
   return (
-    <Section className={styles.container}>
-      <Column.Group centered>
-        <Column widescreen={{ size: 5 }} tablet={{ size: 8 }}>
-          <Card>
-            <Card.Content as="form" spellCheck={false} onSubmit={handleSubmit}>
-              <Column.Group centered>
-                <Column
-                  className="has-content-spaced-between"
-                  widescreen={{ size: 11 }}
-                >
-                  <legend>
-                    <Title textAlign="centered">Sign in</Title>
-                    <Title subtitle textAlign="centered">
-                      or <Link to="/register">create account</Link>
-                    </Title>
-                  </legend>
-
+    <>
+      <Helmet>
+        <title>Login | Brand Name</title>
+      </Helmet>
+      <Section className={styles.container}>
+        <Column.Group centered>
+          <Column widescreen={{ size: 5 }} tablet={{ size: 8 }}>
+            <Card>
+              <Card.Content>
+                <form spellCheck={false} onSubmit={handleSubmit}>
                   <Column.Group centered>
-                    <Column size={10}>
-                      <Shake duration={500} when={error}>
-                        <fieldset disabled={isLoading}>
-                          <Field>
-                            <Label htmlFor="mail">Email address</Label>
+                    <Column
+                      className="has-content-spaced-between"
+                      widescreen={{ size: 11 }}
+                    >
+                      <legend>
+                        <Title textAlign="centered">Sign in</Title>
+                        <Title subtitle textAlign="centered">
+                          or <Link to="/register">create account</Link>
+                        </Title>
+                      </legend>
 
-                            <Control iconLeft loading={isLoading}>
-                              <Input
-                                type="mail"
-                                placeholder="email@example.com"
-                                name="mail"
-                                id="mail"
-                                onInput={handleChange}
-                                autoFocus={!isValidMailParam}
-                                required
-                                autoComplete="username"
-                                defaultValue={mail}
-                              />
-                              <ValidityIconLeft type="mail" value={mail} />
-                            </Control>
-                            {error && error.indexOf('mail') > -1 && (
-                              <Fade>
-                                <Help color="danger">{errors[error]}</Help>
-                              </Fade>
-                            )}
-                          </Field>
+                      <Column.Group centered>
+                        <Column size={11}>
+                          <Shake duration={500} when={error}>
+                            <fieldset disabled={isLoading}>
+                              <Field>
+                                <Label htmlFor="mail">Email address</Label>
 
-                          <Field>
-                            <Label htmlFor="password">Password</Label>
+                                <Control iconLeft loading={isLoading}>
+                                  <Input
+                                    type="mail"
+                                    placeholder="email@example.com"
+                                    name="mail"
+                                    id="mail"
+                                    onInput={handleChange}
+                                    autoFocus={!isValidMailParam}
+                                    required
+                                    autoComplete="username"
+                                    defaultValue={mail}
+                                  />
+                                  <ValidityIconLeft type="mail" value={mail} />
+                                </Control>
+                                {error && error.indexOf('mail') > -1 && (
+                                  <Fade>
+                                    <Help color="danger">{errors[error]}</Help>
+                                  </Fade>
+                                )}
+                              </Field>
 
-                            <Control iconLeft loading={isLoading}>
-                              <Input
-                                type="password"
-                                name="password"
-                                id="password"
-                                onInput={handleChange}
-                                autoFocus={isValidMailParam}
-                                pattern={pattern.password}
-                                required
-                                autoComplete="current-password"
-                              />
-                              <ValidityIconLeft
-                                type="password"
-                                value={password}
-                              />
-                            </Control>
+                              <Field>
+                                <Label htmlFor="password">Password</Label>
 
-                            {error && error.indexOf('password') > -1 && (
-                              <Fade>
-                                <Help color="danger">{errors[error]}</Help>
-                              </Fade>
-                            )}
-                          </Field>
+                                <Control iconLeft loading={isLoading}>
+                                  <Input
+                                    type="password"
+                                    name="password"
+                                    id="password"
+                                    onInput={handleChange}
+                                    autoFocus={isValidMailParam}
+                                    pattern={pattern.password}
+                                    required
+                                    autoComplete="current-password"
+                                  />
+                                  <ValidityIconLeft
+                                    type="password"
+                                    value={password}
+                                  />
+                                </Control>
 
-                          <Field>
-                            <Checkbox
-                              name="rememberMe"
-                              id="remember-me"
-                              onChange={handleChange}
-                              disabled={isLoading}
-                            />
-                            <Label htmlFor="remember-me">Remember me</Label>
-                          </Field>
+                                {error && error.indexOf('password') > -1 && (
+                                  <Fade>
+                                    <Help color="danger">{errors[error]}</Help>
+                                  </Fade>
+                                )}
+                              </Field>
 
-                          {error && error === 'data.invalid' && (
-                            <Fade>
-                              <Help color="danger">{errors[error]}</Help>
-                            </Fade>
-                          )}
+                              <Field>
+                                <Control>
+                                  <Checkbox
+                                    name="rememberMe"
+                                    id="remember-me"
+                                    onChange={handleChange}
+                                    circled
+                                  />
+                                  <Label htmlFor="remember-me">
+                                    Remember me
+                                  </Label>
+                                </Control>
+                              </Field>
 
-                          <Field kind="grouped">
-                            <Button
-                              color="primary"
-                              state={isLoading ? 'loading' : undefined}
-                              fullwidth
-                              disabled={isDisabled}
-                            >
-                              Sign in
-                            </Button>
-                          </Field>
+                              {error && error === 'data.invalid' && (
+                                <Fade>
+                                  <Help color="danger">{errors[error]}</Help>
+                                </Fade>
+                              )}
 
-                          <div className="has-text-centered">
-                            <Title
-                              className="has-text-grey"
-                              size={7}
-                              as={Link}
-                              to="/reset-password"
-                            >
-                              Forgot password?
-                            </Title>
-                          </div>
-                        </fieldset>
-                      </Shake>
+                              <Field kind="grouped">
+                                <Button
+                                  color="primary"
+                                  state={isLoading ? 'loading' : undefined}
+                                  fullwidth
+                                  disabled={isDisabled}
+                                >
+                                  Sign in
+                                </Button>
+                              </Field>
+
+                              <div className="has-text-centered">
+                                <Title
+                                  className="has-text-grey"
+                                  size={7}
+                                  as={Link}
+                                  to="/reset-password"
+                                >
+                                  Forgot password?
+                                </Title>
+                              </div>
+                            </fieldset>
+                          </Shake>
+                        </Column>
+                      </Column.Group>
+
+                      <p className="has-text-centered has-text-grey">
+                        Don't have an account?{' '}
+                        <Link to="/register">Sign up</Link>
+                      </p>
                     </Column>
                   </Column.Group>
-
-                  <p className="has-text-centered has-text-grey">
-                    Don't have an account? <Link to="/register">Sign up</Link>
-                  </p>
-                </Column>
-              </Column.Group>
-            </Card.Content>
-          </Card>
-        </Column>
-      </Column.Group>
-    </Section>
+                </form>
+              </Card.Content>
+            </Card>
+          </Column>
+        </Column.Group>
+      </Section>
+    </>
   );
 }
 
