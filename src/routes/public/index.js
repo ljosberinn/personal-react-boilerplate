@@ -7,4 +7,6 @@ export const PUBLIC_ROUTES = {
   [ROUTES.LOGIN]: lazy(() => import('./LoginRoute')),
   [ROUTES.RESET_PASSWORD]: lazy(() => import('./ResetPasswordRoute')),
   [ROUTES.ACTIVATE_ACCOUNT]: lazy(() => import('./AccountActivationRoute')),
+  [ROUTES.TOS]: lazy(() => import('./TosRoute')),
+  [ROUTES.PRIVACY_POLICY]: lazy(() => import('./PrivacyPolicy')),
 };
