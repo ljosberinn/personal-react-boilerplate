@@ -3,7 +3,7 @@ import { Navbar as RBXNavbar, Button } from 'rbx';
 import { LanguageSwitch, Icon } from '.';
 import { faAdjust } from '@fortawesome/free-solid-svg-icons';
 import { faGithub, faDiscord } from '@fortawesome/free-brands-svg-icons';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 
 const LogoIpsumSvg = () => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 144 39" height="32">
@@ -17,7 +17,7 @@ export default function Navbar({ isLoading, setTheme, theme }) {
   return (
     <RBXNavbar>
       <RBXNavbar.Brand>
-        <RBXNavbar.Item>
+        <RBXNavbar.Item as={Link} to="/">
           <LogoIpsumSvg />
         </RBXNavbar.Item>
         <RBXNavbar.Burger />
