@@ -1,3 +1,5 @@
+// via https://github.com/neo4j/neo4j-browser/blob/master/src/browser/hooks/useDetectColorScheme.js
+
 import { useState, useEffect } from 'react';
 
 // Define available themes

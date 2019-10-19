@@ -1,3 +1,4 @@
 import useDetectColorScheme from './useDetectColorScheme';
+import useTheme from './useTheme';
 
-export { useDetectColorScheme };
+export { useDetectColorScheme, useTheme };
