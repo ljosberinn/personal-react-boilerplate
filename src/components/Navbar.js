@@ -1,7 +1,6 @@
 import React from 'react';
 import { Navbar as RBXNavbar, Button } from 'rbx';
-import { LanguageSwitch, Icon } from '.';
-import { faAdjust } from '@fortawesome/free-solid-svg-icons';
+import { LanguageSwitch, Icon, ThemeSwitch } from '.';
 import { faGithub, faDiscord } from '@fortawesome/free-brands-svg-icons';
 import { NavLink, Link } from 'react-router-dom';
 
@@ -13,7 +12,7 @@ const LogoIpsumSvg = () => (
   </svg>
 );
 
-export default function Navbar({ isLoading, setTheme, theme }) {
+export default function Navbar() {
   return (
     <RBXNavbar>
       <RBXNavbar.Brand>
@@ -26,15 +25,7 @@ export default function Navbar({ isLoading, setTheme, theme }) {
         <RBXNavbar.Segment align="end">
           <LanguageSwitch />
 
-          <RBXNavbar.Item
-            onClick={() =>
-              !isLoading
-                ? setTheme(theme === 'light' ? 'dark' : 'light')
-                : undefined
-            }
-          >
-            <Icon icon={faAdjust} /> <span>Change theme</span>
-          </RBXNavbar.Item>
+          <ThemeSwitch />
 
           <RBXNavbar.Item
             href="https://discord.gg"

@@ -9,6 +9,7 @@ import ExternalLink from './ExternalLink';
 import LanguageSwitch from './LanguageSwitch';
 import Navbar from './Navbar';
 import Footer from './Footer';
+import ThemeSwitch from './ThemeSwitch';
 
 export {
   Checkbox,
@@ -22,4 +23,5 @@ export {
   ExternalLink,
   Navbar,
   LanguageSwitch,
+  ThemeSwitch,
 };

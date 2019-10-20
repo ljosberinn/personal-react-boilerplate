@@ -1,7 +1,14 @@
 import React from 'react';
 import { sanitizeClassArray } from '../utils';
 
-function Checkbox({ className, size, circled, blocked, borderless, ...rest }) {
+export default function Checkbox({
+  className,
+  size,
+  circled,
+  blocked,
+  borderless,
+  ...rest
+}) {
   return (
     <input
       type="checkbox"
@@ -17,5 +24,3 @@ function Checkbox({ className, size, circled, blocked, borderless, ...rest }) {
     />
   );
 }
-
-export default Checkbox;

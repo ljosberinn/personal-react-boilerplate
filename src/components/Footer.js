@@ -2,6 +2,7 @@ import React from 'react';
 import { Footer as RBXFooter, Container, Column, Generic } from 'rbx';
 import { NavLink } from 'react-router-dom';
 import { ExternalLink, LanguageSwitch, Icon } from '.';
+import ThemeSwitch from './ThemeSwitch';
 import * as ROUTES from '../constants/routes';
 import { faGithub, faDiscord } from '@fortawesome/free-brands-svg-icons';
 
@@ -33,8 +34,9 @@ const FooterData = [
     ],
   },
   {
-    title: 'Links',
+    title: 'Other',
     elements: [
+      { to: undefined, content: <ThemeSwitch footer /> },
       {
         to: undefined,
         content: <LanguageSwitch footer />,
@@ -58,6 +60,7 @@ const FooterData = [
     ],
   },
 ];
+
 export default function Footer() {
   return (
     <RBXFooter as="footer">

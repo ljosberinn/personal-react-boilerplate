@@ -1,8 +1,6 @@
 import React from 'react';
 import { LocaleSvg } from '../assets/svg';
 import { Navbar, Dropdown } from 'rbx';
-import { Icon } from '.';
-import { faAngleUp } from '@fortawesome/free-solid-svg-icons';
 
 // TODO: get from backend
 const availableLanguages = ['DE', 'EN', 'JP', 'RU', 'FR', 'ES'];
@@ -16,7 +14,7 @@ export default function LanguageSwitch({ footer }) {
         <Dropdown.Trigger>
           <div className="is-flex" style={{ alignItems: 'center' }}>
             <LocaleSvg />
-            <Icon icon={faAngleUp} size="small" />
+            English
           </div>
         </Dropdown.Trigger>
         <Dropdown.Menu>
@@ -34,8 +32,9 @@ export default function LanguageSwitch({ footer }) {
 
   return (
     <Navbar.Item dropdown hoverable>
-      <Navbar.Link>
+      <Navbar.Link arrowless>
         <LocaleSvg />
+        English
       </Navbar.Link>
       <Navbar.Dropdown>
         {availableLanguages.map(language => (
