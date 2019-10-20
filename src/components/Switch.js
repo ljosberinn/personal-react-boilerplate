@@ -14,6 +14,7 @@ import { sanitizeClassArray } from '../utils';
  *  text: string|number,
  *  value: string|number|boolean,
  *  onChange: (e: React.ChangeEvent<HTMLInputElement />) => void
+ *  checked?: boolean
  * }} Props
  *
  * @returns React.FC<Props>
@@ -28,6 +29,7 @@ export default function Switch({
   value,
   text,
   onChange,
+  checked,
 }) {
   const labelClasses = sanitizeClassArray([
     'switch',
@@ -41,7 +43,13 @@ export default function Switch({
 
   return (
     <label className={labelClasses}>
-      <input type="checkbox" value={value} name={name} onChange={onChange} />
+      <input
+        type="checkbox"
+        value={value}
+        checked={checked}
+        name={name}
+        onChange={onChange}
+      />
       <span className={spanClasses} />
       <span className="control-label">{text}</span>
     </label>
