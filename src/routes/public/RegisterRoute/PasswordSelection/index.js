@@ -11,7 +11,7 @@ import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import Shake from 'react-reveal/Shake';
 import { Fade } from 'react-reveal';
 import styles from './PasswordSelection.module.scss';
-import { errors } from '..';
+import { errors } from '../errors';
 
 const criteria = [
   {

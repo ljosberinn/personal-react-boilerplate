@@ -1,6 +1,8 @@
 import React from 'react';
 import { Navbar as RBXNavbar, Button } from 'rbx';
-import { LanguageSwitch, Icon, ThemeSwitch } from '.';
+import LanguageSwitch from './LanguageSwitch';
+import Icon from './Icon';
+import ThemeSwitch from './ThemeSwitch';
 import { faGithub, faDiscord } from '@fortawesome/free-brands-svg-icons';
 import { NavLink, Link } from 'react-router-dom';
 

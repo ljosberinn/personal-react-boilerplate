@@ -1,6 +1,6 @@
 import React from 'react';
 import { sanitizeClassArray } from '../utils';
-import { Icon } from '.';
+import Icon from './Icon';
 // eslint-disable-next-line
 import { IconDefinition } from '@fortawesome/free-solid-svg-icons';
 

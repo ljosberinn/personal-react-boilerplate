@@ -1,6 +1,5 @@
 import React from 'react';
 import { sanitizeClassArray } from '../utils';
-
 export default function Radio({ className, ...rest }) {
   return (
     <input

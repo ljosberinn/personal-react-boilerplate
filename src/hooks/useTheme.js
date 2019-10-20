@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useDetectColorScheme } from '.';
+import useDetectColorScheme from './useDetectColorScheme';
 
 /**
  * Toggles .theme--light | .theme--dark on HTML tag

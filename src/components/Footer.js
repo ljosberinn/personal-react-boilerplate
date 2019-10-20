@@ -1,7 +1,9 @@
 import React from 'react';
 import { Footer as RBXFooter, Container, Column, Generic } from 'rbx';
 import { NavLink } from 'react-router-dom';
-import { ExternalLink, LanguageSwitch, Icon } from '.';
+import ExternalLink from './ExternalLink';
+import LanguageSwitch from './LanguageSwitch';
+import Icon from './Icon';
 import ThemeSwitch from './ThemeSwitch';
 import * as ROUTES from '../constants/routes';
 import { faGithub, faDiscord } from '@fortawesome/free-brands-svg-icons';

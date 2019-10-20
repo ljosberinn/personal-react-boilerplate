@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useCallback } from 'react';
 import { useTheme } from '../hooks';
-import { Icon, Switch } from '.';
+import Icon from './Icon';
+import Switch from './Switch';
 import { faSun, faMoon } from '@fortawesome/free-solid-svg-icons';
 import { Navbar } from 'rbx';
 
