@@ -33,11 +33,6 @@
   }
 }
 
-#hero .hero-content.is-flex > h1 {
-  line-height: normal;
-  color: #1686f7;
-}
-
 @media (min-width: 1024px) {
   #hero h1 {
     font-size: 54px !important;
@@ -63,7 +58,6 @@
 
 #hero .hero-content.is-flex > p {
   margin-top: 18px;
-  color: #354052;
 }
 
 @media (min-width: 1024px) {

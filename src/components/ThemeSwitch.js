@@ -6,7 +6,7 @@ import Switch from './Switch';
 import Icon from './Icon';
 import styles from './ThemeSwitch.module.scss';
 
-const ThemeContext = createContext({});
+export const ThemeContext = createContext({});
 
 export function Theme({ children }) {
   const { isLoading, setTheme, theme } = useTheme();

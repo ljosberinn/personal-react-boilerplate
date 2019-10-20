@@ -29,6 +29,7 @@ export default function useTheme() {
 
   useEffect(() => {
     changeThemeOnHTMLTag(relevantTheme);
+
     const href = 'https://unpkg.com/bulmaswatch/superhero/bulmaswatch.min.css';
 
     if (relevantTheme === 'dark') {

@@ -1,17 +1,49 @@
-$dark-base-color: #1d2a38;
-
 html.theme--dark {
   .card {
-    background-color: rgba($dark-base-color, 0.95);
+    background-color: rgba($dark-bg-color, 0.95);
+  }
+
+  .button {
+    border-radius: 5px;
+  }
+
+  svg {
+    rect[fill='#00d1b2'],
+    path[fill='#00d1b2'] {
+      fill: $dark-primary-color;
+    }
+  }
+
+  .switch input[type='checkbox']:checked + .check {
+    background: $dark-primary-color;
   }
 }
 
 @media (prefers-color-scheme: dark) {
   .card {
-    background-color: rgba($dark-base-color, 0.95);
+    background-color: rgba($dark-bg-color, 0.95);
   }
 }
 
-* {
+svg rect[fill='#{$primary}'],
+svg path[fill='#{$primary}'] {
+  transition: fill 350ms ease-in-out;
+}
+
+html,
+button,
+a,
+.navbar,
+.footer {
   transition: background-color 350ms ease-in-out;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  transition: color 350ms ease-in-out;
 }

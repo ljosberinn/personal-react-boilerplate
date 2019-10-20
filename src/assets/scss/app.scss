@@ -5,6 +5,9 @@
 $speed-slow: 150ms !default;
 $speed-slower: 250ms !default;
 
+$dark-primary-color: #df691a;
+$dark-bg-color: #1d2a38;
+
 @import './animations';
 @import './extensions';
 @import './dark-theme';
