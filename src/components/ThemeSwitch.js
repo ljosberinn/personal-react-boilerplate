@@ -1,9 +1,10 @@
 import React, { createContext, useContext, useCallback } from 'react';
 import { useTheme } from '../hooks';
-import Icon from './Icon';
-import Switch from './Switch';
 import { faSun, faMoon } from '@fortawesome/free-solid-svg-icons';
 import { Navbar } from 'rbx';
+import Switch from './Switch';
+import Icon from './Icon';
+import styles from './ThemeSwitch.module.scss';
 
 const ThemeContext = createContext({});
 
@@ -28,8 +29,10 @@ const iconClassMap = {
   },
 };
 
-const Span = ({ onClick, children }) => (
-  <span onClick={onClick}>{children}</span>
+const Span = ({ children, onClick, className }) => (
+  <span onClick={onClick} className={className}>
+    {children}
+  </span>
 );
 
 export default function ThemeSwitch({ footer }) {
@@ -42,7 +45,10 @@ export default function ThemeSwitch({ footer }) {
   }, [setTheme]);
 
   return (
-    <Component>
+    <Component
+      className={footer ? styles.clickableContainer : undefined}
+      onClick={handleThemeChange}
+    >
       <Icon icon={faSun} color={iconClassMap.sun[theme]} />
       <Switch
         disabled={isLoading}

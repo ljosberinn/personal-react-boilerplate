@@ -6,7 +6,7 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.25",
     "@fortawesome/free-brands-svg-icons": "^5.11.2",
     "@fortawesome/free-solid-svg-icons": "^5.11.2",
-    "@fortawesome/react-fontawesome": "^0.1.6",
+    "@fortawesome/react-fontawesome": "^0.1.7",
     "bulma-checkradio": "^1.1.1",
     "rbx": "^2.2.0",
     "react": "^16.10.2",

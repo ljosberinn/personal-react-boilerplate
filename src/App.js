@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, StrictMode } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
@@ -12,23 +12,25 @@ import Layout from './Layout';
 
 function App() {
   return (
-    <Router>
-      <Switch>
-        <Layout>
-          <Route path={Object.keys(PUBLIC_ROUTES)} exact>
-            <Suspense fallback={<Loader isFullPage />}>
-              {Object.entries(PUBLIC_ROUTES).map(([path, component]) => (
-                <Route path={path} component={component} exact key={path} />
-              ))}
-            </Suspense>
-          </Route>
+    <StrictMode>
+      <Router>
+        <Switch>
+          <Layout>
+            <Route path={Object.keys(PUBLIC_ROUTES)} exact>
+              <Suspense fallback={<Loader isFullPage />}>
+                {Object.entries(PUBLIC_ROUTES).map(([path, component]) => (
+                  <Route path={path} component={component} exact key={path} />
+                ))}
+              </Suspense>
+            </Route>
 
-          <Route>
-            <Redirect to="/" />
-          </Route>
-        </Layout>
-      </Switch>
-    </Router>
+            <Route>
+              <Redirect to="/" />
+            </Route>
+          </Layout>
+        </Switch>
+      </Router>
+    </StrictMode>
   );
 }
 
