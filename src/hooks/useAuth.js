@@ -5,16 +5,26 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 export default function useAuth() {
   const [user, isLoading, error] = useAuthState(auth());
 
-  const login = useCallback(async (mail, password) => {
+  const registerWithMailAndPassword = useCallback(async (mail, password) => {
+    await auth().createUserWithEmailAndPassword(mail, password);
+  }, []);
+
+  const loginWithMailAndPassword = useCallback(async (mail, password) => {
     await auth().signInWithEmailAndPassword(mail, password);
+  }, []);
+
+  const loginWithGoogle = useCallback(async () => {
+    await auth().signInWithPopup(new auth.GoogleAuthProvider());
+  }, []);
+
+  const sendMailVerification = useCallback(async () => {
+    await auth().currentUser.sendEmailVerification({
+      url: process.env.REACT_APP_CONFIRMATION_MAIL_PATH,
+    });
   }, []);
 
   const logout = useCallback(async () => {
     await auth().signOut();
-  }, []);
-
-  const register = useCallback(async (mail, password) => {
-    await auth().createUserWithEmailAndPassword(mail, password);
   }, []);
 
   const sendPasswordResetMail = useCallback(async mail => {
@@ -31,9 +41,11 @@ export default function useAuth() {
     user,
     isLoading,
     error,
-    login,
+    loginWithMailAndPassword,
+    registerWithMailAndPassword,
+    loginWithGoogle,
+    sendMailVerification,
     logout,
-    register,
     sendPasswordResetMail,
     confirmPasswordReset,
   };

@@ -1,7 +1,12 @@
 import React, { useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { validate } from '../../../utils/validators';
-import { ValidityIconLeft, Checkbox, Field } from '../../../components';
+import {
+  ValidityIconLeft,
+  Checkbox,
+  Field,
+  GoogleSignInButton,
+} from '../../../components';
 import PasswordSelection from './PasswordSelection';
 import {
   Column,
@@ -15,6 +20,7 @@ import {
   Card,
   Button,
   Image,
+  Divider,
   Control,
   Input,
 } from 'rbx';
@@ -28,7 +34,7 @@ import { errors } from './errors';
 import { useAuth } from '../../../hooks';
 
 export default function RegisterRoute() {
-  const { signup } = useAuth();
+  const { registerWithMailAndPassword, loginWithGoogle } = useAuth();
 
   const [data, setData] = useState({
     mail: '',
@@ -58,15 +64,26 @@ export default function RegisterRoute() {
       setIsLoading(true);
 
       try {
-        await signup(data.mail, data.password);
+        await registerWithMailAndPassword(data.mail, data.password);
         setSuccsesfullyRegistered(true);
       } catch (error) {
         setError(error.code);
         setIsLoading(false);
       }
     },
-    [signup, data.mail, data.password],
+    [registerWithMailAndPassword, data.mail, data.password],
   );
+
+  const proxyGoogleSignIn = useCallback(async () => {
+    setIsLoading(true);
+
+    try {
+      await loginWithGoogle();
+    } catch (error) {
+      console.error(error);
+      setIsLoading(false);
+    }
+  }, [loginWithGoogle]);
 
   return (
     <>
@@ -103,6 +120,7 @@ export default function RegisterRoute() {
                               <RegistrationForm
                                 {...{
                                   handleChange,
+                                  proxyGoogleSignIn,
                                   error,
                                   isLoading,
                                   ...data,
@@ -148,6 +166,7 @@ function RegistrationSuccess({ mail }) {
 function RegistrationForm({
   error,
   handleChange,
+  proxyGoogleSignIn,
   isLoading,
   mail,
   password,
@@ -170,6 +189,10 @@ function RegistrationForm({
   return (
     <Shake duration={500} when={error}>
       <fieldset disabled={isLoading}>
+        <GoogleSignInButton onClick={proxyGoogleSignIn} />
+
+        <Divider data-content="or" />
+
         <Field>
           <Label htmlFor="mail">Email address</Label>
 

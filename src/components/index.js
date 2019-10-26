@@ -10,6 +10,7 @@ import LanguageSwitch from './LanguageSwitch';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import ThemeSwitch from './ThemeSwitch';
+import GoogleSignInButton from './GoogleSignInButton';
 
 export {
   Checkbox,
@@ -22,6 +23,7 @@ export {
   Switch,
   ExternalLink,
   Navbar,
+  GoogleSignInButton,
   LanguageSwitch,
   ThemeSwitch,
 };

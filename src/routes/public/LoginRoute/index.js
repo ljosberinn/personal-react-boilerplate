@@ -1,17 +1,23 @@
 import React, { useState, useCallback, useContext } from 'react';
 import { Link, useParams, Redirect } from 'react-router-dom';
 import { validate, pattern } from '../../../utils/validators';
-import { ValidityIconLeft, Checkbox, Field } from '../../../components';
+import {
+  ValidityIconLeft,
+  Checkbox,
+  GoogleSignInButton,
+} from '../../../components';
 import {
   Card,
   Column,
   Title,
   Label,
   Help,
+  Field,
   Button,
   Control,
   Section,
   Input,
+  Divider,
 } from 'rbx';
 import { Fade } from 'react-reveal';
 import Shake from 'react-reveal/Shake';
@@ -32,7 +38,9 @@ const initialState = {
 };
 
 function LoginRoute() {
-  const { user, login } = useContext(AuthContext);
+  const { user, loginWithMailAndPassword, loginWithGoogle } = useContext(
+    AuthContext,
+  );
 
   const params = useParams();
 
@@ -89,7 +97,7 @@ function LoginRoute() {
       }
 
       try {
-        await login(data.mail, data.password);
+        await loginWithMailAndPassword(data.mail, data.password);
       } catch (error) {
         if (data.rememberMe) {
           localStorage.removeItem('brandName');
@@ -98,8 +106,18 @@ function LoginRoute() {
         setIsLoading(false);
       }
     },
-    [data.mail, data.password, data.rememberMe, login],
+    [data.mail, data.password, data.rememberMe, loginWithMailAndPassword],
   );
+
+  const proxyGoogleSignIn = useCallback(async () => {
+    setIsLoading(true);
+    try {
+      await loginWithGoogle();
+    } catch (error) {
+      console.error(error);
+      setIsLoading(false);
+    }
+  }, [loginWithGoogle]);
 
   const { mail, password } = data;
 
@@ -140,6 +158,10 @@ function LoginRoute() {
                         <Column size={11}>
                           <Shake duration={500} when={error}>
                             <fieldset disabled={isLoading}>
+                              <GoogleSignInButton onClick={proxyGoogleSignIn} />
+
+                              <Divider data-content="or" />
+
                               <Field>
                                 <Label htmlFor="mail">Email address</Label>
 
@@ -211,16 +233,14 @@ function LoginRoute() {
                                 )}
                               </Field>
 
-                              <Field kind="grouped">
-                                <Button
-                                  color="primary"
-                                  state={isLoading ? 'loading' : undefined}
-                                  fullwidth
-                                  disabled={isDisabled}
-                                >
-                                  Sign in
-                                </Button>
-                              </Field>
+                              <Button
+                                color="primary"
+                                state={isLoading ? 'loading' : undefined}
+                                fullwidth
+                                disabled={isDisabled}
+                              >
+                                Sign in
+                              </Button>
 
                               <div className="has-text-centered">
                                 <Title
