@@ -1,10 +1,10 @@
 import React from 'react';
 import { Column } from 'rbx';
 import { Footer, Navbar } from './components';
-import { Theme } from './components/ThemeSwitch';
+
 export default function Layout({ children }) {
   return (
-    <Theme>
+    <>
       <Column.Group centered>
         <Column
           widescreen={{ size: 9 }}
@@ -17,6 +17,6 @@ export default function Layout({ children }) {
       </Column.Group>
       <main style={{ flex: 1, display: 'flex' }}>{children}</main>
       <Footer />
-    </Theme>
+    </>
   );
 }

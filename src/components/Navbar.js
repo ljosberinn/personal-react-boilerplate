@@ -3,8 +3,11 @@ import { Navbar as RBXNavbar, Button } from 'rbx';
 import LanguageSwitch from './LanguageSwitch';
 import Icon from './Icon';
 import ThemeSwitch from './ThemeSwitch';
+import { faCog } from '@fortawesome/free-solid-svg-icons';
 import { faGithub, faDiscord } from '@fortawesome/free-brands-svg-icons';
 import { NavLink, Link } from 'react-router-dom';
+import { useAuth } from '../hooks';
+import { useHistory } from 'react-router-dom';
 
 const LogoIpsumSvg = () => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 144 39" height="32">
@@ -15,6 +18,14 @@ const LogoIpsumSvg = () => (
 );
 
 export default function Navbar() {
+  const { user, isLoading, logout } = useAuth();
+  const history = useHistory();
+
+  const handleLogout = async () => {
+    await logout();
+    history.push('/');
+  };
+
   return (
     <RBXNavbar>
       <RBXNavbar.Brand>
@@ -45,14 +56,26 @@ export default function Navbar() {
             <Icon icon={faGithub} /> <span>Contribute</span>
           </RBXNavbar.Item>
 
-          <Button.Group>
-            <Button color="primary" as={NavLink} to="/register">
-              Register
-            </Button>
-            <Button color="light" as={NavLink} to="/login">
-              Login
-            </Button>
-          </Button.Group>
+          {isLoading ? null : !user ? (
+            <Button.Group>
+              <Button color="primary" as={NavLink} to="/register">
+                Register
+              </Button>
+              <Button color="light" as={NavLink} to="/login">
+                Login
+              </Button>
+            </Button.Group>
+          ) : (
+            <Button.Group>
+              <Button as={NavLink} color="primary" to="/settings">
+                <Icon icon={faCog} />
+                <span>Settings</span>
+              </Button>
+              <Button color="danger" onClick={handleLogout}>
+                Logout
+              </Button>
+            </Button.Group>
+          )}
         </RBXNavbar.Segment>
       </RBXNavbar.Menu>
     </RBXNavbar>

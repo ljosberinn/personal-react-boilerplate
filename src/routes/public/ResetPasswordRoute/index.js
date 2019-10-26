@@ -43,7 +43,7 @@ export default function ResetPasswordRoute() {
   return (
     <>
       <Helmet>
-        <title>Reset Password | Brand Name</title>
+        <title>Reset Password | {process.env.REACT_APP_BRAND_NAME}</title>
       </Helmet>
       <Section className={styles.container}>
         <Column.Group centered>

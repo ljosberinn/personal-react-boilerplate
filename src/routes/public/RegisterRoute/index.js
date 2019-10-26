@@ -25,7 +25,11 @@ import styles from './Registration.module.scss';
 import * as ROUTES from '../../../constants/routes';
 import Helmet from 'react-helmet';
 import { errors } from './errors';
+import { useAuth } from '../../../hooks';
+
 export default function RegisterRoute() {
+  const { signup } = useAuth();
+
   const [data, setData] = useState({
     mail: '',
     password: '',
@@ -48,37 +52,26 @@ export default function RegisterRoute() {
   }, []);
 
   const handleSubmit = useCallback(
-    event => {
+    async event => {
       event.preventDefault();
-
-      //alert(JSON.stringify(data));
 
       setIsLoading(true);
 
-      setTimeout(() => {
-        if (Math.floor(Math.random() * 10) >= 5) {
-          const availableErrors = Object.keys(errors);
-          setError(
-            availableErrors[Math.floor(Math.random() * availableErrors.length)],
-          );
-          setIsLoading(false);
-
-          return;
-        }
-
+      try {
+        await signup(data.mail, data.password);
         setSuccsesfullyRegistered(true);
-        if (error) {
-          setError(null);
-        }
-      }, 1500);
+      } catch (error) {
+        setError(error.code);
+        setIsLoading(false);
+      }
     },
-    [error],
+    [signup, data.mail, data.password],
   );
 
   return (
     <>
       <Helmet>
-        <title>Registration | Brand Name</title>
+        <title>Registration | {process.env.REACT_APP_BRAND_NAME}</title>
       </Helmet>
       <Section className={styles.container}>
         <Column.Group centered>

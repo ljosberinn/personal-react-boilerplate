@@ -1,9 +1,6 @@
-import React from 'react';
+import { lazy } from 'react';
+import * as ROUTES from '../../constants/routes';
 
-function PrivateRouteContainer() {
-  return null;
-}
-
-export const PRIVATE_ROUTES = {};
-
-export default PrivateRouteContainer;
+export const PRIVATE_ROUTES = {
+  [ROUTES.SETTINGS.routerPath]: lazy(() => import('./SettingsRoute')),
+};

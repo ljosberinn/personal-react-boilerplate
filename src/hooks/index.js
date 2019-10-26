@@ -1,4 +1,5 @@
 import useDetectColorScheme from './useDetectColorScheme';
 import useTheme from './useTheme';
+import useAuth from './useAuth';
 
-export { useDetectColorScheme, useTheme };
+export { useDetectColorScheme, useTheme, useAuth };

@@ -1,5 +1,5 @@
-import React, { useState, useCallback } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import React, { useState, useCallback, useContext } from 'react';
+import { Link, useParams, Redirect } from 'react-router-dom';
 import { validate, pattern } from '../../../utils/validators';
 import { ValidityIconLeft, Checkbox, Field } from '../../../components';
 import {
@@ -17,6 +17,7 @@ import { Fade } from 'react-reveal';
 import Shake from 'react-reveal/Shake';
 import styles from './Login.module.scss';
 import Helmet from 'react-helmet';
+import { AuthContext } from '../../../context/AuthContext';
 
 const errors = {
   'mail.invalid': 'Please enter a valid mail.',
@@ -24,16 +25,43 @@ const errors = {
   'data.invalid': 'The provided mail or password is invalid.',
 };
 
+const initialState = {
+  mail: '',
+  password: '',
+  rememberMe: false,
+};
+
 function LoginRoute() {
+  const { user, login } = useContext(AuthContext);
+
   const params = useParams();
 
   const isValidMailParam = params.mail && validate.mail(params.mail);
 
-  const [data, setData] = useState({
-    mail: isValidMailParam ? params.mail : '',
-    password: '',
-    rememberMe: false,
-  });
+  const [data, setData] = useState(
+    (() => {
+      if (isValidMailParam) {
+        return {
+          ...initialState,
+          mail: params.mail,
+        };
+      }
+
+      const storedData = localStorage.getItem('brandName');
+
+      if (storedData) {
+        const { mail } = JSON.parse(storedData);
+
+        return {
+          ...initialState,
+          mail,
+          rememberMe: true,
+        };
+      }
+
+      return initialState;
+    })(),
+  );
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -50,25 +78,28 @@ function LoginRoute() {
     [],
   );
 
-  const handleSubmit = event => {
-    event.preventDefault();
+  const handleSubmit = useCallback(
+    async event => {
+      event.preventDefault();
 
-    setIsLoading(true);
+      setIsLoading(true);
 
-    if (Math.floor(Math.random() * 10) >= 5) {
-      const availableErrors = Object.keys(errors);
-      setError(
-        availableErrors[Math.floor(Math.random() * availableErrors.length)],
-      );
-      setIsLoading(false);
+      if (data.rememberMe) {
+        localStorage.setItem('brandName', JSON.stringify({ mail: data.mail }));
+      }
 
-      return;
-    }
-
-    alert(JSON.stringify(data));
-
-    setTimeout(() => setIsLoading(false), 1500);
-  };
+      try {
+        await login(data.mail, data.password);
+      } catch (error) {
+        if (data.rememberMe) {
+          localStorage.removeItem('brandName');
+        }
+        setError('data.invalid');
+        setIsLoading(false);
+      }
+    },
+    [data.mail, data.password, data.rememberMe, login],
+  );
 
   const { mail, password } = data;
 
@@ -78,10 +109,14 @@ function LoginRoute() {
     !validate.mail(mail) ||
     !validate.password(password);
 
+  if (user) {
+    return <Redirect to="/" />;
+  }
+
   return (
     <>
       <Helmet>
-        <title>Login | Brand Name</title>
+        <title>Login | {process.env.REACT_APP_BRAND_NAME}</title>
       </Helmet>
       <Section className={styles.container}>
         <Column.Group centered>
@@ -138,7 +173,7 @@ function LoginRoute() {
                                     name="password"
                                     id="password"
                                     onInput={handleChange}
-                                    autoFocus={isValidMailParam}
+                                    autoFocus={data.mail.length > 0}
                                     pattern={pattern.password}
                                     required
                                     autoComplete="current-password"
@@ -163,18 +198,18 @@ function LoginRoute() {
                                     id="remember-me"
                                     onChange={handleChange}
                                     circled
+                                    checked={data.rememberMe}
                                   />
                                   <Label htmlFor="remember-me">
                                     Remember me
                                   </Label>
                                 </Control>
+                                {error && error === 'data.invalid' && (
+                                  <Fade>
+                                    <Help color="danger">{errors[error]}</Help>
+                                  </Fade>
+                                )}
                               </Field>
-
-                              {error && error === 'data.invalid' && (
-                                <Fade>
-                                  <Help color="danger">{errors[error]}</Help>
-                                </Fade>
-                              )}
 
                               <Field kind="grouped">
                                 <Button

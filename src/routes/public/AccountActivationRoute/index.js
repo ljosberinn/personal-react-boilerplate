@@ -48,7 +48,7 @@ export default function AccountActivationRoute() {
   return (
     <>
       <Helmet>
-        <title>Account Activation | Brand Name</title>
+        <title>Account Activation | {process.env.REACT_APP_BRAND_NAME}</title>
       </Helmet>
       <div className="has-content-spaced-evenly">
         <Title textAlign="centered">{headings[verification]}</Title>
