@@ -9,17 +9,19 @@ import { IconDefinition } from '@fortawesome/free-solid-svg-icons';
  * @see https://github.com/buefy/buefy/blob/dev/src/components/loading/Loading.vue
  *
  * @param {{
- *  icon: IconDefinition,
- *  isFullPage: boolean
+ *  icon?: IconDefinition,
+ *  isFullPage: boolean,
+ *  color?: 'light'| 'dark'
  * }} props
  */
-export default function Loader({ icon = undefined, isFullPage = false }) {
+export default function Loader({ icon, isFullPage = false, color }) {
   return (
     <div
       className={sanitizeClassArray([
         'loading-overlay',
         'is-active',
         isFullPage && 'is-full-page',
+        color && `to-${color}`,
       ])}
     >
       <div className="loading-background" />

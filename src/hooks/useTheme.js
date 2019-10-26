@@ -24,6 +24,8 @@ const changeThemeOnHTMLTag = theme => {
 
 const href = 'https://unpkg.com/bulmaswatch/superhero/bulmaswatch.min.css';
 
+const getDarkThemeLink = () => document.querySelector(`link[href="${href}"]`);
+
 export default function useTheme() {
   const theme = useDetectColorScheme() || THEME_NAMES.LIGHT;
   const [usedTheme, setTheme] = useState(null);
@@ -33,9 +35,7 @@ export default function useTheme() {
   const relevantTheme = usedTheme || theme;
 
   useEffect(() => {
-    changeThemeOnHTMLTag(relevantTheme);
-
-    const darkThemeLink = document.querySelector(`link[href="${href}"]`);
+    const darkThemeLink = getDarkThemeLink();
 
     if (relevantTheme === THEME_NAMES.DARK) {
       // previously switched to dark theme
@@ -47,6 +47,7 @@ export default function useTheme() {
 
         // already exists, reuse it
         darkThemeLink.disabled = false;
+        changeThemeOnHTMLTag(relevantTheme);
         return;
       }
 
@@ -55,19 +56,26 @@ export default function useTheme() {
       document.querySelector('head').append(
         Object.assign(document.createElement('link'), {
           rel: 'stylesheet',
-          onload: () => setIsLoading(false),
+          href,
+          onload: () => {
+            changeThemeOnHTMLTag(relevantTheme);
+            setTimeout(() => {
+              setIsLoading(false);
+            }, 350);
+          },
           onerror: () => {
             setTheme(THEME_NAMES.LIGHT);
             setDidError(true);
           },
-          href,
         }),
       );
+      return;
     }
 
     // already exists, disable it
     if (darkThemeLink) {
       darkThemeLink.disabled = true;
+      changeThemeOnHTMLTag(relevantTheme);
     }
 
     setIsLoading(false);

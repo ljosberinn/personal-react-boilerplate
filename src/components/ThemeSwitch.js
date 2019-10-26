@@ -6,6 +6,7 @@ import Switch from './Switch';
 import Loader from './Loader';
 import Icon from './Icon';
 import styles from './ThemeSwitch.module.scss';
+import { THEME_NAMES } from '../hooks/useDetectColorScheme';
 
 const iconClassMap = {
   sun: {
@@ -30,12 +31,14 @@ export default function ThemeSwitch({ footer }) {
   const Component = footer ? Span : Navbar.Item;
 
   const handleThemeChange = useCallback(() => {
-    setTheme(theme => (theme === 'dark' ? 'light' : 'dark'));
+    setTheme(theme =>
+      theme === THEME_NAMES.DARK ? THEME_NAMES.LIGHT : THEME_NAMES.DARK,
+    );
   }, [setTheme]);
 
   return (
     <>
-      {isLoading && <Loader isFullPage />}
+      {isLoading && <Loader isFullPage color={theme} />}
       <Component
         className={footer ? styles.clickableContainer : undefined}
         onClick={handleThemeChange}
