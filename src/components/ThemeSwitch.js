@@ -1,22 +1,11 @@
-import React, { createContext, useContext, useCallback } from 'react';
-import { useTheme } from '../hooks';
+import React, { useContext, useCallback } from 'react';
 import { faSun, faMoon } from '@fortawesome/free-solid-svg-icons';
 import { Navbar } from 'rbx';
+import { ThemeContext } from '../context/ThemeContext';
 import Switch from './Switch';
+import Loader from './Loader';
 import Icon from './Icon';
 import styles from './ThemeSwitch.module.scss';
-
-export const ThemeContext = createContext({});
-
-export function Theme({ children }) {
-  const { isLoading, setTheme, theme } = useTheme();
-
-  return (
-    <ThemeContext.Provider value={{ isLoading, setTheme, theme }}>
-      {children}
-    </ThemeContext.Provider>
-  );
-}
 
 const iconClassMap = {
   sun: {
@@ -45,19 +34,22 @@ export default function ThemeSwitch({ footer }) {
   }, [setTheme]);
 
   return (
-    <Component
-      className={footer ? styles.clickableContainer : undefined}
-      onClick={handleThemeChange}
-    >
-      <Icon icon={faSun} color={iconClassMap.sun[theme]} />
-      <Switch
-        disabled={isLoading}
-        checked={theme !== 'light'}
-        size="small"
-        rounded
-        onChange={handleThemeChange}
-      />
-      <Icon icon={faMoon} color={iconClassMap.moon[theme]} />
-    </Component>
+    <>
+      {isLoading && <Loader isFullPage />}
+      <Component
+        className={footer ? styles.clickableContainer : undefined}
+        onClick={handleThemeChange}
+      >
+        <Icon icon={faSun} color={iconClassMap.sun[theme]} />
+        <Switch
+          disabled={isLoading}
+          checked={theme !== 'light'}
+          size="small"
+          rounded
+          onChange={handleThemeChange}
+        />
+        <Icon icon={faMoon} color={iconClassMap.moon[theme]} />
+      </Component>
+    </>
   );
 }

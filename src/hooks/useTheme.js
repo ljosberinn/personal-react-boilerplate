@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import useDetectColorScheme from './useDetectColorScheme';
+import useDetectColorScheme, { THEME_NAMES } from './useDetectColorScheme';
 
 /**
  * Toggles .theme--light | .theme--dark on HTML tag
@@ -8,9 +8,11 @@ import useDetectColorScheme from './useDetectColorScheme';
  */
 const changeThemeOnHTMLTag = theme => {
   const thisTheme = `theme--${theme}`;
-  const otherTheme = `theme--${theme === 'light' ? 'dark' : 'light'}`;
+  const otherTheme = `theme--${
+    theme === THEME_NAMES.LIGHT ? THEME_NAMES.DARK : THEME_NAMES.LIGHT
+  }`;
 
-  const htmlTagClassList = document.getElementsByTagName('html')[0].classList;
+  const htmlTagClassList = document.querySelector('html').classList;
 
   if (htmlTagClassList.contains(otherTheme)) {
     htmlTagClassList.replace(otherTheme, thisTheme);
@@ -20,40 +22,56 @@ const changeThemeOnHTMLTag = theme => {
   htmlTagClassList.add(thisTheme);
 };
 
+const href = 'https://unpkg.com/bulmaswatch/superhero/bulmaswatch.min.css';
+
 export default function useTheme() {
-  const theme = useDetectColorScheme() || 'light';
+  const theme = useDetectColorScheme() || THEME_NAMES.LIGHT;
   const [usedTheme, setTheme] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [didError, setDidError] = useState(false);
 
   const relevantTheme = usedTheme || theme;
 
   useEffect(() => {
     changeThemeOnHTMLTag(relevantTheme);
 
-    const href = 'https://unpkg.com/bulmaswatch/superhero/bulmaswatch.min.css';
+    const darkThemeLink = document.querySelector(`link[href="${href}"]`);
 
-    if (relevantTheme === 'dark') {
+    if (relevantTheme === THEME_NAMES.DARK) {
+      // previously switched to dark theme
+      if (darkThemeLink) {
+        // errored server side
+        if (didError) {
+          darkThemeLink.remove();
+        }
+
+        // already exists, reuse it
+        darkThemeLink.disabled = false;
+        return;
+      }
+
       setIsLoading(true);
 
       document.querySelector('head').append(
         Object.assign(document.createElement('link'), {
           rel: 'stylesheet',
           onload: () => setIsLoading(false),
+          onerror: () => {
+            setTheme(THEME_NAMES.LIGHT);
+            setDidError(true);
+          },
           href,
         }),
       );
+    }
 
-      return;
+    // already exists, disable it
+    if (darkThemeLink) {
+      darkThemeLink.disabled = true;
     }
 
     setIsLoading(false);
-
-    const darkTheme = document.querySelector(`link[href="${href}"]`);
-
-    if (darkTheme) {
-      darkTheme.remove();
-    }
-  }, [relevantTheme]);
+  }, [didError, relevantTheme]);
 
   return { theme: relevantTheme, isLoading, setTheme };
 }

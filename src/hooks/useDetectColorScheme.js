@@ -1,11 +1,15 @@
 // via https://github.com/neo4j/neo4j-browser/blob/master/src/browser/hooks/useDetectColorScheme.js
-
 import { useState, useEffect } from 'react';
 
+export const THEME_NAMES = {
+  DARK: 'dark',
+  LIGHT: 'light',
+};
+
 // Define available themes
-export const colorSchemes = {
-  DARK: '(prefers-color-scheme: dark)',
-  LIGHT: '(prefers-color-scheme: light)',
+const colorSchemes = {
+  DARK: `(prefers-color-scheme: ${THEME_NAMES.DARK})`,
+  LIGHT: `(prefers-color-scheme: ${THEME_NAMES.LIGHT})`,
 };
 
 export default function useDetectColorScheme() {
