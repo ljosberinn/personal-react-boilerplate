@@ -32,9 +32,10 @@ import * as ROUTES from '../../../constants/routes';
 import Helmet from 'react-helmet';
 import { errors } from './errors';
 import { useAuth } from '../../../hooks';
+import { Redirect } from 'react-router-dom';
 
 export default function RegisterRoute() {
-  const { registerWithMailAndPassword, loginWithGoogle } = useAuth();
+  const { registerWithMailAndPassword, loginWithGoogle, user } = useAuth();
 
   const [data, setData] = useState({
     mail: '',
@@ -84,6 +85,10 @@ export default function RegisterRoute() {
       setIsLoading(false);
     }
   }, [loginWithGoogle]);
+
+  if (user) {
+    return <Redirect to="/" />;
+  }
 
   return (
     <>
