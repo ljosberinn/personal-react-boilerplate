@@ -78,7 +78,7 @@ export default function LandingPage() {
             <rect x="443.25812" y="245" fill="#00d1b2" rx="5" />
             <rect x="541.25812" y="245" fill="#00d1b2" rx="5" />
             <rect x="639.25812" y="245" fill="#00d1b2" rx="5" />
-            <rect x="247.25812" y="377" fill="#00d1b2" rx="5" />
+            <rect x="345.75812" y="377" fill="#00d1b2" rx="5" />
             <rect x="443.25812" y="377" fill="#00d1b2" rx="5" />
             <rect x="541.25812" y="377" fill="#00d1b2" rx="5" />
             <rect x="639.25812" y="377" fill="#00d1b2" rx="5" />
