@@ -6,7 +6,7 @@ export default function TosRoute() {
   return (
     <>
       <Helmet>
-        <title>Terms of Service | Brand Name</title>
+        <title>Terms of Service | {process.env.REACT_APP_BRAND_NAME}</title>
       </Helmet>
       <Section>
         <h1>WIP</h1>

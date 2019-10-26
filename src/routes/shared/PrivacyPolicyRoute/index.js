@@ -6,7 +6,7 @@ export default function PrivacyPolicy() {
   return (
     <>
       <Helmet>
-        <title>Privacy Policy | Brand Name</title>
+        <title>Privacy Policy | {process.env.REACT_APP_BRAND_NAME}</title>
       </Helmet>
       <Section>
         <h1>WIP</h1>
