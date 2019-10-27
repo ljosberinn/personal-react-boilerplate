@@ -1,6 +1,8 @@
 import React from 'react';
 import Helmet from 'react-helmet';
-import { Section } from 'rbx';
+import { Section, Title, Box, Column } from 'rbx';
+import AccountSettings from './AccountSettings';
+import SiteSettings from './SiteSettings';
 
 export default function Settings() {
   return (
@@ -8,8 +10,23 @@ export default function Settings() {
       <Helmet>
         <title>Settings | {process.env.REACT_APP_BRAND_NAME}</title>
       </Helmet>
-      <Section>
-        <h1>WIP</h1>
+      <Section className="settings-bg">
+        <Column.Group centered multiline>
+          <Column size={10}>
+          <Title>Settings</Title>
+          </Column>
+        
+          <Column size={5}>
+            <Box>
+              <SiteSettings />
+            </Box>
+          </Column>
+          <Column size={5}>
+            <Box>
+              <AccountSettings />
+            </Box>
+          </Column>
+        </Column.Group>
       </Section>
     </>
   );
