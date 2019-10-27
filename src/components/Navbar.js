@@ -3,7 +3,7 @@ import { Navbar as RBXNavbar, Button } from 'rbx';
 import LanguageSwitch from './LanguageSwitch';
 import Icon from './Icon';
 import ThemeSwitch from './ThemeSwitch';
-import { faCog } from '@fortawesome/free-solid-svg-icons';
+import { faCog, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { faGithub, faDiscord } from '@fortawesome/free-brands-svg-icons';
 import { NavLink, Link } from 'react-router-dom';
 import { useAuth } from '../hooks';
@@ -72,7 +72,8 @@ export default function Navbar() {
                 <span>Settings</span>
               </Button>
               <Button color="danger" onClick={handleLogout}>
-                Logout
+                <Icon icon={faSignOutAlt} />
+                <span>Logout</span>
               </Button>
             </Button.Group>
           )}
