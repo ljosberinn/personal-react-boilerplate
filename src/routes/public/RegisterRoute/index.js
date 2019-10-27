@@ -27,12 +27,11 @@ import {
 import { MailSvg } from '../../../assets/svg';
 import Shake from 'react-reveal/Shake';
 import { Fade } from 'react-reveal';
-import styles from './Registration.module.scss';
 import * as ROUTES from '../../../constants/routes';
 import Helmet from 'react-helmet';
 import { errors } from './errors';
 import { useAuth } from '../../../hooks';
-import { Redirect } from 'react-router-dom';
+import RedirectToHome from '../../RedirectToHome';
 
 export default function RegisterRoute() {
   const { registerWithMailAndPassword, loginWithGoogle, user } = useAuth();
@@ -87,7 +86,7 @@ export default function RegisterRoute() {
   }, [loginWithGoogle]);
 
   if (user) {
-    return <Redirect to="/" />;
+    return <RedirectToHome />;
   }
 
   return (
@@ -95,7 +94,7 @@ export default function RegisterRoute() {
       <Helmet>
         <title>Registration | {process.env.REACT_APP_BRAND_NAME}</title>
       </Helmet>
-      <Section className={styles.container}>
+      <Section className="register-bg">
         <Column.Group centered>
           <Column widescreen={{ size: 5 }} tablet={{ size: 8 }}>
             <Card>

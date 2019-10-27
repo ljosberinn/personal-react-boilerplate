@@ -1,0 +1,77 @@
+.settings-bg,
+.login-bg,
+.register-bg,
+.reset-password-bg {
+  background-repeat: no-repeat;
+  background-size: contain;
+  flex-direction: row;
+  width: 100%;
+}
+
+.settings-bg {
+  background-position-x: 50%;
+}
+
+.login-bg {
+  background-position-x: 83%;
+}
+
+.register-bg {
+  background-size: 75%;
+  background-position-x: 45%;
+  background-position-y: 50%;
+}
+
+.reset-password-bg {
+  background-position-x: 80%;
+}
+
+body {
+  background-repeat: repeat-y;
+  background-size: cover;
+}
+
+html {
+  &.theme--light {
+    body {
+      background-image: url('../../svg/light/background.svg');
+    }
+
+    .settings-bg {
+      background-image: url('../../svg/light/settings.svg');
+    }
+
+    .login-bg {
+      background-image: url('../../svg/light/login.svg');
+    }
+
+    .register-bg {
+      background-image: url('../../svg/light/register.svg');
+    }
+
+    .reset-password-bg {
+      background-image: url('../../svg/light/reset-password.svg');
+    }
+  }
+  &.theme--dark {
+    body {
+      background-image: url('../../svg/dark/background.svg');
+    }
+
+    .settings-bg {
+      background-image: url('../../svg/dark/settings.svg');
+    }
+
+    .login-bg {
+      background-image: url('../../svg/dark/login.svg');
+    }
+
+    .register-bg {
+      background-image: url('../../svg/dark/register.svg');
+    }
+
+    .reset-password-bg {
+      background-image: url('../../svg/dark/reset-password.svg');
+    }
+  }
+}

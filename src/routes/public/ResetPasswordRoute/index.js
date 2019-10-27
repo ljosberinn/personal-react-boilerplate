@@ -13,7 +13,6 @@ import {
   Input,
   Content,
 } from 'rbx';
-import styles from './ResetPassword.module.scss';
 import Helmet from 'react-helmet';
 export default function ResetPasswordRoute() {
   const [data, setData] = useState({
@@ -45,7 +44,7 @@ export default function ResetPasswordRoute() {
       <Helmet>
         <title>Reset Password | {process.env.REACT_APP_BRAND_NAME}</title>
       </Helmet>
-      <Section className={styles.container}>
+      <Section className="reset-password-bg">
         <Column.Group centered>
           <Column widescreen={{ size: 5 }} tablet={{ size: 8 }}>
             <Card>

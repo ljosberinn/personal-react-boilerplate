@@ -12,6 +12,7 @@ $dark-bg-color: #1d2a38;
 @import './animations';
 @import './extensions';
 @import './dark-theme';
+@import './backgrounds';
 
 .is-fullpage {
   display: flex;
@@ -71,16 +72,19 @@ $dark-bg-color: #1d2a38;
 @import '../../routes/public/LandingPage/LandingPage.module.scss';
 
 .card {
-  background-color: rgba($white, 0.95);
   border-radius: 5px !important;
-}
-
-body {
-  //background-image: url();
-  background-repeat: repeat-y;
-  background-size: cover;
 }
 
 a span.icon {
   vertical-align: bottom;
+}
+
+.button {
+  transition: transform 0.2s ease-in-out;
+
+  &:hover:not([disabled]) {
+    transform: translateY(-2px);
+    box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+    filter: brightness(105%);
+  }
 }

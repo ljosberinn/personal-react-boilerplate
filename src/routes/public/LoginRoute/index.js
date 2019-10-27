@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useContext } from 'react';
-import { Link, useParams, Redirect } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { validate, pattern } from '../../../utils/validators';
 import {
   ValidityIconLeft,
@@ -21,9 +21,9 @@ import {
 } from 'rbx';
 import { Fade } from 'react-reveal';
 import Shake from 'react-reveal/Shake';
-import styles from './Login.module.scss';
 import Helmet from 'react-helmet';
 import { AuthContext } from '../../../context/AuthContext';
+import RedirectToHome from '../../RedirectToHome';
 
 const errors = {
   'mail.invalid': 'Please enter a valid mail.',
@@ -128,7 +128,7 @@ function LoginRoute() {
     !validate.password(password);
 
   if (user) {
-    return <Redirect to="/" />;
+    return <RedirectToHome />;
   }
 
   return (
@@ -136,7 +136,7 @@ function LoginRoute() {
       <Helmet>
         <title>Login | {process.env.REACT_APP_BRAND_NAME}</title>
       </Helmet>
-      <Section className={styles.container}>
+      <Section className="login-bg">
         <Column.Group centered>
           <Column widescreen={{ size: 5 }} tablet={{ size: 8 }}>
             <Card>
@@ -242,10 +242,12 @@ function LoginRoute() {
                                 Sign in
                               </Button>
 
+                              <br />
+
                               <div className="has-text-centered">
                                 <Title
                                   className="has-text-grey"
-                                  size={7}
+                                  size={6}
                                   as={Link}
                                   to="/reset-password"
                                 >

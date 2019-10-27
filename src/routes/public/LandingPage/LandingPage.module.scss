@@ -9,11 +9,6 @@
   max-width: 1400px;
 }
 
-@media (min-width: 640px) {
-  padding: 140px 16px 100px;
-  flex-direction: row;
-}
-
 #hero .hero-content.is-flex {
   justify-content: center;
   flex-direction: column;
