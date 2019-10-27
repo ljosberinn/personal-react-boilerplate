@@ -5,15 +5,15 @@ import { Loader } from './components';
 import { SHARED_ROUTES } from './routes/shared';
 import { PUBLIC_ROUTES } from './routes/public';
 import { PRIVATE_ROUTES } from './routes/private';
+import RedirectToHome from './routes/RedirectToHome';
 import Layout from './Layout';
 import { useAuth } from './hooks';
 
-function App() {
+export default function App() {
   const { isLoading, user } = useAuth();
 
   const routes = Object.assign(
     SHARED_ROUTES,
-
     user ? PRIVATE_ROUTES : PUBLIC_ROUTES,
   );
 
@@ -28,6 +28,7 @@ function App() {
               {Object.entries(routes).map(([path, component]) => (
                 <Route path={path} component={component} exact key={path} />
               ))}
+              <Route component={RedirectToHome} />
             </Suspense>
           </Switch>
         )}
@@ -35,5 +36,3 @@ function App() {
     </Router>
   );
 }
-
-export default App;
