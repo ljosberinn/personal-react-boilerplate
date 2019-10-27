@@ -43,6 +43,8 @@ export default function useTheme() {
         // errored server side
         if (didError) {
           darkThemeLink.remove();
+          setDidError(false);
+          return;
         }
 
         // already exists, reuse it
