@@ -9,7 +9,7 @@ import {
 export default function DeleteAccount({ user }) {
   const [userEngagedDeletion, setUserEngagedDeletion] = useState(false);
   const [hasApproved, setHasApproved] = useState(false);
-  const [error, setError] = useState('some error');
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     async function deleteUser() {
