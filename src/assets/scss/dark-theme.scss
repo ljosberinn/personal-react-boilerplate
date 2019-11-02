@@ -3,24 +3,6 @@ svg path[fill='#{$primary}'] {
   transition: fill 350ms ease-in-out;
 }
 
-html,
-button,
-a,
-.navbar,
-.footer {
-  transition: background-color 350ms ease-in-out;
-}
-
-p,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  transition: color 350ms ease-in-out;
-}
-
 html {
   &.theme--light {
     .box,
