@@ -40,17 +40,16 @@ export default function useTheme() {
     if (relevantTheme === THEME_NAMES.DARK) {
       // previously switched to dark theme
       if (darkThemeLink) {
-        // errored server side
+        // errored server side, prepare for retrying
         if (didError) {
           darkThemeLink.remove();
           setDidError(false);
+        } else {
+          // already exists, reuse it and bail
+          darkThemeLink.disabled = false;
+          changeThemeOnHTMLTag(relevantTheme);
           return;
         }
-
-        // already exists, reuse it
-        darkThemeLink.disabled = false;
-        changeThemeOnHTMLTag(relevantTheme);
-        return;
       }
 
       setIsLoading(true);
@@ -61,9 +60,7 @@ export default function useTheme() {
           href,
           onload: () => {
             changeThemeOnHTMLTag(relevantTheme);
-            setTimeout(() => {
-              setIsLoading(false);
-            }, 350);
+            setIsLoading(false);
           },
           onerror: () => {
             setTheme(THEME_NAMES.LIGHT);
