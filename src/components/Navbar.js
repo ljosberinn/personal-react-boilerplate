@@ -58,19 +58,21 @@ export default function Navbar() {
 
           {isLoading ? null : !user ? (
             <Button.Group>
-              <Button color="primary" as={NavLink} to="/register">
+              <NavButton color="primary" to="/register">
                 Register
-              </Button>
-              <Button color="light" as={NavLink} to="/login">
+              </NavButton>
+
+              <NavButton color="light" to="/login">
                 Login
-              </Button>
+              </NavButton>
             </Button.Group>
           ) : (
             <Button.Group>
-              <Button as={NavLink} color="primary" to="/settings">
-                <Icon icon={faCog} />
+              <NavButton color="primary" to="/settings">
+                <Icon icon={faCog} className="is-spinning" />
                 <span>Settings</span>
-              </Button>
+              </NavButton>
+
               <Button color="danger" onClick={handleLogout}>
                 <Icon icon={faSignOutAlt} />
                 <span>Logout</span>
@@ -80,5 +82,13 @@ export default function Navbar() {
         </RBXNavbar.Segment>
       </RBXNavbar.Menu>
     </RBXNavbar>
+  );
+}
+
+function NavButton({ children, ...rest }) {
+  return (
+    <Button as={NavLink} {...rest}>
+      {children}
+    </Button>
   );
 }
