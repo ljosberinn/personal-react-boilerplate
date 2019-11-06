@@ -19,7 +19,7 @@
     "react-scripts": "3.2.0"
   },
   "devDependencies": {
-    "@testing-library/react": "^9.3.1",
+    "@testing-library/react": "^9.3.2",
     "node-sass": "^4.13.0"
   },
   "scripts": {
