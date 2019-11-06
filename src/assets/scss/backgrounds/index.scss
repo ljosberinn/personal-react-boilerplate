@@ -6,6 +6,10 @@
   background-size: contain;
   flex-direction: row;
   width: 100%;
+
+  .card {
+    backdrop-filter: blur(5px);
+  }
 }
 
 .settings-bg {
@@ -14,10 +18,12 @@
 
 .login-bg {
   background-position-x: 83%;
+  background-size: 45%;
+  background-position-y: 25%;
 }
 
 .register-bg {
-  background-size: 75%;
+  background-size: 65%;
   background-position-x: 45%;
   background-position-y: 50%;
 }
@@ -53,9 +59,11 @@ html {
       background-image: url('../../svg/light/reset-password.svg');
     }
   }
+
   &.theme--dark {
     body {
       background-image: url('../../svg/dark/background.svg');
+      font-family: $body-family;
     }
 
     .settings-bg {
