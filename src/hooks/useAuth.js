@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { auth } from 'firebase';
+import { auth } from 'firebase/app';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
 export default function useAuth() {
