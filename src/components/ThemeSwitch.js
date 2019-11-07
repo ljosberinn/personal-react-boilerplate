@@ -42,6 +42,8 @@ export default function ThemeSwitch({ footer }) {
       <Component
         className={footer ? styles.clickableContainer : undefined}
         onClick={handleThemeChange}
+        role="button"
+        aria-label="Toggle color theme"
       >
         <Icon icon={faSun} color={iconClassMap.sun[theme]} />
         <Switch
