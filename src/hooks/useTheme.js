@@ -31,21 +31,13 @@ const hasLocalStorage = (() => {
 /**
  * @description retrieves a previous `localStorage.themePreference` value or `null` if nonexistant/unavailable
  */
-const getStoredTheme = () => {
-  if (!hasLocalStorage) {
-    return null;
-  }
+const getStoredTheme = () =>
+  hasLocalStorage
+    ? THEME_NAMES[localStorage.getItem('themePreference')] || null
+    : null;
 
-  const theme = localStorage.getItem('themePreference');
-
-  return Object.values(THEME_NAMES).includes(theme) ? theme : null;
-};
-
-const storeTheme = theme => {
-  if (hasLocalStorage) {
-    localStorage.setItem('themePreference', theme);
-  }
-};
+const storeTheme = theme =>
+  hasLocalStorage && localStorage.setItem('themePreference', theme);
 
 /**
  * Toggles .theme--light | .theme--dark on HTML tag
