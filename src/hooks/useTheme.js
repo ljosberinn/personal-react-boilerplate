@@ -36,15 +36,9 @@ const getStoredTheme = () => {
     return null;
   }
 
-  try {
-    const theme = localStorage.getItem('themePreference');
+  const theme = localStorage.getItem('themePreference');
 
-    return theme.length > 0 && Object.values(THEME_NAMES).includes(theme)
-      ? theme
-      : null;
-  } catch (error) {
-    return null;
-  }
+  return Object.values(THEME_NAMES).includes(theme) ? theme : null;
 };
 
 const storeTheme = theme => {
