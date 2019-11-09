@@ -30,56 +30,55 @@ export default function DeleteAccount({ user }) {
     setUserEngagedDeletion(false);
   };
 
-  if (!userEngagedDeletion) {
-    return (
+  return (
+    <>
       <Button color="danger" onClick={() => setUserEngagedDeletion(true)}>
         Delete Your Account
       </Button>
-    );
-  }
+      {userEngagedDeletion && (
+        <Modal active closeOnBlur closeOnEsc onClose={handleAbort}>
+          <Modal.Background />
 
-  return (
-    <Modal active closeOnBlur closeOnEsc onClose={handleAbort}>
-      <Modal.Background />
+          <Modal.Card>
+            <Modal.Card.Head>
+              <Modal.Card.Title>Warning</Modal.Card.Title>
+              <Delete />
+            </Modal.Card.Head>
+            <Modal.Card.Body>
+              {!hasApproved && (
+                <p>You're in the process of deleting your account!</p>
+              )}
 
-      <Modal.Card>
-        <Modal.Card.Head>
-          <Modal.Card.Title>Warning</Modal.Card.Title>
-          <Delete />
-        </Modal.Card.Head>
-        <Modal.Card.Body>
-          {userEngagedDeletion && !hasApproved && (
-            <p>You're in the process of deleting your account!</p>
-          )}
+              {hasApproved && !error && (
+                <p>
+                  Sad to see you go. Your account will be deleted in 5 seconds.
+                </p>
+              )}
 
-          {hasApproved && !error && (
-            <p>Sad to see you go. Your account will be deleted in 5 seconds.</p>
-          )}
+              {error && error}
+            </Modal.Card.Body>
+            <Modal.Card.Foot>
+              {!hasApproved ? (
+                <Button.Group>
+                  <Button onClick={handleAbort} color="warning">
+                    <Icon icon={faTimesCircle} />
+                    <span>No, please take me back.</span>
+                  </Button>
 
-          {error && error}
-        </Modal.Card.Body>
-        <Modal.Card.Foot>
-          {userEngagedDeletion && !hasApproved && (
-            <Button.Group>
-              <Button onClick={handleAbort} color="warning">
-                <Icon icon={faTimesCircle} />
-                <span>No, please take me back.</span>
-              </Button>
-
-              <Button onClick={() => setHasApproved(true)} color="danger">
-                <Icon icon={faSkullCrossbones} />
-                <span>Yes, delete my account.</span>
-              </Button>
-            </Button.Group>
-          )}
-
-          {hasApproved && (
-            <Button color="warning" onClick={handleAbort}>
-              I changed my mind!
-            </Button>
-          )}
-        </Modal.Card.Foot>
-      </Modal.Card>
-    </Modal>
+                  <Button onClick={() => setHasApproved(true)} color="danger">
+                    <Icon icon={faSkullCrossbones} />
+                    <span>Yes, delete my account.</span>
+                  </Button>
+                </Button.Group>
+              ) : (
+                <Button color="warning" onClick={handleAbort}>
+                  I changed my mind!
+                </Button>
+              )}
+            </Modal.Card.Foot>
+          </Modal.Card>
+        </Modal>
+      )}
+    </>
   );
 }
