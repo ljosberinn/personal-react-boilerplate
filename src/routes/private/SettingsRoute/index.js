@@ -13,9 +13,9 @@ export default function Settings() {
       <Section className="settings-bg">
         <Column.Group centered multiline>
           <Column size={10}>
-          <Title>Settings</Title>
+            <Title>Settings</Title>
           </Column>
-        
+
           <Column size={5}>
             <Box>
               <SiteSettings />

@@ -21,7 +21,14 @@ export default function AccountSettings() {
       <Title as="h2" subtitle>
         Account Settings
       </Title>
-      {!isGoogleUser && <><ChangePassword user={user} /><hr /></>}
+
+      {!isGoogleUser && (
+        <>
+          <ChangePassword user={user} />
+          <hr />
+        </>
+      )}
+
       <Message color="danger">
         <Message.Header>
           <span>Danger Zone</span>
