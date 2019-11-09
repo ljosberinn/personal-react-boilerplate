@@ -30,6 +30,7 @@ export default function Switch({
   text,
   onChange,
   checked,
+  ...rest
 }) {
   const labelClasses = sanitizeClassArray([
     'switch',
@@ -49,6 +50,7 @@ export default function Switch({
         checked={checked}
         name={name}
         onChange={onChange}
+        {...rest}
       />
       <span className={spanClasses} />
       <span className="control-label">{text}</span>

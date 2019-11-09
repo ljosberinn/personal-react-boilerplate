@@ -18,25 +18,30 @@ const iconClassMap = {
   },
 };
 
-const Span = ({ children, onClick, className }) => (
-  <span onClick={onClick} className={className}>
-    {children}
-  </span>
-);
+const Span = ({ children, ...rest }) => <span {...rest}>{children}</span>;
 
-export default function ThemeSwitch({ footer }) {
+const ParentComponentMap = {
+  settings: Span,
+  footer: Span,
+  nav: Navbar.Item,
+};
+
+export default function ThemeSwitch({ from }) {
   const { isLoading, theme, toggleTheme } = useContext(ThemeContext);
 
-  const Component = footer ? Span : Navbar.Item;
+  const Component = ParentComponentMap[from];
+  const id = `theme-switch-${from}`;
 
   return (
     <>
       {isLoading && <Loader isFullPage color={theme} />}
+
       <Component
-        className={footer ? styles.clickableContainer : undefined}
+        className={from !== 'nav' ? styles.clickableContainer : undefined}
         role="button"
-        aria-label="Toggle color theme"
         onClick={toggleTheme}
+        title="Toggle color theme"
+        id={id}
       >
         <Icon icon={faSun} color={iconClassMap.sun[theme]} />
         <Switch
@@ -45,6 +50,7 @@ export default function ThemeSwitch({ footer }) {
           size="small"
           rounded
           onChange={toggleTheme}
+          aria-labelledby={id}
         />
         <Icon icon={faMoon} color={iconClassMap.moon[theme]} />
       </Component>

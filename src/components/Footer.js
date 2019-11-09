@@ -101,7 +101,7 @@ export default function Footer() {
                 Other
               </Generic>
               <li>
-                <ThemeSwitch footer />
+                <ThemeSwitch from="footer" />
               </li>
 
               <li>

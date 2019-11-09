@@ -6,7 +6,7 @@ export default function ChangeTheme() {
   return (
     <>
       <Title as="h3">Change Theme</Title>
-      <ThemeSwitch />
+      <ThemeSwitch from="settings" />
     </>
   );
 }

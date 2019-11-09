@@ -38,7 +38,7 @@ export default function Navbar() {
         <RBXNavbar.Segment align="end">
           <LanguageSwitch />
 
-          <ThemeSwitch />
+          <ThemeSwitch from="nav" />
 
           <RBXNavbar.Item
             href="https://discord.gg"
