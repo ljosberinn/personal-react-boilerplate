@@ -5,11 +5,13 @@ import {
   faTimesCircle,
   faSkullCrossbones,
 } from '@fortawesome/free-solid-svg-icons';
+import { useTranslation } from 'react-i18next';
 
 export default function DeleteAccount({ user }) {
   const [userEngagedDeletion, setUserEngagedDeletion] = useState(false);
   const [hasApproved, setHasApproved] = useState(false);
   const [error, setError] = useState(null);
+  const { t } = useTranslation('settings');
 
   useEffect(() => {
     async function deleteUser() {
@@ -20,7 +22,7 @@ export default function DeleteAccount({ user }) {
       }
     }
 
-    const timeout = hasApproved && setTimeout(deleteUser, 5000);
+    const timeout = hasApproved && setTimeout(deleteUser, 10000);
 
     return () => clearTimeout(timeout);
   }, [hasApproved, user]);
@@ -33,7 +35,7 @@ export default function DeleteAccount({ user }) {
   return (
     <>
       <Button color="danger" onClick={() => setUserEngagedDeletion(true)}>
-        Delete Your Account
+        {t('deleteAccountBtnText')}
       </Button>
       {userEngagedDeletion && (
         <Modal active closeOnBlur closeOnEsc onClose={handleAbort}>
@@ -41,19 +43,13 @@ export default function DeleteAccount({ user }) {
 
           <Modal.Card>
             <Modal.Card.Head>
-              <Modal.Card.Title>Warning</Modal.Card.Title>
+              <Modal.Card.Title>{t('warning')}</Modal.Card.Title>
               <Delete />
             </Modal.Card.Head>
             <Modal.Card.Body>
-              {!hasApproved && (
-                <p>You're in the process of deleting your account!</p>
-              )}
+              {!hasApproved && <p>{t('deleteAccountInfo')}</p>}
 
-              {hasApproved && !error && (
-                <p>
-                  Sad to see you go. Your account will be deleted in 5 seconds.
-                </p>
-              )}
+              {hasApproved && !error && <p>{t('deleteAccountGoodbye')}</p>}
 
               {error && error}
             </Modal.Card.Body>
@@ -62,17 +58,17 @@ export default function DeleteAccount({ user }) {
                 <Button.Group>
                   <Button onClick={handleAbort} color="warning">
                     <Icon icon={faTimesCircle} />
-                    <span>No, please take me back.</span>
+                    <span>{t('deleteAccountAbort')}</span>
                   </Button>
 
                   <Button onClick={() => setHasApproved(true)} color="danger">
                     <Icon icon={faSkullCrossbones} />
-                    <span>Yes, delete my account.</span>
+                    <span>{t('deleteAccountConfirm')}</span>
                   </Button>
                 </Button.Group>
               ) : (
                 <Button color="warning" onClick={handleAbort}>
-                  I changed my mind!
+                  {t('deleteAccountAbort2')}
                 </Button>
               )}
             </Modal.Card.Foot>

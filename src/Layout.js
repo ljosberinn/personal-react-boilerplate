@@ -5,7 +5,7 @@ import { Footer, Navbar } from './components';
 export default function Layout({ children }) {
   return (
     <>
-      <Column.Group centered>
+      <Column.Group centered as="header">
         <Column
           widescreen={{ size: 9 }}
           desktop={{ size: 9 }}

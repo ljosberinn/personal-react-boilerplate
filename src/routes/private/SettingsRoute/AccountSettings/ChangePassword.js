@@ -3,6 +3,7 @@ import { Title, Button, Help, Message } from 'rbx';
 import PasswordSelection from '../../../public/RegisterRoute/PasswordSelection';
 import { validate } from '../../../../utils/validators';
 import { Fade } from 'react-reveal';
+import { useTranslation } from 'react-i18next';
 
 export default function ChangePassword({ user }) {
   const [password, setPassword] = useState('');
@@ -10,6 +11,7 @@ export default function ChangePassword({ user }) {
   const [changeSuccessful, setWasSuccessfullyChanged] = useState(false);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const { t } = useTranslation('settings');
 
   const handleSubmit = useCallback(
     async event => {
@@ -53,8 +55,8 @@ export default function ChangePassword({ user }) {
     return (
       <Fade>
         <Message color="success">
-          <Message.Header>Success</Message.Header>
-          <Message.Body>Your password was successfully changed.</Message.Body>
+          <Message.Header>{t('success')}</Message.Header>
+          <Message.Body>{t('changePasswordSuccess')}</Message.Body>
         </Message>
       </Fade>
     );
@@ -63,7 +65,7 @@ export default function ChangePassword({ user }) {
   return (
     <form spellCheck={false} onSubmit={handleSubmit}>
       <legend>
-        <Title as="h3">Change password</Title>
+        <Title as="h3">{t('changePassword')}</Title>
       </legend>
 
       <fieldset disabled={isLoading}>
@@ -82,7 +84,7 @@ export default function ChangePassword({ user }) {
           color="primary"
           disabled={!passwordsAreMatching}
         >
-          Change Password
+          {t('changePassword')}
         </Button>
       </fieldset>
     </form>

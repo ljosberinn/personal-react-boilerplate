@@ -1,13 +1,16 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { Navbar as RBXNavbar, Button } from 'rbx';
 import LanguageSwitch from './LanguageSwitch';
 import Icon from './Icon';
 import ThemeSwitch from './ThemeSwitch';
-import { faCog, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { faGithub, faDiscord } from '@fortawesome/free-brands-svg-icons';
 import { NavLink, Link } from 'react-router-dom';
 import { useAuth } from '../hooks';
 import { useHistory } from 'react-router-dom';
+import Loader from './Loader';
+import { useTranslation } from 'react-i18next';
+import * as ROUTES from '../constants/routes';
 
 const LogoIpsumSvg = () => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 144 39" height="32">
@@ -20,6 +23,7 @@ const LogoIpsumSvg = () => (
 export default function Navbar() {
   const { user, isLoading, logout } = useAuth();
   const history = useHistory();
+  const { t } = useTranslation(['navigation', 'routes']);
 
   const handleLogout = async () => {
     await logout();
@@ -36,7 +40,9 @@ export default function Navbar() {
       </RBXNavbar.Brand>
       <RBXNavbar.Menu>
         <RBXNavbar.Segment align="end">
-          <LanguageSwitch />
+          <Suspense fallback={<Loader />}>
+            <LanguageSwitch from="nav" />
+          </Suspense>
 
           <ThemeSwitch from="nav" />
 
@@ -53,29 +59,31 @@ export default function Navbar() {
             rel="noreferrer noopener"
             target="_blank"
           >
-            <Icon icon={faGithub} /> <span>Contribute</span>
+            <Icon icon={faGithub} /> <span>{t('contribute')}</span>
           </RBXNavbar.Item>
 
           {isLoading ? null : !user ? (
             <Button.Group>
-              <NavButton color="primary" to="/register">
-                Register
+              <NavButton color="primary" to={ROUTES.REGISTER.normalizedPath}>
+                <Icon icon={ROUTES.REGISTER.icon} />
+                <span>{t('routes:register')}</span>
               </NavButton>
 
-              <NavButton color="light" to="/login">
-                Login
+              <NavButton color="light" to={ROUTES.LOGIN.normalizedPath}>
+                <Icon icon={ROUTES.LOGIN.icon} />
+                <span>{t('routes:login')}</span>
               </NavButton>
             </Button.Group>
           ) : (
             <Button.Group>
-              <NavButton color="primary" to="/settings">
-                <Icon icon={faCog} className="is-spinning" />
-                <span>Settings</span>
+              <NavButton color="primary" to={ROUTES.SETTINGS.normalizedPath}>
+                <Icon icon={ROUTES.SETTINGS.icon} className="is-spinning" />
+                <span>{t('routes:settings')}</span>
               </NavButton>
 
               <Button color="danger" onClick={handleLogout}>
                 <Icon icon={faSignOutAlt} />
-                <span>Logout</span>
+                <span>{t('logout')}</span>
               </Button>
             </Button.Group>
           )}

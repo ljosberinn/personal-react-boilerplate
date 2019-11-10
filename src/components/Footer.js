@@ -1,16 +1,27 @@
-import React, { useContext } from 'react';
+import React, { useContext, Suspense } from 'react';
 import { Footer as RBXFooter, Container, Column, Generic } from 'rbx';
 import { NavLink } from 'react-router-dom';
 import ExternalLink from './ExternalLink';
 import LanguageSwitch from './LanguageSwitch';
+import Loader from './Loader';
 import Icon from './Icon';
 import ThemeSwitch from './ThemeSwitch';
 import * as ROUTES from '../constants/routes';
 import { faGithub, faDiscord } from '@fortawesome/free-brands-svg-icons';
 import { AuthContext } from '../context/AuthContext';
+import { useTranslation } from 'react-i18next';
+
+function Link({ children, ...rest }) {
+  return (
+    <NavLink activeClassName="is-active" {...rest}>
+      {children}
+    </NavLink>
+  );
+}
 
 export default function Footer() {
   const { user } = useContext(AuthContext);
+  const { t } = useTranslation(['footer', 'routes']);
 
   return (
     <RBXFooter as="footer">
@@ -22,43 +33,34 @@ export default function Footer() {
                 {process.env.REACT_APP_BRAND_NAME}
               </Generic>
               <li>
-                <NavLink to="/" activeClassName="is-active">
-                  Home
-                </NavLink>
+                <Link to="/">{t(ROUTES.LANDING_PAGE.title)}</Link>
               </li>
               {!user ? (
                 <>
                   <li>
-                    <NavLink
-                      to={ROUTES.REGISTER.routerPath}
-                      activeClassName="is-active"
-                    >
-                      {ROUTES.REGISTER.title}
-                    </NavLink>
+                    <Link to={ROUTES.REGISTER.normalizedPath}>
+                      <Icon icon={ROUTES.REGISTER.icon} />
+                      <span>{t(ROUTES.REGISTER.title)}</span>
+                    </Link>
                   </li>
                   <li>
-                    <NavLink to="/login" activeClassName="is-active">
-                      Login
-                    </NavLink>
+                    <Link to={ROUTES.LOGIN.normalizedPath}>
+                      <Icon icon={ROUTES.LOGIN.icon} />
+                      <span>{t(ROUTES.LOGIN.title)}</span>
+                    </Link>
                   </li>
                   <li>
-                    <NavLink
-                      to={ROUTES.RESET_PASSWORD.routerPath}
-                      activeClassName="is-active"
-                    >
-                      {ROUTES.RESET_PASSWORD.title}
-                    </NavLink>
+                    <Link to={ROUTES.RESET_PASSWORD.normalizedPath}>
+                      {t(ROUTES.RESET_PASSWORD.title)}
+                    </Link>
                   </li>
                 </>
               ) : (
                 <li>
-                  <NavLink
-                    to={ROUTES.SETTINGS.routerPath}
-                    activeClassName="is-active"
-                  >
+                  <Link to={ROUTES.SETTINGS.normalizedPath}>
                     <Icon icon={ROUTES.SETTINGS.icon} />
-                    <span>{ROUTES.SETTINGS.title}</span>
-                  </NavLink>
+                    <span>{t(ROUTES.SETTINGS.title)}</span>
+                  </Link>
                 </li>
               )}
             </ul>
@@ -66,7 +68,7 @@ export default function Footer() {
           <Column size={3}>
             <ul>
               <Generic as="li" textWeight="semibold">
-                Features
+                {t('features')}
               </Generic>
             </ul>
           </Column>
@@ -74,23 +76,19 @@ export default function Footer() {
           <Column size={3}>
             <ul>
               <Generic as="li" textWeight="semibold">
-                Legal
+                {t('legal')}
               </Generic>
               <li>
-                <NavLink
-                  to={ROUTES.TOS.normalizedPath}
-                  activeClassName="is-active"
-                >
-                  {ROUTES.TOS.title}
-                </NavLink>
+                <Link to={ROUTES.TOS.normalizedPath}>
+                  <Icon icon={ROUTES.TOS.icon} />
+                  <span>{t(ROUTES.TOS.title)}</span>
+                </Link>
               </li>
               <li>
-                <NavLink
-                  to={ROUTES.PRIVACY_POLICY.normalizedPath}
-                  activeClassName="is-active"
-                >
-                  {ROUTES.PRIVACY_POLICY.title}
-                </NavLink>
+                <Link to={ROUTES.PRIVACY_POLICY.normalizedPath}>
+                  <Icon icon={ROUTES.PRIVACY_POLICY.icon} />
+                  <span>{t(ROUTES.PRIVACY_POLICY.title)}</span>
+                </Link>
               </li>
             </ul>
           </Column>
@@ -98,23 +96,27 @@ export default function Footer() {
           <Column size={3}>
             <ul>
               <Generic as="li" textWeight="semibold">
-                Other
+                {t('other')}
               </Generic>
               <li>
                 <ThemeSwitch from="footer" />
               </li>
 
               <li>
-                <LanguageSwitch footer />
+                <Suspense fallback={<Loader />}>
+                  <LanguageSwitch from="footer" />
+                </Suspense>
               </li>
               <li>
                 <ExternalLink href="//discord.gg">
-                  <Icon icon={faDiscord} /> <span>Discord</span>
+                  <Icon icon={faDiscord} />
+                  <span>Discord</span>
                 </ExternalLink>
               </li>
               <li>
                 <ExternalLink href="//github.com/ljosberinn/current-react-playground">
-                  <Icon icon={faGithub} /> <span>Contribute</span>
+                  <Icon icon={faGithub} />
+                  <span>Contribute</span>
                 </ExternalLink>
               </li>
             </ul>

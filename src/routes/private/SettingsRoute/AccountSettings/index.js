@@ -6,9 +6,11 @@ import DeleteAccount from './DeleteAccount';
 import ChangePassword from './ChangePassword';
 import { Icon } from '../../../../components';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
+import { useTranslation } from 'react-i18next';
 
 export default function AccountSettings() {
   const { user } = useContext(AuthContext);
+  const { t } = useTranslation('settings');
 
   if (!user) {
     return <RedirectToHome />;
@@ -19,7 +21,7 @@ export default function AccountSettings() {
   return (
     <Content>
       <Title as="h2" subtitle>
-        Account Settings
+        {t('accountSettings')}
       </Title>
 
       {!isGoogleUser && (
@@ -31,7 +33,7 @@ export default function AccountSettings() {
 
       <Message color="danger">
         <Message.Header>
-          <span>Danger Zone</span>
+          <span>{t('dangerZone')}</span>
           <Icon icon={faExclamationTriangle} />
         </Message.Header>
         <Message.Body>
