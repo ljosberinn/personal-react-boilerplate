@@ -1,39 +1,55 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { LocaleSvg } from '../assets/svg';
-import { Navbar, Dropdown } from 'rbx';
+import { Navbar, Dropdown, Button } from 'rbx';
+import { useTranslation } from 'react-i18next';
 
 // TODO: get from backend
+const availableLanguages = ['de', 'en', 'fr', 'jp', 'ru', 'es'].sort();
 
-const availableLanguages = [
-  { slug: 'de', name: 'Deutsch' },
-  { slug: 'en', name: 'English' },
-  { slug: 'fr', name: 'Francais' },
-  { slug: 'jp', name: 'Japanese' },
-  { slug: 'ru', name: 'Russian' },
-  { slug: 'es', name: 'Spanish' },
-];
-const supportText = 'Language missing? Help translating!';
+export default function LanguageSwitch({ from }) {
+  const { i18n, t } = useTranslation('languages');
 
-export default function LanguageSwitch({ footer }) {
-  // TODO: useTranslation via react-i18next
-  if (footer) {
+  const handleLanguageChange = useCallback(
+    slug => () => i18n.changeLanguage(slug),
+    [i18n],
+  );
+
+  const dropdownContent = (
+    <Dropdown.Content>
+      {availableLanguages.map(slug => (
+        <Dropdown.Item
+          active={slug === i18n.language}
+          onClick={handleLanguageChange(slug)}
+          key={slug}
+        >
+          {t(slug)}
+        </Dropdown.Item>
+      ))}
+
+      <Dropdown.Divider />
+      <Dropdown.Item>{t('help')}</Dropdown.Item>
+    </Dropdown.Content>
+  );
+
+  if (from !== 'nav') {
+    const Wrap = ({ children }) =>
+      from === 'settings' ? (
+        <Button>{children}</Button>
+      ) : (
+        <div className="is-flex" style={{ alignItems: 'center' }}>
+          {children}
+        </div>
+      );
+
     return (
-      <Dropdown up hoverable>
+      <Dropdown up={from === 'footer'} hoverable>
         <Dropdown.Trigger>
-          <div className="is-flex" style={{ alignItems: 'center' }}>
+          <Wrap>
             <LocaleSvg />
-            English
-          </div>
+            {t(i18n.language)}
+          </Wrap>
         </Dropdown.Trigger>
-        <Dropdown.Menu>
-          <Dropdown.Content>
-            {availableLanguages.map(({ slug, name }) => (
-              <Dropdown.Item key={slug}>{name}</Dropdown.Item>
-            ))}
-            <Dropdown.Divider />
-            <Dropdown.Item>{supportText}</Dropdown.Item>
-          </Dropdown.Content>
-        </Dropdown.Menu>
+        <Dropdown.Menu>{dropdownContent}</Dropdown.Menu>
       </Dropdown>
     );
   }
@@ -42,15 +58,9 @@ export default function LanguageSwitch({ footer }) {
     <Navbar.Item dropdown hoverable>
       <Navbar.Link arrowless>
         <LocaleSvg />
-        English
+        {t(i18n.language)}
       </Navbar.Link>
-      <Navbar.Dropdown>
-        {availableLanguages.map(({ slug, name }) => (
-          <Navbar.Item key={slug}>{name}</Navbar.Item>
-        ))}
-        <Navbar.Divider />
-        <Navbar.Item>{supportText}</Navbar.Item>
-      </Navbar.Dropdown>
+      <Navbar.Dropdown>{dropdownContent}</Navbar.Dropdown>
     </Navbar.Item>
   );
 }

@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { faSun, faMoon } from '@fortawesome/free-solid-svg-icons';
-import { Navbar } from 'rbx';
+import { Navbar, Button } from 'rbx';
 import { ThemeContext } from '../context/ThemeContext';
 import Switch from './Switch';
 import Loader from './Loader';
@@ -18,25 +18,27 @@ const iconClassMap = {
   },
 };
 
-const Span = ({ children, ...rest }) => <span {...rest}>{children}</span>;
-
-const ParentComponentMap = {
-  settings: Span,
-  footer: Span,
-  nav: Navbar.Item,
-};
-
 export default function ThemeSwitch({ from }) {
   const { isLoading, theme, toggleTheme } = useContext(ThemeContext);
 
-  const Component = ParentComponentMap[from];
   const id = `theme-switch-${from}`;
+
+  const Wrap = ({ children, ...rest }) =>
+    from === 'nav' ? (
+      <Navbar.Item {...rest}>{children}</Navbar.Item>
+    ) : from === 'settings' ? (
+      <Button type="button" {...rest}>
+        {children}
+      </Button>
+    ) : (
+      <span {...rest}>{children}</span>
+    );
 
   return (
     <>
       {isLoading && <Loader isFullPage color={theme} />}
 
-      <Component
+      <Wrap
         className={from !== 'nav' ? styles.clickableContainer : undefined}
         role="button"
         onClick={toggleTheme}
@@ -53,7 +55,7 @@ export default function ThemeSwitch({ from }) {
           aria-labelledby={id}
         />
         <Icon icon={faMoon} color={iconClassMap.moon[theme]} />
-      </Component>
+      </Wrap>
     </>
   );
 }
