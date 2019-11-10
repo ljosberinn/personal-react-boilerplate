@@ -41,7 +41,7 @@ export const ACTIVATE_ACCOUNT = {
 export const PRIVACY_POLICY = {
   routerPath: '/privacy-policy',
   normalizedPath: '/privacy-policy',
-  title: 'routes:priacyPolicy',
+  title: 'routes:privacyPolicy',
   icon: faUserSecret,
 };
 
