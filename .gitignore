@@ -24,3 +24,7 @@ yarn-error.log*
 package-lock.json
 
 .env
+
+# Local Netlify folder
+.netlify
+built-lambda
