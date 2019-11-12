@@ -11,10 +11,11 @@
     "firebase": "^7.3.0",
     "i18next": "^19.0.0",
     "i18next-browser-languagedetector": "^4.0.1",
+    "i18next-xhr-backend": "^3.2.2",
     "rbx": "^2.2.0",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
-    "react-firebase-hooks": "^2.1.0",
+    "react-firebase-hooks": "^2.1.1",
     "react-helmet": "^5.2.1",
     "react-i18next": "^11.1.0",
     "react-reveal": "^1.2.2",
@@ -23,11 +24,17 @@
   },
   "devDependencies": {
     "@testing-library/react": "^9.3.2",
-    "node-sass": "^4.13.0"
+    "http-proxy-middleware": "^0.20.0",
+    "netlify-lambda": "^1.6.3",
+    "node-sass": "^4.13.0",
+    "npm-run-all": "^4.1.5"
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "run-p build:**",
+    "build:app": "react-scripts build",
+    "build:lambda": "netlify-lambda build src/lambda",
+    "lambda": "netlify-lambda serve src/lambda",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
