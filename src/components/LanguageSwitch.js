@@ -9,6 +9,8 @@ const availableLanguages = ['de', 'en', 'fr', 'jp', 'ru', 'es'].sort();
 export default function LanguageSwitch({ from }) {
   const { i18n, t } = useTranslation('languages');
 
+  const currentLanguage = i18n.languages[0];
+
   const handleLanguageChange = useCallback(
     slug => () => i18n.changeLanguage(slug),
     [i18n],
@@ -18,7 +20,7 @@ export default function LanguageSwitch({ from }) {
     <Dropdown.Content>
       {availableLanguages.map(slug => (
         <Dropdown.Item
-          active={slug === i18n.language}
+          active={slug === currentLanguage}
           onClick={handleLanguageChange(slug)}
           key={slug}
         >
@@ -46,7 +48,7 @@ export default function LanguageSwitch({ from }) {
         <Dropdown.Trigger>
           <Wrap>
             <LocaleSvg />
-            {t(i18n.language)}
+            {t(currentLanguage)}
           </Wrap>
         </Dropdown.Trigger>
         <Dropdown.Menu>{dropdownContent}</Dropdown.Menu>
@@ -58,7 +60,7 @@ export default function LanguageSwitch({ from }) {
     <Navbar.Item dropdown hoverable>
       <Navbar.Link arrowless>
         <LocaleSvg />
-        {t(i18n.language)}
+        {t(currentLanguage)}
       </Navbar.Link>
       <Navbar.Dropdown>{dropdownContent}</Navbar.Dropdown>
     </Navbar.Item>
