@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import { Navbar as RBXNavbar, Button } from 'rbx';
 import LanguageSwitch from './LanguageSwitch';
 import Icon from './Icon';
@@ -8,7 +8,6 @@ import { faGithub, faDiscord } from '@fortawesome/free-brands-svg-icons';
 import { NavLink, Link } from 'react-router-dom';
 import { useAuth } from '../hooks';
 import { useHistory } from 'react-router-dom';
-import Loader from './Loader';
 import { useTranslation } from 'react-i18next';
 import * as ROUTES from '../constants/routes';
 
@@ -40,9 +39,7 @@ export default function Navbar() {
       </RBXNavbar.Brand>
       <RBXNavbar.Menu>
         <RBXNavbar.Segment align="end">
-          <Suspense fallback={<Loader />}>
-            <LanguageSwitch from="nav" />
-          </Suspense>
+          <LanguageSwitch from="nav" />
 
           <ThemeSwitch from="nav" />
 

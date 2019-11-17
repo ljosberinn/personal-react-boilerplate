@@ -1,9 +1,8 @@
-import React, { useContext, Suspense } from 'react';
+import React, { useContext } from 'react';
 import { Footer as RBXFooter, Container, Column, Generic } from 'rbx';
 import { NavLink } from 'react-router-dom';
 import ExternalLink from './ExternalLink';
 import LanguageSwitch from './LanguageSwitch';
-import Loader from './Loader';
 import Icon from './Icon';
 import ThemeSwitch from './ThemeSwitch';
 import * as ROUTES from '../constants/routes';
@@ -103,9 +102,7 @@ export default function Footer() {
               </li>
 
               <li>
-                <Suspense fallback={<Loader />}>
-                  <LanguageSwitch from="footer" />
-                </Suspense>
+                <LanguageSwitch from="footer" />
               </li>
               <li>
                 <ExternalLink href="//discord.gg">
