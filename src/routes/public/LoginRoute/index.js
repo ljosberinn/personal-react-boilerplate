@@ -1,35 +1,30 @@
-import React, { useState, useCallback, useContext } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import React, { useState, useCallback } from 'react';
 import { validate, pattern } from '../../../utils/validators';
+import {
+  Card,
+  Section,
+  Title,
+  Field,
+  Divider,
+  Label,
+  Control,
+  Input,
+  Column,
+  Button,
+  Help,
+} from 'rbx';
+import Helmet from 'react-helmet';
+import { Fade } from 'react-reveal';
+import Shake from 'react-reveal/Shake';
+import RedirectToHome from '../../RedirectToHome';
+import { Link, useParams } from 'react-router-dom';
 import {
   ValidityIconLeft,
   Checkbox,
   GoogleSignInButton,
+  GithubSignInButton,
 } from '../../../components';
-import {
-  Card,
-  Column,
-  Title,
-  Label,
-  Help,
-  Field,
-  Button,
-  Control,
-  Section,
-  Input,
-  Divider,
-} from 'rbx';
-import { Fade } from 'react-reveal';
-import Shake from 'react-reveal/Shake';
-import Helmet from 'react-helmet';
-import { AuthContext } from '../../../context/AuthContext';
-import RedirectToHome from '../../RedirectToHome';
-
-const errors = {
-  'mail.invalid': 'Please enter a valid mail.',
-  'password.insecure': 'Please provide a valid password.',
-  'data.invalid': 'The provided mail or password is invalid.',
-};
+import { useIdentityContext } from 'react-netlify-identity';
 
 const initialState = {
   mail: '',
@@ -37,10 +32,13 @@ const initialState = {
   rememberMe: false,
 };
 
-function LoginRoute() {
-  const { user, loginWithMailAndPassword, loginWithGoogle } = useContext(
-    AuthContext,
-  );
+const errors = {
+  'No user found with this email': 'unknown_user',
+  'Email not confirmed': 'mail_not_confirmed',
+};
+
+export default function LoginRoute() {
+  const { isLoggedIn, loginUser } = useIdentityContext();
 
   const params = useParams();
 
@@ -70,8 +68,20 @@ function LoginRoute() {
       return initialState;
     })(),
   );
+
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+
+  const handleSubmit = async event => {
+    event.preventDefault();
+
+    try {
+      await loginUser(mail, password, data.rememberMe);
+    } catch (error) {
+      setError(error);
+      console.error(error);
+    }
+  };
 
   const handleChange = useCallback(
     ({ target: { name, type, value, checked } }) => {
@@ -86,38 +96,9 @@ function LoginRoute() {
     [],
   );
 
-  const handleSubmit = useCallback(
-    async event => {
-      event.preventDefault();
-
-      setIsLoading(true);
-
-      if (data.rememberMe) {
-        localStorage.setItem('brandName', JSON.stringify({ mail: data.mail }));
-      }
-
-      try {
-        await loginWithMailAndPassword(data.mail, data.password);
-      } catch (error) {
-        if (data.rememberMe) {
-          localStorage.removeItem('brandName');
-        }
-        setError('data.invalid');
-        setIsLoading(false);
-      }
-    },
-    [data.mail, data.password, data.rememberMe, loginWithMailAndPassword],
-  );
-
-  const proxyGoogleSignIn = useCallback(async () => {
-    setIsLoading(true);
-    try {
-      await loginWithGoogle();
-    } catch (error) {
-      console.error(error);
-      setIsLoading(false);
-    }
-  }, [loginWithGoogle]);
+  if (isLoggedIn) {
+    return <RedirectToHome />;
+  }
 
   const { mail, password } = data;
 
@@ -126,10 +107,6 @@ function LoginRoute() {
     password.length === 0 ||
     !validate.mail(mail) ||
     !validate.password(password);
-
-  if (user) {
-    return <RedirectToHome />;
-  }
 
   return (
     <>
@@ -158,7 +135,9 @@ function LoginRoute() {
                         <Column size={11}>
                           <Shake duration={500} when={error}>
                             <fieldset disabled={isLoading}>
-                              <GoogleSignInButton onClick={proxyGoogleSignIn} />
+                              <GoogleSignInButton />
+
+                              <GithubSignInButton />
 
                               <Divider data-content="or" />
 
@@ -179,11 +158,11 @@ function LoginRoute() {
                                   />
                                   <ValidityIconLeft type="mail" value={mail} />
                                 </Control>
-                                {error && error.indexOf('mail') > -1 && (
+                                {/*error && error.indexOf('mail') > -1 && (
                                   <Fade>
                                     <Help color="danger">{errors[error]}</Help>
                                   </Fade>
-                                )}
+                                )*/}
                               </Field>
 
                               <Field>
@@ -206,11 +185,11 @@ function LoginRoute() {
                                   />
                                 </Control>
 
-                                {error && error.indexOf('password') > -1 && (
+                                {/*error && error.indexOf('password') > -1 && (
                                   <Fade>
                                     <Help color="danger">{errors[error]}</Help>
                                   </Fade>
-                                )}
+                                )*/}
                               </Field>
 
                               <Field>
@@ -226,11 +205,11 @@ function LoginRoute() {
                                     Remember me
                                   </Label>
                                 </Control>
-                                {error && error === 'data.invalid' && (
+                                {/*error && error === 'data.invalid' && (
                                   <Fade>
                                     <Help color="danger">{errors[error]}</Help>
                                   </Fade>
-                                )}
+                                )*/}
                               </Field>
 
                               <Button
@@ -238,6 +217,7 @@ function LoginRoute() {
                                 state={isLoading ? 'loading' : undefined}
                                 fullwidth
                                 disabled={isDisabled}
+                                type="submit"
                               >
                                 Sign in
                               </Button>
@@ -274,5 +254,3 @@ function LoginRoute() {
     </>
   );
 }
-
-export default LoginRoute;

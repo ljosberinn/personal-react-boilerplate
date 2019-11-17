@@ -2,16 +2,17 @@ import React, { StrictMode } from 'react';
 import { render } from 'react-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import { ThemeProvider, AuthContext } from './context';
+import { ThemeProvider } from './context';
 import './i18n';
+import { IdentityContextProvider } from 'react-netlify-identity';
 
 render(
   <StrictMode>
-    <AuthContext>
+    <IdentityContextProvider url={process.env.REACT_APP_SITE_URL}>
       <ThemeProvider>
         <App />
       </ThemeProvider>
-    </AuthContext>
+    </IdentityContextProvider>
   </StrictMode>,
   document.getElementById('root'),
 );

@@ -6,6 +6,7 @@ import {
   Checkbox,
   Field,
   GoogleSignInButton,
+  GithubSignInButton,
 } from '../../../components';
 import PasswordSelection from './PasswordSelection';
 import {
@@ -30,11 +31,11 @@ import { Fade } from 'react-reveal';
 import * as ROUTES from '../../../constants/routes';
 import Helmet from 'react-helmet';
 import { errors } from './errors';
-import { useAuth } from '../../../hooks';
 import RedirectToHome from '../../RedirectToHome';
+import { useIdentityContext } from 'react-netlify-identity';
 
 export default function RegisterRoute() {
-  const { registerWithMailAndPassword, loginWithGoogle, user } = useAuth();
+  const { signupUser, isLoggedIn } = useIdentityContext();
 
   const [data, setData] = useState({
     mail: '',
@@ -64,28 +65,17 @@ export default function RegisterRoute() {
       setIsLoading(true);
 
       try {
-        await registerWithMailAndPassword(data.mail, data.password);
+        await signupUser(data.mail, data.password);
         setSuccsesfullyRegistered(true);
       } catch (error) {
         setError(error.code);
         setIsLoading(false);
       }
     },
-    [registerWithMailAndPassword, data.mail, data.password],
+    [signupUser, data.mail, data.password],
   );
 
-  const proxyGoogleSignIn = useCallback(async () => {
-    setIsLoading(true);
-
-    try {
-      await loginWithGoogle();
-    } catch (error) {
-      console.error(error);
-      setIsLoading(false);
-    }
-  }, [loginWithGoogle]);
-
-  if (user) {
+  if (isLoggedIn) {
     return <RedirectToHome />;
   }
 
@@ -124,7 +114,6 @@ export default function RegisterRoute() {
                               <RegistrationForm
                                 {...{
                                   handleChange,
-                                  proxyGoogleSignIn,
                                   error,
                                   isLoading,
                                   ...data,
@@ -170,7 +159,6 @@ function RegistrationSuccess({ mail }) {
 function RegistrationForm({
   error,
   handleChange,
-  proxyGoogleSignIn,
   isLoading,
   mail,
   password,
@@ -193,7 +181,8 @@ function RegistrationForm({
   return (
     <Shake duration={500} when={error}>
       <fieldset disabled={isLoading}>
-        <GoogleSignInButton onClick={proxyGoogleSignIn} />
+        <GoogleSignInButton />
+        <GithubSignInButton />
 
         <Divider data-content="or" />
 

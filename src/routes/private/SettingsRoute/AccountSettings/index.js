@@ -1,5 +1,4 @@
-import React, { useContext } from 'react';
-import { AuthContext } from '../../../../context/AuthContext';
+import React from 'react';
 import { Content, Title, Message } from 'rbx';
 import RedirectToHome from '../../../RedirectToHome';
 import DeleteAccount from './DeleteAccount';
@@ -7,16 +6,15 @@ import ChangePassword from './ChangePassword';
 import { Icon } from '../../../../components';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { useTranslation } from 'react-i18next';
+import { useIdentityContext } from 'react-netlify-identity';
 
 export default function AccountSettings() {
-  const { user } = useContext(AuthContext);
+  const { user } = useIdentityContext();
   const { t } = useTranslation('settings');
 
   if (!user) {
     return <RedirectToHome />;
   }
-
-  const isGoogleUser = user && user.providerData[0].providerId === 'google.com';
 
   return (
     <Content>
@@ -24,12 +22,8 @@ export default function AccountSettings() {
         {t('accountSettings')}
       </Title>
 
-      {!isGoogleUser && (
-        <>
-          <ChangePassword user={user} />
-          <hr />
-        </>
-      )}
+      <ChangePassword user={user} />
+      <hr />
 
       <Message color="danger">
         <Message.Header>

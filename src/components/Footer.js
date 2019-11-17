@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Footer as RBXFooter, Container, Column, Generic } from 'rbx';
 import { NavLink } from 'react-router-dom';
 import ExternalLink from './ExternalLink';
@@ -7,8 +7,8 @@ import Icon from './Icon';
 import ThemeSwitch from './ThemeSwitch';
 import * as ROUTES from '../constants/routes';
 import { faGithub, faDiscord } from '@fortawesome/free-brands-svg-icons';
-import { AuthContext } from '../context/AuthContext';
 import { useTranslation } from 'react-i18next';
+import { useIdentityContext } from 'react-netlify-identity';
 
 function Link({ children, ...rest }) {
   return (
@@ -19,7 +19,7 @@ function Link({ children, ...rest }) {
 }
 
 export default function Footer() {
-  const { user } = useContext(AuthContext);
+  const { isLoggedIn } = useIdentityContext();
   const { t } = useTranslation(['footer', 'routes']);
 
   return (
@@ -34,7 +34,7 @@ export default function Footer() {
               <li>
                 <Link to="/">{t(ROUTES.LANDING_PAGE.title)}</Link>
               </li>
-              {!user ? (
+              {!isLoggedIn ? (
                 <>
                   <li>
                     <Link to={ROUTES.REGISTER.normalizedPath}>
