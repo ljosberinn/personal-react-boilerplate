@@ -11,8 +11,10 @@ import Navbar from './Navbar';
 import Footer from './Footer';
 import ThemeSwitch from './ThemeSwitch';
 import GoogleSignInButton from './GoogleSignInButton';
+import GithubSignInButton from './GithubSignInButton';
 
 export {
+  GithubSignInButton,
   Checkbox,
   Loader,
   Required,

@@ -1,23 +1,22 @@
 import React from 'react';
-import { Button, Icon } from 'rbx';
+import { Button } from 'rbx';
 import styles from './SignInButton.module.scss';
-import { ReactComponent as GoogleSvg } from '../assets/svg/GoogleLogo.svg';
 import { useIdentityContext } from 'react-netlify-identity';
+import { faGithub } from '@fortawesome/free-brands-svg-icons';
+import Icon from './Icon';
 
-export default function GoogleSignInButton() {
+export default function GithubSignInButton() {
   const { loginProvider } = useIdentityContext();
 
   return (
     <Button
       type="button"
-      onClick={() => loginProvider('google')}
+      onClick={() => loginProvider('github')}
       fullwidth
       className={styles.button}
     >
-      <Icon>
-        <GoogleSvg />
-      </Icon>
-      <span>Sign in with Google</span>
+      <Icon icon={faGithub} />
+      <span>Sign in with GitHub</span>
     </Button>
   );
 }
