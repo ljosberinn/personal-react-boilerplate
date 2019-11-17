@@ -4,6 +4,7 @@ import { initReactI18next } from 'react-i18next';
 import XHR from 'i18next-xhr-backend';
 import LocalStorageBackend from 'i18next-localstorage-backend';
 import Backend from 'i18next-chained-backend';
+import BackendAdapter from 'i18next-multiload-backend-adapter';
 
 i18n
   .use(Backend)
@@ -21,13 +22,16 @@ i18n
       order: ['localStorage', 'navigator'], // in which order to search for a language
     },
     backend: {
-      backends: [LocalStorageBackend, XHR], // order defines lookup pattern
-      backendOptions: [
-        { prefix: 'i18next_translation_' },
-        {
-          loadPath: '.netlify/functions/locales?lng={{lng}}&ns={{ns}}',
-        },
-      ],
+      backends: [
+        LocalStorageBackend,
+        new BackendAdapter(null, {
+          backend: new XHR(null, {
+            loadPath: '.netlify/functions/locales?lng={{lng}}&ns={{ns}}',
+            allowMultiloading: true,
+          }),
+        }),
+      ], // order defines lookup pattern
+      backendOptions: [{ prefix: 'i18next_translation_' }, {}],
     },
     ns: [], // removes 'translation' default key from backend query,
     react: {
