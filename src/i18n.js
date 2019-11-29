@@ -16,6 +16,7 @@ i18n
     interpolation: {
       escapeValue: false, // not needed with react
     },
+    load: 'languageOnly',
     detection: {
       lookupLocalStorage: 'languagePreference', // key to store in
       caches: ['localStorage'], // where to cache
@@ -34,9 +35,4 @@ i18n
       backendOptions: [{ prefix: 'i18next_translation_' }, {}],
     },
     ns: [], // removes 'translation' default key from backend query,
-    react: {
-      wait: false,
-      useSuspense: false,
-    },
-    initImmediate: false,
   });
