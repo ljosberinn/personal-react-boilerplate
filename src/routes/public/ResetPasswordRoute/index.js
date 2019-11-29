@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { validate } from '../../../utils/validators';
-import { ValidityIconLeft, Field } from '../../../components';
+import { ValidityIconLeft, Field, TemplatedHelmet } from '../../../components';
 import {
   Column,
   Card,
@@ -13,7 +13,6 @@ import {
   Input,
   Content,
 } from 'rbx';
-import Helmet from 'react-helmet';
 export default function ResetPasswordRoute() {
   const [data, setData] = useState({
     mail: '',
@@ -41,9 +40,9 @@ export default function ResetPasswordRoute() {
 
   return (
     <>
-      <Helmet>
-        <title>Reset Password | {process.env.REACT_APP_BRAND_NAME}</title>
-      </Helmet>
+      <TemplatedHelmet>
+        <title>Reset Password</title>
+      </TemplatedHelmet>
       <Section className="reset-password-bg">
         <Column.Group centered>
           <Column widescreen={{ size: 5 }} tablet={{ size: 8 }}>

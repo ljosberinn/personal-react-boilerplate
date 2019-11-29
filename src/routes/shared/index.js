@@ -11,3 +11,7 @@ export const SHARED_ROUTES = {
     ),
   ),
 };
+
+export const LANGUAGE_ROUTE = lazy(() =>
+  import(/* webpackChunkName: "shared.language" */ './LanguageRoute'),
+);

@@ -7,6 +7,7 @@ import {
   Field,
   GoogleSignInButton,
   GithubSignInButton,
+  TemplatedHelmet,
 } from '../../../components';
 import PasswordSelection from './PasswordSelection';
 import {
@@ -29,7 +30,6 @@ import { MailSvg } from '../../../assets/svg';
 import Shake from 'react-reveal/Shake';
 import { Fade } from 'react-reveal';
 import * as ROUTES from '../../../constants/routes';
-import Helmet from 'react-helmet';
 import { errors } from './errors';
 import RedirectToHome from '../../RedirectToHome';
 import { useIdentityContext } from 'react-netlify-identity';
@@ -81,9 +81,9 @@ export default function RegisterRoute() {
 
   return (
     <>
-      <Helmet>
-        <title>Registration | {process.env.REACT_APP_BRAND_NAME}</title>
-      </Helmet>
+      <TemplatedHelmet>
+        <title>Registration</title>
+      </TemplatedHelmet>
       <Section className="register-bg">
         <Column.Group centered>
           <Column widescreen={{ size: 5 }} tablet={{ size: 8 }}>
@@ -181,8 +181,14 @@ function RegistrationForm({
   return (
     <Shake duration={500} when={error}>
       <fieldset disabled={isLoading}>
-        <GoogleSignInButton />
-        <GithubSignInButton />
+        <Column.Group>
+          <Column>
+            <GoogleSignInButton />
+          </Column>
+          <Column>
+            <GithubSignInButton />
+          </Column>
+        </Column.Group>
 
         <Divider data-content="or" />
 

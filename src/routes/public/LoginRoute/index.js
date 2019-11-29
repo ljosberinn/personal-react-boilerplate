@@ -13,7 +13,6 @@ import {
   Button,
   Help,
 } from 'rbx';
-import Helmet from 'react-helmet';
 import { Fade } from 'react-reveal';
 import Shake from 'react-reveal/Shake';
 import RedirectToHome from '../../RedirectToHome';
@@ -22,6 +21,7 @@ import {
   ValidityIconLeft,
   Checkbox,
   GoogleSignInButton,
+  TemplatedHelmet,
   GithubSignInButton,
 } from '../../../components';
 import { useIdentityContext } from 'react-netlify-identity';
@@ -110,9 +110,9 @@ export default function LoginRoute() {
 
   return (
     <>
-      <Helmet>
-        <title>Login | {process.env.REACT_APP_BRAND_NAME}</title>
-      </Helmet>
+      <TemplatedHelmet>
+        <title>Login</title>
+      </TemplatedHelmet>
       <Section className="login-bg">
         <Column.Group centered>
           <Column widescreen={{ size: 5 }} tablet={{ size: 8 }}>
@@ -135,9 +135,14 @@ export default function LoginRoute() {
                         <Column size={11}>
                           <Shake duration={500} when={error}>
                             <fieldset disabled={isLoading}>
-                              <GoogleSignInButton />
-
-                              <GithubSignInButton />
+                              <Column.Group>
+                                <Column>
+                                  <GoogleSignInButton />
+                                </Column>
+                                <Column>
+                                  <GithubSignInButton />
+                                </Column>
+                              </Column.Group>
 
                               <Divider data-content="or" />
 

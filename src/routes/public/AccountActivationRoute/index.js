@@ -4,7 +4,7 @@ import { ConfirmationSvg, ErrorSvg, LoadingSvg } from '../../../assets/svg';
 import { Column, Title, Image } from 'rbx';
 import { Link } from 'react-router-dom';
 import { Fade } from 'react-reveal';
-import Helmet from 'react-helmet';
+import { TemplatedHelmet } from '../../../components';
 
 const headings = {
   pending: 'Activating your account...',
@@ -47,9 +47,9 @@ export default function AccountActivationRoute() {
 
   return (
     <>
-      <Helmet>
-        <title>Account Activation | {process.env.REACT_APP_BRAND_NAME}</title>
-      </Helmet>
+      <TemplatedHelmet>
+        <title>Account Activation</title>
+      </TemplatedHelmet>
       <div className="has-content-spaced-evenly">
         <Title textAlign="centered">{headings[verification]}</Title>
         <Fade>

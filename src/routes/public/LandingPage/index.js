@@ -1,13 +1,11 @@
 import React from 'react';
 import { Title } from 'rbx';
-import Helmet from 'react-helmet';
+import { TemplatedHelmet } from '../../../components';
 
 export default function LandingPage() {
   return (
     <>
-      <Helmet>
-        <title>{process.env.REACT_APP_BRAND_NAME}</title>
-      </Helmet>
+      <TemplatedHelmet />
       <div id="hero" className="level-item">
         <div className="hero-content is-flex">
           <Title textColor="primary" textWeight="bold">
