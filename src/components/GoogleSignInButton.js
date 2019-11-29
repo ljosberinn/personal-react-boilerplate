@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Icon } from 'rbx';
-import styles from './SignInButton.module.scss';
+import { button } from './SignInButton.module.scss';
 import { ReactComponent as GoogleSvg } from '../assets/svg/GoogleLogo.svg';
 import { useIdentityContext } from 'react-netlify-identity';
 
@@ -12,7 +12,7 @@ export default function GoogleSignInButton() {
       type="button"
       onClick={() => loginProvider('google')}
       fullwidth
-      className={styles.button}
+      className={button}
     >
       <Icon>
         <GoogleSvg />
