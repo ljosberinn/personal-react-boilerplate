@@ -12,6 +12,7 @@ import Footer from './Footer';
 import ThemeSwitch from './ThemeSwitch';
 import GoogleSignInButton from './GoogleSignInButton';
 import GithubSignInButton from './GithubSignInButton';
+import TemplatedHelmet from './TemplatedHelmet';
 
 export {
   GithubSignInButton,
@@ -28,4 +29,5 @@ export {
   GoogleSignInButton,
   LanguageSwitch,
   ThemeSwitch,
+  TemplatedHelmet,
 };
