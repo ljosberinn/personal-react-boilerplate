@@ -1,5 +1,5 @@
 import React from 'react';
-import { Section, Title, Box, Column } from 'rbx';
+import { Section, Title, Column } from 'rbx';
 import AccountSettings from './AccountSettings';
 import SiteSettings from './SiteSettings';
 import { useTranslation } from 'react-i18next';
@@ -20,14 +20,10 @@ export default function Settings() {
           </Column>
 
           <Column size={5}>
-            <Box>
-              <SiteSettings />
-            </Box>
+            <SiteSettings />
           </Column>
           <Column size={5}>
-            <Box>
-              <AccountSettings />
-            </Box>
+            <AccountSettings />
           </Column>
         </Column.Group>
       </Section>

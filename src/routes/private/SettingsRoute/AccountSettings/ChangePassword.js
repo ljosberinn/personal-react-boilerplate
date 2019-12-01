@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { Title, Button, Help, Message } from 'rbx';
+import { Title, Button, Help, Message, Box } from 'rbx';
 import PasswordSelection from '../../../public/RegisterRoute/PasswordSelection';
 import { validate } from '../../../../utils/validators';
 import { Fade } from 'react-reveal';
@@ -63,30 +63,33 @@ export default function ChangePassword({ user }) {
   }
 
   return (
-    <form spellCheck={false} onSubmit={handleSubmit}>
-      <legend>
-        <Title as="h3">{t('changePassword')}</Title>
-      </legend>
+    <Box>
+      <form spellCheck={false} onSubmit={handleSubmit}>
+        <legend>
+          <Title as="h3">{t('changePassword')}</Title>
+        </legend>
 
-      <fieldset disabled={isLoading}>
-        <PasswordSelection
-          {...{ password, confirmPassword, handleChange, isLoading }}
-        />
+        <fieldset disabled={isLoading}>
+          <PasswordSelection
+            {...{ password, confirmPassword, handleChange, isLoading }}
+          />
 
-        {error && (
-          <Fade>
-            <Help color="danger">{error}</Help>
-          </Fade>
-        )}
+          {error && (
+            <Fade>
+              <Help color="danger">{error}</Help>
+            </Fade>
+          )}
 
-        <Button
-          state={isLoading ? 'loading' : undefined}
-          color="primary"
-          disabled={!passwordsAreMatching}
-        >
-          {t('changePassword')}
-        </Button>
-      </fieldset>
-    </form>
+          <Button
+            type="submit"
+            state={isLoading ? 'loading' : undefined}
+            color="primary"
+            disabled={!passwordsAreMatching}
+          >
+            {t('changePassword')}
+          </Button>
+        </fieldset>
+      </form>
+    </Box>
   );
 }
