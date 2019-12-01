@@ -6,10 +6,14 @@ export const PUBLIC_ROUTES = {
     import(/* webpackChunkName: "public.landingpage" */ './LandingPage'),
   ),
   [ROUTES.REGISTER.routerPath]: lazy(() =>
-    import(/* webpackChunkName: "public.register" */ './RegisterRoute'),
+    import(
+      /* webpackChunkName: "public.register" */ /* webpackPrefetch: true */ './RegisterRoute'
+    ),
   ),
   [ROUTES.LOGIN.routerPath]: lazy(() =>
-    import(/* webpackChunkName: "public.login" */ './LoginRoute'),
+    import(
+      /* webpackChunkName: "public.login" */ /* webpackPrefetch: true */ './LoginRoute'
+    ),
   ),
   [ROUTES.RESET_PASSWORD.routerPath]: lazy(() =>
     import(
