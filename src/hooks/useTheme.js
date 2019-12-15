@@ -23,7 +23,8 @@ const hasLocalStorage = (() => {
         // Firefox
         e.name === 'NS_ERROR_DOM_QUOTA_REACHED') &&
       // acknowledge QuotaExceededError only if there's something already stored
-      (localStorage && localStorage.length !== 0)
+      localStorage &&
+      localStorage.length !== 0
     );
   }
 })();
@@ -73,7 +74,9 @@ export default function useTheme() {
   const detectedTheme = useDetectColorScheme();
   const storedTheme = getStoredTheme();
 
-  const [theme, setTheme] = useState(storedTheme ? storedTheme : detectedTheme);
+  const [theme, setTheme] = useState(
+    storedTheme ? storedTheme : detectedTheme ? detectedTheme : 'light',
+  );
 
   const [didError, setDidError] = useState(false);
   const [isLoading, setIsLoading] = useState(theme === THEME_NAMES.DARK);
