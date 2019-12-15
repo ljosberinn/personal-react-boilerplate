@@ -5,7 +5,7 @@ import Icon from './Icon';
 import ThemeSwitch from './ThemeSwitch';
 import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { faGithub, faDiscord } from '@fortawesome/free-brands-svg-icons';
-import { NavLink, Link } from 'react-router-dom';
+import { NavLink, Link, useLocation } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import * as ROUTES from '../constants/routes';
@@ -20,7 +20,7 @@ const LogoIpsumSvg = () => (
 );
 
 export default function Navbar() {
-  const { isLoggedIn, logoutUser } = useIdentityContext();
+  const { isLoggedIn, logoutUser, isConfirmedUser } = useIdentityContext();
   const history = useHistory();
   const { t } = useTranslation(['navigation', 'routes']);
 
@@ -72,17 +72,11 @@ export default function Navbar() {
               </NavButton>
             </Button.Group>
           ) : (
-            <Button.Group>
-              <NavButton color="primary" to={ROUTES.SETTINGS.normalizedPath}>
-                <Icon icon={ROUTES.SETTINGS.icon} className="is-spinning" />
-                <span>{t('routes:settings')}</span>
-              </NavButton>
-
-              <Button color="danger" onClick={handleLogout}>
-                <Icon icon={faSignOutAlt} />
-                <span>{t('logout')}</span>
-              </Button>
-            </Button.Group>
+            <AuthenticatedNavButtons
+              isConfirmedUser={isConfirmedUser}
+              handleLogout={handleLogout}
+              t={t}
+            />
           )}
         </RBXNavbar.Segment>
       </RBXNavbar.Menu>
@@ -95,5 +89,35 @@ function NavButton({ children, ...rest }) {
     <Button as={NavLink} {...rest}>
       {children}
     </Button>
+  );
+}
+
+function AuthenticatedNavButtons({ isConfirmedUser, handleLogout, t }) {
+  const { pathname } = useLocation();
+
+  if (!isConfirmedUser) {
+    return null;
+  }
+
+  return (
+    <Button.Group>
+      <NavButton color="primary" to={ROUTES.SETTINGS.normalizedPath}>
+        <Icon
+          icon={ROUTES.SETTINGS.icon}
+          className={[
+            'is-spinning',
+            pathname === ROUTES.SETTINGS.normalizedPath && 'active',
+          ]
+            .filter(Boolean)
+            .join(' ')}
+        />
+        <span>{t('routes:settings')}</span>
+      </NavButton>
+
+      <Button color="danger" onClick={handleLogout}>
+        <Icon icon={faSignOutAlt} />
+        <span>{t('logout')}</span>
+      </Button>
+    </Button.Group>
   );
 }
