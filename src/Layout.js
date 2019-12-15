@@ -8,7 +8,6 @@ export default function Layout({ children }) {
       <Column.Group centered as="header">
         <Column
           widescreen={{ size: 9 }}
-          desktop={{ size: 9 }}
           tablet={{ size: 12 }}
           mobile={{ size: 12 }}
         >
