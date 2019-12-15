@@ -96,3 +96,28 @@ a span.icon {
 .message-body p:last-of-type {
   margin-bottom: initial !important;
 }
+
+// fixes y-overflow on mobile
+header.columns {
+  margin-bottom: 0 !important;
+
+  @media screen and (max-width: 768px) {
+    margin-right: 0;
+    margin-left: 0;
+  }
+
+  .column {
+    padding-bottom: 0;
+
+    @media screen and (max-width: 768px) {
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
+}
+
+main {
+  display: flex;
+  flex: 1 1 0%;
+  min-height: calc(100vh - 282px - 64px);
+}

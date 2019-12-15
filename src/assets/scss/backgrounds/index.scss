@@ -7,6 +7,10 @@
   flex-direction: row;
   width: 100%;
 
+  @media screen and (max-width: 768px) {
+    background-size: cover;
+  }
+
   .card,
   .box {
     backdrop-filter: blur(5px);

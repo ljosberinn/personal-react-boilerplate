@@ -16,7 +16,7 @@ export default function Layout({ children }) {
           </Suspense>
         </Column>
       </Column.Group>
-      <main style={{ flex: 1, display: 'flex' }}>{children}</main>
+      <main>{children}</main>
       <Suspense fallback={null}>
         <Footer />
       </Suspense>
