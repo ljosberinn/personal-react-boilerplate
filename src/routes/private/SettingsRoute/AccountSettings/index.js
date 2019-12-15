@@ -3,7 +3,6 @@ import { Content, Title, Message, Box } from 'rbx';
 import RedirectToHome from '../../../RedirectToHome';
 //import DeleteAccount from './DeleteAccount';
 import ChangePassword from './ChangePassword';
-import ChangeMail from './ChangeMail';
 //import { Icon } from '../../../../components';
 //import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { useTranslation } from 'react-i18next';
@@ -15,10 +14,6 @@ export default function AccountSettings() {
 
   if (!user) {
     return <RedirectToHome />;
-  }
-
-  async function updateMail(email) {
-    await updateUser({ fields: { email } });
   }
 
   async function updatePassword(password) {
@@ -34,10 +29,7 @@ export default function AccountSettings() {
       </Box>
 
       {user.app_metadata.provider === 'email' && (
-        <>
-          <ChangeMail updateMail={updateMail} />
-          <ChangePassword updatePassword={updatePassword} />
-        </>
+        <ChangePassword updatePassword={updatePassword} />
       )}
 
       {/* 
