@@ -9,6 +9,7 @@
 }
 
 .button:hover .is-spinning,
-.is-spinning:hover {
+.is-spinning:hover,
+.is-spinning.active {
   animation: spin 1s infinite linear;
 }
