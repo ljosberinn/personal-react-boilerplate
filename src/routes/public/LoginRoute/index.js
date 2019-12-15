@@ -13,7 +13,8 @@ import {
   Button,
   Help,
 } from 'rbx';
-import { Fade } from 'react-reveal';
+import { Fade } from 'react-awesome-reveal';
+// TODO: remove once https://github.com/dennismorello/react-awesome-reveal/issues/14 might be resolved
 import Shake from 'react-reveal/Shake';
 import RedirectToHome from '../../RedirectToHome';
 import { Link, useParams } from 'react-router-dom';
@@ -33,8 +34,9 @@ const initialState = {
 };
 
 const errors = {
+  'Email not confirmed': 'mail_unconfirmed',
   'No user found with this email': 'unknown_user',
-  'Email not confirmed': 'mail_not_confirmed',
+  'Invalid Password': 'password_invalid',
 };
 
 export default function LoginRoute() {
@@ -53,7 +55,9 @@ export default function LoginRoute() {
         };
       }
 
-      const storedData = localStorage.getItem('brandName');
+      const storedData = localStorage.getItem(
+        process.env.REACT_APP_BRAND_NAME.split(' ').join('-'),
+      );
 
       if (storedData) {
         const { mail } = JSON.parse(storedData);
@@ -78,7 +82,15 @@ export default function LoginRoute() {
     try {
       await loginUser(mail, password, data.rememberMe);
     } catch (error) {
-      setError(error);
+      if (error?.json?.error_description) {
+        const { error_description } = error.json;
+        setError(
+          errors[error_description]
+            ? errors[error_description]
+            : 'unknown_error',
+        );
+      }
+
       console.error(error);
     }
   };
@@ -163,11 +175,11 @@ export default function LoginRoute() {
                                   />
                                   <ValidityIconLeft type="mail" value={mail} />
                                 </Control>
-                                {/*error && error.indexOf('mail') > -1 && (
+                                {error && error.includes('mail') && (
                                   <Fade>
-                                    <Help color="danger">{errors[error]}</Help>
+                                    <Help color="danger">{error}</Help>
                                   </Fade>
-                                )*/}
+                                )}
                               </Field>
 
                               <Field>
@@ -190,11 +202,11 @@ export default function LoginRoute() {
                                   />
                                 </Control>
 
-                                {/*error && error.indexOf('password') > -1 && (
+                                {error && error.includes('password') && (
                                   <Fade>
-                                    <Help color="danger">{errors[error]}</Help>
+                                    <Help color="danger">{error}</Help>
                                   </Fade>
-                                )*/}
+                                )}
                               </Field>
 
                               <Field>
