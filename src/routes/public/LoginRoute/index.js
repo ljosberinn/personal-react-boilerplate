@@ -73,7 +73,7 @@ export default function LoginRoute() {
     })(),
   );
 
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const handleSubmit = async event => {
