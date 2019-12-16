@@ -106,7 +106,7 @@ function AuthenticatedNavButtons({ isConfirmedUser, handleLogout, t }) {
           icon={ROUTES.SETTINGS.icon}
           className={[
             'is-spinning',
-            pathname === ROUTES.SETTINGS.normalizedPath && 'active',
+            pathname.includes('/settings/') && 'active',
           ]
             .filter(Boolean)
             .join(' ')}

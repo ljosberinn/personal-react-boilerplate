@@ -1,7 +1,6 @@
 import React from 'react';
-import { Content, Title, Message, Box } from 'rbx';
+import { Content, Title } from 'rbx';
 import RedirectToHome from '../../../RedirectToHome';
-//import DeleteAccount from './DeleteAccount';
 import ChangePassword from './ChangePassword';
 //import { Icon } from '../../../../components';
 //import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
@@ -22,12 +21,6 @@ export default function AccountSettings() {
 
   return (
     <Content>
-      <Box>
-        <Title as="h2" subtitle>
-          {t('accountSettings')}
-        </Title>
-      </Box>
-
       {user.app_metadata.provider === 'email' && (
         <ChangePassword updatePassword={updatePassword} />
       )}

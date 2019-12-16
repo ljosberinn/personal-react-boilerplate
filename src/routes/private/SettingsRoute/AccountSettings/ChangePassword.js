@@ -1,8 +1,8 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { Title, Button, Help, Message, Box } from 'rbx';
+import { Title, Button, Help, Message } from 'rbx';
 import PasswordSelection from '../../../public/RegisterRoute/PasswordSelection';
 import { validate } from '../../../../utils/validators';
-import { Fade } from 'react-awesome-reveal';
+import { Fade, Flip } from 'react-awesome-reveal';
 import { useTranslation } from 'react-i18next';
 import CountUp from 'react-countup';
 
@@ -10,6 +10,12 @@ const INITIAL_STATE = {
   password: '',
   confirmPassword: '',
 };
+
+const errors = {
+  'Invalid Refresh Token': 'token_invalid',
+};
+
+const SUCCESS_MSG_DISPLAY_SECONDS = 10;
 
 export default function ChangePassword({ updatePassword }) {
   const [{ password, confirmPassword }, setPasswords] = useState(INITIAL_STATE);
@@ -24,7 +30,7 @@ export default function ChangePassword({ updatePassword }) {
         setPasswords(INITIAL_STATE);
         setError(null);
         setWasSuccessfullyChanged(false);
-      }, 10000);
+      }, SUCCESS_MSG_DISPLAY_SECONDS * 1000);
 
       return () => clearTimeout(timeout);
     }
@@ -40,8 +46,15 @@ export default function ChangePassword({ updatePassword }) {
         await updatePassword(password);
         setWasSuccessfullyChanged(true);
       } catch (error) {
+        if (error?.json?.error_description) {
+          const { error_description } = error.json;
+          setError(
+            errors[error_description]
+              ? errors[error_description]
+              : 'unknown_error',
+          );
+        }
         console.error(error);
-        setError(error);
       } finally {
         setIsLoading(false);
       }
@@ -61,48 +74,49 @@ export default function ChangePassword({ updatePassword }) {
 
   if (changeSuccessful) {
     return (
-      <Fade fadeOutEnabled={true}>
+      <Flip direction="vertical">
         <Message color="success">
           <Message.Header>
-            <p>{t('success')}</p>
-            <CountUp duration={10} start={10} end={0} useEasing={false} />
+            <span>{t('success')}</span>
+            <CountUp
+              duration={SUCCESS_MSG_DISPLAY_SECONDS}
+              start={SUCCESS_MSG_DISPLAY_SECONDS}
+              end={0}
+              useEasing={false}
+            />
           </Message.Header>
           <Message.Body>{t('changePasswordSuccess')}</Message.Body>
         </Message>
-      </Fade>
+      </Flip>
     );
   }
 
   return (
-    <Fade>
-      <Box>
-        <form spellCheck={false} onSubmit={handleSubmit}>
-          <legend>
-            <Title as="h3">{t('changePassword')}</Title>
-          </legend>
+    <form spellCheck={false} onSubmit={handleSubmit}>
+      <legend>
+        <Title as="h3">{t('changePassword')}</Title>
+      </legend>
 
-          <fieldset disabled={isLoading}>
-            <PasswordSelection
-              {...{ password, confirmPassword, handleChange, isLoading }}
-            />
+      <fieldset disabled={isLoading}>
+        <PasswordSelection
+          {...{ password, confirmPassword, handleChange, isLoading }}
+        />
 
-            {error && (
-              <Fade>
-                <Help color="danger">{error}</Help>
-              </Fade>
-            )}
+        {error && (
+          <Fade className="field">
+            <Help color="danger">{t(error)}</Help>
+          </Fade>
+        )}
 
-            <Button
-              type="submit"
-              state={isLoading ? 'loading' : undefined}
-              color="primary"
-              disabled={!passwordsAreMatching}
-            >
-              {t('changePassword')}
-            </Button>
-          </fieldset>
-        </form>
-      </Box>
-    </Fade>
+        <Button
+          type="submit"
+          state={isLoading ? 'loading' : undefined}
+          color="primary"
+          disabled={!passwordsAreMatching}
+        >
+          {t('changePassword')}
+        </Button>
+      </fieldset>
+    </form>
   );
 }

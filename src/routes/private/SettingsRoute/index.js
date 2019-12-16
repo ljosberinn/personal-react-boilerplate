@@ -1,12 +1,30 @@
 import React from 'react';
-import { Section, Title, Column } from 'rbx';
+import { Section, Title, Column, Box, Tab } from 'rbx';
 import AccountSettings from './AccountSettings';
 import SiteSettings from './SiteSettings';
 import { useTranslation } from 'react-i18next';
-import { TemplatedHelmet } from '../../../components';
+import { TemplatedHelmet, Icon } from '../../../components';
+import { Route, Link, Switch, useLocation } from 'react-router-dom';
+import { faSlidersH, faUserCog } from '@fortawesome/free-solid-svg-icons';
+
+const tabs = [
+  {
+    name: 'siteSettings',
+    component: SiteSettings,
+    path: '/settings/site',
+    icon: faSlidersH,
+  },
+  {
+    name: 'accountSettings',
+    component: AccountSettings,
+    path: '/settings/account',
+    icon: faUserCog,
+  },
+];
 
 export default function Settings() {
   const { t } = useTranslation('settings');
+  const { pathname } = useLocation();
 
   return (
     <>
@@ -16,14 +34,33 @@ export default function Settings() {
       <Section className="settings-bg">
         <Column.Group centered multiline>
           <Column size={10}>
-            <Title>{t('title')}</Title>
-          </Column>
+            <Box>
+              <Title>{t('title')}</Title>
 
-          <Column size={5}>
-            <SiteSettings />
-          </Column>
-          <Column size={5}>
-            <AccountSettings />
+              <Tab.Group kind="boxed">
+                {tabs.map(({ name, path, icon }) => (
+                  <Tab
+                    as={Link}
+                    to={path}
+                    key={name}
+                    active={path === pathname}
+                  >
+                    <Icon icon={icon} />
+                    <span>{t(name)}</span>
+                  </Tab>
+                ))}
+              </Tab.Group>
+
+              <Switch>
+                <Route exact path="/settings/site" component={SiteSettings} />
+
+                <Route
+                  exact
+                  path="/settings/account"
+                  component={AccountSettings}
+                />
+              </Switch>
+            </Box>
           </Column>
         </Column.Group>
       </Section>
