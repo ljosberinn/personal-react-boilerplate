@@ -35,4 +35,5 @@ i18n
       backendOptions: [{ prefix: 'i18next_translation_' }, {}],
     },
     ns: [], // removes 'translation' default key from backend query,
+    defaultNS: [],
   });
