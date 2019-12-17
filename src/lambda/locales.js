@@ -1,33 +1,38 @@
-import firebase from '../utils/firebase';
+const faunadb = require('faunadb');
+const q = faunadb.query;
+
+const client = new faunadb.Client({
+  secret: process.env.REACT_APP_FAUNA_DB_SECRET,
+});
 
 export async function handler({ queryStringParameters: { lng, ns } }) {
   const languages = lng.split(' ');
   const namespaces = ns.split(' ');
 
-  const body = languages.reduce((carry, lng) => {
+  const body = await languages.reduce(async (previousPromise, language) => {
+    const carry = await previousPromise;
+
     return {
       ...carry,
-      [lng]: namespaces.reduce((carry, ns) => {
-        return { ...carry, [ns]: {} };
-      }, {}),
+      [language]: await namespaces.reduce(
+        async (previousPromise, namespace) => {
+          const carry = await previousPromise;
+
+          const response = await client.query(
+            q.Get(
+              q.Match(q.Index('i18n_by_language_and_namespace'), [
+                language,
+                namespace,
+              ]),
+            ),
+          );
+
+          return { ...carry, [namespace]: response.data.i18n };
+        },
+        Promise.resolve({}),
+      ),
     };
-  }, {});
-
-  const localesRef = firebase.firestore().collection('locales');
-
-  await Promise.all(
-    languages.map(async lng => {
-      const lngRef = localesRef.doc(lng);
-
-      await Promise.all(
-        namespaces.map(async ns => {
-          body[lng][ns] = (await lngRef.collection(ns).get()).docs
-            .map(doc => doc.data())
-            .reduce((carry, dataset) => ({ ...carry, ...dataset }), {});
-        }),
-      );
-    }),
-  );
+  }, Promise.resolve({}));
 
   return {
     statusCode: 200,
