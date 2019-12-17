@@ -27,7 +27,7 @@ i18n
         LocalStorageBackend,
         new BackendAdapter(null, {
           backend: new XHR(null, {
-            loadPath: '.netlify/functions/locales?lng={{lng}}&ns={{ns}}',
+            loadPath: '/.netlify/functions/locales?lng={{lng}}&ns={{ns}}',
             allowMultiloading: true,
           }),
         }),
