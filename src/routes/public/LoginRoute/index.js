@@ -26,6 +26,7 @@ import {
   GithubSignInButton,
 } from '../../../components';
 import { useIdentityContext } from 'react-netlify-identity';
+import { useTranslation } from 'react-i18next';
 
 const initialState = {
   mail: '',
@@ -40,6 +41,7 @@ const errors = {
 };
 
 export default function LoginRoute() {
+  const { t } = useTranslation('login');
   const { isLoggedIn, loginUser } = useIdentityContext();
 
   const params = useParams();
@@ -123,7 +125,7 @@ export default function LoginRoute() {
   return (
     <>
       <TemplatedHelmet>
-        <title>Login</title>
+        <title>{t('title')}</title>
       </TemplatedHelmet>
       <Section className="login-bg">
         <Column.Group centered>
@@ -137,9 +139,10 @@ export default function LoginRoute() {
                       widescreen={{ size: 11 }}
                     >
                       <legend>
-                        <Title textAlign="centered">Sign in</Title>
+                        <Title textAlign="centered">{t('sign-in')}</Title>
                         <Title subtitle textAlign="centered">
-                          or <Link to="/register">create account</Link>
+                          {t('or')}{' '}
+                          <Link to="/register">{t('create-account')}</Link>
                         </Title>
                       </legend>
 
@@ -156,10 +159,12 @@ export default function LoginRoute() {
                                 </Column>
                               </Column.Group>
 
-                              <Divider data-content="or" />
+                              <Divider data-content={t('or')} />
 
                               <Field>
-                                <Label htmlFor="mail">Email address</Label>
+                                <Label htmlFor="mail">
+                                  {t('email-address')}
+                                </Label>
 
                                 <Control iconLeft loading={isLoading}>
                                   <Input
@@ -175,15 +180,18 @@ export default function LoginRoute() {
                                   />
                                   <ValidityIconLeft type="mail" value={mail} />
                                 </Control>
+
                                 {error && error.includes('mail') && (
                                   <Fade>
-                                    <Help color="danger">{error}</Help>
+                                    <Help color="danger">{t(error)}</Help>
                                   </Fade>
                                 )}
                               </Field>
 
                               <Field>
-                                <Label htmlFor="password">Password</Label>
+                                <Label htmlFor="password">
+                                  {t('password')}
+                                </Label>
 
                                 <Control iconLeft loading={isLoading}>
                                   <Input
@@ -204,7 +212,7 @@ export default function LoginRoute() {
 
                                 {error && error.includes('password') && (
                                   <Fade>
-                                    <Help color="danger">{error}</Help>
+                                    <Help color="danger">{t(error)}</Help>
                                   </Fade>
                                 )}
                               </Field>
@@ -219,7 +227,7 @@ export default function LoginRoute() {
                                     checked={data.rememberMe}
                                   />
                                   <Label htmlFor="remember-me">
-                                    Remember me
+                                    {t('remember-me')}
                                   </Label>
                                 </Control>
                                 {/*error && error === 'data.invalid' && (
@@ -236,7 +244,7 @@ export default function LoginRoute() {
                                 disabled={isDisabled}
                                 type="submit"
                               >
-                                Sign in
+                                {t('sign-in')}
                               </Button>
 
                               <br />
@@ -248,7 +256,7 @@ export default function LoginRoute() {
                                   as={Link}
                                   to="/reset-password"
                                 >
-                                  Forgot password?
+                                  {t('forgot-password')}
                                 </Title>
                               </div>
                             </fieldset>
@@ -257,8 +265,8 @@ export default function LoginRoute() {
                       </Column.Group>
 
                       <p className="has-text-centered has-text-grey">
-                        Don't have an account?{' '}
-                        <Link to="/register">Sign up</Link>
+                        {t('dont-have-an-account')}{' '}
+                        <Link to="/register">{t('sign-up')}</Link>
                       </p>
                     </Column>
                   </Column.Group>
