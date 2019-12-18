@@ -1,7 +1,6 @@
-const faunadb = require('faunadb');
-const q = faunadb.query;
+const { Client, query: q } = require('faunadb');
 
-const client = new faunadb.Client({
+const client = new Client({
   secret: process.env.REACT_APP_FAUNA_DB_SECRET,
 });
 

@@ -27,13 +27,19 @@ i18n
         LocalStorageBackend,
         new BackendAdapter(null, {
           backend: new XHR(null, {
-            loadPath: '/.netlify/functions/locales?lng={{lng}}&ns={{ns}}',
+            loadPath: '/.netlify/functions/geti18n?lng={{lng}}&ns={{ns}}',
+            addPath:
+              '/.netlify/functions/addi18n?language={{lng}}&namespace={{ns}}',
             allowMultiloading: true,
+            parsePayload: (namespace, key, fallbackValue) => ({
+              key: fallbackValue || '',
+            }),
           }),
         }),
       ], // order defines lookup pattern
-      backendOptions: [{ prefix: 'i18next_translation_' }, {}],
+      backendOptions: [{ prefix: 'i18n-' }, {}],
     },
     ns: [], // removes 'translation' default key from backend query,
     defaultNS: [],
+    saveMissing: true,
   });
