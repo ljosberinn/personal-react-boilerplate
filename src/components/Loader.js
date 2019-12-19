@@ -1,23 +1,22 @@
 import React from 'react';
-import { sanitizeClassArray } from '../utils';
 import Icon from './Icon';
-// eslint-disable-next-line
-import { IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import classnames from 'classnames';
 
 /**
+ *
  * @see https://buefy.org/documentation/loading
  * @see https://github.com/buefy/buefy/blob/dev/src/components/loading/Loading.vue
  *
- * @param {{
- *  icon?: IconDefinition,
- *  isFullPage: boolean,
- *  color?: 'light'| 'dark'
- * }} props
+ * @returns {React.FC<{
+ * isFullPage: boolean,
+ * icon?: import('@fortawesome/free-solid-svg-icons').IconDefinition,
+ * color?: 'light' | 'dark'
+ * }>} Loader
  */
 export default function Loader({ icon, isFullPage = false, color }) {
   return (
     <div
-      className={sanitizeClassArray([
+      className={classnames([
         'loading-overlay',
         'is-active',
         isFullPage && 'is-full-page',

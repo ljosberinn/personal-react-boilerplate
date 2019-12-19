@@ -7,8 +7,6 @@ import './i18n';
 import { IdentityContextProvider } from 'react-netlify-identity';
 import * as Sentry from '@sentry/browser';
 
-Sentry.init({ dsn: process.env.REACT_APP_SENTRY_DSN });
-
 if (process.env.NODE_ENV === 'development') {
   if (!localStorage['gotrue.user']) {
     const user = {
@@ -34,6 +32,8 @@ if (process.env.NODE_ENV === 'development') {
 
     localStorage['gotrue.user'] = JSON.stringify(user);
   }
+} else {
+  Sentry.init({ dsn: process.env.REACT_APP_SENTRY_DSN });
 }
 
 render(

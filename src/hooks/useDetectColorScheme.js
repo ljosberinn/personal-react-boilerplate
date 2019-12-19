@@ -21,11 +21,17 @@ export default function useDetectColorScheme() {
     }
 
     // The listener
+    /**
+     *
+     * @param {MediaQueryListEvent} e
+     */
     const listener = e => {
       if (!e || !e.matches) {
         return;
       }
+
       const schemeNames = Object.keys(colorSchemes);
+
       for (let i = 0; i < schemeNames.length; i++) {
         const schemeName = schemeNames[i];
         if (e.media === colorSchemes[schemeName]) {
@@ -36,17 +42,18 @@ export default function useDetectColorScheme() {
     };
 
     // Add listener for all themes
-    let activeMatches = [];
-    Object.keys(colorSchemes).forEach(schemeName => {
+    let activeMatches = Object.keys(colorSchemes).map(schemeName => {
       const mq = window.matchMedia(colorSchemes[schemeName]);
+
       mq.addListener(listener);
-      activeMatches.push(mq);
       listener(mq);
+
+      return mq;
     });
 
     // Remove listeners, no memory leaks
     return () => {
-      activeMatches.forEach(mq => mq.removeListener(listener));
+      activeMatches.forEach(mq => void mq.removeListener(listener));
       activeMatches = [];
     };
   }, []);

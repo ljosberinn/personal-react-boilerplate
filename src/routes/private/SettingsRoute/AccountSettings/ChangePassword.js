@@ -17,6 +17,9 @@ const errors = {
 
 const SUCCESS_MSG_DISPLAY_SECONDS = 10;
 
+/**
+ * @returns {React.FC<{updatePassword: (password:string) => Promise<void>}>} ChangePassword
+ */
 export default function ChangePassword({ updatePassword }) {
   const [{ password, confirmPassword }, setPasswords] = useState(INITIAL_STATE);
   const [changeSuccessful, setWasSuccessfullyChanged] = useState(false);

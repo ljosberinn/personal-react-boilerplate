@@ -40,6 +40,9 @@ const errors = {
   'Invalid Password': 'password_invalid',
 };
 
+/**
+ * @returns {React.FC} LoginRoute
+ */
 export default function LoginRoute() {
   const { t } = useTranslation('login');
   const { isLoggedIn, loginUser } = useIdentityContext();

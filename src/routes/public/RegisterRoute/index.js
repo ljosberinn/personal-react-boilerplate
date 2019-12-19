@@ -37,6 +37,9 @@ import RedirectToHome from '../../RedirectToHome';
 import { useIdentityContext } from 'react-netlify-identity';
 import CountUp from 'react-countup';
 
+/**
+ * @returns {React.FC} RegisterRoute
+ */
 export default function RegisterRoute() {
   const { signupUser, isLoggedIn, isConfirmedUser } = useIdentityContext();
 

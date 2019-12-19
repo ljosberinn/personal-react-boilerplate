@@ -22,6 +22,9 @@ const errors = {
   'User not found': 'unknown_user',
 };
 
+/**
+ * @returns {React.FC}
+ */
 export default function ResetPasswordRoute() {
   const { requestPasswordRecovery } = useIdentityContext();
   const [mail, setMail] = useState('');

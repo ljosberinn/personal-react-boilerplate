@@ -3,6 +3,12 @@ import Helmet from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import { availableLanguages } from './LanguageSwitch';
 
+/**
+ *
+ * @returns {React.FC<{
+ * children: React.ReactChildren
+ * }>} TemplatedHelmet
+ */
 export default function TemplatedHelmet({ children }) {
   const {
     i18n: { language },

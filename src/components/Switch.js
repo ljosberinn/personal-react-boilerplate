@@ -1,23 +1,22 @@
 import React from 'react';
-import { sanitizeClassArray } from '../utils';
+import classnames from 'classnames';
 
 /**
+ *
  * @see https://buefy.org/documentation/switch
  *
- * @param {{
- *  color: (typeof rbx/base/helpers/variables/DEFAULTS.colors)[number],
- *  size: (typeof rbx/elements/form/input/INPUT_DEFAULTS.sizes)[number],
- *  name: string,
- *  disabled: boolean,
- *  rounded: boolean,
- *  outlined: boolean,
- *  text: string|number,
- *  value: string|number|boolean,
- *  onChange: (e: React.ChangeEvent<HTMLInputElement />) => void
- *  checked?: boolean
- * }} Props
- *
- * @returns React.FC<Props>
+ * @returns {React.FC<{
+ * size: import('rbx/elements/form/input').InputVariablesDefaults['sizes'][number],
+ * color: import('rbx/base/helpers/variables').VariablesDefaults['colors'][number],
+ * name: string,
+ * disabled: boolean,
+ * rounded: boolean,
+ * outlined: boolean,
+ * text: string|number,
+ * value: string | number | boolean,
+ * onChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
+ * checked?: boolean
+ * }>} Switch
  */
 export default function Switch({
   color,
@@ -32,7 +31,7 @@ export default function Switch({
   checked,
   ...rest
 }) {
-  const labelClasses = sanitizeClassArray([
+  const labelClasses = classnames([
     'switch',
     rounded && 'is-rounded',
     disabled && 'is-disabled',
@@ -40,7 +39,7 @@ export default function Switch({
     outlined && `is-outlined`,
   ]);
 
-  const spanClasses = sanitizeClassArray(['check', color && `is-${color}`]);
+  const spanClasses = classnames(['check', color && `is-${color}`]);
 
   return (
     <label className={labelClasses}>

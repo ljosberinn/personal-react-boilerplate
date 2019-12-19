@@ -1,6 +1,15 @@
 import React from 'react';
-import { sanitizeClassArray } from '../utils';
+import classnames from 'classnames';
 
+/**
+ * @returns {React.FC<{
+ * className?: string,
+ * size: string | number,
+ * circled: boolean,
+ * blocked: boolean,
+ * borderless: boolean
+ * }>} Checkbox
+ */
 export default function Checkbox({
   className,
   size,
@@ -12,7 +21,7 @@ export default function Checkbox({
   return (
     <input
       type="checkbox"
-      className={sanitizeClassArray([
+      className={classnames([
         'is-checkradio',
         size && `is-${size}`,
         circled && 'is-circle',

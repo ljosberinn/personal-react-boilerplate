@@ -5,6 +5,9 @@ import { useIdentityContext } from 'react-netlify-identity';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import Icon from './Icon';
 
+/**
+ * @returns {React.FC} GithubSignInButton
+ */
 export default function GithubSignInButton() {
   const { loginProvider } = useIdentityContext();
 

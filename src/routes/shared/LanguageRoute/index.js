@@ -3,6 +3,9 @@ import { useTranslation } from 'react-i18next';
 import { availableLanguages } from '../../../components/LanguageSwitch';
 import { useLocation, useHistory } from 'react-router-dom';
 
+/**
+ * @returns {null}
+ */
 export default function LanguageRoute() {
   const { i18n } = useTranslation();
   const { pathname } = useLocation();

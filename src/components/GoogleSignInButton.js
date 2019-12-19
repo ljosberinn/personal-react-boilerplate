@@ -4,6 +4,9 @@ import { button } from './SignInButton.module.scss';
 import { ReactComponent as GoogleSvg } from '../assets/svg/GoogleLogo.svg';
 import { useIdentityContext } from 'react-netlify-identity';
 
+/**
+ * @returns {React.FC} GoogleSignInButton
+ */
 export default function GoogleSignInButton() {
   const { loginProvider } = useIdentityContext();
 

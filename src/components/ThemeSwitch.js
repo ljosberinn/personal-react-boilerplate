@@ -20,10 +20,10 @@ const iconClassMap = {
 
 /**
  *
- * @param {{
+ * @returns {React.FC<{
  *  from: 'settings' | 'nav' | 'footer'
- *  children: React.Children
- * }}
+ *  children: React.ReactChildren
+ * }>} Wrap
  */
 const Wrap = ({ from, children, ...rest }) =>
   from === 'nav' ? (
@@ -36,6 +36,12 @@ const Wrap = ({ from, children, ...rest }) =>
     <span {...rest}>{children}</span>
   );
 
+/**
+ *
+ * @returns {React.FC<{
+ *  from: 'settings' | 'nav' | 'footer'
+ * }>} ThemeSwitch
+ */
 export default function ThemeSwitch({ from }) {
   const { isLoading, theme, toggleTheme } = useContext(ThemeContext);
 

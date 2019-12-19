@@ -10,6 +10,12 @@ import { faGithub, faDiscord } from '@fortawesome/free-brands-svg-icons';
 import { useTranslation } from 'react-i18next';
 import { useIdentityContext } from 'react-netlify-identity';
 
+/**
+ *
+ * @returns {React.FC<{
+ * children: React.ReactChildren
+ * }>} Link
+ */
 function Link({ children, ...rest }) {
   return (
     <NavLink activeClassName="is-active" {...rest}>
@@ -18,6 +24,9 @@ function Link({ children, ...rest }) {
   );
 }
 
+/**
+ * @returns {React.FC} Footer
+ */
 export default function Footer() {
   const { isLoggedIn } = useIdentityContext();
   const { t } = useTranslation(['footer', 'routes']);

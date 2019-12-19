@@ -10,6 +10,9 @@ import Layout from './Layout';
 import { useIdentityContext } from 'react-netlify-identity';
 import { availableLanguages } from './components/LanguageSwitch';
 
+/**
+ * @returns {React.FC} App
+ */
 export default function App() {
   const { isLoggedIn } = useIdentityContext();
 

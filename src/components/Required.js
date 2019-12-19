@@ -2,6 +2,12 @@ import React from 'react';
 import { Generic, Help } from 'rbx';
 import styles from './Required.module.scss';
 
+/**
+ *
+ * @returns {React.FC<{
+ * children: React.ReactChildren
+ * }>} Star
+ */
 function Star({ children }) {
   return (
     <Generic as="span" tooltip="This field is required.">
@@ -15,6 +21,9 @@ function Star({ children }) {
 
 Star.displayName = 'Required';
 
+/**
+ * @returns {React.FC} Hint
+ */
 function Hint() {
   return (
     <Help italic className={styles.margin} pull="right">

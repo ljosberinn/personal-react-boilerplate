@@ -7,6 +7,11 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { useTranslation } from 'react-i18next';
 
+/**
+ * @returns {React.FC<{
+ * user: import('react-netlify-identity').User
+ * }>} DeleteAccount
+ */
 export default function DeleteAccount({ user }) {
   const [userEngagedDeletion, setUserEngagedDeletion] = useState(false);
   const [hasApproved, setHasApproved] = useState(false);

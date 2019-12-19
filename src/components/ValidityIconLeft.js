@@ -23,6 +23,13 @@ const iconMap = {
   },
 };
 
+/**
+ *
+ * @returns {React.FC<{
+ * type: 'password' | 'mail' | 'username',
+ * value: string
+ * }>} ValidityIconLeft
+ */
 export default function ValidityIconLeft({ type, value = '' }) {
   const { success, error } = iconMap[type];
 

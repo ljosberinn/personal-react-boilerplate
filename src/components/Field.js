@@ -1,15 +1,14 @@
 import React from 'react';
 import { Field as RBXField } from 'rbx';
-import { sanitizeClassArray } from '../utils';
+import classnames from 'classnames';
 
 /**
  *
- * @param {{
- *  children: React.Children,
- *  className: string|undefined,
- *  isFloatingLabel: boolean|undefined
- * }} props
- *
+ * @returns {React.FC<{
+ *  children: React.ReactChildren,
+ * className?: string,
+ * isFloatingLabel?: boolean
+ * }>} Field
  */
 export default function Field({
   children,
@@ -19,7 +18,7 @@ export default function Field({
 }) {
   return (
     <RBXField
-      className={sanitizeClassArray([
+      className={classnames([
         className,
         isFloatingLabel && 'is-floating-label',
       ])}

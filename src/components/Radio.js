@@ -1,13 +1,17 @@
 import React from 'react';
-import { sanitizeClassArray } from '../utils';
+import classnames from 'classnames';
+
+/**
+ *
+ * @returns {React.FC<{
+ * className?: string
+ * }>} Radio
+ */
 export default function Radio({ className, ...rest }) {
   return (
     <input
       type="radio"
-      className={sanitizeClassArray([
-        'is-checkradio',
-        className ? className : false,
-      ])}
+      className={classnames(['is-checkradio', className])}
       {...rest}
     />
   );

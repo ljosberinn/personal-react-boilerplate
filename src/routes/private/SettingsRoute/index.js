@@ -22,6 +22,9 @@ const tabs = [
   },
 ];
 
+/**
+ * @returns {React.FC} Settings
+ */
 export default function Settings() {
   const { t } = useTranslation('settings');
   const { pathname } = useLocation();

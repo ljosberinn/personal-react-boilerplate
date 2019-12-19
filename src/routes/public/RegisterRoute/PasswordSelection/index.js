@@ -38,127 +38,134 @@ const criteria = [
 ];
 
 /**
- * @param {{
- *  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
- *  password: string,
- *  confirmPassword: string,
- *  isLoading: boolean,
- *  error: string|null
- * }} props
+ * @returns {React.NamedExoticComponent<{
+ * handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
+ * password: string,
+ * confirmPassword: string,
+ * isLoading: boolean,
+ * error: string|null
+ * }>} PasswordSelection
  */
-const PasswordSelection = memo(
-  ({ handleChange, password, confirmPassword, isLoading, error }) => {
-    const [type, setType] = useState('password');
 
-    const fulfilledCriteriaArr = criteria.map(({ validate }) =>
-      validate(password),
-    );
-    const fulfilledCriteria = fulfilledCriteriaArr.filter(Boolean).length;
+export default memo(function PasswordSelection({
+  handleChange,
+  password,
+  confirmPassword,
+  isLoading,
+  error,
+}) {
+  const [type, setType] = useState('password');
 
-    useEffect(() => {
-      // hide password on submit
-      if (isLoading && type === 'text') {
-        setType('password');
-      }
-    }, [isLoading, type]);
+  const fulfilledCriteriaArr = criteria.map(({ validate }) =>
+    validate(password),
+  );
+  const fulfilledCriteria = fulfilledCriteriaArr.filter(Boolean).length;
 
-    const isValidPassword = validate.password(password);
+  useEffect(() => {
+    // hide password on submit
+    if (isLoading && type === 'text') {
+      setType('password');
+    }
+  }, [isLoading, type]);
 
-    const passwordIsUnsafe = error && error === 'password.unsafe';
-    const passwordsDoNotMatch =
-      (confirmPassword.length > 7 && password !== confirmPassword) ||
-      (error && error === 'password.mismatch');
+  const isValidPassword = validate.password(password);
 
-    return (
-      <>
+  const passwordIsUnsafe = error && error === 'password.unsafe';
+  const passwordsDoNotMatch =
+    (confirmPassword.length > 7 && password !== confirmPassword) ||
+    (error && error === 'password.mismatch');
+
+  return (
+    <>
+      <Field>
+        <Label htmlFor="password">Password</Label>
+
+        <Message>
+          <Message.Body
+            className={sanitizeClassArray([
+              styles.smallBox,
+              fulfilledCriteria === criteria.length && 'anim-opacity-to-40',
+            ])}
+          >
+            {criteria.map(({ info }, index) => (
+              <PasswordCriteriaInformation
+                info={info}
+                isFulfilled={fulfilledCriteriaArr[index]}
+                key={index}
+              />
+            ))}
+          </Message.Body>
+        </Message>
+
+        <Control iconLeft iconRight={!isLoading} loading={isLoading}>
+          <Input
+            type={type}
+            name="password"
+            id="password"
+            onInput={handleChange}
+            pattern={pattern.password}
+            required
+            autoComplete="new-password"
+            color={passwordIsUnsafe ? 'danger' : undefined}
+          />
+          <ValidityIconLeft type="password" value={password} />
+
+          {!isLoading && (
+            <Icon
+              className="is-clickable"
+              align="right"
+              icon={type === 'password' ? faEye : faEyeSlash}
+              onClick={() => setType(type === 'password' ? 'text' : 'password')}
+            />
+          )}
+        </Control>
+
+        {passwordIsUnsafe && (
+          <Fade>
+            <Help color="danger">{errors[error]}</Help>
+          </Fade>
+        )}
+      </Field>
+
+      <Block>
         <Field>
-          <Label htmlFor="password">Password</Label>
+          <Label htmlFor="confirmPassword">Confirm password</Label>
 
-          <Message>
-            <Message.Body
-              className={sanitizeClassArray([
-                styles.smallBox,
-                fulfilledCriteria === criteria.length && 'anim-opacity-to-40',
-              ])}
-            >
-              {criteria.map(({ info }, index) => (
-                <PasswordCriteriaInformation
-                  info={info}
-                  isFulfilled={fulfilledCriteriaArr[index]}
-                  key={index}
-                />
-              ))}
-            </Message.Body>
-          </Message>
-
-          <Control iconLeft iconRight={!isLoading} loading={isLoading}>
+          <Control iconLeft loading={isLoading}>
             <Input
-              type={type}
-              name="password"
-              id="password"
+              type="password"
+              name="confirmPassword"
+              id="confirmPassword"
               onInput={handleChange}
               pattern={pattern.password}
+              disabled={!isValidPassword}
+              placeholder={
+                !isValidPassword ? 'please first enter a valid password' : ''
+              }
               required
               autoComplete="new-password"
-              color={passwordIsUnsafe ? 'danger' : undefined}
+              color={passwordsDoNotMatch ? 'danger' : undefined}
             />
-            <ValidityIconLeft type="password" value={password} />
-
-            {!isLoading && (
-              <Icon
-                className="is-clickable"
-                align="right"
-                icon={type === 'password' ? faEye : faEyeSlash}
-                onClick={() =>
-                  setType(type === 'password' ? 'text' : 'password')
-                }
-              />
-            )}
+            <ValidityIconLeft type="password" value={confirmPassword} />
           </Control>
 
-          {passwordIsUnsafe && (
-            <Fade>
-              <Help color="danger">{errors[error]}</Help>
-            </Fade>
+          {passwordsDoNotMatch && (
+            <Shake>
+              <Fade>
+                <Help color="danger">{errors['password.mismatch']}</Help>
+              </Fade>
+            </Shake>
           )}
         </Field>
+      </Block>
+    </>
+  );
+});
 
-        <Block>
-          <Field>
-            <Label htmlFor="confirmPassword">Confirm password</Label>
-
-            <Control iconLeft loading={isLoading}>
-              <Input
-                type="password"
-                name="confirmPassword"
-                id="confirmPassword"
-                onInput={handleChange}
-                pattern={pattern.password}
-                disabled={!isValidPassword}
-                placeholder={
-                  !isValidPassword ? 'please first enter a valid password' : ''
-                }
-                required
-                autoComplete="new-password"
-                color={passwordsDoNotMatch ? 'danger' : undefined}
-              />
-              <ValidityIconLeft type="password" value={confirmPassword} />
-            </Control>
-
-            {passwordsDoNotMatch && (
-              <Shake>
-                <Fade>
-                  <Help color="danger">{errors['password.mismatch']}</Help>
-                </Fade>
-              </Shake>
-            )}
-          </Field>
-        </Block>
-      </>
-    );
-  },
-);
-
+/**
+ *
+ * @returns {React.FC<{isFulfilled: boolean, info: string}>} PasswordCriteriaInformation
+ */
 function PasswordCriteriaInformation({ isFulfilled, info }) {
   return (
     <Help
@@ -169,5 +176,3 @@ function PasswordCriteriaInformation({ isFulfilled, info }) {
     </Help>
   );
 }
-
-export default PasswordSelection;

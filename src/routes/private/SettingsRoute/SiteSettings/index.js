@@ -4,6 +4,9 @@ import ChangeTheme from './ChangeTheme';
 import ChangeLanguage from './ChangeLanguage';
 import { useTranslation } from 'react-i18next';
 
+/**
+ * @returns {React.FC} SiteSettings
+ */
 export default function SiteSettings() {
   const { t } = useTranslation('settings');
 

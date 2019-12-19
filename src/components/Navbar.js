@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Navbar as RBXNavbar, Button } from 'rbx';
 import LanguageSwitch from './LanguageSwitch';
 import Icon from './Icon';
@@ -11,6 +11,9 @@ import { useTranslation } from 'react-i18next';
 import * as ROUTES from '../constants/routes';
 import { useIdentityContext } from 'react-netlify-identity';
 
+/**
+ * @returns {React.FC} LogoIpsumSvg
+ */
 const LogoIpsumSvg = () => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 144 39" height="32">
     <g fill="currentColor">
@@ -19,12 +22,17 @@ const LogoIpsumSvg = () => (
   </svg>
 );
 
+/**
+ * @returns {React.FC} Navbar
+ */
 export default function Navbar() {
+  const [isLoading, setLoading] = useState(false);
   const { isLoggedIn, logoutUser, isConfirmedUser } = useIdentityContext();
   const history = useHistory();
   const { t } = useTranslation(['navigation', 'routes']);
 
   const handleLogout = async () => {
+    setLoading(true);
     await logoutUser();
     history.push('/');
   };
@@ -73,6 +81,7 @@ export default function Navbar() {
             </Button.Group>
           ) : (
             <AuthenticatedNavButtons
+              isLoading={isLoading}
               isConfirmedUser={isConfirmedUser}
               handleLogout={handleLogout}
               t={t}
@@ -84,6 +93,12 @@ export default function Navbar() {
   );
 }
 
+/**
+ *
+ * @returns {React.FC<{
+ * children: React.ReactChildren
+ * }>} NavButton
+ */
 function NavButton({ children, ...rest }) {
   return (
     <Button as={NavLink} {...rest}>
@@ -92,7 +107,21 @@ function NavButton({ children, ...rest }) {
   );
 }
 
-function AuthenticatedNavButtons({ isConfirmedUser, handleLogout, t }) {
+/**
+ *
+ * @returns {React.FC<{
+ * isLoading: boolean,
+ * isConfirmedUser: boolean,
+ * handleLogout: () => Promise<void>,
+ * t: import('react-i18next').UseTranslationResponse['t']
+ * }>} AuthenticatedNavButtons
+ */
+function AuthenticatedNavButtons({
+  isLoading,
+  isConfirmedUser,
+  handleLogout,
+  t,
+}) {
   const { pathname } = useLocation();
 
   if (!isConfirmedUser) {
@@ -114,7 +143,7 @@ function AuthenticatedNavButtons({ isConfirmedUser, handleLogout, t }) {
         <span>{t('routes:settings')}</span>
       </NavButton>
 
-      <Button color="danger" onClick={handleLogout}>
+      <Button color="danger" onClick={handleLogout} disabled={isLoading}>
         <Icon icon={faSignOutAlt} />
         <span>{t('logout')}</span>
       </Button>

@@ -6,6 +6,12 @@ import { useTranslation } from 'react-i18next';
 // TODO: get from backend
 export const availableLanguages = ['de', 'en', 'fr', 'jp', 'ru', 'es'].sort();
 
+/**
+ *
+ * @returns {React.FC<{
+ * from: 'footer' | 'nav' | 'stettings'
+ * }>} LanguageSwitch
+ */
 export default function LanguageSwitch({ from }) {
   const { i18n, t } = useTranslation('languages');
 
@@ -34,19 +40,10 @@ export default function LanguageSwitch({ from }) {
   );
 
   if (from !== 'nav') {
-    const Wrap = ({ children }) =>
-      from === 'settings' ? (
-        <Button>{children}</Button>
-      ) : (
-        <div className="is-flex" style={{ alignItems: 'center' }}>
-          {children}
-        </div>
-      );
-
     return (
       <Dropdown up={from === 'footer'} hoverable>
         <Dropdown.Trigger>
-          <Wrap>
+          <Wrap from={from}>
             <LocaleSvg />
             {t(currentLanguage)}
           </Wrap>
@@ -64,5 +61,24 @@ export default function LanguageSwitch({ from }) {
       </Navbar.Link>
       <Navbar.Dropdown>{dropdownContent}</Navbar.Dropdown>
     </Navbar.Item>
+  );
+}
+
+/**
+ *
+ * @returns {React.FC<{
+ * children: React.ReactChildren,
+ * from: 'settings' | 'footer' | 'nav'
+ * }>} Wrap
+ */
+function Wrap({ children, from }) {
+  if (from === 'settings') {
+    return <Button>{children}</Button>;
+  }
+
+  return (
+    <div className="is-flex" style={{ alignItems: 'center' }}>
+      {children}
+    </div>
   );
 }
