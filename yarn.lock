@@ -4569,6 +4569,13 @@ encodeurl@~1.0.2:
   resolved "https://registry.yarnpkg.com/encodeurl/-/encodeurl-1.0.2.tgz#ad3ff4c86ec2d029322f5a02c3a9a606c95b3f59"
   integrity sha1-rT/0yG7C0CkyL1oCw6mmBslbP1k=
 
+encoding@^0.1.12:
+  version "0.1.12"
+  resolved "https://registry.yarnpkg.com/encoding/-/encoding-0.1.12.tgz#538b66f3ee62cd1ab51ec323829d1f9480c74beb"
+  integrity sha1-U4tm8+5izRq1HsMjgp0flIDHS+s=
+  dependencies:
+    iconv-lite "~0.4.13"
+
 end-of-stream@^1.0.0, end-of-stream@^1.1.0:
   version "1.4.4"
   resolved "https://registry.yarnpkg.com/end-of-stream/-/end-of-stream-1.4.4.tgz#5ae64a5f45057baf3626ec14da0ca5e4b2431eb0"
@@ -5127,10 +5134,10 @@ fastq@^1.6.0:
   dependencies:
     reusify "^1.0.0"
 
-faunadb@^2.10.1:
-  version "2.10.1"
-  resolved "https://registry.yarnpkg.com/faunadb/-/faunadb-2.10.1.tgz#b371f43fd7c9737bd959b99478b06b6e648b100c"
-  integrity sha512-1EQp6Zgk10oYjAXw6sJGuD01iQwJi0FN8klxsIpoOS2nyYiJD02no4xRZtfN1DTzXCIzzK0l0zxRN/bS7UppKA==
+faunadb@^2.10.2:
+  version "2.10.2"
+  resolved "https://registry.yarnpkg.com/faunadb/-/faunadb-2.10.2.tgz#20bd4cf7a4da2c3115eb78a1f7032808e4761a10"
+  integrity sha512-liwX8YsM+tW1kXZ3/oZvDpVcFu6TqDfTuyGHi6PzbSOKZoc/V+uwfVC0RGTApNV66m3rQ4AsETro1ZMQLJ+Yyg==
   dependencies:
     base64-js "^1.2.0"
     btoa-lite "^1.0.0"
@@ -6047,7 +6054,7 @@ i18next@^19.0.2:
   dependencies:
     "@babel/runtime" "^7.3.1"
 
-iconv-lite@0.4.24, iconv-lite@^0.4.24, iconv-lite@^0.4.4:
+iconv-lite@0.4.24, iconv-lite@^0.4.24, iconv-lite@^0.4.4, iconv-lite@~0.4.13:
   version "0.4.24"
   resolved "https://registry.yarnpkg.com/iconv-lite/-/iconv-lite-0.4.24.tgz#2022b4b25fbddc21d2f524974a474aafe733908b"
   integrity sha512-v3MXnZAcvnywkTUEZomIActle7RXXeedOR31wwl7VlyoXO4Qi9arvSenNQWne1TcRwhCL1HwLI21bEqdpj8/rA==
