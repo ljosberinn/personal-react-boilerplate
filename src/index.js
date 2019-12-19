@@ -5,6 +5,9 @@ import * as serviceWorker from './serviceWorker';
 import { ThemeProvider } from './context';
 import './i18n';
 import { IdentityContextProvider } from 'react-netlify-identity';
+import * as Sentry from '@sentry/browser';
+
+Sentry.init({ dsn: process.env.REACT_APP_SENTRY_DSN });
 
 if (process.env.NODE_ENV === 'development') {
   if (!localStorage['gotrue.user']) {

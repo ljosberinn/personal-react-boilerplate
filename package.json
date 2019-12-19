@@ -7,6 +7,7 @@
     "@fortawesome/free-brands-svg-icons": "^5.12.0",
     "@fortawesome/free-solid-svg-icons": "^5.12.0",
     "@fortawesome/react-fontawesome": "^0.1.8",
+    "@sentry/browser": "^5.10.2",
     "bulma-checkradio": "^1.1.1",
     "i18next": "^19.0.2",
     "i18next-browser-languagedetector": "^4.0.1",
@@ -28,14 +29,14 @@
   },
   "devDependencies": {
     "@testing-library/react": "^9.4.0",
+    "dotenv-webpack": "^1.7.0",
     "encoding": "^0.1.12",
     "faunadb": "^2.10.2",
     "http-proxy-middleware": "^0.20.0",
     "netlify-lambda": "^1.6.3",
     "node-sass": "^4.13.0",
     "npm-run-all": "^4.1.5",
-    "webpack-node-externals": "^1.7.2",
-    "dotenv-webpack": "^1.7.0"
+    "webpack-node-externals": "^1.7.2"
   },
   "scripts": {
     "start": "run-p start:**",
