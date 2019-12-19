@@ -8,7 +8,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.11.2",
     "@fortawesome/react-fontawesome": "^0.1.7",
     "bulma-checkradio": "^1.1.1",
-    "firebase": "^7.3.0",
+    "firebase": "^7.6.1",
     "i18next-browser-languagedetector": "^4.0.1",
     "i18next-chained-backend": "^2.0.0",
     "i18next-localstorage-backend": "^3.0.0",
