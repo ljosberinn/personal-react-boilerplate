@@ -89,10 +89,6 @@ a span.icon {
   }
 }
 
-.column[class*='is-'] {
-  transition: width 300ms ease-in-out;
-}
-
 .message-body p:last-of-type {
   margin-bottom: initial !important;
 }
