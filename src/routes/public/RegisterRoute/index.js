@@ -5,8 +5,7 @@ import {
   ValidityIconLeft,
   Checkbox,
   Field,
-  GoogleSignInButton,
-  GithubSignInButton,
+  LoginProviderButton,
   Loader,
   TemplatedHelmet,
 } from '../../../components';
@@ -250,10 +249,10 @@ function RegistrationForm({
       <fieldset disabled={isLoading}>
         <Column.Group>
           <Column>
-            <GoogleSignInButton />
+            <LoginProviderButton provider="google" />
           </Column>
           <Column>
-            <GithubSignInButton />
+            <LoginProviderButton provider="github" />
           </Column>
         </Column.Group>
 

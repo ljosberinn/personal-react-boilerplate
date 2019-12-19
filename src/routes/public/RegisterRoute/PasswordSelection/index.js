@@ -2,16 +2,13 @@ import React, { useState, useEffect, memo } from 'react';
 import { ValidityIconLeft, Icon, Field } from '../../../../components';
 import { validate, pattern } from '../../../../utils/validators';
 import { Message, Label, Help, Input, Control, Block } from 'rbx';
-import {
-  stringContainsNumber,
-  sanitizeClassArray,
-  stringContainsLetter,
-} from '../../../../utils';
+import { stringContainsNumber, stringContainsLetter } from '../../../../utils';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import Shake from 'react-reveal/Shake';
 import { Fade } from 'react-awesome-reveal';
 import styles from './PasswordSelection.module.scss';
 import { errors } from '../errors';
+import classnames from 'classnames';
 
 const criteria = [
   {
@@ -82,7 +79,7 @@ export default memo(function PasswordSelection({
 
         <Message>
           <Message.Body
-            className={sanitizeClassArray([
+            className={classnames([
               styles.smallBox,
               fulfilledCriteria === criteria.length && 'anim-opacity-to-40',
             ])}

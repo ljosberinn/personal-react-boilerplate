@@ -15,25 +15,24 @@ const stringContainsSpecialCharacter = string =>
   new RegExp(`[${allowedSpecialCharacters.join('')}]`).test(string);
 
 /**
- * @example className={sanitizeClassArray(['foo', somethingTruthy && 'bar', 'baz'])}
- *
- * @param {(string|false)[]} classes
- *
- * @returns {string}
- */
-const sanitizeClassArray = classes => classes.filter(Boolean).join(' ');
-
-/**
  *
  * @param {string} string
  */
 const stringContainsLetter = string =>
   new RegExp(characterPattern).test(string);
 
+/**
+ *
+ * @param {string} str
+ * @returns {string}
+ */
+const upperCaseFirstCharacter = str =>
+  str.charAt(0).toUpperCase() + str.slice(1);
+
 export {
   stringContainsNumber,
   stringContainsSpecialCharacter,
-  sanitizeClassArray,
   allowedSpecialCharacters,
   stringContainsLetter,
+  upperCaseFirstCharacter,
 };

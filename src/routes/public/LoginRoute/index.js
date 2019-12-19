@@ -21,9 +21,8 @@ import { Link, useParams } from 'react-router-dom';
 import {
   ValidityIconLeft,
   Checkbox,
-  GoogleSignInButton,
   TemplatedHelmet,
-  GithubSignInButton,
+  LoginProviderButton,
 } from '../../../components';
 import { useIdentityContext } from 'react-netlify-identity';
 import { useTranslation } from 'react-i18next';
@@ -88,13 +87,17 @@ export default function LoginRoute() {
     setLoading(true);
 
     try {
-      const user = await loginUser(mail, password, data.rememberMe);
+      const { id, created_at, confirmed_at } = await loginUser(
+        mail,
+        password,
+        data.rememberMe,
+      );
 
-      LogRocket.identify(user.id, {
+      LogRocket.identify(id, {
         email: mail,
         provider: 'mail',
-        createdAt: user.created_at,
-        confirmedAt: user.confirmed_at,
+        created_at,
+        confirmed_at,
       });
     } catch (error) {
       if (error?.json?.error_description) {
@@ -166,10 +169,10 @@ export default function LoginRoute() {
                             <fieldset disabled={isLoading}>
                               <Column.Group>
                                 <Column>
-                                  <GoogleSignInButton />
+                                  <LoginProviderButton provider="google" />
                                 </Column>
                                 <Column>
-                                  <GithubSignInButton />
+                                  <LoginProviderButton provider="github" />
                                 </Column>
                               </Column.Group>
 

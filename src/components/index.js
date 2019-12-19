@@ -10,12 +10,11 @@ import LanguageSwitch from './LanguageSwitch';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import ThemeSwitch from './ThemeSwitch';
-import GoogleSignInButton from './GoogleSignInButton';
-import GithubSignInButton from './GithubSignInButton';
+import LoginProviderButton from './LoginProviderButton';
 import TemplatedHelmet from './TemplatedHelmet';
 
 export {
-  GithubSignInButton,
+  LoginProviderButton,
   Checkbox,
   Loader,
   Required,
@@ -26,7 +25,6 @@ export {
   Switch,
   ExternalLink,
   Navbar,
-  GoogleSignInButton,
   LanguageSwitch,
   ThemeSwitch,
   TemplatedHelmet,
