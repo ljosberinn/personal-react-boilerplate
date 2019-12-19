@@ -13,6 +13,14 @@ import * as ROUTES from '../constants/routes';
 import { useIdentityContext } from 'react-netlify-identity';
 import LogRocket from 'logrocket';
 
+const { REACT_APP_DISCORD_LINK, REACT_APP_REPO_LINK } = process.env;
+const DiscordLink =
+  REACT_APP_DISCORD_LINK &&
+  REACT_APP_DISCORD_LINK.length > 0 &&
+  REACT_APP_DISCORD_LINK;
+const RepoLink =
+  REACT_APP_REPO_LINK && REACT_APP_REPO_LINK.length > 0 && REACT_APP_REPO_LINK;
+
 /**
  * @returns {React.FC} LogoIpsumSvg
  */
@@ -58,21 +66,25 @@ export default function Navbar() {
 
             <ThemeSwitch from="nav" />
 
-            <RBXNavbar.Item
-              href="https://discord.gg"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              <Icon icon={faDiscord} /> <span>Discord</span>
-            </RBXNavbar.Item>
+            {DiscordLink && (
+              <RBXNavbar.Item
+                href={DiscordLink}
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                <Icon icon={faDiscord} /> <span>Discord</span>
+              </RBXNavbar.Item>
+            )}
 
-            <RBXNavbar.Item
-              href="//github.com/ljosberinn/current-react-playground"
-              rel="noreferrer noopener"
-              target="_blank"
-            >
-              <Icon icon={faGithub} /> <span>{t('contribute')}</span>
-            </RBXNavbar.Item>
+            {RepoLink && (
+              <RBXNavbar.Item
+                href={RepoLink}
+                rel="noreferrer noopener"
+                target="_blank"
+              >
+                <Icon icon={faGithub} /> <span>{t('contribute')}</span>
+              </RBXNavbar.Item>
+            )}
 
             {!isLoggedIn ? (
               <Button.Group>
