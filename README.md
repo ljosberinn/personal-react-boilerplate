@@ -23,6 +23,10 @@
 - caching via [i18next-localstorage-backend](https://github.com/i18next/i18next-localstorage-backend)
 - retrieving via [i18next-xhr-backend](https://github.com/i18next/i18next-xhr-backend)
 
+## Error Tracking
+
+- [Sentry](https://sentry.io/)
+
 ## Styling
 
 - SCSS via node-sass
