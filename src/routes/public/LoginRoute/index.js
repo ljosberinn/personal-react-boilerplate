@@ -75,11 +75,13 @@ export default function LoginRoute() {
     })(),
   );
 
-  const [isLoading] = useState(false);
+  const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const handleSubmit = async event => {
     event.preventDefault();
+
+    setLoading(true);
 
     try {
       await loginUser(mail, password, data.rememberMe);
@@ -92,8 +94,9 @@ export default function LoginRoute() {
             : 'unknown_error',
         );
       }
-
       console.error(error);
+
+      setLoading(false);
     }
   };
 
