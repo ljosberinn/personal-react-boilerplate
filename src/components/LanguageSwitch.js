@@ -4,7 +4,10 @@ import { Navbar, Dropdown, Button } from 'rbx';
 import { useTranslation } from 'react-i18next';
 
 // TODO: get from backend
-export const availableLanguages = ['de', 'en', 'fr', 'jp', 'ru', 'es'].sort();
+export const availableLanguages = [
+  'de',
+  'en' /*'fr', 'jp', 'ru', 'es'*/,
+].sort();
 
 /**
  *
