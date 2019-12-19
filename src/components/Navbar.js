@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Navbar as RBXNavbar, Button } from 'rbx';
 import LanguageSwitch from './LanguageSwitch';
 import Icon from './Icon';
+import Loader from './Loader';
 import ThemeSwitch from './ThemeSwitch';
 import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { faGithub, faDiscord } from '@fortawesome/free-brands-svg-icons';
@@ -10,6 +11,7 @@ import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import * as ROUTES from '../constants/routes';
 import { useIdentityContext } from 'react-netlify-identity';
+import LogRocket from 'logrocket';
 
 /**
  * @returns {React.FC} LogoIpsumSvg
@@ -26,70 +28,77 @@ const LogoIpsumSvg = () => (
  * @returns {React.FC} Navbar
  */
 export default function Navbar() {
-  const [isLoading, setLoading] = useState(false);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
+
   const { isLoggedIn, logoutUser, isConfirmedUser } = useIdentityContext();
   const history = useHistory();
   const { t } = useTranslation(['navigation', 'routes']);
 
   const handleLogout = async () => {
-    setLoading(true);
+    setIsLoggingOut(true);
     await logoutUser();
+    setIsLoggingOut(false);
+
+    LogRocket.identify(null);
     history.push('/');
   };
 
   return (
-    <RBXNavbar>
-      <RBXNavbar.Brand>
-        <RBXNavbar.Item as={Link} to="/">
-          <LogoIpsumSvg />
-        </RBXNavbar.Item>
-        <RBXNavbar.Burger />
-      </RBXNavbar.Brand>
-      <RBXNavbar.Menu>
-        <RBXNavbar.Segment align="end">
-          <LanguageSwitch from="nav" />
-
-          <ThemeSwitch from="nav" />
-
-          <RBXNavbar.Item
-            href="https://discord.gg"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            <Icon icon={faDiscord} /> <span>Discord</span>
+    <>
+      <RBXNavbar>
+        <RBXNavbar.Brand>
+          <RBXNavbar.Item as={Link} to="/">
+            <LogoIpsumSvg />
           </RBXNavbar.Item>
+          <RBXNavbar.Burger />
+        </RBXNavbar.Brand>
+        <RBXNavbar.Menu>
+          <RBXNavbar.Segment align="end">
+            <LanguageSwitch from="nav" />
 
-          <RBXNavbar.Item
-            href="//github.com/ljosberinn/current-react-playground"
-            rel="noreferrer noopener"
-            target="_blank"
-          >
-            <Icon icon={faGithub} /> <span>{t('contribute')}</span>
-          </RBXNavbar.Item>
+            <ThemeSwitch from="nav" />
 
-          {!isLoggedIn ? (
-            <Button.Group>
-              <NavButton color="primary" to={ROUTES.REGISTER.normalizedPath}>
-                <Icon icon={ROUTES.REGISTER.icon} />
-                <span>{t('routes:register')}</span>
-              </NavButton>
+            <RBXNavbar.Item
+              href="https://discord.gg"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <Icon icon={faDiscord} /> <span>Discord</span>
+            </RBXNavbar.Item>
 
-              <NavButton color="light" to={ROUTES.LOGIN.normalizedPath}>
-                <Icon icon={ROUTES.LOGIN.icon} />
-                <span>{t('routes:login')}</span>
-              </NavButton>
-            </Button.Group>
-          ) : (
-            <AuthenticatedNavButtons
-              isLoading={isLoading}
-              isConfirmedUser={isConfirmedUser}
-              handleLogout={handleLogout}
-              t={t}
-            />
-          )}
-        </RBXNavbar.Segment>
-      </RBXNavbar.Menu>
-    </RBXNavbar>
+            <RBXNavbar.Item
+              href="//github.com/ljosberinn/current-react-playground"
+              rel="noreferrer noopener"
+              target="_blank"
+            >
+              <Icon icon={faGithub} /> <span>{t('contribute')}</span>
+            </RBXNavbar.Item>
+
+            {!isLoggedIn ? (
+              <Button.Group>
+                <NavButton color="primary" to={ROUTES.REGISTER.normalizedPath}>
+                  <Icon icon={ROUTES.REGISTER.icon} />
+                  <span>{t('routes:register')}</span>
+                </NavButton>
+
+                <NavButton color="light" to={ROUTES.LOGIN.normalizedPath}>
+                  <Icon icon={ROUTES.LOGIN.icon} />
+                  <span>{t('routes:login')}</span>
+                </NavButton>
+              </Button.Group>
+            ) : (
+              <AuthenticatedNavButtons
+                isLoggingOut={isLoggingOut}
+                isConfirmedUser={isConfirmedUser}
+                handleLogout={handleLogout}
+                t={t}
+              />
+            )}
+          </RBXNavbar.Segment>
+        </RBXNavbar.Menu>
+      </RBXNavbar>
+      {isLoggingOut && <Loader isFullPage />}
+    </>
   );
 }
 
@@ -110,14 +119,14 @@ function NavButton({ children, ...rest }) {
 /**
  *
  * @returns {React.FC<{
- * isLoading: boolean,
+ * isLoggingOut: boolean,
  * isConfirmedUser: boolean,
  * handleLogout: () => Promise<void>,
  * t: import('react-i18next').UseTranslationResponse['t']
  * }>} AuthenticatedNavButtons
  */
 function AuthenticatedNavButtons({
-  isLoading,
+  isLoggingOut,
   isConfirmedUser,
   handleLogout,
   t,
@@ -130,7 +139,11 @@ function AuthenticatedNavButtons({
 
   return (
     <Button.Group>
-      <NavButton color="primary" to={ROUTES.SETTINGS.normalizedPath}>
+      <NavButton
+        color="primary"
+        to={ROUTES.SETTINGS.normalizedPath}
+        disabled={isLoggingOut}
+      >
         <Icon
           icon={ROUTES.SETTINGS.icon}
           className={[
@@ -143,7 +156,7 @@ function AuthenticatedNavButtons({
         <span>{t('routes:settings')}</span>
       </NavButton>
 
-      <Button color="danger" onClick={handleLogout} disabled={isLoading}>
+      <Button color="danger" onClick={handleLogout} disabled={isLoggingOut}>
         <Icon icon={faSignOutAlt} />
         <span>{t('logout')}</span>
       </Button>

@@ -6,6 +6,8 @@ import { ThemeProvider } from './context';
 import './i18n';
 import { IdentityContextProvider } from 'react-netlify-identity';
 import * as Sentry from '@sentry/browser';
+import LogRocket from 'logrocket';
+import setupLogRocketReact from 'logrocket-react';
 
 if (process.env.NODE_ENV === 'development') {
   if (!localStorage['gotrue.user']) {
@@ -30,10 +32,18 @@ if (process.env.NODE_ENV === 'development') {
       updated_at: '2019-12-15T02:33:58Z',
     };
 
-    localStorage['gotrue.user'] = JSON.stringify(user);
+    //localStorage['gotrue.user'] = JSON.stringify(user);
   }
 } else {
   Sentry.init({ dsn: process.env.REACT_APP_SENTRY_DSN });
+  LogRocket.init(process.env.REACT_APP_LOGROCKET_ID);
+  setupLogRocketReact(LogRocket);
+
+  LogRocket.getSessionURL(sessionURL => {
+    Sentry.configureScope(scope => {
+      scope.setExtra('sessionURL', sessionURL);
+    });
+  });
 }
 
 render(

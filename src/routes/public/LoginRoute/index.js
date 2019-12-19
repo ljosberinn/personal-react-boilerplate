@@ -27,6 +27,7 @@ import {
 } from '../../../components';
 import { useIdentityContext } from 'react-netlify-identity';
 import { useTranslation } from 'react-i18next';
+import LogRocket from 'logrocket';
 
 const initialState = {
   mail: '',
@@ -87,7 +88,14 @@ export default function LoginRoute() {
     setLoading(true);
 
     try {
-      await loginUser(mail, password, data.rememberMe);
+      const user = await loginUser(mail, password, data.rememberMe);
+
+      LogRocket.identify(user.id, {
+        email: mail,
+        provider: 'mail',
+        createdAt: user.created_at,
+        confirmedAt: user.confirmed_at,
+      });
     } catch (error) {
       if (error?.json?.error_description) {
         const { error_description } = error.json;
