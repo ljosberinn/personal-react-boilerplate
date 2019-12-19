@@ -1,34 +1,65 @@
 import React from 'react';
-import Helmet from 'react-helmet';
-import { Section, Title, Box, Column } from 'rbx';
+import { Section, Title, Column, Box, Tab } from 'rbx';
 import AccountSettings from './AccountSettings';
 import SiteSettings from './SiteSettings';
 import { useTranslation } from 'react-i18next';
+import { TemplatedHelmet, Icon } from '../../../components';
+import { Route, Link, Switch, useLocation } from 'react-router-dom';
+import { faSlidersH, faUserCog } from '@fortawesome/free-solid-svg-icons';
+
+const tabs = [
+  {
+    name: 'siteSettings',
+    component: SiteSettings,
+    path: '/settings/site',
+    icon: faSlidersH,
+  },
+  {
+    name: 'accountSettings',
+    component: AccountSettings,
+    path: '/settings/account',
+    icon: faUserCog,
+  },
+];
 
 export default function Settings() {
   const { t } = useTranslation('settings');
+  const { pathname } = useLocation();
 
   return (
     <>
-      <Helmet>
-        <title>
-          {t('title')} | {process.env.REACT_APP_BRAND_NAME}
-        </title>
-      </Helmet>
+      <TemplatedHelmet>
+        <title>{t('title')}</title>
+      </TemplatedHelmet>
       <Section className="settings-bg">
         <Column.Group centered multiline>
           <Column size={10}>
-            <Title>{t('title')}</Title>
-          </Column>
+            <Box>
+              <Title>{t('title')}</Title>
 
-          <Column size={5}>
-            <Box>
-              <SiteSettings />
-            </Box>
-          </Column>
-          <Column size={5}>
-            <Box>
-              <AccountSettings />
+              <Tab.Group kind="boxed">
+                {tabs.map(({ name, path, icon }) => (
+                  <Tab
+                    as={Link}
+                    to={path}
+                    key={name}
+                    active={path === pathname}
+                  >
+                    <Icon icon={icon} />
+                    <span>{t(name)}</span>
+                  </Tab>
+                ))}
+              </Tab.Group>
+
+              <Switch>
+                <Route exact path="/settings/site" component={SiteSettings} />
+
+                <Route
+                  exact
+                  path="/settings/account"
+                  component={AccountSettings}
+                />
+              </Switch>
             </Box>
           </Column>
         </Column.Group>

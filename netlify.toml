@@ -1,2 +1,2 @@
 [build]
-    functions = "built-lambda"
+    functions = ".netlify/build"

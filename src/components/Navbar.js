@@ -5,11 +5,11 @@ import Icon from './Icon';
 import ThemeSwitch from './ThemeSwitch';
 import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { faGithub, faDiscord } from '@fortawesome/free-brands-svg-icons';
-import { NavLink, Link } from 'react-router-dom';
-import { useAuth } from '../hooks';
+import { NavLink, Link, useLocation } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import * as ROUTES from '../constants/routes';
+import { useIdentityContext } from 'react-netlify-identity';
 
 const LogoIpsumSvg = () => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 144 39" height="32">
@@ -20,12 +20,12 @@ const LogoIpsumSvg = () => (
 );
 
 export default function Navbar() {
-  const { user, isLoading, logout } = useAuth();
+  const { isLoggedIn, logoutUser, isConfirmedUser } = useIdentityContext();
   const history = useHistory();
   const { t } = useTranslation(['navigation', 'routes']);
 
   const handleLogout = async () => {
-    await logout();
+    await logoutUser();
     history.push('/');
   };
 
@@ -59,7 +59,7 @@ export default function Navbar() {
             <Icon icon={faGithub} /> <span>{t('contribute')}</span>
           </RBXNavbar.Item>
 
-          {isLoading ? null : !user ? (
+          {!isLoggedIn ? (
             <Button.Group>
               <NavButton color="primary" to={ROUTES.REGISTER.normalizedPath}>
                 <Icon icon={ROUTES.REGISTER.icon} />
@@ -72,17 +72,11 @@ export default function Navbar() {
               </NavButton>
             </Button.Group>
           ) : (
-            <Button.Group>
-              <NavButton color="primary" to={ROUTES.SETTINGS.normalizedPath}>
-                <Icon icon={ROUTES.SETTINGS.icon} className="is-spinning" />
-                <span>{t('routes:settings')}</span>
-              </NavButton>
-
-              <Button color="danger" onClick={handleLogout}>
-                <Icon icon={faSignOutAlt} />
-                <span>{t('logout')}</span>
-              </Button>
-            </Button.Group>
+            <AuthenticatedNavButtons
+              isConfirmedUser={isConfirmedUser}
+              handleLogout={handleLogout}
+              t={t}
+            />
           )}
         </RBXNavbar.Segment>
       </RBXNavbar.Menu>
@@ -95,5 +89,35 @@ function NavButton({ children, ...rest }) {
     <Button as={NavLink} {...rest}>
       {children}
     </Button>
+  );
+}
+
+function AuthenticatedNavButtons({ isConfirmedUser, handleLogout, t }) {
+  const { pathname } = useLocation();
+
+  if (!isConfirmedUser) {
+    return null;
+  }
+
+  return (
+    <Button.Group>
+      <NavButton color="primary" to={ROUTES.SETTINGS.normalizedPath}>
+        <Icon
+          icon={ROUTES.SETTINGS.icon}
+          className={[
+            'is-spinning',
+            pathname.includes('/settings/') && 'active',
+          ]
+            .filter(Boolean)
+            .join(' ')}
+        />
+        <span>{t('routes:settings')}</span>
+      </NavButton>
+
+      <Button color="danger" onClick={handleLogout}>
+        <Icon icon={faSignOutAlt} />
+        <span>{t('logout')}</span>
+      </Button>
+    </Button.Group>
   );
 }

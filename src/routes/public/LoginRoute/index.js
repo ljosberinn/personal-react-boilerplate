@@ -1,35 +1,32 @@
-import React, { useState, useCallback, useContext } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import React, { useState, useCallback } from 'react';
 import { validate, pattern } from '../../../utils/validators';
+import {
+  Card,
+  Section,
+  Title,
+  Field,
+  Divider,
+  Label,
+  Control,
+  Input,
+  Column,
+  Button,
+  Help,
+} from 'rbx';
+import { Fade } from 'react-awesome-reveal';
+// TODO: remove once https://github.com/dennismorello/react-awesome-reveal/issues/14 might be resolved
+import Shake from 'react-reveal/Shake';
+import RedirectToHome from '../../RedirectToHome';
+import { Link, useParams } from 'react-router-dom';
 import {
   ValidityIconLeft,
   Checkbox,
   GoogleSignInButton,
+  TemplatedHelmet,
+  GithubSignInButton,
 } from '../../../components';
-import {
-  Card,
-  Column,
-  Title,
-  Label,
-  Help,
-  Field,
-  Button,
-  Control,
-  Section,
-  Input,
-  Divider,
-} from 'rbx';
-import { Fade } from 'react-reveal';
-import Shake from 'react-reveal/Shake';
-import Helmet from 'react-helmet';
-import { AuthContext } from '../../../context/AuthContext';
-import RedirectToHome from '../../RedirectToHome';
-
-const errors = {
-  'mail.invalid': 'Please enter a valid mail.',
-  'password.insecure': 'Please provide a valid password.',
-  'data.invalid': 'The provided mail or password is invalid.',
-};
+import { useIdentityContext } from 'react-netlify-identity';
+import { useTranslation } from 'react-i18next';
 
 const initialState = {
   mail: '',
@@ -37,10 +34,15 @@ const initialState = {
   rememberMe: false,
 };
 
-function LoginRoute() {
-  const { user, loginWithMailAndPassword, loginWithGoogle } = useContext(
-    AuthContext,
-  );
+const errors = {
+  'Email not confirmed': 'mail_unconfirmed',
+  'No user found with this email': 'unknown_user',
+  'Invalid Password': 'password_invalid',
+};
+
+export default function LoginRoute() {
+  const { t } = useTranslation('login');
+  const { isLoggedIn, loginUser } = useIdentityContext();
 
   const params = useParams();
 
@@ -55,7 +57,9 @@ function LoginRoute() {
         };
       }
 
-      const storedData = localStorage.getItem('brandName');
+      const storedData = localStorage.getItem(
+        process.env.REACT_APP_BRAND_NAME.split(' ').join('-'),
+      );
 
       if (storedData) {
         const { mail } = JSON.parse(storedData);
@@ -70,8 +74,28 @@ function LoginRoute() {
       return initialState;
     })(),
   );
-  const [isLoading, setIsLoading] = useState(false);
+
+  const [isLoading] = useState(false);
   const [error, setError] = useState(null);
+
+  const handleSubmit = async event => {
+    event.preventDefault();
+
+    try {
+      await loginUser(mail, password, data.rememberMe);
+    } catch (error) {
+      if (error?.json?.error_description) {
+        const { error_description } = error.json;
+        setError(
+          errors[error_description]
+            ? errors[error_description]
+            : 'unknown_error',
+        );
+      }
+
+      console.error(error);
+    }
+  };
 
   const handleChange = useCallback(
     ({ target: { name, type, value, checked } }) => {
@@ -86,38 +110,9 @@ function LoginRoute() {
     [],
   );
 
-  const handleSubmit = useCallback(
-    async event => {
-      event.preventDefault();
-
-      setIsLoading(true);
-
-      if (data.rememberMe) {
-        localStorage.setItem('brandName', JSON.stringify({ mail: data.mail }));
-      }
-
-      try {
-        await loginWithMailAndPassword(data.mail, data.password);
-      } catch (error) {
-        if (data.rememberMe) {
-          localStorage.removeItem('brandName');
-        }
-        setError('data.invalid');
-        setIsLoading(false);
-      }
-    },
-    [data.mail, data.password, data.rememberMe, loginWithMailAndPassword],
-  );
-
-  const proxyGoogleSignIn = useCallback(async () => {
-    setIsLoading(true);
-    try {
-      await loginWithGoogle();
-    } catch (error) {
-      console.error(error);
-      setIsLoading(false);
-    }
-  }, [loginWithGoogle]);
+  if (isLoggedIn) {
+    return <RedirectToHome />;
+  }
 
   const { mail, password } = data;
 
@@ -127,15 +122,11 @@ function LoginRoute() {
     !validate.mail(mail) ||
     !validate.password(password);
 
-  if (user) {
-    return <RedirectToHome />;
-  }
-
   return (
     <>
-      <Helmet>
-        <title>Login | {process.env.REACT_APP_BRAND_NAME}</title>
-      </Helmet>
+      <TemplatedHelmet>
+        <title>{t('title')}</title>
+      </TemplatedHelmet>
       <Section className="login-bg">
         <Column.Group centered>
           <Column widescreen={{ size: 5 }} tablet={{ size: 8 }}>
@@ -148,9 +139,10 @@ function LoginRoute() {
                       widescreen={{ size: 11 }}
                     >
                       <legend>
-                        <Title textAlign="centered">Sign in</Title>
+                        <Title textAlign="centered">{t('sign-in')}</Title>
                         <Title subtitle textAlign="centered">
-                          or <Link to="/register">create account</Link>
+                          {t('or')}{' '}
+                          <Link to="/register">{t('create-account')}</Link>
                         </Title>
                       </legend>
 
@@ -158,12 +150,21 @@ function LoginRoute() {
                         <Column size={11}>
                           <Shake duration={500} when={error}>
                             <fieldset disabled={isLoading}>
-                              <GoogleSignInButton onClick={proxyGoogleSignIn} />
+                              <Column.Group>
+                                <Column>
+                                  <GoogleSignInButton />
+                                </Column>
+                                <Column>
+                                  <GithubSignInButton />
+                                </Column>
+                              </Column.Group>
 
-                              <Divider data-content="or" />
+                              <Divider data-content={t('or')} />
 
                               <Field>
-                                <Label htmlFor="mail">Email address</Label>
+                                <Label htmlFor="mail">
+                                  {t('email-address')}
+                                </Label>
 
                                 <Control iconLeft loading={isLoading}>
                                   <Input
@@ -179,15 +180,18 @@ function LoginRoute() {
                                   />
                                   <ValidityIconLeft type="mail" value={mail} />
                                 </Control>
-                                {error && error.indexOf('mail') > -1 && (
+
+                                {error && error.includes('mail') && (
                                   <Fade>
-                                    <Help color="danger">{errors[error]}</Help>
+                                    <Help color="danger">{t(error)}</Help>
                                   </Fade>
                                 )}
                               </Field>
 
                               <Field>
-                                <Label htmlFor="password">Password</Label>
+                                <Label htmlFor="password">
+                                  {t('password')}
+                                </Label>
 
                                 <Control iconLeft loading={isLoading}>
                                   <Input
@@ -206,9 +210,9 @@ function LoginRoute() {
                                   />
                                 </Control>
 
-                                {error && error.indexOf('password') > -1 && (
+                                {error && error.includes('password') && (
                                   <Fade>
-                                    <Help color="danger">{errors[error]}</Help>
+                                    <Help color="danger">{t(error)}</Help>
                                   </Fade>
                                 )}
                               </Field>
@@ -223,14 +227,14 @@ function LoginRoute() {
                                     checked={data.rememberMe}
                                   />
                                   <Label htmlFor="remember-me">
-                                    Remember me
+                                    {t('remember-me')}
                                   </Label>
                                 </Control>
-                                {error && error === 'data.invalid' && (
+                                {/*error && error === 'data.invalid' && (
                                   <Fade>
                                     <Help color="danger">{errors[error]}</Help>
                                   </Fade>
-                                )}
+                                )*/}
                               </Field>
 
                               <Button
@@ -238,8 +242,9 @@ function LoginRoute() {
                                 state={isLoading ? 'loading' : undefined}
                                 fullwidth
                                 disabled={isDisabled}
+                                type="submit"
                               >
-                                Sign in
+                                {t('sign-in')}
                               </Button>
 
                               <br />
@@ -251,7 +256,7 @@ function LoginRoute() {
                                   as={Link}
                                   to="/reset-password"
                                 >
-                                  Forgot password?
+                                  {t('forgot-password')}
                                 </Title>
                               </div>
                             </fieldset>
@@ -260,8 +265,8 @@ function LoginRoute() {
                       </Column.Group>
 
                       <p className="has-text-centered has-text-grey">
-                        Don't have an account?{' '}
-                        <Link to="/register">Sign up</Link>
+                        {t('dont-have-an-account')}{' '}
+                        <Link to="/register">{t('sign-up')}</Link>
                       </p>
                     </Column>
                   </Column.Group>
@@ -274,5 +279,3 @@ function LoginRoute() {
     </>
   );
 }
-
-export default LoginRoute;

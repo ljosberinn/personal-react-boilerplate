@@ -9,14 +9,12 @@ export default function SiteSettings() {
 
   return (
     <Content>
-      <Title as="h2">{t('siteSettings')}</Title>
-
       <Column.Group centered>
-        <Column size={6}>
+        <Column size="half">
           <ChangeLanguage />
         </Column>
 
-        <Column>
+        <Column size="half">
           <ChangeTheme />
         </Column>
       </Column.Group>

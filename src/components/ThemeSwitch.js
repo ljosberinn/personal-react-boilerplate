@@ -18,27 +18,35 @@ const iconClassMap = {
   },
 };
 
+/**
+ *
+ * @param {{
+ *  from: 'settings' | 'nav' | 'footer'
+ *  children: React.Children
+ * }}
+ */
+const Wrap = ({ from, children, ...rest }) =>
+  from === 'nav' ? (
+    <Navbar.Item {...rest}>{children}</Navbar.Item>
+  ) : from === 'settings' ? (
+    <Button type="button" {...rest}>
+      {children}
+    </Button>
+  ) : (
+    <span {...rest}>{children}</span>
+  );
+
 export default function ThemeSwitch({ from }) {
   const { isLoading, theme, toggleTheme } = useContext(ThemeContext);
 
   const id = `theme-switch-${from}`;
-
-  const Wrap = ({ children, ...rest }) =>
-    from === 'nav' ? (
-      <Navbar.Item {...rest}>{children}</Navbar.Item>
-    ) : from === 'settings' ? (
-      <Button type="button" {...rest}>
-        {children}
-      </Button>
-    ) : (
-      <span {...rest}>{children}</span>
-    );
 
   return (
     <>
       {isLoading && <Loader isFullPage color={theme} />}
 
       <Wrap
+        from={from}
         className={from !== 'nav' ? styles.clickableContainer : undefined}
         role="button"
         onClick={toggleTheme}

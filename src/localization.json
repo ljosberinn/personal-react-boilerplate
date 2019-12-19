@@ -1,50 +1,94 @@
 {
-  "de": {
+  "en": {
+    "navigation": {
+      "logout": "Logout",
+      "login": "Login",
+      "contribute": "Contribute"
+    },
+    "routes": {
+      "login": "Login",
+      "landingPage": "Home",
+      "register": "Register",
+      "tos": "Terms of Service",
+      "resetPassword": "Forgot password?",
+      "privacyPolicy": "Privacy Policy",
+      "settings": "Settings"
+    },
+    "footer": { "features": "Features", "other": "Other", "legal": "Legal" },
     "languages": {
-      "en": "Englisch",
-      "de": "Deutsch",
-      "fr": "Französisch",
-      "es": "Spanisch",
-      "jp": "Japanisch",
-      "ru": "Russisch",
-      "help": "Sprache unvollständig oder fehlt? Hilf zu übersetzen!"
+      "es": "Spanish",
+      "jp": "Japanese",
+      "help": "Language incomplete or missing? Help translating!",
+      "de": "German",
+      "en": "English",
+      "fr": "French",
+      "ru": "Russian"
+    },
+    "settings": {
+      "accountSettings": "Account Settings",
+      "changeLanguage": "Change Language",
+      "changePassword": "Change Password",
+      "changePasswordSuccess": "Your password was successfully changed.",
+      "changeTheme": "Change Theme",
+      "dangerZone": "Danger Zone",
+      "deleteAccountAbort": "No, please take me back.",
+      "deleteAccountAbort2": "I changed my mind!",
+      "deleteAccountBtnText": "Delete Your Account",
+      "deleteAccountConfirm": "Yes, delete my account.",
+      "deleteAccountGoodbye": "Sad to see you go. Your account will be deleted in 10 seconds.",
+      "deleteAccountInfo": "You're in the process of deleting your account!",
+      "siteSettings": "Site Settings",
+      "success": "Success",
+      "title": "Settings",
+      "warning": "Warning"
+    }
+  },
+  "de": {
+    "navigation": {
+      "login": "Login",
+      "contribute": "Mitwirken",
+      "logout": "Logout"
     },
     "routes": {
       "landingPage": "Startseite",
       "register": "Registrieren",
-      "login": "Login",
+      "tos": "Nutzungsbedingungen",
       "resetPassword": "Passwort vergessen?",
       "privacyPolicy": "Privacy Policy",
-      "tos": "Nutzungsbedingungen",
-      "settings": "Einstellungen"
-    },
-    "navigation": {
-      "contribute": "Contribute",
-      "logout": "Logout",
+      "settings": "Einstellungen",
       "login": "Login"
     },
+    "footer": {
+      "other": "Weiteres",
+      "legal": "Rechtliches",
+      "features": "Features"
+    },
+    "languages": {
+      "help": "Sprache unvollständig oder fehlt? Hilf zu übersetzen!",
+      "de": "Deutsch",
+      "en": "Englisch",
+      "fr": "Französisch",
+      "ru": "Russisch",
+      "es": "Spanisch",
+      "jp": "Japanisch"
+    },
     "settings": {
-      "title": "Einstellungen",
-      "siteSettings": "Seiteneinstellungen",
       "accountSettings": "Accounteinstellungen",
       "changeLanguage": "Sprache ändern",
+      "changePassword": "Password ändern",
+      "changePasswordSuccess": "Dein Passwort wurde erfolgreich geändert.",
       "changeTheme": "Farbschema ändern",
       "dangerZone": "Gefahrenzone",
-      "deleteAccountBtnText": "Account löschen",
-      "warning": "Warnung",
-      "deleteAccountInfo": "Du bist im Begriff deinen Account zu löschen!",
       "deleteAccountAbort": "Danke nein, zurück.",
+      "deleteAccountAbort2": "Ich habe es mir anders überlegt!",
+      "deleteAccountBtnText": "Account löschen",
       "deleteAccountConfirm": "Ja, löscht meinen Account.",
       "deleteAccountGoodbye": "Schade! Dein Account wird in 10 Sekunden gelöscht.",
-      "deleteAccountAbort2": "Ich habe es mir anders überlegt!",
+      "deleteAccountInfo": "Du bist im Begriff deinen Account zu löschen!",
+      "siteSettings": "Seiteneinstellungen",
       "success": "Erfolg",
-      "changePassword": "Password ändern",
-      "changePasswordSuccess": "Dein Passwort wurde erfolgreich geändert."
-    },
-    "footer": {
-      "legal": "Rechtliches",
-      "features": "Features",
-      "other": "Weiteres"
+      "title": "Einstellungen",
+      "warning": "Warnung"
     }
   }
 }

@@ -9,7 +9,7 @@ import {
 } from '../../../../utils';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import Shake from 'react-reveal/Shake';
-import { Fade } from 'react-reveal';
+import { Fade } from 'react-awesome-reveal';
 import styles from './PasswordSelection.module.scss';
 import { errors } from '../errors';
 
@@ -39,7 +39,7 @@ const criteria = [
 
 /**
  * @param {{
- *  handleChange: (e:React.ChangeEvent<HTMLInputElement>) => void,
+ *  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
  *  password: string,
  *  confirmPassword: string,
  *  isLoading: boolean,

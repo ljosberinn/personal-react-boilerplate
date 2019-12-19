@@ -11,7 +11,7 @@ $dark-bg-color: #1d2a38;
 
 @import './animations';
 @import './extensions';
-@import './dark-theme';
+@import './theme';
 @import './backgrounds';
 
 .is-fullpage {
@@ -87,4 +87,37 @@ a span.icon {
     box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
     filter: brightness(105%);
   }
+}
+
+.column[class*='is-'] {
+  transition: width 300ms ease-in-out;
+}
+
+.message-body p:last-of-type {
+  margin-bottom: initial !important;
+}
+
+// fixes y-overflow on mobile
+header.columns {
+  margin-bottom: 0 !important;
+
+  @media screen and (max-width: 768px) {
+    margin-right: 0;
+    margin-left: 0;
+  }
+
+  .column {
+    padding-bottom: 0;
+
+    @media screen and (max-width: 768px) {
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
+}
+
+main {
+  display: flex;
+  flex: 1 1 0%;
+  min-height: calc(100vh - 282px - 64px);
 }

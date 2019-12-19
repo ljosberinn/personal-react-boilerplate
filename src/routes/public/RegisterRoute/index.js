@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { validate } from '../../../utils/validators';
 import {
@@ -6,6 +6,9 @@ import {
   Checkbox,
   Field,
   GoogleSignInButton,
+  GithubSignInButton,
+  Loader,
+  TemplatedHelmet,
 } from '../../../components';
 import PasswordSelection from './PasswordSelection';
 import {
@@ -18,6 +21,7 @@ import {
   Help,
   Label,
   Card,
+  Message,
   Button,
   Image,
   Divider,
@@ -26,15 +30,15 @@ import {
 } from 'rbx';
 import { MailSvg } from '../../../assets/svg';
 import Shake from 'react-reveal/Shake';
-import { Fade } from 'react-reveal';
+import { Fade } from 'react-awesome-reveal';
 import * as ROUTES from '../../../constants/routes';
-import Helmet from 'react-helmet';
 import { errors } from './errors';
-import { useAuth } from '../../../hooks';
 import RedirectToHome from '../../RedirectToHome';
+import { useIdentityContext } from 'react-netlify-identity';
+import CountUp from 'react-countup';
 
 export default function RegisterRoute() {
-  const { registerWithMailAndPassword, loginWithGoogle, user } = useAuth();
+  const { signupUser, isLoggedIn, isConfirmedUser } = useIdentityContext();
 
   const [data, setData] = useState({
     mail: '',
@@ -64,36 +68,26 @@ export default function RegisterRoute() {
       setIsLoading(true);
 
       try {
-        await registerWithMailAndPassword(data.mail, data.password);
+        await signupUser(data.mail, data.password);
         setSuccsesfullyRegistered(true);
       } catch (error) {
-        setError(error.code);
+        console.log(error);
+        setError(error.message);
         setIsLoading(false);
       }
     },
-    [registerWithMailAndPassword, data.mail, data.password],
+    [signupUser, data.mail, data.password],
   );
 
-  const proxyGoogleSignIn = useCallback(async () => {
-    setIsLoading(true);
-
-    try {
-      await loginWithGoogle();
-    } catch (error) {
-      console.error(error);
-      setIsLoading(false);
-    }
-  }, [loginWithGoogle]);
-
-  if (user) {
+  if (isLoggedIn && isConfirmedUser) {
     return <RedirectToHome />;
   }
 
   return (
     <>
-      <Helmet>
-        <title>Registration | {process.env.REACT_APP_BRAND_NAME}</title>
-      </Helmet>
+      <TemplatedHelmet>
+        <title>Registration</title>
+      </TemplatedHelmet>
       <Section className="register-bg">
         <Column.Group centered>
           <Column widescreen={{ size: 5 }} tablet={{ size: 8 }}>
@@ -110,7 +104,11 @@ export default function RegisterRoute() {
                       widescreen={{ size: 11 }}
                     >
                       <legend>
-                        <Title textAlign="centered">Create your account</Title>
+                        <Title textAlign="centered">
+                          {successfullyRegistered
+                            ? 'Almost there! Please verify your mail'
+                            : 'Create your account'}
+                        </Title>
                       </legend>
 
                       <br />
@@ -119,12 +117,14 @@ export default function RegisterRoute() {
                         <Column size={11}>
                           <Content>
                             {successfullyRegistered ? (
-                              <RegistrationSuccess mail={data.mail} />
+                              <RegistrationSuccess
+                                mail={data.mail}
+                                password={data.password}
+                              />
                             ) : (
                               <RegistrationForm
                                 {...{
                                   handleChange,
-                                  proxyGoogleSignIn,
                                   error,
                                   isLoading,
                                   ...data,
@@ -135,10 +135,12 @@ export default function RegisterRoute() {
                         </Column>
                       </Column.Group>
 
-                      <p className="has-text-centered has-text-grey">
-                        Already have an account?{' '}
-                        <Link to="/login">Sign in</Link>
-                      </p>
+                      {!successfullyRegistered && (
+                        <p className="has-text-centered has-text-grey">
+                          Already have an account?{' '}
+                          <Link to={ROUTES.LOGIN.normalizedPath}>Sign in</Link>
+                        </p>
+                      )}
                     </Column>
                   </Column.Group>
                 </form>
@@ -151,18 +153,69 @@ export default function RegisterRoute() {
   );
 }
 
-function RegistrationSuccess({ mail }) {
+const REGISTRATION_CONFIRMATION_INTERVAL_SECONDS = 15;
+
+function RegistrationSuccess({ mail, password }) {
+  const { loginUser } = useIdentityContext();
+
+  const [attempt, setAttempt] = useState(false);
+
+  useEffect(() => {
+    let timeout;
+
+    (async function() {
+      if (attempt) {
+        try {
+          await loginUser(mail, password, true);
+          setAttempt(false);
+        } catch (error) {
+          setAttempt(false);
+        }
+      } else if (!timeout) {
+        timeout = setTimeout(() => {
+          setAttempt(true);
+        }, REGISTRATION_CONFIRMATION_INTERVAL_SECONDS * 1000);
+      }
+    })();
+
+    return () => timeout && clearTimeout(timeout);
+  }, [attempt, loginUser, mail, password]);
+
   return (
     <Fade>
       <Image.Container size="16by9">
         <MailSvg />
       </Image.Container>
 
-      <Section textAlign="centered">
-        <p>A mail was sent to</p>
-        <Tag color="info">{mail}</Tag>
-        <p>containing further details!</p>
-      </Section>
+      <Message>
+        <Message.Body textAlign="centered">
+          <p>
+            You have successfully registered but have not yet confirmed your
+            mail.
+            <br />A message was sent to
+          </p>
+          <p>
+            <Tag color="info">{mail}</Tag>
+          </p>
+          <p>just now. Please confirm your mail to proceed.</p>
+
+          <p>
+            Trying again{' '}
+            {!attempt && (
+              <>
+                in...{' '}
+                <CountUp
+                  start={REGISTRATION_CONFIRMATION_INTERVAL_SECONDS}
+                  end={0}
+                  useEasing={false}
+                  duration={REGISTRATION_CONFIRMATION_INTERVAL_SECONDS}
+                />
+              </>
+            )}
+          </p>
+          {attempt && <Loader />}
+        </Message.Body>
+      </Message>
     </Fade>
   );
 }
@@ -170,7 +223,6 @@ function RegistrationSuccess({ mail }) {
 function RegistrationForm({
   error,
   handleChange,
-  proxyGoogleSignIn,
   isLoading,
   mail,
   password,
@@ -188,12 +240,19 @@ function RegistrationForm({
     !validate.mail(mail) ||
     !tos;
 
-  const hasMailError = error && error.indexOf('mail') > -1;
+  const hasMailError = error && error.includes('mail');
 
   return (
     <Shake duration={500} when={error}>
       <fieldset disabled={isLoading}>
-        <GoogleSignInButton onClick={proxyGoogleSignIn} />
+        <Column.Group>
+          <Column>
+            <GoogleSignInButton />
+          </Column>
+          <Column>
+            <GithubSignInButton />
+          </Column>
+        </Column.Group>
 
         <Divider data-content="or" />
 
@@ -244,15 +303,10 @@ function RegistrationForm({
                 circled
               />
               <Label htmlFor="tos">
-                I agree to the <Link to={ROUTES.TOS}>Terms of Service</Link>.
+                I agree to the{' '}
+                <Link to={ROUTES.TOS.normalizedPath}>Terms of Service</Link>.
               </Label>
             </Control>
-
-            {error && error === 'tos' && (
-              <Fade>
-                <Help color="danger">{errors[error]}</Help>
-              </Fade>
-            )}
           </Field>
         </Block>
 

@@ -54,8 +54,8 @@ export const TOS = {
 
 /** PRIVATE ROUTES */
 export const SETTINGS = {
-  routerPath: '/settings',
-  normalizedPath: '/settings',
+  routerPath: '/settings/:setting',
+  normalizedPath: '/settings/site',
   title: 'routes:settings',
   icon: faCog,
 };

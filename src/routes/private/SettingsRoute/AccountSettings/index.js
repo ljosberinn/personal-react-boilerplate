@@ -1,36 +1,31 @@
-import React, { useContext } from 'react';
-import { AuthContext } from '../../../../context/AuthContext';
-import { Content, Title, Message } from 'rbx';
+import React from 'react';
+import { Content, Title } from 'rbx';
 import RedirectToHome from '../../../RedirectToHome';
-import DeleteAccount from './DeleteAccount';
 import ChangePassword from './ChangePassword';
-import { Icon } from '../../../../components';
-import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
+//import { Icon } from '../../../../components';
+//import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { useTranslation } from 'react-i18next';
+import { useIdentityContext } from 'react-netlify-identity';
 
 export default function AccountSettings() {
-  const { user } = useContext(AuthContext);
+  const { user, updateUser } = useIdentityContext();
   const { t } = useTranslation('settings');
 
   if (!user) {
     return <RedirectToHome />;
   }
 
-  const isGoogleUser = user && user.providerData[0].providerId === 'google.com';
+  async function updatePassword(password) {
+    await updateUser({ fields: { password } });
+  }
 
   return (
     <Content>
-      <Title as="h2" subtitle>
-        {t('accountSettings')}
-      </Title>
-
-      {!isGoogleUser && (
-        <>
-          <ChangePassword user={user} />
-          <hr />
-        </>
+      {user.app_metadata.provider === 'email' && (
+        <ChangePassword updatePassword={updatePassword} />
       )}
 
+      {/* 
       <Message color="danger">
         <Message.Header>
           <span>{t('dangerZone')}</span>
@@ -40,6 +35,7 @@ export default function AccountSettings() {
           <DeleteAccount user={user} />
         </Message.Body>
       </Message>
+      */}
     </Content>
   );
 }

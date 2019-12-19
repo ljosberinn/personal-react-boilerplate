@@ -1,17 +1,40 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { Title, Button, Help, Message } from 'rbx';
 import PasswordSelection from '../../../public/RegisterRoute/PasswordSelection';
 import { validate } from '../../../../utils/validators';
-import { Fade } from 'react-reveal';
+import { Fade, Flip } from 'react-awesome-reveal';
 import { useTranslation } from 'react-i18next';
+import CountUp from 'react-countup';
 
-export default function ChangePassword({ user }) {
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+const INITIAL_STATE = {
+  password: '',
+  confirmPassword: '',
+};
+
+const errors = {
+  'Invalid Refresh Token': 'token_invalid',
+};
+
+const SUCCESS_MSG_DISPLAY_SECONDS = 10;
+
+export default function ChangePassword({ updatePassword }) {
+  const [{ password, confirmPassword }, setPasswords] = useState(INITIAL_STATE);
   const [changeSuccessful, setWasSuccessfullyChanged] = useState(false);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const { t } = useTranslation('settings');
+
+  useEffect(() => {
+    if (changeSuccessful) {
+      const timeout = setTimeout(() => {
+        setPasswords(INITIAL_STATE);
+        setError(null);
+        setWasSuccessfullyChanged(false);
+      }, SUCCESS_MSG_DISPLAY_SECONDS * 1000);
+
+      return () => clearTimeout(timeout);
+    }
+  }, [changeSuccessful]);
 
   const handleSubmit = useCallback(
     async event => {
@@ -20,29 +43,27 @@ export default function ChangePassword({ user }) {
       setIsLoading(true);
 
       try {
-        await user.updatePassword(password);
+        await updatePassword(password);
         setWasSuccessfullyChanged(true);
       } catch (error) {
+        if (error?.json?.error_description) {
+          const { error_description } = error.json;
+          setError(
+            errors[error_description]
+              ? errors[error_description]
+              : 'unknown_error',
+          );
+        }
         console.error(error);
-        setError(error);
       } finally {
         setIsLoading(false);
       }
     },
-    [user, password],
+    [password, updatePassword],
   );
 
   const handleChange = useCallback(({ target: { name, value } }) => {
-    switch (name) {
-      case 'password':
-        setPassword(value);
-        break;
-      case 'confirmPassword':
-        setConfirmPassword(value);
-        break;
-      default:
-        throw new Error('where does this come from');
-    }
+    setPasswords(passwords => ({ ...passwords, [name]: value }));
   }, []);
 
   const passwordsAreMatching =
@@ -53,12 +74,20 @@ export default function ChangePassword({ user }) {
 
   if (changeSuccessful) {
     return (
-      <Fade>
+      <Flip direction="vertical">
         <Message color="success">
-          <Message.Header>{t('success')}</Message.Header>
+          <Message.Header>
+            <span>{t('success')}</span>
+            <CountUp
+              duration={SUCCESS_MSG_DISPLAY_SECONDS}
+              start={SUCCESS_MSG_DISPLAY_SECONDS}
+              end={0}
+              useEasing={false}
+            />
+          </Message.Header>
           <Message.Body>{t('changePasswordSuccess')}</Message.Body>
         </Message>
-      </Fade>
+      </Flip>
     );
   }
 
@@ -74,12 +103,13 @@ export default function ChangePassword({ user }) {
         />
 
         {error && (
-          <Fade>
-            <Help color="danger">{error}</Help>
+          <Fade className="field">
+            <Help color="danger">{t(error)}</Help>
           </Fade>
         )}
 
         <Button
+          type="submit"
           state={isLoading ? 'loading' : undefined}
           color="primary"
           disabled={!passwordsAreMatching}
