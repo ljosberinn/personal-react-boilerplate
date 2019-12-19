@@ -9,6 +9,7 @@ import * as ROUTES from '../constants/routes';
 import { faGithub, faDiscord } from '@fortawesome/free-brands-svg-icons';
 import { useTranslation } from 'react-i18next';
 import { useIdentityContext } from 'react-netlify-identity';
+import { DiscordLink, RepoLink } from '../constants/env';
 
 /**
  *
@@ -113,18 +114,24 @@ export default function Footer() {
               <li>
                 <LanguageSwitch from="footer" />
               </li>
-              <li>
-                <ExternalLink href="//discord.gg">
-                  <Icon icon={faDiscord} />
-                  <span>Discord</span>
-                </ExternalLink>
-              </li>
-              <li>
-                <ExternalLink href="//github.com/ljosberinn/current-react-playground">
-                  <Icon icon={faGithub} />
-                  <span>Contribute</span>
-                </ExternalLink>
-              </li>
+
+              {DiscordLink && (
+                <li>
+                  <ExternalLink href={DiscordLink}>
+                    <Icon icon={faDiscord} />
+                    <span>Discord</span>
+                  </ExternalLink>
+                </li>
+              )}
+
+              {RepoLink && (
+                <li>
+                  <ExternalLink href={RepoLink}>
+                    <Icon icon={faGithub} />
+                    <span>Contribute</span>
+                  </ExternalLink>
+                </li>
+              )}
             </ul>
           </Column>
         </Column.Group>

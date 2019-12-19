@@ -12,14 +12,7 @@ import { useTranslation } from 'react-i18next';
 import * as ROUTES from '../constants/routes';
 import { useIdentityContext } from 'react-netlify-identity';
 import LogRocket from 'logrocket';
-
-const { REACT_APP_DISCORD_LINK, REACT_APP_REPO_LINK } = process.env;
-const DiscordLink =
-  REACT_APP_DISCORD_LINK &&
-  REACT_APP_DISCORD_LINK.length > 0 &&
-  REACT_APP_DISCORD_LINK;
-const RepoLink =
-  REACT_APP_REPO_LINK && REACT_APP_REPO_LINK.length > 0 && REACT_APP_REPO_LINK;
+import { DiscordLink, RepoLink } from '../constants/env';
 
 /**
  * @returns {React.FC} LogoIpsumSvg
