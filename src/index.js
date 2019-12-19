@@ -9,7 +9,9 @@ import * as Sentry from '@sentry/browser';
 import LogRocket from 'logrocket';
 import setupLogRocketReact from 'logrocket-react';
 
-if (process.env.NODE_ENV === 'development') {
+const isLive = process.env.NODE_ENV !== 'development';
+
+if (!isLive) {
   if (!localStorage['gotrue.user']) {
     const user = {
       url: process.env.REACT_APP_SITE_URL,
@@ -46,9 +48,40 @@ if (process.env.NODE_ENV === 'development') {
   });
 }
 
+/**
+ *
+ * @param {import('react-netlify-identity').User} user
+ */
+function identifyUser(user) {
+  if (!isLive) {
+    return;
+  }
+
+  if (user) {
+    const {
+      id,
+      confirmed_at,
+      created_at,
+      app_metadata: { provider },
+    } = user;
+    LogRocket.identify(id, {
+      provider,
+      created_at,
+      confirmed_at,
+    });
+
+    return;
+  }
+
+  LogRocket.identify(null);
+}
+
 render(
   <StrictMode>
-    <IdentityContextProvider url={process.env.REACT_APP_SITE_URL}>
+    <IdentityContextProvider
+      url={process.env.REACT_APP_SITE_URL}
+      onAuthChange={identifyUser}
+    >
       <ThemeProvider>
         <App />
       </ThemeProvider>
