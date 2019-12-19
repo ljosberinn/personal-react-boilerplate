@@ -1,6 +1,5 @@
 import querystring from 'querystring';
-
-const { Client, query: q } = require('faunadb');
+import { Client, query as q } from 'faunadb';
 
 const client = new Client({
   secret: process.env.REACT_APP_FAUNA_DB_SECRET,
