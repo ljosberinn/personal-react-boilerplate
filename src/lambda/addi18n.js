@@ -19,6 +19,14 @@ export async function handler({
     ),
   );
 
+  // ignore request if key was previously added
+  // or even worse, key exists yet is still setup to be added
+  if (data.i18n[key]) {
+    return {
+      statusCode: 200,
+    };
+  }
+
   return {
     statusCode: (await client.query(
       q.Update(q.Ref(ref), {
