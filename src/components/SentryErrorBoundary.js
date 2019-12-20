@@ -111,18 +111,7 @@ class SentryErrorBoundary extends Component {
       );
     }
 
-    return (
-      <>
-        {this.props.children}
-        <button
-          onClick={() => {
-            this.setState({ error: new Error('test') });
-          }}
-        >
-          click me
-        </button>
-      </>
-    );
+    return this.props.children;
   }
 }
 
