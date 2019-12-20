@@ -8,7 +8,7 @@
 [devdependencies-image]: https://david-dm.org/ljosberinn/current-react-playground/dev-status.png
 [devdependencies-url]: https://david-dm.org/ljosberinn/current-react-playground#info=devDependencies
 [netlify-image]: https://api.netlify.com/api/v1/badges/20ce39dc-d1d4-4bb9-a5ee-6c3d613e3ed6/deploy-status
-[netlify-url]: https://app.netlify.com/sites/trusting-austin-d942b1/deploys
+[netlify-url]: https://app.netlify.com/sites/ljosberinn-react-playground/deploys
 
 # Technologies
 
