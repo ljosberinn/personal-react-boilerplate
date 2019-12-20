@@ -49,10 +49,6 @@ body {
 
 html {
   &.theme--light {
-    body {
-      background-image: url('../../svg/light/background.svg');
-    }
-
     .settings-bg {
       background-image: url('../../svg/light/settings.svg');
     }
@@ -76,7 +72,6 @@ html {
 
   &.theme--dark {
     body {
-      background-image: url('../../svg/dark/background.svg');
       font-family: $body-family;
     }
 
