@@ -30,7 +30,7 @@ function Link({ children, ...rest }) {
  */
 export default function Footer() {
   const { isLoggedIn } = useIdentityContext();
-  const { t } = useTranslation(['footer', 'routes']);
+  const { t } = useTranslation(['footer', 'routes', 'navigation']);
 
   return (
     <RBXFooter as="footer">
@@ -42,7 +42,7 @@ export default function Footer() {
                 {process.env.REACT_APP_BRAND_NAME}
               </Generic>
               <li>
-                <Link to="/">{t(ROUTES.LANDING_PAGE.title)}</Link>
+                <Link to="/">{t(ROUTES.LANDING_PAGE.title, )}</Link>
               </li>
               {!isLoggedIn ? (
                 <>
@@ -128,7 +128,7 @@ export default function Footer() {
                 <li>
                   <ExternalLink href={RepoLink}>
                     <Icon icon={faGithub} />
-                    <span>Contribute</span>
+                    <span>{t('navigation:contribute')}</span>
                   </ExternalLink>
                 </li>
               )}
