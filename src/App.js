@@ -9,6 +9,7 @@ import RedirectToHome from './routes/RedirectToHome';
 import Layout from './Layout';
 import { useIdentityContext } from 'react-netlify-identity';
 import { availableLanguages } from './components/LanguageSwitch';
+import { SentryErrorBoundary } from './components';
 
 /**
  * @returns {React.FC} App
@@ -26,17 +27,19 @@ export default function App() {
       <Layout>
         <Switch>
           <Suspense fallback={<Loader isFullPage />}>
-            {availableLanguages.map(lng => (
-              <Route
-                path={`/${lng}`}
-                key={lng}
-                exact
-                component={LANGUAGE_ROUTE}
-              />
-            ))}
-            {Object.entries(routes).map(([path, component]) => (
-              <Route path={path} component={component} exact key={path} />
-            ))}
+            <SentryErrorBoundary>
+              {availableLanguages.map(lng => (
+                <Route
+                  path={`/${lng}`}
+                  key={lng}
+                  exact
+                  component={LANGUAGE_ROUTE}
+                />
+              ))}
+              {Object.entries(routes).map(([path, component]) => (
+                <Route path={path} component={component} exact key={path} />
+              ))}
+            </SentryErrorBoundary>
           </Suspense>
           <Route component={RedirectToHome} />
         </Switch>

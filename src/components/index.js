@@ -12,6 +12,7 @@ import Footer from './Footer';
 import ThemeSwitch from './ThemeSwitch';
 import LoginProviderButton from './LoginProviderButton';
 import TemplatedHelmet from './TemplatedHelmet';
+import SentryErrorBoundary from './SentryErrorBoundary';
 
 export {
   LoginProviderButton,
@@ -28,4 +29,5 @@ export {
   LanguageSwitch,
   ThemeSwitch,
   TemplatedHelmet,
+  SentryErrorBoundary,
 };

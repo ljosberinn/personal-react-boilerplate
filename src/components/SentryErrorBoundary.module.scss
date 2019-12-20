@@ -1,0 +1,30 @@
+.modal {
+  width: 1240px !important;
+
+  @media screen and (max-width: 1240px) {
+    width: 1024px !important;
+  }
+
+  @media screen and (max-width: 1024px) {
+    width: 840px !important;
+  }
+
+  @media screen and (max-width: 840px) {
+    width: 768px !important;
+  }
+
+  @media screen and (max-width: 768px) {
+    width: 100% !important;
+    background-color: transparent;
+  }
+}
+
+.body {
+  @media screen and (max-width: 768px) {
+    background-color: transparent !important;
+  }
+}
+
+.message {
+  border-radius: 5px !important;
+}

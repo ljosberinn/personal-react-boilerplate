@@ -1,7 +1,8 @@
 .settings-bg,
 .login-bg,
 .register-bg,
-.reset-password-bg {
+.reset-password-bg,
+.error-bg {
   background-repeat: no-repeat;
   background-size: contain;
   flex-direction: row;
@@ -37,6 +38,10 @@
   background-position-x: 80%;
 }
 
+.error-bg {
+  background-position-x: 40%;
+}
+
 body {
   background-repeat: repeat-y;
   background-size: cover;
@@ -63,6 +68,10 @@ html {
     .reset-password-bg {
       background-image: url('../../svg/light/reset-password.svg');
     }
+
+    .error-bg {
+      background-image: url('../../svg/light/bug.svg');
+    }
   }
 
   &.theme--dark {
@@ -85,6 +94,10 @@ html {
 
     .reset-password-bg {
       background-image: url('../../svg/dark/reset-password.svg');
+    }
+
+    .error-bg {
+      background-image: url('../../svg/dark/bug.svg');
     }
   }
 }
