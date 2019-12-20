@@ -27,7 +27,7 @@ export default function LoginProviderButton({ provider }) {
   return (
     <Button
       type="button"
-      onClick={() => loginProvider('google')}
+      onClick={() => loginProvider(provider)}
       fullwidth
       className={button}
     >
