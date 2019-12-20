@@ -26,6 +26,7 @@
 ## Error Tracking
 
 - [Sentry](https://sentry.io/)
+- [LogRocket](https://logrocket.com/)
 
 ## Styling
 
