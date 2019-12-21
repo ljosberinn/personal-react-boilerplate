@@ -1,5 +1,5 @@
 import React from 'react';
-import { Section } from 'rbx';
+import { Section, Title } from 'rbx';
 import { TemplatedHelmet } from '../../../components';
 import { useTranslation } from 'react-i18next';
 
@@ -15,7 +15,7 @@ export default function TosRoute() {
         <title>{t('tos')}</title>
       </TemplatedHelmet>
       <Section>
-        <h1>WIP</h1>
+        <Title>WIP</Title>
       </Section>
     </>
   );
