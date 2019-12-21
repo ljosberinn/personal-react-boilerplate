@@ -6,6 +6,7 @@ import Switch from './Switch';
 import Loader from './Loader';
 import Icon from './Icon';
 import styles from './ThemeSwitch.module.scss';
+import { useTranslation } from 'react-i18next';
 
 const iconClassMap = {
   sun: {
@@ -44,6 +45,7 @@ const Wrap = ({ from, children, ...rest }) =>
  */
 export default function ThemeSwitch({ from }) {
   const { isLoading, theme, toggleTheme } = useContext(ThemeContext);
+  const { t } = useTranslation('settings');
 
   const id = `theme-switch-${from}`;
 
@@ -56,7 +58,7 @@ export default function ThemeSwitch({ from }) {
         className={from !== 'nav' ? styles.clickableContainer : undefined}
         role="button"
         onClick={toggleTheme}
-        title="Toggle color theme"
+        title={t('changeTheme')}
         id={id}
       >
         <Icon icon={faSun} color={iconClassMap.sun[theme]} />

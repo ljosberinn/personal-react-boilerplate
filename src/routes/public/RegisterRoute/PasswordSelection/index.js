@@ -1,27 +1,26 @@
-import React, { useState, useEffect, memo } from 'react';
+import React, { useCallback, useState, useEffect, memo } from 'react';
 import { ValidityIconLeft, Icon, Field } from '../../../../components';
 import { validate, pattern } from '../../../../utils/validators';
 import { Message, Label, Help, Input, Control, Block } from 'rbx';
 import { stringContainsNumber, stringContainsLetter } from '../../../../utils';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import Shake from 'react-reveal/Shake';
-import { Fade } from 'react-awesome-reveal';
 import styles from './PasswordSelection.module.scss';
-import { errors } from '../errors';
 import classnames from 'classnames';
+import { useTranslation } from 'react-i18next';
+import { faLock, faLockOpen } from '@fortawesome/free-solid-svg-icons';
 
 const criteria = [
   {
-    validate: password => stringContainsNumber(password),
-    info: 'must contain at least one number',
+    validate: password => stringContainsLetter(password),
+    info: 'password-criteria-letter',
   },
   {
-    validate: password => stringContainsLetter(password),
-    info: 'must contain at least one letter',
+    validate: password => stringContainsNumber(password),
+    info: 'password-criteria-number',
   },
   {
     validate: password => password.length > 7,
-    info: 'must be at least 8 characters long',
+    info: 'password-criteria-length',
   },
   /*{
     validate: password => stringContainsSpecialCharacter(password),
@@ -52,6 +51,7 @@ export default memo(function PasswordSelection({
   error,
 }) {
   const [type, setType] = useState('password');
+  const { t } = useTranslation('registration', 'login');
 
   const fulfilledCriteriaArr = criteria.map(({ validate }) =>
     validate(password),
@@ -65,17 +65,21 @@ export default memo(function PasswordSelection({
     }
   }, [isLoading, type]);
 
+  const handlePasswordVisibilityChange = useCallback(
+    () => setType(type => (type === 'text' ? 'password' : 'text')),
+    [],
+  );
+
   const isValidPassword = validate.password(password);
 
-  const passwordIsUnsafe = error && error === 'password.unsafe';
-  const passwordsDoNotMatch =
-    (confirmPassword.length > 7 && password !== confirmPassword) ||
-    (error && error === 'password.mismatch');
+  const hasConfirmPassword =
+    password.length > 0 && confirmPassword.length === password.length;
+  const passwordsMatch = hasConfirmPassword && password === confirmPassword;
 
   return (
     <>
       <Field>
-        <Label htmlFor="password">Password</Label>
+        <Label htmlFor="password">{t('login:password')}</Label>
 
         <Message>
           <Message.Body
@@ -86,8 +90,9 @@ export default memo(function PasswordSelection({
           >
             {criteria.map(({ info }, index) => (
               <PasswordCriteriaInformation
-                info={info}
+                info={t(info)}
                 isFulfilled={fulfilledCriteriaArr[index]}
+                t={t}
                 key={index}
               />
             ))}
@@ -103,7 +108,6 @@ export default memo(function PasswordSelection({
             pattern={pattern.password}
             required
             autoComplete="new-password"
-            color={passwordIsUnsafe ? 'danger' : undefined}
           />
           <ValidityIconLeft type="password" value={password} />
 
@@ -112,21 +116,15 @@ export default memo(function PasswordSelection({
               className="is-clickable"
               align="right"
               icon={type === 'password' ? faEye : faEyeSlash}
-              onClick={() => setType(type === 'password' ? 'text' : 'password')}
+              onClick={handlePasswordVisibilityChange}
             />
           )}
         </Control>
-
-        {passwordIsUnsafe && (
-          <Fade>
-            <Help color="danger">{errors[error]}</Help>
-          </Fade>
-        )}
       </Field>
 
       <Block>
         <Field>
-          <Label htmlFor="confirmPassword">Confirm password</Label>
+          <Label htmlFor="confirmPassword">{t('confirm-password')}</Label>
 
           <Control iconLeft loading={isLoading}>
             <Input
@@ -137,22 +135,37 @@ export default memo(function PasswordSelection({
               pattern={pattern.password}
               disabled={!isValidPassword}
               placeholder={
-                !isValidPassword ? 'please first enter a valid password' : ''
+                !isValidPassword ? t('enter-valid-password-first') : ''
               }
               required
               autoComplete="new-password"
-              color={passwordsDoNotMatch ? 'danger' : undefined}
+              color={
+                passwordsMatch
+                  ? undefined
+                  : hasConfirmPassword
+                  ? 'danger'
+                  : undefined
+              }
             />
-            <ValidityIconLeft type="password" value={confirmPassword} />
-          </Control>
 
-          {passwordsDoNotMatch && (
-            <Shake>
-              <Fade>
-                <Help color="danger">{errors['password.mismatch']}</Help>
-              </Fade>
-            </Shake>
-          )}
+            <Icon
+              align="left"
+              icon={
+                passwordsMatch
+                  ? faLock
+                  : hasConfirmPassword
+                  ? faLockOpen
+                  : faLockOpen
+              }
+              color={
+                passwordsMatch
+                  ? 'success'
+                  : hasConfirmPassword
+                  ? 'danger'
+                  : undefined
+              }
+            />
+          </Control>
         </Field>
       </Block>
     </>
@@ -161,13 +174,16 @@ export default memo(function PasswordSelection({
 
 /**
  *
- * @returns {React.FC<{isFulfilled: boolean, info: string}>} PasswordCriteriaInformation
+ * @returns {React.FC<{
+ * isFulfilled: boolean,
+ * info: string
+ * }>} PasswordCriteriaInformation
  */
-function PasswordCriteriaInformation({ isFulfilled, info }) {
+function PasswordCriteriaInformation({ isFulfilled, info, t }) {
   return (
     <Help
       color={isFulfilled ? 'success' : undefined}
-      tooltip={isFulfilled ? undefined : 'Please fulfill this requirement'}
+      tooltip={isFulfilled ? undefined : t('fulfill-requirement')}
     >
       {isFulfilled && '✓'} {info}
     </Help>

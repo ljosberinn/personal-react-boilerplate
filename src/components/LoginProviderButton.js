@@ -6,6 +6,7 @@ import { ReactComponent as GoogleSvg } from '../assets/svg/GoogleLogo.svg';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { useIdentityContext } from 'react-netlify-identity';
 import { upperCaseFirstCharacter } from '../utils';
+import { useTranslation } from 'react-i18next';
 
 const iconMap = {
   google: (
@@ -23,6 +24,7 @@ const iconMap = {
  */
 export default function LoginProviderButton({ provider }) {
   const { loginProvider } = useIdentityContext(provider);
+  const { t } = useTranslation('registration');
 
   return (
     <Button
@@ -32,7 +34,11 @@ export default function LoginProviderButton({ provider }) {
       className={button}
     >
       {iconMap[provider]}{' '}
-      <span>Sign in with {upperCaseFirstCharacter(provider)}</span>
+      <span>
+        {t('sign-in-via-provider', {
+          provider: upperCaseFirstCharacter(provider),
+        })}
+      </span>
     </Button>
   );
 }
