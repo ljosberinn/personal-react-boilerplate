@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { LocaleSvg } from '../assets/svg';
 import { Navbar, Dropdown, Button } from 'rbx';
 import { useTranslation } from 'react-i18next';
@@ -12,7 +12,7 @@ export const availableLanguages = [
 /**
  *
  * @returns {React.FC<{
- * from: 'footer' | 'nav' | 'stettings'
+ * from: 'footer' | 'nav' | 'settings'
  * }>} LanguageSwitch
  */
 export default function LanguageSwitch({ from }) {
@@ -20,10 +20,7 @@ export default function LanguageSwitch({ from }) {
 
   const currentLanguage = i18n.languages[0];
 
-  const handleLanguageChange = useCallback(
-    slug => () => i18n.changeLanguage(slug),
-    [i18n],
-  );
+  const handleLanguageChange = slug => () => i18n.changeLanguage(slug);
 
   const dropdownContent = (
     <Dropdown.Content>
