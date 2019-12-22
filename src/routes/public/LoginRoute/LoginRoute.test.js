@@ -1,12 +1,9 @@
 import React from 'react';
-import { default as Component } from '.';
-import { fireEvent, act } from '@testing-library/react';
+import LoginRoute from '.';
+import { fireEvent } from '@testing-library/react';
 import { Route } from 'react-router-dom';
 import * as ROUTES from '../../../constants/routes';
-import { withTranslation } from 'react-i18next';
 import render from '../../../utils/testUtils';
-
-const LoginRoute = withTranslation()(props => <Component {...props} />);
 
 const validMail = 'some@mail.com';
 const invalidMail = 'foo';
@@ -97,18 +94,14 @@ describe('<LoginRoute />', () => {
 
       expect(submitButton.disabled).toBeTruthy();
 
-      act(() => {
-        fireEvent.input(mailInput, { target: { value: mail.value } });
-      });
+      fireEvent.input(mailInput, { target: { value: mail.value } });
 
       expect(submitButton.disabled).toBeTruthy();
       expect(
         mailInput.nextElementSibling.classList.contains('has-text-success'),
       ).toBe(mail.iconSuccess);
 
-      act(() => {
-        fireEvent.input(passwordInput, { target: { value: password.value } });
-      });
+      fireEvent.input(passwordInput, { target: { value: password.value } });
 
       expect(
         passwordInput.nextElementSibling.classList.contains('has-text-success'),

@@ -1,12 +1,7 @@
 import React from 'react';
-import { default as Component } from '.';
-import { fireEvent, act } from '@testing-library/react';
-import { withTranslation } from 'react-i18next';
+import RegisterRoute from '.';
+import { fireEvent } from '@testing-library/react';
 import render from '../../../utils/testUtils';
-
-const RegisterRoute = withTranslation()(props => {
-  return <Component {...props} />;
-});
 
 const validMail = 'some@mail.com';
 const invalidMail = 'foo';
@@ -20,7 +15,7 @@ describe('<RegisterRoute />', () => {
   });
 
   test('disallows registration if passwords dont match', () => {
-    const { getByTestId, getByText } = render(<RegisterRoute />);
+    const { getByTestId } = render(<RegisterRoute />);
 
     const passwordInput = getByTestId('password');
     const confirmPasswordInput = getByTestId('confirm-password');
@@ -30,11 +25,9 @@ describe('<RegisterRoute />', () => {
     expect(confirmPasswordInput.disabled).toBeTruthy();
 
     // Password
-    act(() => {
-      fireEvent.input(passwordInput, { target: { value: validPassword } });
-      fireEvent.input(confirmPasswordInput, {
-        target: { value: invalidPassword },
-      });
+    fireEvent.input(passwordInput, { target: { value: validPassword } });
+    fireEvent.input(confirmPasswordInput, {
+      target: { value: invalidPassword },
     });
 
     expect(confirmPasswordInput.classList.contains('is-danger')).toBeTruthy();
@@ -133,9 +126,7 @@ describe('<RegisterRoute />', () => {
         expect(confirmPasswordInput.disabled).toBeTruthy();
 
         // Mail
-        act(() => {
-          fireEvent.input(mailInput, { target: { value: mail.value } });
-        });
+        fireEvent.input(mailInput, { target: { value: mail.value } });
 
         expect(submitButton.disabled).toBeTruthy();
         expect(confirmPasswordInput.disabled).toBeTruthy();
@@ -144,9 +135,7 @@ describe('<RegisterRoute />', () => {
         ).toBe(mail.iconSuccess);
 
         // Password
-        act(() => {
-          fireEvent.input(passwordInput, { target: { value: password.value } });
-        });
+        fireEvent.input(passwordInput, { target: { value: password.value } });
 
         expect(submitButton.disabled).toBeTruthy();
         expect(confirmPasswordInput.disabled).toBe(
@@ -159,10 +148,8 @@ describe('<RegisterRoute />', () => {
         ).toBe(password.iconSuccess);
 
         // Confirm password
-        act(() => {
-          fireEvent.input(confirmPasswordInput, {
-            target: { value: confirmPassword.value },
-          });
+        fireEvent.input(confirmPasswordInput, {
+          target: { value: confirmPassword.value },
         });
 
         expect(confirmPasswordInput.disabled).toBe(
@@ -178,9 +165,7 @@ describe('<RegisterRoute />', () => {
 
         // ToS checkbox
         if (tos.checked) {
-          act(() => {
-            fireEvent.click(tosCheckbox);
-          });
+          fireEvent.click(tosCheckbox);
         }
 
         expect(tosCheckbox.checked).toBe(tos.checked);

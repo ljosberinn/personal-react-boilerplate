@@ -1,10 +1,7 @@
 import React from 'react';
 import render from '../utils/testUtils';
-import { default as Component } from './ThemeSwitch';
-import { withTranslation } from 'react-i18next';
-import { act, fireEvent } from '@testing-library/react';
-
-const ThemeSwitch = withTranslation()(props => <Component {...props} />);
+import ThemeSwitch from './ThemeSwitch';
+import { fireEvent } from '@testing-library/react';
 
 describe('<LanguageSwitch />', () => {
   test('it renders successfully', () => {
@@ -19,9 +16,7 @@ describe('<LanguageSwitch />', () => {
 
     expect(switchElement.checked).toBeFalsy();
 
-    act(() => {
-      fireEvent.click(button);
-    });
+    fireEvent.click(button);
 
     expect(switchElement.checked).toBeTruthy();
   });

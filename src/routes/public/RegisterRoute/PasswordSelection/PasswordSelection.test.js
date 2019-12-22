@@ -1,10 +1,7 @@
 import React from 'react';
-import { default as Component } from '.';
-import { fireEvent, act } from '@testing-library/react';
+import PasswordSelection from '.';
+import { fireEvent } from '@testing-library/react';
 import render from '../../../../utils/testUtils';
-import { withTranslation } from 'react-i18next';
-
-const PasswordSelection = withTranslation()(props => <Component {...props} />);
 
 const validPassword = 'a1234567';
 
@@ -38,72 +35,42 @@ describe('<PasswordSelection />', () => {
 
     expect(passwordInput.type).toBe('password');
 
-    act(() => {
-      fireEvent.click(svg);
-    });
-
+    fireEvent.click(svg);
     expect(passwordInput.type).toBe('text');
 
-    act(() => {
-      fireEvent.click(svg);
-    });
-
+    fireEvent.click(svg);
     expect(passwordInput.type).toBe('password');
   });
 
   it('changes help state depending on password security', () => {
-    const { container, getByTestId, rerender } = render(
+    const { container, rerender } = render(
       <PasswordSelection {...defaultProps} />,
     );
 
-    const passwordInput = getByTestId('password');
+    const passwordCriteriaClasses = '.help.is-success';
 
-    expect(container.querySelectorAll('.help.is-success').length).toBe(0);
-
-    act(() => {
-      fireEvent.input(passwordInput, {
-        target: { value: validPassword.slice(0, 1) },
-      });
-    });
-
-    expect(defaultProps.handleChange).toHaveBeenCalledTimes(1);
+    expect(container.querySelectorAll(passwordCriteriaClasses).length).toBe(0);
 
     rerender(
       <PasswordSelection
-        {...{ ...defaultProps, password: validPassword.slice(0, 1) }}
+        {...{ ...defaultProps, password: validPassword.substr(0, 1) }}
       />,
     );
 
-    expect(container.querySelectorAll('.help.is-success').length).toBe(1);
-
-    act(() => {
-      fireEvent.input(passwordInput, {
-        target: { value: validPassword.slice(0, 2) },
-      });
-    });
-
-    expect(defaultProps.handleChange).toHaveBeenCalledTimes(2);
+    expect(container.querySelectorAll(passwordCriteriaClasses).length).toBe(1);
 
     rerender(
       <PasswordSelection
-        {...{ ...defaultProps, password: validPassword.slice(0, 2) }}
+        {...{ ...defaultProps, password: validPassword.substr(0, 2) }}
       />,
     );
 
-    expect(container.querySelectorAll('.help.is-success').length).toBe(2);
-
-    act(() => {
-      fireEvent.input(passwordInput, {
-        target: { value: validPassword },
-      });
-    });
-
-    expect(defaultProps.handleChange).toHaveBeenCalledTimes(3);
+    expect(container.querySelectorAll(passwordCriteriaClasses).length).toBe(2);
 
     rerender(
       <PasswordSelection {...{ ...defaultProps, password: validPassword }} />,
     );
 
-    expect(container.querySelectorAll('.help.is-success').length).toBe(3);
+    expect(container.querySelectorAll(passwordCriteriaClasses).length).toBe(3);
   });
 });
