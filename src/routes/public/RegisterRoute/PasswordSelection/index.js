@@ -52,11 +52,6 @@ export default memo(function PasswordSelection({
   const [type, setType] = useState('password');
   const { t } = useTranslation(['registration', 'login']);
 
-  const fulfilledCriteriaArr = criteria.map(({ validate }) =>
-    validate(password),
-  );
-  const fulfilledCriteria = fulfilledCriteriaArr.filter(Boolean).length;
-
   useEffect(() => {
     // hide password on submit
     if (isLoading && type === 'text') {
@@ -81,30 +76,14 @@ export default memo(function PasswordSelection({
       <Field>
         <Label htmlFor="password">{t('login:password')}</Label>
 
-        <Message>
-          <Message.Body
-            className={classnames([
-              styles.smallBox,
-              fulfilledCriteria === criteria.length && 'anim-opacity-to-40',
-            ])}
-          >
-            {criteria.map(({ info }, index) => (
-              <PasswordCriteriaInformation
-                info={t(info)}
-                isFulfilled={fulfilledCriteriaArr[index]}
-                t={t}
-                key={index}
-              />
-            ))}
-          </Message.Body>
-        </Message>
+        <PasswordCriteria password={password} t={t} />
 
         <Control iconLeft iconRight={!isLoading} loading={isLoading}>
           <Input
             type={type}
             name="password"
             id="password"
-            onInput={handleChange}
+            onChange={handleChange}
             pattern={pattern.password}
             required
             autoComplete="new-password"
@@ -132,7 +111,7 @@ export default memo(function PasswordSelection({
               type="password"
               name="confirmPassword"
               id="confirmPassword"
-              onInput={handleChange}
+              onChange={handleChange}
               pattern={pattern.password}
               disabled={!isValidPassword}
               placeholder={
@@ -173,6 +152,40 @@ export default memo(function PasswordSelection({
     </>
   );
 });
+
+/**
+ *
+ * @returns {React.FC<{
+ *  password: string,
+ * t: import('i18next').TFunction
+ * }>} PasswordCriteria
+ */
+function PasswordCriteria({ password, t }) {
+  const fulfilledCriteriaArr = criteria.map(({ validate }) =>
+    validate(password),
+  );
+  const fulfilledCriteria = fulfilledCriteriaArr.filter(Boolean).length;
+
+  return (
+    <Message>
+      <Message.Body
+        className={classnames([
+          styles.smallBox,
+          fulfilledCriteria === criteria.length && 'anim-opacity-to-40',
+        ])}
+      >
+        {criteria.map(({ info }, index) => (
+          <PasswordCriteriaInformation
+            info={t(info)}
+            isFulfilled={fulfilledCriteriaArr[index]}
+            t={t}
+            key={index}
+          />
+        ))}
+      </Message.Body>
+    </Message>
+  );
+}
 
 /**
  *
