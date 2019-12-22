@@ -1,9 +1,10 @@
 import React from 'react';
-import PasswordSelection from '.';
-import { render, fireEvent, cleanup } from '@testing-library/react';
-import { act } from 'react-dom/test-utils';
+import { default as Component } from '.';
+import { fireEvent, act } from '@testing-library/react';
+import render from '../../../../utils/testUtils';
+import { withTranslation } from 'react-i18next';
 
-afterEach(cleanup);
+const PasswordSelection = withTranslation()(props => <Component {...props} />);
 
 const validPassword = 'a1234567';
 
@@ -16,23 +17,23 @@ const defaultProps = {
 };
 
 describe('<PasswordSelection />', () => {
-  it('renders successfully', () => {
-    const { getByLabelText } = render(<PasswordSelection {...defaultProps} />);
+  test('renders successfully', () => {
+    const { getByTestId } = render(<PasswordSelection {...defaultProps} />);
 
-    const passwordInput = getByLabelText('Password');
-    const confirmPasswordInput = getByLabelText('Confirm password');
+    const passwordInput = getByTestId('password');
+    const confirmPasswordInput = getByTestId('confirm-password');
 
     expect(passwordInput.disabled).toBe(false);
     expect(passwordInput.type).toBe('password');
     expect(confirmPasswordInput.disabled).toBe(true);
   });
 
-  it('toggles input type on faEye click', () => {
-    const { container, getByLabelText } = render(
+  test('toggles input type on faEye click', () => {
+    const { container, getByTestId } = render(
       <PasswordSelection {...defaultProps} />,
     );
 
-    const passwordInput = getByLabelText('Password');
+    const passwordInput = getByTestId('password');
     const svg = container.querySelector('.fa-eye');
 
     expect(passwordInput.type).toBe('password');
@@ -51,11 +52,11 @@ describe('<PasswordSelection />', () => {
   });
 
   it('changes help state depending on password security', () => {
-    const { container, getByLabelText, rerender } = render(
+    const { container, getByTestId, rerender } = render(
       <PasswordSelection {...defaultProps} />,
     );
 
-    const passwordInput = getByLabelText('Password');
+    const passwordInput = getByTestId('password');
 
     expect(container.querySelectorAll('.help.is-success').length).toBe(0);
 

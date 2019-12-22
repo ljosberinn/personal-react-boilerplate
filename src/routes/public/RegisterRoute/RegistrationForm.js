@@ -87,6 +87,7 @@ export default function RegistrationForm({
               autoFocus
               autoComplete="username"
               color={mailInUse ? 'danger' : undefined}
+              data-testid="mail"
             />
             <ValidityIconLeft type="mail" value={mail} />
           </Control>
@@ -126,6 +127,7 @@ export default function RegistrationForm({
                 disabled={isLoading}
                 onChange={handleChange}
                 circled
+                data-testid="tos"
               />
               <Trans
                 parent={Label}
@@ -149,6 +151,7 @@ export default function RegistrationForm({
             state={isLoading ? 'loading' : undefined}
             disabled={isDisabled}
             fullwidth
+            data-testid="sign-up"
           >
             {t('login:sign-up')}
           </Button>

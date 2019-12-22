@@ -1,12 +1,12 @@
 import React from 'react';
-import LoginRoute from '.';
-import { render, cleanup, fireEvent } from '@testing-library/react';
-import { Router, Route } from 'react-router-dom';
+import { default as Component } from '.';
+import { fireEvent, act } from '@testing-library/react';
+import { Route } from 'react-router-dom';
 import * as ROUTES from '../../../constants/routes';
-import { createMemoryHistory } from 'history';
-import { act } from 'react-dom/test-utils';
+import { withTranslation } from 'react-i18next';
+import render from '../../../utils/testUtils';
 
-const history = createMemoryHistory();
+const LoginRoute = withTranslation()(props => <Component {...props} />);
 
 const validMail = 'some@mail.com';
 const invalidMail = 'foo';
@@ -14,47 +14,37 @@ const invalidMail = 'foo';
 const validPassword = 'a1234567';
 const invalidPassword = '12345678';
 
-afterEach(cleanup);
-
 describe('<LoginRoute />', () => {
-  it('renders successfully', () => {
-    render(
-      <Router history={history}>
-        <LoginRoute />
-      </Router>,
-    );
+  test('renders successfully', () => {
+    render(<LoginRoute />);
   });
 
-  it('renders successfully with optional valid mail', () => {
-    history.push(`/login/${validMail}`);
-
-    const { getByLabelText } = render(
-      <Router history={history}>
-        <Route path={ROUTES.LOGIN} component={LoginRoute} />
-      </Router>,
+  test('renders successfully with optional valid mail', () => {
+    const { getByTestId, history } = render(
+      <Route path={ROUTES.LOGIN.routerPath} component={LoginRoute} />,
     );
 
-    const mailInput = getByLabelText('Email address');
+    history.push(`/login/${validMail}`);
+
+    const mailInput = getByTestId('mail');
 
     expect(mailInput.value).toBe(validMail);
     expect(
       mailInput.nextElementSibling.classList.contains('has-text-success'),
-    ).toBe(true);
+    ).toBeTruthy();
 
-    const passwordInput = getByLabelText('Password');
+    const passwordInput = getByTestId('password');
     expect(document.activeElement).toEqual(passwordInput);
   });
 
-  it('renders successfully with optional invalid mail', () => {
-    history.push(`/login/${invalidMail}`);
-
-    const { getByLabelText } = render(
-      <Router history={history}>
-        <LoginRoute />
-      </Router>,
+  test('renders successfully with optional invalid mail', () => {
+    const { getByTestId, history } = render(
+      <Route path={ROUTES.LOGIN.routerPath} component={LoginRoute} />,
     );
 
-    const mailInput = getByLabelText('Email address');
+    history.push(`/login/${invalidMail}`);
+
+    const mailInput = getByTestId('mail');
 
     expect(mailInput.value).toBe('');
     expect(document.activeElement).toEqual(mailInput);
@@ -98,24 +88,20 @@ describe('<LoginRoute />', () => {
       buttonDisabled: true,
     },
   ].forEach(({ description, password, mail, buttonDisabled }) => {
-    it(description, () => {
-      const { getByLabelText, getByText } = render(
-        <Router history={history}>
-          <LoginRoute />
-        </Router>,
-      );
+    test(description, () => {
+      const { getByTestId } = render(<LoginRoute />);
 
-      const mailInput = getByLabelText('Email address');
-      const passwordInput = getByLabelText('Password');
-      const submitButton = getByText('Sign in', { selector: 'button' });
+      const mailInput = getByTestId('mail');
+      const passwordInput = getByTestId('password');
+      const submitButton = getByTestId('sign-in');
 
-      expect(submitButton.disabled).toBe(true);
+      expect(submitButton.disabled).toBeTruthy();
 
       act(() => {
         fireEvent.input(mailInput, { target: { value: mail.value } });
       });
 
-      expect(submitButton.disabled).toBe(true);
+      expect(submitButton.disabled).toBeTruthy();
       expect(
         mailInput.nextElementSibling.classList.contains('has-text-success'),
       ).toBe(mail.iconSuccess);

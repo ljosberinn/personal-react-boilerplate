@@ -48,10 +48,9 @@ export default memo(function PasswordSelection({
   password,
   confirmPassword,
   isLoading,
-  error,
 }) {
   const [type, setType] = useState('password');
-  const { t } = useTranslation('registration', 'login');
+  const { t } = useTranslation(['registration', 'login']);
 
   const fulfilledCriteriaArr = criteria.map(({ validate }) =>
     validate(password),
@@ -74,7 +73,8 @@ export default memo(function PasswordSelection({
 
   const hasConfirmPassword =
     password.length > 0 && confirmPassword.length === password.length;
-  const passwordsMatch = hasConfirmPassword && password === confirmPassword;
+  const passwordsMatch =
+    isValidPassword && hasConfirmPassword && password === confirmPassword;
 
   return (
     <>
@@ -108,6 +108,7 @@ export default memo(function PasswordSelection({
             pattern={pattern.password}
             required
             autoComplete="new-password"
+            data-testid="password"
           />
           <ValidityIconLeft type="password" value={password} />
 
@@ -146,6 +147,7 @@ export default memo(function PasswordSelection({
                   ? 'danger'
                   : undefined
               }
+              data-testid="confirm-password"
             />
 
             <Icon

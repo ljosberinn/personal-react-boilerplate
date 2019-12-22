@@ -194,6 +194,7 @@ export default function LoginRoute() {
                                     required
                                     autoComplete="username"
                                     defaultValue={mail}
+                                    data-testid="mail"
                                   />
                                   <ValidityIconLeft type="mail" value={mail} />
                                 </Control>
@@ -220,6 +221,7 @@ export default function LoginRoute() {
                                     pattern={pattern.password}
                                     required
                                     autoComplete="current-password"
+                                    data-testid="password"
                                   />
                                   <ValidityIconLeft
                                     type="password"
@@ -260,6 +262,7 @@ export default function LoginRoute() {
                                 fullwidth
                                 disabled={isDisabled}
                                 type="submit"
+                                data-testid="sign-in"
                               >
                                 {t('sign-in')}
                               </Button>

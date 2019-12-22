@@ -1,12 +1,12 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { faSun, faMoon } from '@fortawesome/free-solid-svg-icons';
 import { Navbar, Button } from 'rbx';
-import { ThemeContext } from '../context/ThemeContext';
 import Switch from './Switch';
 import Loader from './Loader';
 import Icon from './Icon';
 import styles from './ThemeSwitch.module.scss';
 import { useTranslation } from 'react-i18next';
+import { useTheme } from '../hooks';
 
 const iconClassMap = {
   sun: {
@@ -44,7 +44,7 @@ const Wrap = ({ from, children, ...rest }) =>
  * }>} ThemeSwitch
  */
 export default function ThemeSwitch({ from }) {
-  const { isLoading, theme, toggleTheme } = useContext(ThemeContext);
+  const { isLoading, theme, toggleTheme } = useTheme();
   const { t } = useTranslation('settings');
 
   const id = `theme-switch-${from}`;
@@ -60,6 +60,7 @@ export default function ThemeSwitch({ from }) {
         onClick={toggleTheme}
         title={t('changeTheme')}
         id={id}
+        data-testid="toggle-theme"
       >
         <Icon icon={faSun} color={iconClassMap.sun[theme]} />
         <Switch
@@ -69,6 +70,7 @@ export default function ThemeSwitch({ from }) {
           rounded
           onChange={toggleTheme}
           aria-labelledby={id}
+          data-testid="theme-switch"
         />
         <Icon icon={faMoon} color={iconClassMap.moon[theme]} />
       </Wrap>
