@@ -1,4 +1,5 @@
 const { REACT_APP_DISCORD_LINK, REACT_APP_REPO_LINK } = process.env;
+
 const DiscordLink =
   REACT_APP_DISCORD_LINK &&
   REACT_APP_DISCORD_LINK.length > 0 &&

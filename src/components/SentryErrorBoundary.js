@@ -5,27 +5,77 @@ import {
   Container,
   Message,
   Section,
-  Icon,
   Button,
   Modal,
   Content,
   Generic,
+  Title,
 } from 'rbx';
+import Icon from './Icon';
 import { withTranslation } from 'react-i18next';
 import { faBomb } from '@fortawesome/free-solid-svg-icons';
+import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import * as Sentry from '@sentry/browser';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { modal, body, message } from './SentryErrorBoundary.module.scss';
+import styles from './SentryErrorBoundary.module.scss';
+import { RepoLink } from '../constants/env';
+import hasLocalStorage from '../constants/localStorage';
+
+const logRocketUrl =
+  'https://app.logrocket.com/__LR_ENV__/?filters=%255B%257B%2522type%2522%253A%2522userID%2522%252C%2522operator%2522%253A%257B%2522name%2522%253A%2522is%2522%252C%2522type%2522%253A%2522IS%2522%252C%2522hasStrings%2522%253Atrue%252C%2522autocompleteEnabled%2522%253Atrue%257D%252C%2522strings%2522%253A%255B%2522__LR_ID__%2522%255D%257D%255D';
+
+/**
+ *
+ * @param {Error} error
+ *
+ * @returns {string} url
+ */
+const createGitHubIssueUrl = ({ name, message, stack }) => {
+  const url = [RepoLink, 'issues', 'new'].join('/');
+
+  const logRocketLink = (() => {
+    if (!hasLocalStorage) {
+      return false;
+    }
+
+    try {
+      if (localStorage._lr_id_) {
+        const lrJSON = JSON.parse(localStorage._lr_id_);
+
+        if (lrJSON.userId) {
+          const url = logRocketUrl
+            .replace('__LR_ENV__', process.env.REACT_APP_LOGROCKET_ID)
+            .replace('__LR_ID__', lrJSON.userId);
+
+          return `[LogRocket Link](${url})`;
+        }
+
+        return false;
+      }
+
+      return false;
+    } catch (_) {
+      return false;
+    }
+  })();
+
+  const params = {
+    title: [name, message].join(': '),
+    body: logRocketLink ? [stack, logRocketLink].join('\n\n') : stack,
+    labels: 'bug',
+  };
+
+  return [url, new URLSearchParams(params).toString()].join('?');
+};
 
 const MAX_STACK_LENGTH_SHOWN = 10;
 
 class SentryErrorBoundary extends Component {
   state = {
     error: null,
-    eventId: null,
+    hasError: false,
   };
 
-  static getDerivedStateFromError(error) {
+  static getDerivedStateFromError() {
     return { hasError: true };
   }
 
@@ -33,20 +83,15 @@ class SentryErrorBoundary extends Component {
     Sentry.withScope(scope => {
       scope.setExtras(errorInfo);
 
-      const eventId = Sentry.captureException(error);
-      this.setState({ eventId, error });
+      this.setState({ error });
     });
   }
 
-  showReportDialog = () => {
-    Sentry.showReportDialog({
-      eventId: this.state.eventId,
-      lang: this.props.i18n.language,
-    });
-  };
-
   render() {
     if (this.state.error) {
+      const { t } = this.props;
+      const { error } = this.state;
+
       return (
         <Section className="error-bg">
           <Container>
@@ -55,51 +100,55 @@ class SentryErrorBoundary extends Component {
                 <Box className="fade-in">
                   <Modal active>
                     <Modal.Background />
-                    <Modal.Card className={modal}>
-                      <Modal.Card.Body className={body}>
-                        <Content>
-                          <Message color="danger" className={message}>
-                            <Message.Body>
-                              <Column.Group>
-                                <Column size={1}>
-                                  <Icon size="large">
-                                    <FontAwesomeIcon icon={faBomb} />
-                                  </Icon>
-                                </Column>
-                                <Column>
-                                  <p>
-                                    Yeah that... that shouldn't have happened.
-                                    Gladly our team already received an error
-                                    report.
-                                  </p>
+                    <Modal.Card className={styles.modal}>
+                      <Modal.Card.Body className={styles.body}>
+                        <Message color="danger" className={styles.message}>
+                          <Message.Body>
+                            <Title textColor="danger">
+                              <Icon size="large" icon={faBomb} />
+                              {t('title')}
+                            </Title>
+                            <p>{t('boundary-info')}</p>
 
-                                  <br />
+                            <br />
 
-                                  <Content backgroundColor="white">
-                                    <Generic
-                                      italic
-                                      as="code"
-                                      textSize={7}
-                                      style={{ whiteSpace: 'pre' }}
-                                    >
-                                      {this.state.error.stack
-                                        .split('\n')
-                                        .slice(0, MAX_STACK_LENGTH_SHOWN + 1)
-                                        .join('\n')}
-                                    </Generic>
-                                  </Content>
+                            <Content backgroundColor="white">
+                              <Generic
+                                italic
+                                as="code"
+                                textSize={7}
+                                style={{ whiteSpace: 'pre' }}
+                              >
+                                {error.stack
+                                  .split('\n')
+                                  .slice(0, MAX_STACK_LENGTH_SHOWN + 1)
+                                  .join('\n')}
+                              </Generic>
+                            </Content>
 
-                                  <Button
-                                    onClick={this.showReportDialog}
-                                    color="primary"
-                                  >
-                                    Wanna help some more?
-                                  </Button>
-                                </Column>
-                              </Column.Group>
-                            </Message.Body>
-                          </Message>
-                        </Content>
+                            <Button.Group>
+                              <Button
+                                color="primary"
+                                onClick={() => void window.location.reload()}
+                              >
+                                {t('reload-page')}
+                              </Button>
+
+                              {RepoLink && (
+                                <Button
+                                  color="link"
+                                  as="a"
+                                  href={createGitHubIssueUrl(error)}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                >
+                                  <Icon icon={faGithub} />{' '}
+                                  <span>{t('open-issue')}</span>
+                                </Button>
+                              )}
+                            </Button.Group>
+                          </Message.Body>
+                        </Message>
                       </Modal.Card.Body>
                     </Modal.Card>
                   </Modal>
@@ -115,4 +164,4 @@ class SentryErrorBoundary extends Component {
   }
 }
 
-export default withTranslation()(SentryErrorBoundary);
+export default withTranslation('error')(SentryErrorBoundary);
