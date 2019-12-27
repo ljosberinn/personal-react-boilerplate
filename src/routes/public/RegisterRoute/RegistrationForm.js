@@ -5,8 +5,8 @@ import {
   Checkbox,
   Field,
   LoginProviderButton,
+  PasswordSelection,
 } from '../../../components';
-import PasswordSelection from './PasswordSelection';
 import {
   Column,
   Block,
@@ -74,7 +74,7 @@ export default function RegistrationForm({
         <Divider data-content={t('login:or')} />
 
         <Field>
-          <Label htmlFor="mail">{t('login:email-address')}</Label>
+          <Label htmlFor="mail">{t('login:email')}</Label>
 
           <Control iconLeft loading={isLoading}>
             <Input
@@ -97,7 +97,7 @@ export default function RegistrationForm({
               <Help color="danger">
                 <Trans parent="span" ns="registration" i18nKey="mail-in-use">
                   An account with this email already exists. Did you{' '}
-                  <Link to={ROUTES.RESET_PASSWORD.normalizedPath}>
+                  <Link to={ROUTES.RESET_PASSWORD.clientPath}>
                     forget your password
                   </Link>
                   ?
@@ -136,7 +136,7 @@ export default function RegistrationForm({
                 ns="registration"
               >
                 I agree to the{' '}
-                <Link to={ROUTES.TOS.normalizedPath}>
+                <Link to={ROUTES.TOS.clientPath}>
                   {{ tos: t('routes:tos') }}
                 </Link>
               </Trans>

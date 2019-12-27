@@ -81,12 +81,12 @@ export default function Navbar() {
 
             {!isLoggedIn ? (
               <Button.Group>
-                <NavButton color="primary" to={ROUTES.REGISTER.normalizedPath}>
+                <NavButton color="primary" to={ROUTES.REGISTER.clientPath}>
                   <Icon icon={ROUTES.REGISTER.icon} />
                   <span>{t('routes:register')}</span>
                 </NavButton>
 
-                <NavButton color="light" to={ROUTES.LOGIN.normalizedPath}>
+                <NavButton color="light" to={ROUTES.LOGIN.clientPath}>
                   <Icon icon={ROUTES.LOGIN.icon} />
                   <span>{t('routes:login')}</span>
                 </NavButton>
@@ -146,7 +146,7 @@ function AuthenticatedNavButtons({
     <Button.Group>
       <NavButton
         color="primary"
-        to={ROUTES.SETTINGS.normalizedPath}
+        to={ROUTES.SETTINGS.clientPath}
         disabled={isLoggingOut}
       >
         <Icon

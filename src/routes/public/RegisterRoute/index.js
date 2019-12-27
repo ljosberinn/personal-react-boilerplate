@@ -119,7 +119,7 @@ export default function RegisterRoute() {
                       {!successfullyRegistered && (
                         <p className="has-text-centered has-text-grey">
                           {t('already-have-an-account')}{' '}
-                          <Link to={ROUTES.LOGIN.normalizedPath}>
+                          <Link to={ROUTES.LOGIN.clientPath}>
                             {t('login:sign-in')}
                           </Link>
                         </p>

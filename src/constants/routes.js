@@ -1,53 +1,57 @@
 import {
   faCog,
   faBookReader,
-  faUserSecret,
+  faShieldAlt,
   faUserEdit,
+  faHome,
   faSignInAlt,
+  faUnlockAlt,
 } from '@fortawesome/free-solid-svg-icons';
 
 export const LANDING_PAGE = {
   routerPath: '/',
-  normalizedPath: undefined,
+  clientPath: '/',
   title: 'routes:landingPage',
+  icon: faHome,
 };
 
 export const REGISTER = {
   routerPath: '/register',
-  normalizedPath: '/register',
+  clientPath: '/register',
   title: 'routes:register',
   icon: faUserEdit,
 };
 
 export const LOGIN = {
   routerPath: '/login/:mail?',
-  normalizedPath: '/login',
+  clientPath: '/login',
   title: 'routes:login',
   icon: faSignInAlt,
 };
 
 export const RESET_PASSWORD = {
-  routerPath: '/reset-password',
-  normalizedPath: '/reset-password',
+  routerPath: '/reset-password/:token?',
+  clientPath: '/reset-password',
   title: 'routes:resetPassword',
+  icon: faUnlockAlt,
 };
 
 export const ACTIVATE_ACCOUNT = {
   routerPath: '/activate-account/:token',
-  normalizedPath: undefined,
+  clientPath: undefined,
   title: undefined,
 };
 
 export const PRIVACY_POLICY = {
   routerPath: '/privacy-policy',
-  normalizedPath: '/privacy-policy',
+  clientPath: '/privacy-policy',
   title: 'routes:privacyPolicy',
-  icon: faUserSecret,
+  icon: faShieldAlt,
 };
 
 export const TOS = {
   routerPath: '/tos',
-  normalizedPath: '/tos',
+  clientPath: '/tos',
   title: 'routes:tos',
   icon: faBookReader,
 };
@@ -55,7 +59,7 @@ export const TOS = {
 /** PRIVATE ROUTES */
 export const SETTINGS = {
   routerPath: '/settings/:setting',
-  normalizedPath: '/settings/site',
+  clientPath: '/settings/site',
   title: 'routes:settings',
   icon: faCog,
 };

@@ -42,34 +42,23 @@ export default function Footer() {
                 {process.env.REACT_APP_BRAND_NAME}
               </Generic>
               <li>
-                <Link to="/">{t(ROUTES.LANDING_PAGE.title, )}</Link>
+                <InternalLink route={ROUTES.LANDING_PAGE} t={t} />
               </li>
               {!isLoggedIn ? (
                 <>
                   <li>
-                    <Link to={ROUTES.REGISTER.normalizedPath}>
-                      <Icon icon={ROUTES.REGISTER.icon} />
-                      <span>{t(ROUTES.REGISTER.title)}</span>
-                    </Link>
+                    <InternalLink route={ROUTES.REGISTER} t={t} />
                   </li>
                   <li>
-                    <Link to={ROUTES.LOGIN.normalizedPath}>
-                      <Icon icon={ROUTES.LOGIN.icon} />
-                      <span>{t(ROUTES.LOGIN.title)}</span>
-                    </Link>
+                    <InternalLink route={ROUTES.LOGIN} t={t} />
                   </li>
                   <li>
-                    <Link to={ROUTES.RESET_PASSWORD.normalizedPath}>
-                      {t(ROUTES.RESET_PASSWORD.title)}
-                    </Link>
+                    <InternalLink route={ROUTES.RESET_PASSWORD} t={t} />
                   </li>
                 </>
               ) : (
                 <li>
-                  <Link to={ROUTES.SETTINGS.normalizedPath}>
-                    <Icon icon={ROUTES.SETTINGS.icon} />
-                    <span>{t(ROUTES.SETTINGS.title)}</span>
-                  </Link>
+                  <InternalLink route={ROUTES.SETTINGS} t={t} />
                 </li>
               )}
             </ul>
@@ -88,16 +77,10 @@ export default function Footer() {
                 {t('legal')}
               </Generic>
               <li>
-                <Link to={ROUTES.TOS.normalizedPath}>
-                  <Icon icon={ROUTES.TOS.icon} />
-                  <span>{t(ROUTES.TOS.title)}</span>
-                </Link>
+                <InternalLink route={ROUTES.TOS} t={t} />
               </li>
               <li>
-                <Link to={ROUTES.PRIVACY_POLICY.normalizedPath}>
-                  <Icon icon={ROUTES.PRIVACY_POLICY.icon} />
-                  <span>{t(ROUTES.PRIVACY_POLICY.title)}</span>
-                </Link>
+                <InternalLink route={ROUTES.PRIVACY_POLICY} t={t} />
               </li>
             </ul>
           </Column>
@@ -137,5 +120,27 @@ export default function Footer() {
         </Column.Group>
       </Container>
     </RBXFooter>
+  );
+}
+
+/**
+ *
+ * @returns {React.FC<{
+ * route: typeof ROUTES[number],
+ * t: import('i18next').TFunction
+ * }} InternalLink
+ */
+function InternalLink({ route: { clientPath, icon, title }, t }) {
+  return (
+    <Link to={clientPath}>
+      {icon ? (
+        <>
+          <Icon icon={icon} />
+          <span>{t(title)}</span>
+        </>
+      ) : (
+        t(title)
+      )}
+    </Link>
   );
 }

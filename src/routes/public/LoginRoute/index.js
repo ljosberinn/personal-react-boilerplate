@@ -37,7 +37,7 @@ const initialState = {
 const errors = {
   'Email not confirmed': 'mail_unconfirmed',
   'No user found with this email': 'unknown_user',
-  'Invalid Password': 'password_invalid',
+  'Invalid Password': 'password-invalid',
 };
 
 /**
@@ -179,9 +179,7 @@ export default function LoginRoute() {
                               <Divider data-content={t('or')} />
 
                               <Field>
-                                <Label htmlFor="mail">
-                                  {t('email-address')}
-                                </Label>
+                                <Label htmlFor="mail">{t('email')}</Label>
 
                                 <Control iconLeft loading={isLoading}>
                                   <Input
