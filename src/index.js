@@ -8,6 +8,7 @@ import { IdentityContextProvider } from 'react-netlify-identity';
 import * as Sentry from '@sentry/browser';
 import LogRocket from 'logrocket';
 import setupLogRocketReact from 'logrocket-react';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 const isLive = process.env.NODE_ENV !== 'development';
 
@@ -74,6 +75,7 @@ function identifyUser(user) {
   }
 
   LogRocket.identify(null);
+  window.location.pathname = '/';
 }
 
 render(
@@ -83,7 +85,9 @@ render(
       onAuthChange={identifyUser}
     >
       <ThemeProvider>
-        <App />
+        <Router>
+          <App />
+        </Router>
       </ThemeProvider>
     </IdentityContextProvider>
   </StrictMode>,

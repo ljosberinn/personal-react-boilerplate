@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { Switch, Route, useLocation, useHistory } from 'react-router-dom';
 import './assets/scss/app.scss';
 import { Loader } from './components';
 import { SHARED_ROUTES, LANGUAGE_ROUTE } from './routes/shared';
@@ -12,9 +12,17 @@ import { availableLanguages } from './components/LanguageSwitch';
 import { SentryErrorBoundary } from './components';
 
 /**
+ * @see https://github.com/sw-yx/react-netlify-identity/blob/master/src/runRoutes.tsx#L9
+ */
+const passwordRecoveryRegEx = /recovery_token=([^&]+)/;
+
+/**
  * @returns {React.FC} App
  */
 export default function App() {
+  const { hash } = useLocation();
+  const { push } = useHistory();
+
   const { isLoggedIn } = useIdentityContext();
 
   const routes = Object.assign(
@@ -22,28 +30,35 @@ export default function App() {
     isLoggedIn ? PRIVATE_ROUTES : PUBLIC_ROUTES,
   );
 
+  const passwordRecoveryMatches = hash.match(passwordRecoveryRegEx);
+
+  if (passwordRecoveryMatches) {
+    const token = passwordRecoveryMatches[1];
+
+    push(`/reset-password/${token}`);
+    return null;
+  }
+
   return (
-    <Router>
-      <Layout>
-        <Switch>
-          <Suspense fallback={<Loader isFullPage />}>
-            <SentryErrorBoundary>
-              {availableLanguages.map(lng => (
-                <Route
-                  path={`/${lng}`}
-                  key={lng}
-                  exact
-                  component={LANGUAGE_ROUTE}
-                />
-              ))}
-              {Object.entries(routes).map(([path, component]) => (
-                <Route path={path} component={component} exact key={path} />
-              ))}
-            </SentryErrorBoundary>
-          </Suspense>
-          <Route component={RedirectToHome} />
-        </Switch>
-      </Layout>
-    </Router>
+    <Layout>
+      <Switch>
+        <Suspense fallback={<Loader isFullPage />}>
+          <SentryErrorBoundary>
+            {availableLanguages.map(lng => (
+              <Route
+                path={`/${lng}`}
+                key={lng}
+                exact
+                component={LANGUAGE_ROUTE}
+              />
+            ))}
+            {Object.entries(routes).map(([path, component]) => (
+              <Route path={path} component={component} exact key={path} />
+            ))}
+          </SentryErrorBoundary>
+        </Suspense>
+        <Route component={RedirectToHome} />
+      </Switch>
+    </Layout>
   );
 }
