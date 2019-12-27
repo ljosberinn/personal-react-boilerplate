@@ -1,10 +1,10 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { Title, Button, Help, Message } from 'rbx';
-import PasswordSelection from '../../../public/RegisterRoute/PasswordSelection';
 import { validate } from '../../../../utils/validators';
 import { Fade, Flip } from 'react-awesome-reveal';
 import { useTranslation } from 'react-i18next';
 import CountUp from 'react-countup';
+import { PasswordSelection } from '../../../../components';
 
 const INITIAL_STATE = {
   password: '',
