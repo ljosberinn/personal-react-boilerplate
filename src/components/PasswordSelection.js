@@ -1,8 +1,8 @@
 import React, { useCallback, useState, useEffect, memo } from 'react';
-import { ValidityIconLeft, Icon, Field } from '../../../../components';
-import { validate, pattern } from '../../../../utils/validators';
+import { ValidityIconLeft, Icon, Field } from '.';
+import { validate, pattern } from '../utils/validators';
 import { Message, Label, Help, Input, Control, Block } from 'rbx';
-import { stringContainsNumber, stringContainsLetter } from '../../../../utils';
+import { stringContainsNumber, stringContainsLetter } from '../utils';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import styles from './PasswordSelection.module.scss';
 import classnames from 'classnames';

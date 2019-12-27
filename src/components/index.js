@@ -13,6 +13,7 @@ import ThemeSwitch from './ThemeSwitch';
 import LoginProviderButton from './LoginProviderButton';
 import TemplatedHelmet from './TemplatedHelmet';
 import SentryErrorBoundary from './SentryErrorBoundary';
+import PasswordSelection from './PasswordSelection';
 
 export {
   LoginProviderButton,
@@ -30,4 +31,5 @@ export {
   ThemeSwitch,
   TemplatedHelmet,
   SentryErrorBoundary,
+  PasswordSelection,
 };
