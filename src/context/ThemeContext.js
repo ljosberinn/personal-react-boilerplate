@@ -18,7 +18,7 @@ const getStoredTheme = () => {
 };
 
 const storeTheme = theme =>
-  void hasLocalStorage && localStorage.setItem('themePreference', theme);
+  hasLocalStorage && localStorage.setItem('themePreference', theme);
 
 /**
  * Toggles .theme--light | .theme--dark on HTML tag
@@ -113,21 +113,18 @@ export default function ThemeProvider({ children }) {
     }
   }, [detectedTheme, storedTheme]);
 
-  const toggleTheme = useCallback(
-    event => {
-      setTheme(currentTheme => {
-        const upcomingTheme =
-          currentTheme === THEME_NAMES.LIGHT
-            ? THEME_NAMES.DARK
-            : THEME_NAMES.LIGHT;
+  const toggleTheme = useCallback(() => {
+    setTheme(currentTheme => {
+      const upcomingTheme =
+        currentTheme === THEME_NAMES.LIGHT
+          ? THEME_NAMES.DARK
+          : THEME_NAMES.LIGHT;
 
-        storeTheme(upcomingTheme);
+      storeTheme(upcomingTheme);
 
-        return upcomingTheme;
-      });
-    },
-    [setTheme],
-  );
+      return upcomingTheme;
+    });
+  }, [setTheme]);
 
   return (
     <ThemeContext.Provider value={{ isLoading, toggleTheme, theme }}>
