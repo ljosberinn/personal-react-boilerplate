@@ -1,9 +1,10 @@
 import faunadb from 'faunadb';
+import env from '../constants/env';
 
 const q = faunadb.query;
 
 const client = new faunadb.Client({
-  secret: process.env.REACT_APP_FAUNA_DB_SECRET,
+  secret: env.FAUNA_DB_SECRET,
 });
 
 export async function handler({ queryStringParameters: { lng, ns } }) {

@@ -27,6 +27,7 @@ import {
 import { useIdentityContext } from 'react-netlify-identity';
 import { useTranslation } from 'react-i18next';
 import LogRocket from 'logrocket';
+import env from '../../../constants/env';
 
 const initialState = {
   mail: '',
@@ -61,7 +62,7 @@ export default function LoginRoute() {
       }
 
       const storedData = localStorage.getItem(
-        process.env.REACT_APP_BRAND_NAME.split(' ').join('-'),
+        env.BRAND_NAME.split(' ').join('-'),
       );
 
       if (storedData) {

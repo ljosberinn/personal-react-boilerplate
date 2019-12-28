@@ -2,12 +2,9 @@ import React from 'react';
 import { LocaleSvg } from '../assets/svg';
 import { Navbar, Dropdown, Button } from 'rbx';
 import { useTranslation } from 'react-i18next';
+import env from '../constants/env';
 
-// TODO: get from backend
-export const availableLanguages = [
-  'de',
-  'en' /*'fr', 'jp', 'ru', 'es'*/,
-].sort();
+export const availableLanguages = env.ENABLED_LANGUAGES.split(',').sort();
 
 /**
  *
@@ -20,14 +17,12 @@ export default function LanguageSwitch({ from }) {
 
   const currentLanguage = i18n.languages[0];
 
-  const handleLanguageChange = slug => () => i18n.changeLanguage(slug);
-
   const dropdownContent = (
     <Dropdown.Content>
       {availableLanguages.map(slug => (
         <Dropdown.Item
           active={slug === currentLanguage}
-          onClick={handleLanguageChange(slug)}
+          onClick={() => i18n.changeLanguage(slug)}
           key={slug}
         >
           {t(slug)}

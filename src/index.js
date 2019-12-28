@@ -9,13 +9,14 @@ import * as Sentry from '@sentry/browser';
 import LogRocket from 'logrocket';
 import setupLogRocketReact from 'logrocket-react';
 import { BrowserRouter as Router } from 'react-router-dom';
+import env from './constants/env';
 
 const isLive = process.env.NODE_ENV !== 'development';
 
 if (!isLive) {
   if (!localStorage['gotrue.user']) {
     const user = {
-      url: process.env.REACT_APP_SITE_URL,
+      url: env.SITE_URL,
       token: {
         access_token: '',
         token_type: 'bearer',
@@ -38,8 +39,8 @@ if (!isLive) {
     //localStorage['gotrue.user'] = JSON.stringify(user);
   }
 } else {
-  Sentry.init({ dsn: process.env.REACT_APP_SENTRY_DSN });
-  LogRocket.init(process.env.REACT_APP_LOGROCKET_ID);
+  Sentry.init({ dsn: env.SENTRY_DSN });
+  LogRocket.init(env.LOGROCKET_ID);
   setupLogRocketReact(LogRocket);
 
   LogRocket.getSessionURL(sessionURL => {
@@ -80,10 +81,7 @@ function identifyUser(user) {
 
 render(
   <StrictMode>
-    <IdentityContextProvider
-      url={process.env.REACT_APP_SITE_URL}
-      onAuthChange={identifyUser}
-    >
+    <IdentityContextProvider url={env.SITE_URL} onAuthChange={identifyUser}>
       <ThemeProvider>
         <Router>
           <App />

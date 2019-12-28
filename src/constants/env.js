@@ -1,10 +1,28 @@
-const { REACT_APP_DISCORD_LINK, REACT_APP_REPO_LINK } = process.env;
+const requiredEnvVariables = [
+  'REPO_LINK',
+  'BRAND_NAME',
+  'SITE_URL',
+  'ENABLED_LANGUAGES',
+];
 
-const DiscordLink =
-  REACT_APP_DISCORD_LINK &&
-  REACT_APP_DISCORD_LINK.length > 0 &&
-  REACT_APP_DISCORD_LINK;
-const RepoLink =
-  REACT_APP_REPO_LINK && REACT_APP_REPO_LINK.length > 0 && REACT_APP_REPO_LINK;
+const optionalEnvVariables = [
+  'SENTRY_DSN',
+  'FAUNA_DB_SECRET',
+  'LOGROCKET_ID',
+  'DISCORD_LINK',
+];
 
-export { DiscordLink, RepoLink };
+export default [...requiredEnvVariables, ...optionalEnvVariables].reduce(
+  (carry, envName) => {
+    const key = `REACT_APP_${envName}`;
+
+    if (process.env[key] && process.env[key].length > 0) {
+      carry[envName] = process.env[key];
+    } else if (requiredEnvVariables.includes(envName)) {
+      throw new Error(`missing env variable: ${key}`);
+    }
+
+    return carry;
+  },
+  {},
+);

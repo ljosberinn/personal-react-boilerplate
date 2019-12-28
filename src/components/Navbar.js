@@ -12,7 +12,7 @@ import { useTranslation } from 'react-i18next';
 import * as ROUTES from '../constants/routes';
 import { useIdentityContext } from 'react-netlify-identity';
 import LogRocket from 'logrocket';
-import { DiscordLink, RepoLink } from '../constants/env';
+import env from '../constants/env';
 
 /**
  * @returns {React.FC} LogoIpsumSvg
@@ -59,9 +59,9 @@ export default function Navbar() {
 
             <ThemeSwitch from="nav" />
 
-            {DiscordLink && (
+            {env.DISCORD_LINK && (
               <RBXNavbar.Item
-                href={DiscordLink}
+                href={env.DISCORD_LINK}
                 rel="noopener noreferrer"
                 target="_blank"
               >
@@ -69,9 +69,9 @@ export default function Navbar() {
               </RBXNavbar.Item>
             )}
 
-            {RepoLink && (
+            {env.REPO_LINK && (
               <RBXNavbar.Item
-                href={RepoLink}
+                href={env.REPO_LINK}
                 rel="noreferrer noopener"
                 target="_blank"
               >

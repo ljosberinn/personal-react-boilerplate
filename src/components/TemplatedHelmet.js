@@ -2,6 +2,7 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import { availableLanguages } from './LanguageSwitch';
+import env from '../constants/env';
 
 /**
  *
@@ -15,15 +16,15 @@ export default function TemplatedHelmet({ children }) {
   } = useTranslation();
 
   return (
-    <Helmet titleTemplate={`%s | ${process.env.REACT_APP_BRAND_NAME}`}>
+    <Helmet titleTemplate={`%s | ${env.BRAND_NAME}`}>
       <html lang={language} />
-      <link rel="canonical" href={process.env.REACT_APP_SITE_URL} />
+      <link rel="canonical" href={env.SITE_URL} />
       {availableLanguages
         .filter(lng => lng !== 'en')
         .map(lng => (
           <link
             rel="alternate"
-            href={[process.env.REACT_APP_SITE_URL, lng].join('/')}
+            href={[env.SITE_URL, lng].join('/')}
             hrefLang={lng}
             key={lng}
           />

@@ -17,7 +17,7 @@ import { faBomb } from '@fortawesome/free-solid-svg-icons';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import * as Sentry from '@sentry/browser';
 import styles from './SentryErrorBoundary.module.scss';
-import { RepoLink } from '../constants/env';
+import env from '../constants/env';
 import hasLocalStorage from '../constants/localStorage';
 
 const logRocketUrl =
@@ -30,7 +30,7 @@ const logRocketUrl =
  * @returns {string} url
  */
 const createGitHubIssueUrl = ({ name, message, stack }) => {
-  const url = [RepoLink, 'issues', 'new'].join('/');
+  const url = [env.REPO_LINK, 'issues', 'new'].join('/');
 
   const logRocketLink = (() => {
     if (!hasLocalStorage) {
@@ -43,7 +43,7 @@ const createGitHubIssueUrl = ({ name, message, stack }) => {
 
         if (lrJSON.userId) {
           const url = logRocketUrl
-            .replace('__LR_ENV__', process.env.REACT_APP_LOGROCKET_ID)
+            .replace('__LR_ENV__', env.LOGROCKET_ID)
             .replace('__LR_ID__', lrJSON.userId);
 
           return `[LogRocket Link](${url})`;
@@ -134,7 +134,7 @@ class SentryErrorBoundary extends Component {
                                 {t('reload-page')}
                               </Button>
 
-                              {RepoLink && (
+                              {env.REPO_LINK && (
                                 <Button
                                   color="link"
                                   as="a"

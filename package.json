@@ -33,7 +33,6 @@
   "devDependencies": {
     "@testing-library/react": "^9.4.0",
     "@testing-library/jest-dom": "^4.2.4",
-
     "dotenv-webpack": "^1.7.0",
     "encoding": "^0.1.12",
     "faunadb": "^2.10.2",
