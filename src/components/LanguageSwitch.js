@@ -3,8 +3,11 @@ import { LocaleSvg } from '../assets/svg';
 import { Navbar, Dropdown, Button } from 'rbx';
 import { useTranslation } from 'react-i18next';
 import env from '../constants/env';
+import ExternalLink from './ExternalLink';
 
 export const availableLanguages = env.ENABLED_LANGUAGES.split(',').sort();
+
+const validOrigins = ['footer', 'nav', 'settings'];
 
 /**
  *
@@ -15,23 +18,19 @@ export const availableLanguages = env.ENABLED_LANGUAGES.split(',').sort();
 export default function LanguageSwitch({ from }) {
   const { i18n, t } = useTranslation('languages');
 
+  if (!validOrigins.includes(from)) {
+    console.error(`unimplemented from-case for LanguageSwitch: ${from}`);
+    return null;
+  }
+
   const currentLanguage = i18n.languages[0];
 
   const dropdownContent = (
-    <Dropdown.Content>
-      {availableLanguages.map(slug => (
-        <Dropdown.Item
-          active={slug === currentLanguage}
-          onClick={() => i18n.changeLanguage(slug)}
-          key={slug}
-        >
-          {t(slug)}
-        </Dropdown.Item>
-      ))}
-
-      <Dropdown.Divider />
-      <Dropdown.Item>{t('help')}</Dropdown.Item>
-    </Dropdown.Content>
+    <DropdownContent
+      t={t}
+      changeLanguage={i18n.changeLanguage}
+      currentLanguage={currentLanguage}
+    />
   );
 
   if (from !== 'nav') {
@@ -56,6 +55,38 @@ export default function LanguageSwitch({ from }) {
       </Navbar.Link>
       <Navbar.Dropdown>{dropdownContent}</Navbar.Dropdown>
     </Navbar.Item>
+  );
+}
+
+/**
+ *
+ * @returns {React.FC<{
+ * t: import('i18next').TFunction,
+ * currentLanguage: string,
+ * changeLanguage: import ('i18next').i18n['changeLanguage']
+ * }>} DropdownContent
+ */
+function DropdownContent({ t, currentLanguage, changeLanguage }) {
+  return (
+    <Dropdown.Content>
+      {availableLanguages.map(slug => (
+        <Dropdown.Item
+          active={slug === currentLanguage}
+          onClick={() => changeLanguage(slug)}
+          key={slug}
+        >
+          {t(slug)}
+        </Dropdown.Item>
+      ))}
+
+      <Dropdown.Divider />
+      <Dropdown.Item
+        as={ExternalLink}
+        href={`${env.REPO_LINK}#help-translating`}
+      >
+        {t('help')}
+      </Dropdown.Item>
+    </Dropdown.Content>
   );
 }
 
