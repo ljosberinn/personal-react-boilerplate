@@ -55,6 +55,10 @@
 - [react-reveal](https://www.react-reveal.com/docs/) & [react-awesome-reveal](https://github.com/dennismorello/react-awesome-reveal)
 - [react-router](https://reacttraining.com/react-router/web/guides/quick-start)
 
+## Help translating
+
+// todo once localization is finished
+
 # Requirements
 
 - [Node.js](https://nodejs.org/en/)
