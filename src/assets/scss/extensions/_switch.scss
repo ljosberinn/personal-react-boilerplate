@@ -53,6 +53,7 @@ $switch-active-background-color: $primary !default;
 
     &:checked + .check {
       background: $switch-active-background-color;
+
       @each $name, $pair in $colors {
         $color: nth($pair, 1);
         &.is-#{$name} {
@@ -188,5 +189,21 @@ $switch-active-background-color: $primary !default;
     opacity: 0.5;
     cursor: not-allowed;
     color: $grey;
+  }
+}
+
+html.theme--dark {
+  .switch {
+    input[type='checkbox'] {
+      &:checked + .check {
+        background: $dark-primary;
+
+        @each $name, $color in $dark-colors {
+          &.is-#{$name} {
+            background: $color;
+          }
+        }
+      }
+    }
   }
 }
