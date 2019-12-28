@@ -2,7 +2,8 @@
 .login-bg,
 .register-bg,
 .reset-password-bg,
-.error-bg {
+.error-bg,
+.privacy-bg {
   background-repeat: no-repeat;
   background-size: contain;
   flex-direction: row;
@@ -18,7 +19,8 @@
   }
 }
 
-.settings-bg {
+.settings-bg,
+.privacy-bg {
   background-position-x: 50%;
 }
 
@@ -43,56 +45,23 @@
 }
 
 body {
-  background-repeat: repeat-y;
   background-size: cover;
 }
 
+$svgs: settings login register reset-password error privacy;
+
 html {
-  &.theme--light {
-    .settings-bg {
-      background-image: url('../../svg/light/settings.svg');
-    }
+  @each $theme in $themes {
+    &.theme--#{$theme} {
+      @if $theme == dark {
+        font-family: $body-family;
+      }
 
-    .login-bg {
-      background-image: url('../../svg/light/login.svg');
-    }
-
-    .register-bg {
-      background-image: url('../../svg/light/register.svg');
-    }
-
-    .reset-password-bg {
-      background-image: url('../../svg/light/reset-password.svg');
-    }
-
-    .error-bg {
-      background-image: url('../../svg/light/bug.svg');
-    }
-  }
-
-  &.theme--dark {
-    body {
-      font-family: $body-family;
-    }
-
-    .settings-bg {
-      background-image: url('../../svg/dark/settings.svg');
-    }
-
-    .login-bg {
-      background-image: url('../../svg/dark/login.svg');
-    }
-
-    .register-bg {
-      background-image: url('../../svg/dark/register.svg');
-    }
-
-    .reset-password-bg {
-      background-image: url('../../svg/dark/reset-password.svg');
-    }
-
-    .error-bg {
-      background-image: url('../../svg/dark/bug.svg');
+      @each $svg in $svgs {
+        .#{$svg}-bg {
+          background-image: url('../../svg/#{$theme}/#{$svg}.svg');
+        }
+      }
     }
   }
 }
