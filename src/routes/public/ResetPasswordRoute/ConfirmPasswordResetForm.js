@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { PasswordSelection } from '../../../components';
+import { PasswordSelection, Form } from '../../../components';
 import { Title, Column, Button, Message } from 'rbx';
 import { useIdentityContext } from 'react-netlify-identity';
 import { Link, useLocation } from 'react-router-dom';
@@ -84,7 +84,7 @@ export default function ConfirmPasswordResetForm({ token }) {
     !validate.password(password) || password !== confirmPassword;
 
   return (
-    <form onSubmit={handleSubmit} spellCheck={false} autoComplete="off">
+    <Form onSubmit={handleSubmit}>
       <Column.Group centered>
         <Column
           className="has-content-spaced-between"
@@ -131,6 +131,6 @@ export default function ConfirmPasswordResetForm({ token }) {
           </Column.Group>
         </Column>
       </Column.Group>
-    </form>
+    </Form>
   );
 }

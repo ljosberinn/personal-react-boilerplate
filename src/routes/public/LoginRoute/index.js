@@ -22,6 +22,7 @@ import {
   ValidityIconLeft,
   TemplatedHelmet,
   LoginProviderButton,
+  Form,
 } from '../../../components';
 import { useIdentityContext } from 'react-netlify-identity';
 import { useTranslation } from 'react-i18next';
@@ -146,7 +147,7 @@ export default function LoginRoute() {
           <Column widescreen={{ size: 5 }} tablet={{ size: 8 }}>
             <Card>
               <Card.Content>
-                <form spellCheck={false} onSubmit={handleSubmit}>
+                <Form onSubmit={handleSubmit}>
                   <Column.Group centered>
                     <Column
                       className="has-content-spaced-between"
@@ -265,7 +266,7 @@ export default function LoginRoute() {
                       </p>
                     </Column>
                   </Column.Group>
-                </form>
+                </Form>
               </Card.Content>
             </Card>
           </Column>

@@ -14,6 +14,7 @@ import LoginProviderButton from './LoginProviderButton';
 import TemplatedHelmet from './TemplatedHelmet';
 import SentryErrorBoundary from './SentryErrorBoundary';
 import PasswordSelection from './PasswordSelection';
+import Form from './Form';
 
 export {
   LoginProviderButton,
@@ -32,4 +33,5 @@ export {
   TemplatedHelmet,
   SentryErrorBoundary,
   PasswordSelection,
+  Form,
 };

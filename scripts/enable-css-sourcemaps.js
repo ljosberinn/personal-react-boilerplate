@@ -2,7 +2,7 @@ const { writeFileSync, existsSync, readFileSync } = require('fs');
 
 const path = 'node_modules/react-scripts/config/webpack.config.js';
 
-const find = new RegExp(/(sourceMap: isEnvProduction && shouldUseSourceMap)/g);
+const find = /(sourceMap: isEnvProduction && shouldUseSourceMap)/g;
 const replace = 'sourceMap: isEnvDevelopment && shouldUseSourceMap';
 
 if (existsSync(path)) {
@@ -12,8 +12,10 @@ if (existsSync(path)) {
 
   try {
     writeFileSync(path, buffer);
-    console.log('sourcemaps are now active');
+    console.info('enable-css-sourcemaps: active');
   } catch (e) {
-    console.log(`${path} manipulation to enable sourcemaps failed!`);
+    console.error(`enable-css-sourcemaps: ${path} manipulation failed!`);
   }
+} else {
+  console.warn(`enable-css-sourcemaps: ${path} does not exist`);
 }

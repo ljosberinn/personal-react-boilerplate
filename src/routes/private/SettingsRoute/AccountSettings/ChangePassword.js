@@ -4,7 +4,7 @@ import { validate } from '../../../../utils/validators';
 import { Fade, Flip } from 'react-awesome-reveal';
 import { useTranslation } from 'react-i18next';
 import CountUp from 'react-countup';
-import { PasswordSelection } from '../../../../components';
+import { PasswordSelection, Form } from '../../../../components';
 
 const INITIAL_STATE = {
   password: '',
@@ -97,7 +97,7 @@ export default function ChangePassword({ updatePassword }) {
   }
 
   return (
-    <form spellCheck={false} onSubmit={handleSubmit}>
+    <Form onSubmit={handleSubmit}>
       <legend>
         <Title as="h3">{t('changePassword')}</Title>
       </legend>
@@ -122,6 +122,6 @@ export default function ChangePassword({ updatePassword }) {
           {t('changePassword')}
         </Button>
       </fieldset>
-    </form>
+    </Form>
   );
 }

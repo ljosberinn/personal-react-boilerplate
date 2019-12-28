@@ -11,7 +11,7 @@ import {
   Help,
 } from 'rbx';
 import { Link } from 'react-router-dom';
-import { ValidityIconLeft, Field } from '../../../components';
+import { ValidityIconLeft, Field, Form } from '../../../components';
 import { useIdentityContext } from 'react-netlify-identity';
 import { validate } from '../../../utils/validators';
 import { Fade } from 'react-awesome-reveal';
@@ -109,7 +109,7 @@ export default function ResetPasswordForm() {
   }
 
   return (
-    <form spellCheck={false} onSubmit={handleSubmit}>
+    <Form onSubmit={handleSubmit}>
       <Column.Group centered>
         <Column
           className="has-content-spaced-between"
@@ -169,6 +169,6 @@ export default function ResetPasswordForm() {
           </p>
         </Column>
       </Column.Group>
-    </form>
+    </Form>
   );
 }

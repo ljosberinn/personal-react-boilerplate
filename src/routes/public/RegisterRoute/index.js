@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
-import { TemplatedHelmet } from '../../../components';
+import { TemplatedHelmet, Form } from '../../../components';
 import { Column, Content, Title, Section, Card } from 'rbx';
 import * as ROUTES from '../../../constants/routes';
 import RedirectToHome from '../../RedirectToHome';
@@ -76,11 +76,7 @@ export default function RegisterRoute() {
           <Column widescreen={{ size: 5 }} tablet={{ size: 8 }}>
             <Card>
               <Card.Content>
-                <form
-                  spellCheck={false}
-                  autoCorrect="off"
-                  onSubmit={handleSubmit}
-                >
+                <Form onSubmit={handleSubmit}>
                   <Column.Group centered>
                     <Column
                       className="has-content-spaced-between"
@@ -126,7 +122,7 @@ export default function RegisterRoute() {
                       )}
                     </Column>
                   </Column.Group>
-                </form>
+                </Form>
               </Card.Content>
             </Card>
           </Column>
