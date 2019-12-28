@@ -26,11 +26,7 @@ export default function LanguageSwitch({ from }) {
   const currentLanguage = i18n.languages[0];
 
   const dropdownContent = (
-    <DropdownContent
-      t={t}
-      changeLanguage={i18n.changeLanguage}
-      currentLanguage={currentLanguage}
-    />
+    <DropdownContent t={t} i18n={i18n} currentLanguage={currentLanguage} />
   );
 
   if (from !== 'nav') {
@@ -63,16 +59,16 @@ export default function LanguageSwitch({ from }) {
  * @returns {React.FC<{
  * t: import('i18next').TFunction,
  * currentLanguage: string,
- * changeLanguage: import ('i18next').i18n['changeLanguage']
+ * i18n: import ('i18next').i18n
  * }>} DropdownContent
  */
-function DropdownContent({ t, currentLanguage, changeLanguage }) {
+function DropdownContent({ t, currentLanguage, i18n }) {
   return (
     <Dropdown.Content>
       {availableLanguages.map(slug => (
         <Dropdown.Item
           active={slug === currentLanguage}
-          onClick={() => changeLanguage(slug)}
+          onClick={() => i18n.changeLanguage(slug)}
           key={slug}
         >
           {t(slug)}
