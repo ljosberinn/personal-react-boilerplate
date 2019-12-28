@@ -52,13 +52,10 @@ const isValidUsername = userName => new RegExp(usernamePattern).test(userName);
 const namePattern =
   "^[a-zA-Z àáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð'-]+$";
 
-const isValidRealName = name => new RegExp(namePattern).test(name);
-
 const validate = {
   mail: isValidMail,
   password: isValidPassword,
   username: isValidUsername,
-  realName: isValidRealName,
 };
 
 const pattern = {
