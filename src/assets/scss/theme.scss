@@ -34,12 +34,12 @@ html {
       rect,
       path {
         &[fill='#00d1b2'] {
-          fill: $dark-primary-color;
+          fill: $dark-primary;
         }
       }
 
       .switch input[type='checkbox']:checked + .check {
-        background: $dark-primary-color;
+        background: $dark-primary;
       }
     }
   }

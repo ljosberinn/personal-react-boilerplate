@@ -6,11 +6,20 @@
 $speed-slow: 150ms !default;
 $speed-slower: 250ms !default;
 
-$dark-primary-color: #df691a;
 $dark-bg-color: #1d2a38;
+
+$dark-primary: #df691a;
+$dark-warning: #f0ad4e;
+$dark-success: #5cb85c;
+$dark-info: #5bc0de;
+$dark-danger: #d9534f;
+
+$dark-colors: primary $dark-primary, warning $dark-warning,
+  success $dark-success, info $dark-info, danger $dark-danger;
 
 $themes: light dark;
 
+@import './breakpoints';
 @import './animations';
 @import './extensions';
 @import './theme';
@@ -117,5 +126,9 @@ header.columns {
 main {
   display: flex;
   flex: 1 1 0%;
-  min-height: calc(100vh - 269px - 64px);
+  min-height: calc(100vh - 247px - 64px);
+}
+
+.footer li {
+  margin: 0.25rem 0;
 }
