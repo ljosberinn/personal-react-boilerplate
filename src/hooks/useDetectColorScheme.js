@@ -20,7 +20,6 @@ export default function useDetectColorScheme() {
       return;
     }
 
-    // The listener
     /**
      *
      * @param {MediaQueryListEvent} e

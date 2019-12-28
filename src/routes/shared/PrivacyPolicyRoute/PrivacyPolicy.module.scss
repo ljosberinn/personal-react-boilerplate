@@ -1,0 +1,78 @@
+@import '../../../assets/scss/breakpoints';
+
+.container {
+  margin-top: 1rem;
+
+  &:not(:last-of-type) {
+    margin-bottom: 2rem;
+  }
+
+  &:first-of-type {
+    margin-top: 3rem;
+  }
+}
+
+.box {
+  max-width: 55%;
+  box-shadow: 4px 4px 4px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1);
+
+  transition: top 350ms ease-in-out;
+  top: 0;
+  position: relative;
+
+  &:hover {
+    top: -5px;
+  }
+
+  @include tablet {
+    max-width: 75%;
+  }
+
+  @include mobile {
+    max-width: 100%;
+  }
+}
+
+.right {
+  margin-left: 45%;
+
+  > .box {
+    max-width: 100%;
+  }
+
+  @include tablet {
+    margin-left: 25%;
+  }
+
+  @include mobile {
+    margin-left: 0;
+  }
+}
+
+.card {
+  box-shadow: none;
+  background-color: transparent !important;
+  backdrop-filter: none !important;
+  border: none !important;
+}
+
+.ul {
+  margin-top: initial !important;
+  margin-right: 2em;
+}
+
+.li {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+.cardHeader {
+  border-radius: 6px !important;
+  box-shadow: none !important;
+}
+
+.img {
+  @include mobile {
+    margin: 0 auto !important;
+  }
+}
