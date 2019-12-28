@@ -47,7 +47,7 @@ export default function RegisterRoute() {
         await signupUser(data.mail, data.password);
         setSuccessfullyRegistered(true);
       } catch (error) {
-        console.log(error);
+        console.error(error);
 
         if (
           error?.json?.msg ===
