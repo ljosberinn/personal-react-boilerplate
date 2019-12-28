@@ -8,7 +8,7 @@ import { PRIVATE_ROUTES } from './routes/private';
 import RedirectToHome from './routes/RedirectToHome';
 import Layout from './Layout';
 import { useIdentityContext } from 'react-netlify-identity';
-import { availableLanguages } from './components/LanguageSwitch';
+import languages from './constants/languages';
 import { SentryErrorBoundary } from './components';
 
 /**
@@ -44,7 +44,7 @@ export default function App() {
       <Switch>
         <Suspense fallback={<Loader isFullPage />}>
           <SentryErrorBoundary>
-            {availableLanguages.map(lng => (
+            {languages.map(lng => (
               <Route
                 path={`/${lng}`}
                 key={lng}

@@ -1,8 +1,8 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 import { useTranslation } from 'react-i18next';
-import { availableLanguages } from './LanguageSwitch';
 import env from '../constants/env';
+import languages from '../constants/languages';
 
 /**
  *
@@ -19,7 +19,7 @@ export default function TemplatedHelmet({ children }) {
     <Helmet titleTemplate={`%s | ${env.BRAND_NAME}`}>
       <html lang={language} />
       <link rel="canonical" href={env.SITE_URL} />
-      {availableLanguages
+      {languages
         .filter(lng => lng !== 'en')
         .map(lng => (
           <link

@@ -5,6 +5,7 @@ import XHR from 'i18next-xhr-backend';
 import LocalStorageBackend from 'i18next-localstorage-backend';
 import Backend from 'i18next-chained-backend';
 import BackendAdapter from 'i18next-multiload-backend-adapter';
+import languages from './constants/languages';
 
 i18n
   .use(Backend)
@@ -41,5 +42,6 @@ i18n
     },
     ns: [], // removes 'translation' default key from backend query,
     defaultNS: [],
+    whitelist: languages,
     saveMissing: true,
   });

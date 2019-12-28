@@ -2,10 +2,9 @@ import React from 'react';
 import { LocaleSvg } from '../assets/svg';
 import { Navbar, Dropdown, Button } from 'rbx';
 import { useTranslation } from 'react-i18next';
+import enabledLanguages from '../constants/languages';
 import env from '../constants/env';
 import ExternalLink from './ExternalLink';
-
-export const availableLanguages = env.ENABLED_LANGUAGES.split(',').sort();
 
 const validOrigins = ['footer', 'nav', 'settings'];
 
@@ -65,7 +64,7 @@ export default function LanguageSwitch({ from }) {
 function DropdownContent({ t, currentLanguage, i18n }) {
   return (
     <Dropdown.Content>
-      {availableLanguages.map(slug => (
+      {enabledLanguages.map(slug => (
         <Dropdown.Item
           active={slug === currentLanguage}
           onClick={() => i18n.changeLanguage(slug)}
