@@ -20,9 +20,4 @@ export const PUBLIC_ROUTES = {
       /* webpackChunkName: "public.resetpassword" */ './ResetPasswordRoute'
     ),
   ),
-  [ROUTES.ACTIVATE_ACCOUNT.routerPath]: lazy(() =>
-    import(
-      /* webpackChunkName: "public.accountactivation" */ './AccountActivationRoute'
-    ),
-  ),
 };
