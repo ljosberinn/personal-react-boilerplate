@@ -1,15 +1,27 @@
+@mixin mobile-bg-adjustment {
+  @include mobile {
+    background-image: none !important;
+    margin-top: initial;
+    margin-bottom: initial;
+  }
+}
+
 .settings-bg,
 .login-bg,
 .register-bg,
 .reset-password-bg,
 .error-bg,
-.privacy-bg {
+.privacy-bg,
+.tos-bg {
   background-repeat: no-repeat;
   background-size: contain;
   flex-direction: row;
   width: 100%;
 
-  @media screen and (max-width: 768px) {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+
+  @include mobile {
     background-size: cover;
   }
 
@@ -20,7 +32,7 @@
 }
 
 .settings-bg,
-.privacy-bg {
+.tos-bg {
   background-position-x: 50%;
 }
 
@@ -28,12 +40,16 @@
   background-position-x: 83%;
   background-size: 45%;
   background-position-y: 25%;
+
+  @include mobile-bg-adjustment();
 }
 
 .register-bg {
   background-size: 65%;
   background-position-x: 45%;
   background-position-y: 50%;
+
+  @include mobile-bg-adjustment();
 }
 
 .reset-password-bg {
@@ -44,11 +60,20 @@
   background-position-x: 40%;
 }
 
+.privacy-bg {
+  background-position-x: 115%;
+
+  @include tablet {
+    background-position-x: 50%;
+    background-position-y: 50%;
+  }
+}
+
 body {
   background-size: cover;
 }
 
-$svgs: settings login register reset-password error privacy;
+$svgs: settings login register reset-password error privacy tos;
 
 html {
   @each $theme in $themes {
