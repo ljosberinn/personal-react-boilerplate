@@ -20,7 +20,6 @@ import RedirectToHome from '../../RedirectToHome';
 import { Link, useParams } from 'react-router-dom';
 import {
   ValidityIconLeft,
-  Checkbox,
   TemplatedHelmet,
   LoginProviderButton,
 } from '../../../components';
@@ -32,7 +31,6 @@ import env from '../../../constants/env';
 const initialState = {
   mail: '',
   password: '',
-  rememberMe: false,
 };
 
 const errors = {
@@ -91,7 +89,7 @@ export default function LoginRoute() {
       const { id, created_at, confirmed_at } = await loginUser(
         mail,
         password,
-        data.rememberMe,
+        true,
       );
 
       LogRocket.identify(id, {
@@ -116,16 +114,14 @@ export default function LoginRoute() {
   };
 
   const handleChange = useCallback(
-    ({ target: { name, type, value, checked } }) => {
-      switch (type) {
-        case 'checkbox':
-          setData(data => ({ ...data, [name]: checked }));
-          break;
-        default:
-          setData(data => ({ ...data, [name]: value }));
+    ({ target: { name, type, value } }) => {
+      if (error) {
+        setError(null);
       }
+
+      setData(data => ({ ...data, [name]: value }));
     },
-    [],
+    [error],
   );
 
   if (isLoggedIn) {
@@ -233,26 +229,6 @@ export default function LoginRoute() {
                                     <Help color="danger">{t(error)}</Help>
                                   </Fade>
                                 )}
-                              </Field>
-
-                              <Field>
-                                <Control>
-                                  <Checkbox
-                                    name="rememberMe"
-                                    id="remember-me"
-                                    onChange={handleChange}
-                                    circled
-                                    checked={data.rememberMe}
-                                  />
-                                  <Label htmlFor="remember-me">
-                                    {t('remember-me')}
-                                  </Label>
-                                </Control>
-                                {/*error && error === 'data.invalid' && (
-                                  <Fade>
-                                    <Help color="danger">{errors[error]}</Help>
-                                  </Fade>
-                                )*/}
                               </Field>
 
                               <Button
