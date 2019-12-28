@@ -51,7 +51,8 @@
     "build:lambda": "netlify-lambda build -c ./config/webpack.js src/lambda",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "nuke-modules": "rm -rf node_modules/ && yarn install"
+    "nuke-modules": "rm -rf node_modules/ && yarn install",
+    "postinstall": "node ./scripts/enable-css-sourcemaps.js"
   },
   "eslintConfig": {
     "extends": "react-app"
