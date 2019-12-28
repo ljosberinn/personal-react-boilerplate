@@ -1,5 +1,5 @@
 import React from 'react';
-import { Section, Title } from 'rbx';
+import { Section, Title, Column } from 'rbx';
 import { TemplatedHelmet } from '../../../components';
 import { useTranslation } from 'react-i18next';
 
@@ -14,8 +14,12 @@ export default function TosRoute() {
       <TemplatedHelmet>
         <title>{t('tos')}</title>
       </TemplatedHelmet>
-      <Section>
-        <Title>WIP</Title>
+      <Section className="tos-bg">
+      <Column.Group>
+          <Column size="two-third" offset={2}>
+            <Title>{t('tos')}</Title>
+          </Column>
+        </Column.Group>
       </Section>
     </>
   );
