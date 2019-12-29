@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { Section, Column, Card, Box, Content, Title } from 'rbx';
 import { TemplatedHelmet, ExternalLink } from '../../../components';
 import { useTranslation, Trans } from 'react-i18next';
@@ -12,79 +12,83 @@ import {
   AnalyticsSvg,
 } from '../../../components/themedSvgs';
 
+const content = [
+  {
+    key: 'analytics',
+    entries: [
+      { id: 1, placeholder: '' },
+      { id: 2, placeholder: '' },
+      {
+        id: 3,
+        placeholder: (
+          <>
+            Logs provided by{' '}
+            <ExternalLink href="//sentry.io">Sentry</ExternalLink> and/or{' '}
+            <ExternalLink href="//logrocket.com">LogRocket</ExternalLink> may
+            contain information such as ip address and browser & OS metadata.
+          </>
+        ),
+      },
+    ],
+    icon: AnalyticsSvg,
+  },
+  {
+    key: 'third-party',
+    entries: [
+      { id: 1, placeholder: '' },
+      {
+        id: 2,
+        placeholder: (
+          <>
+            Our identity provider is{' '}
+            <ExternalLink href="//netlify.com">Netlify</ExternalLink>.
+          </>
+        ),
+      },
+      {
+        id: 3,
+        placeholder: (
+          <>
+            Your application data is stored on servers of{' '}
+            <ExternalLink href="//fauna.com/">FaunaDB</ExternalLink>.
+          </>
+        ),
+      },
+    ],
+    icon: SecuritySvg,
+  },
+  {
+    key: 'cookies',
+    entries: [
+      {
+        id: 1,
+        placeholder: (
+          <>
+            This site relies on a browser feature called{' '}
+            <code>localStorage</code>. This enables us to not require any
+            cookies.
+          </>
+        ),
+      },
+      { id: 2, placeholder: '' },
+    ],
+    icon: CookieSvg,
+  },
+  {
+    key: 'ads',
+    entries: [
+      { id: 1, placeholder: '' },
+      { id: 2, placeholder: '' },
+    ],
+    icon: AdSvg,
+  },
+];
+
 /**
  * @returns {React.FC}
  */
 export default function PrivacyPolicy() {
   const { t } = useTranslation(['routes', 'privacyPolicy']);
-
-  const content = [
-    {
-      title: 'analytics-title',
-      entries: [
-        'analytics-1',
-        'analytics-2',
-        <Trans
-          i18nKey="analytics-3"
-          ns="privacyPolicy"
-          parent="li"
-          className={styles.li}
-        >
-          Logs provided by{' '}
-          <ExternalLink href="//sentry.io">Sentry</ExternalLink> and/or{' '}
-          <ExternalLink href="//logrocket.com">LogRocket</ExternalLink> may
-          contain information such as ip address and browser & OS metadata.
-        </Trans>,
-      ],
-      icon: AnalyticsSvg,
-    },
-    {
-      title: 'third-party-title',
-      entries: [
-        'third-party-1',
-        <Trans
-          i18nKey="third-party-2"
-          ns="privacyPolicy"
-          parent="li"
-          className={styles.li}
-        >
-          Our identity provider is{' '}
-          <ExternalLink href="//netlify.com">Netlify</ExternalLink>.
-        </Trans>,
-        <Trans
-          i18nKey="third-party-3"
-          ns="privacyPolicy"
-          parent="li"
-          className={styles.li}
-        >
-          Your application data is stored on servers of{' '}
-          <ExternalLink href="//fauna.com/">FaunaDB</ExternalLink>.
-        </Trans>,
-      ],
-      icon: SecuritySvg,
-    },
-    {
-      title: 'cookies-title',
-      entries: [
-        <Trans
-          i18nKey="cookies-1"
-          ns="privacyPolicy"
-          parent="li"
-          className={styles.li}
-        >
-          This site relies on a browser feature called <code>localStorage</code>
-          . This enables us to not require any cookies.
-        </Trans>,
-        'cookies-2',
-      ],
-      icon: CookieSvg,
-    },
-    {
-      title: 'ads-title',
-      entries: ['ads-1', 'ads-2'],
-      icon: AdSvg,
-    },
-  ];
 
   return (
     <>
@@ -116,7 +120,7 @@ export default function PrivacyPolicy() {
  * index: number
  * }>} Slide
  */
-function Slide({ dataset: { title, icon: Icon, entries }, index, t }) {
+function Slide({ dataset: { key, icon: Icon, entries }, index, t }) {
   const direction = index % 2 === 0 ? 'left' : 'right';
 
   return (
@@ -132,7 +136,9 @@ function Slide({ dataset: { title, icon: Icon, entries }, index, t }) {
       <Box className={styles.box}>
         <Card className={styles.card}>
           <Card.Header className={styles.cardHeader}>
-            <Card.Header.Title>{t(`privacyPolicy:${title}`)}</Card.Header.Title>
+            <Card.Header.Title>
+              {t(`privacyPolicy:${key}-title`)}
+            </Card.Header.Title>
           </Card.Header>
           <Card.Content>
             <Content>
@@ -142,17 +148,17 @@ function Slide({ dataset: { title, icon: Icon, entries }, index, t }) {
                 </Column>
                 <Column size={9}>
                   <ul className={styles.ul}>
-                    {entries.map((entry, index) => {
-                      if (typeof entry === 'string') {
-                        return (
-                          <li className={styles.li} key={index}>
-                            {t(`privacyPolicy:${entry}`)}
-                          </li>
-                        );
-                      }
-
-                      return <Fragment key={index}>{entry}</Fragment>;
-                    })}
+                    {entries.map(({ id, placeholder }, index) => (
+                      <Trans
+                        i18nKey={`${key}-${id}`}
+                        ns="privacyPolicy"
+                        parent="li"
+                        className={styles.li}
+                        key={index}
+                      >
+                        {placeholder}
+                      </Trans>
+                    ))}
                   </ul>
                 </Column>
               </Column.Group>
