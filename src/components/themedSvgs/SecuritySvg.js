@@ -27,9 +27,9 @@ export default function SecuritySvg({ height, className }) {
           gradientTransform="rotate(90 783.095 446.895)"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0" stop-color="gray" stop-opacity=".25" />
-          <stop offset=".54" stop-color="gray" stop-opacity=".12" />
-          <stop offset="1" stop-color="gray" stop-opacity=".1" />
+          <stop offset="0" stopColor="gray" stopOpacity=".25" />
+          <stop offset=".54" stopColor="gray" stopOpacity=".12" />
+          <stop offset="1" stopColor="gray" stopOpacity=".1" />
         </linearGradient>
         <linearGradient
           id="b"

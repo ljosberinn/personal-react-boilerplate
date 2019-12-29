@@ -86,7 +86,7 @@ html {
 
       @each $svg in $svgs {
         .#{$svg}-bg {
-          background-image: url('../../svg/#{$theme}/#{$svg}.svg');
+          background-image: url('../svg/#{$theme}/#{$svg}.svg');
         }
       }
     }

@@ -26,9 +26,9 @@ export default function AnalyticsSvg({ height, className }) {
           y2="341"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0" stop-color="gray" stop-opacity=".25" />
-          <stop offset=".54" stop-color="gray" stop-opacity=".12" />
-          <stop offset="1" stop-color="gray" stop-opacity=".1" />
+          <stop offset="0" stopColor="gray" stopOpacity=".25" />
+          <stop offset=".54" stopColor="gray" stopOpacity=".12" />
+          <stop offset="1" stopColor="gray" stopOpacity=".1" />
         </linearGradient>
         <linearGradient id="b" x1="640" x2="640" y1="537.58" y2="459.58" />
         <linearGradient id="c" x1="736" x2="736" y1="591.58" y2="513.58" />
