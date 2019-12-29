@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { TemplatedHelmet, Form } from '../../../components';
-import { Column, Content, Title, Section, Card } from 'rbx';
+import { Column, Content, Title, Section, Card, Generic } from 'rbx';
 import * as ROUTES from '../../../constants/routes';
 import RedirectToHome from '../../RedirectToHome';
 import { useIdentityContext } from 'react-netlify-identity';
@@ -113,12 +113,12 @@ export default function RegisterRoute() {
                       </Column.Group>
 
                       {!successfullyRegistered && (
-                        <p className="has-text-centered has-text-grey">
+                        <Generic textAlign="centered">
                           {t('already-have-an-account')}{' '}
                           <Link to={ROUTES.LOGIN.clientPath}>
                             {t('login:sign-in')}
                           </Link>
-                        </p>
+                        </Generic>
                       )}
                     </Column>
                   </Column.Group>

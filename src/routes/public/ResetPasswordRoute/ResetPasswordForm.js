@@ -9,6 +9,7 @@ import {
   Message,
   Button,
   Help,
+  Generic,
 } from 'rbx';
 import { Link } from 'react-router-dom';
 import { ValidityIconLeft, Field, Form } from '../../../components';
@@ -167,10 +168,10 @@ export default function ResetPasswordForm() {
               </Content>
             </Column>
           </Column.Group>
-          <p className="has-text-centered has-text-grey">
+          <Generic as="p" textAlign="centered">
             Forget it, send me back to the <Link to="/login">Sign in</Link>{' '}
             screen.
-          </p>
+          </Generic>
         </Column>
       </Column.Group>
     </Form>

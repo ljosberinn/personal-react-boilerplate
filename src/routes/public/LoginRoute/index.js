@@ -12,6 +12,7 @@ import {
   Column,
   Button,
   Help,
+  Generic,
 } from 'rbx';
 import { Fade } from 'react-awesome-reveal';
 // TODO: remove once https://github.com/dennismorello/react-awesome-reveal/issues/14 might be resolved
@@ -249,25 +250,20 @@ export default function LoginRoute() {
 
                               <br />
 
-                              <div className="has-text-centered">
-                                <Title
-                                  className="has-text-grey"
-                                  size={6}
-                                  as={Link}
-                                  to="/reset-password"
-                                >
+                              <Generic textAlign="centered">
+                                <Title size={6} as={Link} to="/reset-password">
                                   {t('forgot-password')}
                                 </Title>
-                              </div>
+                              </Generic>
                             </fieldset>
                           </Shake>
                         </Column>
                       </Column.Group>
 
-                      <p className="has-text-centered has-text-grey">
+                      <Generic as="p" textAlign="centered">
                         {t('dont-have-an-account')}{' '}
                         <Link to="/register">{t('sign-up')}</Link>
-                      </p>
+                      </Generic>
                     </Column>
                   </Column.Group>
                 </Form>
