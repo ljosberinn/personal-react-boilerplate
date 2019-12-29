@@ -1,6 +1,12 @@
-svg rect[fill='#{$primary}'],
-svg path[fill='#{$primary}'] {
-  transition: fill 350ms ease-in-out;
+$transitioning-colors: $dark-primary $primary;
+
+@each $color in $transitioning-colors {
+  svg {
+    rect[fill='#{$color}'], path[fill='#{$color}'] {
+      transition: fill 350ms ease-in-out;
+
+    }
+  }
 }
 
 html {

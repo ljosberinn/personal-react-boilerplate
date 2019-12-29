@@ -1,15 +1,15 @@
 import React from 'react';
-import { Section, Column, Card, Box, Content, Image, Title } from 'rbx';
+import { Section, Column, Card, Box, Content, Title } from 'rbx';
 import { TemplatedHelmet, ExternalLink } from '../../../components';
 import { useTranslation } from 'react-i18next';
 import styles from './PrivacyPolicy.module.scss';
 import { Slide as AwesomeSlide, Fade } from 'react-awesome-reveal';
 import classnames from 'classnames';
 
-import AnalyticsSvg from '../../../assets/svg/analytics.svg';
-import SecuritySvg from '../../../assets/svg/security.svg';
-import CookieSvg from '../../../assets/svg/cookie.svg';
-import AdSvg from '../../../assets/svg/ad.svg';
+import AnalyticsSvg from '../../../assets/svg/AnalyticsSvg';
+import SecuritySvg from '../../../assets/svg/SecuritySvg';
+import CookieSvg from '../../../assets/svg/CookieSvg';
+import AdSvg from '../../../assets/svg/AdSvg';
 
 const content = [
   {
@@ -57,7 +57,10 @@ side, no unauthorized person can access your data.`,
   },
   {
     title: 'No Ads',
-    entries: ["This site has never and won't ever show ads."],
+    entries: [
+      "This site has never and won't ever show ads.",
+      'As a direct result, no ad provider is hiddenly collecting data either.',
+    ],
     icon: AdSvg,
   },
 ];
@@ -97,7 +100,7 @@ export default function PrivacyPolicy() {
  * index: number
  * }>} Slide
  */
-function Slide({ dataset: { title, icon, entries }, index }) {
+function Slide({ dataset: { title, icon: Icon, entries }, index }) {
   const direction = index % 2 === 0 ? 'left' : 'right';
 
   return (
@@ -118,13 +121,8 @@ function Slide({ dataset: { title, icon, entries }, index }) {
           <Card.Content>
             <Content>
               <Column.Group vcentered>
-                <Column>
-                  <Image.Container
-                    size={128}
-                    className={classnames('is-flex', styles.img)}
-                  >
-                    <Image src={icon} />
-                  </Image.Container>
+                <Column className="is-flex">
+                  <Icon height="100%" aria-hidden className={styles.icon} />
                 </Column>
                 <Column size={9}>
                   <ul className={styles.ul}>

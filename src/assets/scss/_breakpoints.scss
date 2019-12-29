@@ -1,8 +1,15 @@
+$desktop: 1920px;
 $tablet: 1280px;
 $mobile: 768px;
 
+@mixin widescreen {
+  @media screen and (min-width: #{$desktop}) {
+    @content;
+  }
+}
+
 @mixin desktop {
-  @media screen and (min-width: #{$tablet}) {
+  @media screen and (min-width: #{$tablet}) and (max-width: #{$desktop}) {
     @content;
   }
 }

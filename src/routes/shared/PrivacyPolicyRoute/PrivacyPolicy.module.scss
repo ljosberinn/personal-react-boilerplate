@@ -14,7 +14,7 @@
 
 .box {
   max-width: 55%;
-  box-shadow: 4px 4px 4px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1);
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.12), 0 0 0 0px rgba(0, 0, 0, 0.12);
 
   transition: top 350ms ease-in-out;
   top: 0;
@@ -22,6 +22,10 @@
 
   &:hover {
     top: -5px;
+  }
+
+  @include widescreen {
+    max-width: 1024px !important;
   }
 
   @include tablet {
@@ -38,6 +42,10 @@
 
   > .box {
     max-width: 100%;
+  }
+
+  @include widescreen {
+    margin-left: calc(100vw - 1024px);
   }
 
   @include tablet {
@@ -59,11 +67,15 @@
 .ul {
   margin-top: initial !important;
   margin-right: 2em;
+
+  @include mobile {
+    margin-left: 0 !important;
+    margin-right: 0;
+  }
 }
 
 .li {
-  margin-top: 1em;
-  margin-bottom: 1em;
+  margin: 1rem;
 }
 
 .cardHeader {
@@ -74,5 +86,13 @@
 .img {
   @include mobile {
     margin: 0 auto !important;
+  }
+}
+
+.icon {
+  flex-grow: 1;
+
+  @include mobile {
+    max-height: 256px;
   }
 }
