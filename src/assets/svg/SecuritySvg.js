@@ -5,7 +5,9 @@ import getThemeBasedSvgColor from '../../constants/svgColor';
 export default function SecuritySvg({ height, className }) {
   const { theme } = useTheme();
 
-  const color = getThemeBasedSvgColor(theme);
+  const { primary, purple } = getThemeBasedSvgColor(theme);
+
+  const purpleWhenLight = theme === 'light' ? purple : '#f5f5f5';
 
   return (
     <svg
@@ -101,7 +103,7 @@ export default function SecuritySvg({ height, className }) {
         />
       </defs>
       <path
-        fill="#f5f5f5"
+        fill={purpleWhenLight}
         d="M415.96671357 68.34968968l2.9864847-19.65439669 465.07166725 70.66761938-2.98648471 19.65439668z"
       />
       <path
@@ -110,7 +112,7 @@ export default function SecuritySvg({ height, className }) {
         transform="rotate(-81.36 589.88238658 447.62674005)"
       />
       <path
-        fill="#f5f5f5"
+        fill={purpleWhenLight}
         d="M364.44677797 407.32465688L415.9546257 68.34563316l465.07166724 70.66761938-51.50784774 338.97902372z"
       />
       <circle
@@ -140,7 +142,7 @@ export default function SecuritySvg({ height, className }) {
         transform="rotate(-81.36 595.29908063 378.9200065)"
       />
       <path
-        fill={color}
+        fill={primary}
         d="M435.20261206 107.29101198l408.58010654 62.08372921-17.29396982 113.81358886-408.58010654-62.08372922z"
       />
       <path
@@ -149,7 +151,7 @@ export default function SecuritySvg({ height, className }) {
         transform="rotate(-81.36 453.30439186 480.90389267)"
       />
       <path
-        fill={color}
+        fill={primary}
         d="M477.3773868 284.58224091l26.19927123 3.98097811-2.98648471 19.65439669-26.19927124-3.98097811z"
       />
       <path
@@ -161,12 +163,12 @@ export default function SecuritySvg({ height, className }) {
         d="M467.16710643 351.72651579l26.19927123 3.9809781-2.9864847 19.6543967-26.19927124-3.98097812z"
       />
       <path
-        fill={color}
+        fill={primary}
         d="M546.3461984 299.25059775l211.2452183 32.09870162-1.74111457 11.45847373-211.2452183-32.09870163zM541.24100148 332.82348631l211.2452183 32.09870163-1.74111458 11.45847372-211.2452183-32.09870163zM536.14580456 366.39637488l211.2452183 32.09870163-1.74111458 11.45847372-211.2452183-32.09870163z"
         opacity=".4"
       />
       <path
-        fill="#f5f5f5"
+        fill={purpleWhenLight}
         d="M10.88678903 118.11307821L499.66494008 8.8582172l4.2668818 19.08893187L15.15367083 137.20201008z"
       />
       <path
@@ -175,7 +177,7 @@ export default function SecuritySvg({ height, className }) {
         transform="rotate(-12.6 -495.08329595 1022.24937017)"
       />
       <path
-        fill="#f5f5f5"
+        fill={purpleWhenLight}
         d="M15.15027587 137.21301078L503.92842692 27.95814976l73.60152965 329.27431548L88.75180552 466.48732626z"
       />
       <ellipse
@@ -208,7 +210,7 @@ export default function SecuritySvg({ height, className }) {
         transform="rotate(-12.6 -514.96906167 957.38871467)"
       />
       <path
-        fill={color}
+        fill={primary}
         d="M48.6125531 165.6367311l429.40337525-95.9830262 24.71126638 110.55185079L73.32381948 276.1885819z"
       />
       <path
@@ -217,7 +219,7 @@ export default function SecuritySvg({ height, className }) {
         transform="rotate(-12.6 -618.68187953 1103.72494454)"
       />
       <path
-        fill={color}
+        fill={primary}
         d="M158.0646 313.4782l27.6556-6.2084 4.3032 19.1688-27.6556 6.2084z"
       />
       <path
@@ -229,24 +231,24 @@ export default function SecuritySvg({ height, className }) {
         d="M172.8314 378.9362l27.6556-6.2084 4.3032 19.1688-27.6556 6.2084z"
       />
       <path
-        fill={color}
+        fill={primary}
         d="M229.90848542 299.63964185l222.01130417-49.62540599 2.48901439 11.13521026L232.3974998 310.7748521zM237.19656972 332.25402322l222.01130417-49.62540598 2.48901438 11.13521025-222.01130417 49.62540599zM244.48465401 364.8584046l222.01130418-49.62540598 2.48901438 11.13521025-222.01130417 49.62540598z"
         opacity=".4"
       />
-      <path fill="#f5f5f5" d="M170.07 18.48h568v24h-568z" />
+      <path fill={purpleWhenLight} d="M170.07 18.48h568v24h-568z" />
       <path fill="url(#g)" d="M159.07 10.48h592v454h-592z" />
-      <path fill="#fff" d="M170.07 42.48h568v414h-568z" />
+      <path fill={purpleWhenLight} d="M170.07 42.48h568v414h-568z" />
       <circle cx="183.94" cy="30.48" r="5.87" fill="#ff5252" />
       <circle cx="200.07" cy="30.48" r="5.87" fill="#ff0" />
       <circle cx="216.2" cy="30.48" r="5.87" fill="#69f0ae" />
       <path fill="url(#h)" d="M194.07 79.48h510v150h-510z" />
-      <path fill={color} d="M200.07 85.48h499v139h-499z" />
+      <path fill={primary} d="M200.07 85.48h499v139h-499z" />
       <path fill="url(#i)" d="M281.07 287.48h34v29h-34z" />
-      <path fill={color} d="M282.57 289.48h32v24h-32z" />
+      <path fill={primary} d="M282.57 289.48h32v24h-32z" />
       <path fill="#ff5252" d="M282.57 330.48h32v24h-32z" />
       <path fill="#ff9800" d="M282.57 371.48h32v24h-32z" />
       <path
-        fill={color}
+        fill={primary}
         d="M367.57 294.48h258v14h-258zM367.57 335.48h258v14h-258zM367.57 376.48h258v14h-258z"
         opacity=".4"
       />
@@ -257,12 +259,12 @@ export default function SecuritySvg({ height, className }) {
         transform="translate(-152.16 -191.26)"
       />
       <path
-        fill="#fff"
+        fill={primary}
         d="M409.07 339.48a50 50 0 01100 0v32h14v-32a64 64 0 00-128 0v32h14z"
       />
-      <path fill={color} d="M372.07 369.48h174v142h-174z" />
-      <path fill="#fff" d="M372.07 369.48h174v142h-174z" />
-      <path fill={color} d="M372.07 397.48h174v86h-174z" />
+      <path fill={primary} d="M372.07 369.48h174v142h-174z" />
+      <path fill={primary} d="M372.07 369.48h174v142h-174z" />
+      <path fill={primary} d="M372.07 397.48h174v86h-174z" />
       <path
         fill="url(#l)"
         d="M624 615.5a12.76 12.76 0 10-22 8.74v27.22a9.28 9.28 0 0018.56 0v-27.22a12.7 12.7 0 003.44-8.74z"

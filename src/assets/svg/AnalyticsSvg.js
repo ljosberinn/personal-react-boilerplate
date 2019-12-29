@@ -5,7 +5,9 @@ import getThemeBasedSvgColor from '../../constants/svgColor';
 export default function AnalyticsSvg({ height, className }) {
   const { theme } = useTheme();
 
-  const color = getThemeBasedSvgColor(theme);
+  const { primary, purple } = getThemeBasedSvgColor(theme);
+
+  const purpleWhenLight = theme === 'light' ? purple : '#fff';
 
   return (
     <svg
@@ -37,8 +39,8 @@ export default function AnalyticsSvg({ height, className }) {
         <linearGradient id="h" x1="500.8" x2="500.8" y1="592.09" y2="468.22" />
       </defs>
       <path fill="url(#a)" d="M464 341h418v422.27H464z" />
-      <path fill="#fff" d="M469.69 407.82h406.63v344.07H469.69z" />
-      <path fill="#bdbdbd" d="M469.69 345.27h406.63v62.56H469.69z" />
+      <path fill={purpleWhenLight} d="M469.69 407.82h406.63v344.07H469.69z" />
+      <path fill={purpleWhenLight} d="M469.69 345.27h406.63v62.56H469.69z" />
       <circle cx="500.97" cy="376.54" r="15.64" fill="#ff5252" />
       <circle cx="540.78" cy="376.54" r="15.64" fill="#ff0" />
       <circle cx="580.59" cy="376.54" r="15.64" fill="#69f0ae" />
@@ -50,13 +52,13 @@ export default function AnalyticsSvg({ height, className }) {
       <circle cx="736" cy="552.58" r="39" fill="url(#c)" />
       <circle cx="688" cy="606.58" r="39" fill="url(#d)" />
       <circle cx="822" cy="660.58" r="39" fill="url(#e)" />
-      <circle cx="640" cy="498.58" r="33" fill={color} />
-      <circle cx="736" cy="552.58" r="33" fill={color} />
-      <circle cx="688" cy="606.58" r="33" fill={color} />
+      <circle cx="640" cy="498.58" r="33" fill={primary} />
+      <circle cx="736" cy="552.58" r="33" fill={primary} />
+      <circle cx="688" cy="606.58" r="33" fill={primary} />
       <circle cx="822" cy="660.58" r="33" fill="#69f0ae" />
       <path fill="url(#f)" d="M0 0h418v422.27H0z" />
-      <path fill="#fff" d="M5.69 66.82h406.63v344.07H5.69z" />
-      <path fill="#bdbdbd" d="M5.69 4.27h406.63v62.56H5.69z" />
+      <path fill={purpleWhenLight} d="M5.69 66.82h406.63v344.07H5.69z" />
+      <path fill={purpleWhenLight} d="M5.69 4.27h406.63v62.56H5.69z" />
       <circle cx="36.97" cy="35.54" r="15.64" fill="#ff5252" />
       <circle cx="76.78" cy="35.54" r="15.64" fill="#ff0" />
       <circle cx="116.59" cy="35.54" r="15.64" fill="#69f0ae" />
@@ -69,12 +71,12 @@ export default function AnalyticsSvg({ height, className }) {
       <path fill="#69f0ae" d="M158.47 220h38.26v39.13h-38.26z" opacity=".4" />
       <path fill="#ff0" d="M285.1 222.05h38.26v39.13H285.1z" opacity=".4" />
       <path fill="#69f0ae" d="M158.12 258.3h38.26v70.12h-38.26z" />
-      <path fill={color} d="M221.6 225.81h38.26v102.62H221.6z" />
-      <path fill={color} d="M221.6 190.16h38.26v35.65H221.6z" opacity=".4" />
+      <path fill={primary} d="M221.6 225.81h38.26v102.62H221.6z" />
+      <path fill={primary} d="M221.6 190.16h38.26v35.65H221.6z" opacity=".4" />
       <path fill="#ff0" d="M285.08 261.47h38.26v66.96h-38.26z" />
       <path fill="url(#g)" d="M196 160.45h418v422.27H196z" />
-      <path fill="#fff" d="M201.69 227.27h406.63v344.07H201.69z" />
-      <path fill="#bdbdbd" d="M201.69 164.71h406.63v62.56H201.69z" />
+      <path fill={purpleWhenLight} d="M201.69 227.27h406.63v344.07H201.69z" />
+      <path fill={purpleWhenLight} d="M201.69 164.71h406.63v62.56H201.69z" />
       <circle cx="232.97" cy="195.99" r="15.64" fill="#ff5252" />
       <circle cx="272.78" cy="195.99" r="15.64" fill="#ff0" />
       <circle cx="312.59" cy="195.99" r="15.64" fill="#69f0ae" />
@@ -85,7 +87,10 @@ export default function AnalyticsSvg({ height, className }) {
         d="M439.61 468.22v.74A123.14 123.14 0 00562 592.09V468.22z"
         transform="translate(-159 -68.37)"
       />
-      <path fill={color} d="M284.17 401.43v.71a118 118 0 00117.3 118V401.43z" />
+      <path
+        fill={primary}
+        d="M284.17 401.43v.71a118 118 0 00117.3 118V401.43z"
+      />
     </svg>
   );
 }

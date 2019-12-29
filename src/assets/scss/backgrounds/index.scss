@@ -67,6 +67,8 @@
     background-position-x: 50%;
     background-position-y: 50%;
   }
+
+  @include mobile-bg-adjustment();
 }
 
 body {
