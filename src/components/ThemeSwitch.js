@@ -7,6 +7,7 @@ import Icon from './Icon';
 import styles from './ThemeSwitch.module.scss';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '../hooks';
+import classnames from 'classnames';
 
 const iconClassMap = {
   sun: {
@@ -78,13 +79,13 @@ export default function ThemeSwitch({ from }) {
  *  children: React.ReactChildren
  * }>} Wrap
  */
-const Wrap = ({ from, children, ...rest }) =>
+const Wrap = ({ from, children, className, ...rest }) =>
   from === 'nav' ? (
-    <Navbar.Item {...rest}>{children}</Navbar.Item>
+    <Navbar.Item  className={className} {...rest}>{children}</Navbar.Item>
   ) : from === 'settings' ? (
-    <Button type="button" {...rest}>
+    <Button type="button" className={className}  {...rest}>
       {children}
     </Button>
   ) : (
-    <span {...rest}>{children}</span>
+    <span className={classnames(className, 'is-flex')} {...rest}>{children}</span>
   );
