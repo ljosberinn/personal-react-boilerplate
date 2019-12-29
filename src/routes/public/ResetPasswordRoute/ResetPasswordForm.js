@@ -158,7 +158,11 @@ export default function ResetPasswordForm() {
                     </Button>
                   </Field>
 
-                  {error && <Help color="danger">{error}</Help>}
+                  {error && (
+                    <Help color="danger" role="alert">
+                      {error}
+                    </Help>
+                  )}
                 </fieldset>
               </Content>
             </Column>

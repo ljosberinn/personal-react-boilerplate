@@ -109,7 +109,9 @@ export default function ChangePassword({ updatePassword }) {
 
         {error && (
           <Fade className="field">
-            <Help color="danger">{t(error)}</Help>
+            <Help color="danger" role="alert">
+              {t(error)}
+            </Help>
           </Fade>
         )}
 

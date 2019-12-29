@@ -197,7 +197,9 @@ export default function LoginRoute() {
 
                                 {error && error.includes('mail') && (
                                   <Fade>
-                                    <Help color="danger">{t(error)}</Help>
+                                    <Help color="danger" role="alert">
+                                      {t(error)}
+                                    </Help>
                                   </Fade>
                                 )}
                               </Field>
@@ -227,7 +229,9 @@ export default function LoginRoute() {
 
                                 {error && error.includes('password') && (
                                   <Fade>
-                                    <Help color="danger">{t(error)}</Help>
+                                    <Help color="danger" role="alert">
+                                      {t(error)}
+                                    </Help>
                                   </Fade>
                                 )}
                               </Field>
