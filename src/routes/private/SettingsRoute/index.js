@@ -1,7 +1,5 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import { Section, Title, Column, Box, Tab } from 'rbx';
-import AccountSettings from './AccountSettings';
-import SiteSettings from './SiteSettings';
 import { useTranslation } from 'react-i18next';
 import { TemplatedHelmet, Icon } from '../../../components';
 import { Route, Link, Switch, useLocation } from 'react-router-dom';
@@ -10,13 +8,19 @@ import { faSlidersH, faUserCog } from '@fortawesome/free-solid-svg-icons';
 const tabs = [
   {
     name: 'siteSettings',
-    component: SiteSettings,
+    component: lazy(() =>
+      import(/* webpackChunkName: "private.settings.site" */ './SiteSettings'),
+    ),
     path: '/settings/site',
     icon: faSlidersH,
   },
   {
     name: 'accountSettings',
-    component: AccountSettings,
+    component: lazy(() =>
+      import(
+        /* webpackChunkName: "private.settings.account" */ './AccountSettings'
+      ),
+    ),
     path: '/settings/account',
     icon: faUserCog,
   },
@@ -55,13 +59,11 @@ export default function Settings() {
               </Tab.Group>
 
               <Switch>
-                <Route exact path="/settings/site" component={SiteSettings} />
-
-                <Route
-                  exact
-                  path="/settings/account"
-                  component={AccountSettings}
-                />
+                <Suspense fallback={() => null}>
+                  {tabs.map(({ path, component }) => (
+                    <Route exact path={path} component={component} key={path} />
+                  ))}
+                </Suspense>
               </Switch>
             </Box>
           </Column>
