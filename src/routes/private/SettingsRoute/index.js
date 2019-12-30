@@ -59,7 +59,7 @@ export default function Settings() {
               </Tab.Group>
 
               <Switch>
-                <Suspense fallback={() => null}>
+                <Suspense fallback={null}>
                   {tabs.map(({ path, component }) => (
                     <Route exact path={path} component={component} key={path} />
                   ))}
