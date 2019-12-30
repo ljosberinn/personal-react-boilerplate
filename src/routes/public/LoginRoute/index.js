@@ -28,16 +28,15 @@ import {
 import { useIdentityContext } from 'react-netlify-identity';
 import { useTranslation } from 'react-i18next';
 import LogRocket from 'logrocket';
-import env from '../../../constants/env';
 
-const initialState = {
+const INITIAL_STATE = {
   mail: '',
   password: '',
 };
 
 const errors = {
-  'Email not confirmed': 'mail_unconfirmed',
-  'No user found with this email': 'unknown_user',
+  'Email not confirmed': 'mail-unconfirmed',
+  'No user found with this email': 'unknown-user',
   'Invalid Password': 'password-invalid',
 };
 
@@ -56,26 +55,12 @@ export default function LoginRoute() {
     (() => {
       if (isValidMailParam) {
         return {
-          ...initialState,
+          ...INITIAL_STATE,
           mail: params.mail,
         };
       }
 
-      const storedData = localStorage.getItem(
-        env.BRAND_NAME.split(' ').join('-'),
-      );
-
-      if (storedData) {
-        const { mail } = JSON.parse(storedData);
-
-        return {
-          ...initialState,
-          mail,
-          rememberMe: true,
-        };
-      }
-
-      return initialState;
+      return INITIAL_STATE;
     })(),
   );
 
