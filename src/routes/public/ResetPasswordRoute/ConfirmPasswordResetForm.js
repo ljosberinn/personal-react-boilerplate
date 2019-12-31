@@ -65,12 +65,13 @@ export default function ConfirmPasswordResetForm({ token }) {
         }
       }
     }
+
     verifyToken();
     // token can't change via props
-    // shouldUpdatePassword is condition to run and can only change to false
+    // shouldUpdatePassword is condition to run and can only change to true
     // recoverAccount will change because of react-netlify-identity internal state change during calling it
     // eslint-disable-next-line
-  }, []);
+  }, [shouldUpdatePassword]);
 
   // changes the password after re-render with login
   useEffect(() => {
