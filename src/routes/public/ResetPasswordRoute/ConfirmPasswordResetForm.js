@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { PasswordSelection, Form } from '../../../components';
-import { Title, Column, Button, Message } from 'rbx';
+import { Title, Column, Button, Message, Help } from 'rbx';
 import { useIdentityContext } from 'react-netlify-identity';
-import { Link, useLocation } from 'react-router-dom';
-import * as ROUTES from '../../../constants/routes';
+import { useHistory } from 'react-router-dom';
 import { validate } from '../../../utils/validators';
 import { useTranslation } from 'react-i18next';
+import * as ROUTES from '../../../constants/routes';
 
 const errors = {
   invalidToken: 'invalid-token',
@@ -19,9 +19,9 @@ const errors = {
  * }>} ConfirmPasswordResetForm
  */
 export default function ConfirmPasswordResetForm({ token }) {
-  const { t } = useTranslation(['resetPassword', 'error']);
+  const { t } = useTranslation(['resetPassword', 'error', 'settings']);
 
-  const { push } = useLocation();
+  const { replace } = useHistory();
   const { recoverAccount, setUser, updateUser } = useIdentityContext();
 
   const [{ password, confirmPassword }, setPassword] = useState({
@@ -47,8 +47,9 @@ export default function ConfirmPasswordResetForm({ token }) {
     setUser(userObj);
   };
 
+  // only runs if a token exists that hasn't been validated yet
   useEffect(() => {
-    (async () => {
+    async function verifyToken() {
       if (!shouldUpdatePassword) {
         try {
           const user = await recoverAccount(token);
@@ -63,7 +64,12 @@ export default function ConfirmPasswordResetForm({ token }) {
           setError(errors.invalidToken);
         }
       }
-    })();
+    }
+    verifyToken();
+    // token can't change via props
+    // shouldUpdatePassword is condition to run and can only change to false
+    // recoverAccount will change because of react-netlify-identity internal state change during calling it
+    // eslint-disable-next-line
   }, []);
 
   // changes the password after re-render with login
@@ -71,14 +77,20 @@ export default function ConfirmPasswordResetForm({ token }) {
     async function doPasswordChange() {
       if (userObj && shouldUpdatePassword) {
         try {
+          // update the password
           await updateUser({ password });
-          push('/');
-        } catch (error) {}
+          // kill internal react-netlify-identity state
+          setUser(undefined);
+          // move use to login
+          replace(ROUTES.LOGIN.clientPath);
+        } catch (error) {
+          // ignore errors here - react-netlify-identity
+        }
       }
     }
 
     doPasswordChange();
-  }, [shouldUpdatePassword, userObj, password, updateUser, push]);
+  }, [shouldUpdatePassword, userObj, password, updateUser, replace, setUser]);
 
   const isDisabled =
     !validate.password(password) || password !== confirmPassword;
@@ -91,7 +103,9 @@ export default function ConfirmPasswordResetForm({ token }) {
           widescreen={{ size: 11 }}
         >
           <legend>
-            <Title textAlign="centered">{t('title')}</Title>
+            <Title textAlign="centered" id="section-title">
+              {t('title')}
+            </Title>
           </legend>
 
           <br />
@@ -102,17 +116,7 @@ export default function ConfirmPasswordResetForm({ token }) {
                 <Message color="danger">
                   <Message.Header>{t('error:title')}</Message.Header>
                   <Message.Body>
-                    <p>{t(error)}</p>
-
-                    <br />
-
-                    <Button
-                      as={Link}
-                      color="primary"
-                      to={ROUTES.RESET_PASSWORD.clientPath}
-                    >
-                      Go back
-                    </Button>
+                    <Help role="alert">{t(`error:${error}`)}</Help>
                   </Message.Body>
                 </Message>
               ) : (
@@ -124,7 +128,9 @@ export default function ConfirmPasswordResetForm({ token }) {
                     handleChange={handleChange}
                   />
 
-                  <Button disabled={isDisabled}>Change Password</Button>
+                  <Button disabled={isDisabled}>
+                    {t('settings:changePassword')}
+                  </Button>
                 </fieldset>
               )}
             </Column>
