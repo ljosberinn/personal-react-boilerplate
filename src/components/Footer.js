@@ -29,7 +29,7 @@ function Link({ children, ...rest }) {
  * @returns {React.FC} Footer
  */
 export default function Footer() {
-  const { isLoggedIn } = useIdentityContext();
+  const { isLoggedIn, isConfirmedUser } = useIdentityContext();
   const { t } = useTranslation(['footer', 'routes', 'navigation']);
 
   return (
@@ -44,7 +44,7 @@ export default function Footer() {
               <li>
                 <InternalLink route={ROUTES.LANDING_PAGE} t={t} />
               </li>
-              {!isLoggedIn ? (
+              {!isLoggedIn || !isConfirmedUser ? (
                 <>
                   <li>
                     <InternalLink route={ROUTES.REGISTER} t={t} />

@@ -79,7 +79,7 @@ export default function Navbar() {
               </RBXNavbar.Item>
             )}
 
-            {!isLoggedIn ? (
+            {!isConfirmedUser || !isLoggedIn ? (
               <Button.Group>
                 <NavButton color="primary" to={ROUTES.REGISTER.clientPath}>
                   <Icon icon={ROUTES.REGISTER.icon} />
