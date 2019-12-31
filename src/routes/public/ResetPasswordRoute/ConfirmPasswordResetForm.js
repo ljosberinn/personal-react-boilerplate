@@ -53,11 +53,11 @@ export default function ConfirmPasswordResetForm({ token }) {
       if (!shouldUpdatePassword) {
         try {
           const user = await recoverAccount(token);
-          setUserObj(user);
 
           if (user.app_metadata.provider !== 'email') {
             setError(errors.isProvider);
           } else {
+            setUserObj(user);
             setShouldUpdatePassword(true);
           }
         } catch (error) {
