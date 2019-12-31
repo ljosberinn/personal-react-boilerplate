@@ -2,9 +2,9 @@ $transitioning-colors: $dark-primary $primary;
 
 @each $color in $transitioning-colors {
   svg {
-    rect[fill='#{$color}'], path[fill='#{$color}'] {
+    rect[fill='#{$color}'],
+    path[fill='#{$color}'] {
       transition: fill 350ms ease-in-out;
-
     }
   }
 }
