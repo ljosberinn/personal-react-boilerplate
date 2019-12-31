@@ -4,19 +4,10 @@ import {
   ValidityIconLeft,
   Checkbox,
   Field,
-  LoginProviderButton,
+  LoginProviderGroup,
   PasswordSelection,
 } from '../../../components';
-import {
-  Column,
-  Block,
-  Help,
-  Label,
-  Button,
-  Divider,
-  Control,
-  Input,
-} from 'rbx';
+import { Block, Help, Label, Button, Divider, Control, Input } from 'rbx';
 import { Link } from 'react-router-dom';
 import * as ROUTES from '../../../constants/routes';
 import { Trans } from 'react-i18next';
@@ -62,16 +53,9 @@ export default function RegistrationForm({
   return (
     <Shake duration={500} when={error}>
       <fieldset disabled={isLoading}>
-        <Column.Group>
-          <Column>
-            <LoginProviderButton provider="google" />
-          </Column>
-          <Column>
-            <LoginProviderButton provider="github" />
-          </Column>
-        </Column.Group>
+        <LoginProviderGroup />
 
-        <Divider data-content={t('login:or')} />
+        <Divider data-content={t('login:or-with-mail')} />
 
         <Field>
           <Label htmlFor="mail">{t('login:email')}</Label>

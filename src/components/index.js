@@ -15,6 +15,7 @@ import SentryErrorBoundary from './SentryErrorBoundary';
 import PasswordSelection from './PasswordSelection';
 import Form from './Form';
 import Error from './Error';
+import LoginProviderGroup from './LoginProviderGroup';
 
 export {
   LoginProviderButton,
@@ -34,4 +35,5 @@ export {
   PasswordSelection,
   Form,
   Error,
+  LoginProviderGroup,
 };

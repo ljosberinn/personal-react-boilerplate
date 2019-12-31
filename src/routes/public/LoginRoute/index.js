@@ -20,13 +20,12 @@ import { Link, useParams } from 'react-router-dom';
 import {
   ValidityIconLeft,
   TemplatedHelmet,
-  LoginProviderButton,
   Form,
   Error,
+  LoginProviderGroup,
 } from '../../../components';
 import { useIdentityContext } from 'react-netlify-identity';
 import { useTranslation } from 'react-i18next';
-import LogRocket from 'logrocket';
 
 const INITIAL_STATE = {
   mail: '',
@@ -72,18 +71,7 @@ export default function LoginRoute() {
     setLoading(true);
 
     try {
-      const { id, created_at, confirmed_at } = await loginUser(
-        mail,
-        password,
-        true,
-      );
-
-      LogRocket.identify(id, {
-        email: mail,
-        provider: 'mail',
-        created_at,
-        confirmed_at,
-      });
+      await loginUser(mail, password, true);
     } catch (error) {
       if (error?.json?.error_description) {
         const { error_description } = error.json;
@@ -152,16 +140,9 @@ export default function LoginRoute() {
                         <Column size={11}>
                           <Shake duration={500} when={error}>
                             <fieldset disabled={isLoading}>
-                              <Column.Group>
-                                <Column>
-                                  <LoginProviderButton provider="google" />
-                                </Column>
-                                <Column>
-                                  <LoginProviderButton provider="github" />
-                                </Column>
-                              </Column.Group>
+                              <LoginProviderGroup />
 
-                              <Divider data-content={t('or')} />
+                              <Divider data-content={t('or-with-mail')} />
 
                               <Field>
                                 <Label htmlFor="mail">{t('email')}</Label>

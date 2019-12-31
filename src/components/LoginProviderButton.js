@@ -21,12 +21,12 @@ export default function LoginProviderButton({ provider }) {
   return (
     <Button
       type="button"
-      color={theme === 'light' ? 'info' : 'success'}
+      color={theme === 'light' ? 'info' : undefined}
       onClick={() => loginProvider(provider)}
       fullwidth
       className={button}
     >
-      <Icon icon={provider === 'google' ? faGoogle : faGithub} />{' '}
+      <Icon icon={provider === 'github' ? faGithub : faGoogle} />{' '}
       <span>
         {t('sign-in-via-provider', {
           provider: upperCaseFirstCharacter(provider),

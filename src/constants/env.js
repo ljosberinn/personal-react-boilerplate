@@ -3,6 +3,7 @@ const requiredEnvVariables = [
   'BRAND_NAME',
   'SITE_URL',
   'ENABLED_LANGUAGES',
+  'ENABLED_PROVIDER',
 ];
 
 const optionalEnvVariables = [
