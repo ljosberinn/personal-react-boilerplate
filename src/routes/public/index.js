@@ -1,21 +1,19 @@
-import { lazy } from 'react';
 import * as ROUTES from '../../constants/routes';
+import LoadableComponent from '../loadUtils';
 
 export const PUBLIC_ROUTES = {
-  [ROUTES.LANDING_PAGE.routerPath]: lazy(() =>
+  [ROUTES.LANDING_PAGE.routerPath]: LoadableComponent(() =>
     import(/* webpackChunkName: "public.landingpage" */ './LandingPage'),
   ),
-  [ROUTES.REGISTER.routerPath]: lazy(() =>
-    import(
-      /* webpackChunkName: "public.register" */ /* webpackPrefetch: true */ './RegisterRoute'
-    ),
+  [ROUTES.REGISTER.routerPath]: LoadableComponent(() =>
+    import(/* webpackChunkName: "public.register" */ './RegisterRoute'),
   ),
-  [ROUTES.LOGIN.routerPath]: lazy(() =>
+  [ROUTES.LOGIN.routerPath]: LoadableComponent(() =>
     import(
       /* webpackChunkName: "public.login" */ /* webpackPrefetch: true */ './LoginRoute'
     ),
   ),
-  [ROUTES.RESET_PASSWORD.routerPath]: lazy(() =>
+  [ROUTES.RESET_PASSWORD.routerPath]: LoadableComponent(() =>
     import(
       /* webpackChunkName: "public.resetpassword" */ './ResetPasswordRoute'
     ),

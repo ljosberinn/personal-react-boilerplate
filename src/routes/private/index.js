@@ -1,11 +1,11 @@
-import { lazy } from 'react';
 import * as ROUTES from '../../constants/routes';
+import LoadableComponent from '../loadUtils';
 
 export const PRIVATE_ROUTES = {
-  [ROUTES.LANDING_PAGE.routerPath]: lazy(() =>
+  [ROUTES.LANDING_PAGE.routerPath]: LoadableComponent(() =>
     import(/* webpackChunkName: "private.landingpage" */ './LandingPage'),
   ),
-  [ROUTES.SETTINGS.routerPath]: lazy(() =>
+  [ROUTES.SETTINGS.routerPath]: LoadableComponent(() =>
     import(/* webpackChunkName: "private.settings" */ './SettingsRoute'),
   ),
 };
