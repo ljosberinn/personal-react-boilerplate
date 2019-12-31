@@ -1,21 +1,12 @@
 import React from 'react';
-import { Button, Icon as RBXIcon } from 'rbx';
+import { Button } from 'rbx';
 import Icon from './Icon';
 import { button } from './LoginProviderButton.module.scss';
-import { ReactComponent as GoogleSvg } from '../assets/svg/GoogleLogo.svg';
-import { faGithub } from '@fortawesome/free-brands-svg-icons';
+import { faGithub, faGoogle } from '@fortawesome/free-brands-svg-icons';
 import { useIdentityContext } from 'react-netlify-identity';
 import { upperCaseFirstCharacter } from '../utils';
 import { useTranslation } from 'react-i18next';
-
-const iconMap = {
-  google: (
-    <RBXIcon>
-      <GoogleSvg />
-    </RBXIcon>
-  ),
-  github: <Icon icon={faGithub} />,
-};
+import { useTheme } from '../hooks';
 
 /**
  * @returns {React.FC<{
@@ -25,15 +16,17 @@ const iconMap = {
 export default function LoginProviderButton({ provider }) {
   const { loginProvider } = useIdentityContext(provider);
   const { t } = useTranslation('registration');
+  const { theme } = useTheme();
 
   return (
     <Button
       type="button"
+      color={theme === 'light' ? 'info' : 'success'}
       onClick={() => loginProvider(provider)}
       fullwidth
       className={button}
     >
-      {iconMap[provider]}{' '}
+      <Icon icon={provider === 'google' ? faGoogle : faGithub} />{' '}
       <span>
         {t('sign-in-via-provider', {
           provider: upperCaseFirstCharacter(provider),
