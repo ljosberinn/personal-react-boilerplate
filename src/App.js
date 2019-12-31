@@ -21,7 +21,7 @@ const passwordRecoveryRegEx = /recovery_token=([^&]+)/;
  */
 export default function App() {
   const { hash } = useLocation();
-  const { push } = useHistory();
+  const { replace } = useHistory();
 
   const { isLoggedIn } = useIdentityContext();
 
@@ -35,7 +35,7 @@ export default function App() {
   if (passwordRecoveryMatches) {
     const token = passwordRecoveryMatches[1];
 
-    push(`/reset-password/${token}`);
+    replace(`/reset-password/${token}`);
     return null;
   }
 

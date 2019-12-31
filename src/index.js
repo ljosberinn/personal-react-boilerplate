@@ -15,7 +15,8 @@ const isLive = process.env.NODE_ENV !== 'development';
 
 if (!isLive) {
   if (!localStorage['gotrue.user']) {
-    const user = {
+    /*
+   const user = {
       url: env.SITE_URL,
       token: {
         access_token: '',
@@ -36,7 +37,8 @@ if (!isLive) {
       updated_at: '2019-12-15T02:33:58Z',
     };
 
-    //localStorage['gotrue.user'] = JSON.stringify(user);
+    localStorage['gotrue.user'] = JSON.stringify(user);
+    */
   }
 } else {
   Sentry.init({ dsn: env.SENTRY_DSN });
