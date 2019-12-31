@@ -99,11 +99,8 @@ export default function ResetPasswordForm() {
     return (
       <Fade>
         <Message color="success">
-          <Message.Header>Success</Message.Header>
-          <Message.Body>
-            A mail has been sent. Please check your inbox as well as your spam
-            folder.
-          </Message.Body>
+          <Message.Header>{t('success')}</Message.Header>
+          <Message.Body>{t('mail-sent')}</Message.Body>
         </Message>
       </Fade>
     );
@@ -117,7 +114,9 @@ export default function ResetPasswordForm() {
           widescreen={{ size: 11 }}
         >
           <legend>
-            <Title textAlign="centered">{t('title')}</Title>
+            <Title textAlign="centered" id="section-title">
+              {t('title')}
+            </Title>
           </legend>
 
           <br />
@@ -125,8 +124,7 @@ export default function ResetPasswordForm() {
           <Column.Group centered>
             <Column size={11}>
               <Title size={5} as="p" textWeight="normal">
-                Enter your email address and we'll send you an email with
-                instructions to reset your password.
+                {t('instructions')}
               </Title>
               <Content>
                 <fieldset disabled={isLoading}>
@@ -155,7 +153,7 @@ export default function ResetPasswordForm() {
                       fullwidth
                       disabled={isDisabled}
                     >
-                      Request Password Recovery
+                      {t('request-recovery')}
                     </Button>
                   </Field>
 
@@ -168,10 +166,16 @@ export default function ResetPasswordForm() {
               </Content>
             </Column>
           </Column.Group>
-          <Generic as="p" textAlign="centered">
+          <Trans
+            parent={Generic}
+            as="p"
+            textAlign="centered"
+            ns="resetPassword"
+            i18nKey="login-link"
+          >
             Forget it, send me back to the <Link to="/login">Sign in</Link>{' '}
             screen.
-          </Generic>
+          </Trans>
         </Column>
       </Column.Group>
     </Form>
