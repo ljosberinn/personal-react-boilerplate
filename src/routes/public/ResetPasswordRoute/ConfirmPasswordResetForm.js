@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { PasswordSelection, Form } from '../../../components';
-import { Title, Column, Button, Message, Help } from 'rbx';
+import { PasswordSelection, Form, Error } from '../../../components';
+import { Title, Column, Button, Message } from 'rbx';
 import { useIdentityContext } from 'react-netlify-identity';
 import { useHistory } from 'react-router-dom';
 import { validate } from '../../../utils/validators';
@@ -109,7 +109,7 @@ export default function ConfirmPasswordResetForm({ token }) {
                 <Message color="danger">
                   <Message.Header>{t('error:title')}</Message.Header>
                   <Message.Body>
-                    <Help role="alert">{t(`error:${error}`)}</Help>
+                    <Error>{t(`error:${error}`)}</Error>
                   </Message.Body>
                 </Message>
               ) : (

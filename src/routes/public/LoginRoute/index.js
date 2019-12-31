@@ -11,10 +11,8 @@ import {
   Input,
   Column,
   Button,
-  Help,
   Generic,
 } from 'rbx';
-import { Fade } from 'react-awesome-reveal';
 // TODO: remove once https://github.com/dennismorello/react-awesome-reveal/issues/14 might be resolved
 import Shake from 'react-reveal/Shake';
 import RedirectToHome from '../../RedirectToHome';
@@ -24,6 +22,7 @@ import {
   TemplatedHelmet,
   LoginProviderButton,
   Form,
+  Error,
 } from '../../../components';
 import { useIdentityContext } from 'react-netlify-identity';
 import { useTranslation } from 'react-i18next';
@@ -44,7 +43,7 @@ const errors = {
  * @returns {React.FC} LoginRoute
  */
 export default function LoginRoute() {
-  const { t } = useTranslation('login');
+  const { t } = useTranslation(['login', 'error']);
   const { isLoggedIn, loginUser } = useIdentityContext();
 
   const params = useParams();
@@ -184,11 +183,7 @@ export default function LoginRoute() {
                                 </Control>
 
                                 {error && error.includes('mail') && (
-                                  <Fade>
-                                    <Help color="danger" role="alert">
-                                      {t(error)}
-                                    </Help>
-                                  </Fade>
+                                  <Error> {t(`error:${error}`)}</Error>
                                 )}
                               </Field>
 
@@ -216,11 +211,7 @@ export default function LoginRoute() {
                                 </Control>
 
                                 {error && error.includes('password') && (
-                                  <Fade>
-                                    <Help color="danger" role="alert">
-                                      {t(error)}
-                                    </Help>
-                                  </Fade>
+                                  <Error> {t(`error:${error}`)}</Error>
                                 )}
                               </Field>
 

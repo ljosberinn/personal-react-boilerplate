@@ -1,10 +1,10 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { Title, Button, Help, Message } from 'rbx';
+import { Title, Button, Message } from 'rbx';
 import { validate } from '../../../../utils/validators';
-import { Fade, Flip } from 'react-awesome-reveal';
+import { Flip } from 'react-awesome-reveal';
 import { useTranslation } from 'react-i18next';
 import CountUp from 'react-countup';
-import { PasswordSelection, Form } from '../../../../components';
+import { PasswordSelection, Form, Error } from '../../../../components';
 
 const INITIAL_STATE = {
   password: '',
@@ -12,7 +12,7 @@ const INITIAL_STATE = {
 };
 
 const errors = {
-  'Invalid Refresh Token': 'token_invalid',
+  'Invalid Refresh Token': 'refresh-token-invalid',
 };
 
 const SUCCESS_MSG_DISPLAY_SECONDS = 10;
@@ -27,7 +27,7 @@ export default function ChangePassword({ updatePassword }) {
   const [changeSuccessful, setWasSuccessfullyChanged] = useState(false);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const { t } = useTranslation('settings');
+  const { t } = useTranslation(['settings', 'error']);
 
   useEffect(() => {
     if (changeSuccessful) {
@@ -56,7 +56,7 @@ export default function ChangePassword({ updatePassword }) {
           setError(
             errors[error_description]
               ? errors[error_description]
-              : 'unknown_error',
+              : 'unknown-error',
           );
         }
         console.error(error);
@@ -107,13 +107,7 @@ export default function ChangePassword({ updatePassword }) {
           {...{ password, confirmPassword, handleChange, isLoading }}
         />
 
-        {error && (
-          <Fade className="field">
-            <Help color="danger" role="alert">
-              {t(error)}
-            </Help>
-          </Fade>
-        )}
+        {error && <Error className="field">{t(error)}</Error>}
 
         <Button
           type="submit"

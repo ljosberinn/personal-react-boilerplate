@@ -8,18 +8,17 @@ import {
   Control,
   Message,
   Button,
-  Help,
   Generic,
 } from 'rbx';
 import { Link } from 'react-router-dom';
-import { ValidityIconLeft, Field, Form } from '../../../components';
+import { ValidityIconLeft, Field, Form, Error } from '../../../components';
 import { useIdentityContext } from 'react-netlify-identity';
 import { validate } from '../../../utils/validators';
 import { Fade } from 'react-awesome-reveal';
 import { useTranslation, Trans } from 'react-i18next';
 
 const errors = {
-  'User not found': 'unknown_user',
+  'User not found': 'unknown-user',
 };
 
 const INITIAL_STATE = {
@@ -49,7 +48,7 @@ const reducer = (state, action) => {
  * @returns {React.FC} ResetPasswordForm
  */
 export default function ResetPasswordForm() {
-  const { t } = useTranslation(['resetPassword', 'login']);
+  const { t } = useTranslation(['resetPassword', 'login', 'error']);
   const { requestPasswordRecovery } = useIdentityContext();
   const [{ mail, isLoading, error, mailSent }, dispatch] = useReducer(
     reducer,
@@ -84,7 +83,7 @@ export default function ResetPasswordForm() {
 
         dispatch({
           type: 'SET_ERROR',
-          value: errors[msg] ? errors[msg] : 'unknown_error',
+          value: errors[msg] ? errors[msg] : 'unknown-error',
         });
       }
       console.error(error);
@@ -157,11 +156,7 @@ export default function ResetPasswordForm() {
                     </Button>
                   </Field>
 
-                  {error && (
-                    <Help color="danger" role="alert">
-                      {error}
-                    </Help>
-                  )}
+                  {error && <Error>{t(`error:${error}`)}</Error>}
                 </fieldset>
               </Content>
             </Column>
