@@ -18,7 +18,7 @@ export default function ResetPasswordRoute() {
       <TemplatedHelmet>
         <title>{t('title')}</title>
       </TemplatedHelmet>
-      <Section className="reset-password-bg">
+      <Section className="reset-password-bg" aria-labelledby="section-title">
         <Column.Group centered>
           <Column widescreen={{ size: 5 }} tablet={{ size: 8 }}>
             <Card>

@@ -128,7 +128,7 @@ export default function LoginRoute() {
       <TemplatedHelmet>
         <title>{t('title')}</title>
       </TemplatedHelmet>
-      <Section className="login-bg">
+      <Section className="login-bg" aria-labelledby="section-title">
         <Column.Group centered>
           <Column widescreen={{ size: 5 }} tablet={{ size: 8 }}>
             <Card>
@@ -140,7 +140,9 @@ export default function LoginRoute() {
                       widescreen={{ size: 11 }}
                     >
                       <legend>
-                        <Title textAlign="centered">{t('sign-in')}</Title>
+                        <Title textAlign="centered" id="section-title">
+                          {t('sign-in')}
+                        </Title>
                         <Title subtitle textAlign="centered">
                           {t('or')}{' '}
                           <Link to="/register">{t('create-account')}</Link>

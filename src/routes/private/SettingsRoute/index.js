@@ -38,11 +38,11 @@ export default function Settings() {
       <TemplatedHelmet>
         <title>{t('title')}</title>
       </TemplatedHelmet>
-      <Section className="settings-bg">
+      <Section className="settings-bg" aria-labelledby="section-title">
         <Column.Group centered multiline>
           <Column size={10}>
             <Box>
-              <Title>{t('title')}</Title>
+              <Title id="section-title">{t('title')}</Title>
 
               <Tab.Group kind="boxed">
                 {tabs.map(({ name, path, icon }) => (

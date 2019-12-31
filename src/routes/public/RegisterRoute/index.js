@@ -71,7 +71,7 @@ export default function RegisterRoute() {
       <TemplatedHelmet>
         <title>{t('routes:register')}</title>
       </TemplatedHelmet>
-      <Section className="register-bg">
+      <Section className="register-bg" aria-labelledby="section-title">
         <Column.Group centered>
           <Column widescreen={{ size: 5 }} tablet={{ size: 8 }}>
             <Card>
@@ -83,7 +83,7 @@ export default function RegisterRoute() {
                       widescreen={{ size: 11 }}
                     >
                       <legend>
-                        <Title textAlign="centered">
+                        <Title textAlign="centered" id="section-title">
                           {successfullyRegistered
                             ? t('verify-mail')
                             : t('create-your-account')}

@@ -14,10 +14,10 @@ export default function TosRoute() {
       <TemplatedHelmet>
         <title>{t('tos')}</title>
       </TemplatedHelmet>
-      <Section className="tos-bg">
-      <Column.Group>
+      <Section className="tos-bg" aria-labelledby="section-title">
+        <Column.Group>
           <Column size="two-third" offset={2}>
-            <Title>{t('tos')}</Title>
+            <Title id="section-title">{t('tos')}</Title>
           </Column>
         </Column.Group>
       </Section>

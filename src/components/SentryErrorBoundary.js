@@ -93,7 +93,7 @@ class SentryErrorBoundary extends Component {
       const { error } = this.state;
 
       return (
-        <Section className="error-bg">
+        <Section className="error-bg" aria-labelledby="section-title">
           <Container>
             <Column.Group centered>
               <Column size="one-third" narrow>
@@ -104,7 +104,7 @@ class SentryErrorBoundary extends Component {
                       <Modal.Card.Body className={styles.body}>
                         <Message color="danger" className={styles.message}>
                           <Message.Body>
-                            <Title textColor="danger">
+                            <Title textColor="danger" id="section-title">
                               <Icon size="large" icon={faBomb} />
                               {t('title')}
                             </Title>

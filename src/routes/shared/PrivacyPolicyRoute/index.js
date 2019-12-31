@@ -50,7 +50,7 @@ const content = [
         placeholder: (
           <>
             Your application data is stored on servers of{' '}
-            <ExternalLink href="//fauna.com/">FaunaDB</ExternalLink>.
+            <ExternalLink href="//fauna.com/">Fauna</ExternalLink>.
           </>
         ),
       },
@@ -96,9 +96,9 @@ export default function PrivacyPolicy() {
         <title>{t('privacyPolicy')}</title>
       </TemplatedHelmet>
 
-      <Section className="privacy-bg">
+      <Section className="privacy-bg" aria-labelledby="section-title">
         <Fade triggerOnce>
-          <Title>{t('privacyPolicy')}</Title>
+          <Title id="section-title">{t('privacyPolicy')}</Title>
         </Fade>
         {content.map((dataset, index) => (
           <Slide dataset={dataset} key={index} index={index} t={t} />
