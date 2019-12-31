@@ -1,15 +1,15 @@
-import React, { Suspense } from 'react';
+import React, { lazy } from 'react';
 import { Switch, Route, useLocation, useHistory } from 'react-router-dom';
 import './assets/scss/app.scss';
-import { Loader } from './components';
 import { SHARED_ROUTES, LANGUAGE_ROUTE } from './routes/shared';
 import { PUBLIC_ROUTES } from './routes/public';
 import { PRIVATE_ROUTES } from './routes/private';
-import RedirectToHome from './routes/RedirectToHome';
 import Layout from './Layout';
 import { useIdentityContext } from 'react-netlify-identity';
 import languages from './constants/languages';
 import { SentryErrorBoundary } from './components';
+
+const RedirectToHome = lazy(() => import('./routes/RedirectToHome'));
 
 /**
  * @see https://github.com/sw-yx/react-netlify-identity/blob/master/src/runRoutes.tsx#L9
@@ -42,22 +42,20 @@ export default function App() {
   return (
     <Layout>
       <Switch>
-        <Suspense fallback={<Loader isFullPage />}>
-          <SentryErrorBoundary>
-            {languages.map(lng => (
-              <Route
-                path={`/${lng}`}
-                key={lng}
-                exact
-                component={LANGUAGE_ROUTE}
-              />
-            ))}
-            {Object.entries(routes).map(([path, component]) => (
-              <Route path={path} component={component} exact key={path} />
-            ))}
-          </SentryErrorBoundary>
-        </Suspense>
-        <Route component={RedirectToHome} />
+        <SentryErrorBoundary>
+          {languages.map(lng => (
+            <Route
+              path={`/${lng}`}
+              key={lng}
+              exact
+              component={LANGUAGE_ROUTE}
+            />
+          ))}
+          {Object.entries(routes).map(([path, component]) => (
+            <Route path={path} component={component} exact key={path} />
+          ))}
+          <Route component={RedirectToHome} />
+        </SentryErrorBoundary>
       </Switch>
     </Layout>
   );
