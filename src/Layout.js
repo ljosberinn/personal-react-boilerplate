@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react';
 import { Column } from 'rbx';
-import { Footer, Navbar, Loader } from './components';
+import { Footer, Navbar } from './components';
 
 /**
  *
@@ -11,7 +11,7 @@ import { Footer, Navbar, Loader } from './components';
 export default function Layout({ children }) {
   return (
     <>
-      <Column.Group centered as="header">
+      <Column.Group as="header">
         <Column>
           <Suspense fallback={null}>
             <Navbar />
@@ -19,7 +19,7 @@ export default function Layout({ children }) {
         </Column>
       </Column.Group>
       <main>
-        <Suspense fallback={<Loader isFullPage />}>{children}</Suspense>
+        <Suspense fallback={null}>{children}</Suspense>
       </main>
       <Suspense fallback={null}>
         <Footer />
