@@ -22,7 +22,7 @@ export default function ConfirmPasswordResetForm({ token }) {
   const { t } = useTranslation(['resetPassword', 'error', 'settings']);
 
   const { replace } = useHistory();
-  const { recoverAccount, setUser, updateUser } = useIdentityContext();
+  const { recoverAccount, setUser, updateUser, user } = useIdentityContext();
 
   const [{ password, confirmPassword }, setPassword] = useState({
     password: '',
@@ -30,7 +30,6 @@ export default function ConfirmPasswordResetForm({ token }) {
   });
   const [error, setError] = useState(null);
   const [userObj, setUserObj] = useState(null);
-  const [shouldUpdatePassword, setShouldUpdatePassword] = useState(false);
 
   const handleChange = ({ target: { value, name } }) => {
     setPassword(data => ({ ...data, [name]: value }));
@@ -47,10 +46,10 @@ export default function ConfirmPasswordResetForm({ token }) {
     setUser(userObj);
   };
 
-  // only runs if a token exists that hasn't been validated yet
   useEffect(() => {
-    async function verifyToken() {
-      if (!shouldUpdatePassword) {
+    if (!userObj) {
+      // only runs if a token exists that hasn't been validated yet
+      async function verifyToken() {
         try {
           const user = await recoverAccount(token);
 
@@ -58,25 +57,16 @@ export default function ConfirmPasswordResetForm({ token }) {
             setError(errors.isProvider);
           } else {
             setUserObj(user);
-            setShouldUpdatePassword(true);
           }
         } catch (error) {
           setError(errors.invalidToken);
         }
       }
-    }
 
-    verifyToken();
-    // token can't change via props
-    // shouldUpdatePassword is condition to run and can only change to true
-    // recoverAccount will change because of react-netlify-identity internal state change during calling it
-    // eslint-disable-next-line
-  }, [shouldUpdatePassword]);
-
-  // changes the password after re-render with login
-  useEffect(() => {
-    async function doPasswordChange() {
-      if (userObj && shouldUpdatePassword) {
+      verifyToken();
+    } else if (user) {
+      // changes the password after re-render with login
+      async function doPasswordChange() {
         try {
           // update the password
           await updateUser({ password });
@@ -88,10 +78,12 @@ export default function ConfirmPasswordResetForm({ token }) {
           // ignore errors here - react-netlify-identity
         }
       }
-    }
 
-    doPasswordChange();
-  }, [shouldUpdatePassword, userObj, password, updateUser, replace, setUser]);
+      doPasswordChange();
+    }
+    // react-netlify-identity functions are excluded because they trigger a re-run of verifyToken
+    // eslint-disable-next-line
+  }, [password, userObj, replace, token, user]);
 
   const isDisabled =
     !validate.password(password) || password !== confirmPassword;
