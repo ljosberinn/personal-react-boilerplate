@@ -11,7 +11,6 @@ import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import * as ROUTES from '../constants/routes';
 import { useIdentityContext } from 'react-netlify-identity';
-import LogRocket from 'logrocket';
 import env from '../constants/env';
 
 /**
@@ -32,7 +31,7 @@ export default function Navbar() {
   const [isLoggingOut, setIsLoggingOut] = useState(false);
 
   const { isLoggedIn, logoutUser, isConfirmedUser } = useIdentityContext();
-  const history = useHistory();
+  const { push } = useHistory();
   const { t } = useTranslation(['navigation', 'routes']);
 
   const handleLogout = async () => {
@@ -40,8 +39,7 @@ export default function Navbar() {
     await logoutUser();
     setIsLoggingOut(false);
 
-    LogRocket.identify(null);
-    history.push('/');
+    push('/');
   };
 
   return (

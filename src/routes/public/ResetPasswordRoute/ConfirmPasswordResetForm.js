@@ -121,7 +121,7 @@ export default function ConfirmPasswordResetForm({ token }) {
                     handleChange={handleChange}
                   />
 
-                  <Button disabled={isDisabled}>
+                  <Button type="submit" color="primary" disabled={isDisabled}>
                     {t('settings:changePassword')}
                   </Button>
                 </fieldset>

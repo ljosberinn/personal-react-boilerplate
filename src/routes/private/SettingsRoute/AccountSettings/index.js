@@ -17,7 +17,7 @@ export default function AccountSettings() {
 
   return (
     <Content>
-      {user.app_metadata.provider === 'email' && (
+      {user?.app_metadata?.provider === 'email' && (
         <ChangePassword updatePassword={updatePassword} />
       )}
 
