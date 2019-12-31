@@ -12,8 +12,16 @@ const colorSchemes = {
   LIGHT: `(prefers-color-scheme: ${THEME_NAMES.LIGHT})`,
 };
 
+const getInitialScheme = () => {
+  if (window.matchMedia && window.matchMedia(colorSchemes.DARK).matches) {
+    return THEME_NAMES.DARK;
+  }
+
+  return THEME_NAMES.LIGHT;
+};
+
 export default function useDetectColorScheme() {
-  const [scheme, setScheme] = useState(null);
+  const [scheme, setScheme] = useState(getInitialScheme());
 
   useEffect(() => {
     if (!window.matchMedia) {
