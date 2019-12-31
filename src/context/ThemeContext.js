@@ -6,6 +6,7 @@ import hasLocalStorage from '../constants/localStorage';
 
 /**
  * @description retrieves a previous `localStorage.themePreference` value or `null` if nonexistant/unavailable
+ * @returns {string|null}
  */
 const getStoredTheme = () => {
   if (hasLocalStorage) {
@@ -51,9 +52,7 @@ export default function ThemeProvider({ children }) {
   const detectedTheme = useDetectColorScheme();
   const storedTheme = getStoredTheme();
 
-  const [theme, setTheme] = useState(
-    storedTheme ? storedTheme : detectedTheme ? detectedTheme : 'light',
-  );
+  const [theme, setTheme] = useState(storedTheme ? storedTheme : detectedTheme);
 
   const [didError, setDidError] = useState(false);
   const [isLoading, setIsLoading] = useState(theme === THEME_NAMES.DARK);
