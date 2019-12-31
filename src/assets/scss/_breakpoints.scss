@@ -1,5 +1,5 @@
 $desktop: 1920px;
-$tablet: 1280px;
+$tablet: 1215px;
 $mobile: 768px;
 
 @mixin widescreen {
@@ -9,13 +9,13 @@ $mobile: 768px;
 }
 
 @mixin desktop {
-  @media screen and (min-width: #{$tablet}) and (max-width: #{$desktop}) {
+  @media screen and (min-width: #{$tablet}) and (max-width: #{$desktop - 1}) {
     @content;
   }
 }
 
 @mixin tablet {
-  @media screen and (min-width: #{$mobile}) and (max-width: #{$tablet}) {
+  @media screen and (min-width: #{$mobile}) and (max-width: #{$tablet - 1}) {
     @content;
   }
 }

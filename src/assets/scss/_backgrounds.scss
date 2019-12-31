@@ -19,10 +19,10 @@
   width: 100%;
 
   margin-top: 1rem;
-  margin-bottom: 1rem;
 
   @include mobile {
     background-size: cover;
+    margin-bottom: 1rem;
   }
 
   .card,
@@ -37,9 +37,13 @@
 }
 
 .login-bg {
-  background-position-x: 83%;
-  background-size: 45%;
+  background-position-x: 85%;
   background-position-y: 25%;
+  background-size: 45%;
+
+  @include tablet {
+    background-size: 75%;
+  }
 
   @include mobile-bg-adjustment();
 }
@@ -62,6 +66,7 @@
 
 .privacy-bg {
   background-position-x: 115%;
+  margin-bottom: 1rem;
 
   @include tablet {
     background-position-x: 50%;
