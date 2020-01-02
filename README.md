@@ -3,12 +3,12 @@
 [![dependencies][dependencies-image] ][dependencies-url]
 [![devdependencies][devdependencies-image] ][devdependencies-url]
 
-[dependencies-image]: https://david-dm.org/ljosberinn/current-react-playground.png
-[dependencies-url]: https://david-dm.org/ljosberinn/current-react-playground
-[devdependencies-image]: https://david-dm.org/ljosberinn/current-react-playground/dev-status.png
-[devdependencies-url]: https://david-dm.org/ljosberinn/current-react-playground#info=devDependencies
+[dependencies-image]: https://david-dm.org/ljosberinn/personal-react-boilerplate.png
+[dependencies-url]: https://david-dm.org/ljosberinn/personal-react-boilerplate
+[devdependencies-image]: https://david-dm.org/ljosberinn/personal-react-boilerplate/dev-status.png
+[devdependencies-url]: https://david-dm.org/ljosberinn/personal-react-boilerplate#info=devDependencies
 [netlify-image]: https://api.netlify.com/api/v1/badges/20ce39dc-d1d4-4bb9-a5ee-6c3d613e3ed6/deploy-status
-[netlify-url]: https://app.netlify.com/sites/ljosberinn-react-playground/deploys
+[netlify-url]: https://app.netlify.com/sites/personal-react-boilerplate/deploys
 
 # Technologies
 
@@ -72,8 +72,8 @@
 # Development
 
 ```bash
-git clone https://github.com/ljosberinn/current-react-playground
-cd current-react-playground
+git clone https://github.com/ljosberinn/personal-react-boilerplate
+cd personal-react-boilerplate
 yarn install
 code .
 ```
