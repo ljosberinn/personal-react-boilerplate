@@ -1,0 +1,13 @@
+{
+  "language": "de",
+  "namespace": "languages",
+  "i18n": {
+    "help": "Sprache unvollständig oder fehlt? Hilf zu übersetzen!",
+    "de": "Deutsch",
+    "en": "Englisch",
+    "fr": "Französisch",
+    "ru": "Russisch",
+    "es": "Spanisch",
+    "jp": "Japanisch"
+  }
+}

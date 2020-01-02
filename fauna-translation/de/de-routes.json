@@ -1,0 +1,13 @@
+{
+  "language": "de",
+  "namespace": "routes",
+  "i18n": {
+    "landingPage": "Startseite",
+    "register": "Registrierung",
+    "tos": "Nutzungsbedingungen",
+    "resetPassword": "Passwort vergessen?",
+    "privacyPolicy": "Datenschutz",
+    "settings": "Einstellungen",
+    "login": "Login"
+  }
+}

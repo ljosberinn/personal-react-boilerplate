@@ -1,0 +1,18 @@
+{
+  "language": "en",
+  "namespace": "registration",
+  "i18n": {
+    "signInViaProvider": "Sign in with {{provider}}",
+    "createYourAccount": "Create Your Account",
+    "verifyMail": "Almost there! Please verify your mail.",
+    "alreadyHaveAnAccount": "Already have an account?",
+    "agreeToTos": "I agree to the <2>{{tos}}</2>.",
+    "enterValidPasswordFirst": "please first enter a valid password",
+    "confirmPassword": "Confirm password",
+    "passwordCriteriaNumber": "must contain at least one number",
+    "passwordCriteriaLetter": "must contain at least one letter",
+    "passwordCriteriaLength": "must be at least 8 characters long",
+    "fulfillRequirement": "please fulfill this requirement",
+    "registrationSuccessful": "<0>You have successfully registered but still need to confirmed your mail.<br/>A message was sent to</0><1><0>{{mail}}</0></1><p>just now. Please also check your spam folder.</p>"
+  }
+}

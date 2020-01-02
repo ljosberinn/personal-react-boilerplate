@@ -1,0 +1,20 @@
+{
+  "language": "en",
+  "namespace": "privacyPolicy",
+  "i18n": {
+    "analyticsTitle": "No Usage Analytics",
+    "analytics1": "We do not collect any direct analytics!",
+    "analytics2": "However, in case of crashes or bugs/bug reports, logs may be evaluated to ensure the future stability of the platform.",
+    "analytics3": "<0>Logs provided by <2>Sentry</2> and/or <5>LogRocket</5> may contain information such as ip address and browser & OS metadata.</0>",
+    "thirdPartyTitle": "No Third-Party Data Access",
+    "thirdParty1": "Your data is not sold to anyone and, given there are no security breaches on your or our data providers side, no unauthorized person can access your data.",
+    "thirdParty2": "<0>Our identity provider is <2>Netlify</2>.</0>",
+    "thirdParty3": "<0>Your application data is stored on servers of <2>Fauna</2>.</0>",
+    "cookiesTitle": "No Cookies",
+    "cookies1": "<0>This site relies on a browser feature called <2>localStorage</2>. This enables us to not require any cookies.</0>",
+    "cookies2": "However, old devices/browsers pay the price as this feature is not supported there.",
+    "adsTitle": "No Ads",
+    "ads1": "This site has never and won't ever show ads.",
+    "ads2": "As a direct result, no ad provider is hiddenly collecting data either."
+  }
+}

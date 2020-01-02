@@ -1,0 +1,9 @@
+{
+  "language": "en",
+  "namespace": "footer",
+  "i18n": {
+    "features": "Features",
+    "other": "Other",
+    "legal": "Legal"
+  }
+}

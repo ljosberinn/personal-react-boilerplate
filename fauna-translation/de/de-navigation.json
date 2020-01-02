@@ -1,0 +1,9 @@
+{
+  "language": "de",
+  "namespace": "navigation",
+  "i18n": {
+    "login": "Login",
+    "contribute": "Mitwirken",
+    "logout": "Logout"
+  }
+}
