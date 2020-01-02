@@ -108,7 +108,7 @@ class SentryErrorBoundary extends Component {
                               <Icon size="large" icon={faBomb} />
                               {t('title')}
                             </Title>
-                            <p>{t('boundary-info')}</p>
+                            <p>{t('boundaryInfo')}</p>
 
                             <br />
 
@@ -131,7 +131,7 @@ class SentryErrorBoundary extends Component {
                                 color="primary"
                                 onClick={() => void window.location.reload()}
                               >
-                                {t('reload-page')}
+                                {t('reloadPage')}
                               </Button>
 
                               {env.REPO_LINK && (
@@ -143,7 +143,7 @@ class SentryErrorBoundary extends Component {
                                   rel="noopener noreferrer"
                                 >
                                   <Icon icon={faGithub} />{' '}
-                                  <span>{t('open-issue')}</span>
+                                  <span>{t('openIssue')}</span>
                                 </Button>
                               )}
                             </Button.Group>

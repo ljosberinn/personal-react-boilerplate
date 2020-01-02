@@ -33,9 +33,9 @@ const INITIAL_STATE = {
 };
 
 const errors = {
-  'Email not confirmed': 'mail-unconfirmed',
-  'No user found with this email': 'unknown-user',
-  'Invalid Password': 'password-invalid',
+  'Email not confirmed': 'mailUnconfirmed',
+  'No user found with this email': 'unknownUser',
+  'Invalid Password': 'passwordInvalid',
 };
 
 /**
@@ -78,7 +78,7 @@ export default function LoginRoute() {
         setError(
           errors[error_description]
             ? errors[error_description]
-            : 'unknown_error',
+            : 'unknownError',
         );
       }
       console.error(error);
@@ -128,11 +128,11 @@ export default function LoginRoute() {
                     >
                       <legend>
                         <Title textAlign="centered" id="section-title">
-                          {t('sign-in')}
+                          {t('signIn')}
                         </Title>
                         <Title subtitle textAlign="centered">
                           {t('or')}{' '}
-                          <Link to="/register">{t('create-account')}</Link>
+                          <Link to="/register">{t('createAccount')}</Link>
                         </Title>
                       </legend>
 
@@ -142,7 +142,7 @@ export default function LoginRoute() {
                             <fieldset disabled={isLoading}>
                               <LoginProviderGroup />
 
-                              <Divider data-content={t('or-with-mail')} />
+                              <Divider data-content={t('orWithMail')} />
 
                               <Field>
                                 <Label htmlFor="mail">{t('email')}</Label>
@@ -204,14 +204,14 @@ export default function LoginRoute() {
                                 type="submit"
                                 data-testid="sign-in"
                               >
-                                {t('sign-in')}
+                                {t('signIn')}
                               </Button>
 
                               <br />
 
                               <Generic textAlign="centered">
                                 <Title size={6} as={Link} to="/reset-password">
-                                  {t('forgot-password')}
+                                  {t('forgotPassword')}
                                 </Title>
                               </Generic>
                             </fieldset>
@@ -220,8 +220,8 @@ export default function LoginRoute() {
                       </Column.Group>
 
                       <Generic as="p" textAlign="centered">
-                        {t('dont-have-an-account')}{' '}
-                        <Link to="/register">{t('sign-up')}</Link>
+                        {t('dontHaveAnAccount')}{' '}
+                        <Link to="/register">{t('signUp')}</Link>
                       </Generic>
                     </Column>
                   </Column.Group>

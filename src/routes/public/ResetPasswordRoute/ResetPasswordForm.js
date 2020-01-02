@@ -18,7 +18,7 @@ import { Fade } from 'react-awesome-reveal';
 import { useTranslation, Trans } from 'react-i18next';
 
 const errors = {
-  'User not found': 'unknown-user',
+  'User not found': 'unknownUser',
 };
 
 const INITIAL_STATE = {
@@ -83,7 +83,7 @@ export default function ResetPasswordForm() {
 
         dispatch({
           type: 'SET_ERROR',
-          value: errors[msg] ? errors[msg] : 'unknown-error',
+          value: errors[msg] ? errors[msg] : 'unknownError',
         });
       }
       console.error(error);
@@ -99,7 +99,7 @@ export default function ResetPasswordForm() {
       <Fade>
         <Message color="success">
           <Message.Header>{t('success')}</Message.Header>
-          <Message.Body>{t('mail-sent')}</Message.Body>
+          <Message.Body>{t('mailSent')}</Message.Body>
         </Message>
       </Fade>
     );
@@ -152,7 +152,7 @@ export default function ResetPasswordForm() {
                       fullwidth
                       disabled={isDisabled}
                     >
-                      {t('request-recovery')}
+                      {t('requestRecovery')}
                     </Button>
                   </Field>
 

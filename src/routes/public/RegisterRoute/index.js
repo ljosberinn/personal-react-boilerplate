@@ -9,6 +9,10 @@ import { useTranslation } from 'react-i18next';
 import RegistrationSuccess from './RegistrationSuccess';
 import RegistrationForm from './RegistrationForm';
 
+const errors = {
+  mailInUse: 'mailInUse',
+};
+
 /**
  * @returns {React.FC} RegisterRoute
  */
@@ -24,7 +28,7 @@ export default function RegisterRoute() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [successfullyRegistered, setSuccessfullyRegistered] = useState(false);
-  const { t } = useTranslation(['registration', 'routes', 'login']);
+  const { t } = useTranslation(['registration', 'routes', 'login', 'error']);
 
   const handleChange = useCallback(({ target: { name, type, value } }) => {
     switch (type) {
@@ -53,9 +57,9 @@ export default function RegisterRoute() {
           error?.json?.msg ===
           'A user with this email address has already been registered'
         ) {
-          setError('mail-in-use');
+          setError(errors.mailInUse);
         }
-
+      } finally {
         setIsLoading(false);
       }
     },
@@ -85,8 +89,8 @@ export default function RegisterRoute() {
                       <legend>
                         <Title textAlign="centered" id="section-title">
                           {successfullyRegistered
-                            ? t('verify-mail')
-                            : t('create-your-account')}
+                            ? t('verifyMail')
+                            : t('createYourAccount')}
                         </Title>
                       </legend>
 
@@ -114,9 +118,9 @@ export default function RegisterRoute() {
 
                       {!successfullyRegistered && (
                         <Generic textAlign="centered">
-                          {t('already-have-an-account')}{' '}
+                          {t('alreadyHaveAnAccount')}{' '}
                           <Link to={ROUTES.LOGIN.clientPath}>
-                            {t('login:sign-in')}
+                            {t('login:signIn')}
                           </Link>
                         </Generic>
                       )}

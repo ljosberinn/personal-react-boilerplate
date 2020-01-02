@@ -12,7 +12,7 @@ const INITIAL_STATE = {
 };
 
 const errors = {
-  'Invalid Refresh Token': 'refresh-token-invalid',
+  'Invalid Refresh Token': 'refreshTokenInvalid',
 };
 
 const SUCCESS_MSG_DISPLAY_SECONDS = 10;
@@ -56,7 +56,7 @@ export default function ChangePassword({ updatePassword }) {
           setError(
             errors[error_description]
               ? errors[error_description]
-              : 'unknown-error',
+              : 'unknownError',
           );
         }
         console.error(error);

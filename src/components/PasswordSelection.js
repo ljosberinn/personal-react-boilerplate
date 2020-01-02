@@ -12,15 +12,15 @@ import { faLock, faLockOpen } from '@fortawesome/free-solid-svg-icons';
 const criteria = [
   {
     validate: password => stringContainsLetter(password),
-    info: 'password-criteria-letter',
+    info: 'passwordCriteriaLetter',
   },
   {
     validate: password => stringContainsNumber(password),
-    info: 'password-criteria-number',
+    info: 'passwordCriteriaNumber',
   },
   {
     validate: password => password.length > 7,
-    info: 'password-criteria-length',
+    info: 'passwordCriteriaLength',
   },
   /*{
     validate: password => stringContainsSpecialCharacter(password),
@@ -104,7 +104,7 @@ export default memo(function PasswordSelection({
 
       <Block>
         <Field>
-          <Label htmlFor="confirmPassword">{t('confirm-password')}</Label>
+          <Label htmlFor="confirmPassword">{t('confirmPassword')}</Label>
 
           <Control iconLeft loading={isLoading}>
             <Input
@@ -114,9 +114,7 @@ export default memo(function PasswordSelection({
               onChange={handleChange}
               pattern={pattern.password}
               disabled={!isValidPassword}
-              placeholder={
-                !isValidPassword ? t('enter-valid-password-first') : ''
-              }
+              placeholder={!isValidPassword ? t('enterValidPasswordFirst') : ''}
               required
               autoComplete="new-password"
               color={
@@ -126,7 +124,7 @@ export default memo(function PasswordSelection({
                   ? 'danger'
                   : undefined
               }
-              data-testid="confirm-password"
+              data-testid="confirmPassword"
             />
 
             <Icon
@@ -198,7 +196,7 @@ function PasswordCriteriaInformation({ isFulfilled, info, t }) {
   return (
     <Help
       color={isFulfilled ? 'success' : undefined}
-      tooltip={isFulfilled ? undefined : t('fulfill-requirement')}
+      tooltip={isFulfilled ? undefined : t('fulfillRequirement')}
     >
       {isFulfilled && '✓'} {info}
     </Help>

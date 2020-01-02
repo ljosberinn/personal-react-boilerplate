@@ -55,7 +55,7 @@ export default function RegistrationForm({
       <fieldset disabled={isLoading}>
         <LoginProviderGroup />
 
-        <Divider data-content={t('login:or-with-mail')} />
+        <Divider data-content={t('login:orWithMail')} />
 
         <Field>
           <Label htmlFor="mail">{t('login:email')}</Label>
@@ -116,7 +116,7 @@ export default function RegistrationForm({
               <Trans
                 parent={Label}
                 htmlFor="tos"
-                i18nKey="agree-to-tos"
+                i18nKey="agreeToTos"
                 ns="registration"
               >
                 I agree to the{' '}

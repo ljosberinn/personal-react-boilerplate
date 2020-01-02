@@ -33,7 +33,7 @@ const content = [
     icon: AnalyticsSvg,
   },
   {
-    key: 'third-party',
+    key: 'thirdParty',
     entries: [
       { id: 1, placeholder: '' },
       {
@@ -137,7 +137,7 @@ function Slide({ dataset: { key, icon: Icon, entries }, index, t }) {
         <Card className={styles.card}>
           <Card.Header className={styles.cardHeader}>
             <Card.Header.Title>
-              {t(`privacyPolicy:${key}-title`)}
+              {t(`privacyPolicy:${key}Title`)}
             </Card.Header.Title>
           </Card.Header>
           <Card.Content>
@@ -150,7 +150,7 @@ function Slide({ dataset: { key, icon: Icon, entries }, index, t }) {
                   <ul className={styles.ul}>
                     {entries.map(({ id, placeholder }, index) => (
                       <Trans
-                        i18nKey={`${key}-${id}`}
+                        i18nKey={`${key}${id}`}
                         ns="privacyPolicy"
                         parent="li"
                         className={styles.li}

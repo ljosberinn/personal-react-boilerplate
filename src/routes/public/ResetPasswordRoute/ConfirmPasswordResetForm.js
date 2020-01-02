@@ -8,8 +8,8 @@ import { useTranslation } from 'react-i18next';
 import * as ROUTES from '../../../constants/routes';
 
 const errors = {
-  invalidToken: 'invalid-token',
-  isProvider: 'is-provider',
+  invalidToken: 'invalidToken',
+  isProvider: 'isProvider',
 };
 
 /**

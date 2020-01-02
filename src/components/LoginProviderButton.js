@@ -28,7 +28,7 @@ export default function LoginProviderButton({ provider }) {
     >
       <Icon icon={provider === 'github' ? faGithub : faGoogle} />{' '}
       <span>
-        {t('sign-in-via-provider', {
+        {t('signInViaProvider', {
           provider: upperCaseFirstCharacter(provider),
         })}
       </span>
