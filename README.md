@@ -57,7 +57,11 @@
 
 ## Help translating
 
-// todo once localization is finished
+- fork the repo
+- in /fauna-translation, navigate to the language you want to change
+- or add your language folder (copy over the file from another language and adapt the names)
+- well, translate...
+- file a Pull Request
 
 # Requirements
 
