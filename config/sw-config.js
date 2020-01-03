@@ -1,3 +1,3 @@
 module.exports = {
-  navigateFallbackBlacklist: [/^\/.netlify/, /^\/_/, /[^/?]+\\.[^/]+$/],
+  navigateFallbackWhitelist: [/^\/.netlify/, /^\/_/, /[^/?]+\\.[^/]+$/],
 };
