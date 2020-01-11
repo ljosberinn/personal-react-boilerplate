@@ -1,0 +1,18 @@
+{
+  "language": "de",
+  "namespace": "error",
+  "i18n": {
+    "reloadPage": "Neu laden und nochmal versuchen",
+    "boundaryInfo": "Sorry, hier hat sich ein Fehler eingeschlichen. Wir wurden bereits darüber informiert! :)",
+    "title": "Fehler",
+    "open-issue": "Fehlermeldung einreichen",
+    "invalidToken": "Dieser Token ist entweder ungültig oder bereits verwendet worden.",
+    "isProvider": "Dieser Account wurde nicht via Mail sondern über einen Drittanbieter wie bspw. Google registriert. Eine Passwortänderung ist nur beim Anbieter selbst möglich.",
+    "mailUnconfirmed": "Die Mail dieses Accounts wurde noch nicht bestätigt. Bitte überprüfe deine Mails.",
+    "unknownUser": "Benutzer oder Passwort ungültig.",
+    "passwordInvalid": "Benutzer oder Passwort ungültig.",
+    "unknownError": "Ein unbekannter Fehler ist aufgetreten.",
+    "refreshTokenInvalid": "Die Sitzung ist abgelaufen. Bitte nach Login erneut versuchen.",
+    "mailInUse": "Es existiert bereits ein Account mit dieser Mail. Hast du dein <2>Passwort vergessen</2>?"
+  }
+}
