@@ -1,4 +1,5 @@
 import faunadb from 'faunadb';
+import { OK } from '../utils/statusCodes';
 
 const q = faunadb.query;
 
@@ -36,7 +37,7 @@ export async function handler({ queryStringParameters: { lng, ns } }) {
   }, Promise.resolve({}));
 
   return {
-    statusCode: 200,
+    statusCode: OK,
     body: JSON.stringify(body),
     headers: {
       'Content-Type': 'application/json',

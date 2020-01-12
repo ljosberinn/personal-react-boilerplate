@@ -21,7 +21,7 @@ const isValidMail = mail => {
   }
 };
 
-const allowedSpecialCharacters = [
+export const allowedSpecialCharacters = [
   '!',
   '"',
   '§',
@@ -40,7 +40,7 @@ const allowedSpecialCharacters = [
   '_',
   '-',
 ];
-const characterPattern = '[A-Za-z]';
+export const characterPattern = '[A-Za-z]';
 const passwordPattern = `^(?=.*${characterPattern})(?=.*[0-9])(?=.{8,}).*$`;
 
 const isValidPassword = password => new RegExp(passwordPattern).test(password);
@@ -52,17 +52,14 @@ const isValidUsername = userName => new RegExp(usernamePattern).test(userName);
 const namePattern =
   "^[a-zA-Z àáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð'-]+$";
 
-const validate = {
+export const validate = {
   mail: isValidMail,
   password: isValidPassword,
   username: isValidUsername,
 };
 
-const pattern = {
-  mail: '',
+export const pattern = {
   password: passwordPattern,
   userName: usernamePattern,
   realName: namePattern,
 };
-
-export { validate, pattern, allowedSpecialCharacters, characterPattern };

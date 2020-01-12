@@ -1,9 +1,11 @@
+import { OK } from '../utils/statusCodes';
+
 export async function handler({
   body,
   queryStringParameters: { language, namespace },
 }) {
   return {
-    statusCode: 200,
+    statusCode: OK,
     body: 'ack',
   };
 }
