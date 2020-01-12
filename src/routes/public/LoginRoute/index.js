@@ -167,9 +167,11 @@ export default function LoginRoute() {
                                   <ValidityIconLeft type="mail" value={mail} />
                                 </Control>
 
-                                {error && error.includes('mail') && (
-                                  <Error> {t(`error:${error}`)}</Error>
-                                )}
+                                {error &&
+                                  (error === 'unknownUser' ||
+                                    error === 'mailUnknown') && (
+                                    <Error>{t(`error:${error}`)}</Error>
+                                  )}
                               </Field>
 
                               <Field>
