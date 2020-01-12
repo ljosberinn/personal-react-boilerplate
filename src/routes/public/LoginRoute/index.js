@@ -68,6 +68,10 @@ export default function LoginRoute() {
   const handleSubmit = async event => {
     event.preventDefault();
 
+    if (error) {
+      setError(null);
+    }
+
     setLoading(true);
 
     try {
