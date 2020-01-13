@@ -34,6 +34,8 @@
   "devDependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.4.0",
+    "customize-cra": "^0.9.1",
+    "customize-cra-react-refresh": "^1.0.1",
     "dotenv-webpack": "^1.7.0",
     "encoding": "^0.1.12",
     "faunadb": "^2.10.2",
@@ -41,6 +43,7 @@
     "netlify-lambda": "^1.6.3",
     "node-sass": "^4.13.0",
     "npm-run-all": "^4.1.5",
+    "react-app-rewired": "^2.1.5",
     "sw-precache-cra": "^1.0.0",
     "webpack-node-externals": "^1.7.2"
   },
@@ -53,8 +56,7 @@
     "build:lambda": "netlify-lambda build -c ./config/webpack.js src/lambda",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "nuke-modules": "rm -rf node_modules/ && yarn install",
-    "postinstall": "node ./scripts/enable-css-sourcemaps.js"
+    "nuke-modules": "rm -rf node_modules/ && yarn install"
   },
   "eslintConfig": {
     "extends": "react-app"
