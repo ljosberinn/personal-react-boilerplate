@@ -3,7 +3,7 @@ import { LocaleSvg } from '../assets/svg';
 import { Navbar, Dropdown, Button } from 'rbx';
 import { useTranslation } from 'react-i18next';
 import enabledLanguages from '../constants/languages';
-import env from '../constants/env';
+import { REPO_LINK } from '../constants/env';
 import ExternalLink from './ExternalLink';
 
 const validOrigins = ['footer', 'nav', 'settings'];
@@ -75,10 +75,7 @@ function DropdownContent({ t, currentLanguage, i18n }) {
       ))}
 
       <Dropdown.Divider />
-      <Dropdown.Item
-        as={ExternalLink}
-        href={`${env.REPO_LINK}#help-translating`}
-      >
+      <Dropdown.Item as={ExternalLink} href={`${REPO_LINK}#help-translating`}>
         {t('help')}
       </Dropdown.Item>
     </Dropdown.Content>

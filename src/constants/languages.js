@@ -1,3 +1,3 @@
-import env from './env';
+import { ENABLED_LANGUAGES } from './env';
 
-export default env.ENABLED_LANGUAGES.split(',').sort();
+export default ENABLED_LANGUAGES.split(',').sort();

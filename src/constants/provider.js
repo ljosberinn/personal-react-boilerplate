@@ -1,3 +1,3 @@
-import env from './env';
+import { ENABLED_PROVIDER } from './env';
 
-export default env.ENABLED_PROVIDER.split(',');
+export default ENABLED_PROVIDER.split(',');

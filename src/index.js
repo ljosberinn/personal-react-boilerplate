@@ -9,7 +9,7 @@ import * as Sentry from '@sentry/browser';
 import LogRocket from 'logrocket';
 import setupLogRocketReact from 'logrocket-react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import env from './constants/env';
+import { SENTRY_DSN, LOGROCKET_ID, SITE_URL } from './constants/env';
 
 const isLive = process.env.NODE_ENV !== 'development';
 
@@ -41,8 +41,8 @@ if (!isLive) {
     */
   }
 } else {
-  Sentry.init({ dsn: env.SENTRY_DSN });
-  LogRocket.init(env.LOGROCKET_ID);
+  Sentry.init({ dsn: SENTRY_DSN });
+  LogRocket.init(LOGROCKET_ID);
   setupLogRocketReact(LogRocket);
 
   LogRocket.getSessionURL(sessionURL => {
@@ -83,7 +83,7 @@ function identifyUser(user) {
 
 render(
   <StrictMode>
-    <IdentityContextProvider url={env.SITE_URL} onAuthChange={identifyUser}>
+    <IdentityContextProvider url={SITE_URL} onAuthChange={identifyUser}>
       <ThemeProvider>
         <Router>
           <App />

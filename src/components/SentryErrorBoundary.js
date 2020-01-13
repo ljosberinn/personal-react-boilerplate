@@ -17,8 +17,8 @@ import { faBomb } from '@fortawesome/free-solid-svg-icons';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import * as Sentry from '@sentry/browser';
 import styles from './SentryErrorBoundary.module.scss';
-import env from '../constants/env';
-import hasLocalStorage from '../constants/localStorage';
+import { REPO_LINK, LOGROCKET_ID } from '../constants/env';
+import { hasLocalStorage } from '../constants/browserAPIs';
 
 const logRocketUrl =
   'https://app.logrocket.com/__LR_ENV__/?filters=%255B%257B%2522type%2522%253A%2522userID%2522%252C%2522operator%2522%253A%257B%2522name%2522%253A%2522is%2522%252C%2522type%2522%253A%2522IS%2522%252C%2522hasStrings%2522%253Atrue%252C%2522autocompleteEnabled%2522%253Atrue%257D%252C%2522strings%2522%253A%255B%2522__LR_ID__%2522%255D%257D%255D';
@@ -30,7 +30,7 @@ const logRocketUrl =
  * @returns {string} url
  */
 const createGitHubIssueUrl = ({ name, message, stack }) => {
-  const url = [env.REPO_LINK, 'issues', 'new'].join('/');
+  const url = [REPO_LINK, 'issues', 'new'].join('/');
 
   const logRocketLink = (() => {
     if (!hasLocalStorage) {
@@ -43,7 +43,7 @@ const createGitHubIssueUrl = ({ name, message, stack }) => {
 
         if (lrJSON.userId) {
           const url = logRocketUrl
-            .replace('__LR_ENV__', env.LOGROCKET_ID)
+            .replace('__LR_ENV__', LOGROCKET_ID)
             .replace('__LR_ID__', lrJSON.userId);
 
           return `[LogRocket Link](${url})`;
@@ -129,12 +129,12 @@ class SentryErrorBoundary extends Component {
                             <Button.Group>
                               <Button
                                 color="primary"
-                                onClick={() => void window.location.reload()}
+                                onClick={() => window.location.reload()}
                               >
                                 {t('reloadPage')}
                               </Button>
 
-                              {env.REPO_LINK && (
+                              {REPO_LINK && (
                                 <Button
                                   color="link"
                                   as="a"

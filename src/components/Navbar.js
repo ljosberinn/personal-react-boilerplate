@@ -11,7 +11,7 @@ import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import * as ROUTES from '../constants/routes';
 import { useIdentityContext } from 'react-netlify-identity';
-import env from '../constants/env';
+import { REPO_LINK, DISCORD_LINK } from '../constants/env';
 
 /**
  * @returns {React.FC} LogoIpsumSvg
@@ -57,9 +57,9 @@ export default function Navbar() {
 
             <ThemeSwitch from="nav" />
 
-            {env.DISCORD_LINK && (
+            {DISCORD_LINK && (
               <RBXNavbar.Item
-                href={env.DISCORD_LINK}
+                href={DISCORD_LINK}
                 rel="noopener noreferrer"
                 target="_blank"
               >
@@ -67,9 +67,9 @@ export default function Navbar() {
               </RBXNavbar.Item>
             )}
 
-            {env.REPO_LINK && (
+            {REPO_LINK && (
               <RBXNavbar.Item
-                href={env.REPO_LINK}
+                href={REPO_LINK}
                 rel="noreferrer noopener"
                 target="_blank"
               >

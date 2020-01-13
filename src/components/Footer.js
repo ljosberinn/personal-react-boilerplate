@@ -9,7 +9,7 @@ import * as ROUTES from '../constants/routes';
 import { faGithub, faDiscord } from '@fortawesome/free-brands-svg-icons';
 import { useTranslation } from 'react-i18next';
 import { useIdentityContext } from 'react-netlify-identity';
-import env from '../constants/env';
+import { REPO_LINK, DISCORD_LINK, BRAND_NAME } from '../constants/env';
 
 /**
  *
@@ -39,7 +39,7 @@ export default function Footer() {
           <Column size={3}>
             <ul>
               <Generic as="li" textWeight="semibold">
-                {env.BRAND_NAME}
+                {BRAND_NAME}
               </Generic>
               <li>
                 <InternalLink route={ROUTES.LANDING_PAGE} t={t} />
@@ -98,18 +98,18 @@ export default function Footer() {
                 <LanguageSwitch from="footer" />
               </li>
 
-              {env.DISCORD_LINK && (
+              {DISCORD_LINK && (
                 <li>
-                  <ExternalLink href={env.DISCORD_LINK}>
+                  <ExternalLink href={DISCORD_LINK}>
                     <Icon icon={faDiscord} />
                     <span>Discord</span>
                   </ExternalLink>
                 </li>
               )}
 
-              {env.REPO_LINK && (
+              {REPO_LINK && (
                 <li>
-                  <ExternalLink href={env.REPO_LINK}>
+                  <ExternalLink href={REPO_LINK}>
                     <Icon icon={faGithub} />
                     <span>{t('navigation:contribute')}</span>
                   </ExternalLink>

@@ -1,29 +1,8 @@
-const requiredEnvVariables = [
-  'REPO_LINK',
-  'BRAND_NAME',
-  'SITE_URL',
-  'ENABLED_LANGUAGES',
-  'ENABLED_PROVIDER',
-];
-
-const optionalEnvVariables = [
-  'SENTRY_DSN',
-  'FAUNA_DB_SECRET',
-  'LOGROCKET_ID',
-  'DISCORD_LINK',
-];
-
-export default [...requiredEnvVariables, ...optionalEnvVariables].reduce(
-  (carry, envName) => {
-    const key = `REACT_APP_${envName}`;
-
-    if (process.env[key] && process.env[key].length > 0) {
-      carry[envName] = process.env[key];
-    } else if (requiredEnvVariables.includes(envName)) {
-      throw new Error(`missing env variable: ${key}`);
-    }
-
-    return carry;
-  },
-  {},
-);
+export const REPO_LINK = process.env.REACT_APP_REPO_LINK;
+export const BRAND_NAME = process.env.REACT_APP_BRAND_NAME;
+export const SITE_URL = process.env.REACT_APP_SITE_URL;
+export const ENABLED_LANGUAGES = process.env.REACT_APP_ENABLED_LANGUAGES;
+export const ENABLED_PROVIDER = process.env.REACT_APP_ENABLED_PROVIDER;
+export const SENTRY_DSN = process.env.REACT_APP_SENTRY_DSN;
+export const DISCORD_LINK = process.env.REACT_APP_DISCORD_LINK;
+export const LOGROCKET_ID = process.env.REACT_APP_LOGROCKET_ID;
