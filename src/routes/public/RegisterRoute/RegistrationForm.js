@@ -137,7 +137,7 @@ export default function RegistrationForm({
             fullwidth
             data-testid="sign-up"
           >
-            {t('login:sign-up')}
+            {t('login:signUp')}
           </Button>
         </Field>
       </fieldset>

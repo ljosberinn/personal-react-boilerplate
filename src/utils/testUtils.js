@@ -7,7 +7,7 @@ import { Loader } from '../components';
 import { I18nextProvider, withTranslation } from 'react-i18next';
 import { render as rtlRender } from '@testing-library/react';
 import { ThemeProvider } from '../context';
-import env from '../constants/env';
+import { SITE_URL } from '../constants/env';
 
 export default function render(
   component,
@@ -26,7 +26,7 @@ export default function render(
   function Wrapper({ children }) {
     return (
       <ThemeProvider>
-        <IdentityContextProvider url={env.SITE_URL}>
+        <IdentityContextProvider url={SITE_URL}>
           <ThemeProvider>
             <I18nextProvider i18n={i18n}>
               <Router history={history}>

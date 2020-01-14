@@ -114,13 +114,13 @@ describe('<RegisterRoute />', () => {
   ].forEach(
     ({ description, mail, password, confirmPassword, buttonDisabled, tos }) => {
       it(description, () => {
-        const { getByTestId, getByText } = render(<RegisterRoute />);
+        const { getByTestId } = render(<RegisterRoute />);
 
         const mailInput = getByTestId('mail');
         const passwordInput = getByTestId('password');
         const confirmPasswordInput = getByTestId('confirm-password');
         const tosCheckbox = getByTestId('tos');
-        const submitButton = getByText('sign-up');
+        const submitButton = getByTestId('sign-up');
 
         expect(submitButton.disabled).toBeTruthy();
         expect(confirmPasswordInput.disabled).toBeTruthy();

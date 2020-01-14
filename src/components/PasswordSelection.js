@@ -104,13 +104,13 @@ export default memo(function PasswordSelection({
 
       <Block>
         <Field>
-          <Label htmlFor="confirmPassword">{t('confirmPassword')}</Label>
+          <Label htmlFor="confirm-password">{t('confirmPassword')}</Label>
 
           <Control iconLeft loading={isLoading}>
             <Input
               type="password"
               name="confirmPassword"
-              id="confirmPassword"
+              id="confirm-password"
               onChange={handleChange}
               pattern={pattern.password}
               disabled={!isValidPassword}
@@ -124,7 +124,7 @@ export default memo(function PasswordSelection({
                   ? 'danger'
                   : undefined
               }
-              data-testid="confirmPassword"
+              data-testid="confirm-password"
             />
 
             <Icon
