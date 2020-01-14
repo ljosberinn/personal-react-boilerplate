@@ -17,9 +17,15 @@ describe('<RegisterRoute />', () => {
   test('disallows registration if passwords dont match', () => {
     const { getByTestId } = render(<RegisterRoute />);
 
+    const mailInput = getByTestId('mail');
+    const tosCheckbox = getByTestId('tos');
     const passwordInput = getByTestId('password');
     const confirmPasswordInput = getByTestId('confirm-password');
     const submitButton = getByTestId('sign-up');
+
+    // setup
+    fireEvent.input(mailInput, { target: { value: validMail } });
+    fireEvent.input(tosCheckbox, { target: { checked: true } });
 
     expect(submitButton.disabled).toBeTruthy();
     expect(confirmPasswordInput.disabled).toBeTruthy();
