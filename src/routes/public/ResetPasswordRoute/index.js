@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { TemplatedHelmet } from '../../../components';
 import { Column, Card, Section } from 'rbx';
 import ResetPasswordForm from './ResetPasswordForm';
 import ConfirmPasswordResetForm from './ConfirmPasswordResetForm';
-import { useParams } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 /**
@@ -11,7 +11,10 @@ import { useTranslation } from 'react-i18next';
  */
 export default function ResetPasswordRoute() {
   const { t } = useTranslation('resetPassword');
-  const { token } = useParams();
+  const {
+    location: { state },
+  } = useHistory();
+  const [token] = useState(state?.token);
 
   return (
     <>

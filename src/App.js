@@ -15,40 +15,25 @@ const RedirectToHome = LoadableComponent(() =>
 );
 
 /**
- * @see https://github.com/sw-yx/react-netlify-identity/blob/master/src/runRoutes.tsx#L9
- */
-const passwordRecoveryRegEx = /recovery_token=([^&]+)/;
-
-/**
  * @returns {React.FC} App
  */
 export default function App() {
-  const { hash, pathname } = useLocation();
-  const { replace } = useHistory();
-
   const { isLoggedIn } = useIdentityContext();
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [pathname]);
 
   const routes = Object.assign(
     SHARED_ROUTES,
     isLoggedIn ? PRIVATE_ROUTES : PUBLIC_ROUTES,
   );
 
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, [pathname]);
-
-  const passwordRecoveryMatches = hash.match(passwordRecoveryRegEx);
-
-  if (passwordRecoveryMatches) {
-    const token = passwordRecoveryMatches[1];
-
-    replace(`/reset-password/${token}`);
-    return null;
-  }
-
   return (
     <Layout>
       <SentryErrorBoundary>
+        <CatchNetlifyRecoveryNullComponent />
         <Switch>
           {languages.map(lng => (
             <Route
@@ -66,4 +51,18 @@ export default function App() {
       </SentryErrorBoundary>
     </Layout>
   );
+}
+
+function CatchNetlifyRecoveryNullComponent() {
+  const {
+    param: { token, type },
+  } = useIdentityContext();
+  const { replace } = useHistory();
+  const { pathname } = useLocation();
+
+  if (token && pathname === '/' && token && type === 'recovery') {
+    replace(`/reset-password/`, { token });
+  }
+
+  return null;
 }

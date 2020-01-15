@@ -30,7 +30,7 @@ export const LOGIN = {
 };
 
 export const RESET_PASSWORD = {
-  routerPath: '/reset-password/:token?',
+  routerPath: '/reset-password',
   clientPath: '/reset-password',
   title: 'routes:resetPassword',
   icon: faUnlockAlt,
