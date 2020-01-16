@@ -46,44 +46,42 @@ export default function ConfirmPasswordResetForm({ token }) {
     setUser(userObj);
   };
 
+  // only runs if a token exists that hasn't been validated yet
   useEffect(() => {
     if (!userObj) {
-      // only runs if a token exists that hasn't been validated yet
-      async function verifyToken() {
-        try {
-          const user = await recoverAccount(token);
-
+      recoverAccount()
+        .then(user => {
           if (user.app_metadata.provider !== 'email') {
             setError(errors.isProvider);
           } else {
             setUserObj(user);
           }
-        } catch (error) {
+        })
+        .catch(error => {
           setError(errors.invalidToken);
-        }
-      }
+        });
+    }
+  }, [recoverAccount, userObj]);
 
-      verifyToken();
-    } else if (user) {
-      // changes the password after re-render with login
-      async function doPasswordChange() {
-        try {
-          // update the password
-          await updateUser({ password });
+  // changes the password after re-render with login
+  useEffect(() => {
+    if (user) {
+      updateUser({ password })
+        .then(() => {
           // kill internal react-netlify-identity state
           setUser(undefined);
           // move use to login
           replace(ROUTES.LOGIN.clientPath);
-        } catch (error) {
+        })
+        .catch(error => {
           // ignore errors here - react-netlify-identity
-        }
-      }
-
-      doPasswordChange();
+          console.error(error);
+        });
     }
+
     // react-netlify-identity functions are excluded because they trigger a re-run of verifyToken
-    // eslint-disable-next-line
-  }, [password, userObj, replace, token, user]);
+    /* eslint-disable-next-line react-hooks/exhaustive-deps */
+  }, [password, replace, setUser, user]);
 
   const isDisabled =
     !validate.password(password) || password !== confirmPassword;
