@@ -41,7 +41,8 @@ export const allowedSpecialCharacters = [
   '-',
 ];
 export const characterPattern = '[A-Za-z]';
-const passwordPattern = `^(?=.*${characterPattern})(?=.*[0-9])(?=.{8,}).*$`;
+export const passwordMinLength = 8;
+const passwordPattern = `^(?=.*${characterPattern})(?=.*[0-9])(?=.{${passwordMinLength},}).*$`;
 
 const isValidPassword = password => new RegExp(passwordPattern).test(password);
 
