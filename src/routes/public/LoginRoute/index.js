@@ -172,8 +172,11 @@ export default function LoginRoute() {
                                 </Control>
 
                                 {error &&
-                                  (error === 'unknownUser' ||
-                                    error === 'mailUnknown') && (
+                                  [
+                                    'unknownUser',
+                                    'mailUnknown',
+                                    'mailUnconfirmed',
+                                  ].includes(error) && (
                                     <Error>{t(`error:${error}`)}</Error>
                                   )}
                               </Field>
