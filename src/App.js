@@ -18,20 +18,19 @@ const RedirectToHome = LoadableComponent(() =>
  * @returns {React.FC} App
  */
 export default function App() {
-  const { isLoggedIn } = useIdentityContext();
   const { pathname } = useLocation();
-
+  const { replace } = useHistory();
   const {
+    isLoggedIn,
     param: { token, type },
   } = useIdentityContext();
-  const { replace } = useHistory();
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [pathname]);
 
   if (token && pathname === '/' && type === 'recovery') {
-    replace(`/reset-password/`, { token });
+    replace('/reset-password', { token });
   }
 
   const routes = Object.assign(
