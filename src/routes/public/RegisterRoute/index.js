@@ -81,7 +81,7 @@ export default function RegisterRoute() {
         setIsLoading(false);
       }
     },
-    [signupUser, data.mail, data.password],
+    [signupUser, data.mail, data.password, theme],
   );
 
   if (isLoggedIn && isConfirmedUser) {
