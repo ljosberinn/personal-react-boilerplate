@@ -16,7 +16,7 @@ export default function AccountSettings() {
    * @param {string} password
    */
   async function updatePassword(password) {
-    await updateUser({ fields: { data: { password } } });
+    await updateUser({ data: { password } });
   }
 
   return (
