@@ -11,8 +11,12 @@ import { useIdentityContext } from 'react-netlify-identity';
 export default function AccountSettings() {
   const { user, updateUser } = useIdentityContext();
 
+  /**
+   *
+   * @param {string} password
+   */
   async function updatePassword(password) {
-    await updateUser({ fields: { password } });
+    await updateUser({ fields: { data: { password } } });
   }
 
   return (
