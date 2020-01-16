@@ -10189,10 +10189,10 @@ react-loadable@^5.5.0:
   dependencies:
     prop-types "^15.5.0"
 
-react-netlify-identity@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/react-netlify-identity/-/react-netlify-identity-0.2.0.tgz#15deb0c9094fd824e210d4afbf7ca2cffc28c1f4"
-  integrity sha512-PY6y7hmcTpji22DN6oCLKyvTf4G4uf8yo51iTMcAfOs4CWck+4bVyCJbwv+ZyGo+p+PoumWByJJWkBX7PI7b7g==
+react-netlify-identity@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/react-netlify-identity/-/react-netlify-identity-0.2.1.tgz#255127a6d0c027f0cc3f69f91c222bd980d7fc27"
+  integrity sha512-CpA/MEwDvpUZDe6sdfahuyQewFgOHKGtvP2MBlZpb2PcCfLiQ9ZiEF5RWgpgGSBtcqiHvLhE0bkOEBnbyMB4RA==
   dependencies:
     gotrue-js "^0.9.25"
     tsdx "^0.12.3"
