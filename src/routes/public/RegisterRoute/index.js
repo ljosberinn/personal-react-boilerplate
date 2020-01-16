@@ -8,6 +8,7 @@ import { useIdentityContext } from 'react-netlify-identity';
 import { useTranslation } from 'react-i18next';
 import RegistrationSuccess from './RegistrationSuccess';
 import RegistrationForm from './RegistrationForm';
+import i18n from 'i18next';
 
 const errors = {
   mailInUse: 'mailInUse',
@@ -17,7 +18,12 @@ const errors = {
  * @returns {React.FC} RegisterRoute
  */
 export default function RegisterRoute() {
-  const { signupUser, isLoggedIn, isConfirmedUser } = useIdentityContext();
+  const {
+    signupUser,
+    isLoggedIn,
+    isConfirmedUser,
+    setUser,
+  } = useIdentityContext();
 
   const [data, setData] = useState({
     mail: '',
@@ -30,16 +36,23 @@ export default function RegisterRoute() {
   const [successfullyRegistered, setSuccessfullyRegistered] = useState(false);
   const { t } = useTranslation(['registration', 'routes', 'login', 'error']);
 
-  const handleChange = useCallback(({ target: { name, type, value } }) => {
-    switch (type) {
-      case 'checkbox':
-        setData(data => ({ ...data, [name]: !data[name] }));
-        break;
-      default:
-        setData(data => ({ ...data, [name]: value }));
-        break;
-    }
-  }, []);
+  const handleChange = useCallback(
+    ({ target: { name, type, value } }) => {
+      if (error) {
+        setError(null);
+      }
+
+      switch (type) {
+        case 'checkbox':
+          setData(data => ({ ...data, [name]: !data[name] }));
+          break;
+        default:
+          setData(data => ({ ...data, [name]: value }));
+          break;
+      }
+    },
+    [error],
+  );
 
   const handleSubmit = useCallback(
     async event => {
@@ -48,7 +61,11 @@ export default function RegisterRoute() {
       setIsLoading(true);
 
       try {
-        await signupUser(data.mail, data.password);
+        await signupUser(data.mail, data.password, {
+          language: i18n.language,
+        });
+        // signup moves state into "logged in"" but "not confirmed", kill that
+        setUser(null);
         setSuccessfullyRegistered(true);
       } catch (error) {
         console.error(error);
@@ -63,7 +80,7 @@ export default function RegisterRoute() {
         setIsLoading(false);
       }
     },
-    [signupUser, data.mail, data.password],
+    [signupUser, data.mail, data.password, setUser],
   );
 
   if (isLoggedIn && isConfirmedUser) {
