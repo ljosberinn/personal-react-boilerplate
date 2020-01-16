@@ -21,9 +21,18 @@ export default function App() {
   const { isLoggedIn } = useIdentityContext();
   const { pathname } = useLocation();
 
+  const {
+    param: { token, type },
+  } = useIdentityContext();
+  const { replace } = useHistory();
+
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [pathname]);
+
+  if (token && pathname === '/' && type === 'recovery') {
+    replace(`/reset-password/`, { token });
+  }
 
   const routes = Object.assign(
     SHARED_ROUTES,
@@ -33,7 +42,6 @@ export default function App() {
   return (
     <Layout>
       <SentryErrorBoundary>
-        <CatchNetlifyRecoveryNullComponent />
         <Switch>
           {languages.map(lng => (
             <Route
@@ -51,18 +59,4 @@ export default function App() {
       </SentryErrorBoundary>
     </Layout>
   );
-}
-
-function CatchNetlifyRecoveryNullComponent() {
-  const {
-    param: { token, type },
-  } = useIdentityContext();
-  const { replace } = useHistory();
-  const { pathname } = useLocation();
-
-  if (token && pathname === '/' && token && type === 'recovery') {
-    replace(`/reset-password/`, { token });
-  }
-
-  return null;
 }
