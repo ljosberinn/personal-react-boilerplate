@@ -11,10 +11,8 @@ import { useTranslation } from 'react-i18next';
  */
 export default function ResetPasswordRoute() {
   const { t } = useTranslation('resetPassword');
-  const {
-    location: { state },
-  } = useHistory();
-  const [token] = useState(state?.token);
+  const { location } = useHistory();
+  const [token] = useState(location.state?.token);
 
   return (
     <>
