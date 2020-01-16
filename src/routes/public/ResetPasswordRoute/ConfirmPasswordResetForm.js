@@ -20,9 +20,8 @@ const errors = {
  */
 export default function ConfirmPasswordResetForm({ token }) {
   const { t } = useTranslation(['resetPassword', 'error', 'settings']);
-
   const { replace } = useHistory();
-  const { recoverAccount, setUser, updateUser, user } = useIdentityContext();
+  const { recoverAccount, setUser, updateUser } = useIdentityContext();
 
   const [{ password, confirmPassword }, setPassword] = useState({
     password: '',
