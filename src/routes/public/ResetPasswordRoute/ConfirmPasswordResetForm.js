@@ -42,48 +42,35 @@ export default function ConfirmPasswordResetForm({ token }) {
       return;
     }
 
-    // this is effectively a login, triggering a re-render
-    setUser(userObj);
+    updateUser({ password })
+      .then(() => {
+        // kill internal react-netlify-identity state
+        setUser(undefined);
+        // move use to login
+        replace(ROUTES.LOGIN.clientPath);
+      })
+      .catch(error => {
+        // ignore errors here - react-netlify-identity
+        console.error(error);
+      });
   };
 
   // only runs if a token exists that hasn't been validated yet
   useEffect(() => {
-    if (!userObj) {
-      recoverAccount()
-        .then(user => {
-          if (user.app_metadata.provider !== 'email') {
-            setError(errors.isProvider);
-          } else {
-            setUserObj(user);
-          }
-        })
-        .catch(() => {
-          setError(errors.invalidToken);
-        });
-    }
+    recoverAccount()
+      .then(user => {
+        if (user.app_metadata.provider !== 'email') {
+          setError(errors.isProvider);
+        } else {
+          setUserObj(user);
+        }
+      })
+      .catch(() => {
+        setError(errors.invalidToken);
+      });
     // react-netlify-identity functions are excluded because they trigger a re-run
     /* eslint-disable-next-line react-hooks/exhaustive-deps */
-  }, [userObj]);
-
-  // changes the password after re-render with login
-  useEffect(() => {
-    if (user) {
-      updateUser({ password })
-        .then(() => {
-          // kill internal react-netlify-identity state
-          setUser(undefined);
-          // move use to login
-          replace(ROUTES.LOGIN.clientPath);
-        })
-        .catch(error => {
-          // ignore errors here - react-netlify-identity
-          console.error(error);
-        });
-    }
-
-    // react-netlify-identity functions are excluded because they trigger a re-run
-    /* eslint-disable-next-line react-hooks/exhaustive-deps */
-  }, [password, replace, setUser, user]);
+  }, []);
 
   const isDisabled =
     !validate.password(password) || password !== confirmPassword;
