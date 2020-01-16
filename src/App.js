@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Switch, Route, useLocation, useHistory } from 'react-router-dom';
 import './assets/scss/app.scss';
 import { SHARED_ROUTES, LANGUAGE_ROUTE } from './routes/shared';
@@ -9,6 +9,7 @@ import { useIdentityContext } from 'react-netlify-identity';
 import languages from './constants/languages';
 import { SentryErrorBoundary } from './components';
 import LoadableComponent from './routes/loadUtils';
+import { useScrollToTop } from './hooks';
 
 const RedirectToHome = LoadableComponent(() =>
   import('./routes/RedirectToHome'),
@@ -25,9 +26,7 @@ export default function App() {
     param: { token, type },
   } = useIdentityContext();
 
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, [pathname]);
+  useScrollToTop();
 
   if (token && pathname === '/' && type === 'recovery') {
     replace('/reset-password', { token });
