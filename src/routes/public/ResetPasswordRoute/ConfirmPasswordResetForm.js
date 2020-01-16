@@ -57,11 +57,13 @@ export default function ConfirmPasswordResetForm({ token }) {
             setUserObj(user);
           }
         })
-        .catch(error => {
+        .catch(() => {
           setError(errors.invalidToken);
         });
     }
-  }, [recoverAccount, userObj]);
+    // react-netlify-identity functions are excluded because they trigger a re-run
+    /* eslint-disable-next-line react-hooks/exhaustive-deps */
+  }, [userObj]);
 
   // changes the password after re-render with login
   useEffect(() => {
@@ -79,7 +81,7 @@ export default function ConfirmPasswordResetForm({ token }) {
         });
     }
 
-    // react-netlify-identity functions are excluded because they trigger a re-run of verifyToken
+    // react-netlify-identity functions are excluded because they trigger a re-run
     /* eslint-disable-next-line react-hooks/exhaustive-deps */
   }, [password, replace, setUser, user]);
 
