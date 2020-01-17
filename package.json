@@ -38,7 +38,7 @@
     "customize-cra-react-refresh": "^1.0.1",
     "dotenv-webpack": "^1.7.0",
     "encoding": "^0.1.12",
-    "faunadb": "^2.10.2",
+    "faunadb": "^2.10.3",
     "http-proxy-middleware": "^0.20.0",
     "netlify-lambda": "^1.6.3",
     "node-sass": "^4.13.0",
