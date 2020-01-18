@@ -10054,13 +10054,14 @@ react-app-rewired@^2.1.5:
   dependencies:
     semver "^5.6.0"
 
-react-awesome-reveal@^2.3.0:
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/react-awesome-reveal/-/react-awesome-reveal-2.3.0.tgz#0f90233424ca9551aa57e616c1f8c2efc53c1732"
-  integrity sha512-Dzv+uZlRbCX+iCmB4Ij3/6KyMiQjSQpife8IAG4nekJZWD0UDu7bOCv0FEjppDuVh8og3kPZW+cqRlYe0eBMOw==
+react-awesome-reveal@^2.4.0:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/react-awesome-reveal/-/react-awesome-reveal-2.4.0.tgz#602323c847de2445833536438727702638b7d9e3"
+  integrity sha512-MXlSSMDfDc+rDVy1qfZ3SyM+/h1MlXsWnQ5i+h1xeqrhE4CoreAQg3kQXLHGwhmkHXs3tU4cezXDX3A2EZkcBA==
   dependencies:
     classnames "^2.2.6"
     react-intersection-observer "^8.25.1"
+    react-is "^16.12.0"
 
 react-countup@^4.3.2:
   version "4.3.2"
@@ -10177,7 +10178,7 @@ react-intersection-observer@^8.25.1:
   dependencies:
     tiny-invariant "^1.0.6"
 
-react-is@^16.6.0, react-is@^16.7.0, react-is@^16.8.1, react-is@^16.8.4:
+react-is@^16.12.0, react-is@^16.6.0, react-is@^16.7.0, react-is@^16.8.1, react-is@^16.8.4:
   version "16.12.0"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.12.0.tgz#2cc0fe0fba742d97fd527c42a13bec4eeb06241c"
   integrity sha512-rPCkf/mWBtKc97aLL9/txD8DZdemK0vkA3JMLShjlJB3Pj3s+lpf1KaBzMfQrAmhMQB0n1cU/SUGgKKBCe837Q==
