@@ -5,15 +5,13 @@ import * as serviceWorker from './serviceWorker';
 import { ThemeProvider } from './context';
 import './i18n';
 import { IdentityContextProvider } from 'react-netlify-identity';
-import * as Sentry from '@sentry/browser';
 import LogRocket from 'logrocket';
 import setupLogRocketReact from 'logrocket-react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { SENTRY_DSN, LOGROCKET_ID, SITE_URL } from './constants/env';
+import { LOGROCKET_ID, SITE_URL, IS_LIVE } from './constants/env';
+import './utils/errors';
 
-const isLive = process.env.NODE_ENV !== 'development';
-
-if (!isLive) {
+if (!IS_LIVE) {
   if (!localStorage['gotrue.user']) {
     /*
    const user = {
@@ -41,15 +39,9 @@ if (!isLive) {
     */
   }
 } else {
-  Sentry.init({ dsn: SENTRY_DSN });
+  //Sentry.init({ dsn: SENTRY_DSN });
   LogRocket.init(LOGROCKET_ID);
   setupLogRocketReact(LogRocket);
-
-  LogRocket.getSessionURL(sessionURL => {
-    Sentry.configureScope(scope => {
-      scope.setExtra('sessionURL', sessionURL);
-    });
-  });
 }
 
 /**
@@ -57,7 +49,7 @@ if (!isLive) {
  * @param {import('react-netlify-identity').User} user
  */
 function identifyUser(user) {
-  if (!isLive) {
+  if (!IS_LIVE) {
     return;
   }
 

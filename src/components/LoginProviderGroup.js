@@ -1,7 +1,7 @@
 import React from 'react';
 import { Column } from 'rbx';
 import LoginProviderButton from './LoginProviderButton';
-import provider from '../constants/provider';
+import { ENABLED_PROVIDER } from '../constants/env';
 
 /**
  * @returns {React.FC} LoginProviderGroup
@@ -9,7 +9,7 @@ import provider from '../constants/provider';
 export default function LoginProviderGroup() {
   return (
     <Column.Group multiline>
-      {provider.map(provider => (
+      {ENABLED_PROVIDER.map(provider => (
         <Column key={provider} size="half">
           <LoginProviderButton provider={provider} />
         </Column>

@@ -6,7 +6,7 @@ import { PUBLIC_ROUTES } from './routes/public';
 import { PRIVATE_ROUTES } from './routes/private';
 import Layout from './Layout';
 import { useIdentityContext } from 'react-netlify-identity';
-import languages from './constants/languages';
+import { ENABLED_LANGUAGES } from './constants/env';
 import { SentryErrorBoundary } from './components';
 import LoadableComponent from './routes/loadUtils';
 import { useScrollToTop } from './hooks';
@@ -41,7 +41,7 @@ export default function App() {
     <Layout>
       <SentryErrorBoundary>
         <Switch>
-          {languages.map(lng => (
+          {ENABLED_LANGUAGES.map(lng => (
             <Route
               path={`/${lng}`}
               key={lng}
