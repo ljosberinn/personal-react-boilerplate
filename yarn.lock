@@ -10069,10 +10069,10 @@ react-app-rewired@^2.1.5:
   dependencies:
     semver "^5.6.0"
 
-react-awesome-reveal@^2.4.0:
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/react-awesome-reveal/-/react-awesome-reveal-2.4.0.tgz#602323c847de2445833536438727702638b7d9e3"
-  integrity sha512-MXlSSMDfDc+rDVy1qfZ3SyM+/h1MlXsWnQ5i+h1xeqrhE4CoreAQg3kQXLHGwhmkHXs3tU4cezXDX3A2EZkcBA==
+react-awesome-reveal@^2.4.1:
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/react-awesome-reveal/-/react-awesome-reveal-2.4.1.tgz#4ae2371480ddac97f2672bc7c4922d91faae1d28"
+  integrity sha512-kkzqOENS8BqxRk/wXUohukxo7BwDeewxsb+v+jeHHvwHCy5NvrCQ36BT83D2G69jOsoM1ENOx1Mz+P2+Pn0pUw==
   dependencies:
     classnames "^2.2.6"
     react-intersection-observer "^8.25.1"
