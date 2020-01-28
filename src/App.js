@@ -30,6 +30,7 @@ export default function App() {
 
   if (token && pathname === '/' && type === 'recovery') {
     replace('/reset-password', { token });
+    return null;
   }
 
   const routes = Object.assign(

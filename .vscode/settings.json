@@ -1,0 +1,14 @@
+{
+  "editor.fontLigatures": true,
+  "editor.fontFamily": "'Fira Code', Consolas, 'Courier New', monospace",
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "workbench.tree.renderIndentGuides": "always",
+  "editor.suggestSelection": "first",
+  "references.preferredLocation": "view",
+  "editor.suggest.maxVisibleSuggestions": 5,
+  "editor.rulers": [80],
+  "editor.formatOnSave": true,
+  "eslint.packageManager": "yarn"
+}
