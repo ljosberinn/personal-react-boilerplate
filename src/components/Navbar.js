@@ -35,11 +35,11 @@ export default function Navbar() {
   const { t } = useTranslation(['navigation', 'routes']);
 
   const handleLogout = async () => {
+    push('/');
+
     setIsLoggingOut(true);
     await logoutUser();
     setIsLoggingOut(false);
-
-    push('/');
   };
 
   return (
