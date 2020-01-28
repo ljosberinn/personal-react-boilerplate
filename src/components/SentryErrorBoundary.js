@@ -110,15 +110,8 @@ class SentryErrorBoundary extends Component {
                             </Title>
                             <p>{t('boundaryInfo')}</p>
 
-                            <br />
-
                             <Content backgroundColor="white">
-                              <Generic
-                                italic
-                                as="code"
-                                textSize={7}
-                                style={{ whiteSpace: 'pre' }}
-                              >
+                              <Generic italic as="code" textSize={7}>
                                 {error.stack
                                   .split('\n')
                                   .slice(0, MAX_STACK_LENGTH_SHOWN + 1)

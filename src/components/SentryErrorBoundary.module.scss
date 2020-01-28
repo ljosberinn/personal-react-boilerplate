@@ -1,26 +1,34 @@
+@import '../assets/scss/breakpoints';
+
 .modal {
   width: 1240px !important;
 
-  @media screen and (max-width: 1240px) {
+  code {
+    white-space: pre;
+    margin-bottom: 1rem;
+  }
+
+  @include tablet {
     width: 1024px !important;
+
+    code {
+      display: none;
+    }
   }
 
-  @media screen and (max-width: 1024px) {
-    width: 840px !important;
-  }
-
-  @media screen and (max-width: 840px) {
-    width: 768px !important;
-  }
-
-  @media screen and (max-width: 768px) {
-    width: 100% !important;
+  @include mobile {
+    width: 90% !important;
     background-color: transparent;
+    overflow-x: hidden;
+
+    code {
+      display: none;
+    }
   }
 }
 
 .body {
-  @media screen and (max-width: 768px) {
+  @include mobile {
     background-color: transparent !important;
   }
 }
