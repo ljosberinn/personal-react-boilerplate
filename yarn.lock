@@ -6159,10 +6159,10 @@ i18next-xhr-backend@^3.2.2:
   dependencies:
     "@babel/runtime" "^7.5.5"
 
-i18next@^19.0.3:
-  version "19.0.3"
-  resolved "https://registry.yarnpkg.com/i18next/-/i18next-19.0.3.tgz#31fd3165762d9802e08a2a86932db4eff5c862e9"
-  integrity sha512-Ru4afr++b4cUApsIBifcMYyWG9Nx8wlFdq4DuOF+UuoPoQKfuh0iAVMekTjs6w1CZLUOVb5QZEuoYRLmu17EIA==
+i18next@^19.1.0:
+  version "19.1.0"
+  resolved "https://registry.yarnpkg.com/i18next/-/i18next-19.1.0.tgz#fe1a1da3d208872946307c7d2d115da45d46159f"
+  integrity sha512-ISbmukX4L6Dz0QoH9+EW1AnBw7j+NRLoMu9uLPMaNSSTP9Eie9/oUL0dOyWX15baB3gYOpkHJpGZRHOqcnl0ew==
   dependencies:
     "@babel/runtime" "^7.3.1"
 
@@ -10069,19 +10069,19 @@ react-app-rewired@^2.1.5:
   dependencies:
     semver "^5.6.0"
 
-react-awesome-reveal@^2.4.0:
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/react-awesome-reveal/-/react-awesome-reveal-2.4.0.tgz#602323c847de2445833536438727702638b7d9e3"
-  integrity sha512-MXlSSMDfDc+rDVy1qfZ3SyM+/h1MlXsWnQ5i+h1xeqrhE4CoreAQg3kQXLHGwhmkHXs3tU4cezXDX3A2EZkcBA==
+react-awesome-reveal@^2.4.1:
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/react-awesome-reveal/-/react-awesome-reveal-2.4.1.tgz#4ae2371480ddac97f2672bc7c4922d91faae1d28"
+  integrity sha512-kkzqOENS8BqxRk/wXUohukxo7BwDeewxsb+v+jeHHvwHCy5NvrCQ36BT83D2G69jOsoM1ENOx1Mz+P2+Pn0pUw==
   dependencies:
     classnames "^2.2.6"
     react-intersection-observer "^8.25.1"
     react-is "^16.12.0"
 
-react-countup@^4.3.2:
-  version "4.3.2"
-  resolved "https://registry.yarnpkg.com/react-countup/-/react-countup-4.3.2.tgz#57f1424538863484848da25f2ce59a36b0da0d1b"
-  integrity sha512-3zkN1XXQgRC1b2L97e47m7D2BKQoYEw0ZiBsbrfqp4w7YA/GtOXwJWgA/2XcYh0TQyHqp47ZCCjradCK8iSGEw==
+react-countup@^4.3.3:
+  version "4.3.3"
+  resolved "https://registry.yarnpkg.com/react-countup/-/react-countup-4.3.3.tgz#143a8d854d47290b73d6915eac20a12d839153c2"
+  integrity sha512-pWnxpwdPNRyJFha/YKKbyc4RLAw8PzmULdgCziGIgw6vxhT1VdccrvQgj38HBSoM2qF/MoLmn4M2klvDWVIdaw==
   dependencies:
     countup.js "^1.9.3"
     prop-types "^15.7.2"
