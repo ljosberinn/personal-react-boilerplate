@@ -3,10 +3,10 @@ import { Navbar as RBXNavbar, Button } from 'rbx';
 import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { faGithub, faDiscord } from '@fortawesome/free-brands-svg-icons';
 import { NavLink, Link, useLocation } from 'react-router-dom';
-import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useIdentityContext } from 'react-netlify-identity';
 import * as ROUTES from '../constants/routes';
+import { useNavigate } from '../hooks';
 import { REPO_LINK, DISCORD_LINK } from '../constants/env';
 import LanguageSwitch from './LanguageSwitch';
 import Icon from './Icon';
@@ -25,11 +25,11 @@ export default function Navbar() {
   const [isLoggingOut, setIsLoggingOut] = useState(false);
 
   const { isLoggedIn, logoutUser, isConfirmedUser } = useIdentityContext();
-  const { push } = useHistory();
+  const navigate = useNavigate();
   const { t } = useTranslation(['navigation', 'routes']);
 
   const handleLogout = async () => {
-    push('/');
+    navigate('/');
 
     setIsLoggingOut(true);
     await logoutUser();
