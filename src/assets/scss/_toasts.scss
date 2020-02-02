@@ -1,0 +1,23 @@
+@import 'node_modules/react-toastify/dist/ReactToastify.min';
+
+.notification {
+  border-radius: 5px !important;
+
+  @each $name, $pair in $colors {
+    $color: nth($pair, 1);
+    &.is-#{$name} .Toastify__progress-bar--default {
+      background: darken($color, 20%);
+    }
+  }
+}
+
+html.theme--dark {
+  .notification {
+    @each $name, $pair in $dark-colors {
+      $color: nth($pair, 1);
+      &.is-#{$name} .Toastify__progress-bar--default {
+        background: darken($color, 25%);
+      }
+    }
+  }
+}

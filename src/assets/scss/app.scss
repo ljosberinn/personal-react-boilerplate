@@ -14,6 +14,7 @@ $themes: light dark;
 @import './extensions';
 @import './theme';
 @import './backgrounds';
+@import './toasts';
 
 .is-fullpage {
   display: flex;
