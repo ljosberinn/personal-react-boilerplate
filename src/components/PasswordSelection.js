@@ -1,13 +1,15 @@
 import React, { useCallback, useState, useEffect, memo } from 'react';
-import { ValidityIconLeft, Icon, Field } from '.';
-import { validate, pattern, passwordMinLength } from '../utils/validators';
-import { Message, Label, Help, Input, Control, Block } from 'rbx';
-import { stringContainsNumber, stringContainsLetter } from '../utils';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import styles from './PasswordSelection.module.scss';
-import classnames from 'classnames';
-import { useTranslation } from 'react-i18next';
 import { faLock, faLockOpen } from '@fortawesome/free-solid-svg-icons';
+import { useTranslation } from 'react-i18next';
+import classnames from 'classnames';
+import { Message, Label, Help, Input, Control, Block } from 'rbx';
+import { validate, pattern, passwordMinLength } from '../utils/validators';
+import { stringContainsNumber, stringContainsLetter } from '../utils';
+import styles from './PasswordSelection.module.scss';
+import ValidityIconLeft from './ValidityIconLeft';
+import Icon from './Icon';
+import Field from './Field';
 
 const criteria = [
   {
@@ -34,13 +36,13 @@ const criteria = [
 ];
 
 /**
- * @returns {React.NamedExoticComponent<{
+ * @param {{
  * handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
  * password: string,
  * confirmPassword: string,
  * isLoading: boolean,
  * error: string|null
- * }>} PasswordSelection
+ * }}
  */
 
 export default memo(function PasswordSelection({
@@ -155,10 +157,10 @@ export default memo(function PasswordSelection({
 
 /**
  *
- * @returns {React.FC<{
- *  password: string,
+ * @param {{
+ * password: string,
  * t: import('i18next').TFunction
- * }>} PasswordCriteria
+ * }}
  */
 function PasswordCriteria({ password, t }) {
   const fulfilledCriteriaArr = criteria.map(({ validate }) =>
@@ -189,10 +191,10 @@ function PasswordCriteria({ password, t }) {
 
 /**
  *
- * @returns {React.FC<{
+ * @param {{
  * isFulfilled: boolean,
  * info: string
- * }>} PasswordCriteriaInformation
+ * }}
  */
 function PasswordCriteriaInformation({ isFulfilled, info, t }) {
   return (

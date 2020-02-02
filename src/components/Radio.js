@@ -3,9 +3,9 @@ import classnames from 'classnames';
 
 /**
  *
- * @returns {React.FC<{
+ * @param {{
  * className?: string
- * }>} Radio
+ * }}
  */
 export default function Radio({ className, ...rest }) {
   return (

@@ -5,7 +5,7 @@ import classnames from 'classnames';
  *
  * @see https://buefy.org/documentation/switch
  *
- * @returns {React.FC<{
+ * @param {{
  * size: import('rbx/elements/form/input').InputVariablesDefaults['sizes'][number],
  * color: import('rbx/base/helpers/variables').VariablesDefaults['colors'][number],
  * name: string,
@@ -16,7 +16,7 @@ import classnames from 'classnames';
  * value: string | number | boolean,
  * onChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
  * checked?: boolean
- * }>} Switch
+ * }}
  */
 export default function Switch({
   color,

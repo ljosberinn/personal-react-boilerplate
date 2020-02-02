@@ -1,9 +1,9 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { Title, Button, Message } from 'rbx';
-import { validate } from '../../../../utils/validators';
 import { Flip } from 'react-awesome-reveal';
 import { useTranslation } from 'react-i18next';
 import CountUp from 'react-countup';
+import { validate } from '../../../../utils/validators';
 import { PasswordSelection, Form, Error } from '../../../../components';
 
 const INITIAL_STATE = {
@@ -18,9 +18,9 @@ const errors = {
 const SUCCESS_MSG_DISPLAY_SECONDS = 10;
 
 /**
- * @returns {React.FC<{
+ * @param {{
  * updatePassword: (password:string) => Promise<void>
- * }>} ChangePassword
+ * }}
  */
 export default function ChangePassword({ updatePassword }) {
   const [{ password, confirmPassword }, setPasswords] = useState(INITIAL_STATE);

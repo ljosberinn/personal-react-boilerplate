@@ -1,14 +1,14 @@
 import React from 'react';
 import { Image, Message, Tag } from 'rbx';
-import { MailSvg } from '../../../assets/svg';
 import { Fade } from 'react-awesome-reveal';
 import { Trans } from 'react-i18next';
+import { MailSvg } from '../../../assets/svg';
 
 /**
  *
- * @returns {React.FC<{
+ * @param {{
  * mail: string
- * }>} RegistrationSuccess
+ * }}
  */
 export default function PasswordSuccess({ mail }) {
   return (

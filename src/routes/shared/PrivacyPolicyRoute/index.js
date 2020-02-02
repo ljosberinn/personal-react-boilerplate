@@ -1,16 +1,16 @@
 import React from 'react';
 import { Section, Column, Card, Box, Content, Title } from 'rbx';
-import { TemplatedHelmet, ExternalLink } from '../../../components';
-import { useTranslation, Trans } from 'react-i18next';
-import styles from './PrivacyPolicy.module.scss';
-import { Slide as AwesomeSlide, Fade } from 'react-awesome-reveal';
 import classnames from 'classnames';
+import { useTranslation, Trans } from 'react-i18next';
+import { Slide as AwesomeSlide, Fade } from 'react-awesome-reveal';
+import { TemplatedHelmet, ExternalLink } from '../../../components';
 import {
   AdSvg,
   CookieSvg,
   SecuritySvg,
   AnalyticsSvg,
 } from '../../../components/themedSvgs';
+import styles from './PrivacyPolicy.module.scss';
 
 const content = [
   {
@@ -84,9 +84,6 @@ const content = [
   },
 ];
 
-/**
- * @returns {React.FC}
- */
 export default function PrivacyPolicy() {
   const { t } = useTranslation(['routes', 'privacyPolicy']);
 
@@ -110,7 +107,7 @@ export default function PrivacyPolicy() {
 
 /**
  *
- * @returns {React.FC<{
+ * @param {{
  * dataset: {
  *  title: string,
  *  entries: (string|React.ComponentType)[],
@@ -118,7 +115,7 @@ export default function PrivacyPolicy() {
  *  t: import('i18next').TFunction,
  * }[],
  * index: number
- * }>} Slide
+ * }}
  */
 function Slide({ dataset: { key, icon: Icon, entries }, index, t }) {
   const direction = index % 2 === 0 ? 'left' : 'right';

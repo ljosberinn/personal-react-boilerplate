@@ -1,13 +1,13 @@
 import React from 'react';
 import { faSun, faMoon } from '@fortawesome/free-solid-svg-icons';
 import { Navbar, Button } from 'rbx';
+import { useTranslation } from 'react-i18next';
+import classnames from 'classnames';
+import { useTheme } from '../hooks';
 import Switch from './Switch';
 import Loader from './Loader';
 import Icon from './Icon';
 import styles from './ThemeSwitch.module.scss';
-import { useTranslation } from 'react-i18next';
-import { useTheme } from '../hooks';
-import classnames from 'classnames';
 
 const iconClassMap = {
   sun: {
@@ -24,9 +24,9 @@ export const validOrigins = ['settings', 'nav', 'footer'];
 
 /**
  *
- * @returns {React.FC<{
+ * @param {{
  *  from: 'settings' | 'nav' | 'footer'
- * }>} ThemeSwitch
+ * }}
  */
 export default function ThemeSwitch({ from }) {
   const { isLoading, theme, toggleTheme } = useTheme();
@@ -74,18 +74,22 @@ export default function ThemeSwitch({ from }) {
 
 /**
  *
- * @returns {React.FC<{
+ * @param {{
  *  from: 'settings' | 'nav' | 'footer'
  *  children: React.ReactChildren
- * }>} Wrap
+ * }}
  */
 const Wrap = ({ from, children, className, ...rest }) =>
   from === 'nav' ? (
-    <Navbar.Item  className={className} {...rest}>{children}</Navbar.Item>
+    <Navbar.Item className={className} {...rest}>
+      {children}
+    </Navbar.Item>
   ) : from === 'settings' ? (
-    <Button type="button" className={className}  {...rest}>
+    <Button type="button" className={className} {...rest}>
       {children}
     </Button>
   ) : (
-    <span className={classnames(className, 'is-flex')} {...rest}>{children}</span>
+    <span className={classnames(className, 'is-flex')} {...rest}>
+      {children}
+    </span>
   );

@@ -1,17 +1,17 @@
 import React from 'react';
 import { Button } from 'rbx';
-import Icon from './Icon';
-import { button } from './LoginProviderButton.module.scss';
 import { faGithub, faGoogle } from '@fortawesome/free-brands-svg-icons';
 import { useIdentityContext } from 'react-netlify-identity';
-import { upperCaseFirstCharacter } from '../utils';
 import { useTranslation } from 'react-i18next';
+import { upperCaseFirstCharacter } from '../utils';
 import { useTheme } from '../hooks';
+import Icon from './Icon';
+import { button } from './LoginProviderButton.module.scss';
 
 /**
- * @returns {React.FC<{
+ * @param {{
  * provider: 'google' | 'github'
- * }>} LoginProviderButton
+ * }}
  */
 export default function LoginProviderButton({ provider }) {
   const { loginProvider } = useIdentityContext(provider);

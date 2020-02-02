@@ -1,11 +1,8 @@
 import React from 'react';
 import { Section, Title, Column } from 'rbx';
-import { TemplatedHelmet } from '../../../components';
 import { useTranslation } from 'react-i18next';
+import { TemplatedHelmet } from '../../../components';
 
-/**
- * @returns {React.FC}
- */
 export default function TosRoute() {
   const { t } = useTranslation(['routes', 'termsOfService']);
 

@@ -33,12 +33,13 @@
     "react-toastify": "^5.5.0"
   },
   "devDependencies": {
-    "@testing-library/jest-dom": "^5.0.2",
+    "@testing-library/jest-dom": "^5.1.0",
     "@testing-library/react": "^9.4.0",
     "customize-cra": "^0.9.1",
     "customize-cra-react-refresh": "^1.0.1",
     "dotenv-webpack": "^1.7.0",
     "encoding": "^0.1.12",
+    "eslint-plugin-import": "^2.20.0",
     "faunadb": "^2.11.1",
     "http-proxy-middleware": "^0.20.0",
     "netlify-lambda": "^1.6.3",
@@ -60,7 +61,22 @@
     "nuke-modules": "rm -rf node_modules/ && yarn install"
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": "react-app",
+    "rules": {
+      "import/order": [
+        "error",
+        {
+          "groups": [
+            "builtin",
+            "external",
+            "internal",
+            "parent",
+            "sibling",
+            "index"
+          ]
+        }
+      ]
+    }
   },
   "browserslist": {
     "production": [

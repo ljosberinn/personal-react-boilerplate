@@ -2,13 +2,13 @@ import React from 'react';
 import classnames from 'classnames';
 
 /**
- * @returns {React.FC<{
+ * @param {{
  * className?: string,
  * size: string | number,
  * circled: boolean,
  * blocked: boolean,
  * borderless: boolean
- * }>} Checkbox
+ * }} props
  */
 export default function Checkbox({
   className,

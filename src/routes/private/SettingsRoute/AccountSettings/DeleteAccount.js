@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Modal, Delete } from 'rbx';
-import { Icon } from '../../../../components';
 import {
   faTimesCircle,
   faSkullCrossbones,
 } from '@fortawesome/free-solid-svg-icons';
 import { useTranslation } from 'react-i18next';
+import { Icon } from '../../../../components';
 
 /**
- * @returns {React.FC<{
+ * @param {{
  * user: import('react-netlify-identity').User
- * }>} DeleteAccount
+ * }}
  */
 export default function DeleteAccount({ user }) {
   const [userEngagedDeletion, setUserEngagedDeletion] = useState(false);

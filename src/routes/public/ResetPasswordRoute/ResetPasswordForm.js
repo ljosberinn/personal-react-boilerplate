@@ -11,11 +11,11 @@ import {
   Generic,
 } from 'rbx';
 import { Link } from 'react-router-dom';
-import { ValidityIconLeft, Field, Form, Error } from '../../../components';
-import { useIdentityContext } from 'react-netlify-identity';
-import { validate } from '../../../utils/validators';
 import { Fade } from 'react-awesome-reveal';
 import { useTranslation, Trans } from 'react-i18next';
+import { useIdentityContext } from 'react-netlify-identity';
+import { ValidityIconLeft, Field, Form, Error } from '../../../components';
+import { validate } from '../../../utils/validators';
 
 const errors = {
   'User not found': 'unknownUser',
@@ -43,10 +43,6 @@ const reducer = (state, action) => {
   }
 };
 
-/**
- *
- * @returns {React.FC} ResetPasswordForm
- */
 export default function ResetPasswordForm() {
   const { t } = useTranslation(['resetPassword', 'login', 'error']);
   const { requestPasswordRecovery } = useIdentityContext();

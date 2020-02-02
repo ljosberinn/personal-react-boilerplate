@@ -1,7 +1,7 @@
 import React from 'react';
-import RegisterRoute from '.';
 import { fireEvent } from '@testing-library/react';
 import render from '../../../utils/testUtils';
+import RegisterRoute from './';
 
 const validMail = 'some@mail.com';
 const invalidMail = 'foo';

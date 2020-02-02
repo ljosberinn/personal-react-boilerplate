@@ -1,11 +1,11 @@
 import React from 'react';
 import { Switch, Route, useLocation, useHistory } from 'react-router-dom';
-import './assets/scss/app.scss';
+import { useIdentityContext } from 'react-netlify-identity';
 import { SHARED_ROUTES, LANGUAGE_ROUTE } from './routes/shared';
+import './assets/scss/app.scss';
 import { PUBLIC_ROUTES } from './routes/public';
 import { PRIVATE_ROUTES } from './routes/private';
 import Layout from './Layout';
-import { useIdentityContext } from 'react-netlify-identity';
 import { ENABLED_LANGUAGES } from './constants/env';
 import { SentryErrorBoundary } from './components';
 import LoadableComponent from './routes/loadUtils';
@@ -15,9 +15,6 @@ const RedirectToHome = LoadableComponent(() =>
   import('./routes/RedirectToHome'),
 );
 
-/**
- * @returns {React.FC} App
- */
 export default function App() {
   const { pathname } = useLocation();
   const { replace } = useHistory();

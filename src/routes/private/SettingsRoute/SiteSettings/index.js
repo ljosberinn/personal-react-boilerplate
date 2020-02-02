@@ -3,9 +3,6 @@ import { Content, Column } from 'rbx';
 import ChangeTheme from './ChangeTheme';
 import ChangeLanguage from './ChangeLanguage';
 
-/**
- * @returns {React.FC} SiteSettings
- */
 export default function SiteSettings() {
   return (
     <Content>

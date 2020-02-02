@@ -2,6 +2,13 @@ import React from 'react';
 import { useTheme } from '../../hooks';
 import getThemeBasedSvgColor from '../../constants/svgColor';
 
+/**
+ *
+ * @param {{
+ * height: string | number;
+ * className: string;
+ * }} props
+ */
 export default function AdSvg({ height, className }) {
   const { theme } = useTheme();
 

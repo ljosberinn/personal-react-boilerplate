@@ -4,9 +4,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 /**
  *
- * @returns {React.FC<{
+ * @param {{
  * icon: import('@fortawesome/free-solid-svg-icons').IconDefinition
- * }>} Icon
+ * }}
  */
 export default function Icon({ icon, ...rest }) {
   return (

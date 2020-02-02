@@ -1,7 +1,7 @@
 import React from 'react';
-import { LocaleSvg } from '../assets/svg';
 import { Navbar, Dropdown, Button } from 'rbx';
 import { useTranslation } from 'react-i18next';
+import { LocaleSvg } from '../assets/svg';
 import { REPO_LINK, ENABLED_LANGUAGES } from '../constants/env';
 import ExternalLink from './ExternalLink';
 
@@ -9,9 +9,9 @@ const validOrigins = ['footer', 'nav', 'settings'];
 
 /**
  *
- * @returns {React.FC<{
+ * @param {{
  * from: 'footer' | 'nav' | 'settings'
- * }>} LanguageSwitch
+ * }}
  */
 export default function LanguageSwitch({ from }) {
   const { i18n, t } = useTranslation('languages');
@@ -54,11 +54,11 @@ export default function LanguageSwitch({ from }) {
 
 /**
  *
- * @returns {React.FC<{
+ * @param {{
  * t: import('i18next').TFunction,
  * currentLanguage: string,
  * i18n: import ('i18next').i18n
- * }>} DropdownContent
+ * }}
  */
 function DropdownContent({ t, currentLanguage, i18n }) {
   return (
@@ -83,10 +83,10 @@ function DropdownContent({ t, currentLanguage, i18n }) {
 
 /**
  *
- * @returns {React.FC<{
+ * @param {{
  * children: React.ReactChildren,
  * from: 'settings' | 'footer' | 'nav'
- * }>} Wrap
+ * }}
  */
 function Wrap({ children, from }) {
   if (from === 'settings') {

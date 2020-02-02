@@ -1,9 +1,6 @@
 import React, { useState, useCallback } from 'react';
-import {
-  validate,
-  pattern,
-  passwordMinLength,
-} from '../../../utils/validators';
+// TODO: remove once https://github.com/dennismorello/react-awesome-reveal/issues/14 might be resolved
+import Shake from 'react-reveal/Shake';
 import {
   Card,
   Section,
@@ -17,10 +14,10 @@ import {
   Button,
   Generic,
 } from 'rbx';
-// TODO: remove once https://github.com/dennismorello/react-awesome-reveal/issues/14 might be resolved
-import Shake from 'react-reveal/Shake';
-import RedirectToHome from '../../RedirectToHome';
 import { Link, useParams } from 'react-router-dom';
+import { useIdentityContext } from 'react-netlify-identity';
+import { useTranslation } from 'react-i18next';
+import RedirectToHome from '../../RedirectToHome';
 import {
   ValidityIconLeft,
   TemplatedHelmet,
@@ -28,8 +25,11 @@ import {
   Error,
   LoginProviderGroup,
 } from '../../../components';
-import { useIdentityContext } from 'react-netlify-identity';
-import { useTranslation } from 'react-i18next';
+import {
+  validate,
+  pattern,
+  passwordMinLength,
+} from '../../../utils/validators';
 
 const INITIAL_STATE = {
   mail: '',
@@ -42,9 +42,6 @@ const errors = {
   'Invalid Password': 'passwordInvalid',
 };
 
-/**
- * @returns {React.FC} LoginRoute
- */
 export default function LoginRoute() {
   const { t } = useTranslation(['login', 'error']);
   const { isLoggedIn, loginUser } = useIdentityContext();

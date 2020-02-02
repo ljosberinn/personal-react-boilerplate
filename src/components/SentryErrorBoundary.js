@@ -11,14 +11,14 @@ import {
   Generic,
   Title,
 } from 'rbx';
-import Icon from './Icon';
 import { withTranslation } from 'react-i18next';
 import { faBomb } from '@fortawesome/free-solid-svg-icons';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import * as Sentry from '@sentry/browser';
-import styles from './SentryErrorBoundary.module.scss';
 import { REPO_LINK, LOGROCKET_ID } from '../constants/env';
 import { hasLocalStorage } from '../constants/browserAPIs';
+import Icon from './Icon';
+import styles from './SentryErrorBoundary.module.scss';
 
 const logRocketUrl =
   'https://app.logrocket.com/__LR_ENV__/?filters=%255B%257B%2522type%2522%253A%2522userID%2522%252C%2522operator%2522%253A%257B%2522name%2522%253A%2522is%2522%252C%2522type%2522%253A%2522IS%2522%252C%2522hasStrings%2522%253Atrue%252C%2522autocompleteEnabled%2522%253Atrue%257D%252C%2522strings%2522%253A%255B%2522__LR_ID__%2522%255D%257D%255D';

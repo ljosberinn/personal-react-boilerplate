@@ -1,11 +1,8 @@
 import React from 'react';
 import { Column } from 'rbx';
-import LoginProviderButton from './LoginProviderButton';
 import { ENABLED_PROVIDER } from '../constants/env';
+import LoginProviderButton from './LoginProviderButton';
 
-/**
- * @returns {React.FC} LoginProviderGroup
- */
 export default function LoginProviderGroup() {
   return (
     <Column.Group multiline>

@@ -6,9 +6,9 @@ import { ENABLED_LANGUAGES } from '../constants/env';
 
 /**
  *
- * @returns {React.FC<{
+ * @param {{
  * children: React.ReactChildren
- * }>} TemplatedHelmet
+ * }}
  */
 export default function TemplatedHelmet({ children }) {
   const {

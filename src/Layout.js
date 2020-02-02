@@ -4,9 +4,9 @@ import { Footer, Navbar } from './components';
 
 /**
  *
- * @returns {React.FC<{
+ * @param {{
  * children: React.ReactChildren
- * }>} Layout
+ * }}
  */
 export default function Layout({ children }) {
   return (

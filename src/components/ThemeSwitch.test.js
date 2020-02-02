@@ -1,7 +1,7 @@
 import React from 'react';
+import { fireEvent } from '@testing-library/react';
 import render from '../utils/testUtils';
 import ThemeSwitch, { validOrigins } from './ThemeSwitch';
-import { fireEvent } from '@testing-library/react';
 
 const primaryColorClassName = 'has-text-primary';
 

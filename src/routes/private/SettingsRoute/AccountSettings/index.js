@@ -1,13 +1,10 @@
 import React from 'react';
 import { Content } from 'rbx';
+import { useIdentityContext } from 'react-netlify-identity';
 import ChangePassword from './ChangePassword';
 //import { Icon } from '../../../../components';
 //import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
-import { useIdentityContext } from 'react-netlify-identity';
 
-/**
- * @returns {React.FC} AccountSettings
- */
 export default function AccountSettings() {
   const { user, updateUser } = useIdentityContext();
 

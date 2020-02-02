@@ -1,11 +1,8 @@
 import React from 'react';
 import { Title } from 'rbx';
-import { LanguageSwitch } from '../../../../components';
 import { useTranslation } from 'react-i18next';
+import { LanguageSwitch } from '../../../../components';
 
-/**
- * @returns {React.FC} ChangeLanguage
- */
 export default function ChangeLanguage() {
   const { t } = useTranslation('settings');
 

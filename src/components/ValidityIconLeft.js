@@ -1,5 +1,4 @@
 import React from 'react';
-import Icon from './Icon';
 import {
   faLock,
   faLockOpen,
@@ -7,6 +6,7 @@ import {
   faEnvelope,
 } from '@fortawesome/free-solid-svg-icons';
 import { validate } from '../utils/validators';
+import Icon from './Icon';
 
 const iconMap = {
   password: {
@@ -25,10 +25,10 @@ const iconMap = {
 
 /**
  *
- * @returns {React.FC<{
+ * @param {{
  * type: 'password' | 'mail' | 'username',
  * value: string
- * }>} ValidityIconLeft
+ * }}
  */
 export default function ValidityIconLeft({ type, value = '' }) {
   const { success, error } = iconMap[type];

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { PasswordSelection, Form, Error } from '../../../components';
 import { Title, Column, Button, Message } from 'rbx';
 import { useIdentityContext } from 'react-netlify-identity';
 import { useHistory } from 'react-router-dom';
-import { validate } from '../../../utils/validators';
 import { useTranslation } from 'react-i18next';
+import { PasswordSelection, Form, Error } from '../../../components';
+import { validate } from '../../../utils/validators';
 import * as ROUTES from '../../../constants/routes';
 
 const errors = {
@@ -14,9 +14,9 @@ const errors = {
 
 /**
  *
- * @returns {React.FC<{
+ * @param {{
  * token: string
- * }>} ConfirmPasswordResetForm
+ * }}
  */
 export default function ConfirmPasswordResetForm({ token }) {
   const { t } = useTranslation(['resetPassword', 'error', 'settings']);
