@@ -1,15 +1,17 @@
-import React, { useCallback, useState, useEffect, memo } from 'react';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { faLock, faLockOpen } from '@fortawesome/free-solid-svg-icons';
-import { useTranslation } from 'react-i18next';
 import classnames from 'classnames';
 import { Message, Label, Help, Input, Control, Block } from 'rbx';
-import { validate, pattern, passwordMinLength } from '../utils/validators';
+import React, { useCallback, useState, useEffect, memo } from 'react';
+import { useTranslation } from 'react-i18next';
+
 import { stringContainsNumber, stringContainsLetter } from '../utils';
+import { validate, pattern, passwordMinLength } from '../utils/validators';
+
+import Field from './Field';
+import Icon from './Icon';
 import styles from './PasswordSelection.module.scss';
 import ValidityIconLeft from './ValidityIconLeft';
-import Icon from './Icon';
-import Field from './Field';
 
 const criteria = [
   {

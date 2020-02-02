@@ -1,7 +1,8 @@
-import React from 'react';
 import { Title } from 'rbx';
-import { TemplatedHelmet } from '../../../components';
+import React from 'react';
+
 import { LandingPageSvg } from '../../../assets/svg';
+import { TemplatedHelmet } from '../../../components';
 
 export default function LandingPage() {
   return (

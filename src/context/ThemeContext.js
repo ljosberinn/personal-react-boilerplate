@@ -1,8 +1,9 @@
 import React, { createContext, useState, useEffect, useCallback } from 'react';
+
+import { hasLocalStorage } from '../constants/browserAPIs';
 import useDetectColorScheme, {
   THEME_NAMES,
 } from '../hooks/useDetectColorScheme';
-import { hasLocalStorage } from '../constants/browserAPIs';
 
 /**
  * @description retrieves a previous `localStorage.themePreference` value or `null` if nonexistant/unavailable

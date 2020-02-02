@@ -1,6 +1,7 @@
 import React from 'react';
-import { useTheme } from '../../hooks';
+
 import getThemeBasedSvgColor from '../../constants/svgColor';
+import { useTheme } from '../../hooks';
 
 /**
  *

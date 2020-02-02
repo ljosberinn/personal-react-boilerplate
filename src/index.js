@@ -1,14 +1,15 @@
-import React, { StrictMode } from 'react';
-import { render } from 'react-dom';
-import { BrowserRouter as Router } from 'react-router-dom';
-import { IdentityContextProvider } from 'react-netlify-identity';
 import LogRocket from 'logrocket';
 import setupLogRocketReact from 'logrocket-react';
+import React, { StrictMode } from 'react';
+import { render } from 'react-dom';
+import { IdentityContextProvider } from 'react-netlify-identity';
+import { BrowserRouter as Router } from 'react-router-dom';
+
 import App from './App';
-import * as serviceWorker from './serviceWorker';
-import { ThemeProvider } from './context';
-import './i18n';
 import { LOGROCKET_ID, SITE_URL, IS_LIVE } from './constants/env';
+import { ThemeProvider } from './context';
+import * as serviceWorker from './serviceWorker';
+import './i18n';
 import './utils/errors';
 
 if (!IS_LIVE) {

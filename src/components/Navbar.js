@@ -1,15 +1,17 @@
-import React, { useState } from 'react';
-import { Navbar as RBXNavbar, Button } from 'rbx';
-import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { faGithub, faDiscord } from '@fortawesome/free-brands-svg-icons';
-import { NavLink, Link, useLocation } from 'react-router-dom';
+import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { Navbar as RBXNavbar, Button } from 'rbx';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useIdentityContext } from 'react-netlify-identity';
+import { NavLink, Link, useLocation } from 'react-router-dom';
+
+import { REPO_LINK, DISCORD_LINK } from '../constants/env';
 import * as ROUTES from '../constants/routes';
 import { useNavigate } from '../hooks';
-import { REPO_LINK, DISCORD_LINK } from '../constants/env';
-import LanguageSwitch from './LanguageSwitch';
+
 import Icon from './Icon';
+import LanguageSwitch from './LanguageSwitch';
 import Loader from './Loader';
 import ThemeSwitch from './ThemeSwitch';
 

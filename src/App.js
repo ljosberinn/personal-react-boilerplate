@@ -1,6 +1,7 @@
 import React from 'react';
 import { useIdentityContext } from 'react-netlify-identity';
 import { Switch, Route, useLocation, useHistory } from 'react-router-dom';
+
 import './assets/scss/app.scss';
 import Layout from './Layout';
 import { SentryErrorBoundary } from './components';

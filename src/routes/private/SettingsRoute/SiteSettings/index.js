@@ -1,7 +1,8 @@
-import React from 'react';
 import { Content, Column } from 'rbx';
-import ChangeTheme from './ChangeTheme';
+import React from 'react';
+
 import ChangeLanguage from './ChangeLanguage';
+import ChangeTheme from './ChangeTheme';
 
 export default function SiteSettings() {
   return (

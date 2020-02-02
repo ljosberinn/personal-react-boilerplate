@@ -1,6 +1,6 @@
-import React from 'react';
-import { Field as RBXField } from 'rbx';
 import classnames from 'classnames';
+import { Field as RBXField } from 'rbx';
+import React from 'react';
 
 /**
  *

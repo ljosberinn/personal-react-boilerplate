@@ -1,7 +1,8 @@
-import React from 'react';
-import { ToastCloseButton } from '../components';
-import { toast as toastFn } from 'react-toastify';
 import classnames from 'classnames';
+import React from 'react';
+import { toast as toastFn } from 'react-toastify';
+
+import { ToastCloseButton } from '../components';
 
 toastFn.configure({
   autoClose: 20000,

@@ -1,6 +1,8 @@
-import React from 'react';
 import { fireEvent } from '@testing-library/react';
+import React from 'react';
+
 import render from '../../../utils/testUtils';
+
 import RegisterRoute from './';
 
 const validMail = 'some@mail.com';

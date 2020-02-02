@@ -1,8 +1,9 @@
-import React from 'react';
-import { Section, Column, Card, Box, Content, Title } from 'rbx';
 import classnames from 'classnames';
-import { useTranslation, Trans } from 'react-i18next';
+import { Section, Column, Card, Box, Content, Title } from 'rbx';
+import React from 'react';
 import { Slide as AwesomeSlide, Fade } from 'react-awesome-reveal';
+import { useTranslation, Trans } from 'react-i18next';
+
 import { TemplatedHelmet, ExternalLink } from '../../../components';
 import {
   AdSvg,
@@ -10,6 +11,7 @@ import {
   SecuritySvg,
   AnalyticsSvg,
 } from '../../../components/themedSvgs';
+
 import styles from './PrivacyPolicy.module.scss';
 
 const content = [

@@ -1,4 +1,5 @@
 import LogRocket from 'logrocket';
+
 import { IS_LIVE } from '../constants/env';
 
 let sessionUrlInitialized = false;

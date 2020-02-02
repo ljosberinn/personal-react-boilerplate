@@ -1,22 +1,22 @@
-import ValidityIconLeft from './ValidityIconLeft';
-import Icon from './Icon';
 import Checkbox from './Checkbox';
-import Loader from './Loader';
-import Field from './Field';
-import Switch from './Switch';
-import ExternalLink from './ExternalLink';
-import LanguageSwitch from './LanguageSwitch';
-import Navbar from './Navbar';
-import Footer from './Footer';
-import ThemeSwitch from './ThemeSwitch';
-import LoginProviderButton from './LoginProviderButton';
-import TemplatedHelmet from './TemplatedHelmet';
-import SentryErrorBoundary from './SentryErrorBoundary';
-import PasswordSelection from './PasswordSelection';
-import Form from './Form';
 import Error from './Error';
+import ExternalLink from './ExternalLink';
+import Field from './Field';
+import Footer from './Footer';
+import Form from './Form';
+import Icon from './Icon';
+import LanguageSwitch from './LanguageSwitch';
+import Loader from './Loader';
+import LoginProviderButton from './LoginProviderButton';
 import LoginProviderGroup from './LoginProviderGroup';
+import Navbar from './Navbar';
+import PasswordSelection from './PasswordSelection';
+import SentryErrorBoundary from './SentryErrorBoundary';
+import Switch from './Switch';
+import TemplatedHelmet from './TemplatedHelmet';
+import ThemeSwitch from './ThemeSwitch';
 import ToastCloseButton from './ToastCloseButton';
+import ValidityIconLeft from './ValidityIconLeft';
 
 export {
   LoginProviderButton,

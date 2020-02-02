@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { Button, Modal, Delete } from 'rbx';
 import {
   faTimesCircle,
   faSkullCrossbones,
 } from '@fortawesome/free-solid-svg-icons';
+import { Button, Modal, Delete } from 'rbx';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+
 import { Icon } from '../../../../components';
 
 /**

@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
 import { Column, Card, Section } from 'rbx';
-import { useHistory } from 'react-router-dom';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useHistory } from 'react-router-dom';
+
 import { TemplatedHelmet } from '../../../components';
-import ResetPasswordForm from './ResetPasswordForm';
+
 import ConfirmPasswordResetForm from './ConfirmPasswordResetForm';
+import ResetPasswordForm from './ResetPasswordForm';
 
 export default function ResetPasswordRoute() {
   const { t } = useTranslation('resetPassword');

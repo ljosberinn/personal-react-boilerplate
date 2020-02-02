@@ -1,8 +1,10 @@
-import React from 'react';
 import { fireEvent } from '@testing-library/react';
+import React from 'react';
 import { Route } from 'react-router-dom';
+
 import * as ROUTES from '../../../constants/routes';
 import render from '../../../utils/testUtils';
+
 import LoginRoute from './';
 
 const validMail = 'some@mail.com';

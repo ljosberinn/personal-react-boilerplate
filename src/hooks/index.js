@@ -1,6 +1,6 @@
 import useDetectColorScheme from './useDetectColorScheme';
-import useTheme from './useTheme';
-import useScrollToTop from './useScrollToTop';
 import useNavigate from './useNavigate';
+import useScrollToTop from './useScrollToTop';
+import useTheme from './useTheme';
 
 export { useDetectColorScheme, useTheme, useScrollToTop, useNavigate };

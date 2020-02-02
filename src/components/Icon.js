@@ -1,6 +1,6 @@
-import React from 'react';
-import { Icon as RBXIcon } from 'rbx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Icon as RBXIcon } from 'rbx';
+import React from 'react';
 
 /**
  *

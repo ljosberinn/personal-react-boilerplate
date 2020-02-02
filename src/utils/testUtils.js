@@ -1,13 +1,15 @@
+import { render as rtlRender } from '@testing-library/react';
+import { createMemoryHistory } from 'history';
 import React, { Suspense } from 'react';
+import { I18nextProvider, withTranslation } from 'react-i18next';
 import { IdentityContextProvider } from 'react-netlify-identity';
 import { Router } from 'react-router-dom';
-import { createMemoryHistory } from 'history';
-import i18n from './testi18n';
+
 import { Loader } from '../components';
-import { I18nextProvider, withTranslation } from 'react-i18next';
-import { render as rtlRender } from '@testing-library/react';
-import { ThemeProvider } from '../context';
 import { SITE_URL } from '../constants/env';
+import { ThemeProvider } from '../context';
+
+import i18n from './testi18n';
 
 export default function render(
   component,

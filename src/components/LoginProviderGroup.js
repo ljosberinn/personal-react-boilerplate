@@ -1,6 +1,8 @@
-import React from 'react';
 import { Column } from 'rbx';
+import React from 'react';
+
 import { ENABLED_PROVIDER } from '../constants/env';
+
 import LoginProviderButton from './LoginProviderButton';
 
 export default function LoginProviderGroup() {

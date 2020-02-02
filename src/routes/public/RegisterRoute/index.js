@@ -1,13 +1,15 @@
-import React, { useState, useCallback } from 'react';
-import { Link } from 'react-router-dom';
+import i18n from 'i18next';
 import { Column, Content, Title, Section, Card, Generic } from 'rbx';
+import React, { useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useIdentityContext } from 'react-netlify-identity';
-import i18n from 'i18next';
+import { Link } from 'react-router-dom';
+
 import { TemplatedHelmet, Form } from '../../../components';
 import * as ROUTES from '../../../constants/routes';
-import RedirectToHome from '../../RedirectToHome';
 import { useTheme } from '../../../hooks';
+import RedirectToHome from '../../RedirectToHome';
+
 import RegistrationForm from './RegistrationForm';
 import RegistrationSuccess from './RegistrationSuccess';
 

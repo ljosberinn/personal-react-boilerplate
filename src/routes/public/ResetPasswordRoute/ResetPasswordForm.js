@@ -1,4 +1,3 @@
-import React, { useReducer, useCallback } from 'react';
 import {
   Column,
   Title,
@@ -10,10 +9,12 @@ import {
   Button,
   Generic,
 } from 'rbx';
-import { Link } from 'react-router-dom';
+import React, { useReducer, useCallback } from 'react';
 import { Fade } from 'react-awesome-reveal';
 import { useTranslation, Trans } from 'react-i18next';
 import { useIdentityContext } from 'react-netlify-identity';
+import { Link } from 'react-router-dom';
+
 import { ValidityIconLeft, Field, Form, Error } from '../../../components';
 import { validate } from '../../../utils/validators';
 

@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react';
 import { Title, Column, Button, Message } from 'rbx';
+import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useIdentityContext } from 'react-netlify-identity';
 import { useHistory } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
+
 import { PasswordSelection, Form, Error } from '../../../components';
-import { validate } from '../../../utils/validators';
 import * as ROUTES from '../../../constants/routes';
+import { validate } from '../../../utils/validators';
 
 const errors = {
   invalidToken: 'invalidToken',

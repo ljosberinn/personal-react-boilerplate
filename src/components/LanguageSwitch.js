@@ -1,8 +1,10 @@
-import React from 'react';
 import { Navbar, Dropdown, Button } from 'rbx';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
+
 import { LocaleSvg } from '../assets/svg';
 import { REPO_LINK, ENABLED_LANGUAGES } from '../constants/env';
+
 import ExternalLink from './ExternalLink';
 
 const validOrigins = ['footer', 'nav', 'settings'];

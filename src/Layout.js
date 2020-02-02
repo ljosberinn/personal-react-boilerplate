@@ -1,5 +1,6 @@
-import React, { Suspense } from 'react';
 import { Column } from 'rbx';
+import React, { Suspense } from 'react';
+
 import { Footer, Navbar } from './components';
 
 /**

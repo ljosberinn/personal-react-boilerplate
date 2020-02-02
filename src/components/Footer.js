@@ -1,14 +1,16 @@
-import React from 'react';
-import { Footer as RBXFooter, Container, Column, Generic } from 'rbx';
-import { NavLink } from 'react-router-dom';
 import { faGithub, faDiscord } from '@fortawesome/free-brands-svg-icons';
+import { Footer as RBXFooter, Container, Column, Generic } from 'rbx';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useIdentityContext } from 'react-netlify-identity';
-import * as ROUTES from '../constants/routes';
+import { NavLink } from 'react-router-dom';
+
 import { REPO_LINK, DISCORD_LINK, BRAND_NAME } from '../constants/env';
+import * as ROUTES from '../constants/routes';
+
 import ExternalLink from './ExternalLink';
-import LanguageSwitch from './LanguageSwitch';
 import Icon from './Icon';
+import LanguageSwitch from './LanguageSwitch';
 import ThemeSwitch from './ThemeSwitch';
 
 /**

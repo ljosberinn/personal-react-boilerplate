@@ -1,11 +1,13 @@
-import React from 'react';
 import {
   faLock,
   faLockOpen,
   faIdCard,
   faEnvelope,
 } from '@fortawesome/free-solid-svg-icons';
+import React from 'react';
+
 import { validate } from '../utils/validators';
+
 import Icon from './Icon';
 
 const iconMap = {

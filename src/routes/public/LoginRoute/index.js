@@ -1,6 +1,3 @@
-import React, { useState, useCallback } from 'react';
-// TODO: remove once https://github.com/dennismorello/react-awesome-reveal/issues/14 might be resolved
-import Shake from 'react-reveal/Shake';
 import {
   Card,
   Section,
@@ -14,10 +11,13 @@ import {
   Button,
   Generic,
 } from 'rbx';
-import { Link, useParams } from 'react-router-dom';
-import { useIdentityContext } from 'react-netlify-identity';
+import React, { useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import RedirectToHome from '../../RedirectToHome';
+import { useIdentityContext } from 'react-netlify-identity';
+// TODO: remove once https://github.com/dennismorello/react-awesome-reveal/issues/14 might be resolved
+import Shake from 'react-reveal/Shake';
+import { Link, useParams } from 'react-router-dom';
+
 import {
   ValidityIconLeft,
   TemplatedHelmet,
@@ -30,6 +30,7 @@ import {
   pattern,
   passwordMinLength,
 } from '../../../utils/validators';
+import RedirectToHome from '../../RedirectToHome';
 
 const INITIAL_STATE = {
   mail: '',

@@ -1,10 +1,11 @@
-import React, { useState, useCallback, useEffect } from 'react';
 import { Title, Button, Message } from 'rbx';
+import React, { useState, useCallback, useEffect } from 'react';
 import { Flip } from 'react-awesome-reveal';
-import { useTranslation } from 'react-i18next';
 import CountUp from 'react-countup';
-import { validate } from '../../../../utils/validators';
+import { useTranslation } from 'react-i18next';
+
 import { PasswordSelection, Form, Error } from '../../../../components';
+import { validate } from '../../../../utils/validators';
 
 const INITIAL_STATE = {
   password: '',

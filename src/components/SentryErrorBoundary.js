@@ -1,4 +1,6 @@
-import React, { Component } from 'react';
+import { faGithub } from '@fortawesome/free-brands-svg-icons';
+import { faBomb } from '@fortawesome/free-solid-svg-icons';
+import * as Sentry from '@sentry/browser';
 import {
   Column,
   Box,
@@ -11,12 +13,12 @@ import {
   Generic,
   Title,
 } from 'rbx';
+import React, { Component } from 'react';
 import { withTranslation } from 'react-i18next';
-import { faBomb } from '@fortawesome/free-solid-svg-icons';
-import { faGithub } from '@fortawesome/free-brands-svg-icons';
-import * as Sentry from '@sentry/browser';
-import { REPO_LINK, LOGROCKET_ID } from '../constants/env';
+
 import { hasLocalStorage } from '../constants/browserAPIs';
+import { REPO_LINK, LOGROCKET_ID } from '../constants/env';
+
 import Icon from './Icon';
 import styles from './SentryErrorBoundary.module.scss';
 
