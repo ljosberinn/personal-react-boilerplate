@@ -1,15 +1,17 @@
 import React from 'react';
-import { Switch, Route, useLocation, useHistory } from 'react-router-dom';
 import { useIdentityContext } from 'react-netlify-identity';
-import { SHARED_ROUTES, LANGUAGE_ROUTE } from './routes/shared';
+import { Switch, Route, useLocation, useHistory } from 'react-router-dom';
 import './assets/scss/app.scss';
-import { PUBLIC_ROUTES } from './routes/public';
-import { PRIVATE_ROUTES } from './routes/private';
 import Layout from './Layout';
-import { ENABLED_LANGUAGES } from './constants/env';
 import { SentryErrorBoundary } from './components';
-import LoadableComponent from './routes/loadUtils';
+import { ENABLED_LANGUAGES } from './constants/env';
 import { useScrollToTop } from './hooks';
+import LoadableComponent from './routes/loadUtils';
+import { PRIVATE_ROUTES } from './routes/private';
+import { PUBLIC_ROUTES } from './routes/public';
+import { SHARED_ROUTES, LANGUAGE_ROUTE } from './routes/shared';
+
+console.log('foo');
 
 const RedirectToHome = LoadableComponent(() =>
   import('./routes/RedirectToHome'),
