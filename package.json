@@ -40,7 +40,7 @@
     "dotenv-webpack": "^1.7.0",
     "encoding": "^0.1.12",
     "eslint": "^6.8.0",
-    "eslint-plugin-import": "^2.20.0",
+    "eslint-plugin-import": "^2.20.1",
     "faunadb": "^2.11.1",
     "http-proxy-middleware": "^0.20.0",
     "husky": "^4.2.1",
