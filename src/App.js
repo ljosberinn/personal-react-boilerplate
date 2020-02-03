@@ -12,8 +12,6 @@ import { PRIVATE_ROUTES } from './routes/private';
 import { PUBLIC_ROUTES } from './routes/public';
 import { SHARED_ROUTES, LANGUAGE_ROUTE } from './routes/shared';
 
-console.log('foo');
-
 const RedirectToHome = LoadableComponent(() =>
   import('./routes/RedirectToHome'),
 );
