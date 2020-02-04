@@ -1,135 +1,112 @@
-// This optional code is used to register a service worker.
-// register() is not called by default.
+/* eslint no-restricted-globals: 0 */
 
-// This lets the app load faster on subsequent visits in production, and gives
-// it offline capabilities. However, it also means that developers (and users)
-// will only see deployed updates on subsequent visits to a page, after all the
-// existing tabs open on the page have been closed, since previously cached
-// resources are updated in the background.
+import { setCacheNameDetails, cacheNames } from 'workbox-core';
+import { precacheAndRoute, getCacheKeyForURL } from 'workbox-precaching';
+import { Router, NavigationRoute } from 'workbox-routing';
 
-// To learn more about the benefits of this model and instructions on how to
-// opt-in, read https://bit.ly/CRA-PWA
+/**
+ * @typedef {Object} FalconSWBuildConfig
+ * @property {boolean} precache if Workbox precache
+ */
+/** @type {FalconSWBuildConfig} */
+const CONFIG = {};
 
-const isLocalhost = Boolean(
-  window.location.hostname === 'localhost' ||
-    // [::1] is the IPv6 localhost address.
-    window.location.hostname === '[::1]' ||
-    // 127.0.0.1/8 is considered localhost for IPv4.
-    window.location.hostname.match(
-      /^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/,
-    ),
-);
+const ENTRIES = [];
 
-export function register(config) {
-  if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
-    // The URL constructor is available in all browsers that support SW.
-    const publicUrl = new URL(process.env.PUBLIC_URL, window.location.href);
-    if (publicUrl.origin !== window.location.origin) {
-      // Our service worker won't work if PUBLIC_URL is on a different origin
-      // from what our page is served on. This might happen if a CDN is used to
-      // serve assets; see https://github.com/facebook/create-react-app/issues/2374
-      return;
+/**
+ * `message` event handler
+ * @param {Event} event event
+ */
+function onMessage(event) {
+  const { data } = event;
+
+  if (data && data.type) {
+    switch (data.type) {
+      case 'SKIP_WAITING':
+        self.skipWaiting();
+        break;
+
+      default:
+        break;
+    }
+  }
+}
+
+self.addEventListener('message', onMessage);
+
+setCacheNameDetails({ prefix: '@deity' });
+if (CONFIG.precache) {
+  precacheAndRoute(ENTRIES, {});
+}
+
+const router = new Router();
+self.addEventListener('fetch', event => {
+  const responsePromise = router.handleRequest(event);
+  if (responsePromise) {
+    event.respondWith(responsePromise);
+  }
+});
+
+/**
+ * Check if Service Worker is waiting for activation, but there is only one client
+ * @returns {boolean} boolean
+ */
+async function isWaitingWithOneClient() {
+  const clients = await self.clients.matchAll();
+
+  return self.registration.waiting && clients.length <= 1;
+}
+
+async function getFromCacheOrNetwork(request) {
+  try {
+    const response = await caches.match(request, {
+      cacheName: cacheNames.precache,
+    });
+
+    if (response) {
+      return response;
     }
 
-    window.addEventListener('load', () => {
-      const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`;
+    // This shouldn't normally happen, but there are edge cases: https://github.com/GoogleChrome/workbox/issues/1441
+    throw new Error(
+      `The cache ${cacheNames.precache} did not have an entry for ${request}.`,
+    );
+  } catch (error) {
+    // If there's either a cache miss, or the caches.match() call threw
+    // an exception, then attempt to fulfill the navigation request with
+    // a response from the network rather than leaving the user with a
+    // failed navigation.
+    console.log(
+      `Unable to respond to navigation request with cached response. Falling back to network.`,
+      error,
+    );
 
-      if (isLocalhost) {
-        // This is running on localhost. Let's check if a service worker still exists or not.
-        checkValidServiceWorker(swUrl, config);
-
-        // Add some additional logging to localhost, pointing developers to the
-        // service worker/PWA documentation.
-        navigator.serviceWorker.ready.then(() => {
-          console.log(
-            'This web app is being served cache-first by a service ' +
-              'worker. To learn more, visit https://bit.ly/CRA-PWA',
-          );
-        });
-      } else {
-        // Is not localhost. Just register service worker
-        registerValidSW(swUrl, config);
-      }
-    });
+    // This might still fail if the browser is offline...
+    return fetch(request);
   }
 }
 
-function registerValidSW(swUrl, config) {
-  navigator.serviceWorker
-    .register(swUrl)
-    .then(registration => {
-      registration.onupdatefound = () => {
-        const installingWorker = registration.installing;
-        if (installingWorker == null) {
-          return;
-        }
-        installingWorker.onstatechange = () => {
-          if (installingWorker.state === 'installed') {
-            if (navigator.serviceWorker.controller) {
-              // At this point, the updated precached content has been fetched,
-              // but the previous service worker will still serve the older
-              // content until all client tabs are closed.
-              console.log(
-                'New content is available and will be used when all ' +
-                  'tabs for this page are closed. See https://bit.ly/CRA-PWA.',
-              );
+router.registerRoute(
+  new NavigationRoute(async ({ url }) => {
+    if (await isWaitingWithOneClient()) {
+      self.registration.waiting.postMessage({
+        type: 'SKIP_WAITING',
+        payload: undefined,
+      });
 
-              // Execute callback
-              if (config && config.onUpdate) {
-                config.onUpdate(registration);
-              }
-            } else {
-              // At this point, everything has been precached.
-              // It's the perfect time to display a
-              // "Content is cached for offline use." message.
-              console.log('Content is cached for offline use.');
+      // refresh the tab by returning a blank response
+      return new Response('', { headers: { Refresh: '0' } });
+    }
 
-              // Execute callback
-              if (config && config.onSuccess) {
-                config.onSuccess(registration);
-              }
-            }
-          }
-        };
-      };
-    })
-    .catch(error => {
-      console.error('Error during service worker registration:', error);
-    });
-}
+    if (!CONFIG.precache) {
+      return fetch(url.href);
+    }
 
-function checkValidServiceWorker(swUrl, config) {
-  // Check if the service worker can be found. If it can't reload the page.
-  fetch(swUrl)
-    .then(response => {
-      // Ensure service worker exists, and that we really are getting a JS file.
-      const contentType = response.headers.get('content-type');
-      if (
-        response.status === 404 ||
-        (contentType != null && contentType.indexOf('javascript') === -1)
-      ) {
-        // No service worker found. Probably a different app. Reload the page.
-        navigator.serviceWorker.ready.then(registration => {
-          registration.unregister().then(() => {
-            window.location.reload();
-          });
-        });
-      } else {
-        // Service worker found. Proceed as normal.
-        registerValidSW(swUrl, config);
-      }
-    })
-    .catch(() => {
-      console.log(
-        'No internet connection found. App is running in offline mode.',
-      );
-    });
-}
+    const cachedUrlKey = getCacheKeyForURL('app-shell');
+    if (!cachedUrlKey) {
+      return fetch(url.href);
+    }
 
-export function unregister() {
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.ready.then(registration => {
-      registration.unregister();
-    });
-  }
-}
+    return getFromCacheOrNetwork(cachedUrlKey);
+  }),
+);

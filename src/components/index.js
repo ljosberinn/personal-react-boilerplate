@@ -12,6 +12,7 @@ import LoginProviderGroup from './LoginProviderGroup';
 import Navbar from './Navbar';
 import PasswordSelection from './PasswordSelection';
 import SentryErrorBoundary from './SentryErrorBoundary';
+import ServiceWorker from './ServiceWorker';
 import Switch from './Switch';
 import TemplatedHelmet from './TemplatedHelmet';
 import ThemeSwitch from './ThemeSwitch';
@@ -38,4 +39,5 @@ export {
   Error,
   LoginProviderGroup,
   ToastCloseButton,
+  ServiceWorker,
 };
