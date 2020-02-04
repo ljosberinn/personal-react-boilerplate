@@ -38,6 +38,7 @@ export default function App() {
     ...SHARED_ROUTES,
     ...(isLoggedIn ? PRIVATE_ROUTES : PUBLIC_ROUTES),
   };
+  
   return (
     <Layout>
       <SentryErrorBoundary>
