@@ -20,6 +20,9 @@ function whenReady(callback) {
   }
 }
 
+const { origin } = new URL(process.env.PUBLIC_URL, window.location.href);
+const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`;
+
 /**
  *
  * @param {{
@@ -30,7 +33,7 @@ function whenReady(callback) {
  * @see https://github.com/deity-io/falcon/blob/master/packages/falcon-service-worker/src/ServiceWorkerRegistrar.tsx
  */
 export default function ServiceWorkerProvider({ children, options }) {
-  const [isSupported, setIsSupported] = useState(supportsServiceWorker);
+  const [isSupported] = useState(supportsServiceWorker);
   const [registration, setRegistration] = useState(undefined);
 
   useEffect(() => {
@@ -39,18 +42,13 @@ export default function ServiceWorkerProvider({ children, options }) {
     }
 
     whenReady(() => {
-      const publicUrl = new URL(process.env.PUBLIC_URL, window.location.href);
-
-      if (publicUrl.origin !== window.location.origin) {
+      if (origin !== window.location.origin) {
         return;
       }
-
-      const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`;
 
       navigator.serviceWorker
         .register(swUrl, options)
         .then(registration => {
-          setIsSupported(true);
           setRegistration(registration);
 
           navigator.serviceWorker.addEventListener(

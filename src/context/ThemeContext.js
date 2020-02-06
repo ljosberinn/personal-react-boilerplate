@@ -1,6 +1,7 @@
 import React, { createContext, useState, useEffect, useCallback } from 'react';
 
 import { hasLocalStorage } from '../constants/browserAPIs';
+import { ALT_THEME_URL } from '../constants/env';
 import useDetectColorScheme, {
   THEME_NAMES,
 } from '../hooks/useDetectColorScheme';
@@ -43,9 +44,8 @@ const changeThemeOnHTMLTag = theme => {
   htmlTagClassList.add(thisTheme);
 };
 
-const href = 'https://unpkg.com/bulmaswatch/superhero/bulmaswatch.min.css';
-
-const getDarkThemeLink = () => document.querySelector(`link[href="${href}"]`);
+const getDarkThemeLink = () =>
+  document.querySelector(`link[href="${ALT_THEME_URL}"]`);
 
 export const ThemeContext = createContext();
 
@@ -81,7 +81,7 @@ export default function ThemeProvider({ children }) {
       document.querySelector('head').append(
         Object.assign(document.createElement('link'), {
           rel: 'stylesheet',
-          href,
+          href: ALT_THEME_URL,
           onload: () => {
             changeThemeOnHTMLTag(theme);
             setIsLoading(false);

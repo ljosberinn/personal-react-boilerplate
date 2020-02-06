@@ -2,16 +2,18 @@
 
 import { setCacheNameDetails, cacheNames } from 'workbox-core';
 import { precacheAndRoute, getCacheKeyForURL } from 'workbox-precaching';
-import { Router, NavigationRoute } from 'workbox-routing';
+import { Router, NavigationRoute, registerRoute } from 'workbox-routing';
+import { StaleWhileRevalidate } from 'workbox-strategies';
 
-/**
- * @typedef {Object} FalconSWBuildConfig
- * @property {boolean} precache if Workbox precache
- */
-/** @type {FalconSWBuildConfig} */
+import { ALT_THEME_URL } from './constats/env';
+
 const CONFIG = {};
-
 const ENTRIES = [];
+
+registerRoute(
+  ALT_THEME_URL,
+  new StaleWhileRevalidate({ cacheName: 'alternative-theme' }),
+);
 
 /**
  * `message` event handler
@@ -20,7 +22,7 @@ const ENTRIES = [];
 function onMessage(event) {
   const { data } = event;
 
-  if (data && data.type) {
+  if (data?.type) {
     switch (data.type) {
       case 'SKIP_WAITING':
         self.skipWaiting();
@@ -34,14 +36,17 @@ function onMessage(event) {
 
 self.addEventListener('message', onMessage);
 
-setCacheNameDetails({ prefix: '@deity' });
+setCacheNameDetails({ prefix: '@ljosberinn' });
+
 if (CONFIG.precache) {
   precacheAndRoute(ENTRIES, {});
 }
 
 const router = new Router();
+
 self.addEventListener('fetch', event => {
   const responsePromise = router.handleRequest(event);
+
   if (responsePromise) {
     event.respondWith(responsePromise);
   }
@@ -49,7 +54,6 @@ self.addEventListener('fetch', event => {
 
 /**
  * Check if Service Worker is waiting for activation, but there is only one client
- * @returns {boolean} boolean
  */
 async function isWaitingWithOneClient() {
   const clients = await self.clients.matchAll();

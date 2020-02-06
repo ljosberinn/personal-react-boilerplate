@@ -11,3 +11,4 @@ export const SENTRY_DSN = process.env.REACT_APP_SENTRY_DSN;
 export const DISCORD_LINK = process.env.REACT_APP_DISCORD_LINK;
 export const LOGROCKET_ID = process.env.REACT_APP_LOGROCKET_ID;
 export const IS_LIVE = process.env.NODE_ENV !== 'development';
+export const ALT_THEME_URL = process.env.REACT_APP_ALT_THEME_URL;

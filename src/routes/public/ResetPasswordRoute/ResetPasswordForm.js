@@ -1,3 +1,5 @@
+import { useIdentityContext } from 'react-netlify-identity';
+
 import {
   Column,
   Title,
@@ -12,7 +14,6 @@ import {
 import React, { useReducer, useCallback } from 'react';
 import { Fade } from 'react-awesome-reveal';
 import { useTranslation, Trans } from 'react-i18next';
-import { useIdentityContext } from 'react-netlify-identity';
 import { Link } from 'react-router-dom';
 
 import { ValidityIconLeft, Field, Form, Error } from '../../../components';
@@ -163,7 +164,7 @@ export default function ResetPasswordForm() {
             as="p"
             textAlign="centered"
             ns="resetPassword"
-            i18nKey="login-link"
+            i18nKey="loginLink"
           >
             Forget it, send me back to the <Link to="/login">Sign in</Link>{' '}
             screen.
