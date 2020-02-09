@@ -1,16 +1,40 @@
 /* eslint-disable no-restricted-globals */
 
+import { CacheableResponsePlugin } from 'workbox-cacheable-response';
 import { cacheNames, setCacheNameDetails } from 'workbox-core';
+import { ExpirationPlugin } from 'workbox-expiration';
 import { getCacheKeyForURL, precacheAndRoute } from 'workbox-precaching';
 import { NavigationRoute, registerRoute, Router } from 'workbox-routing';
-import { StaleWhileRevalidate } from 'workbox-strategies';
+import { CacheFirst, StaleWhileRevalidate } from 'workbox-strategies';
 
 const CONFIG = {};
 const ENTRIES = [];
 
 registerRoute(
-  /https:\/\/unpkg.com\/bulmaswatch@/,
+  /^https:\/\/unpkg.com\/bulmaswatch@/,
   new StaleWhileRevalidate({ cacheName: 'alternative-theme' }),
+);
+
+registerRoute(
+  /^https:\/\/fonts\.googleapis\.com/,
+  new StaleWhileRevalidate({
+    cacheName: 'google-fonts-stylesheets',
+  }),
+);
+
+registerRoute(
+  /^https:\/\/fonts\.gstatic\.com/,
+  new CacheFirst({
+    cacheName: 'google-fonts-webfonts',
+    plugins: [
+      new CacheableResponsePlugin({
+        statuses: [0, 200],
+      }),
+      new ExpirationPlugin({
+        maxAgeSeconds: 60 * 60 * 24 * 365,
+      }),
+    ],
+  }),
 );
 
 /**

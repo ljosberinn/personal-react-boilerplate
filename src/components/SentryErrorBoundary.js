@@ -1,6 +1,6 @@
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { faBomb } from '@fortawesome/free-solid-svg-icons';
-import * as Sentry from '@sentry/browser';
+import { withScope } from '@sentry/browser';
 import {
   Column,
   Box,
@@ -82,7 +82,7 @@ class SentryErrorBoundary extends Component {
   }
 
   componentDidCatch(error, errorInfo) {
-    Sentry.withScope(scope => {
+    withScope(scope => {
       scope.setExtras(errorInfo);
 
       this.setState({ error });
