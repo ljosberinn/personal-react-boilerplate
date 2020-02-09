@@ -5,13 +5,11 @@ import { precacheAndRoute, getCacheKeyForURL } from 'workbox-precaching';
 import { Router, NavigationRoute, registerRoute } from 'workbox-routing';
 import { StaleWhileRevalidate } from 'workbox-strategies';
 
-import { ALT_THEME_URL } from './constats/env';
-
 const CONFIG = {};
 const ENTRIES = [];
 
 registerRoute(
-  ALT_THEME_URL,
+  /bulmaswatch.min.css/,
   new StaleWhileRevalidate({ cacheName: 'alternative-theme' }),
 );
 
@@ -27,7 +25,6 @@ function onMessage(event) {
       case 'SKIP_WAITING':
         self.skipWaiting();
         break;
-
       default:
         break;
     }

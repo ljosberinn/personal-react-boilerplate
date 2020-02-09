@@ -12,35 +12,7 @@ import { ThemeProvider, ServiceWorkerProvider } from './context';
 import './i18n';
 import './utils/errors';
 
-if (!IS_LIVE) {
-  if (!localStorage['gotrue.user']) {
-    /*
-   const user = {
-      url: env.SITE_URL,
-      token: {
-        access_token: '',
-        token_type: 'bearer',
-        expires_in: 3600,
-        refresh_token: 'pYDomuTz1CtXErmnyV28wg',
-        expires_at: 1576380881000,
-      },
-      id: '12345678-1234-1234-1234-1234567890123',
-      aud: '',
-      role: '',
-      email: 'foo@bar.baz',
-      confirmed_at: '2019-12-15T02:34:39Z',
-      confirmation_sent_at: '2019-12-15T02:33:58Z',
-      app_metadata: { provider: 'email' },
-      user_metadata: {},
-      created_at: '2019-12-15T02:33:58Z',
-      updated_at: '2019-12-15T02:33:58Z',
-    };
-
-    localStorage['gotrue.user'] = JSON.stringify(user);
-    */
-  }
-} else {
-  //Sentry.init({ dsn: SENTRY_DSN });
+if (IS_LIVE) {
   LogRocket.init(LOGROCKET_ID);
   setupLogRocketReact(LogRocket);
 }
