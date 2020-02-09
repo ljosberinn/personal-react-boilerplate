@@ -1,4 +1,3 @@
-import { Button } from 'rbx';
 import React, { useState, useEffect } from 'react';
 
 import { supportsServiceWorker } from '../constants/browserAPIs';
@@ -81,22 +80,14 @@ export default function ServiceWorker() {
         autoClose: false,
         closeOnClick: false,
         content: (
-          <>
-            Site has updated.To see changes close other tabs or
-            <Button
-              size="small"
-              type="button"
-              color="primary"
-              onClick={skipWaiting}
-            >
-              click here
-            </Button>
-          </>
+          <div onClick={skipWaiting}>
+            Site has updated.To see changes close other tabs or click here.
+          </div>
         ),
       });
     }
-    //eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [supportsServiceWorker, isWaiting, registration?.waiting]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isWaiting, isInstalled, registration?.waiting]);
 
   return null;
 }

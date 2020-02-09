@@ -33,11 +33,10 @@ const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`;
  * @see https://github.com/deity-io/falcon/blob/master/packages/falcon-service-worker/src/ServiceWorkerRegistrar.tsx
  */
 export default function ServiceWorkerProvider({ children, options }) {
-  const [isSupported] = useState(supportsServiceWorker);
   const [registration, setRegistration] = useState(undefined);
 
   useEffect(() => {
-    if (!isSupported) {
+    if (!supportsServiceWorker) {
       return;
     }
 
@@ -71,11 +70,11 @@ export default function ServiceWorkerProvider({ children, options }) {
         onControllerChange,
       );
     };
-  }, [isSupported, options]);
+  }, [options]);
 
   return (
     <ServiceWorkerContext.Provider
-      value={{ isSupported, registration, options }}
+      value={{ isSupported: supportsServiceWorker, registration, options }}
     >
       {children}
     </ServiceWorkerContext.Provider>
