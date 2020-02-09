@@ -1,6 +1,5 @@
 import { useIdentityContext } from 'react-netlify-identity';
 
-import { Button } from 'rbx';
 import React from 'react';
 import { Switch, Route, useLocation, useHistory } from 'react-router-dom';
 
