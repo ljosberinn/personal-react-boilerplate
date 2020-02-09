@@ -8,7 +8,7 @@ import { ENABLED_LANGUAGES } from '../constants/env';
 /**
  *
  * @param {{
- * children: React.ReactChildren
+ * children: JSX.Element
  * }}
  */
 export default function TemplatedHelmet({ children }) {

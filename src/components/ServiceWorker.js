@@ -1,28 +1,18 @@
-import { useState, useEffect } from 'react';
+import { Button } from 'rbx';
+import React, { useState, useEffect } from 'react';
 
 import { supportsServiceWorker } from '../constants/browserAPIs';
 import { useServiceWorker } from '../hooks';
+import toast from '../utils/toast';
 
 /**
  *
  * @see https://github.com/deity-io/falcon/blob/master/packages/falcon-service-worker/src/ServiceWorker.tsx
- * @param {{
- * children: React.Children;
- * }}
  */
-export default function ServiceWorker({ children }) {
+export default function ServiceWorker() {
   const [isWaiting, setIsWaiting] = useState(false);
-  const { isSupported, registration } = useServiceWorker();
-
-  function skipWaiting() {
-    debugger;
-    return registration.waiting
-      ? registration.waiting.postMessage({
-          type: 'SKIP_WAITING',
-          payload: undefined,
-        })
-      : () => {};
-  }
+  const [isInstalled, setIsInstalled] = useState(false);
+  const { registration } = useServiceWorker();
 
   useEffect(() => {
     if (!supportsServiceWorker || !registration) {
@@ -38,14 +28,19 @@ export default function ServiceWorker({ children }) {
       if (registration.installing) {
         registration.installing.addEventListener('statechange', event => {
           if (event.target.state === 'installed') {
-            setIsWaiting(true);
+            setIsInstalled(true);
           }
         });
+      }
+
+      if (registration.waiting) {
+        setIsWaiting(true);
       }
     }
 
     if (registration.installing) {
-      return onUpdateFound();
+      onUpdateFound();
+      return;
     }
 
     registration.addEventListener('updatefound', onUpdateFound);
@@ -55,14 +50,53 @@ export default function ServiceWorker({ children }) {
     };
   }, [registration]);
 
-  if (isSupported && registration) {
-    return children({
-      isWaiting,
-      skipWaiting,
-      isSupported,
-      registration,
-    });
-  }
+  useEffect(() => {
+    if (!supportsServiceWorker) {
+      return;
+    }
 
-  return children({ isSupported, isWaiting: false, skipWaiting: () => {} });
+    if (isInstalled) {
+      toast({
+        type: 'info',
+        autoClose: false,
+        closeOnClick: true,
+        content:
+          'ServiceWorker successfully installed. Site is now partially available offline.',
+      });
+      return;
+    }
+
+    if (isWaiting) {
+      function skipWaiting() {
+        return registration.waiting
+          ? registration.waiting.postMessage({
+              type: 'SKIP_WAITING',
+              payload: undefined,
+            })
+          : () => {};
+      }
+
+      toast({
+        type: 'info',
+        autoClose: false,
+        closeOnClick: false,
+        content: (
+          <>
+            Site has updated.To see changes close other tabs or
+            <Button
+              size="small"
+              type="button"
+              color="primary"
+              onClick={skipWaiting}
+            >
+              click here
+            </Button>
+          </>
+        ),
+      });
+    }
+    //eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [supportsServiceWorker, isWaiting, registration?.waiting]);
+
+  return null;
 }

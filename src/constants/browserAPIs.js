@@ -32,5 +32,5 @@ export const supportsServiceWorker = (() => {
   const isHttps = location.protocol === 'https:';
   const isLocalHost = location.host.match(/(localhost|127.0.0.1)/);
 
-  return isApiAvailable && (isHttps || isLocalHost);
+  return !!(isApiAvailable && (isHttps || isLocalHost));
 })();

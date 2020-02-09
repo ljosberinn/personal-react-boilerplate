@@ -1,6 +1,4 @@
-import AnalyticsSvg from './AnalyticsSvg';
-import SecuritySvg from './SecuritySvg';
-import CookieSvg from './CookieSvg';
-import AdSvg from './AdSvg';
-
-export { AnalyticsSvg, SecuritySvg, CookieSvg, AdSvg };
+export { default as AnalyticsSvg } from './AnalyticsSvg';
+export { default as SecuritySvg } from './SecuritySvg';
+export { default as CookieSvg } from './CookieSvg';
+export { default as AdSvg } from './AdSvg';

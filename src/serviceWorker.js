@@ -1,21 +1,20 @@
-/* eslint no-restricted-globals: 0 */
+/* eslint-disable no-restricted-globals */
 
-import { setCacheNameDetails, cacheNames } from 'workbox-core';
-import { precacheAndRoute, getCacheKeyForURL } from 'workbox-precaching';
-import { Router, NavigationRoute, registerRoute } from 'workbox-routing';
+import { cacheNames, setCacheNameDetails } from 'workbox-core';
+import { getCacheKeyForURL, precacheAndRoute } from 'workbox-precaching';
+import { NavigationRoute, registerRoute, Router } from 'workbox-routing';
 import { StaleWhileRevalidate } from 'workbox-strategies';
 
 const CONFIG = {};
 const ENTRIES = [];
 
 registerRoute(
-  /bulmaswatch.min.css/,
+  /https:\/\/unpkg.com\/bulmaswatch@/,
   new StaleWhileRevalidate({ cacheName: 'alternative-theme' }),
 );
 
 /**
- * `message` event handler
- * @param {Event} event event
+ * @param {Event} event
  */
 function onMessage(event) {
   const { data } = event;

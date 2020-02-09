@@ -1,8 +1,11 @@
 import classnames from 'classnames';
+import { Delete } from 'rbx';
 import React from 'react';
 import { toast as toastFn } from 'react-toastify';
 
-import { ToastCloseButton } from '../components';
+function ToastCloseButton({ closeToast }) {
+  return <Delete onClick={closeToast} />;
+}
 
 toastFn.configure({
   autoClose: 20000,

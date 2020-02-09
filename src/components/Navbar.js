@@ -1,9 +1,10 @@
+import { useIdentityContext } from 'react-netlify-identity';
+
 import { faGithub, faDiscord } from '@fortawesome/free-brands-svg-icons';
 import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { Navbar as RBXNavbar, Button } from 'rbx';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useIdentityContext } from 'react-netlify-identity';
 import { NavLink, Link, useLocation } from 'react-router-dom';
 
 import { REPO_LINK, DISCORD_LINK } from '../constants/env';
@@ -104,7 +105,7 @@ export default function Navbar() {
 /**
  *
  * @param {{
- * children: React.ReactChildren
+ * children: JSX.Element
  * }}
  */
 function NavButton({ children, ...rest }) {

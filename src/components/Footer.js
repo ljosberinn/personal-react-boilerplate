@@ -1,8 +1,9 @@
+import { useIdentityContext } from 'react-netlify-identity';
+
 import { faGithub, faDiscord } from '@fortawesome/free-brands-svg-icons';
 import { Footer as RBXFooter, Container, Column, Generic } from 'rbx';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useIdentityContext } from 'react-netlify-identity';
 import { NavLink } from 'react-router-dom';
 
 import { REPO_LINK, DISCORD_LINK, BRAND_NAME } from '../constants/env';
@@ -15,7 +16,7 @@ import ThemeSwitch from './ThemeSwitch';
 
 /**
  *
- * @param {{children: React.Children;}} props
+ * @param {{children: JSX.Element;}} props
  */
 function Link({ children, ...rest }) {
   return (

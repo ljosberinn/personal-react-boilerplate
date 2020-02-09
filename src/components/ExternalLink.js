@@ -4,7 +4,8 @@ import React from 'react';
  *
  * @param {{
  * href: string;
- * children: React.Children}} props
+ * children: JSX.Element
+ * }} props
  */
 export default function ExternalLink({ href, children, ...rest }) {
   return (

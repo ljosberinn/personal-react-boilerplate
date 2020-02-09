@@ -1,43 +1,20 @@
-import Checkbox from './Checkbox';
-import Error from './Error';
-import ExternalLink from './ExternalLink';
-import Field from './Field';
-import Footer from './Footer';
-import Form from './Form';
-import Icon from './Icon';
-import LanguageSwitch from './LanguageSwitch';
-import Loader from './Loader';
-import LoginProviderButton from './LoginProviderButton';
-import LoginProviderGroup from './LoginProviderGroup';
-import Navbar from './Navbar';
-import PasswordSelection from './PasswordSelection';
-import SentryErrorBoundary from './SentryErrorBoundary';
-import ServiceWorker from './ServiceWorker';
-import Switch from './Switch';
-import TemplatedHelmet from './TemplatedHelmet';
-import ThemeSwitch from './ThemeSwitch';
-import ToastCloseButton from './ToastCloseButton';
-import ValidityIconLeft from './ValidityIconLeft';
-
-export {
-  LoginProviderButton,
-  Checkbox,
-  Loader,
-  Footer,
-  ValidityIconLeft,
-  Icon,
-  Field,
-  Switch,
-  ExternalLink,
-  Navbar,
-  LanguageSwitch,
-  ThemeSwitch,
-  TemplatedHelmet,
-  SentryErrorBoundary,
-  PasswordSelection,
-  Form,
-  Error,
-  LoginProviderGroup,
-  ToastCloseButton,
-  ServiceWorker,
-};
+export { default as Checkbox } from './Checkbox';
+export { default as DrawerNav } from './DrawerNav';
+export { default as Error } from './Error';
+export { default as ExternalLink } from './ExternalLink';
+export { default as Field } from './Field';
+export { default as Footer } from './Footer';
+export { default as Form } from './Form';
+export { default as Icon } from './Icon';
+export { default as LanguageSwitch } from './LanguageSwitch';
+export { default as Loader } from './Loader';
+export { default as LoginProviderButton } from './LoginProviderButton';
+export { default as LoginProviderGroup } from './LoginProviderGroup';
+export { default as Navbar } from './Navbar';
+export { default as PasswordSelection } from './PasswordSelection';
+export { default as SentryErrorBoundary } from './SentryErrorBoundary';
+export { default as ServiceWorker } from './ServiceWorker';
+export { default as Switch } from './Switch';
+export { default as TemplatedHelmet } from './TemplatedHelmet';
+export { default as ValidityIconLeft } from './ValidityIconLeft';
+export { default as ThemeSwitch } from './ThemeSwitch';

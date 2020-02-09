@@ -78,20 +78,29 @@ export default function ThemeSwitch({ from }) {
  *
  * @param {{
  *  from: 'settings' | 'nav' | 'footer'
- *  children: React.ReactChildren
+ *  children: JSX.Element
  * }}
  */
-const Wrap = ({ from, children, className, ...rest }) =>
-  from === 'nav' ? (
-    <Navbar.Item className={className} {...rest}>
-      {children}
-    </Navbar.Item>
-  ) : from === 'settings' ? (
-    <Button type="button" className={className} {...rest}>
-      {children}
-    </Button>
-  ) : (
+function Wrap({ from, children, className, ...rest }) {
+  if (from === 'nav') {
+    return (
+      <Navbar.Item className={className} {...rest}>
+        {children}
+      </Navbar.Item>
+    );
+  }
+
+  if (from === 'settings') {
+    return (
+      <Button type="button" className={className} {...rest}>
+        {children}
+      </Button>
+    );
+  }
+
+  return (
     <span className={classnames(className, 'is-flex')} {...rest}>
       {children}
     </span>
   );
+}

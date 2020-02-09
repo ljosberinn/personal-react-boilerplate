@@ -6,7 +6,7 @@ import React from 'react';
  * onSubmit: (e: React.FormEvent<HTMLFormElement>) => void,
  * spellCheck: boolean,
  * autoCorrect: 'on' | 'off',
- * children: React.ReactChildren
+ * children: JSX.Element
  * }} props
  */
 export default function Form({

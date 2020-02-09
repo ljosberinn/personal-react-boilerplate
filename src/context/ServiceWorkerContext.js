@@ -26,7 +26,7 @@ const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`;
 /**
  *
  * @param {{
- * chilren: React.ReactChildren;
+ * chilren: JSX.Element;
  * options?: RegistrationOptions;
  * }}
  *

@@ -5,7 +5,7 @@ import { Fade } from 'react-awesome-reveal';
 /**
  *
  * @param {{
- * children: React.Children
+ * children: JSX.Element
  * }} props
  */
 export default function Error({ children, ...rest }) {

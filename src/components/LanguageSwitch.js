@@ -86,7 +86,7 @@ function DropdownContent({ t, currentLanguage, i18n }) {
 /**
  *
  * @param {{
- * children: React.ReactChildren,
+ * children: JSX.Element,
  * from: 'settings' | 'footer' | 'nav'
  * }}
  */

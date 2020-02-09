@@ -1,4 +1,2 @@
-import ServiceWorkerProvider from './ServiceWorkerContext';
-import ThemeProvider from './ThemeContext';
-
-export { ThemeProvider, ServiceWorkerProvider };
+export { default as ServiceWorkerProvider } from './ServiceWorkerContext';
+export { default as ThemeProvider } from './ThemeContext';

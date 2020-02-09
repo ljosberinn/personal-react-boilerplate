@@ -112,7 +112,7 @@ export default function PrivacyPolicy() {
  * @param {{
  * dataset: {
  *  title: string,
- *  entries: (string|React.ComponentType)[],
+ *  entries: (string|JSX.Element)[],
  *  icon: string,
  *  t: import('i18next').TFunction,
  * }[],

@@ -1,15 +1,16 @@
 import { Column } from 'rbx';
 import React, { Suspense } from 'react';
 
-import { Footer, Navbar } from './components';
+import { Footer, Navbar, DrawerNav } from './components';
 
 /**
  *
  * @param {{
- * children: React.ReactChildren
+ * children: JSX.Element;
+ * isLoggedIn: boolean;
  * }}
  */
-export default function Layout({ children }) {
+export default function Layout({ children, isLoggedIn }) {
   return (
     <>
       <Column.Group as="header">
@@ -20,7 +21,10 @@ export default function Layout({ children }) {
         </Column>
       </Column.Group>
       <main>
-        <Suspense fallback={null}>{children}</Suspense>
+        <Suspense fallback={null}>
+          {isLoggedIn && <DrawerNav />}
+          {children}
+        </Suspense>
       </main>
       <Suspense fallback={null}>
         <Footer />

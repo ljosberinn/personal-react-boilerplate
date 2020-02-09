@@ -5,7 +5,7 @@ import { Loader } from '../components';
 
 /**
  *
- * @param {() => Promise<React.ComponentType>} loader
+ * @param {() => Promise<JSX.Element>} loader
  */
 const LoadableComponent = loader =>
   Loadable({
