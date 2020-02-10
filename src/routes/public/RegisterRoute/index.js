@@ -1,8 +1,9 @@
+import { useIdentityContext } from 'react-netlify-identity';
+
 import i18n from 'i18next';
 import { Column, Content, Title, Section, Card, Generic } from 'rbx';
 import React, { useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useIdentityContext } from 'react-netlify-identity';
 import { Link } from 'react-router-dom';
 
 import { TemplatedHelmet, Form } from '../../../components';
@@ -10,6 +11,7 @@ import * as ROUTES from '../../../constants/routes';
 import { useTheme } from '../../../hooks';
 import RedirectToHome from '../../RedirectToHome';
 
+import styles from './Register.module.scss';
 import RegistrationForm from './RegistrationForm';
 import RegistrationSuccess from './RegistrationSuccess';
 
@@ -92,7 +94,10 @@ export default function RegisterRoute() {
       <TemplatedHelmet>
         <title>{t('routes:register')}</title>
       </TemplatedHelmet>
-      <Section className="register-bg" aria-labelledby="section-title">
+      <Section
+        className={`has-background-svg ${styles.container}`}
+        aria-labelledby="section-title"
+      >
         <Column.Group centered>
           <Column widescreen={{ size: 5 }} tablet={{ size: 8 }}>
             <Card>

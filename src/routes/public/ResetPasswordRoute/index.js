@@ -6,6 +6,7 @@ import { useHistory } from 'react-router-dom';
 import { TemplatedHelmet } from '../../../components';
 
 import ConfirmPasswordResetForm from './ConfirmPasswordResetForm';
+import styles from './ResetPassword.module.scss';
 import ResetPasswordForm from './ResetPasswordForm';
 
 export default function ResetPasswordRoute() {
@@ -18,7 +19,10 @@ export default function ResetPasswordRoute() {
       <TemplatedHelmet>
         <title>{t('title')}</title>
       </TemplatedHelmet>
-      <Section className="reset-password-bg" aria-labelledby="section-title">
+      <Section
+        className={`has-background-svg ${styles.container}`}
+        aria-labelledby="section-title"
+      >
         <Column.Group centered>
           <Column widescreen={{ size: 5 }} tablet={{ size: 8 }}>
             <Card>

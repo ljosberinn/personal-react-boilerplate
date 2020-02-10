@@ -95,13 +95,18 @@ export default function PrivacyPolicy() {
         <title>{t('privacyPolicy')}</title>
       </TemplatedHelmet>
 
-      <Section className="privacy-bg" aria-labelledby="section-title">
+      <Section
+        className={`has-background-svg ${styles.background}`}
+        aria-labelledby="section-title"
+      >
         <Fade triggerOnce>
           <Title id="section-title">{t('privacyPolicy')}</Title>
         </Fade>
-        {content.map((dataset, index) => (
-          <Slide dataset={dataset} key={index} index={index} t={t} />
-        ))}
+        <div>
+          {content.map((dataset, index) => (
+            <Slide dataset={dataset} key={index} index={index} t={t} />
+          ))}
+        </div>
       </Section>
     </>
   );
@@ -111,12 +116,12 @@ export default function PrivacyPolicy() {
  *
  * @param {{
  * dataset: {
- *  title: string,
- *  entries: (string|JSX.Element)[],
- *  icon: string,
- *  t: import('i18next').TFunction,
- * }[],
- * index: number
+ *  title: string;
+ *  entries: (string | JSX.Element)[];
+ *  icon: string;
+ *  t: import('i18next').TFunction;
+ * }[];
+ * index: number;
  * }}
  */
 function Slide({ dataset: { key, icon: Icon, entries }, index, t }) {
@@ -132,10 +137,10 @@ function Slide({ dataset: { key, icon: Icon, entries }, index, t }) {
         direction === 'right' && styles.right,
       )}
     >
-      <Box className={styles.box}>
+      <Box className={styles.box} as="article">
         <Card className={styles.card}>
           <Card.Header className={styles.cardHeader}>
-            <Card.Header.Title>
+            <Card.Header.Title as="h2">
               {t(`privacyPolicy:${key}Title`)}
             </Card.Header.Title>
           </Card.Header>

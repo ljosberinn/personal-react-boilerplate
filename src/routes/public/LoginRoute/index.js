@@ -1,3 +1,5 @@
+import { useIdentityContext } from 'react-netlify-identity';
+
 import {
   Card,
   Section,
@@ -13,7 +15,6 @@ import {
 } from 'rbx';
 import React, { useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useIdentityContext } from 'react-netlify-identity';
 // TODO: remove once https://github.com/dennismorello/react-awesome-reveal/issues/14 might be resolved
 import Shake from 'react-reveal/Shake';
 import { Link, useParams } from 'react-router-dom';
@@ -31,6 +32,8 @@ import {
   passwordMinLength,
 } from '../../../utils/validators';
 import RedirectToHome from '../../RedirectToHome';
+
+import styles from './Login.module.scss';
 
 const INITIAL_STATE = {
   mail: '',
@@ -121,7 +124,10 @@ export default function LoginRoute() {
       <TemplatedHelmet>
         <title>{t('title')}</title>
       </TemplatedHelmet>
-      <Section className="login-bg" aria-labelledby="section-title">
+      <Section
+        className={`has-background-svg ${styles.container}`}
+        aria-labelledby="section-title"
+      >
         <Column.Group centered>
           <Column widescreen={{ size: 5 }} tablet={{ size: 8 }}>
             <Card>

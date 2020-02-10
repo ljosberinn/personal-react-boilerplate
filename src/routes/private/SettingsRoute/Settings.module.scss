@@ -1,0 +1,7 @@
+@import '../../../assets/scss/mixins';
+
+.container {
+  background-position-x: 50%;
+}
+
+@include themedSvg('settings', '.container');

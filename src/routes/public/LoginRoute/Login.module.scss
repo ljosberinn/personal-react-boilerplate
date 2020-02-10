@@ -1,0 +1,14 @@
+@import '../../../assets/scss/mixins';
+@include themedSvg('login', '.container');
+
+.container {
+  background-position-x: 85%;
+  background-position-y: 25%;
+  background-size: 45%;
+
+  @include tablet {
+    background-size: 75%;
+  }
+
+  @include mobile-bg-adjustment();
+}

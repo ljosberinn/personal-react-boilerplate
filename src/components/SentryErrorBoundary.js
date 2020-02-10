@@ -95,7 +95,10 @@ class SentryErrorBoundary extends Component {
       const { error } = this.state;
 
       return (
-        <Section className="error-bg" aria-labelledby="section-title">
+        <Section
+          className={`has-background-svg ${styles.container}`}
+          aria-labelledby="section-title"
+        >
           <Container>
             <Column.Group centered>
               <Column size="one-third" narrow>

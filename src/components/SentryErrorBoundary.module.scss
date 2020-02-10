@@ -1,4 +1,10 @@
-@import '../assets/scss/breakpoints';
+@import '../assets/scss/mixins';
+
+.container {
+  background-position-x: 40%;
+}
+
+@include themedSvg('error', '.container');
 
 .modal {
   width: 1240px !important;

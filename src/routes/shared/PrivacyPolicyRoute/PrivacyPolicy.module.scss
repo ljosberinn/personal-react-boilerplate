@@ -1,15 +1,32 @@
-@import '../../../assets/scss/breakpoints';
+@import '../../../assets/scss/mixins';
+@include themedSvg('privacy', '.background');
+
+.background {
+  background-position-x: 115%;
+
+  @include tablet {
+    background-position-x: 50%;
+    background-position-y: 50%;
+  }
+}
 
 .container {
-  margin-top: 1rem;
+  &:first-of-type {
+    margin-top: 2rem;
+  }
 
   &:not(:last-of-type) {
     margin-bottom: 2rem;
   }
 
-  &:first-of-type {
-    margin-top: 3rem;
+  background-position-x: 115%;
+
+  @include tablet {
+    background-position-x: 50%;
+    background-position-y: 50%;
   }
+
+  @include mobile-bg-adjustment();
 }
 
 .box {
@@ -37,15 +54,24 @@
   }
 }
 
+@include widescreen {
+  // yeah about that...
+  [class*='column'] {
+    &[class*='is-1'] + [class*='column'] [class*='privacy-bg'] .right {
+      margin-left: calc(100vw - 1024px - 8.33%);
+    }
+
+    &[class*='is-2'] + [class*='column'] [class*='privacy-bg'] .right {
+      margin-left: calc(100vw - 1024px- 16.66%);
+    }
+  }
+}
+
 .right {
   margin-left: 45%;
 
   > .box {
     max-width: 100%;
-  }
-
-  @include widescreen {
-    margin-left: calc(100vw - 1024px);
   }
 
   @include tablet {
