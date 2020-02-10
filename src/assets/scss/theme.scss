@@ -64,5 +64,20 @@ html {
       border-radius: 5px;
       padding: 1rem;
     }
+
+    legend,
+    .box {
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6,
+      .title {
+        background-color: initial;
+        border-radius: initial;
+        padding: initial;
+      }
+    }
   }
 }
