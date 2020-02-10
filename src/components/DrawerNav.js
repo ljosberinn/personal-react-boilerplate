@@ -109,7 +109,7 @@ export default function DrawerNav({ isLoggedIn }) {
           <Menu.List className={styles.fixedBottom}>
             <Menu.List.Item
               onClick={toggleMenu}
-              tooltip={isExpanded ? undefined : 'toggle menu'}
+              tooltip={isExpanded ? undefined : t('toggleMenu')}
               tooltipPosition="right"
             >
               <Icon
@@ -118,7 +118,7 @@ export default function DrawerNav({ isLoggedIn }) {
                   isExpanded ? styles.transform90 : styles.transform270
                 }
               />
-              <span>toggle menu</span>
+              <span>{t('toggleMenu')}</span>
             </Menu.List.Item>
           </Menu.List>
         </nav>
