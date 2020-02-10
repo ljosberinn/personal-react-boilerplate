@@ -12,20 +12,20 @@ import {
   LoginProviderGroup,
   PasswordSelection,
 } from '../../../components';
-import * as ROUTES from '../../../constants/routes';
+import { RESET_PASSWORD, TOS } from '../../../constants/routes';
 import { validate } from '../../../utils/validators';
 
 /**
  *
  * @param {{
- * error: string,
- * handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
- * isLoading: boolean,
- * mail: string,
- * password: string,
- * confirmPassword: string,
- * tos: boolean,
- * t: import('i18next').TFunction
+ * error: string;
+ * handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+ * isLoading: boolean;
+ * mail: string;
+ * password: string;
+ * confirmPassword: string;
+ * tos: boolean;
+ * t: import('i18next').TFunction;
  * }}
  */
 export default function RegistrationForm({
@@ -82,7 +82,7 @@ export default function RegistrationForm({
               <Help color="danger">
                 <Trans parent="span" ns="registration" i18nKey="mail-in-use">
                   An account with this email already exists. Did you{' '}
-                  <Link to={ROUTES.RESET_PASSWORD.clientPath}>
+                  <Link to={RESET_PASSWORD.clientPath}>
                     forget your password
                   </Link>
                   ?
@@ -121,9 +121,7 @@ export default function RegistrationForm({
                 ns="registration"
               >
                 I agree to the{' '}
-                <Link to={ROUTES.TOS.clientPath}>
-                  {{ tos: t('routes:tos') }}
-                </Link>
+                <Link to={TOS.clientPath}>{{ tos: t('routes:tos') }}</Link>
               </Trans>
             </Control>
           </Field>

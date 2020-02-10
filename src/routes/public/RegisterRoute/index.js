@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
 import { TemplatedHelmet, Form } from '../../../components';
-import * as ROUTES from '../../../constants/routes';
+import { LOGIN } from '../../../constants/routes';
 import { useTheme } from '../../../hooks';
 import RedirectToHome from '../../RedirectToHome';
 
@@ -99,7 +99,7 @@ export default function RegisterRoute() {
         aria-labelledby="section-title"
       >
         <Column.Group centered>
-          <Column widescreen={{ size: 5 }} tablet={{ size: 8 }}>
+          <Column widescreen={{ size: 6 }} tablet={{ size: 8 }}>
             <Card>
               <Card.Content>
                 <Form onSubmit={handleSubmit}>
@@ -141,9 +141,7 @@ export default function RegisterRoute() {
                       {!successfullyRegistered && (
                         <Generic textAlign="centered">
                           {t('alreadyHaveAnAccount')}{' '}
-                          <Link to={ROUTES.LOGIN.clientPath}>
-                            {t('login:signIn')}
-                          </Link>
+                          <Link to={LOGIN.clientPath}>{t('login:signIn')}</Link>
                         </Generic>
                       )}
                     </Column>

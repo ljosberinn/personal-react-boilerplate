@@ -26,6 +26,7 @@ import {
   Error,
   LoginProviderGroup,
 } from '../../../components';
+import { REGISTER, RESET_PASSWORD } from '../../../constants/routes';
 import {
   validate,
   pattern,
@@ -129,7 +130,7 @@ export default function LoginRoute() {
         aria-labelledby="section-title"
       >
         <Column.Group centered>
-          <Column widescreen={{ size: 5 }} tablet={{ size: 8 }}>
+          <Column widescreen={{ size: 6 }} tablet={{ size: 9 }}>
             <Card>
               <Card.Content>
                 <Form onSubmit={handleSubmit}>
@@ -144,7 +145,9 @@ export default function LoginRoute() {
                         </Title>
                         <Title subtitle textAlign="centered">
                           {t('or')}{' '}
-                          <Link to="/register">{t('createAccount')}</Link>
+                          <Link to={REGISTER.clientPath}>
+                            {t('createAccount')}
+                          </Link>
                         </Title>
                       </legend>
 
@@ -228,7 +231,11 @@ export default function LoginRoute() {
                               <br />
 
                               <Generic textAlign="centered">
-                                <Title size={6} as={Link} to="/reset-password">
+                                <Title
+                                  size={6}
+                                  as={Link}
+                                  to={RESET_PASSWORD.clientPath}
+                                >
                                   {t('forgotPassword')}
                                 </Title>
                               </Generic>
@@ -239,7 +246,7 @@ export default function LoginRoute() {
 
                       <Generic as="p" textAlign="centered">
                         {t('dontHaveAnAccount')}{' '}
-                        <Link to="/register">{t('signUp')}</Link>
+                        <Link to={REGISTER.clientPath}>{t('signUp')}</Link>
                       </Generic>
                     </Column>
                   </Column.Group>
