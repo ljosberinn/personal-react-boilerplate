@@ -33,6 +33,7 @@ function identifyUser(user) {
       created_at,
       app_metadata: { provider },
     } = user;
+    
     LogRocket.identify(id, {
       provider,
       created_at,
@@ -43,7 +44,6 @@ function identifyUser(user) {
   }
 
   LogRocket.identify(null);
-  window.location.pathname = '/';
 }
 
 render(
