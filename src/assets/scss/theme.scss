@@ -15,6 +15,10 @@ html {
     .card {
       background-color: rgba($white, 0.95);
     }
+
+    .column[class*='DrawerNav'] .box {
+      background-color: $white-ter;
+    }
   }
 
   &.theme--dark {
@@ -47,6 +51,18 @@ html {
       .switch input[type='checkbox']:checked + .check {
         background: $dark-primary;
       }
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    .title {
+      background-color: rgba($dark-bg-color, 0.95);
+      border-radius: 5px;
+      padding: 1rem;
     }
   }
 }

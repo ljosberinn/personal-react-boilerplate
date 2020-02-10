@@ -13,6 +13,8 @@ export const LANDING_PAGE = {
   clientPath: '/',
   title: 'routes:landingPage',
   icon: faHome,
+  visibleInDrawerNav: false,
+  isPublic: true,
 };
 
 export const REGISTER = {
@@ -20,6 +22,8 @@ export const REGISTER = {
   clientPath: '/register',
   title: 'routes:register',
   icon: faUserEdit,
+  visibleInDrawerNav: false,
+  isPublic: true,
 };
 
 export const LOGIN = {
@@ -27,6 +31,8 @@ export const LOGIN = {
   clientPath: '/login',
   title: 'routes:login',
   icon: faSignInAlt,
+  visibleInDrawerNav: false,
+  isPublic: true,
 };
 
 export const RESET_PASSWORD = {
@@ -34,12 +40,16 @@ export const RESET_PASSWORD = {
   clientPath: '/reset-password',
   title: 'routes:resetPassword',
   icon: faUnlockAlt,
+  visibleInDrawerNav: false,
+  isPublic: true,
 };
 
 export const ACTIVATE_ACCOUNT = {
   routerPath: '/activate-account/:token',
   clientPath: undefined,
   title: undefined,
+  visibleInDrawerNav: false,
+  isPublic: true,
 };
 
 export const PRIVACY_POLICY = {
@@ -47,6 +57,8 @@ export const PRIVACY_POLICY = {
   clientPath: '/privacy-policy',
   title: 'routes:privacyPolicy',
   icon: faShieldAlt,
+  visibleInDrawerNav: false,
+  isPublic: true,
 };
 
 export const TOS = {
@@ -54,6 +66,8 @@ export const TOS = {
   clientPath: '/tos',
   title: 'routes:tos',
   icon: faBookReader,
+  visibleInDrawerNav: false,
+  isPublic: true,
 };
 
 /** PRIVATE ROUTES */
@@ -62,4 +76,6 @@ export const SETTINGS = {
   clientPath: '/settings/site',
   title: 'routes:settings',
   icon: faCog,
+  visibleInDrawerNav: true,
+  isPublic: false,
 };

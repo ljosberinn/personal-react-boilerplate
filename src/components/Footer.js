@@ -32,9 +32,9 @@ export default function Footer() {
 
   return (
     <RBXFooter as="footer">
-      <Container>
+      <Container as="nav" aria-label="meta navigation">
         <Column.Group>
-          <Column size={3}>
+          <Column size={4}>
             <ul>
               <Generic as="li" textWeight="semibold">
                 {BRAND_NAME}
@@ -61,15 +61,8 @@ export default function Footer() {
               )}
             </ul>
           </Column>
-          <Column size={3}>
-            <ul>
-              <Generic as="li" textWeight="semibold">
-                {t('features')}
-              </Generic>
-            </ul>
-          </Column>
 
-          <Column size={3}>
+          <Column size={4}>
             <ul>
               <Generic as="li" textWeight="semibold">
                 {t('legal')}
@@ -83,7 +76,7 @@ export default function Footer() {
             </ul>
           </Column>
 
-          <Column size={3}>
+          <Column size={4}>
             <ul>
               <Generic as="li" textWeight="semibold">
                 {t('other')}

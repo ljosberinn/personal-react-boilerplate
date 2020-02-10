@@ -41,7 +41,7 @@ export default function Navbar() {
 
   return (
     <>
-      <RBXNavbar>
+      <RBXNavbar aria-label="secondary navigation" role={undefined}>
         <RBXNavbar.Brand>
           <RBXNavbar.Item as={Link} to="/">
             <LogoIpsumSvg />

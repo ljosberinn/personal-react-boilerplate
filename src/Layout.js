@@ -1,8 +1,8 @@
 import { Column } from 'rbx';
 import React, { Suspense } from 'react';
 
+import styles from './Layout.module.scss';
 import { Footer, Navbar, DrawerNav } from './components';
-
 /**
  *
  * @param {{
@@ -20,12 +20,15 @@ export default function Layout({ children, isLoggedIn }) {
           </Suspense>
         </Column>
       </Column.Group>
-      <main>
+      <Column.Group gapless as="main">
         <Suspense fallback={null}>
-          {isLoggedIn && <DrawerNav />}
-          {children}
+          <DrawerNav isLoggedIn={isLoggedIn} />
         </Suspense>
-      </main>
+
+        <Suspense fallback={null}>
+          <Column className={styles.shadow}>{children}</Column>
+        </Suspense>
+      </Column.Group>
       <Suspense fallback={null}>
         <Footer />
       </Suspense>

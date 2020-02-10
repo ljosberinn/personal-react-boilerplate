@@ -118,6 +118,10 @@ main {
   display: flex;
   flex: 1 1 0%;
   min-height: calc(100vh - 247px - 64px);
+
+  &.columns.is-gapless {
+    margin-bottom: 0 !important;
+  }
 }
 
 .footer li {
