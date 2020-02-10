@@ -76,6 +76,6 @@ export const SETTINGS = {
   clientPath: '/settings/site',
   title: 'routes:settings',
   icon: faCog,
-  visibleInDrawerNav: true,
+  visibleInDrawerNav: false,
   isPublic: false,
 };
