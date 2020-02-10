@@ -83,7 +83,9 @@ export default function DrawerNav({ isLoggedIn }) {
           className={styles.absoluteButton}
           role="button"
         >
-          <div class={classnames('navbar-burger', isExpanded && 'is-active')}>
+          <div
+            className={classnames('navbar-burger', isExpanded && 'is-active')}
+          >
             <span />
             <span />
             <span />
