@@ -1,14 +1,14 @@
+import { useIdentityContext } from 'react-netlify-identity';
+
 import { faGithub, faGoogle } from '@fortawesome/free-brands-svg-icons';
 import { Button } from 'rbx';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useIdentityContext } from 'react-netlify-identity';
 
 import { useTheme } from '../hooks';
 import { upperCaseFirstCharacter } from '../utils';
 
 import Icon from './Icon';
-import { button } from './LoginProviderButton.module.scss';
 
 /**
  * @param {{
@@ -26,7 +26,6 @@ export default function LoginProviderButton({ provider }) {
       color={theme === 'light' ? 'info' : undefined}
       onClick={() => loginProvider(provider)}
       fullwidth
-      className={button}
     >
       <Icon icon={provider === 'github' ? faGithub : faGoogle} />{' '}
       <span>

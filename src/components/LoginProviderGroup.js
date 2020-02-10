@@ -4,12 +4,13 @@ import React from 'react';
 import { ENABLED_PROVIDER } from '../constants/env';
 
 import LoginProviderButton from './LoginProviderButton';
+import styles from './LoginProviderGroup.module.scss';
 
 export default function LoginProviderGroup() {
   return (
     <Column.Group multiline>
       {ENABLED_PROVIDER.map(provider => (
-        <Column key={provider} size="half">
+        <Column key={provider} className={styles.column}>
           <LoginProviderButton provider={provider} />
         </Column>
       ))}
