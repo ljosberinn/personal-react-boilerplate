@@ -17,7 +17,6 @@ const localStorageMeta = {
   open: 'open',
   closed: 'closed',
 };
-
 /**
  *
  * @param {boolean} isDesktop
@@ -27,7 +26,7 @@ const getExpansionFromLocalStorage = isDesktop => {
     try {
       const storedState = localStorage.getItem(localStorageMeta.key);
 
-      return storedState ? storedState === localStorageMeta.open : true;
+      return storedState ? storedState === localStorageMeta.open : isDesktop;
     } catch (error) {
       return true;
     }
