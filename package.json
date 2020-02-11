@@ -71,11 +71,16 @@
         "error",
         {
           "groups": [
-            "builtin",
-            "external",
-            "internal",
-            "parent",
-            "sibling",
+            [
+              "builtin",
+              "external",
+              "internal"
+            ],
+            [
+              "unknown",
+              "parent",
+              "sibling"
+            ],
             "index"
           ],
           "alphabetize": {
