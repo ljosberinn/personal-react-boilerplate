@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect, useCallback } from 'react';
+import React, { createContext, useState, useEffect, useCallback, useMemo } from 'react';
 
 import { hasLocalStorage } from '../constants/browserAPIs';
 import useDetectColorScheme, {
@@ -125,9 +125,15 @@ export default function ThemeProvider({ children }) {
       return upcomingTheme;
     });
   }, [setTheme]);
+  
+  const value = useMemo(() => {
+    isLoading,
+    toggleTheme,
+    theme
+  }, [isLoading, toggleTheme, theme]);
 
   return (
-    <ThemeContext.Provider value={{ isLoading, toggleTheme, theme }}>
+    <ThemeContext.Provider value={value}>
       {children}
     </ThemeContext.Provider>
   );
