@@ -72,11 +72,11 @@ export default function ServiceWorkerProvider({ children, options }) {
     };
   }, [options]);
   
-  const value = useMemo(() => {
+  const value = useMemo(() => ({
     isSupported: supportsServiceWorker,
     registration,
     options
-  }, [supportsServiceWorker, registration, options]);
+  }), [supportsServiceWorker, registration, options]);
 
   return (
     <ServiceWorkerContext.Provider
