@@ -15,6 +15,31 @@ import './utils/errors';
 if (IS_LIVE) {
   LogRocket.init(LOGROCKET_ID);
   setupLogRocketReact(LogRocket);
+} else {
+  if (!localStorage['gotrue.user']) {
+    const user = {
+      url: process.env.REACT_APP_SITE_URL,
+      token: {
+        access_token: '',
+        token_type: 'bearer',
+        expires_in: 3600,
+        refresh_token: 'pYDomuTz1CtXErmnyV28wg',
+        expires_at: 1576380881000,
+      },
+      id: '12345678-1234-1234-1234-1234567890123',
+      aud: '',
+      role: '',
+      email: 'foo@bar.baz',
+      confirmed_at: '2019-12-15T02:34:39Z',
+      confirmation_sent_at: '2019-12-15T02:33:58Z',
+      app_metadata: { provider: 'email' },
+      user_metadata: {},
+      created_at: '2019-12-15T02:33:58Z',
+      updated_at: '2019-12-15T02:33:58Z',
+    };
+
+    //localStorage['gotrue.user'] = JSON.stringify(user);
+  }
 }
 
 /**
@@ -33,7 +58,7 @@ function identifyUser(user) {
       created_at,
       app_metadata: { provider },
     } = user;
-    
+
     LogRocket.identify(id, {
       provider,
       created_at,
@@ -48,15 +73,15 @@ function identifyUser(user) {
 
 render(
   <StrictMode>
-    <ServiceWorkerProvider>
-      <IdentityContextProvider url={SITE_URL} onAuthChange={identifyUser}>
-        <ThemeProvider>
+    <ThemeProvider>
+      <ServiceWorkerProvider>
+        <IdentityContextProvider url={SITE_URL} onAuthChange={identifyUser}>
           <Router>
             <App />
           </Router>
-        </ThemeProvider>
-      </IdentityContextProvider>
-    </ServiceWorkerProvider>
+        </IdentityContextProvider>
+      </ServiceWorkerProvider>
+    </ThemeProvider>
   </StrictMode>,
   document.getElementById('root'),
 );
