@@ -126,11 +126,11 @@ export default function ThemeProvider({ children }) {
     });
   }, [setTheme]);
   
-  const value = useMemo(() => {
+  const value = useMemo(() => ({
     isLoading,
     toggleTheme,
     theme
-  }, [isLoading, toggleTheme, theme]);
+  }), [isLoading, toggleTheme, theme]);
 
   return (
     <ThemeContext.Provider value={value}>
