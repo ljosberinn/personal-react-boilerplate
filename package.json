@@ -43,7 +43,7 @@
     "eslint-plugin-import": "^2.20.1",
     "faunadb": "^2.11.1",
     "http-proxy-middleware": "^0.20.0",
-    "husky": "^4.2.1",
+    "husky": "^4.2.2",
     "lint-staged": "^10.0.7",
     "netlify-lambda": "^1.6.3",
     "node-sass": "^4.13.1",
