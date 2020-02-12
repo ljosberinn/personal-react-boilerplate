@@ -1,5 +1,3 @@
-import { useIdentityContext } from 'react-netlify-identity';
-
 import {
   Column,
   Title,
@@ -14,6 +12,7 @@ import {
 import React, { useReducer, useCallback } from 'react';
 import { Fade } from 'react-awesome-reveal';
 import { useTranslation, Trans } from 'react-i18next';
+import { useIdentityContext } from 'react-netlify-identity';
 import { Link } from 'react-router-dom';
 
 import { ValidityIconLeft, Field, Form, Error } from '../../../components';

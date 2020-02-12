@@ -1,14 +1,12 @@
-import { IdentityContextProvider } from 'react-netlify-identity';
-
 import { render as rtlRender } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 import React, { Suspense } from 'react';
 import { I18nextProvider, withTranslation } from 'react-i18next';
+import { IdentityContextProvider } from 'react-netlify-identity';
 import { Router } from 'react-router-dom';
 
 import { SITE_URL } from '../constants/env';
 import { ThemeProvider, ServiceWorkerProvider } from '../context';
-
 import i18n from './testi18n';
 
 export default function render(

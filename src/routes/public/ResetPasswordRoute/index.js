@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 
 import { TemplatedHelmet } from '../../../components';
-
 import ConfirmPasswordResetForm from './ConfirmPasswordResetForm';
 import styles from './ResetPassword.module.scss';
 import ResetPasswordForm from './ResetPasswordForm';

@@ -3,7 +3,6 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { TemplatedHelmet } from '../../../components';
-
 import styles from './Tos.module.scss';
 
 export default function TosRoute() {

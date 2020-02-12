@@ -1,4 +1,5 @@
 import faunadb from 'faunadb';
+
 import { OK } from '../utils/statusCodes';
 
 const q = faunadb.query;

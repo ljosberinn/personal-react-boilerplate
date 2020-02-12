@@ -11,7 +11,6 @@ import {
   SecuritySvg,
   AnalyticsSvg,
 } from '../../../components/themedSvgs';
-
 import styles from './PrivacyPolicy.module.scss';
 
 const content = [

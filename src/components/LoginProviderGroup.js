@@ -2,7 +2,6 @@ import { Column } from 'rbx';
 import React from 'react';
 
 import { ENABLED_PROVIDER } from '../constants/env';
-
 import LoginProviderButton from './LoginProviderButton';
 import styles from './LoginProviderGroup.module.scss';
 
