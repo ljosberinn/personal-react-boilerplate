@@ -1,14 +1,20 @@
-import { useIdentityContext } from 'react-netlify-identity';
-
 import { faGithub, faDiscord } from '@fortawesome/free-brands-svg-icons';
 import { Footer as RBXFooter, Container, Column, Generic } from 'rbx';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { useIdentityContext } from 'react-netlify-identity';
 import { NavLink } from 'react-router-dom';
 
 import { REPO_LINK, DISCORD_LINK, BRAND_NAME } from '../constants/env';
-import * as ROUTES from '../constants/routes';
-
+import {
+  LANDING_PAGE,
+  REGISTER,
+  LOGIN,
+  RESET_PASSWORD,
+  SETTINGS,
+  TOS,
+  PRIVACY_POLICY,
+} from '../constants/routes';
 import ExternalLink from './ExternalLink';
 import Icon from './Icon';
 import LanguageSwitch from './LanguageSwitch';
@@ -40,23 +46,23 @@ export default function Footer() {
                 {BRAND_NAME}
               </Generic>
               <li>
-                <InternalLink route={ROUTES.LANDING_PAGE} t={t} />
+                <InternalLink route={LANDING_PAGE} t={t} />
               </li>
               {!isLoggedIn || !isConfirmedUser ? (
                 <>
                   <li>
-                    <InternalLink route={ROUTES.REGISTER} t={t} />
+                    <InternalLink route={REGISTER} t={t} />
                   </li>
                   <li>
-                    <InternalLink route={ROUTES.LOGIN} t={t} />
+                    <InternalLink route={LOGIN} t={t} />
                   </li>
                   <li>
-                    <InternalLink route={ROUTES.RESET_PASSWORD} t={t} />
+                    <InternalLink route={RESET_PASSWORD} t={t} />
                   </li>
                 </>
               ) : (
                 <li>
-                  <InternalLink route={ROUTES.SETTINGS} t={t} />
+                  <InternalLink route={SETTINGS} t={t} />
                 </li>
               )}
             </ul>
@@ -68,10 +74,10 @@ export default function Footer() {
                 {t('legal')}
               </Generic>
               <li>
-                <InternalLink route={ROUTES.TOS} t={t} />
+                <InternalLink route={TOS} t={t} />
               </li>
               <li>
-                <InternalLink route={ROUTES.PRIVACY_POLICY} t={t} />
+                <InternalLink route={PRIVACY_POLICY} t={t} />
               </li>
             </ul>
           </Column>

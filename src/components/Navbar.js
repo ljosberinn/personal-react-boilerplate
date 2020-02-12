@@ -1,16 +1,14 @@
-import { useIdentityContext } from 'react-netlify-identity';
-
 import { faGithub, faDiscord } from '@fortawesome/free-brands-svg-icons';
 import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { Navbar as RBXNavbar, Button } from 'rbx';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useIdentityContext } from 'react-netlify-identity';
 import { NavLink, Link, useLocation } from 'react-router-dom';
 
 import { REPO_LINK, DISCORD_LINK } from '../constants/env';
-import * as ROUTES from '../constants/routes';
+import { REGISTER, LOGIN, SETTINGS } from '../constants/routes';
 import { useNavigate } from '../hooks';
-
 import Icon from './Icon';
 import LanguageSwitch from './LanguageSwitch';
 import Loader from './Loader';
@@ -76,13 +74,13 @@ export default function Navbar() {
 
             {!isConfirmedUser || !isLoggedIn ? (
               <Button.Group>
-                <NavButton color="primary" to={ROUTES.REGISTER.clientPath}>
-                  <Icon icon={ROUTES.REGISTER.icon} />
+                <NavButton color="primary" to={REGISTER.clientPath}>
+                  <Icon icon={REGISTER.icon} />
                   <span>{t('routes:register')}</span>
                 </NavButton>
 
-                <NavButton color="light" to={ROUTES.LOGIN.clientPath}>
-                  <Icon icon={ROUTES.LOGIN.icon} />
+                <NavButton color="light" to={LOGIN.clientPath}>
+                  <Icon icon={LOGIN.icon} />
                   <span>{t('routes:login')}</span>
                 </NavButton>
               </Button.Group>
@@ -141,11 +139,11 @@ function AuthenticatedNavButtons({
     <Button.Group>
       <NavButton
         color="primary"
-        to={ROUTES.SETTINGS.clientPath}
+        to={SETTINGS.clientPath}
         disabled={isLoggingOut}
       >
         <Icon
-          icon={ROUTES.SETTINGS.icon}
+          icon={SETTINGS.icon}
           className={[
             'is-spinning',
             pathname.includes('/settings/') && 'active',

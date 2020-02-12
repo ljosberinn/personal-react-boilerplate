@@ -5,7 +5,7 @@ import { useIdentityContext } from 'react-netlify-identity';
 import { useHistory } from 'react-router-dom';
 
 import { PasswordSelection, Form, Error } from '../../../components';
-import * as ROUTES from '../../../constants/routes';
+import { LOGIN } from '../../../constants/routes';
 import { validate } from '../../../utils/validators';
 
 const errors = {
@@ -47,7 +47,7 @@ export default function ConfirmPasswordResetForm({ token }) {
         // kill internal react-netlify-identity state
         setUser(undefined);
         // move use to login
-        replace(ROUTES.LOGIN.clientPath);
+        replace(LOGIN.clientPath);
       })
       .catch(error => {
         // ignore errors here - react-netlify-identity

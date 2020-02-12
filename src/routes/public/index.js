@@ -1,19 +1,24 @@
-import * as ROUTES from '../../constants/routes';
+import {
+  LANDING_PAGE,
+  REGISTER,
+  LOGIN,
+  RESET_PASSWORD,
+} from '../../constants/routes';
 import LoadableComponent from '../loadUtils';
 
 export const PUBLIC_ROUTES = {
-  [ROUTES.LANDING_PAGE.routerPath]: LoadableComponent(() =>
+  [LANDING_PAGE.routerPath]: LoadableComponent(() =>
     import(/* webpackChunkName: "public.landingpage" */ './LandingPage'),
   ),
-  [ROUTES.REGISTER.routerPath]: LoadableComponent(() =>
+  [REGISTER.routerPath]: LoadableComponent(() =>
     import(/* webpackChunkName: "public.register" */ './RegisterRoute'),
   ),
-  [ROUTES.LOGIN.routerPath]: LoadableComponent(() =>
+  [LOGIN.routerPath]: LoadableComponent(() =>
     import(
       /* webpackChunkName: "public.login" */ /* webpackPrefetch: true */ './LoginRoute'
     ),
   ),
-  [ROUTES.RESET_PASSWORD.routerPath]: LoadableComponent(() =>
+  [RESET_PASSWORD.routerPath]: LoadableComponent(() =>
     import(
       /* webpackChunkName: "public.resetpassword" */ './ResetPasswordRoute'
     ),

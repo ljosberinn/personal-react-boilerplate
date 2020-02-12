@@ -1,11 +1,11 @@
-import * as ROUTES from '../../constants/routes';
+import { TOS, PRIVACY_POLICY } from '../../constants/routes';
 import LoadableComponent from '../loadUtils';
 
 export const SHARED_ROUTES = {
-  [ROUTES.TOS.routerPath]: LoadableComponent(() =>
+  [TOS.routerPath]: LoadableComponent(() =>
     import(/* webpackChunkName: "shared.tos" */ './TosRoute'),
   ),
-  [ROUTES.PRIVACY_POLICY.routerPath]: LoadableComponent(() =>
+  [PRIVACY_POLICY.routerPath]: LoadableComponent(() =>
     import(
       /* webpackChunkName: "shared.privacypolicy" */ './PrivacyPolicyRoute'
     ),
