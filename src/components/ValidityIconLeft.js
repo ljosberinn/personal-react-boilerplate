@@ -1,26 +1,20 @@
-import {
-  faLock,
-  faLockOpen,
-  faIdCard,
-  faEnvelope,
-} from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
+import { FaLock, FaLockOpen, FaIdCard, FaEnvelope } from 'react-icons/fa';
 
 import { validate } from '../utils/validators';
-
 import Icon from './Icon';
 
 const iconMap = {
   password: {
-    success: faLock,
-    error: faLockOpen,
+    success: FaLock,
+    error: FaLockOpen,
   },
   mail: {
-    success: faEnvelope,
+    success: FaEnvelope,
     error: undefined,
   },
   username: {
-    success: faIdCard,
+    success: FaIdCard,
     error: undefined,
   },
 };
@@ -47,10 +41,10 @@ export default function ValidityIconLeft({ type, value = '' }) {
       <Icon
         align="left"
         color={color}
-        icon={color === 'success' ? success : error}
+        svg={color === 'success' ? success : error}
       />
     );
   }
 
-  return <Icon align="left" color={color} icon={success} />;
+  return <Icon align="left" color={color} svg={success} />;
 }

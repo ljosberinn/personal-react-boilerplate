@@ -1,17 +1,21 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Icon as RBXIcon } from 'rbx';
 import React from 'react';
 
 /**
  *
  * @param {{
- * icon: import('@fortawesome/free-solid-svg-icons').IconDefinition
+ * svg: import('react-icons').IconType
  * }}
  */
-export default function Icon({ icon, ...rest }) {
+export default function Icon({ svg: Svg, ...rest }) {
   return (
     <RBXIcon {...rest}>
-      <FontAwesomeIcon icon={icon} />
+      <Svg
+        focusable={false}
+        aria-hidden={true}
+        strokeWidth={undefined}
+        stroke={undefined}
+      />
     </RBXIcon>
   );
 }

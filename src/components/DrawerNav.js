@@ -1,14 +1,13 @@
-import { faAngleDoubleDown } from '@fortawesome/free-solid-svg-icons';
 import classnames from 'classnames';
 import { Column, Menu, Tag, Box, Modal } from 'rbx';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { FaAngleDoubleDown } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
 import { hasLocalStorage } from '../constants/browserAPIs';
 import * as ROUTES from '../constants/routes';
 import { useMediaQuery } from '../hooks';
-
 import styles from './DrawerNav.module.scss';
 import Icon from './Icon';
 
@@ -113,7 +112,7 @@ export default function DrawerNav({ isLoggedIn }) {
               tooltipPosition="right"
             >
               <Icon
-                icon={faAngleDoubleDown}
+                svg={FaAngleDoubleDown}
                 className={
                   isExpanded ? styles.transform90 : styles.transform270
                 }
@@ -150,7 +149,7 @@ function RouteList({ isExpanded, t, isLoggedIn, onClick }) {
         .map(({ title, clientPath, icon }) => (
           <NavigationLink
             path={clientPath}
-            icon={icon}
+            svg={icon}
             key={clientPath}
             isExpanded={isExpanded}
             onClick={onClick}
@@ -189,7 +188,7 @@ function NavigationLink({ path, icon, children, isExpanded, onClick }) {
       tooltipPosition="right"
       onClick={onClick}
     >
-      <Icon icon={icon} />
+      <Icon svg={icon} />
       <span>{children}</span>
     </Menu.List.Item>
   );

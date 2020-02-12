@@ -1,11 +1,10 @@
-import { faSun, faMoon } from '@fortawesome/free-solid-svg-icons';
 import classnames from 'classnames';
 import { Navbar, Button } from 'rbx';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { FaSun, FaMoon } from 'react-icons/fa';
 
 import { useTheme } from '../hooks';
-
 import Icon from './Icon';
 import Loader from './Loader';
 import Switch from './Switch';
@@ -54,7 +53,7 @@ export default function ThemeSwitch({ from }) {
         id={id}
         data-testid="toggle-theme"
       >
-        <Icon icon={faSun} color={iconClassMap.sun[theme]} data-testid="sun" />
+        <Icon svg={FaSun} color={iconClassMap.sun[theme]} data-testid="sun" />
         <Switch
           disabled={isLoading}
           checked={theme !== 'light'}
@@ -65,7 +64,7 @@ export default function ThemeSwitch({ from }) {
           data-testid="theme-switch"
         />
         <Icon
-          icon={faMoon}
+          svg={FaMoon}
           color={iconClassMap.moon[theme]}
           data-testid="moon"
         />

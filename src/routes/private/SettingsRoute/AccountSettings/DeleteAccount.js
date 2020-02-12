@@ -1,10 +1,7 @@
-import {
-  faTimesCircle,
-  faSkullCrossbones,
-} from '@fortawesome/free-solid-svg-icons';
 import { Button, Modal, Delete } from 'rbx';
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { FaTimesCircle, FaSkullCrossbones } from 'react-icons/fa';
 
 import { Icon } from '../../../../components';
 
@@ -63,12 +60,12 @@ export default function DeleteAccount({ user }) {
               {!hasApproved ? (
                 <Button.Group>
                   <Button onClick={handleAbort} color="warning">
-                    <Icon icon={faTimesCircle} />
+                    <Icon svg={FaTimesCircle} />
                     <span>{t('deleteAccountAbort')}</span>
                   </Button>
 
                   <Button onClick={() => setHasApproved(true)} color="danger">
-                    <Icon icon={faSkullCrossbones} />
+                    <Icon svg={FaSkullCrossbones} />
                     <span>{t('deleteAccountConfirm')}</span>
                   </Button>
                 </Button.Group>

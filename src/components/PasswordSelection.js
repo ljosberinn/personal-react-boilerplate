@@ -1,13 +1,11 @@
-import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import { faLock, faLockOpen } from '@fortawesome/free-solid-svg-icons';
 import classnames from 'classnames';
 import { Message, Label, Help, Input, Control, Block } from 'rbx';
 import React, { useCallback, useState, useEffect, memo } from 'react';
 import { useTranslation } from 'react-i18next';
+import { FaLock, FaLockOpen, FaEye, FaEyeSlash } from 'react-icons/fa';
 
 import { stringContainsNumber, stringContainsLetter } from '../utils';
 import { validate, pattern, passwordMinLength } from '../utils/validators';
-
 import Field from './Field';
 import Icon from './Icon';
 import styles from './PasswordSelection.module.scss';
@@ -100,7 +98,7 @@ export default memo(function PasswordSelection({
             <Icon
               className="is-clickable"
               align="right"
-              icon={type === 'password' ? faEye : faEyeSlash}
+              svg={type === 'password' ? FaEye : FaEyeSlash}
               onClick={handlePasswordVisibilityChange}
             />
           )}
@@ -135,12 +133,12 @@ export default memo(function PasswordSelection({
 
             <Icon
               align="left"
-              icon={
+              svg={
                 passwordsMatch
-                  ? faLock
+                  ? FaLock
                   : hasConfirmPassword
-                  ? faLockOpen
-                  : faLockOpen
+                  ? FaLockOpen
+                  : FaLockOpen
               }
               color={
                 passwordsMatch

@@ -1,7 +1,7 @@
-import { faGithub, faDiscord } from '@fortawesome/free-brands-svg-icons';
 import { Footer as RBXFooter, Container, Column, Generic } from 'rbx';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { FaGithub, FaDiscord } from 'react-icons/fa';
 import { useIdentityContext } from 'react-netlify-identity';
 import { NavLink } from 'react-router-dom';
 
@@ -98,7 +98,7 @@ export default function Footer() {
               {DISCORD_LINK && (
                 <li>
                   <ExternalLink href={DISCORD_LINK}>
-                    <Icon icon={faDiscord} />
+                    <Icon svg={FaDiscord} />
                     <span>Discord</span>
                   </ExternalLink>
                 </li>
@@ -107,7 +107,7 @@ export default function Footer() {
               {REPO_LINK && (
                 <li>
                   <ExternalLink href={REPO_LINK}>
-                    <Icon icon={faGithub} />
+                    <Icon svg={FaGithub} />
                     <span>{t('navigation:contribute')}</span>
                   </ExternalLink>
                 </li>
@@ -132,7 +132,7 @@ function InternalLink({ route: { clientPath, icon, title }, t }) {
     <Link to={clientPath}>
       {icon ? (
         <>
-          <Icon icon={icon} />
+          <Icon svg={icon} />
           <span>{t(title)}</span>
         </>
       ) : (

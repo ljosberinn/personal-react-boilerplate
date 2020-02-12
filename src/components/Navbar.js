@@ -1,8 +1,8 @@
-import { faGithub, faDiscord } from '@fortawesome/free-brands-svg-icons';
-import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import classnames from 'classnames';
 import { Navbar as RBXNavbar, Button } from 'rbx';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { FaSignOutAlt, FaGithub, FaDiscord } from 'react-icons/fa';
 import { useIdentityContext } from 'react-netlify-identity';
 import { NavLink, Link, useLocation } from 'react-router-dom';
 
@@ -58,7 +58,7 @@ export default function Navbar() {
                 rel="noopener noreferrer"
                 target="_blank"
               >
-                <Icon icon={faDiscord} /> <span>Discord</span>
+                <Icon svg={FaDiscord} /> <span>Discord</span>
               </RBXNavbar.Item>
             )}
 
@@ -68,19 +68,19 @@ export default function Navbar() {
                 rel="noreferrer noopener"
                 target="_blank"
               >
-                <Icon icon={faGithub} /> <span>{t('contribute')}</span>
+                <Icon svg={FaGithub} /> <span>{t('contribute')}</span>
               </RBXNavbar.Item>
             )}
 
             {!isConfirmedUser || !isLoggedIn ? (
               <Button.Group>
                 <NavButton color="primary" to={REGISTER.clientPath}>
-                  <Icon icon={REGISTER.icon} />
+                  <Icon svg={REGISTER.icon} />
                   <span>{t('routes:register')}</span>
                 </NavButton>
 
                 <NavButton color="light" to={LOGIN.clientPath}>
-                  <Icon icon={LOGIN.icon} />
+                  <Icon svg={LOGIN.icon} />
                   <span>{t('routes:login')}</span>
                 </NavButton>
               </Button.Group>
@@ -143,19 +143,17 @@ function AuthenticatedNavButtons({
         disabled={isLoggingOut}
       >
         <Icon
-          icon={SETTINGS.icon}
-          className={[
+          svg={SETTINGS.icon}
+          className={classnames(
             'is-spinning',
             pathname.includes('/settings/') && 'active',
-          ]
-            .filter(Boolean)
-            .join(' ')}
+          )}
         />
         <span>{t('routes:settings')}</span>
       </NavButton>
 
       <Button color="danger" onClick={handleLogout} disabled={isLoggingOut}>
-        <Icon icon={faSignOutAlt} />
+        <Icon svg={FaSignOutAlt} />
         <span>{t('logout')}</span>
       </Button>
     </Button.Group>

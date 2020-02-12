@@ -1,13 +1,11 @@
-import { useIdentityContext } from 'react-netlify-identity';
-
-import { faGithub, faGoogle } from '@fortawesome/free-brands-svg-icons';
 import { Button } from 'rbx';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { FaGithub, FaGoogle } from 'react-icons/fa';
+import { useIdentityContext } from 'react-netlify-identity';
 
 import { useTheme } from '../hooks';
 import { upperCaseFirstCharacter } from '../utils';
-
 import Icon from './Icon';
 
 /**
@@ -27,7 +25,7 @@ export default function LoginProviderButton({ provider }) {
       onClick={() => loginProvider(provider)}
       fullwidth
     >
-      <Icon icon={provider === 'github' ? faGithub : faGoogle} />{' '}
+      <Icon svg={provider === 'github' ? FaGithub : FaGoogle} />{' '}
       <span>
         {t('signInViaProvider', {
           provider: upperCaseFirstCharacter(provider),

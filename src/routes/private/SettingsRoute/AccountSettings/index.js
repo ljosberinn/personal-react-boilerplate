@@ -4,7 +4,7 @@ import { useIdentityContext } from 'react-netlify-identity';
 
 import ChangePassword from './ChangePassword';
 //import { Icon } from '../../../../components';
-//import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
+//import { faExclamationTriangle } from 'react-icons/fa';
 
 export default function AccountSettings() {
   const { user, updateUser } = useIdentityContext();
@@ -27,7 +27,7 @@ export default function AccountSettings() {
         <Message color="danger">
           <Message.Header>
             <span>{t('dangerZone')}</span>
-            <Icon icon={faExclamationTriangle} />
+            <Icon svg={faExclamationTriangle} />
           </Message.Header>
           <Message.Body>
             <DeleteAccount user={user} />

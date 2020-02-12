@@ -1,18 +1,18 @@
 import {
-  faCog,
-  faBookReader,
-  faShieldAlt,
-  faUserEdit,
-  faHome,
-  faSignInAlt,
-  faUnlockAlt,
-} from '@fortawesome/free-solid-svg-icons';
+  FaCog,
+  FaBookReader,
+  FaShieldAlt,
+  FaUserEdit,
+  FaHome,
+  FaSignInAlt,
+  FaUnlockAlt,
+} from 'react-icons/fa';
 
 export const LANDING_PAGE = {
   routerPath: '/',
   clientPath: '/',
   title: 'routes:landingPage',
-  icon: faHome,
+  icon: FaHome,
   visibleInDrawerNav: false,
   isPublic: true,
 };
@@ -21,7 +21,7 @@ export const REGISTER = {
   routerPath: '/register',
   clientPath: '/register',
   title: 'routes:register',
-  icon: faUserEdit,
+  icon: FaUserEdit,
   visibleInDrawerNav: false,
   isPublic: true,
 };
@@ -30,7 +30,7 @@ export const LOGIN = {
   routerPath: '/login/:mail?',
   clientPath: '/login',
   title: 'routes:login',
-  icon: faSignInAlt,
+  icon: FaSignInAlt,
   visibleInDrawerNav: false,
   isPublic: true,
 };
@@ -39,7 +39,7 @@ export const RESET_PASSWORD = {
   routerPath: '/reset-password',
   clientPath: '/reset-password',
   title: 'routes:resetPassword',
-  icon: faUnlockAlt,
+  icon: FaUnlockAlt,
   visibleInDrawerNav: false,
   isPublic: true,
 };
@@ -56,7 +56,7 @@ export const PRIVACY_POLICY = {
   routerPath: '/privacy-policy',
   clientPath: '/privacy-policy',
   title: 'routes:privacyPolicy',
-  icon: faShieldAlt,
+  icon: FaShieldAlt,
   visibleInDrawerNav: false,
   isPublic: true,
 };
@@ -65,7 +65,7 @@ export const TOS = {
   routerPath: '/tos',
   clientPath: '/tos',
   title: 'routes:tos',
-  icon: faBookReader,
+  icon: FaBookReader,
   visibleInDrawerNav: false,
   isPublic: true,
 };
@@ -75,7 +75,7 @@ export const SETTINGS = {
   routerPath: '/settings/:setting',
   clientPath: '/settings/site',
   title: 'routes:settings',
-  icon: faCog,
+  icon: FaCog,
   visibleInDrawerNav: false,
   isPublic: false,
 };

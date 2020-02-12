@@ -1,5 +1,3 @@
-import { faGithub } from '@fortawesome/free-brands-svg-icons';
-import { faBomb } from '@fortawesome/free-solid-svg-icons';
 import { withScope } from '@sentry/browser';
 import {
   Column,
@@ -15,10 +13,10 @@ import {
 } from 'rbx';
 import React, { Component } from 'react';
 import { withTranslation } from 'react-i18next';
+import { FaBomb, FaGithub } from 'react-icons/fa';
 
 import { hasLocalStorage } from '../constants/browserAPIs';
 import { REPO_LINK, LOGROCKET_ID } from '../constants/env';
-
 import Icon from './Icon';
 import styles from './SentryErrorBoundary.module.scss';
 
@@ -110,7 +108,7 @@ class SentryErrorBoundary extends Component {
                         <Message color="danger" className={styles.message}>
                           <Message.Body>
                             <Title textColor="danger" id="section-title">
-                              <Icon size="large" icon={faBomb} />
+                              <Icon size="large" svg={FaBomb} />
                               {t('title')}
                             </Title>
                             <p>{t('boundaryInfo')}</p>
@@ -140,7 +138,7 @@ class SentryErrorBoundary extends Component {
                                   target="_blank"
                                   rel="noopener noreferrer"
                                 >
-                                  <Icon icon={faGithub} />{' '}
+                                  <Icon svg={FaGithub} />{' '}
                                   <span>{t('openIssue')}</span>
                                 </Button>
                               )}

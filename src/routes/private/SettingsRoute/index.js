@@ -1,12 +1,11 @@
-import { faSlidersH, faUserCog } from '@fortawesome/free-solid-svg-icons';
 import { Section, Title, Box, Tab } from 'rbx';
 import React, { Suspense } from 'react';
 import { useTranslation } from 'react-i18next';
+import { FaSlidersH, FaUserCog } from 'react-icons/fa';
 import { Route, Link, Switch, useLocation } from 'react-router-dom';
 
 import { TemplatedHelmet, Icon } from '../../../components';
 import LoadableComponent from '../../loadUtils';
-
 import styles from './Settings.module.scss';
 
 const tabs = [
@@ -16,7 +15,7 @@ const tabs = [
       import(/* webpackChunkName: "private.settings.site" */ './SiteSettings'),
     ),
     path: '/settings/site',
-    icon: faSlidersH,
+    icon: FaSlidersH,
   },
   {
     name: 'accountSettings',
@@ -26,7 +25,7 @@ const tabs = [
       ),
     ),
     path: '/settings/account',
-    icon: faUserCog,
+    icon: FaUserCog,
   },
 ];
 
@@ -49,7 +48,7 @@ export default function Settings() {
           <Tab.Group kind="boxed">
             {tabs.map(({ name, path, icon }) => (
               <Tab as={Link} to={path} key={name} active={path === pathname}>
-                <Icon icon={icon} />
+                <Icon svg={icon} />
                 <span>{t(name)}</span>
               </Tab>
             ))}
