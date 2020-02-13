@@ -37,7 +37,7 @@ export default function App() {
   };
 
   return (
-    <Layout isLoggedIn={isLoggedIn}>
+    <Layout>
       <SentryErrorBoundary>
         <ServiceWorker />
         <Switch>
