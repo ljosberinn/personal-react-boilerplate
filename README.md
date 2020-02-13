@@ -33,7 +33,7 @@
 - SCSS via node-sass
 - [bulma](https://bulma.io/) via [rbx](https://github.com/dfee/rbx)
 - themed via [bulmaswatch](https://github.com/jenil/bulmaswatch)
-- Icons via FontAwesome through [react-fontawesome](https://github.com/FortAwesome/react-fontawesome)
+- Icons via [react-icons](https://github.com/react-icons/react-icons)
 
 ## Backend
 
@@ -74,6 +74,8 @@
 ```bash
 git clone https://github.com/ljosberinn/personal-react-boilerplate
 cd personal-react-boilerplate
+cp .env.example .env
+# edit .env
 yarn install
 code .
 ```
