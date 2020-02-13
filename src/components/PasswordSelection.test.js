@@ -27,12 +27,10 @@ describe('<PasswordSelection />', () => {
   });
 
   test('toggles input type on faEye click', () => {
-    const { container, getByTestId } = render(
-      <PasswordSelection {...defaultProps} />,
-    );
+    const { getByTestId } = render(<PasswordSelection {...defaultProps} />);
 
     const passwordInput = getByTestId('password');
-    const svg = container.querySelector('.fa-eye');
+    const svg = getByTestId('toggle-input-type-icon');
 
     expect(passwordInput.type).toBe('password');
 

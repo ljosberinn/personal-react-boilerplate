@@ -97,6 +97,7 @@ export default memo(function PasswordSelection({
           {!isLoading && (
             <Icon
               className="is-clickable"
+              data-testid="toggle-input-type-icon"
               align="right"
               svg={type === 'password' ? FaEye : FaEyeSlash}
               onClick={handlePasswordVisibilityChange}
@@ -133,13 +134,7 @@ export default memo(function PasswordSelection({
 
             <Icon
               align="left"
-              svg={
-                passwordsMatch
-                  ? FaLock
-                  : hasConfirmPassword
-                  ? FaLockOpen
-                  : FaLockOpen
-              }
+              svg={passwordsMatch ? FaLock : FaLockOpen}
               color={
                 passwordsMatch
                   ? 'success'
