@@ -1,6 +1,7 @@
 import classnames from 'classnames';
 import { Column, Menu, Tag, Box, Modal } from 'rbx';
 import React, { useState } from 'react';
+import { useIdentityContext } from 'react-netlify-identity';
 import { useTranslation } from 'react-i18next';
 import { FaAngleDoubleDown } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
