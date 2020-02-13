@@ -43,13 +43,7 @@ const persistExpansionToLocalStorage = isExpanded => {
   }
 };
 
-/**
- *
- * @param {{
- * isLoggedIn: boolean;
- * }}
- */
-export default function DrawerNav({ isLoggedIn }) {
+export default function DrawerNav() {
   const isDesktop = useMediaQuery('(min-width: 1024px)');
   const [isExpanded, setIsExpanded] = useState(
     getExpansionFromLocalStorage(isDesktop),
@@ -63,7 +57,6 @@ export default function DrawerNav({ isLoggedIn }) {
 
   const routeListProps = {
     t,
-    isLoggedIn,
     toggleMenu,
     isExpanded,
   };
@@ -131,11 +124,12 @@ export default function DrawerNav({ isLoggedIn }) {
  * @param {{
  * isExpanded: boolean;
  * t: import('i18next').TFunction;
- * isLoggedIn: boolean;
  * onClick?: () => void;
  * }}
  */
-function RouteList({ isExpanded, t, isLoggedIn, onClick }) {
+function RouteList({ isExpanded, t, onClick }) {
+  const { isLoggedIn } = useIdentityContext();
+  
   return (
     <Menu.List>
       {Object.values(ROUTES)
