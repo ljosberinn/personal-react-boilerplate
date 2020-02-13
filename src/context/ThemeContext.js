@@ -25,6 +25,10 @@ const getStoredTheme = () => {
   return null;
 };
 
+/**
+ *
+ * @param {'dark' | 'light'} theme
+ */
 const storeTheme = theme =>
   hasLocalStorage && localStorage.setItem('themePreference', theme);
 
