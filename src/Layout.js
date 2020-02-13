@@ -7,10 +7,9 @@ import { Footer, Navbar, DrawerNav } from './components';
  *
  * @param {{
  * children: JSX.Element;
- * isLoggedIn: boolean;
  * }}
  */
-export default function Layout({ children, isLoggedIn }) {
+export default function Layout({ children }) {
   return (
     <>
       <Column.Group as="header">
@@ -22,7 +21,7 @@ export default function Layout({ children, isLoggedIn }) {
       </Column.Group>
       <Column.Group gapless as="main">
         <Suspense fallback={null}>
-          <DrawerNav isLoggedIn={isLoggedIn} />
+          <DrawerNav />
         </Suspense>
 
         <Suspense fallback={null}>
