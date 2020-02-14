@@ -12,14 +12,14 @@ import { Footer, Navbar, DrawerNav } from './components';
 export default function Layout({ children }) {
   return (
     <>
-      <Column.Group as="header">
+      <Column.Group marginless as="header">
         <Column>
           <Suspense fallback={null}>
             <Navbar />
           </Suspense>
         </Column>
       </Column.Group>
-      <Column.Group gapless as="main">
+      <Column.Group gapless marginless as="main">
         <Suspense fallback={null}>
           <DrawerNav />
         </Suspense>

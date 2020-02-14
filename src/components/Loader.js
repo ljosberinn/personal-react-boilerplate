@@ -17,11 +17,11 @@ import Icon from './Icon';
 export default function Loader({ icon, isFullPage = false }) {
   return (
     <div
-      className={classnames([
+      className={classnames(
         'loading-overlay',
         'is-active',
         isFullPage && 'is-full-page',
-      ])}
+      )}
     >
       <div className="loading-background" />
       {icon ? (
