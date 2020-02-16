@@ -1,13 +1,14 @@
 import classnames from 'classnames';
 import { Column, Menu, Tag, Box, Modal } from 'rbx';
 import React, { useState } from 'react';
-import { useIdentityContext } from 'react-netlify-identity';
 import { useTranslation } from 'react-i18next';
 import { FaAngleDoubleDown } from 'react-icons/fa';
+import { useIdentityContext } from 'react-netlify-identity';
 import { Link } from 'react-router-dom';
 
 import { hasLocalStorage } from '../constants/browserAPIs';
 import * as ROUTES from '../constants/routes';
+import { withSuspense } from '../hocs';
 import { useMediaQuery } from '../hooks';
 import styles from './DrawerNav.module.scss';
 import Icon from './Icon';
@@ -44,7 +45,7 @@ const persistExpansionToLocalStorage = isExpanded => {
   }
 };
 
-export default function DrawerNav() {
+export default withSuspense(function DrawerNav() {
   const isDesktop = useMediaQuery('(min-width: 1024px)');
   const [isExpanded, setIsExpanded] = useState(
     getExpansionFromLocalStorage(isDesktop),
@@ -118,7 +119,7 @@ export default function DrawerNav() {
       </Box>
     </Column>
   );
-}
+});
 
 /**
  *
@@ -130,7 +131,7 @@ export default function DrawerNav() {
  */
 function RouteList({ isExpanded, t, onClick }) {
   const { isLoggedIn } = useIdentityContext();
-  
+
   return (
     <Menu.List>
       {Object.values(ROUTES)
