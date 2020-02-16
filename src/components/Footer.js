@@ -33,6 +33,8 @@ function Link({ children, ...rest }) {
   );
 }
 
+console.log(withSuspense);
+
 export default memo(
   withSuspense(function Footer() {
     const { isLoggedIn, isConfirmedUser } = useIdentityContext();
