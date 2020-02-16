@@ -82,13 +82,9 @@ export default function LoginRoute() {
       await loginUser(mail, password, true);
     } catch (error) {
       if (error?.json?.error_description) {
-        const { error_description } = error.json;
-        setError(
-          errors[error_description]
-            ? errors[error_description]
-            : 'unknownError',
-        );
+        setError(errors[error.json.error_description] ?? 'unknownError');
       }
+
       console.error(error);
 
       setLoading(false);
