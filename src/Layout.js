@@ -2,9 +2,8 @@ import { Column } from 'rbx';
 import React, { memo } from 'react';
 
 import styles from './Layout.module.scss';
-import { Footer, Navbar, DrawerNav } from './components';
+import { Footer, Navbar } from './components';
 
-console.log(DrawerNav);
 /**
  *
  * @param {{
