@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect, useMemo } from 'react';
+import React, { createContext, useState, useEffect } from 'react';
 
 import { supportsServiceWorker } from '../constants/browserAPIs';
 
@@ -72,17 +72,14 @@ export default function ServiceWorkerProvider({ children, options }) {
     };
   }, [options]);
 
-  const value = useMemo(
-    () => ({
-      isSupported: supportsServiceWorker,
-      registration,
-      options,
-    }),
-    [registration, options],
-  );
-
   return (
-    <ServiceWorkerContext.Provider value={value}>
+    <ServiceWorkerContext.Provider
+      value={{
+        isSupported: supportsServiceWorker,
+        registration,
+        options,
+      }}
+    >
       {children}
     </ServiceWorkerContext.Provider>
   );

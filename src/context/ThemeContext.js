@@ -1,10 +1,4 @@
-import React, {
-  createContext,
-  useState,
-  useEffect,
-  useCallback,
-  useMemo,
-} from 'react';
+import React, { createContext, useState, useEffect, useCallback } from 'react';
 
 import { hasLocalStorage } from '../constants/browserAPIs';
 import useDetectColorScheme, {
@@ -53,9 +47,7 @@ const changeThemeOnHTMLTag = theme => {
   htmlTagClassList.add(thisTheme);
 };
 
-const href = 'https://unpkg.com/bulmaswatch/superhero/bulmaswatch.min.css';
-
-const getDarkThemeLink = () => document.querySelector(`link[href="${href}"]`);
+const getDarkThemeLink = () => document.querySelector(`[data-theme="dark"]`);
 
 export const ThemeContext = createContext();
 
@@ -65,55 +57,18 @@ export default function ThemeProvider({ children }) {
 
   const [theme, setTheme] = useState(storedTheme ? storedTheme : detectedTheme);
 
-  const [didError, setDidError] = useState(false);
-  const [isLoading, setIsLoading] = useState(theme === THEME_NAMES.DARK);
-
   useEffect(() => {
     const darkThemeLink = getDarkThemeLink();
 
     if (theme === THEME_NAMES.DARK) {
-      // previously switched to dark theme
-      if (darkThemeLink) {
-        // errored server side, prepare for retrying
-        if (didError) {
-          darkThemeLink.remove();
-          setDidError(false);
-        } else {
-          // already exists, reuse it and bail
-          darkThemeLink.disabled = false;
-          changeThemeOnHTMLTag(theme);
-          return;
-        }
-      }
-
-      setIsLoading(true);
-
-      document.querySelector('head').append(
-        Object.assign(document.createElement('link'), {
-          rel: 'stylesheet',
-          href,
-          onload: () => {
-            changeThemeOnHTMLTag(theme);
-            setIsLoading(false);
-          },
-          onerror: () => {
-            setTheme(THEME_NAMES.LIGHT);
-            setDidError(true);
-            setIsLoading(false);
-          },
-        }),
-      );
+      darkThemeLink.disabled = false;
+      changeThemeOnHTMLTag(theme);
       return;
     }
 
-    // already exists, disable it
-    if (darkThemeLink) {
-      darkThemeLink.disabled = true;
-      changeThemeOnHTMLTag(theme);
-    }
-
-    setIsLoading(false);
-  }, [didError, theme]);
+    darkThemeLink.disabled = true;
+    changeThemeOnHTMLTag(theme);
+  }, [theme]);
 
   // change theme when device theme changed
   // but only if no preference was previously set
@@ -134,18 +89,11 @@ export default function ThemeProvider({ children }) {
 
       return upcomingTheme;
     });
-  }, [setTheme]);
-
-  const value = useMemo(
-    () => ({
-      isLoading,
-      toggleTheme,
-      theme,
-    }),
-    [isLoading, toggleTheme, theme],
-  );
+  }, []);
 
   return (
-    <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>
+    <ThemeContext.Provider value={{ toggleTheme, theme }}>
+      {children}
+    </ThemeContext.Provider>
   );
 }
