@@ -25,7 +25,7 @@ $themes: light dark;
 
   html {
     @each $theme in $themes {
-      &[class*='theme--#{$theme}'] {
+      &[data-theme='#{$theme}'] {
         #{$className} {
           background-image: url('../svg/#{$theme}/#{$name}.svg');
         }

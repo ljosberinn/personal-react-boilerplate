@@ -1,0 +1,185 @@
+@import 'breakpoints';
+@import 'toasts';
+
+.input {
+  border-radius: 4px;
+}
+
+.is-fullpage {
+  display: flex;
+  flex: 100%;
+
+  &:not(.columns) {
+    min-height: 100vh;
+    overflow: hidden;
+    flex-direction: column;
+  }
+}
+
+.has-content-centered:not(.is-flex-row) {
+  justify-content: center;
+}
+
+.login-logo img,
+.login-logo svg {
+  max-height: 2.75rem;
+}
+
+.has-padding-large {
+  padding: 2.5rem !important;
+}
+
+.has-content-spaced-between {
+  display: flex !important;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.has-content-spaced-evenly {
+  display: flex !important;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.is-clickable {
+  pointer-events: all !important;
+  cursor: pointer;
+}
+
+.is-checkradio[type='radio'].is-circle + label,
+.is-checkradio[type='checkbox'].is-circle + label {
+  position: static;
+}
+
+.footer li {
+  margin: 0.25rem 0;
+
+  &.has-text-weight-semibold {
+    margin-bottom: 1rem;
+  }
+}
+
+.card {
+  border-radius: 5px !important;
+}
+
+a span.icon {
+  vertical-align: bottom;
+}
+
+.message-body p:last-of-type {
+  margin-bottom: initial !important;
+}
+
+// fixes y-overflow on mobile
+header.columns .column {
+  padding: 0;
+}
+
+main {
+  min-height: calc(100vh - 247px - 64px);
+}
+
+.has-background-svg {
+  background-repeat: no-repeat;
+  background-size: contain;
+  flex-direction: row;
+  height: 100%;
+  width: 100%;
+
+  padding: 1rem 0;
+
+  @include mobile {
+    background-size: cover;
+    margin-bottom: 1rem;
+  }
+
+  .card,
+  .box {
+    backdrop-filter: blur(5px);
+  }
+}
+
+.switch input[type='checkbox']:checked + .check {
+  background: $primary;
+}
+
+.title {
+  background-color: rgba($grey-darker, 0.95);
+  border-radius: 5px;
+  padding: 1rem;
+}
+
+legend,
+.box {
+  .title {
+    background-color: initial;
+    border-radius: initial;
+    padding: initial;
+  }
+}
+
+.switch {
+  input[type='checkbox'] {
+    + .check {
+      &:before {
+        background: #f5f5f5;
+      }
+    }
+
+    &:checked + .check {
+      background: $primary;
+
+      @each $name, $color in $colors {
+        &.is-#{$name} {
+          background: $color;
+        }
+      }
+    }
+
+    &:focus {
+      outline: none;
+      + .check {
+        box-shadow: 0 0 0.5em rgba($grey, 0.6);
+      }
+
+      &:checked + .check {
+        box-shadow: 0 0 0.5em rgba($primary, 0.8);
+
+        @each $name, $color in $colors {
+          $color: nth($color, 1);
+
+          &.is-#{$name} {
+            box-shadow: 0 0 0.5em rgba($color, 0.8);
+          }
+        }
+      }
+    }
+  }
+}
+
+.notification {
+  @each $name, $pair in $colors {
+    $color: nth($pair, 1);
+
+    &.is-#{$name} .Toastify__progress-bar--default {
+      background: darken($color, 25%);
+    }
+  }
+}
+
+svg,
+rect,
+path {
+  &[fill] {
+    transition: fill 350ms ease-in-out;
+  }
+}
+
+.button {
+  border-radius: 5px;
+}
+
+.navbar-dropdown {
+  padding: 0;
+}

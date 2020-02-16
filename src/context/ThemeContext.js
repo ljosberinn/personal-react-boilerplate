@@ -27,47 +27,23 @@ const storeTheme = theme =>
   hasLocalStorage && localStorage.setItem('themePreference', theme);
 
 /**
- * Toggles .theme--light | .theme--dark on HTML tag
+ * Toggles [data-theme=theme] on root
  *
  * @param {string} theme
  */
-const changeThemeOnHTMLTag = theme => {
-  const thisTheme = `theme--${theme}`;
-  const otherTheme = `theme--${
-    theme === THEME_NAMES.LIGHT ? THEME_NAMES.DARK : THEME_NAMES.LIGHT
-  }`;
-
-  const htmlTagClassList = document.querySelector('html').classList;
-
-  if (htmlTagClassList.contains(otherTheme)) {
-    htmlTagClassList.replace(otherTheme, thisTheme);
-    return;
-  }
-
-  htmlTagClassList.add(thisTheme);
+const changeThemeOnRoot = theme => {
+  document.documentElement.dataset.theme = theme;
 };
-
-const getDarkThemeLink = () => document.querySelector(`[data-theme="dark"]`);
-
 export const ThemeContext = createContext();
 
 export default function ThemeProvider({ children }) {
   const detectedTheme = useDetectColorScheme();
   const storedTheme = getStoredTheme();
 
-  const [theme, setTheme] = useState(storedTheme ? storedTheme : detectedTheme);
+  const [theme, setTheme] = useState(storedTheme ?? detectedTheme);
 
   useEffect(() => {
-    const darkThemeLink = getDarkThemeLink();
-
-    if (theme === THEME_NAMES.DARK) {
-      darkThemeLink.disabled = false;
-      changeThemeOnHTMLTag(theme);
-      return;
-    }
-
-    darkThemeLink.disabled = true;
-    changeThemeOnHTMLTag(theme);
+    changeThemeOnRoot(theme);
   }, [theme]);
 
   // change theme when device theme changed
@@ -86,6 +62,7 @@ export default function ThemeProvider({ children }) {
           : THEME_NAMES.LIGHT;
 
       storeTheme(upcomingTheme);
+      changeThemeOnRoot(upcomingTheme);
 
       return upcomingTheme;
     });

@@ -45,13 +45,13 @@
 }
 
 html {
-  &.theme--light .loading-overlay .loading-background,
-  &.theme--dark .loading-overlay.to-light .loading-background {
+  &[data-theme='light'] .loading-overlay .loading-background,
+  &[data-theme='dark'] .loading-overlay.to-light .loading-background {
     background: rgba(255, 255, 255, 0.5);
   }
 
-  &.theme--dark .loading-overlay .loading-background,
-  &.theme--light .loading-overlay.to-dark .loading-background {
+  &[data-theme='dark'] .loading-overlay .loading-background,
+  &[data-theme='light'] .loading-overlay.to-dark .loading-background {
     background: rgba(0, 0, 0, 0.25);
   }
 }

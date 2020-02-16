@@ -25,3 +25,6 @@ package-lock.json
 
 # Local Netlify folder
 .netlify
+
+/public/root.css
+/public/app.css
