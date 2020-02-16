@@ -1,5 +1,5 @@
 import { Column } from 'rbx';
-import React, { Suspense } from 'react';
+import React, { memo } from 'react';
 
 import styles from './Layout.module.scss';
 import { Footer, Navbar, DrawerNav } from './components';
@@ -9,28 +9,17 @@ import { Footer, Navbar, DrawerNav } from './components';
  * children: JSX.Element;
  * }}
  */
-export default function Layout({ children }) {
+export default memo(function Layout({ children }) {
   return (
     <>
-      <Column.Group marginless as="header">
-        <Column>
-          <Suspense fallback={null}>
-            <Navbar />
-          </Suspense>
-        </Column>
-      </Column.Group>
-      <Column.Group gapless marginless as="main">
-        <Suspense fallback={null}>
-          <DrawerNav />
-        </Suspense>
+      <Navbar />
 
-        <Suspense fallback={null}>
-          <Column className={styles.shadow}>{children}</Column>
-        </Suspense>
+      <Column.Group gapless marginless as="main">
+        <DrawerNav />
+        <Column className={styles.shadow}>{children}</Column>
       </Column.Group>
-      <Suspense fallback={null}>
-        <Footer />
-      </Suspense>
+
+      <Footer />
     </>
   );
-}
+});
