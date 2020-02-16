@@ -3,6 +3,7 @@ import React from 'react';
 
 import { LandingPageSvg } from '../../../assets/svg';
 import { TemplatedHelmet } from '../../../components';
+import './LandingPage.scss';
 
 export default function LandingPage() {
   return (
