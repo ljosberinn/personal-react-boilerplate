@@ -6,6 +6,8 @@ import { IdentityContextProvider } from 'react-netlify-identity';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import App from './App';
+import Layout from './Layout';
+import { ServiceWorker } from './components';
 import { LOGROCKET_ID, SITE_URL, IS_LIVE } from './constants/env';
 import { ThemeProvider, ServiceWorkerProvider } from './context';
 
@@ -50,12 +52,15 @@ render(
   <StrictMode>
     <ThemeProvider>
       <ServiceWorkerProvider>
-        <IdentityContextProvider url={SITE_URL} onAuthChange={identifyUser}>
-          <Router>
-            <App />
-          </Router>
-        </IdentityContextProvider>
+        <ServiceWorker />
       </ServiceWorkerProvider>
+      <Router>
+        <IdentityContextProvider url={SITE_URL} onAuthChange={identifyUser}>
+          <Layout>
+            <App />
+          </Layout>
+        </IdentityContextProvider>
+      </Router>
     </ThemeProvider>
   </StrictMode>,
   document.getElementById('root'),
