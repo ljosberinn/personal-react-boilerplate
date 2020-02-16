@@ -3,7 +3,7 @@ export { default as Checkbox } from './Checkbox';
 export { default as Error } from './Error';
 export { default as ExternalLink } from './ExternalLink';
 export { default as Field } from './Field';
-export { default as Footer } from './Footer';
+//export { default as Footer } from './Footer';
 export { default as Form } from './Form';
 export { default as Icon } from './Icon';
 export { default as LanguageSwitch } from './LanguageSwitch';

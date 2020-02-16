@@ -2,7 +2,7 @@ import { Column } from 'rbx';
 import React, { memo } from 'react';
 
 import styles from './Layout.module.scss';
-import { Footer, Navbar } from './components';
+import { Navbar } from './components';
 
 /**
  *
@@ -20,7 +20,7 @@ export default memo(function Layout({ children }) {
         <Column className={styles.shadow}>{children}</Column>
       </Column.Group>
 
-      <Footer />
+      {/*<Footer />*/}
     </>
   );
 });
