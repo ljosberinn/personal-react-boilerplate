@@ -40,7 +40,7 @@
     "eslint": "^6.8.0",
     "eslint-plugin-import": "^2.20.1",
     "faunadb": "^2.11.1",
-    "http-proxy-middleware": "^0.20.0",
+    "http-proxy-middleware": "^0.21.0",
     "husky": "^4.2.3",
     "lint-staged": "^10.0.7",
     "netlify-lambda": "^1.6.3",
@@ -61,10 +61,11 @@
     "test": "react-app-rewired test",
     "eject": "react-app-rewired eject",
     "nuke-modules": "rm -rf node_modules/ && yarn install",
-    "precompile-styles": "yarn precompile-light && yarn precompile-dark && yarn generate-root-css",
-    "precompile-light": "node-sass src/assets/scss/theme.light.scss public/light.min.css --output-style=expanded",
-    "precompile-dark": "node-sass src/assets/scss/theme.dark.scss public/dark.min.css --output-style=expanded",
-    "generate-root-css": "node transform-css-colors-to-vars"
+    "precompile-styles": "yarn precompile-light && yarn precompile-dark && yarn generate-root-css && yarn minify-compiled-css",
+    "precompile-light": "node-sass src/assets/scss/theme.light.scss public/light.css --output-style=expanded",
+    "precompile-dark": "node-sass src/assets/scss/theme.dark.scss public/dark.css --output-style=expanded",
+    "generate-root-css": "node transform-css-colors-to-vars",
+    "minify-compiled-css": "node-sass public/app.css public/app.css --output-style=compressed && node-sass public/root.css public/root.css --output-style=compressed"
   },
   "eslintConfig": {
     "extends": "react-app",

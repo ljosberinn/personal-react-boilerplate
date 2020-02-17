@@ -1,8 +1,8 @@
 const CSSOM = require('cssom');
 const { readFileSync, writeFileSync, unlinkSync } = require('fs');
 
-const lightTheme = 'public/light.min.css';
-const darkTheme = 'public/dark.min.css';
+const lightTheme = 'public/light.css';
+const darkTheme = 'public/dark.css';
 
 const possibleColorDeclarations = [
   'background',
@@ -76,7 +76,7 @@ const fallbackMap = {
 
 let i = 0;
 
-const generateId = () => `--c-${i}`;
+const generateId = () => `--c${i}`;
 
 const newStylesheet = darkStyleSheet.cssRules
   .filter(filterUnwantedBulmaswatchOverrides)
