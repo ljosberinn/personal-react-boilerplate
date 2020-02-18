@@ -11,11 +11,6 @@ const CONFIG = {};
 const ENTRIES = [];
 
 registerRoute(
-  /^https:\/\/unpkg.com\/bulmaswatch@/,
-  new StaleWhileRevalidate({ cacheName: 'alternative-theme' }),
-);
-
-registerRoute(
   /^https:\/\/fonts\.googleapis\.com/,
   new StaleWhileRevalidate({
     cacheName: 'google-fonts-stylesheets',
