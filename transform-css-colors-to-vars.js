@@ -74,6 +74,12 @@ const fallbackMap = {
   },
 };
 
+const overrideMap = {
+  '.input, .textarea, .select select': {
+    color: 'inherit',
+  },
+};
+
 let i = 0;
 
 const generateId = () => `--c${i}`;
@@ -107,25 +113,32 @@ const newStylesheet = darkStyleSheet.cssRules
             );
             const id = previousEntry ? previousEntry.id : generateId();
 
+            const override = overrideMap[rule.selectorText];
             // no stored match, thus store
             if (!previousEntry) {
               const fallback = fallbackMap[rule.selectorText];
 
               collection.push({
                 dark: value,
-                light: twinProp || (fallback && fallback[prop]) || null,
+                light:
+                  (override && override[prop]) ||
+                  (fallback && fallback[prop]) ||
+                  twinProp ||
+                  '#fff',
                 id,
               });
 
               i++;
             }
 
-            // mutate rule
-            rule.style.setProperty(
-              prop,
-              `var(${id})`,
-              rule.style.getPropertyPriority(prop),
-            );
+            if (!override) {
+              // mutate rule
+              rule.style.setProperty(
+                prop,
+                `var(${id})`,
+                rule.style.getPropertyPriority(prop),
+              );
+            }
           }
         }
       });
@@ -144,9 +157,7 @@ writeFileSync('public/app.css', newStylesheet);
  * @param {'dark' | 'light'} key
  */
 const buildRoot = (collection, key) =>
-  collection
-    .map(dataset => `${dataset.id}:${dataset[key] || '#fff'};`)
-    .join('');
+  collection.map(dataset => `${dataset.id}:${dataset[key]};`).join('');
 
 writeFileSync(
   'public/root.css',
