@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@sentry/browser": "^5.12.1",
+    "@sentry/browser": "^5.12.4",
     "bulma-checkradio": "^1.1.1",
     "classnames": "^2.2.6",
-    "i18next": "^19.1.0",
+    "i18next": "^19.2.0",
     "i18next-browser-languagedetector": "^4.0.1",
     "i18next-chained-backend": "^2.0.1",
     "i18next-localstorage-backend": "^3.0.0",
