@@ -7,9 +7,9 @@ import styles from './LoginProviderGroup.module.scss';
 
 export default function LoginProviderGroup() {
   return (
-    <Column.Group multiline>
+    <Column.Group multiline className={styles.columns}>
       {ENABLED_PROVIDER.map(provider => (
-        <Column key={provider} className={styles.column}>
+        <Column key={provider}>
           <LoginProviderButton provider={provider} />
         </Column>
       ))}

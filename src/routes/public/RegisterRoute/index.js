@@ -114,8 +114,6 @@ export default function RegisterRoute() {
                         </Title>
                       </legend>
 
-                      <br />
-
                       <Column.Group centered>
                         <Column size={11}>
                           <Content>

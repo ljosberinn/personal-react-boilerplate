@@ -4,6 +4,7 @@ import { Fade } from 'react-awesome-reveal';
 import { Trans } from 'react-i18next';
 
 import { MailSvg } from '../../../assets/svg';
+import styles from './RegistrationSuccess.module.scss';
 
 /**
  *
@@ -13,7 +14,7 @@ import { MailSvg } from '../../../assets/svg';
  */
 export default function PasswordSuccess({ mail }) {
   return (
-    <Fade>
+    <Fade className={styles.marginTop}>
       <Image.Container size="16by9">
         <MailSvg />
       </Image.Container>
