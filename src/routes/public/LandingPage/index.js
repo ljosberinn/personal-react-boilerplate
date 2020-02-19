@@ -1,4 +1,4 @@
-import { Title } from 'rbx';
+import { Title, Section, Hero, Container, Column, Image } from 'rbx';
 import React from 'react';
 
 import { TemplatedHelmet } from '../../../components';
@@ -11,20 +11,36 @@ export default function LandingPage() {
       <TemplatedHelmet>
         <title>Home</title>
       </TemplatedHelmet>
-      <div id="hero" className="level-item">
-        <div className="hero-content is-flex">
-          <Title textColor="primary" textWeight="bold">
-            A very catchy slogan
-          </Title>
-          <p className="t22-t16">
-            Yeah yeah, we get it. You do this, that and probably something else
-            too.
-          </p>
-        </div>
-        <div className="hero-image">
-          <LandingPageSvg />
-        </div>
-      </div>
+      <Hero as={Section} relative className="is-medium is-block">
+        <Container>
+          <Column.Group vcentered className="is-desktop">
+            <Column desktop={{ size: 5 }} className="has-text-centered-touch">
+              <header>
+                <Title
+                  textWeight="bold"
+                  className="is-1 is-size-2-mobile"
+                  spaced
+                  textColor="primary"
+                >
+                  A very catchy slogan
+                </Title>
+                <Title as="p" subtitle>
+                  <span>
+                    Yeah yeah, we get it. You do this, that and probably
+                    something else too.
+                  </span>
+                </Title>
+              </header>
+            </Column>
+            <Column size={1} />
+            <Column>
+              <Image.Container>
+                <LandingPageSvg />
+              </Image.Container>
+            </Column>
+          </Column.Group>
+        </Container>
+      </Hero>
     </>
   );
 }
