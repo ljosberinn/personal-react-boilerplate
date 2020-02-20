@@ -5985,10 +5985,10 @@ i18next-chained-backend@^2.0.1:
   dependencies:
     "@babel/runtime" "^7.4.5"
 
-i18next-localstorage-backend@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/i18next-localstorage-backend/-/i18next-localstorage-backend-3.0.0.tgz#19b4e836e9a79e564631b88b8ba1c738375e636f"
-  integrity sha512-jOvnvVYP7VlA87aO0wgNeXRoj/vQHqO56UB/R6DlglWn/Ipz4rNGZUyzejJVLFaypZTZ6rpqNsB/pjSVtZm4YQ==
+i18next-localstorage-backend@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/i18next-localstorage-backend/-/i18next-localstorage-backend-3.1.0.tgz#af44946ec6a4ced1479b879e58dcf846574e08fa"
+  integrity sha512-TmpdlJTLhvnudngtjb2/EkK0/rHP4EZ95/qWWhlSjlE/fCPHj6EB1MMpjKvc3LPWj0Txza0nSlO+HnbvZvgzFg==
   dependencies:
     "@babel/runtime" "^7.4.5"
 
@@ -6004,10 +6004,10 @@ i18next-xhr-backend@^3.2.2:
   dependencies:
     "@babel/runtime" "^7.5.5"
 
-i18next@^19.2.0:
-  version "19.2.0"
-  resolved "https://registry.yarnpkg.com/i18next/-/i18next-19.2.0.tgz#befeea5e9a5d133e9438b8a402cd55102ca41526"
-  integrity sha512-Pj/WKE0ABTwZ1CA5CHSsrcUm1KD0BxLEs30m7AAJCBKtRVOB9rqQCpXX4qzRHwFB8Fm6xqy6Dlcz/7IKb8nkQQ==
+i18next@^19.3.1:
+  version "19.3.1"
+  resolved "https://registry.yarnpkg.com/i18next/-/i18next-19.3.1.tgz#b8e1adb1e3297f240af98382724967f9895096e3"
+  integrity sha512-fSd67ADNfVtffECirge69OBChESzdJgXMVa8cmnR96mHn+rB2lTmNE5bqwPz32aufAKOV1LHwOTAepG+P9QbjA==
   dependencies:
     "@babel/runtime" "^7.3.1"
 
