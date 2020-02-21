@@ -7,6 +7,7 @@ import { useIdentityContext } from 'react-netlify-identity';
 import { useTheme } from '../hooks';
 import { upperCaseFirstCharacter } from '../utils';
 import Icon from './Icon';
+import styles from './LoginProviderButton.module.scss';
 
 /**
  * @param {{
@@ -25,7 +26,10 @@ export default function LoginProviderButton({ provider }) {
       onClick={() => loginProvider(provider)}
       fullwidth
     >
-      <Icon svg={provider === 'github' ? FaGithub : FaGoogle} />{' '}
+      <Icon
+        svg={provider === 'github' ? FaGithub : FaGoogle}
+        className={styles.icon}
+      />
       <span>
         {t('signInViaProvider', {
           provider: upperCaseFirstCharacter(provider),

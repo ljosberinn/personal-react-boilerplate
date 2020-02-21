@@ -1,4 +1,4 @@
-import { Column } from 'rbx';
+import { Button } from 'rbx';
 import React from 'react';
 
 import { ENABLED_PROVIDER } from '../constants/env';
@@ -7,12 +7,10 @@ import styles from './LoginProviderGroup.module.scss';
 
 export default function LoginProviderGroup() {
   return (
-    <Column.Group multiline className={styles.columns}>
+    <Button.Group className={styles.buttons}>
       {ENABLED_PROVIDER.map(provider => (
-        <Column key={provider}>
-          <LoginProviderButton provider={provider} />
-        </Column>
+        <LoginProviderButton provider={provider} />
       ))}
-    </Column.Group>
+    </Button.Group>
   );
 }
