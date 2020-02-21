@@ -54,17 +54,6 @@ export default function ServiceWorker() {
       return;
     }
 
-    if (isInstalled) {
-      toast({
-        type: 'info',
-        autoClose: false,
-        closeOnClick: true,
-        content:
-          'ServiceWorker successfully installed. Site is now partially available offline.',
-      });
-      return;
-    }
-
     if (isWaiting) {
       function skipWaiting() {
         return registration.waiting
@@ -84,6 +73,17 @@ export default function ServiceWorker() {
             Site has updated.To see changes close other tabs or click here.
           </div>
         ),
+      });
+      return;
+    }
+
+    if (isInstalled) {
+      toast({
+        type: 'info',
+        autoClose: false,
+        closeOnClick: true,
+        content:
+          'ServiceWorker successfully installed. Site is now partially available offline.',
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
