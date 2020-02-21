@@ -9,7 +9,7 @@ export default function LoginProviderGroup() {
   return (
     <Button.Group className={styles.buttons}>
       {ENABLED_PROVIDER.map(provider => (
-        <LoginProviderButton provider={provider} />
+        <LoginProviderButton provider={provider} key={provider} />
       ))}
     </Button.Group>
   );
