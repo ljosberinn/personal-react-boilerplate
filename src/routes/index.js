@@ -16,8 +16,6 @@ export default memo(function Routes({ isLoggedIn }) {
     ...(isLoggedIn ? PRIVATE_ROUTES : PUBLIC_ROUTES),
   ];
 
-  console.log({ routes });
-
   return (
     <Switch>
       {ENABLED_LANGUAGES.map(lng => (
