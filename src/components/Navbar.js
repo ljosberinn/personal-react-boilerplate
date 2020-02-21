@@ -8,9 +8,9 @@ import { NavLink, Link, useLocation } from 'react-router-dom';
 
 import { ReactComponent as LogoIpsumSvg } from '../assets/svg/logoIpsum.svg';
 import { REPO_LINK, DISCORD_LINK } from '../constants/env';
-import { REGISTER, LOGIN, SETTINGS } from '../constants/routes';
 import { withSuspense } from '../hocs';
 import { useNavigate } from '../hooks';
+import { REGISTER, LOGIN, SETTINGS } from '../routes/config';
 import Icon from './Icon';
 import LanguageSwitch from './LanguageSwitch';
 import Loader from './Loader';

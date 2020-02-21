@@ -7,6 +7,7 @@ import { NavLink } from 'react-router-dom';
 
 import { ReactComponent as LogoIpsumSvg } from '../assets/svg/logoIpsum.svg';
 import { REPO_LINK, DISCORD_LINK, BRAND_NAME } from '../constants/env';
+import { withSuspense } from '../hocs';
 import {
   LANDING_PAGE,
   REGISTER,
@@ -15,8 +16,7 @@ import {
   SETTINGS,
   TOS,
   PRIVACY_POLICY,
-} from '../constants/routes';
-import { withSuspense } from '../hocs';
+} from '../routes/config';
 import ExternalLink from './ExternalLink';
 import styles from './Footer.module.scss';
 import Icon from './Icon';

@@ -11,10 +11,12 @@ import { SHARED_ROUTES, LANGUAGE_ROUTE } from './shared';
 const RedirectToHome = LoadableComponent(() => import('./RedirectToHome'));
 
 export default memo(function Routes({ isLoggedIn }) {
-  const routes = {
+  const routes = [
     ...SHARED_ROUTES,
     ...(isLoggedIn ? PRIVATE_ROUTES : PUBLIC_ROUTES),
-  };
+  ];
+
+  console.log({ routes });
 
   return (
     <Switch>
@@ -26,7 +28,7 @@ export default memo(function Routes({ isLoggedIn }) {
           component={withSuspense(withSentry(LANGUAGE_ROUTE))}
         />
       ))}
-      {Object.entries(routes).map(([path, component]) => (
+      {routes.map(({ path, component }) => (
         <Route
           path={path}
           key={path}

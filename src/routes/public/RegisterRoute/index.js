@@ -6,9 +6,9 @@ import { useIdentityContext } from 'react-netlify-identity';
 import { Link } from 'react-router-dom';
 
 import { TemplatedHelmet, Form } from '../../../components';
-import { LOGIN } from '../../../constants/routes';
 import { useTheme } from '../../../hooks';
 import RedirectToHome from '../../RedirectToHome';
+import { LOGIN } from '../../config';
 import styles from './Register.module.scss';
 import RegistrationForm from './RegistrationForm';
 import RegistrationSuccess from './RegistrationSuccess';

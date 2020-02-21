@@ -1,11 +1,17 @@
-import { LANDING_PAGE, SETTINGS } from '../../constants/routes';
+import { LANDING_PAGE, SETTINGS } from '../config';
 import LoadableComponent from '../loadUtils';
 
-export const PRIVATE_ROUTES = {
-  [LANDING_PAGE.routerPath]: LoadableComponent(() =>
-    import(/* webpackChunkName: "private.landingpage" */ './LandingPage'),
-  ),
-  [SETTINGS.routerPath]: LoadableComponent(() =>
-    import(/* webpackChunkName: "private.settings" */ './SettingsRoute'),
-  ),
-};
+export const PRIVATE_ROUTES = [
+  {
+    path: LANDING_PAGE.routerPath,
+    component: LoadableComponent(() =>
+      import(/* webpackChunkName: "private.landingpage" */ './LandingPage'),
+    ),
+  },
+  {
+    path: SETTINGS.routerPath,
+    component: LoadableComponent(() =>
+      import(/* webpackChunkName: "private.settings" */ './SettingsRoute'),
+    ),
+  },
+];

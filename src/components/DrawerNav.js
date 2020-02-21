@@ -7,9 +7,9 @@ import { useIdentityContext } from 'react-netlify-identity';
 import { Link } from 'react-router-dom';
 
 import { hasLocalStorage } from '../constants/browserAPIs';
-import * as ROUTES from '../constants/routes';
 import { withSuspense } from '../hocs';
 import { useMediaQuery } from '../hooks';
+import * as ROUTES from '../routes/config';
 import styles from './DrawerNav.module.scss';
 import Icon from './Icon';
 

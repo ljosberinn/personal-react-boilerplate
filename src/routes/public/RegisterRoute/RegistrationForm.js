@@ -12,8 +12,8 @@ import {
   LoginProviderGroup,
   PasswordSelection,
 } from '../../../components';
-import { RESET_PASSWORD, TOS } from '../../../constants/routes';
 import { validate } from '../../../utils/validators';
+import { RESET_PASSWORD, TOS } from '../../config';
 
 /**
  *

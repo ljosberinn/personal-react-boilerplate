@@ -25,13 +25,13 @@ import {
   Error,
   LoginProviderGroup,
 } from '../../../components';
-import { REGISTER, RESET_PASSWORD } from '../../../constants/routes';
 import {
   validate,
   pattern,
   passwordMinLength,
 } from '../../../utils/validators';
 import RedirectToHome from '../../RedirectToHome';
+import { REGISTER, RESET_PASSWORD } from '../../config';
 import styles from './Login.module.scss';
 
 const INITIAL_STATE = {

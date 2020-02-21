@@ -1,26 +1,33 @@
-import {
-  LANDING_PAGE,
-  REGISTER,
-  LOGIN,
-  RESET_PASSWORD,
-} from '../../constants/routes';
+import { LANDING_PAGE, REGISTER, LOGIN, RESET_PASSWORD } from '../config';
 import LoadableComponent from '../loadUtils';
 
-export const PUBLIC_ROUTES = {
-  [LANDING_PAGE.routerPath]: LoadableComponent(() =>
-    import(/* webpackChunkName: "public.landingpage" */ './LandingPage'),
-  ),
-  [REGISTER.routerPath]: LoadableComponent(() =>
-    import(/* webpackChunkName: "public.register" */ './RegisterRoute'),
-  ),
-  [LOGIN.routerPath]: LoadableComponent(() =>
-    import(
-      /* webpackChunkName: "public.login" */ /* webpackPrefetch: true */ './LoginRoute'
+export const PUBLIC_ROUTES = [
+  {
+    path: LANDING_PAGE.routerPath,
+    component: LoadableComponent(() =>
+      import(/* webpackChunkName: "public.landingpage" */ './LandingPage'),
     ),
-  ),
-  [RESET_PASSWORD.routerPath]: LoadableComponent(() =>
-    import(
-      /* webpackChunkName: "public.resetpassword" */ './ResetPasswordRoute'
+  },
+  {
+    path: REGISTER.routerPath,
+    component: LoadableComponent(() =>
+      import(/* webpackChunkName: "public.register" */ './RegisterRoute'),
     ),
-  ),
-};
+  },
+  {
+    path: LOGIN.routerPath,
+    component: LoadableComponent(() =>
+      import(
+        /* webpackChunkName: "public.login" */ /* webpackPrefetch: true */ './LoginRoute'
+      ),
+    ),
+  },
+  {
+    path: RESET_PASSWORD.routerPath,
+    component: LoadableComponent(() =>
+      import(
+        /* webpackChunkName: "public.resetpassword" */ './ResetPasswordRoute'
+      ),
+    ),
+  },
+];

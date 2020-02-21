@@ -5,8 +5,8 @@ import { useIdentityContext } from 'react-netlify-identity';
 import { useHistory } from 'react-router-dom';
 
 import { PasswordSelection, Form, Error } from '../../../components';
-import { LOGIN } from '../../../constants/routes';
 import { validate } from '../../../utils/validators';
+import { LOGIN } from '../../config';
 
 const errors = {
   invalidToken: 'invalidToken',
