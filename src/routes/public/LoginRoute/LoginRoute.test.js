@@ -2,7 +2,7 @@ import { fireEvent } from '@testing-library/react';
 import React from 'react';
 import { Route } from 'react-router-dom';
 
-import { LOGIN } from '../../../constants/routes';
+import { LOGIN } from '../../../routes/config';
 import render from '../../../utils/testUtils';
 
 import LoginRoute from './';
