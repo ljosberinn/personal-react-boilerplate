@@ -1,6 +1,6 @@
 import faunadb from 'faunadb';
 
-import { isValidReferrer } from '../utils/lambdaUtils';
+import { isValidReferer } from '../utils/lambdaUtils';
 import { OK, FORBIDDEN } from '../utils/statusCodes';
 
 const q = faunadb.query;
@@ -13,7 +13,7 @@ export async function handler({
   headers: { referer },
   queryStringParameters: { lng, ns },
 }) {
-  if (!referer || !isValidReferrer(referer)) {
+  if (!referer || !isValidReferer(referer)) {
     return {
       statusCode: FORBIDDEN,
     };
