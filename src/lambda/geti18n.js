@@ -8,7 +8,12 @@ const client = new faunadb.Client({
   secret: process.env.REACT_APP_FAUNA_DB_SECRET,
 });
 
-export async function handler({ queryStringParameters: { lng, ns } }) {
+export async function handler(event, ctx) {
+  console.log({ event, ctx });
+  const {
+    queryStringParameters: { lng, ns },
+  } = event;
+
   const languages = lng.split(' ');
   const namespaces = ns.split(' ');
 
