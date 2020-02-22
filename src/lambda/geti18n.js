@@ -1,6 +1,7 @@
 import faunadb from 'faunadb';
 
-import { OK } from '../utils/statusCodes';
+import { isValidReferrer } from '../utils/lambdaUtils';
+import { OK, FORBIDDEN } from '../utils/statusCodes';
 
 const q = faunadb.query;
 
@@ -8,11 +9,15 @@ const client = new faunadb.Client({
   secret: process.env.REACT_APP_FAUNA_DB_SECRET,
 });
 
-export async function handler(event, ctx) {
-  console.log({ event, ctx });
-  const {
-    queryStringParameters: { lng, ns },
-  } = event;
+export async function handler({
+  headers: { referer },
+  queryStringParameters: { lng, ns },
+}) {
+  if (!referer || !isValidReferrer(referer)) {
+    return {
+      statusCode: FORBIDDEN,
+    };
+  }
 
   const languages = lng.split(' ');
   const namespaces = ns.split(' ');
