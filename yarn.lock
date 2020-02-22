@@ -5985,10 +5985,10 @@ i18next-chained-backend@^2.0.1:
   dependencies:
     "@babel/runtime" "^7.4.5"
 
-i18next-localstorage-backend@^3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/i18next-localstorage-backend/-/i18next-localstorage-backend-3.1.0.tgz#af44946ec6a4ced1479b879e58dcf846574e08fa"
-  integrity sha512-TmpdlJTLhvnudngtjb2/EkK0/rHP4EZ95/qWWhlSjlE/fCPHj6EB1MMpjKvc3LPWj0Txza0nSlO+HnbvZvgzFg==
+i18next-localstorage-backend@^3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/i18next-localstorage-backend/-/i18next-localstorage-backend-3.1.1.tgz#c60e86c696cebccf2ff4d8a90637cf0b67c59b21"
+  integrity sha512-/IRvORQni6sutcjnDT2ZBDns4/zXK1b4SIg0aF2sSjAqwTfoyt7PEg8HmRf0zS7fqPC1mDy6g4uNFWmvqRGbvQ==
   dependencies:
     "@babel/runtime" "^7.4.5"
 

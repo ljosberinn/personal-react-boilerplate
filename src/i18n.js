@@ -42,7 +42,6 @@ i18n
       backendOptions: [
         {
           prefix: 'i18n-',
-          defaultVersion: 'v1',
           expirationTime: 28 * 24 * 60 * 60 * 1000,
         },
         {},
