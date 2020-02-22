@@ -39,7 +39,14 @@ i18n
           }),
         }),
       ], // order defines lookup pattern
-      backendOptions: [{ prefix: 'i18n-' }, {}],
+      backendOptions: [
+        {
+          prefix: 'i18n-',
+          defaultVersion: 'v1',
+          expirationTime: 28 * 24 * 60 * 60 * 1000,
+        },
+        {},
+      ],
     },
     ns: [], // removes 'translation' default key from backend query,
     defaultNS: [],
