@@ -36,7 +36,7 @@
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.1.1",
-    "@testing-library/react": "^9.4.0",
+    "@testing-library/react": "^9.4.1",
     "bulmaswatch": "^0.7.5",
     "cssom": "^0.4.4",
     "customize-cra": "^0.9.1",
