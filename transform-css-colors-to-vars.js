@@ -149,9 +149,7 @@ const newStylesheet = darkStyleSheet.cssRules
   .join('')
   .replace(/(\r\n|\r|\n)/gim, '');
 
-const targetFolder = process.env.NODE_ENV ? 'build' : 'public';
-
-writeFileSync(`${targetFolder}/app.css`, newStylesheet);
+writeFileSync('public/app.css', newStylesheet);
 
 /**
  *
@@ -162,7 +160,7 @@ const buildRoot = (collection, key) =>
   collection.map(dataset => `${dataset.id}:${dataset[key]};`).join('');
 
 writeFileSync(
-  `${targetFolder}/root.css`,
+  'public/root.css',
   ['dark', 'light']
     .map(theme => `[data-theme="${theme}"]{${buildRoot(collection, theme)}}`)
     .join(''),

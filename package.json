@@ -61,9 +61,8 @@
     "start:app": "react-app-rewired start",
     "start:lambda": "netlify-lambda serve -c ./config/lambda-webpack.js src/lambda",
     "build": "run-p build:**",
-    "build:app": "react-app-rewired build && sw-precache-cra --config ./config/sw-config.js",
+    "build:app": "react-app-rewired build && sw-precache-cra --config ./config/sw-config.js && yarn precompile-styles && yarn compress-styles-prod",
     "build:lambda": "netlify-lambda build -c ./config/lambda-webpack.js src/lambda",
-    "build:css": "yarn precompile-styles && yarn compress-styles-prod",
     "test": "react-app-rewired test",
     "eject": "react-app-rewired eject",
     "nuke-modules": "rm -rf node_modules/ && yarn install",
@@ -71,7 +70,7 @@
     "precompile-light": "node-sass src/assets/scss/theme.light.scss public/light.css --output-style=expanded",
     "precompile-dark": "node-sass src/assets/scss/theme.dark.scss public/dark.css --output-style=expanded",
     "compress-styles-dev": "node-sass public/app.css public/app.css --output-style=compressed && node-sass public/root.css public/root.css --output-style=compressed",
-    "compress-styles-prod": "node-sass build/app.css build/app.css --output-style=compressed && node-sass build/root.css build/root.css --output-style=compressed"
+    "compress-styles-prod": "node-sass public/app.css build/app.css --output-style=compressed && node-sass public/root.css build/root.css --output-style=compressed"
   },
   "eslintConfig": {
     "extends": "react-app",
