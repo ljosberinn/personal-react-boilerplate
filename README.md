@@ -1,5 +1,4 @@
 [![Netlify Status][netlify-image] ][netlify-url]
-
 [![dependencies][dependencies-image] ][dependencies-url]
 [![devdependencies][devdependencies-image] ][devdependencies-url]
 
@@ -70,6 +69,8 @@
 - preferably [VSCode](https://code.visualstudio.com/insiders/)
 
 # Development
+
+_Currently not supposed to be developed by anyone other than the author. Further how tos will be available once the project is in a more releasable state._
 
 ```bash
 git clone https://github.com/ljosberinn/personal-react-boilerplate
