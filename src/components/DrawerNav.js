@@ -1,6 +1,6 @@
 import classnames from 'classnames';
 import { Column, Menu, Tag, Box, Modal } from 'rbx';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaAngleDoubleDown } from 'react-icons/fa';
 import { useIdentityContext } from 'react-netlify-identity';
@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 
 import { hasLocalStorage } from '../constants/browserAPIs';
 import { withSuspense } from '../hocs';
-import { useMediaQuery } from '../hooks';
+import { useMediaQuery, usePrevious } from '../hooks';
 import * as ROUTES from '../routes/config';
 import styles from './DrawerNav.module.scss';
 import Icon from './Icon';
@@ -47,6 +47,7 @@ const persistExpansionToLocalStorage = isExpanded => {
 
 export default withSuspense(function DrawerNav() {
   const isDesktop = useMediaQuery('(min-width: 1024px)');
+  const wasPreviouslyDesktop = usePrevious(isDesktop);
   const [isExpanded, setIsExpanded] = useState(
     getExpansionFromLocalStorage(isDesktop),
   );
@@ -56,6 +57,16 @@ export default withSuspense(function DrawerNav() {
     setIsExpanded(!isExpanded);
     persistExpansionToLocalStorage(!isExpanded);
   }
+
+  useEffect(() => {
+    if (!isDesktop && wasPreviouslyDesktop && isExpanded) {
+      setIsExpanded(false);
+    }
+
+    if (isDesktop && !wasPreviouslyDesktop && !isExpanded) {
+      setIsExpanded(true);
+    }
+  }, [isDesktop, isExpanded, wasPreviouslyDesktop]);
 
   const routeListProps = {
     t,
