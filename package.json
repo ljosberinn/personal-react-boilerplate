@@ -60,7 +60,7 @@
     "start": "run-p start:**",
     "start:app": "react-app-rewired start",
     "start:lambda": "netlify-lambda serve -c ./config/lambda-webpack.js src/lambda",
-    "build": "yarn precompile-styles && run-p build:**",
+    "build": "run-p build:**",
     "build:app": "react-app-rewired build && sw-precache-cra --config ./config/sw-config.js",
     "build:lambda": "netlify-lambda build -c ./config/lambda-webpack.js src/lambda",
     "build:css": "yarn precompile-styles",
