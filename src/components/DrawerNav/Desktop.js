@@ -3,11 +3,14 @@ import React, { lazy } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaAngleDoubleDown } from 'react-icons/fa';
 
+import { withSuspense } from '../../hocs';
 import Icon from '../Icon';
 import styles from './Desktop.module.scss';
 
-const RouteList = lazy(() =>
-  import(/* webpackChunkName: "drawer_nav.route_list" */ './RouteList'),
+const RouteList = withSuspense(
+  lazy(() =>
+    import(/* webpackChunkName: "drawer_nav.route_list" */ './RouteList'),
+  ),
 );
 
 export default function DrawerNavDesktop({

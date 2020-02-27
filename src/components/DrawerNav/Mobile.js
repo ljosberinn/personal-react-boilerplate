@@ -2,10 +2,13 @@ import classnames from 'classnames';
 import { Tag, Box, Modal } from 'rbx';
 import React, { lazy } from 'react';
 
+import { withSuspense } from '../../hocs';
 import styles from './Mobile.module.scss';
 
-const RouteList = lazy(() =>
-  import(/* webpackChunkName: "drawer_nav.route_list" */ './RouteList'),
+const RouteList = withSuspense(
+  lazy(() =>
+    import(/* webpackChunkName: "drawer_nav.route_list" */ './RouteList'),
+  ),
 );
 
 export default function DrawerNavMobile({

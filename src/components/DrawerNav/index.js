@@ -4,11 +4,11 @@ import { hasLocalStorage } from '../../constants/browserAPIs';
 import { withSuspense } from '../../hocs';
 import { useMediaQuery, usePrevious } from '../../hooks';
 
-const Mobile = lazy(() =>
-  import(/* webpackChunkName: "drawer_nav.mobile" */ './Mobile'),
+const Mobile = withSuspense(
+  lazy(() => import(/* webpackChunkName: "drawer_nav.mobile" */ './Mobile')),
 );
-const Desktop = lazy(() =>
-  import(/* webpackChunkName: "drawer_nav.desktop" */ './Desktop'),
+const Desktop = withSuspense(
+  lazy(() => import(/* webpackChunkName: "drawer_nav.desktop" */ './Desktop')),
 );
 
 const localStorageMeta = {
