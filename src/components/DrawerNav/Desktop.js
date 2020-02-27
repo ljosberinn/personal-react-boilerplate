@@ -1,11 +1,14 @@
 import { Column, Menu, Box } from 'rbx';
-import React from 'react';
+import React, { lazy } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaAngleDoubleDown } from 'react-icons/fa';
 
 import Icon from '../Icon';
 import styles from './Desktop.module.scss';
-import RouteList from './RouteList';
+
+const RouteList = lazy(() =>
+  import(/* webpackChunkName: "drawer_nav.route_list" */ './RouteList'),
+);
 
 export default function DrawerNavDesktop({
   isExpanded,

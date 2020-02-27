@@ -1,17 +1,29 @@
 import i18n from 'i18next';
 import { Column, Content, Title, Section, Card, Generic } from 'rbx';
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, lazy } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useIdentityContext } from 'react-netlify-identity';
 import { Link } from 'react-router-dom';
 
 import { TemplatedHelmet, Form } from '../../../components';
 import { useTheme } from '../../../hooks';
-import RedirectToHome from '../../RedirectToHome';
 import { LOGIN } from '../../config';
 import styles from './Register.module.scss';
-import RegistrationForm from './RegistrationForm';
-import RegistrationSuccess from './RegistrationSuccess';
+
+const RedirectToHome = lazy(() =>
+  import(/* webpackChunkName: "redirect_to_home" */ '../../RedirectToHome'),
+);
+
+const RegistrationSuccess = lazy(() =>
+  import(
+    /* webpackChunkName: "public.registration.success" */ './RegistrationSuccess'
+  ),
+);
+const RegistrationForm = lazy(() =>
+  import(
+    /* webpackChunkName: "public.registration.form" */ './RegistrationForm'
+  ),
+);
 
 const errors = {
   mailInUse: 'mailInUse',
@@ -50,24 +62,26 @@ export default function RegisterRoute() {
     [error],
   );
 
-  const handleSubmit = useCallback(
-    async event => {
-      event.preventDefault();
+  function handleSubmit(event) {
+    event.preventDefault();
 
-      setIsLoading(true);
+    if (error) {
+      setError(null);
+    }
 
-      try {
-        await signupUser(
-          data.mail,
-          data.password,
-          {
-            language: i18n.language,
-            theme,
-          },
-          false,
-        );
-        setSuccessfullyRegistered(true);
-      } catch (error) {
+    setIsLoading(true);
+
+    signupUser(
+      data.mail,
+      data.password,
+      {
+        language: i18n.language,
+        theme,
+      },
+      false,
+    )
+      .then(() => setSuccessfullyRegistered(true))
+      .catch(error => {
         console.error(error);
 
         if (
@@ -76,12 +90,9 @@ export default function RegisterRoute() {
         ) {
           setError(errors.mailInUse);
         }
-      } finally {
-        setIsLoading(false);
-      }
-    },
-    [signupUser, data.mail, data.password, theme],
-  );
+      })
+      .finally(() => setIsLoading(false));
+  }
 
   if (isLoggedIn && isConfirmedUser) {
     return <RedirectToHome />;

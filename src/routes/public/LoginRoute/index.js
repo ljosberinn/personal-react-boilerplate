@@ -11,7 +11,7 @@ import {
   Button,
   Generic,
 } from 'rbx';
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, lazy } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useIdentityContext } from 'react-netlify-identity';
 // TODO: remove once https://github.com/dennismorello/react-awesome-reveal/issues/14 might be resolved
@@ -30,9 +30,12 @@ import {
   pattern,
   passwordMinLength,
 } from '../../../utils/validators';
-import RedirectToHome from '../../RedirectToHome';
 import { REGISTER, RESET_PASSWORD } from '../../config';
 import styles from './Login.module.scss';
+
+const RedirectToHome = lazy(() =>
+  import(/* webpackChunkName: "redirect_to_home" */ '../../RedirectToHome'),
+);
 
 const INITIAL_STATE = {
   mail: '',
@@ -69,28 +72,6 @@ export default function LoginRoute() {
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const handleSubmit = async event => {
-    event.preventDefault();
-
-    if (error) {
-      setError(null);
-    }
-
-    setLoading(true);
-
-    try {
-      await loginUser(mail, password, true);
-    } catch (error) {
-      if (error?.json?.error_description) {
-        setError(errors[error.json.error_description] ?? 'unknownError');
-      }
-
-      console.error(error);
-
-      setLoading(false);
-    }
-  };
-
   const handleChange = useCallback(
     ({ target: { name, type, value } }) => {
       if (error) {
@@ -101,6 +82,26 @@ export default function LoginRoute() {
     },
     [error],
   );
+
+  function handleSubmit(event) {
+    event.preventDefault();
+
+    if (error) {
+      setError(null);
+    }
+
+    setLoading(true);
+
+    loginUser(mail, password, true).catch(error => {
+      if (error?.json?.error_description) {
+        setError(errors[error.json.error_description] ?? 'unknownError');
+      }
+
+      console.error(error);
+
+      setLoading(false);
+    });
+  }
 
   if (isLoggedIn) {
     return <RedirectToHome />;

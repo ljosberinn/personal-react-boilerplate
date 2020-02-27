@@ -103,7 +103,7 @@ export default function PrivacyPolicy() {
         </Fade>
         <div>
           {content.map((dataset, index) => (
-            <Slide dataset={dataset} key={index} index={index} t={t} />
+            <Slide dataset={dataset} index={index} t={t} key={index} />
           ))}
         </div>
       </Section>

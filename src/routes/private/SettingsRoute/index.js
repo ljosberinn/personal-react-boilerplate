@@ -1,10 +1,11 @@
 import { Section, Title, Box, Tab } from 'rbx';
-import React, { Suspense } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaSlidersH, FaUserCog } from 'react-icons/fa';
 import { Route, Link, Switch, useLocation } from 'react-router-dom';
 
 import { TemplatedHelmet, Icon } from '../../../components';
+import { withSuspense } from '../../../hocs';
 import LoadableComponent from '../../loadUtils';
 import styles from './Settings.module.scss';
 
@@ -54,13 +55,16 @@ export default function Settings() {
             ))}
           </Tab.Group>
 
-          <Suspense fallback={null}>
-            <Switch>
-              {tabs.map(({ path, component }) => (
-                <Route exact path={path} component={component} key={path} />
-              ))}
-            </Switch>
-          </Suspense>
+          <Switch>
+            {tabs.map(({ path, component }) => (
+              <Route
+                exact
+                path={path}
+                component={withSuspense(component)}
+                key={path}
+              />
+            ))}
+          </Switch>
         </Box>
       </Section>
     </>
