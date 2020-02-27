@@ -6,7 +6,6 @@ import { FaSun, FaMoon } from 'react-icons/fa';
 
 import { useTheme } from '../hooks';
 import Icon from './Icon';
-import Loader from './Loader';
 import Switch from './Switch';
 import styles from './ThemeSwitch.module.scss';
 
@@ -30,7 +29,7 @@ export const validOrigins = ['settings', 'nav', 'footer'];
  * }}
  */
 export default function ThemeSwitch({ from }) {
-  const { isLoading, theme, toggleTheme } = useTheme();
+  const { theme, toggleTheme } = useTheme();
   const { t } = useTranslation('settings');
 
   if (!validOrigins.includes(from)) {
@@ -42,8 +41,6 @@ export default function ThemeSwitch({ from }) {
 
   return (
     <>
-      {isLoading && <Loader isFullPage color={theme} />}
-
       <Wrap
         from={from}
         className={from !== 'nav' ? styles.clickableContainer : undefined}
@@ -55,7 +52,6 @@ export default function ThemeSwitch({ from }) {
       >
         <Icon svg={FaSun} color={iconClassMap.sun[theme]} data-testid="sun" />
         <Switch
-          disabled={isLoading}
           checked={theme !== 'light'}
           size="small"
           rounded
