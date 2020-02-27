@@ -1,0 +1,29 @@
+.absoluteButton {
+  display: block;
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+
+  z-index: 100;
+
+  width: 4rem;
+  height: 4rem !important;
+
+  div[class^='navbar-burger'] {
+    width: 4rem;
+    height: 4rem;
+    color: #fff;
+
+    span {
+      height: 2px;
+    }
+
+    &:hover {
+      background-color: unset;
+    }
+  }
+}
+
+.mobileBox {
+  margin: 1rem;
+}
