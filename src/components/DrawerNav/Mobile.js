@@ -32,16 +32,18 @@ export default function DrawerNavMobile({
         </div>
       </Tag>
 
-      <Modal active={isExpanded} closeOnBlur closeOnEsc>
-        <Modal.Background onClick={toggleMenu} />
-        <Modal.Content>
-          <Box className={styles.mobileBox}>
-            <nav aria-label="primary navigation">
-              <RouteList {...routeListProps} />
-            </nav>
-          </Box>
-        </Modal.Content>
-      </Modal>
+       {isExpanded && (
+        <Modal active closeOnBlur closeOnEsc>
+          <Modal.Background onClick={toggleMenu} />
+          <Modal.Content>
+            <Box className={styles.mobileBox}>
+              <nav aria-label="primary navigation">
+                <RouteList {...routeListProps} />
+              </nav>
+            </Box>
+          </Modal.Content>
+        </Modal>
+      )}
     </>
   );
 }
