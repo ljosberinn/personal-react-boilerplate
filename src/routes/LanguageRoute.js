@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useHistory } from 'react-router-dom';
 
-import { ENABLED_LANGUAGES } from '../../../constants/env';
+import { ENABLED_LANGUAGES } from '../constants/env';
 
 export default function LanguageRoute() {
   const { i18n } = useTranslation();

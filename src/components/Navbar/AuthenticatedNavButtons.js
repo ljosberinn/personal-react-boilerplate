@@ -8,7 +8,8 @@ import { useLocation } from 'react-router-dom';
 
 import { withSuspense } from '../../hocs';
 import { useNavigate } from '../../hooks';
-import { SETTINGS } from '../../routes/config';
+import { SETTINGS as SETTINGS_CONFIG } from '../../routes/config';
+import { SETTINGS } from '../../routes/private';
 import Icon from '../Icon';
 import Loader from '../Loader';
 
@@ -26,30 +27,33 @@ const NavButton = lazy(() =>
  * }}
  */
 export default withSuspense(function AuthenticatedNavButtons() {
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
+
   const { logoutUser } = useIdentityContext();
   const { pathname } = useLocation();
   const { t } = useTranslation(['navigation', 'routes']);
-
-  const [isLoggingOut, setIsLoggingOut] = useState(false);
   const navigate = useNavigate();
-  const handleLogout = async () => {
-    navigate('/');
 
+  function handleLogout() {
+    navigate('/');
     setIsLoggingOut(true);
-    await logoutUser();
-    setIsLoggingOut(false);
-  };
+
+    logoutUser().then(() => {
+      setIsLoggingOut(false);
+    });
+  }
 
   return (
     <>
       <Button.Group>
         <NavButton
           color="primary"
-          to={SETTINGS.clientPath}
+          to={SETTINGS_CONFIG.clientPath}
           disabled={isLoggingOut}
+          onMouseOver={() => SETTINGS.component.preload()}
         >
           <Icon
-            svg={SETTINGS.icon}
+            svg={SETTINGS_CONFIG.icon}
             className={classnames(
               'is-spinning',
               pathname.includes('/settings/') && 'active',

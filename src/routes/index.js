@@ -3,18 +3,19 @@ import { Switch, Route } from 'react-router-dom';
 
 import { ENABLED_LANGUAGES } from '../constants/env';
 import { withSuspense, withSentry } from '../hocs';
+import LANGUAGE_ROUTE from './LanguageRoute';
 import LoadableComponent from './loadUtils';
-import { PRIVATE_ROUTES } from './private';
-import { PUBLIC_ROUTES } from './public';
-import { SHARED_ROUTES, LANGUAGE_ROUTE } from './shared';
+import * as PRIVATE_ROUTES from './private';
+import * as PUBLIC_ROUTES from './public';
+import * as SHARED_ROUTES from './shared';
 
 const RedirectToHome = LoadableComponent(() => import('./RedirectToHome'));
 
 export default memo(function Routes({ isLoggedIn }) {
-  const routes = [
+  const routes = Object.values({
     ...SHARED_ROUTES,
     ...(isLoggedIn ? PRIVATE_ROUTES : PUBLIC_ROUTES),
-  ];
+  });
 
   return (
     <Switch>

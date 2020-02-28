@@ -14,7 +14,6 @@ export const LANDING_PAGE = {
   title: 'routes:landingPage',
   icon: FaHome,
   visibleInDrawerNav: false,
-  isPublic: true,
 };
 
 export const REGISTER = {
@@ -23,7 +22,6 @@ export const REGISTER = {
   title: 'routes:register',
   icon: FaUserEdit,
   visibleInDrawerNav: false,
-  isPublic: true,
 };
 
 export const LOGIN = {
@@ -32,7 +30,6 @@ export const LOGIN = {
   title: 'routes:login',
   icon: FaSignInAlt,
   visibleInDrawerNav: false,
-  isPublic: true,
 };
 
 export const RESET_PASSWORD = {
@@ -41,7 +38,6 @@ export const RESET_PASSWORD = {
   title: 'routes:resetPassword',
   icon: FaUnlockAlt,
   visibleInDrawerNav: false,
-  isPublic: true,
 };
 
 export const ACTIVATE_ACCOUNT = {
@@ -49,7 +45,6 @@ export const ACTIVATE_ACCOUNT = {
   clientPath: undefined,
   title: undefined,
   visibleInDrawerNav: false,
-  isPublic: true,
 };
 
 export const PRIVACY_POLICY = {
@@ -58,7 +53,6 @@ export const PRIVACY_POLICY = {
   title: 'routes:privacyPolicy',
   icon: FaShieldAlt,
   visibleInDrawerNav: false,
-  isPublic: true,
 };
 
 export const TOS = {
@@ -67,7 +61,6 @@ export const TOS = {
   title: 'routes:tos',
   icon: FaBookReader,
   visibleInDrawerNav: false,
-  isPublic: true,
 };
 
 /** PRIVATE ROUTES */
@@ -77,5 +70,4 @@ export const SETTINGS = {
   title: 'routes:settings',
   icon: FaCog,
   visibleInDrawerNav: false,
-  isPublic: false,
 };
