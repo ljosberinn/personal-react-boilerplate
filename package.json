@@ -67,8 +67,8 @@
     "eject": "react-app-rewired eject",
     "nuke-modules": "rm -rf node_modules/ && yarn install",
     "precompile-styles": "yarn precompile-light && yarn precompile-dark && node transform-css-colors-to-vars",
-    "precompile-light": "node-sass src/assets/scss/theme.light.scss public/light.css --output-style=expanded",
-    "precompile-dark": "node-sass src/assets/scss/theme.dark.scss public/dark.css --output-style=expanded",
+    "precompile-light": "node-sass src/assets/scss/theme.light.scss src/assets/light.css --output-style=expanded",
+    "precompile-dark": "node-sass src/assets/scss/theme.dark.scss src/assets/dark.css --output-style=expanded",
     "compress-styles-dev": "node-sass public/app.css public/app.css --output-style=compressed && node-sass public/root.css public/root.css --output-style=compressed",
     "compress-styles-prod": "node-sass public/app.css build/app.css --output-style=compressed && node-sass public/root.css build/root.css --output-style=compressed"
   },

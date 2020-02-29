@@ -1,8 +1,8 @@
 const CSSOM = require('cssom');
 const { readFileSync, writeFileSync, unlinkSync } = require('fs');
 
-const lightTheme = 'public/light.css';
-const darkTheme = 'public/dark.css';
+const lightTheme = 'src/assets/light.css';
+const darkTheme = 'src/assets/dark.css';
 
 const possibleColorDeclarations = [
   'background',
@@ -17,9 +17,6 @@ const possibleColorDeclarations = [
   'border-right-color',
   'border-bottom-color',
 ];
-
-const lightStyleSheet = CSSOM.parse(readFileSync(lightTheme).toString());
-const darkStyleSheet = CSSOM.parse(readFileSync(darkTheme).toString());
 
 const isStyleRule = rule => rule instanceof CSSOM.CSSStyleRule;
 const isMediaRule = rule => rule instanceof CSSOM.CSSMediaRule;
@@ -84,72 +81,80 @@ let i = 0;
 
 const generateId = () => `--c${i}`;
 
-const newStylesheet = darkStyleSheet.cssRules
-  .filter(filterUnwantedBulmaswatchOverrides)
-  .map(rule => {
-    if (hasColorDeclarations(rule)) {
-      // verify this rule has a twin in the other stylesheet
-      const twin = findBySelector(lightStyleSheet, rule.selectorText);
+console.log(`parsing stylesheets into AST`);
+const lightStyleSheet = CSSOM.parse(readFileSync(lightTheme).toString());
+const darkStyleSheet = CSSOM.parse(readFileSync(darkTheme).toString());
 
-      if (!twin) {
-        return rule.cssText;
-      }
+writeFileSync(
+  'public/app.css',
+  darkStyleSheet.cssRules
+    .filter(filterUnwantedBulmaswatchOverrides)
+    .map(rule => {
+      if (hasColorDeclarations(rule)) {
+        // verify this rule has a twin in the other stylesheet
+        const twin = findBySelector(lightStyleSheet, rule.selectorText);
 
-      // extract color definitions
-      possibleColorDeclarations.forEach(prop => {
-        // the current color of a dark declaration
-        const value = rule.style[prop] ? rule.style[prop].toLowerCase() : null;
+        if (!twin) {
+          return rule.cssText;
+        }
 
-        if (value) {
-          // the current color of the corresponding light declaration
-          const twinProp = twin.style[prop]
-            ? twin.style[prop].toLowerCase()
+        // extract color definitions
+        possibleColorDeclarations.forEach(prop => {
+          // the current color of a dark declaration
+          const value = rule.style[prop]
+            ? rule.style[prop].toLowerCase()
             : null;
 
-          if (twinProp !== value) {
-            // check whether we can recycle a selector
-            const previousEntry = collection.find(
-              dataset => dataset.dark === value,
-            );
-            const id = previousEntry ? previousEntry.id : generateId();
+          if (value) {
+            // the current color of the corresponding light declaration
+            const twinProp = twin.style[prop]
+              ? twin.style[prop].toLowerCase()
+              : null;
 
-            const override = overrideMap[rule.selectorText];
-            // no stored match, thus store
-            if (!previousEntry) {
-              const fallback = fallbackMap[rule.selectorText];
-
-              collection.push({
-                dark: value,
-                light:
-                  (override && override[prop]) ||
-                  (fallback && fallback[prop]) ||
-                  twinProp ||
-                  '#fff',
-                id,
-              });
-
-              i++;
-            }
-
-            if (!override) {
-              // mutate rule
-              rule.style.setProperty(
-                prop,
-                `var(${id})`,
-                rule.style.getPropertyPriority(prop),
+            if (twinProp !== value) {
+              // check whether we can recycle a selector
+              const previousEntry = collection.find(
+                dataset => dataset.dark === value && dataset.light === twinProp,
               );
+              const id = previousEntry ? previousEntry.id : generateId();
+
+              const override = overrideMap[rule.selectorText];
+              // no stored match, thus store
+              if (!previousEntry) {
+                const fallback = fallbackMap[rule.selectorText];
+
+                collection.push({
+                  dark: value,
+                  light:
+                    (override && override[prop]) ||
+                    (fallback && fallback[prop]) ||
+                    twinProp ||
+                    '#fff',
+                  id,
+                });
+
+                i++;
+              }
+
+              if (!override) {
+                // mutate rule
+                rule.style.setProperty(
+                  prop,
+                  `var(${id})`,
+                  rule.style.getPropertyPriority(prop),
+                );
+              }
             }
           }
-        }
-      });
-    }
+        });
+      }
 
-    return rule.cssText;
-  })
-  .join('')
-  .replace(/(\r\n|\r|\n)/gim, '');
-
-writeFileSync('public/app.css', newStylesheet);
+      return rule.cssText;
+    })
+    .join('')
+    .replace(/(\r\n|\r|\n)/gim, ''),
+);
+console.log(`wrote stylesheet to "public/app.css"`);
 
 /**
  *
@@ -166,4 +171,8 @@ writeFileSync(
     .join(''),
 );
 
+console.log(`wrote root vars  to "public/root.css`);
+
 [lightTheme, darkTheme].forEach(unlinkSync);
+
+console.log(`removed precompiled themes, done transforming css`);

@@ -17,3 +17,14 @@
       0 3px 6px rgba(255, 255, 255, 0.08);
   }
 }
+
+[data-theme] {
+  .control {
+    &.has-icons-left,
+    &.has-icons-right {
+      .icon {
+        color: lighten(#4e5d6c, 30%);
+      }
+    }
+  }
+}

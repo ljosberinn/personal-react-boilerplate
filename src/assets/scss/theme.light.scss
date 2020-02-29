@@ -8,6 +8,17 @@
   background-color: rgba($white, 0.95);
 }
 
-.column[class*='DrawerNav'] .box {
-  background-color: $white-ter;
+.navbar {
+  background-color: whitesmoke;
+}
+
+[data-theme] {
+  .control {
+    &.has-icons-left,
+    &.has-icons-right {
+      .icon {
+        color: $input-placeholder-and-icon-color;
+      }
+    }
+  }
 }
