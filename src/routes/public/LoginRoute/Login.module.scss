@@ -5,10 +5,16 @@
   background-position-x: 85%;
   background-position-y: 25%;
   background-size: 45%;
+  display: flex;
 
   @include tablet {
     background-size: 75%;
   }
 
   @include mobile-bg-adjustment();
+}
+
+.parent {
+  align-items: center;
+  width: 100%;
 }

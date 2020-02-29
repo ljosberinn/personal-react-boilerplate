@@ -124,7 +124,7 @@ export default function LoginRoute() {
         className={`has-background-svg ${styles.container}`}
         aria-labelledby="section-title"
       >
-        <Column.Group centered>
+        <Column.Group centered className={styles.parent}>
           <Column widescreen={{ size: 6 }} tablet={{ size: 9 }}>
             <Card>
               <Card.Content>

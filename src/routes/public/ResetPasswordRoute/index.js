@@ -22,7 +22,7 @@ export default function ResetPasswordRoute() {
         className={`has-background-svg ${styles.container}`}
         aria-labelledby="section-title"
       >
-        <Column.Group centered>
+        <Column.Group centered className={styles.parent}>
           <Column widescreen={{ size: 5 }} tablet={{ size: 8 }}>
             <Card>
               <Card.Content>

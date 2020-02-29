@@ -6,6 +6,12 @@
   background-size: 65%;
   background-position-x: 45%;
   background-position-y: 50%;
+  display: flex;
 
   @include mobile-bg-adjustment();
+}
+
+.parent {
+  align-items: center;
+  width: 100%;
 }
