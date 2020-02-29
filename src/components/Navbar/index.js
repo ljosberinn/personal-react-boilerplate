@@ -6,7 +6,7 @@ import { useIdentityContext } from 'react-netlify-identity';
 import { Link } from 'react-router-dom';
 
 import { ReactComponent as LogoIpsumSvg } from '../../assets/svg/logoIpsum.svg';
-import { REPO_LINK, DISCORD_LINK } from '../../constants/env';
+import { REPO_LINK, DISCORD_LINK, BRAND_NAME } from '../../constants/env';
 import { withSuspense } from '../../hocs';
 import Icon from '../Icon';
 import LanguageSwitch from '../LanguageSwitch';
@@ -45,9 +45,9 @@ export default memo(
         >
           <RBXNavbar.Brand>
             <RBXNavbar.Item as={Link} to="/">
-              <LogoIpsumSvg />
+              <LogoIpsumSvg aria-label={BRAND_NAME} />
             </RBXNavbar.Item>
-            <RBXNavbar.Burger />
+            <RBXNavbar.Burger aria-label={t('toggleNavigation')} />
           </RBXNavbar.Brand>
           <RBXNavbar.Menu>
             <RBXNavbar.Segment align="end">

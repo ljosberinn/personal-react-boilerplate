@@ -1,6 +1,7 @@
 import classnames from 'classnames';
 import { Tag, Box, Modal } from 'rbx';
 import React, { lazy } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { withSuspense } from '../../hocs';
 import styles from './Mobile.module.scss';
@@ -16,6 +17,8 @@ export default function DrawerNavMobile({
   toggleMenu,
   ...routeListProps
 }) {
+  const { t } = useTranslation('navigation');
+
   return (
     <>
       <Tag
@@ -24,6 +27,7 @@ export default function DrawerNavMobile({
         onClick={toggleMenu}
         className={styles.absoluteButton}
         role="button"
+        aria-label={t('toggleMenu')}
       >
         <div className={classnames('navbar-burger', isExpanded && 'is-active')}>
           <span />
@@ -32,7 +36,7 @@ export default function DrawerNavMobile({
         </div>
       </Tag>
 
-       {isExpanded && (
+      {isExpanded && (
         <Modal active closeOnBlur closeOnEsc>
           <Modal.Background onClick={toggleMenu} />
           <Modal.Content>

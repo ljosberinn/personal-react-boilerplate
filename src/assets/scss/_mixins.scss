@@ -18,12 +18,10 @@ $themes: light dark;
     }
   }
 
-  html {
-    @each $theme in $themes {
-      &[data-theme='#{$theme}'] {
-        #{$className} {
-          background-image: url('../svg/#{$theme}/#{$name}.svg');
-        }
+  @each $theme in $themes {
+    &[data-theme='#{$theme}'] {
+      #{$className} {
+        background-image: url('../svg/#{$theme}/#{$name}.svg');
       }
     }
   }

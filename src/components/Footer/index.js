@@ -39,7 +39,7 @@ export default memo(
             <Column size={5} widescreen={{ size: 4 }}>
               <NavLink className="brand" to={LANDING_PAGE.clientPath}>
                 <div className="brand-icon">
-                  <LogoIpsumSvg />
+                  <LogoIpsumSvg aria-label={BRAND_NAME} />
                 </div>
               </NavLink>
               <p className={styles.paragraph}>
