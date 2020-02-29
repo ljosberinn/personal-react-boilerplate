@@ -31,18 +31,16 @@ export default function Switch({
   checked,
   ...rest
 }) {
-  const labelClasses = classnames([
-    'switch',
-    rounded && 'is-rounded',
-    disabled && 'is-disabled',
-    size && `is-${size}`,
-    outlined && `is-outlined`,
-  ]);
-
-  const spanClasses = classnames(['check', color && `is-${color}`]);
-
   return (
-    <label className={labelClasses}>
+    <label
+      className={classnames(
+        'switch',
+        rounded && 'is-rounded',
+        disabled && 'is-disabled',
+        size && `is-${size}`,
+        outlined && `is-outlined`,
+      )}
+    >
       <input
         type="checkbox"
         value={value}
@@ -51,7 +49,7 @@ export default function Switch({
         onChange={onChange}
         {...rest}
       />
-      <span className={spanClasses} />
+      <span className={classnames('check', color && `is-${color}`)} />
       <span className="control-label">{text}</span>
     </label>
   );

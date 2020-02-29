@@ -1,8 +1,9 @@
 import { fireEvent } from '@testing-library/react';
 import React from 'react';
 
-import render from '../utils/testUtils';
-import ThemeSwitch, { validOrigins } from './ThemeSwitch';
+import render from '../../utils/testUtils';
+
+import ThemeSwitch, { validOrigins } from '.';
 
 const primaryColorClassName = 'has-text-primary';
 

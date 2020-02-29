@@ -1,6 +1,6 @@
 import React from 'react';
 
-import SentryErrorBoundary from '../components/SentryErrorBoundary';
+import { SentryErrorBoundary } from '../components';
 
 /**
  *

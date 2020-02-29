@@ -1,39 +1,31 @@
 import { Footer as RBXFooter, Container, Column, Generic } from 'rbx';
-import React, { memo } from 'react';
+import React, { memo, lazy } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaGithub, FaDiscord } from 'react-icons/fa';
 import { useIdentityContext } from 'react-netlify-identity';
 import { NavLink } from 'react-router-dom';
 
-import { ReactComponent as LogoIpsumSvg } from '../assets/svg/logoIpsum.svg';
-import { REPO_LINK, DISCORD_LINK, BRAND_NAME } from '../constants/env';
-import { withSuspense } from '../hocs';
-import {
-  LANDING_PAGE,
-  REGISTER,
-  LOGIN,
-  RESET_PASSWORD,
-  SETTINGS,
-  TOS,
-  PRIVACY_POLICY,
-} from '../routes/config';
-import ExternalLink from './ExternalLink';
+import { ReactComponent as LogoIpsumSvg } from '../../assets/svg/logoIpsum.svg';
+import { REPO_LINK, DISCORD_LINK, BRAND_NAME } from '../../constants/env';
+import { withSuspense } from '../../hocs';
+import { LANDING_PAGE, TOS, PRIVACY_POLICY } from '../../routes/config';
+import ExternalLink from '../ExternalLink';
+import Icon from '../Icon';
+import LanguageSwitch from '../LanguageSwitch';
+import ThemeSwitch from '../ThemeSwitch';
 import styles from './Footer.module.scss';
-import Icon from './Icon';
-import LanguageSwitch from './LanguageSwitch';
-import ThemeSwitch from './ThemeSwitch';
+import InternalLink from './InternalLink';
 
-/**
- *
- * @param {{children: JSX.Element;}} props
- */
-function Link({ children, ...rest }) {
-  return (
-    <NavLink activeClassName="is-active" {...rest}>
-      {children}
-    </NavLink>
-  );
-}
+const UnauthenticatedLinks = lazy(() =>
+  import(
+    /* webpackChunkName: "footer.unauthenticated_links" */ './UnauthenticatedLinks'
+  ),
+);
+const AuthenticatedLinks = lazy(() =>
+  import(
+    /* webpackChunkName: "footer.authenticated_links" */ './AuthenticatedLinks'
+  ),
+);
 
 export default memo(
   withSuspense(function Footer() {
@@ -41,7 +33,7 @@ export default memo(
     const { t } = useTranslation(['footer', 'routes', 'navigation']);
 
     return (
-      <RBXFooter as="footer">
+      <RBXFooter as="footer" className={styles.footer}>
         <Container as="nav" aria-label="meta navigation">
           <Column.Group>
             <Column size={5} widescreen={{ size: 4 }}>
@@ -69,21 +61,9 @@ export default memo(
                       <InternalLink route={LANDING_PAGE} t={t} />
                     </li>
                     {!isLoggedIn || !isConfirmedUser ? (
-                      <>
-                        <li>
-                          <InternalLink route={REGISTER} t={t} />
-                        </li>
-                        <li>
-                          <InternalLink route={LOGIN} t={t} />
-                        </li>
-                        <li>
-                          <InternalLink route={RESET_PASSWORD} t={t} />
-                        </li>
-                      </>
+                      <UnauthenticatedLinks t={t} />
                     ) : (
-                      <li>
-                        <InternalLink route={SETTINGS} t={t} />
-                      </li>
+                      <AuthenticatedLinks t={t} />
                     )}
                   </ul>
                 </Column>
@@ -142,25 +122,3 @@ export default memo(
     );
   }),
 );
-
-/**
- *
- * @param {{
- * route: typeof ROUTES[number],
- * t: import('i18next').TFunction
- * }}
- */
-function InternalLink({ route: { clientPath, icon, title }, t }) {
-  return (
-    <Link to={clientPath}>
-      {icon ? (
-        <>
-          <Icon svg={icon} />
-          <span>{t(title)}</span>
-        </>
-      ) : (
-        t(title)
-      )}
-    </Link>
-  );
-}

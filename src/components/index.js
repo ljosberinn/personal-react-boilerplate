@@ -8,7 +8,6 @@ export { default as Form } from './Form';
 export { default as Icon } from './Icon';
 export { default as LanguageSwitch } from './LanguageSwitch';
 export { default as Loader } from './Loader';
-export { default as LoginProviderButton } from './LoginProviderButton';
 export { default as LoginProviderGroup } from './LoginProviderGroup';
 export { default as Navbar } from './Navbar';
 export { default as PasswordSelection } from './PasswordSelection';

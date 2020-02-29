@@ -1,8 +1,9 @@
 import { fireEvent } from '@testing-library/react';
 import React from 'react';
 
-import render from '../utils/testUtils';
-import PasswordSelection from './PasswordSelection';
+import render from '../../utils/testUtils';
+
+import PasswordSelection from '.';
 
 const validPassword = 'a1234567';
 

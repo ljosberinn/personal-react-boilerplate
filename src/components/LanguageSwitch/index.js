@@ -2,9 +2,10 @@ import { Navbar, Dropdown, Button } from 'rbx';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { LocaleSvg } from '../assets/svg';
-import { REPO_LINK, ENABLED_LANGUAGES } from '../constants/env';
-import ExternalLink from './ExternalLink';
+import { LocaleSvg } from '../../assets/svg';
+import { REPO_LINK, ENABLED_LANGUAGES } from '../../constants/env';
+import ExternalLink from '../ExternalLink';
+import styles from './LanguageSwitch.module.scss';
 
 const validOrigins = ['footer', 'nav', 'settings'];
 
@@ -28,27 +29,37 @@ export default function LanguageSwitch({ from }) {
     <DropdownContent t={t} i18n={i18n} currentLanguage={currentLanguage} />
   );
 
+  const ariaId = `dropdown-lng-${from}`;
+
   if (from !== 'nav') {
+    const isFooter = from === 'footer';
+
     return (
-      <Dropdown up={from === 'footer'} hoverable>
+      <Dropdown
+        up={isFooter}
+        hoverable
+        className={isFooter ? styles.pointer : undefined}
+        aria-haspopup="true"
+        aria-controls={ariaId}
+      >
         <Dropdown.Trigger>
           <Wrap from={from}>
             <LocaleSvg />
             {t(currentLanguage)}
           </Wrap>
         </Dropdown.Trigger>
-        <Dropdown.Menu>{dropdownContent}</Dropdown.Menu>
+        <Dropdown.Menu id={ariaId}>{dropdownContent}</Dropdown.Menu>
       </Dropdown>
     );
   }
 
   return (
-    <Navbar.Item dropdown hoverable>
+    <Navbar.Item dropdown hoverable aria-haspopup="true" aria-controls={ariaId}>
       <Navbar.Link arrowless>
         <LocaleSvg />
         {t(currentLanguage)}
       </Navbar.Link>
-      <Navbar.Dropdown>{dropdownContent}</Navbar.Dropdown>
+      <Navbar.Dropdown id={ariaId}>{dropdownContent}</Navbar.Dropdown>
     </Navbar.Item>
   );
 }

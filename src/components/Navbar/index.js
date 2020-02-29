@@ -11,6 +11,7 @@ import { withSuspense } from '../../hocs';
 import Icon from '../Icon';
 import LanguageSwitch from '../LanguageSwitch';
 import ThemeSwitch from '../ThemeSwitch';
+import styles from './Navbar.module.scss';
 
 const AuthenticatedNavButtons = lazy(() =>
   import(
@@ -37,7 +38,11 @@ export default memo(
 
     return (
       <header>
-        <RBXNavbar aria-label="secondary navigation" role={undefined}>
+        <RBXNavbar
+          aria-label="secondary navigation"
+          role={undefined}
+          className={styles.navbar}
+        >
           <RBXNavbar.Brand>
             <RBXNavbar.Item as={Link} to="/">
               <LogoIpsumSvg />

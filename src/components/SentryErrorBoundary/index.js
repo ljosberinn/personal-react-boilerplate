@@ -15,9 +15,9 @@ import React, { Component } from 'react';
 import { withTranslation } from 'react-i18next';
 import { FaBomb, FaGithub } from 'react-icons/fa';
 
-import { hasLocalStorage } from '../constants/browserAPIs';
-import { REPO_LINK, LOGROCKET_ID } from '../constants/env';
-import Icon from './Icon';
+import { hasLocalStorage } from '../../constants/browserAPIs';
+import { REPO_LINK, LOGROCKET_ID } from '../../constants/env';
+import Icon from '../Icon';
 import styles from './SentryErrorBoundary.module.scss';
 
 const logRocketUrl =

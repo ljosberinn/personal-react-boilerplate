@@ -3,6 +3,7 @@ import React, { lazy } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { withSuspense } from '../../hocs';
+import { useTheme } from '../../hooks';
 import {
   REGISTER as REGISTER_CONFIG,
   LOGIN as LOGIN_CONFIG,
@@ -16,6 +17,7 @@ const NavButton = lazy(() =>
 
 export default withSuspense(function UnauthenticatedNavButtons() {
   const { t } = useTranslation('routes');
+  const { theme } = useTheme();
 
   return (
     <Button.Group>
@@ -25,16 +27,16 @@ export default withSuspense(function UnauthenticatedNavButtons() {
         onMouseOver={() => REGISTER.component.preload()}
       >
         <Icon svg={REGISTER_CONFIG.icon} />
-        <span>{t('routes:register')}</span>
+        <span>{t('register')}</span>
       </NavButton>
 
       <NavButton
-        color="light"
+        color={theme === 'dark' ? 'light' : undefined}
         to={LOGIN_CONFIG.clientPath}
         onMouseOver={() => LOGIN.component.preload()}
       >
         <Icon svg={LOGIN_CONFIG.icon} />
-        <span>{t('routes:login')}</span>
+        <span>{t('login')}</span>
       </NavButton>
     </Button.Group>
   );

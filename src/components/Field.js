@@ -7,21 +7,18 @@ import React from 'react';
  * @param {{
  * children: JSX.Element;
  * className?:string;
- * isFloatingLabel?: boolean;
+ * hasFloatingLabel?: boolean;
  * }} props
  */
 export default function Field({
   children,
-  isFloatingLabel,
+  hasFloatingLabel,
   className,
   ...rest
 }) {
   return (
     <RBXField
-      className={classnames([
-        className,
-        isFloatingLabel && 'is-floating-label',
-      ])}
+      className={classnames(className, hasFloatingLabel && 'is-floating-label')}
       {...rest}
     >
       {children}

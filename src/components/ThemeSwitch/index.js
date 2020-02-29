@@ -4,9 +4,9 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaSun, FaMoon } from 'react-icons/fa';
 
-import { useTheme } from '../hooks';
-import Icon from './Icon';
-import Switch from './Switch';
+import { useTheme } from '../../hooks';
+import Icon from '../Icon';
+import Switch from '../Switch';
 import styles from './ThemeSwitch.module.scss';
 
 const iconClassMap = {

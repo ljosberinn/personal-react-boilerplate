@@ -21,14 +21,14 @@ export default function Checkbox({
   return (
     <input
       type="checkbox"
-      className={classnames([
+      className={classnames(
         'is-checkradio',
         size && `is-${size}`,
         circled && 'is-circle',
         blocked && 'is-blocked',
         borderless && 'has-no-border',
         className,
-      ])}
+      )}
       {...rest}
     />
   );
