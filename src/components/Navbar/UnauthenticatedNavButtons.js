@@ -18,6 +18,10 @@ export default withSuspense(function UnauthenticatedNavButtons() {
     PreloadingLink,
   } = useNavigationContext();
 
+  if (!REGISTER || !LOGIN) {
+    return null;
+  }
+
   return (
     <Button.Group>
       <PreloadingLink as={NavButton} color="primary" to={REGISTER}>
