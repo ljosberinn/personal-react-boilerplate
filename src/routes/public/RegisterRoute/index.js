@@ -9,6 +9,7 @@ import { TemplatedHelmet, Form } from '../../../components';
 import { useTheme } from '../../../hooks';
 import { LOGIN } from '../../config';
 import styles from './Register.module.scss';
+import RegistrationForm from './RegistrationForm';
 
 const RedirectToHome = lazy(() =>
   import(/* webpackChunkName: "redirect_to_home" */ '../../RedirectToHome'),
@@ -17,11 +18,6 @@ const RedirectToHome = lazy(() =>
 const RegistrationSuccess = lazy(() =>
   import(
     /* webpackChunkName: "public.registration.success" */ './RegistrationSuccess'
-  ),
-);
-const RegistrationForm = lazy(() =>
-  import(
-    /* webpackChunkName: "public.registration.form" */ './RegistrationForm'
   ),
 );
 
