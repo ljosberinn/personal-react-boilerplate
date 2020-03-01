@@ -14,24 +14,14 @@ export default function UnauthenticatedLinks() {
 
   return (
     <>
-      <li>
-        <PreloadingLink as={NavLink} to={REGISTER}>
-          <Icon svg={REGISTER.icon} />
-          <span>{t(REGISTER.title)}</span>
-        </PreloadingLink>
-      </li>
-      <li>
-        <PreloadingLink as={NavLink} to={LOGIN}>
-          <Icon svg={LOGIN.icon} />
-          <span>{t(LOGIN.title)}</span>
-        </PreloadingLink>
-      </li>
-      <li>
-        <PreloadingLink as={NavLink} to={RESET_PASSWORD}>
-          <Icon svg={RESET_PASSWORD.icon} />
-          <span>{t(RESET_PASSWORD.title)}</span>
-        </PreloadingLink>
-      </li>
+      {[REGISTER, LOGIN, RESET_PASSWORD].filter(Boolean).map(route => (
+        <li key={route.title}>
+          <PreloadingLink as={NavLink} to={route}>
+            <Icon svg={route.icon} />
+            <span>{t(route.title)}</span>
+          </PreloadingLink>
+        </li>
+      ))}
     </>
   );
 }
