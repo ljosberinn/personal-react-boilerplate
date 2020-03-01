@@ -23,9 +23,7 @@ export const REGISTER = {
 export const LOGIN = {
   path: LOGIN_CONFIG.routerPath,
   component: LoadableComponent(() =>
-    import(
-      /* webpackChunkName: "public.login" */ /* webpackPrefetch: true */ './LoginRoute'
-    ),
+    import(/* webpackChunkName: "public.login" */ './LoginRoute'),
   ),
 };
 

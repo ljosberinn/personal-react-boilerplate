@@ -1,16 +1,21 @@
 import { Footer as RBXFooter, Container, Column, Generic } from 'rbx';
 import React, { memo, lazy } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FaGithub, FaDiscord } from 'react-icons/fa';
 import { useIdentityContext } from 'react-netlify-identity';
 import { NavLink } from 'react-router-dom';
 
 import { ReactComponent as LogoIpsumSvg } from '../../assets/svg/logoIpsum.svg';
-import { REPO_LINK, DISCORD_LINK, BRAND_NAME } from '../../constants/env';
+import { BRAND_NAME } from '../../constants/env';
 import withSuspense from '../../hocs/withSuspense';
-import { LANDING_PAGE, TOS, PRIVACY_POLICY } from '../../routes/config';
+import {
+  LANDING_PAGE,
+  TOS as TOS_CONFIG,
+  PRIVACY_POLICY as PRIVACY_POLICY_CONFIG,
+} from '../../routes/config';
+import { TOS, PRIVACY_POLICY } from '../../routes/shared';
+import DiscordLink from '../DiscordLink';
 import ExternalLink from '../ExternalLink';
-import Icon from '../Icon';
+import GithubLink from '../GithubLink';
 import LanguageSwitch from '../LanguageSwitch';
 import ThemeSwitch from '../ThemeSwitch';
 import styles from './Footer.module.scss';
@@ -27,10 +32,17 @@ const AuthenticatedLinks = lazy(() =>
   ),
 );
 
-export default withSuspense(
-  memo(function Footer() {
+export default memo(
+  withSuspense(function Footer() {
     const { isLoggedIn, isConfirmedUser } = useIdentityContext();
     const { t } = useTranslation(['footer', 'routes', 'navigation']);
+
+    const authAwareLinks =
+      !isLoggedIn || !isConfirmedUser ? (
+        <UnauthenticatedLinks t={t} />
+      ) : (
+        <AuthenticatedLinks t={t} />
+      );
 
     return (
       <RBXFooter as="footer" className={styles.footer}>
@@ -44,7 +56,7 @@ export default withSuspense(
               </NavLink>
               <p className={styles.paragraph}>
                 The personal React boilerplate of{' '}
-                <ExternalLink href={REPO_LINK}>
+                <ExternalLink href="//github.com/ljosberinn">
                   Gerrit Alex / ljosberinn
                 </ExternalLink>
               </p>
@@ -60,11 +72,7 @@ export default withSuspense(
                     <li>
                       <InternalLink route={LANDING_PAGE} t={t} />
                     </li>
-                    {!isLoggedIn || !isConfirmedUser ? (
-                      <UnauthenticatedLinks t={t} />
-                    ) : (
-                      <AuthenticatedLinks t={t} />
-                    )}
+                    {authAwareLinks}
                   </ul>
                 </Column>
 
@@ -74,10 +82,18 @@ export default withSuspense(
                       {t('legal')}
                     </Generic>
                     <li>
-                      <InternalLink route={TOS} t={t} />
+                      <InternalLink
+                        route={TOS_CONFIG}
+                        onMouseOver={() => TOS.component.preload()}
+                        t={t}
+                      />
                     </li>
                     <li>
-                      <InternalLink route={PRIVACY_POLICY} t={t} />
+                      <InternalLink
+                        route={PRIVACY_POLICY_CONFIG}
+                        onMouseOver={() => PRIVACY_POLICY.component.preload()}
+                        t={t}
+                      />
                     </li>
                   </ul>
                 </Column>
@@ -95,23 +111,8 @@ export default withSuspense(
                       <LanguageSwitch from="footer" />
                     </li>
 
-                    {DISCORD_LINK && (
-                      <li>
-                        <ExternalLink href={DISCORD_LINK}>
-                          <Icon svg={FaDiscord} />
-                          <span>Discord</span>
-                        </ExternalLink>
-                      </li>
-                    )}
-
-                    {REPO_LINK && (
-                      <li>
-                        <ExternalLink href={REPO_LINK}>
-                          <Icon svg={FaGithub} />
-                          <span>{t('navigation:contribute')}</span>
-                        </ExternalLink>
-                      </li>
-                    )}
+                    <DiscordLink from="footer" />
+                    <GithubLink from="footer" />
                   </ul>
                 </Column>
               </Column.Group>

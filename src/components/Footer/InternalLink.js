@@ -17,9 +17,10 @@ import Icon from '../Icon';
 export default function InternalLink({
   route: { clientPath, icon, title },
   t,
+  ...rest
 }) {
   return (
-    <NavLink activeClassName="is-active" to={clientPath}>
+    <NavLink activeClassName="is-active" to={clientPath} {...rest}>
       {icon ? (
         <>
           <Icon svg={icon} />

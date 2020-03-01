@@ -11,7 +11,7 @@ const LoadableComponent = loader =>
   Loadable({
     loader,
     loading: Loading,
-    delay: 500,
+    delay: 750,
   });
 
 /**

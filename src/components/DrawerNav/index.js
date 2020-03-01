@@ -45,10 +45,11 @@ const persistExpansionToLocalStorage = isExpanded => {
   }
 };
 
-export default withSuspense(
-  memo(function DrawerNav() {
+export default memo(
+  withSuspense(function DrawerNav() {
     const isDesktop = useMediaQuery('(min-width: 1024px)');
     const wasPreviouslyDesktop = usePrevious(isDesktop);
+
     const [isExpanded, setIsExpanded] = useState(
       getExpansionFromLocalStorage(isDesktop),
     );

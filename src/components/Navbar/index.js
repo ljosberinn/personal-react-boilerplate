@@ -1,40 +1,32 @@
+import classnames from 'classnames';
 import { Navbar as RBXNavbar } from 'rbx';
 import React, { memo, lazy } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FaGithub, FaDiscord } from 'react-icons/fa';
-import { useIdentityContext } from 'react-netlify-identity';
 import { Link } from 'react-router-dom';
 
 import { ReactComponent as LogoIpsumSvg } from '../../assets/svg/logoIpsum.svg';
-import { REPO_LINK, DISCORD_LINK, BRAND_NAME } from '../../constants/env';
+import { BRAND_NAME } from '../../constants/env';
 import withSuspense from '../../hocs/withSuspense';
-import Icon from '../Icon';
-import LanguageSwitch from '../LanguageSwitch';
-import ThemeSwitch from '../ThemeSwitch';
+import {
+  useLocationBasedVisibility,
+  useBreakpointBasedVisibility,
+} from '../../hooks';
 import styles from './Navbar.module.scss';
 
-const AuthenticatedNavButtons = lazy(() =>
-  import(
-    /* webpackChunkName: "navbar.authenticated_nav_buttons" */ './AuthenticatedNavButtons'
-  ),
+const Menu = withSuspense(
+  lazy(() => import(/* webpackChunkName: "navbar.menu" */ './Menu')),
 );
 
-const UnauthenticatedNavButtons = lazy(() =>
-  import(
-    /* webpackChunkName: "navbar.unauthenticated_nav_buttons" */ './UnauthenticatedNavButtons'
-  ),
-);
+export default memo(
+  withSuspense(function Navbar() {
+    const { t } = useTranslation('navigation');
 
-export default withSuspense(
-  memo(function Navbar() {
-    const { isLoggedIn, isConfirmedUser } = useIdentityContext();
-    const { t } = useTranslation(['navigation', 'routes']);
-
-    const authAwareButtons = !isLoggedIn ? (
-      <UnauthenticatedNavButtons />
-    ) : isConfirmedUser ? (
-      <AuthenticatedNavButtons />
-    ) : null;
+    const [shouldBeVisibleByDefault] = useBreakpointBasedVisibility(
+      '(min-width: 1024px)',
+    );
+    const [menuActive, toggleMenu] = useLocationBasedVisibility(
+      shouldBeVisibleByDefault,
+    );
 
     return (
       <header>
@@ -47,37 +39,18 @@ export default withSuspense(
             <RBXNavbar.Item as={Link} to="/">
               <LogoIpsumSvg aria-label={BRAND_NAME} />
             </RBXNavbar.Item>
-            <RBXNavbar.Burger aria-label={t('toggleNavigation')} />
+            <div
+              className={classnames('navbar-burger', menuActive && 'is-active')}
+              role="button"
+              aria-label={t('toggleNavigation')}
+              onClick={toggleMenu}
+            >
+              <span />
+              <span />
+              <span />
+            </div>
           </RBXNavbar.Brand>
-          <RBXNavbar.Menu>
-            <RBXNavbar.Segment align="end">
-              <LanguageSwitch from="nav" />
-
-              <ThemeSwitch from="nav" />
-
-              {DISCORD_LINK && (
-                <RBXNavbar.Item
-                  href={DISCORD_LINK}
-                  rel="noopener noreferrer"
-                  target="_blank"
-                >
-                  <Icon svg={FaDiscord} /> <span>Discord</span>
-                </RBXNavbar.Item>
-              )}
-
-              {REPO_LINK && (
-                <RBXNavbar.Item
-                  href={REPO_LINK}
-                  rel="noreferrer noopener"
-                  target="_blank"
-                >
-                  <Icon svg={FaGithub} /> <span>{t('contribute')}</span>
-                </RBXNavbar.Item>
-              )}
-
-              {authAwareButtons}
-            </RBXNavbar.Segment>
-          </RBXNavbar.Menu>
+          {(shouldBeVisibleByDefault || menuActive) && <Menu />}
         </RBXNavbar>
       </header>
     );
