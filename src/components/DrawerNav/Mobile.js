@@ -3,7 +3,7 @@ import { Tag, Box, Modal } from 'rbx';
 import React, { lazy } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { withSuspense } from '../../hocs';
+import withSuspense from '../../hocs/withSuspense';
 import styles from './Mobile.module.scss';
 
 const RouteList = withSuspense(
@@ -12,11 +12,7 @@ const RouteList = withSuspense(
   ),
 );
 
-export default function DrawerNavMobile({
-  isExpanded,
-  toggleMenu,
-  ...routeListProps
-}) {
+export default function Mobile({ isExpanded, toggleMenu, ...routeListProps }) {
   const { t } = useTranslation('navigation');
 
   return (

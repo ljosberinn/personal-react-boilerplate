@@ -3,7 +3,7 @@ import React, { lazy } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaAngleDoubleDown } from 'react-icons/fa';
 
-import { withSuspense } from '../../hocs';
+import withSuspense from '../../hocs/withSuspense';
 import Icon from '../Icon';
 import styles from './Desktop.module.scss';
 
@@ -13,11 +13,7 @@ const RouteList = withSuspense(
   ),
 );
 
-export default function DrawerNavDesktop({
-  isExpanded,
-  toggleMenu,
-  ...routeListProps
-}) {
+export default function Desktop({ isExpanded, toggleMenu, ...routeListProps }) {
   const { t } = useTranslation('navigation');
 
   return (
