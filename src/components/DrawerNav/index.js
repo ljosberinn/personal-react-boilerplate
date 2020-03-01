@@ -1,7 +1,6 @@
-import React, { useState, useEffect, lazy } from 'react';
+import React, { useState, useEffect, lazy, memo } from 'react';
 
 import { hasLocalStorage } from '../../constants/browserAPIs';
-import { withSuspense } from '../../hocs';
 import { useMediaQuery, usePrevious } from '../../hooks';
 
 const Mobile = lazy(() =>
@@ -44,7 +43,7 @@ const persistExpansionToLocalStorage = isExpanded => {
   }
 };
 
-export default withSuspense(function DrawerNav() {
+export default memo(function DrawerNav() {
   const isDesktop = useMediaQuery('(min-width: 1024px)');
   const wasPreviouslyDesktop = usePrevious(isDesktop);
   const [isExpanded, setIsExpanded] = useState(
