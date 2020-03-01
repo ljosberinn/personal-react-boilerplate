@@ -5,8 +5,8 @@ import { useIdentityContext } from 'react-netlify-identity';
 import { useHistory } from 'react-router-dom';
 
 import { PasswordSelection, Form, Error } from '../../../components';
+import { useNavigationContext } from '../../../hooks';
 import { validate } from '../../../utils/validators';
-import { LOGIN } from '../../config';
 
 const errors = {
   invalidToken: 'invalidToken',
@@ -23,6 +23,9 @@ export default function ConfirmPasswordResetForm({ token }) {
   const { t } = useTranslation(['resetPassword', 'error', 'settings']);
   const { replace } = useHistory();
   const { recoverAccount, setUser, updateUser } = useIdentityContext();
+  const {
+    routes: { LOGIN },
+  } = useNavigationContext();
 
   const [{ password, confirmPassword }, setPassword] = useState({
     password: '',

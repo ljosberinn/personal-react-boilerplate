@@ -1,12 +1,17 @@
 import { Column, Card, Section } from 'rbx';
-import React, { useState } from 'react';
+import React, { useState, lazy } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 
 import { TemplatedHelmet } from '../../../components';
-import ConfirmPasswordResetForm from './ConfirmPasswordResetForm';
 import styles from './ResetPassword.module.scss';
 import ResetPasswordForm from './ResetPasswordForm';
+
+const ConfirmPasswordResetForm = lazy(() =>
+  import(
+    /* webpackChunkName: "reset_password.confirm_password_reset_form" */ './ConfirmPasswordResetForm'
+  ),
+);
 
 export default function ResetPasswordRoute() {
   const { t } = useTranslation('resetPassword');

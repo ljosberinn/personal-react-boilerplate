@@ -1,25 +1,36 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
+import { NavLink } from 'react-router-dom';
 
-import { REGISTER, LOGIN, RESET_PASSWORD } from '../../routes/config';
-import InternalLink from './InternalLink';
+import { useNavigationContext } from '../../hooks';
+import Icon from '../Icon';
 
-/**
- *
- * @param {{
- * t: import('i18next').TFunction
- * }}
- */
-export default function UnauthenticatedLinks({ t }) {
+export default function UnauthenticatedLinks() {
+  const { t } = useTranslation('routes');
+  const {
+    routes: { REGISTER, LOGIN, RESET_PASSWORD },
+    PreloadingLink,
+  } = useNavigationContext();
+
   return (
     <>
       <li>
-        <InternalLink route={REGISTER} t={t} />
+        <PreloadingLink as={NavLink} to={REGISTER}>
+          <Icon svg={REGISTER.icon} />
+          <span>{t(REGISTER.title)}</span>
+        </PreloadingLink>
       </li>
       <li>
-        <InternalLink route={LOGIN} t={t} />
+        <PreloadingLink as={NavLink} to={LOGIN}>
+          <Icon svg={LOGIN.icon} />
+          <span>{t(LOGIN.title)}</span>
+        </PreloadingLink>
       </li>
       <li>
-        <InternalLink route={RESET_PASSWORD} t={t} />
+        <PreloadingLink as={NavLink} to={RESET_PASSWORD}>
+          <Icon svg={RESET_PASSWORD.icon} />
+          <span>{t(RESET_PASSWORD.title)}</span>
+        </PreloadingLink>
       </li>
     </>
   );

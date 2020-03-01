@@ -1,18 +1,22 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
-import { SETTINGS } from '../../routes/config';
-import InternalLink from './InternalLink';
+import { useNavigationContext } from '../../hooks';
+import Icon from '../Icon';
 
-/**
- *
- * @param {{
- * t: import('i18next').TFunction
- * }}
- */
-export default function AuthenticatedLinks({ t }) {
+export default function AuthenticatedLinks() {
+  const { t } = useTranslation('routes');
+  const {
+    routes: { SETTINGS },
+    PreloadingLink,
+  } = useNavigationContext();
+
   return (
     <li>
-      <InternalLink route={SETTINGS} t={t} />
+      <PreloadingLink to={SETTINGS}>
+        <Icon svg={SETTINGS.icon} />
+        <span>{t(SETTINGS.title)}</span>
+      </PreloadingLink>
     </li>
   );
 }

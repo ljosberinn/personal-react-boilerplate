@@ -11,6 +11,13 @@ export default function DiscordLink({ from }) {
     return null;
   }
 
+  const content = (
+    <>
+      <Icon svg={FaDiscord} />
+      <span>Discord</span>
+    </>
+  );
+
   if (from === 'nav') {
     return (
       <Navbar.Item
@@ -18,18 +25,12 @@ export default function DiscordLink({ from }) {
         rel="noopener noreferrer"
         href={DISCORD_LINK}
       >
-        <Icon svg={FaDiscord} />
-        <span>Discord</span>
+        {content}
       </Navbar.Item>
     );
   }
 
-  return (
-    <li>
-      <Icon svg={FaDiscord} />
-      <span>Discord</span>
-    </li>
-  );
+  return <li>{content}</li>;
 }
 
 DiscordLink.propTypes = {

@@ -14,16 +14,16 @@ const matchPath = path =>
 /**
  *
  * @param {{
- * path: string;
- * icon: import('@fortawesome/free-brands-svg-icons').IconDefinition;
+ * to: string;
+ * svg: import('react-icons').IconType;
  * children: JSX.Element;
  * isExpanded: boolean;
  * onClick?: () => void;
  * }}
  */
 export default function NavigationLink({
-  path,
-  icon,
+  to,
+  svg,
   children,
   isExpanded,
   onClick,
@@ -31,13 +31,13 @@ export default function NavigationLink({
   return (
     <Menu.List.Item
       as={Link}
-      to={path}
-      active={matchPath(path)}
+      to={to}
+      active={matchPath(to)}
       tooltip={isExpanded ? undefined : children}
       tooltipPosition="right"
       onClick={onClick}
     >
-      <Icon svg={icon} />
+      <Icon svg={svg} />
       <span>{children}</span>
     </Menu.List.Item>
   );

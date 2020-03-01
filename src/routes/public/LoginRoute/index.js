@@ -25,12 +25,12 @@ import {
   Error,
   LoginProviderGroup,
 } from '../../../components';
+import { useNavigationContext } from '../../../hooks';
 import {
   validate,
   pattern,
   passwordMinLength,
 } from '../../../utils/validators';
-import { REGISTER, RESET_PASSWORD } from '../../config';
 import styles from './Login.module.scss';
 
 const RedirectToHome = lazy(() =>
@@ -51,6 +51,10 @@ const errors = {
 export default function LoginRoute() {
   const { t } = useTranslation(['login', 'error']);
   const { isLoggedIn, loginUser } = useIdentityContext();
+  const {
+    routes: { REGISTER, RESET_PASSWORD },
+    PreloadingLink,
+  } = useNavigationContext();
 
   const params = useParams();
 
@@ -140,9 +144,9 @@ export default function LoginRoute() {
                         </Title>
                         <Title subtitle textAlign="centered">
                           {t('or')}{' '}
-                          <Link to={REGISTER.clientPath}>
+                          <PreloadingLink to={REGISTER}>
                             {t('createAccount')}
-                          </Link>
+                          </PreloadingLink>
                         </Title>
                       </legend>
 
@@ -226,13 +230,9 @@ export default function LoginRoute() {
                               <br />
 
                               <Generic textAlign="centered">
-                                <Title
-                                  size={6}
-                                  as={Link}
-                                  to={RESET_PASSWORD.clientPath}
-                                >
+                                <PreloadingLink to={RESET_PASSWORD}>
                                   {t('forgotPassword')}
-                                </Title>
+                                </PreloadingLink>
                               </Generic>
                             </fieldset>
                           </Shake>
@@ -241,7 +241,9 @@ export default function LoginRoute() {
 
                       <Generic as="p" textAlign="centered">
                         {t('dontHaveAnAccount')}{' '}
-                        <Link to={REGISTER.clientPath}>{t('signUp')}</Link>
+                        <PreloadingLink as={Link} to={REGISTER}>
+                          {t('signUp')}
+                        </PreloadingLink>
                       </Generic>
                     </Column>
                   </Column.Group>

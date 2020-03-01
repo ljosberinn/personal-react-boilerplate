@@ -7,19 +7,14 @@ import { NavLink } from 'react-router-dom';
 import { ReactComponent as LogoIpsumSvg } from '../../assets/svg/logoIpsum.svg';
 import { BRAND_NAME } from '../../constants/env';
 import withSuspense from '../../hocs/withSuspense';
-import {
-  LANDING_PAGE,
-  TOS as TOS_CONFIG,
-  PRIVACY_POLICY as PRIVACY_POLICY_CONFIG,
-} from '../../routes/config';
-import { TOS, PRIVACY_POLICY } from '../../routes/shared';
+import { useNavigationContext } from '../../hooks';
 import DiscordLink from '../DiscordLink';
 import ExternalLink from '../ExternalLink';
 import GithubLink from '../GithubLink';
+import Icon from '../Icon';
 import LanguageSwitch from '../LanguageSwitch';
 import ThemeSwitch from '../ThemeSwitch';
 import styles from './Footer.module.scss';
-import InternalLink from './InternalLink';
 
 const UnauthenticatedLinks = lazy(() =>
   import(
@@ -36,12 +31,16 @@ export default memo(
   withSuspense(function Footer() {
     const { isLoggedIn, isConfirmedUser } = useIdentityContext();
     const { t } = useTranslation(['footer', 'routes', 'navigation']);
+    const {
+      routes: { LANDING_PAGE, TOS, PRIVACY_POLICY },
+      PreloadingLink,
+    } = useNavigationContext();
 
     const authAwareLinks =
       !isLoggedIn || !isConfirmedUser ? (
-        <UnauthenticatedLinks t={t} />
+        <UnauthenticatedLinks />
       ) : (
-        <AuthenticatedLinks t={t} />
+        <AuthenticatedLinks />
       );
 
     return (
@@ -49,11 +48,11 @@ export default memo(
         <Container as="nav" aria-label="meta navigation">
           <Column.Group>
             <Column size={5} widescreen={{ size: 4 }}>
-              <NavLink className="brand" to={LANDING_PAGE.clientPath}>
+              <PreloadingLink as={NavLink} className="brand" to={LANDING_PAGE}>
                 <div className="brand-icon">
                   <LogoIpsumSvg aria-label={BRAND_NAME} />
                 </div>
-              </NavLink>
+              </PreloadingLink>
               <p className={styles.paragraph}>
                 The personal React boilerplate of{' '}
                 <ExternalLink href="//github.com/ljosberinn">
@@ -70,7 +69,9 @@ export default memo(
                       {BRAND_NAME}
                     </Generic>
                     <li>
-                      <InternalLink route={LANDING_PAGE} t={t} />
+                      <PreloadingLink as={NavLink} to={LANDING_PAGE}>
+                        {t(LANDING_PAGE.title)}
+                      </PreloadingLink>
                     </li>
                     {authAwareLinks}
                   </ul>
@@ -82,18 +83,16 @@ export default memo(
                       {t('legal')}
                     </Generic>
                     <li>
-                      <InternalLink
-                        route={TOS_CONFIG}
-                        onMouseOver={() => TOS.component.preload()}
-                        t={t}
-                      />
+                      <PreloadingLink as={NavLink} to={TOS}>
+                        <Icon svg={TOS.icon} />
+                        <span>{t(TOS.title)}</span>
+                      </PreloadingLink>
                     </li>
                     <li>
-                      <InternalLink
-                        route={PRIVACY_POLICY_CONFIG}
-                        onMouseOver={() => PRIVACY_POLICY.component.preload()}
-                        t={t}
-                      />
+                      <PreloadingLink as={NavLink} to={PRIVACY_POLICY}>
+                        <Icon svg={PRIVACY_POLICY.icon} />
+                        <span>{t(PRIVACY_POLICY.title)}</span>
+                      </PreloadingLink>
                     </li>
                   </ul>
                 </Column>
@@ -106,11 +105,9 @@ export default memo(
                     <li>
                       <ThemeSwitch from="footer" />
                     </li>
-
                     <li>
                       <LanguageSwitch from="footer" />
                     </li>
-
                     <DiscordLink from="footer" />
                     <GithubLink from="footer" />
                   </ul>

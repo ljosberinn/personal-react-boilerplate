@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import usePrevious from './usePrevious';
@@ -19,5 +19,5 @@ export default function useLocationBasedVisibility(initialState = false) {
     }
   }, [isVisible, pathname, previousPath]);
 
-  return [isVisible, toggle];
+  return useMemo(() => [isVisible, toggle], [isVisible, toggle]);
 }

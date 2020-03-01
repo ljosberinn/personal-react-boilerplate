@@ -7,9 +7,7 @@ import { useIdentityContext } from 'react-netlify-identity';
 import { useLocation } from 'react-router-dom';
 
 import { withSuspense } from '../../hocs';
-import { useNavigate } from '../../hooks';
-import { SETTINGS as SETTINGS_CONFIG } from '../../routes/config';
-import { SETTINGS } from '../../routes/private';
+import { useNavigate, useNavigationContext } from '../../hooks';
 import Icon from '../Icon';
 import Loader from '../Loader';
 
@@ -28,6 +26,10 @@ const NavButton = lazy(() =>
  */
 export default withSuspense(function AuthenticatedNavButtons() {
   const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const {
+    routes: { SETTINGS },
+    PreloadingLink,
+  } = useNavigationContext();
 
   const { logoutUser } = useIdentityContext();
   const { pathname } = useLocation();
@@ -46,21 +48,21 @@ export default withSuspense(function AuthenticatedNavButtons() {
   return (
     <>
       <Button.Group>
-        <NavButton
+        <PreloadingLink
+          as={NavButton}
           color="primary"
-          to={SETTINGS_CONFIG.clientPath}
+          to={SETTINGS}
           disabled={isLoggingOut}
-          onMouseOver={() => SETTINGS.component.preload()}
         >
           <Icon
-            svg={SETTINGS_CONFIG.icon}
+            svg={SETTINGS.icon}
             className={classnames(
               'is-spinning',
               pathname.includes('/settings/') && 'active',
             )}
           />
           <span>{t('routes:settings')}</span>
-        </NavButton>
+        </PreloadingLink>
 
         <Button color="danger" onClick={handleLogout} disabled={isLoggingOut}>
           <Icon svg={FaSignOutAlt} />

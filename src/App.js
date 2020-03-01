@@ -3,15 +3,17 @@ import { useIdentityContext } from 'react-netlify-identity';
 import { useLocation, Redirect } from 'react-router-dom';
 
 import { withSuspense } from './hocs';
-import { useScrollToTop } from './hooks';
+import { useScrollToTop, useNavigationContext } from './hooks';
 import Routes from './routes';
 
 export default withSuspense(function App() {
   const { pathname } = useLocation();
   const {
-    isLoggedIn,
     param: { token, type },
   } = useIdentityContext();
+  const {
+    routes: { RESET_PASSWORD },
+  } = useNavigationContext();
 
   useScrollToTop();
 
@@ -19,12 +21,12 @@ export default withSuspense(function App() {
     return (
       <Redirect
         to={{
-          pathname: '/reset-password',
+          pathname: RESET_PASSWORD.clientPath,
           state: { token },
         }}
       />
     );
   }
 
-  return <Routes isLoggedIn={isLoggedIn} />;
+  return <Routes />;
 });

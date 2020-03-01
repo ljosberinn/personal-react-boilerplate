@@ -20,7 +20,7 @@ export default function Desktop({ isExpanded, toggleMenu, ...routeListProps }) {
     <Column size={isExpanded ? 2 : 1} className={styles.transitionAll}>
       <Box as={Menu} className={styles.box}>
         <nav aria-label="primary navigation">
-          <RouteList {...routeListProps} />
+          <RouteList isExpanded={isExpanded} {...routeListProps} />
           <Menu.List className={styles.fixedBottom}>
             <Menu.List.Item
               onClick={toggleMenu}

@@ -1,18 +1,24 @@
-import {
-  LANDING_PAGE as LANDING_PAGE_CONFIG,
-  SETTINGS as SETTINGS_CONFIG,
-} from '../config';
+import { FaCog, FaHome } from 'react-icons/fa';
+
 import LoadableComponent from '../loadUtils';
 
 export const LANDING_PAGE = {
-  path: LANDING_PAGE_CONFIG.routerPath,
+  routerPath: '/',
+  clientPath: '/',
+  title: 'routes:landingPage',
+  icon: FaHome,
+  visibleInDrawerNav: false,
   component: LoadableComponent(() =>
-    import(/* webpackChunkName: "private.landingpage" */ './LandingPage'),
+    import(/* webpackChunkName: "public.landing_page" */ './LandingPage'),
   ),
 };
 
 export const SETTINGS = {
-  path: SETTINGS_CONFIG.routerPath,
+  routerPath: '/settings/:setting',
+  clientPath: '/settings/site',
+  title: 'routes:settings',
+  icon: FaCog,
+  visibleInDrawerNav: false,
   component: LoadableComponent(() =>
     import(/* webpackChunkName: "private.settings" */ './SettingsRoute'),
   ),

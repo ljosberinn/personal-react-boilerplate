@@ -6,7 +6,7 @@ import { IdentityContextProvider } from 'react-netlify-identity';
 import { Router } from 'react-router-dom';
 
 import { SITE_URL } from '../constants/env';
-import { ThemeProvider } from '../context';
+import { ThemeProvider, NavigationProvider } from '../context';
 import i18n from './testi18n';
 
 export default function render(
@@ -29,7 +29,9 @@ export default function render(
         <Router history={history}>
           <IdentityContextProvider url={SITE_URL}>
             <I18nextProvider i18n={i18n}>
-              <Suspense fallback={null}>{children}</Suspense>
+              <NavigationProvider>
+                <Suspense fallback={null}>{children}</Suspense>
+              </NavigationProvider>
             </I18nextProvider>
           </IdentityContextProvider>
         </Router>

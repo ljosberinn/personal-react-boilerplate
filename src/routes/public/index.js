@@ -1,34 +1,46 @@
-import {
-  LANDING_PAGE as LANDING_PAGE_CONFIG,
-  REGISTER as REGISTER_CONFIG,
-  LOGIN as LOGIN_CONFIG,
-  RESET_PASSWORD as RESET_PASSWORD_CONFIG,
-} from '../config';
+import { FaUserEdit, FaHome, FaSignInAlt, FaUnlockAlt } from 'react-icons/fa';
+
 import LoadableComponent from '../loadUtils';
 
 export const LANDING_PAGE = {
-  path: LANDING_PAGE_CONFIG.routerPath,
+  routerPath: '/',
+  clientPath: '/',
+  title: 'routes:landingPage',
+  icon: FaHome,
+  visibleInDrawerNav: false,
   component: LoadableComponent(() =>
     import(/* webpackChunkName: "public.landing_page" */ './LandingPage'),
   ),
 };
 
 export const REGISTER = {
-  path: REGISTER_CONFIG.routerPath,
+  routerPath: '/register',
+  clientPath: '/register',
+  title: 'routes:register',
+  icon: FaUserEdit,
+  visibleInDrawerNav: false,
   component: LoadableComponent(() =>
     import(/* webpackChunkName: "public.register" */ './RegisterRoute'),
   ),
 };
 
 export const LOGIN = {
-  path: LOGIN_CONFIG.routerPath,
+  routerPath: '/login/:mail?',
+  clientPath: '/login',
+  title: 'routes:login',
+  icon: FaSignInAlt,
+  visibleInDrawerNav: false,
   component: LoadableComponent(() =>
     import(/* webpackChunkName: "public.login" */ './LoginRoute'),
   ),
 };
 
 export const RESET_PASSWORD = {
-  path: RESET_PASSWORD_CONFIG.routerPath,
+  routerPath: '/reset-password',
+  clientPath: '/reset-password',
+  title: 'routes:resetPassword',
+  icon: FaUnlockAlt,
+  visibleInDrawerNav: false,
   component: LoadableComponent(() =>
     import(
       /* webpackChunkName: "public.reset_password" */ './ResetPasswordRoute'

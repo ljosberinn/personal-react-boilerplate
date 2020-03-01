@@ -15,21 +15,24 @@ export default function GithubLink({ from }) {
     return null;
   }
 
+  const content = (
+    <>
+      <Icon svg={FaGithub} />
+      <span>{t('contribute')}</span>
+    </>
+  );
+
   if (from === 'nav') {
     return (
       <Navbar.Item target="_blank" rel="noopener noreferrer" href={REPO_LINK}>
-        <Icon svg={FaGithub} />
-        <span>{t('contribute')}</span>
+        {content}
       </Navbar.Item>
     );
   }
 
   return (
     <li>
-      <ExternalLink href={REPO_LINK}>
-        <Icon svg={FaGithub} />
-        <span>{t('contribute')}</span>
-      </ExternalLink>
+      <ExternalLink href={REPO_LINK}>{content}</ExternalLink>
     </li>
   );
 }

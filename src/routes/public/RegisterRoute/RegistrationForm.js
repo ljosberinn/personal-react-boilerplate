@@ -3,7 +3,6 @@ import React from 'react';
 import { Fade } from 'react-awesome-reveal';
 import { Trans } from 'react-i18next';
 import Shake from 'react-reveal/Shake';
-import { Link } from 'react-router-dom';
 
 import {
   ValidityIconLeft,
@@ -12,8 +11,8 @@ import {
   LoginProviderGroup,
   PasswordSelection,
 } from '../../../components';
+import { useNavigationContext } from '../../../hooks';
 import { validate } from '../../../utils/validators';
-import { RESET_PASSWORD, TOS } from '../../config';
 
 /**
  *
@@ -38,6 +37,10 @@ export default function RegistrationForm({
   tos,
   t,
 }) {
+  const {
+    routes: { RESET_PASSWORD, TOS },
+    PreloadingLink,
+  } = useNavigationContext();
   const passwordsAreMatching = password === confirmPassword;
 
   const isDisabled =
@@ -82,9 +85,9 @@ export default function RegistrationForm({
               <Help color="danger">
                 <Trans parent="span" ns="registration" i18nKey="mail-in-use">
                   An account with this email already exists. Did you{' '}
-                  <Link to={RESET_PASSWORD.clientPath}>
+                  <PreloadingLink to={RESET_PASSWORD}>
                     forget your password
-                  </Link>
+                  </PreloadingLink>
                   ?
                 </Trans>
               </Help>
@@ -121,7 +124,9 @@ export default function RegistrationForm({
                 ns="registration"
               >
                 I agree to the{' '}
-                <Link to={TOS.clientPath}>{{ tos: t('routes:tos') }}</Link>
+                <PreloadingLink to={TOS}>
+                  {{ tos: t('routes:tos') }}
+                </PreloadingLink>
               </Trans>
             </Control>
           </Field>

@@ -2,10 +2,11 @@ import { fireEvent } from '@testing-library/react';
 import React from 'react';
 import { Route } from 'react-router-dom';
 
-import { LOGIN } from '../../../routes/config';
 import render from '../../../utils/testUtils';
 
 import LoginRoute from './';
+
+const path = '/login/:mail?';
 
 const validMail = 'some@mail.com';
 const invalidMail = 'foo';
@@ -20,7 +21,7 @@ describe('<LoginRoute />', () => {
 
   test('renders successfully with optional valid mail', () => {
     const { getByTestId, history } = render(
-      <Route path={LOGIN.routerPath} component={LoginRoute} />,
+      <Route path={path} component={LoginRoute} />,
     );
 
     history.push(`/login/${validMail}`);
@@ -38,7 +39,7 @@ describe('<LoginRoute />', () => {
 
   test('renders successfully with optional invalid mail', () => {
     const { getByTestId, history } = render(
-      <Route path={LOGIN.routerPath} component={LoginRoute} />,
+      <Route path={path} component={LoginRoute} />,
     );
 
     history.push(`/login/${invalidMail}`);

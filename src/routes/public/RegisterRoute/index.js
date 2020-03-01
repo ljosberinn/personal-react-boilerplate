@@ -3,11 +3,9 @@ import { Column, Content, Title, Section, Card, Generic } from 'rbx';
 import React, { useState, useCallback, lazy } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useIdentityContext } from 'react-netlify-identity';
-import { Link } from 'react-router-dom';
 
 import { TemplatedHelmet, Form } from '../../../components';
-import { useTheme } from '../../../hooks';
-import { LOGIN } from '../../config';
+import { useTheme, useNavigationContext } from '../../../hooks';
 import styles from './Register.module.scss';
 import RegistrationForm from './RegistrationForm';
 
@@ -28,6 +26,10 @@ const errors = {
 export default function RegisterRoute() {
   const { signupUser, isLoggedIn, isConfirmedUser } = useIdentityContext();
   const { theme } = useTheme();
+  const {
+    routes: { LOGIN },
+    PreloadingLink,
+  } = useNavigationContext();
 
   const [data, setData] = useState({
     mail: '',
@@ -144,7 +146,9 @@ export default function RegisterRoute() {
                       {!successfullyRegistered && (
                         <Generic textAlign="centered">
                           {t('alreadyHaveAnAccount')}{' '}
-                          <Link to={LOGIN.clientPath}>{t('login:signIn')}</Link>
+                          <PreloadingLink to={LOGIN}>
+                            {t('login:signIn')}
+                          </PreloadingLink>
                         </Generic>
                       )}
                     </Column>

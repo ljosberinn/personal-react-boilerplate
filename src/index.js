@@ -9,7 +9,11 @@ import App from './App';
 import Layout from './Layout';
 import { ServiceWorker } from './components';
 import { LOGROCKET_ID, SITE_URL, IS_LIVE } from './constants/env';
-import { ThemeProvider, ServiceWorkerProvider } from './context';
+import {
+  ThemeProvider,
+  ServiceWorkerProvider,
+  NavigationProvider,
+} from './context';
 
 import './i18n';
 import './utils/errors';
@@ -56,9 +60,11 @@ render(
       </ServiceWorkerProvider>
       <Router>
         <IdentityContextProvider url={SITE_URL} onAuthChange={identifyUser}>
-          <Layout>
-            <App />
-          </Layout>
+          <NavigationProvider>
+            <Layout>
+              <App />
+            </Layout>
+          </NavigationProvider>
         </IdentityContextProvider>
       </Router>
     </ThemeProvider>

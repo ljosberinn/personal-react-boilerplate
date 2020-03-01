@@ -1,9 +1,8 @@
 import { Menu } from 'rbx';
 import React, { lazy } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useIdentityContext } from 'react-netlify-identity';
 
-import * as ROUTES from '../../routes/config';
+import { useNavigationContext, useMediaQuery } from '../../hooks';
 
 const NavigationLink = lazy(() =>
   import(
@@ -19,29 +18,26 @@ const NavigationLink = lazy(() =>
  * }}
  */
 export default function RouteList({ isExpanded, onClick }) {
-  const { isLoggedIn } = useIdentityContext();
-  const { t } = useTranslation('navigation');
+  const { t } = useTranslation('routes');
+  const { routes, PreloadingLink } = useNavigationContext();
+  const isDesktop = useMediaQuery('(min-width: 1024px)');
 
   return (
     <Menu.List>
-      {Object.values(ROUTES)
-        .filter(({ visibleInDrawerNav, isPublic }) => {
-          if (visibleInDrawerNav) {
-            return isPublic ? true : !isPublic && isLoggedIn;
-          }
-
-          return false;
-        })
-        .map(({ title, clientPath, icon }) => (
-          <NavigationLink
-            path={clientPath}
-            svg={icon}
-            isExpanded={isExpanded}
+      {Object.values(routes)
+        .filter(({ visibleInDrawerNav }) => visibleInDrawerNav)
+        .map(route => (
+          <PreloadingLink
+            as={NavigationLink}
+            to={route}
+            path={route.clientPath}
+            svg={route.icon}
+            isExpanded={isDesktop ? isExpanded : true}
             onClick={onClick}
-            key={clientPath}
+            key={route.clientPath}
           >
-            {t(title)}
-          </NavigationLink>
+            {t(route.title)}
+          </PreloadingLink>
         ))}
     </Menu.List>
   );

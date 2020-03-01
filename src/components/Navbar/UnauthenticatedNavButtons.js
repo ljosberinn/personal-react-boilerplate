@@ -3,12 +3,7 @@ import React, { lazy } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { withSuspense } from '../../hocs';
-import { useTheme } from '../../hooks';
-import {
-  REGISTER as REGISTER_CONFIG,
-  LOGIN as LOGIN_CONFIG,
-} from '../../routes/config';
-import { REGISTER, LOGIN } from '../../routes/public';
+import { useTheme, useNavigationContext } from '../../hooks';
 import Icon from '../Icon';
 
 const NavButton = lazy(() =>
@@ -18,26 +13,26 @@ const NavButton = lazy(() =>
 export default withSuspense(function UnauthenticatedNavButtons() {
   const { t } = useTranslation('routes');
   const { theme } = useTheme();
+  const {
+    routes: { REGISTER, LOGIN },
+    PreloadingLink,
+  } = useNavigationContext();
 
   return (
     <Button.Group>
-      <NavButton
-        color="primary"
-        to={REGISTER_CONFIG.clientPath}
-        onMouseOver={() => REGISTER.component.preload()}
-      >
-        <Icon svg={REGISTER_CONFIG.icon} />
+      <PreloadingLink as={NavButton} color="primary" to={REGISTER}>
+        <Icon svg={REGISTER.icon} />
         <span>{t('register')}</span>
-      </NavButton>
+      </PreloadingLink>
 
-      <NavButton
+      <PreloadingLink
+        as={NavButton}
         color={theme === 'dark' ? 'light' : undefined}
-        to={LOGIN_CONFIG.clientPath}
-        onMouseOver={() => LOGIN.component.preload()}
+        to={LOGIN}
       >
-        <Icon svg={LOGIN_CONFIG.icon} />
+        <Icon svg={LOGIN.icon} />
         <span>{t('login')}</span>
-      </NavButton>
+      </PreloadingLink>
     </Button.Group>
   );
 });
