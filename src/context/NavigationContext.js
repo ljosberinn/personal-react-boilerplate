@@ -8,6 +8,7 @@ import React, {
 import { useIdentityContext } from 'react-netlify-identity';
 import { Link } from 'react-router-dom';
 
+import { usePrevious } from '../hooks';
 import * as PRIVATE_ROUTES from '../routes/private';
 import * as PUBLIC_ROUTES from '../routes/public';
 import * as SHARED_ROUTES from '../routes/shared';
@@ -23,11 +24,15 @@ const preloadedMap = new Map();
 
 export default function NavigationProvider({ children }) {
   const { isLoggedIn } = useIdentityContext();
+  const previousLoggedIn = usePrevious(isLoggedIn);
   const [routes, setRoutes] = useState(computeRoutes(isLoggedIn));
 
   useEffect(() => {
-    setRoutes(computeRoutes(isLoggedIn));
-  }, [isLoggedIn]);
+    // skip initial render effect
+    if (isLoggedIn !== previousLoggedIn) {
+      setRoutes(computeRoutes(isLoggedIn));
+    }
+  }, [isLoggedIn, previousLoggedIn]);
 
   const PreloadingLink = useCallback(
     ({
