@@ -8,7 +8,7 @@ import React, { Suspense } from 'react';
 export default function withSuspense(Component, fallback = null) {
   const displayName = `withSuspense(${Component.displayName ||
     Component.name ||
-    'UnknownComponent'})`;
+    'Unknown'})`;
 
   const C = props => (
     <Suspense fallback={fallback}>

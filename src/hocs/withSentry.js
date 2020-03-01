@@ -9,7 +9,7 @@ import { SentryErrorBoundary } from '../components';
 export default function withSentry(Component) {
   const displayName = `withSentry(${Component.displayName ||
     Component.Name ||
-    'UnknownComponent'})`;
+    'Unknown'})`;
 
   const C = props => (
     <SentryErrorBoundary>
