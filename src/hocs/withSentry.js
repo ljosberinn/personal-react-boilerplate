@@ -11,11 +11,13 @@ export default function withSentry(Component) {
     Component.Name ||
     'Unknown'})`;
 
-  const C = props => (
-    <SentryErrorBoundary>
-      <Component {...props} />
-    </SentryErrorBoundary>
-  );
+  function C(props) {
+    return (
+      <SentryErrorBoundary>
+        <Component {...props} />
+      </SentryErrorBoundary>
+    );
+  }
 
   C.displayName = displayName;
   C.WrappedComponent = Component;

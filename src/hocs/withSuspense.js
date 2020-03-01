@@ -10,11 +10,13 @@ export default function withSuspense(Component, fallback = null) {
     Component.name ||
     'Unknown'})`;
 
-  const C = props => (
-    <Suspense fallback={fallback}>
-      <Component {...props} />
-    </Suspense>
-  );
+  function C(props) {
+    return (
+      <Suspense fallback={fallback}>
+        <Component {...props} />
+      </Suspense>
+    );
+  }
 
   C.displayName = displayName;
   C.WrappedComponent = Component;

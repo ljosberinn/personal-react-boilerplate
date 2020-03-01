@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 
 import { ReactComponent as LogoIpsumSvg } from '../../assets/svg/logoIpsum.svg';
 import { REPO_LINK, DISCORD_LINK, BRAND_NAME } from '../../constants/env';
-import { withSuspense } from '../../hocs';
+import withSuspense from '../../hocs/withSuspense';
 import Icon from '../Icon';
 import LanguageSwitch from '../LanguageSwitch';
 import ThemeSwitch from '../ThemeSwitch';
@@ -25,8 +25,8 @@ const UnauthenticatedNavButtons = lazy(() =>
   ),
 );
 
-export default memo(
-  withSuspense(function Navbar() {
+export default withSuspense(
+  memo(function Navbar() {
     const { isLoggedIn, isConfirmedUser } = useIdentityContext();
     const { t } = useTranslation(['navigation', 'routes']);
 

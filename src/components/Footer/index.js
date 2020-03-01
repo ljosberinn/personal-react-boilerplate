@@ -7,7 +7,7 @@ import { NavLink } from 'react-router-dom';
 
 import { ReactComponent as LogoIpsumSvg } from '../../assets/svg/logoIpsum.svg';
 import { REPO_LINK, DISCORD_LINK, BRAND_NAME } from '../../constants/env';
-import { withSuspense } from '../../hocs';
+import withSuspense from '../../hocs/withSuspense';
 import { LANDING_PAGE, TOS, PRIVACY_POLICY } from '../../routes/config';
 import ExternalLink from '../ExternalLink';
 import Icon from '../Icon';
@@ -27,8 +27,8 @@ const AuthenticatedLinks = lazy(() =>
   ),
 );
 
-export default memo(
-  withSuspense(function Footer() {
+export default withSuspense(
+  memo(function Footer() {
     const { isLoggedIn, isConfirmedUser } = useIdentityContext();
     const { t } = useTranslation(['footer', 'routes', 'navigation']);
 

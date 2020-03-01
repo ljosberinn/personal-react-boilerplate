@@ -1,6 +1,7 @@
 import React, { useState, useEffect, lazy, memo } from 'react';
 
 import { hasLocalStorage } from '../../constants/browserAPIs';
+import withSuspense from '../../hocs/withSuspense';
 import { useMediaQuery, usePrevious } from '../../hooks';
 
 const Mobile = lazy(() =>
@@ -16,6 +17,7 @@ const localStorageMeta = {
   open: 'open',
   closed: 'closed',
 };
+
 /**
  *
  * @param {boolean} isDesktop
@@ -43,31 +45,35 @@ const persistExpansionToLocalStorage = isExpanded => {
   }
 };
 
-export default memo(function DrawerNav() {
-  const isDesktop = useMediaQuery('(min-width: 1024px)');
-  const wasPreviouslyDesktop = usePrevious(isDesktop);
-  const [isExpanded, setIsExpanded] = useState(
-    getExpansionFromLocalStorage(isDesktop),
-  );
+export default withSuspense(
+  memo(function DrawerNav() {
+    const isDesktop = useMediaQuery('(min-width: 1024px)');
+    const wasPreviouslyDesktop = usePrevious(isDesktop);
+    const [isExpanded, setIsExpanded] = useState(
+      getExpansionFromLocalStorage(isDesktop),
+    );
 
-  function toggleMenu() {
-    setIsExpanded(!isExpanded);
-    persistExpansionToLocalStorage(!isExpanded);
-  }
+    useEffect(() => {
+      // ignore auto-expanding the mobile nav when coming from desktop
+      if (!isDesktop && wasPreviouslyDesktop && isExpanded) {
+        setIsExpanded(false);
+      }
 
-  useEffect(() => {
-    if (!isDesktop && wasPreviouslyDesktop && isExpanded) {
-      setIsExpanded(false);
+      // auto expand desktop nav when increasing width
+      if (isDesktop && !wasPreviouslyDesktop && !isExpanded) {
+        setIsExpanded(true);
+      }
+    }, [isDesktop, isExpanded, wasPreviouslyDesktop]);
+
+    function toggleMenu() {
+      setIsExpanded(!isExpanded);
+      persistExpansionToLocalStorage(!isExpanded);
     }
 
-    if (isDesktop && !wasPreviouslyDesktop && !isExpanded) {
-      setIsExpanded(true);
+    if (isDesktop) {
+      return <Desktop toggleMenu={toggleMenu} isExpanded={isExpanded} />;
     }
-  }, [isDesktop, isExpanded, wasPreviouslyDesktop]);
 
-  if (isDesktop) {
-    return <Desktop toggleMenu={toggleMenu} isExpanded={isExpanded} />;
-  }
-
-  return <Mobile toggleMenu={toggleMenu} isExpanded={isExpanded} />;
-});
+    return <Mobile toggleMenu={toggleMenu} isExpanded={isExpanded} />;
+  }),
+);
