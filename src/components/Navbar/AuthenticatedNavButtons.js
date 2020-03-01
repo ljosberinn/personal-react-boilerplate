@@ -40,9 +40,7 @@ export default withSuspense(function AuthenticatedNavButtons() {
     navigate('/');
     setIsLoggingOut(true);
 
-    logoutUser().then(() => {
-      setIsLoggingOut(false);
-    });
+    logoutUser();
   }
 
   return (
