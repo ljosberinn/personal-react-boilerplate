@@ -6,7 +6,7 @@ import React from 'react';
  *
  * @param {{
  * children: JSX.Element;
- * className?:string;
+ * className?: string;
  * hasFloatingLabel?: boolean;
  * }} props
  */

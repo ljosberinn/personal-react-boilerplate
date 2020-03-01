@@ -1,4 +1,5 @@
 import classnames from 'classnames';
+import PropTypes from 'prop-types';
 import { Message, Help } from 'rbx';
 import React from 'react';
 
@@ -63,11 +64,17 @@ export default function PasswordCriteria({ password, t }) {
   );
 }
 
+PasswordCriteria.propTypes = {
+  password: PropTypes.string.isRequired,
+  t: PropTypes.func.isRequired,
+};
+
 /**
  *
  * @param {{
  * isFulfilled: boolean,
- * info: string
+ * info: string,
+ * t: import('i18next').TFunction
  * }}
  */
 function PasswordCriteriaInformation({ isFulfilled, info, t }) {
@@ -80,3 +87,9 @@ function PasswordCriteriaInformation({ isFulfilled, info, t }) {
     </Help>
   );
 }
+
+PasswordCriteriaInformation.propTypes = {
+  isFulfilled: PropTypes.bool.isRequired,
+  info: PropTypes.string.isRequired,
+  t: PropTypes.func.isRequired,
+};

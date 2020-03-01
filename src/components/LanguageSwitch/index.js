@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { Navbar, Dropdown, Button } from 'rbx';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -7,14 +8,8 @@ import { REPO_LINK, ENABLED_LANGUAGES } from '../../constants/env';
 import ExternalLink from '../ExternalLink';
 import styles from './LanguageSwitch.module.scss';
 
-const validOrigins = ['footer', 'nav', 'settings'];
+export const validOrigins = ['footer', 'nav', 'settings'];
 
-/**
- *
- * @param {{
- * from: 'footer' | 'nav' | 'settings'
- * }}
- */
 export default function LanguageSwitch({ from }) {
   const { i18n, t } = useTranslation('languages');
 
@@ -64,6 +59,10 @@ export default function LanguageSwitch({ from }) {
   );
 }
 
+LanguageSwitch.propTypes = {
+  from: PropTypes.oneOf(validOrigins).isRequired,
+};
+
 /**
  *
  * @param {{
@@ -111,3 +110,7 @@ function Wrap({ children, from }) {
     </div>
   );
 }
+
+Wrap.propTypes = {
+  from: PropTypes.oneOf(validOrigins).isRequired,
+};

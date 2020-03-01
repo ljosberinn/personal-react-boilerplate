@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { Icon as RBXIcon } from 'rbx';
 import React from 'react';
 
@@ -19,3 +20,7 @@ export default function Icon({ svg: Svg, ...rest }) {
     </RBXIcon>
   );
 }
+
+Icon.propTypes = {
+  svg: PropTypes.elementType.isRequired,
+};

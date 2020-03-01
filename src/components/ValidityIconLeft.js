@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { FaLock, FaLockOpen, FaIdCard, FaEnvelope } from 'react-icons/fa';
 
@@ -48,3 +49,8 @@ export default function ValidityIconLeft({ type, value = '' }) {
 
   return <Icon align="left" color={color} svg={success} />;
 }
+
+ValidityIconLeft.propTypes = {
+  type: PropTypes.oneOf(['password', 'mail', 'username']).isRequired,
+  value: PropTypes.string.isRequired,
+};

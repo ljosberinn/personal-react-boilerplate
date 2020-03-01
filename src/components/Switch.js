@@ -1,4 +1,5 @@
 import classnames from 'classnames';
+import PropTypes from 'prop-types';
 import React from 'react';
 
 /**
@@ -54,3 +55,15 @@ export default function Switch({
     </label>
   );
 }
+
+Switch.propTypes = {
+  color: PropTypes.string,
+  disabled: PropTypes.bool,
+  name: PropTypes.string,
+  size: PropTypes.string,
+  outlined: PropTypes.bool,
+  value: PropTypes.oneOf([PropTypes.string, PropTypes.number]),
+  text: PropTypes.oneOf([PropTypes.string, PropTypes.number]),
+  onChange: PropTypes.func,
+  checked: PropTypes.bool,
+};

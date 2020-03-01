@@ -1,9 +1,9 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 /**
  *
  * @param {{
- * href: string;
  * children: JSX.Element
  * }} props
  */
@@ -14,3 +14,7 @@ export default function ExternalLink({ children, ...rest }) {
     </a>
   );
 }
+
+ExternalLink.propTypes = {
+  href: PropTypes.string.isRequired,
+};

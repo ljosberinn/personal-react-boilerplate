@@ -1,4 +1,5 @@
 import classnames from 'classnames';
+import PropTypes from 'prop-types';
 import { Navbar, Button } from 'rbx';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -69,6 +70,10 @@ export default function ThemeSwitch({ from }) {
   );
 }
 
+ThemeSwitch.propTypes = {
+  from: PropTypes.oneOf(validOrigins).isRequired,
+};
+
 /**
  *
  * @param {{
@@ -99,3 +104,7 @@ function Wrap({ from, children, className, ...rest }) {
     </span>
   );
 }
+
+Wrap.propTypes = {
+  from: PropTypes.oneOf(validOrigins).isRequired,
+};
