@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { Menu } from 'rbx';
 import React, { lazy } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -10,14 +11,7 @@ const NavigationLink = lazy(() =>
   ),
 );
 
-/**
- *
- * @param {{
- * isExpanded: boolean;
- * onClick?: () => void;
- * }}
- */
-export default function RouteList({ isExpanded, onClick }) {
+export default function RouteList({ isExpanded }) {
   const { t } = useTranslation('routes');
   const { routes, PreloadingLink } = useNavigationContext();
   const isDesktop = useMediaQuery('(min-width: 1024px)');
@@ -33,7 +27,6 @@ export default function RouteList({ isExpanded, onClick }) {
             path={route.clientPath}
             svg={route.icon}
             isExpanded={isDesktop ? isExpanded : true}
-            onClick={onClick}
             key={route.clientPath}
           >
             {t(route.title)}
@@ -42,3 +35,7 @@ export default function RouteList({ isExpanded, onClick }) {
     </Menu.List>
   );
 }
+
+RouteList.propTypes = {
+  isExpanded: PropTypes.bool.isRequired,
+};

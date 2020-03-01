@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { Column, Menu, Box } from 'rbx';
 import React, { lazy } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -13,19 +14,20 @@ const RouteList = withSuspense(
   ),
 );
 
-export default function Desktop({ isExpanded, toggleMenu, ...routeListProps }) {
+export default function Desktop({ isExpanded, toggleMenu }) {
   const { t } = useTranslation('navigation');
 
   return (
     <Column size={isExpanded ? 2 : 1} className={styles.transitionAll}>
       <Box as={Menu} className={styles.box}>
         <nav aria-label="primary navigation">
-          <RouteList isExpanded={isExpanded} {...routeListProps} />
+          <RouteList isExpanded={isExpanded} />
           <Menu.List className={styles.fixedBottom}>
             <Menu.List.Item
               onClick={toggleMenu}
               tooltip={isExpanded ? undefined : t('toggleMenu')}
               tooltipPosition="right"
+              data-testid="drawer-nav-desktop-toggle"
             >
               <Icon
                 svg={FaAngleDoubleDown}
@@ -41,3 +43,8 @@ export default function Desktop({ isExpanded, toggleMenu, ...routeListProps }) {
     </Column>
   );
 }
+
+Desktop.propTypes = {
+  isExpanded: PropTypes.bool.isRequired,
+  toggleMenu: PropTypes.func.isRequired,
+};

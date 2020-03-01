@@ -1,4 +1,5 @@
 import classnames from 'classnames';
+import PropTypes from 'prop-types';
 import { Tag, Box, Modal } from 'rbx';
 import React, { lazy } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -12,7 +13,7 @@ const RouteList = withSuspense(
   ),
 );
 
-export default function Mobile({ isExpanded, toggleMenu, ...routeListProps }) {
+export default function Mobile({ isExpanded, toggleMenu }) {
   const { t } = useTranslation('navigation');
 
   return (
@@ -33,12 +34,17 @@ export default function Mobile({ isExpanded, toggleMenu, ...routeListProps }) {
       </Tag>
 
       {isExpanded && (
-        <Modal active closeOnBlur closeOnEsc>
+        <Modal
+          active
+          closeOnBlur
+          closeOnEsc
+          data-testid="drawer-nav-mobile-modal"
+        >
           <Modal.Background onClick={toggleMenu} />
           <Modal.Content>
             <Box className={styles.mobileBox}>
               <nav aria-label="primary navigation">
-                <RouteList {...routeListProps} />
+                <RouteList isExpanded />
               </nav>
             </Box>
           </Modal.Content>
@@ -47,3 +53,8 @@ export default function Mobile({ isExpanded, toggleMenu, ...routeListProps }) {
     </>
   );
 }
+
+Mobile.propTypes = {
+  isExpanded: PropTypes.bool.isRequired,
+  toggleMenu: PropTypes.func.isRequired,
+};
