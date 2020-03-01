@@ -5,3 +5,5 @@ export { default as useServiceWorker } from './useServiceWorker';
 export { default as useTheme } from './useTheme';
 export { default as useMediaQuery } from './useMediaQuery';
 export { default as usePrevious } from './usePrevious';
+export { default as useLocationBasedVisibility } from './useLocationBasedVisibility';
+export { default as useBreakpointBasedVisibility } from './useBreakpointBasedVisibility';
