@@ -10,7 +10,7 @@ import React from 'react';
  */
 export default function Icon({ svg: Svg, ...rest }) {
   return (
-    <RBXIcon {...rest}>
+    <RBXIcon data-testid="icon-rbx-wrap" {...rest}>
       <Svg
         focusable={false}
         aria-hidden={true}
