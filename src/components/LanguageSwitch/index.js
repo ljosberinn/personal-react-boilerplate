@@ -78,6 +78,7 @@ function DropdownContent({ t, currentLanguage, i18n }) {
         <Dropdown.Item
           active={slug === currentLanguage}
           onClick={() => i18n.changeLanguage(slug)}
+          data-testid={`lang-switch-${slug}`}
           key={slug}
         >
           {t(slug)}
@@ -91,6 +92,12 @@ function DropdownContent({ t, currentLanguage, i18n }) {
     </Dropdown.Content>
   );
 }
+
+DropdownContent.propTypes = {
+  t: PropTypes.func.isRequired,
+  currentLanguage: PropTypes.string.isRequired,
+  i18n: PropTypes.shape().isRequired,
+};
 
 /**
  *
