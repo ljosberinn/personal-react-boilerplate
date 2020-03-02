@@ -3,8 +3,10 @@ import { Navbar } from 'rbx';
 import React from 'react';
 import { FaDiscord } from 'react-icons/fa';
 
-import { DISCORD_LINK } from '../constants/env';
-import Icon from './Icon';
+import { DISCORD_LINK } from '../../constants/env';
+import Icon from '../Icon';
+
+export const validOrigins = ['nav', 'footer'];
 
 export default function DiscordLink({ from }) {
   if (!DISCORD_LINK) {
@@ -13,7 +15,7 @@ export default function DiscordLink({ from }) {
 
   const content = (
     <>
-      <Icon svg={FaDiscord} />
+      <Icon data-testid="discord-link-svg" svg={FaDiscord} />
       <span>Discord</span>
     </>
   );
@@ -34,5 +36,5 @@ export default function DiscordLink({ from }) {
 }
 
 DiscordLink.propTypes = {
-  from: PropTypes.oneOf(['nav', 'footer']).isRequired,
+  from: PropTypes.oneOf(validOrigins).isRequired,
 };
