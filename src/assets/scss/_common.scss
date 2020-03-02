@@ -1,6 +1,11 @@
 @import 'breakpoints';
 @import 'toasts';
 
+html {
+  // accessibility override of bulmas default 16px
+  font-size: 100%;
+}
+
 .is-fullpage {
   display: flex;
   flex: 100%;
