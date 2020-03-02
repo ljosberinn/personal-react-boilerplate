@@ -4,9 +4,11 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaGithub } from 'react-icons/fa';
 
-import { REPO_LINK } from '../constants/env';
-import ExternalLink from './ExternalLink';
-import Icon from './Icon';
+import { REPO_LINK } from '../../constants/env';
+import ExternalLink from '../ExternalLink';
+import Icon from '../Icon';
+
+export const validOrigins = ['footer', 'nav'];
 
 export default function GithubLink({ from }) {
   const { t } = useTranslation('navigation');
@@ -17,7 +19,7 @@ export default function GithubLink({ from }) {
 
   const content = (
     <>
-      <Icon svg={FaGithub} />
+      <Icon data-testid="github-link-svg" svg={FaGithub} />
       <span>{t('contribute')}</span>
     </>
   );
@@ -38,5 +40,5 @@ export default function GithubLink({ from }) {
 }
 
 GithubLink.propTypes = {
-  from: PropTypes.oneOf(['footer', 'nav']).isRequired,
+  from: PropTypes.oneOf(validOrigins).isRequired,
 };
