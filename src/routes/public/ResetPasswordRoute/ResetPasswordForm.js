@@ -16,7 +16,7 @@ import { useIdentityContext } from 'react-netlify-identity';
 import { Link } from 'react-router-dom';
 
 import { ValidityIconLeft, Field, Form, Error } from '../../../components';
-import { validate } from '../../../utils/validators';
+import { isValidMail } from '../../../utils/validators';
 
 const errors = {
   'User not found': 'unknownUser',
@@ -89,7 +89,7 @@ export default function ResetPasswordForm() {
     dispatch({ type: 'SET_LOADING' });
   };
 
-  const isDisabled = mail.length === 0 || !validate.mail(mail);
+  const isDisabled = mail.length === 0 || !isValidMail(mail);
 
   if (mailSent) {
     return (

@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom';
 
 import { PasswordSelection, Form, Error } from '../../../components';
 import { useNavigationContext } from '../../../hooks';
-import { validate } from '../../../utils/validators';
+import { isValidPassword } from '../../../utils/validators';
 
 const errors = {
   invalidToken: 'invalidToken',
@@ -75,8 +75,7 @@ export default function ConfirmPasswordResetForm({ token }) {
     /* eslint-disable-next-line react-hooks/exhaustive-deps */
   }, []);
 
-  const isDisabled =
-    !validate.password(password) || password !== confirmPassword;
+  const isDisabled = !isValidPassword(password) || password !== confirmPassword;
 
   return (
     <Form onSubmit={handleSubmit}>

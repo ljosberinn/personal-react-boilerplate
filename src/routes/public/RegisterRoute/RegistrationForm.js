@@ -12,7 +12,7 @@ import {
   PasswordSelection,
 } from '../../../components';
 import { useNavigationContext } from '../../../hooks';
-import { validate } from '../../../utils/validators';
+import { isValidPassword, isValidMail } from '../../../utils/validators';
 
 /**
  *
@@ -47,9 +47,9 @@ export default function RegistrationForm({
     mail.length === 0 ||
     password.length === 0 ||
     confirmPassword.length === 0 ||
-    !validate.password(password) ||
+    !isValidPassword(password) ||
     !passwordsAreMatching ||
-    !validate.mail(mail) ||
+    !isValidMail(mail) ||
     !tos;
 
   const mailInUse = error === 'mail-in-use';

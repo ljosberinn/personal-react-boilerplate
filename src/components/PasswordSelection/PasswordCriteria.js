@@ -19,15 +19,6 @@ const criteria = [
     validate: password => password.length > 7,
     info: 'passwordCriteriaLength',
   },
-  /*{
-      validate: password => stringContainsSpecialCharacter(password),
-      info: (
-        <span>
-          - must contain at least one special character{' '}
-          <Tag>{allowedSpecialCharacters.join(' ')}</Tag>
-        </span>
-      ),
-    },*/
 ];
 
 /**

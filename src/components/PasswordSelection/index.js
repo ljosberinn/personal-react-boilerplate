@@ -3,7 +3,11 @@ import React, { useCallback, useState, useEffect, memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaLock, FaLockOpen, FaEye, FaEyeSlash } from 'react-icons/fa';
 
-import { validate, pattern, passwordMinLength } from '../../utils/validators';
+import {
+  isValidPassword,
+  pattern,
+  passwordMinLength,
+} from '../../utils/validators';
 import Field from '../Field';
 import Icon from '../Icon';
 import ValidityIconLeft from '../ValidityIconLeft';
@@ -40,12 +44,12 @@ export default memo(function PasswordSelection({
     [],
   );
 
-  const isValidPassword = validate.password(password);
+  const passwordIsValid = isValidPassword(password);
 
   const hasConfirmPassword =
     password.length > 0 && confirmPassword.length === password.length;
   const passwordsMatch =
-    isValidPassword && hasConfirmPassword && password === confirmPassword;
+    passwordIsValid && hasConfirmPassword && password === confirmPassword;
 
   return (
     <>
@@ -91,8 +95,8 @@ export default memo(function PasswordSelection({
               id="confirm-password"
               onChange={handleChange}
               pattern={pattern.password}
-              disabled={!isValidPassword}
-              placeholder={!isValidPassword ? t('enterValidPasswordFirst') : ''}
+              disabled={!passwordIsValid}
+              placeholder={!passwordIsValid ? t('enterValidPasswordFirst') : ''}
               required
               autoComplete="new-password"
               color={

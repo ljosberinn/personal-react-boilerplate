@@ -5,7 +5,7 @@ import CountUp from 'react-countup';
 import { useTranslation } from 'react-i18next';
 
 import { PasswordSelection, Form, Error } from '../../../../components';
-import { validate } from '../../../../utils/validators';
+import { isValidPassword } from '../../../../utils/validators';
 
 const INITIAL_STATE = {
   password: '',
@@ -76,7 +76,7 @@ export default function ChangePassword({ updatePassword }) {
     password.length > 0 &&
     confirmPassword.length > 0 &&
     password === confirmPassword &&
-    validate.password(password);
+    isValidPassword(password);
 
   if (changeSuccessful) {
     return (
