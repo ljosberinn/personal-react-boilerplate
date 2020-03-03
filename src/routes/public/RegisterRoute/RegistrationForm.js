@@ -1,6 +1,5 @@
-import { Block, Help, Label, Button, Divider, Control, Input } from 'rbx';
-import React from 'react';
-import { Fade } from 'react-awesome-reveal';
+import { Block, Label, Button, Divider, Control, Input } from 'rbx';
+import React, { lazy } from 'react';
 import { Trans } from 'react-i18next';
 import Shake from 'react-reveal/Shake';
 
@@ -11,8 +10,17 @@ import {
   LoginProviderGroup,
   PasswordSelection,
 } from '../../../components';
+import { withSuspense } from '../../../hocs';
 import { useNavigationContext } from '../../../hooks';
 import { isValidPassword, isValidMail } from '../../../utils/validators';
+
+const MailInUseWarning = withSuspense(
+  lazy(() =>
+    import(
+      /* webpackChunkName: "registration_form.mail_in_use_warning"*/ './MailInUseWarning'
+    ),
+  ),
+);
 
 /**
  *
@@ -38,7 +46,7 @@ export default function RegistrationForm({
   t,
 }) {
   const {
-    routes: { RESET_PASSWORD, TOS },
+    routes: { TOS },
     PreloadingLink,
   } = useNavigationContext();
   const passwordsAreMatching = password === confirmPassword;
@@ -80,19 +88,7 @@ export default function RegistrationForm({
             <ValidityIconLeft type="mail" value={mail} />
           </Control>
 
-          {mailInUse && (
-            <Fade>
-              <Help color="danger">
-                <Trans parent="span" ns="registration" i18nKey="mail-in-use">
-                  An account with this email already exists. Did you{' '}
-                  <PreloadingLink to={RESET_PASSWORD}>
-                    forget your password
-                  </PreloadingLink>
-                  ?
-                </Trans>
-              </Help>
-            </Fade>
-          )}
+          {mailInUse && <MailInUseWarning />}
         </Field>
 
         <PasswordSelection
