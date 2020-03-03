@@ -1,3 +1,4 @@
+import { fireEvent } from '@testing-library/react';
 import React from 'react';
 
 import render, { defineMatchMedia } from '../../utils/testUtils';
@@ -33,5 +34,17 @@ describe('<DrawerNavDesktop />', () => {
     expect(getByTestId('drawer-nav-desktop-toggle').dataset.tooltip).not.toBe(
       undefined,
     );
+  });
+
+  it('should toggle the menu onClick', () => {
+    const { getByTestId } = render(<Desktop {...defaultProps} />);
+
+    const toggle = getByTestId('drawer-nav-desktop-toggle');
+
+    expect(defaultProps.toggleMenu).toBeCalledTimes(0);
+
+    fireEvent.click(toggle);
+
+    expect(defaultProps.toggleMenu).toHaveBeenCalled();
   });
 });
