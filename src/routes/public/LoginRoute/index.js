@@ -124,10 +124,7 @@ export default function LoginRoute() {
       <TemplatedHelmet>
         <title>{t('title')}</title>
       </TemplatedHelmet>
-      <Section
-        className={`has-background-svg ${styles.container}`}
-        aria-labelledby="section-title"
-      >
+      <Section className={styles.container} aria-labelledby="section-title">
         <Column.Group centered className={styles.parent}>
           <Column widescreen={{ size: 6 }} tablet={{ size: 9 }}>
             <Card>

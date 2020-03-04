@@ -1,4 +1,5 @@
 import classnames from 'classnames';
+import PropTypes from 'prop-types';
 import { Section, Column, Card, Box, Content, Title } from 'rbx';
 import React from 'react';
 import { Slide as AwesomeSlide, Fade } from 'react-awesome-reveal';
@@ -94,10 +95,7 @@ export default function PrivacyPolicy() {
         <title>{t('privacyPolicy')}</title>
       </TemplatedHelmet>
 
-      <Section
-        className={`has-background-svg ${styles.background}`}
-        aria-labelledby="section-title"
-      >
+      <Section className={styles.background} aria-labelledby="section-title">
         <Fade triggerOnce>
           <Title id="section-title">{t('privacyPolicy')}</Title>
         </Fade>
@@ -117,9 +115,9 @@ export default function PrivacyPolicy() {
  * dataset: {
  *  title: string;
  *  entries: (string | JSX.Element)[];
- *  icon: string;
+ *  icon: import('react-icons').IconType;
  *  t: import('i18next').TFunction;
- * }[];
+ * };
  * index: number;
  * }}
  */
@@ -172,3 +170,16 @@ function Slide({ dataset: { key, icon: Icon, entries }, index, t }) {
     </AwesomeSlide>
   );
 }
+
+Slide.propTypes = {
+  dataset: PropTypes.shape({
+    title: PropTypes.string,
+    entries: PropTypes.arrayOf(
+      PropTypes.oneOf(PropTypes.string, PropTypes.elementType),
+    ),
+    icon: PropTypes.func,
+    t: PropTypes.func,
+  }).isRequired,
+
+  index: PropTypes.number.isRequired,
+};

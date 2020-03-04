@@ -101,10 +101,7 @@ export default function RegisterRoute() {
       <TemplatedHelmet>
         <title>{t('routes:register')}</title>
       </TemplatedHelmet>
-      <Section
-        className={`has-background-svg ${styles.container}`}
-        aria-labelledby="section-title"
-      >
+      <Section className={styles.container} aria-labelledby="section-title">
         <Column.Group centered className={styles.parent}>
           <Column widescreen={{ size: 6 }} tablet={{ size: 8 }}>
             <Card>

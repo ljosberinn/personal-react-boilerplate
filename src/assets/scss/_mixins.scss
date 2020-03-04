@@ -10,11 +10,9 @@ $themes: light dark;
     flex-direction: row;
     height: 100%;
 
-    padding: 2rem;
-
-    @include mobile {
-      background-size: cover;
-      margin-bottom: 1rem;
+    [class*='box'],
+    [class*='card'] {
+      backdrop-filter: blur(5px);
     }
   }
 

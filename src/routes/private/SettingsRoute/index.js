@@ -39,10 +39,7 @@ export default function Settings() {
       <TemplatedHelmet>
         <title>{t('title')}</title>
       </TemplatedHelmet>
-      <Section
-        className={`has-background-svg ${styles.container}`}
-        aria-labelledby="section-title"
-      >
+      <Section className={styles.container} aria-labelledby="section-title">
         <Box>
           <Title id="section-title">{t('title')}</Title>
 

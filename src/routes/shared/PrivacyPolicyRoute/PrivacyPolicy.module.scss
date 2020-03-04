@@ -8,6 +8,8 @@
     background-position-x: 50%;
     background-position-y: 50%;
   }
+
+  @include mobile-bg-adjustment();
 }
 
 .container {
@@ -25,8 +27,6 @@
     background-position-x: 50%;
     background-position-y: 50%;
   }
-
-  @include mobile-bg-adjustment();
 }
 
 .box {

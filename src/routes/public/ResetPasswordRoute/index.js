@@ -23,10 +23,7 @@ export default function ResetPasswordRoute() {
       <TemplatedHelmet>
         <title>{t('title')}</title>
       </TemplatedHelmet>
-      <Section
-        className={`has-background-svg ${styles.container}`}
-        aria-labelledby="section-title"
-      >
+      <Section className={styles.container} aria-labelledby="section-title">
         <Column.Group centered className={styles.parent}>
           <Column widescreen={{ size: 5 }} tablet={{ size: 8 }}>
             <Card>

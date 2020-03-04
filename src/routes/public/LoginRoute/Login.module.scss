@@ -2,9 +2,9 @@
 @include themedSvg('login', '.container');
 
 .container {
-  background-position-x: 85%;
+  background-position-x: 95%;
   background-position-y: 25%;
-  background-size: 45%;
+  background-size: 65%;
   display: flex;
 
   @include tablet {
@@ -17,4 +17,5 @@
 .parent {
   align-items: center;
   width: 100%;
+  margin: 0;
 }

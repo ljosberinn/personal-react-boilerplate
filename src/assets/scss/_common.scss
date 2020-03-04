@@ -1,7 +1,8 @@
 @import 'breakpoints';
 @import 'toasts';
 
-html {
+html,
+body {
   // accessibility override of bulmas default 16px
   font-size: 100%;
 }
@@ -75,34 +76,6 @@ a span.icon {
 // fixes y-overflow on mobile
 header.columns .column {
   padding: 0;
-}
-
-main {
-  min-height: calc(100vh - 247px - 64px);
-}
-
-.has-background-svg {
-  background-repeat: no-repeat;
-  background-size: contain;
-  flex-direction: row;
-  height: 100%;
-  width: 100%;
-
-  padding: 1rem 0;
-
-  @include mobile {
-    background-size: cover;
-    margin-bottom: 1rem;
-  }
-
-  .card,
-  .box {
-    backdrop-filter: blur(5px);
-  }
-}
-
-.switch input[type='checkbox']:checked + .check {
-  background: $primary;
 }
 
 .title {
