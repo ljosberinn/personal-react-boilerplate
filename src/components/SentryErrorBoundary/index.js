@@ -1,7 +1,7 @@
 import { withScope } from '@sentry/browser';
 import React, { Component, lazy } from 'react';
 
-import { withSuspense } from '../../hocs';
+import withSuspense from '../../hocs/withSuspense';
 
 const ErrorUI = withSuspense(
   lazy(() =>
