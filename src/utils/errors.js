@@ -30,5 +30,10 @@ const captureError = async error => {
   logError(error);
 };
 
-window.onerror = (message, url, line, column, error) => captureError(error);
-window.onunhandledrejection = event => captureError(event.reason);
+window.addEventListener('error', (message, url, line, column, error) => {
+  captureError(error);
+});
+
+window.addEventListener('unhandledrejection', event => {
+  captureError(event.reason);
+});
