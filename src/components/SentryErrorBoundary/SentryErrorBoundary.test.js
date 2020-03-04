@@ -1,10 +1,29 @@
+import { wait } from '@testing-library/react';
 import React from 'react';
 
-import render from '../../utils/testUtils';
+import render, {
+  defineMatchMedia,
+  defineIntersectionObserver,
+} from '../../utils/testUtils';
 
 import SentryErrorBoundary from '.';
 
+defineMatchMedia();
+defineIntersectionObserver();
+
+beforeEach(() => {
+  jest.spyOn(console, 'error');
+  console.error.mockImplementation(() => {});
+});
+
+afterEach(() => {
+  console.error.mockRestore();
+});
+
 const TestButton = () => <button type="button">test</button>;
+const CrashingButton = () => {
+  throw new Error('test');
+};
 
 describe('<SentryErrorBoundary />', () => {
   it('should render without crashing', () => {
@@ -23,5 +42,19 @@ describe('<SentryErrorBoundary />', () => {
     );
 
     expect(container.innerHTML).toEqual('<button type="button">test</button>');
+  });
+
+  it('should render an alternative UI when catching an error', async () => {
+    const { container } = render(
+      <SentryErrorBoundary>
+        <CrashingButton />
+      </SentryErrorBoundary>,
+    );
+
+    expect.any(Error);
+
+    expect(console.error).toHaveBeenCalledTimes(2);
+
+    await wait(() => container.innerHTML !== '');
   });
 });

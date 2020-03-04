@@ -1,13 +1,12 @@
 @import '../../assets/scss/mixins';
 
 .container {
-  background-position-x: 40%;
-}
+  display: flex;
 
-@include themedSvg('error', '.container');
-
-.modal {
-  width: 1240px !important;
+  > div {
+    width: 100%;
+    align-self: center;
+  }
 
   code {
     white-space: pre;
@@ -15,15 +14,12 @@
   }
 
   @include tablet {
-    width: 1024px !important;
-
     code {
       display: none;
     }
   }
 
   @include mobile {
-    width: 90% !important;
     background-color: transparent;
     overflow-x: hidden;
 
@@ -33,10 +29,10 @@
   }
 }
 
-.body {
-  @include mobile {
-    background-color: transparent !important;
-  }
+@include themedSvg('error', '.container');
+
+.content {
+  margin-top: 1.5rem;
 }
 
 .message {
