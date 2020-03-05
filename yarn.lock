@@ -5030,10 +5030,10 @@ fastq@^1.6.0:
   dependencies:
     reusify "^1.0.0"
 
-faunadb@^2.11.1:
-  version "2.11.1"
-  resolved "https://registry.yarnpkg.com/faunadb/-/faunadb-2.11.1.tgz#601d436bc3ecdf1855f193b2578a7c79fd3a801c"
-  integrity sha512-kRb0Au0zeDYRk/JXO9YJnGo7JVE2hdvVcv99THNbWlQIyOlH9KVZsaAelNHe6fzPl+qZtMjNxDO+6V092SF2xg==
+faunadb@^2.12.0:
+  version "2.12.0"
+  resolved "https://registry.yarnpkg.com/faunadb/-/faunadb-2.12.0.tgz#493a4f4f35b4d80506d747397bd8a4079c3a3adf"
+  integrity sha512-0R8iIRNBeYLMB2qDJMoelggGowydkQCQb7qZ5mFbYdwuUB0602q8udw+iykdD1fBzBFmNZCsk2I76fAxnn4YHw==
   dependencies:
     base64-js "^1.2.0"
     btoa-lite "^1.0.0"
