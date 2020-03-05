@@ -1,8 +1,8 @@
 const { writeFileSync } = require('fs');
 const { renderSync } = require('node-sass');
 
-const isDev = process.env.NODE_ENV !== 'production';
-const targetFolder = isDev ? 'public' : 'build';
+const isProd = !!process.env.NETLIFY;
+const targetFolder = isProd ? 'build' : 'public';
 
 const compress = file => {
   writeFileSync(
