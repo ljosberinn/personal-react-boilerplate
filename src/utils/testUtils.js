@@ -1,6 +1,6 @@
 import { render as rtlRender } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
-import React, { Suspense } from 'react';
+import React, { Suspense, createContext as mockCreateContext } from 'react';
 import { I18nextProvider, withTranslation } from 'react-i18next';
 import { IdentityContextProvider } from 'react-netlify-identity';
 import { Router } from 'react-router-dom';
@@ -8,6 +8,80 @@ import { Router } from 'react-router-dom';
 import { SITE_URL } from '../constants/env';
 import { ThemeProvider, NavigationProvider } from '../context';
 import i18n from './testi18n';
+
+const mockInstantlyResolvedPromise = () => Promise.resolve({});
+
+jest.mock('react-netlify-identity', () => ({
+  useIdentityContext: () => ({
+    setSettings: jest.fn(),
+    setUser: mockInstantlyResolvedPromise,
+    signupUser: mockInstantlyResolvedPromise,
+    loginUser: mockInstantlyResolvedPromise,
+    logoutUser: mockInstantlyResolvedPromise,
+    requestPasswordRecovery: mockInstantlyResolvedPromise,
+    recoverAccount: mockInstantlyResolvedPromise,
+    updateUser: mockInstantlyResolvedPromise,
+    getFreshJWT: mockInstantlyResolvedPromise,
+    authedFetch: {
+      get: mockInstantlyResolvedPromise,
+      post: mockInstantlyResolvedPromise,
+      patch: mockInstantlyResolvedPromise,
+      put: mockInstantlyResolvedPromise,
+    },
+    loginProvider: mockInstantlyResolvedPromise,
+    acceptInviteExternalUrl: mockInstantlyResolvedPromise,
+    isConfirmedUser: false,
+    isLoggedIn: false,
+    user: () => ({}),
+    _url: '',
+    verifyToken: '',
+    param: {
+      token: undefined,
+      type: undefined,
+      error: undefined,
+      status: undefined,
+    },
+  }),
+  IdentityContextProvider: ({ url, children }) => {
+    const Context = mockCreateContext(null);
+
+    return (
+      <Context.Provider
+        value={{
+          setUser: mockInstantlyResolvedPromise,
+          signupUser: mockInstantlyResolvedPromise,
+          loginUser: mockInstantlyResolvedPromise,
+          logoutUser: mockInstantlyResolvedPromise,
+          requestPasswordRecovery: mockInstantlyResolvedPromise,
+          recoverAccount: mockInstantlyResolvedPromise,
+          updateUser: mockInstantlyResolvedPromise,
+          getFreshJWT: mockInstantlyResolvedPromise,
+          authedFetch: {
+            get: mockInstantlyResolvedPromise,
+            post: mockInstantlyResolvedPromise,
+            patch: mockInstantlyResolvedPromise,
+            put: mockInstantlyResolvedPromise,
+          },
+          loginProvider: mockInstantlyResolvedPromise,
+          acceptInviteExternalUrl: mockInstantlyResolvedPromise,
+          verifyToken: mockInstantlyResolvedPromise,
+          isConfirmedUser: false,
+          isLoggedIn: false,
+          user: () => ({}),
+          _url: url,
+          param: {
+            token: undefined,
+            type: undefined,
+            error: undefined,
+            status: undefined,
+          },
+        }}
+      >
+        {children}
+      </Context.Provider>
+    );
+  },
+}));
 
 export default function render(
   component,
