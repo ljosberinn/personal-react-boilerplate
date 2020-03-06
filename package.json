@@ -37,6 +37,7 @@
   "devDependencies": {
     "@testing-library/jest-dom": "^5.1.1",
     "@testing-library/react": "^9.5.0",
+    "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "bulmaswatch": "^0.7.5",
     "cssom": "^0.4.4",
     "customize-cra": "^0.9.1",

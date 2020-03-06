@@ -1,4 +1,8 @@
-const { override, adjustStyleLoaders } = require('customize-cra');
+const {
+  override,
+  adjustStyleLoaders,
+  addExternalBabelPlugins,
+} = require('customize-cra');
 
 module.exports = override(
   adjustStyleLoaders(({ use: [, css, postcss, resolve, processor] }) => {
@@ -14,4 +18,5 @@ module.exports = override(
       processor.options.sourceMap = true; // sass-loader
     }
   }),
+  addExternalBabelPlugins('babel-plugin-transform-react-remove-prop-types'),
 );
