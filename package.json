@@ -37,7 +37,6 @@
   "devDependencies": {
     "@testing-library/jest-dom": "^5.1.1",
     "@testing-library/react": "^9.5.0",
-    "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "bulmaswatch": "^0.7.5",
     "cssom": "^0.4.4",
     "customize-cra": "^0.9.1",
@@ -56,9 +55,11 @@
     "react-app-rewired": "^2.1.5",
     "rimraf": "^3.0.2",
     "sw-precache-cra": "^1.0.0",
+    "webpack-bundle-analyzer": "^3.6.0",
     "webpack-node-externals": "^1.7.2"
   },
   "scripts": {
+    "analyze": "node scripts/bundle-analyzer.js",
     "build": "run-p build:**",
     "build:app": "react-app-rewired build && sw-precache-cra --config ./config/sw-config.js && yarn make-styles",
     "build:lambda": "netlify-lambda build -c ./config/lambda-webpack.js src/lambda",

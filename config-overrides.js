@@ -18,5 +18,6 @@ module.exports = override(
       processor.options.sourceMap = true; // sass-loader
     }
   }),
+  // required because netlify env isn't production ¯\_(ツ)_/¯
   addExternalBabelPlugins('babel-plugin-transform-react-remove-prop-types'),
 );
