@@ -5,17 +5,6 @@ import { Loader } from '../components';
 
 /**
  *
- * @param {() => Promise<JSX.Element>} loader
- */
-const LoadableComponent = loader =>
-  Loadable({
-    loader,
-    loading: Loading,
-    delay: 750,
-  });
-
-/**
- *
  * @param {Error} error
  * @param {boolean} pastDelay
  */
@@ -30,5 +19,16 @@ const Loading = ({ error, pastDelay }) => {
 
   return null;
 };
+
+/**
+ *
+ * @param {() => Promise<JSX.Element>} loader
+ */
+const LoadableComponent = loader =>
+  Loadable({
+    loader,
+    loading: Loading,
+    delay: 750,
+  });
 
 export default LoadableComponent;

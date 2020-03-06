@@ -25,6 +25,7 @@ import {
   Error,
   LoginProviderGroup,
 } from '../../../components';
+import { withSentry } from '../../../hocs';
 import { useNavigationContext } from '../../../hooks';
 import {
   validate,
@@ -48,7 +49,7 @@ const errors = {
   'Invalid Password': 'passwordInvalid',
 };
 
-export default function LoginRoute() {
+export default withSentry(function LoginRoute() {
   const { t } = useTranslation(['login', 'error']);
   const { isLoggedIn, loginUser } = useIdentityContext();
   const {
@@ -252,4 +253,4 @@ export default function LoginRoute() {
       </Section>
     </>
   );
-}
+});

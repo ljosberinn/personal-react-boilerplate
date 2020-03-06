@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 
 import { TemplatedHelmet } from '../../../components';
+import { withSentry } from '../../../hocs';
 import styles from './ResetPassword.module.scss';
 import ResetPasswordForm from './ResetPasswordForm';
 
@@ -13,7 +14,7 @@ const ConfirmPasswordResetForm = lazy(() =>
   ),
 );
 
-export default function ResetPasswordRoute() {
+export default withSentry(function ResetPasswordRoute() {
   const { t } = useTranslation('resetPassword');
   const { location } = useHistory();
   const [token] = useState(location.state?.token);
@@ -40,4 +41,4 @@ export default function ResetPasswordRoute() {
       </Section>
     </>
   );
-}
+});

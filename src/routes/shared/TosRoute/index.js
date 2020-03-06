@@ -3,9 +3,10 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { TemplatedHelmet } from '../../../components';
+import { withSentry } from '../../../hocs';
 import styles from './Tos.module.scss';
 
-export default function TosRoute() {
+export default withSentry(function TosRoute() {
   const { t } = useTranslation(['routes', 'termsOfService']);
 
   return (
@@ -18,4 +19,4 @@ export default function TosRoute() {
       </Section>
     </>
   );
-}
+});

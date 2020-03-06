@@ -5,7 +5,7 @@ import { FaSlidersH, FaUserCog } from 'react-icons/fa';
 import { Route, Link, Switch, useLocation } from 'react-router-dom';
 
 import { TemplatedHelmet, Icon } from '../../../components';
-import { withSuspense } from '../../../hocs';
+import { withSentry } from '../../../hocs';
 import LoadableComponent from '../../loadUtils';
 import styles from './Settings.module.scss';
 
@@ -30,7 +30,7 @@ const tabs = [
   },
 ];
 
-export default function Settings() {
+export default withSentry(function Settings() {
   const { t } = useTranslation('settings');
   const { pathname } = useLocation();
 
@@ -45,7 +45,7 @@ export default function Settings() {
 
           <Tab.Group kind="boxed">
             {tabs.map(({ name, path, icon }) => (
-              <Tab as={Link} to={path} key={name} active={path === pathname}>
+              <Tab as={Link} to={path} active={path === pathname} key={name}>
                 <Icon svg={icon} />
                 <span>{t(name)}</span>
               </Tab>
@@ -54,16 +54,11 @@ export default function Settings() {
 
           <Switch>
             {tabs.map(({ path, component }) => (
-              <Route
-                exact
-                path={path}
-                component={withSuspense(component)}
-                key={path}
-              />
+              <Route exact path={path} component={component} key={path} />
             ))}
           </Switch>
         </Box>
       </Section>
     </>
   );
-}
+});

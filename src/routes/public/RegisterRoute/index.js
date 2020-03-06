@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useIdentityContext } from 'react-netlify-identity';
 
 import { TemplatedHelmet, Form } from '../../../components';
+import { withSentry } from '../../../hocs';
 import { useTheme, useNavigationContext } from '../../../hooks';
 import styles from './Register.module.scss';
 import RegistrationForm from './RegistrationForm';
@@ -23,7 +24,7 @@ const errors = {
   mailInUse: 'mailInUse',
 };
 
-export default function RegisterRoute() {
+export default withSentry(function RegisterRoute() {
   const { signupUser, isLoggedIn, isConfirmedUser } = useIdentityContext();
   const { theme } = useTheme();
   const {
@@ -158,4 +159,4 @@ export default function RegisterRoute() {
       </Section>
     </>
   );
-}
+});

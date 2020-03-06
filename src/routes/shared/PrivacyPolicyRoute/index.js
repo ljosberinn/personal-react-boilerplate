@@ -12,6 +12,7 @@ import {
   SecuritySvg,
   AnalyticsSvg,
 } from '../../../components/themedSvgs';
+import { withSentry } from '../../../hocs';
 import styles from './PrivacyPolicy.module.scss';
 
 const content = [
@@ -86,7 +87,7 @@ const content = [
   },
 ];
 
-export default function PrivacyPolicy() {
+export default withSentry(function PrivacyPolicy() {
   const { t } = useTranslation(['routes', 'privacyPolicy']);
 
   return (
@@ -107,7 +108,7 @@ export default function PrivacyPolicy() {
       </Section>
     </>
   );
-}
+});
 
 /**
  *
@@ -175,7 +176,7 @@ Slide.propTypes = {
   dataset: PropTypes.shape({
     title: PropTypes.string,
     entries: PropTypes.arrayOf(
-      PropTypes.oneOf(PropTypes.string, PropTypes.elementType),
+      PropTypes.oneOf([PropTypes.string, PropTypes.elementType]),
     ),
     icon: PropTypes.func,
     t: PropTypes.func,

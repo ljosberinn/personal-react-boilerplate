@@ -3,9 +3,10 @@ import React from 'react';
 
 import { TemplatedHelmet } from '../../../components';
 import { LandingPageSvg } from '../../../components/themedSvgs';
+import { withSentry } from '../../../hocs';
 import './LandingPage.scss';
 
-export default function LandingPage() {
+export default withSentry(function LandingPage() {
   return (
     <>
       <TemplatedHelmet>
@@ -43,4 +44,4 @@ export default function LandingPage() {
       </Hero>
     </>
   );
-}
+});
