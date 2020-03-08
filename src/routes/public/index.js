@@ -1,6 +1,6 @@
 import { FaUserEdit, FaHome, FaSignInAlt, FaUnlockAlt } from 'react-icons/fa';
 
-import LoadableComponent from '../loadUtils';
+import LoadableComponent, { withMaxDelay } from '../loadUtils';
 
 export const LANDING_PAGE = {
   routerPath: '/',
@@ -9,7 +9,9 @@ export const LANDING_PAGE = {
   icon: FaHome,
   visibleInDrawerNav: false,
   component: LoadableComponent(() =>
-    import(/* webpackChunkName: "public.landing_page" */ './LandingPage'),
+    withMaxDelay(
+      import(/* webpackChunkName: "public.landing_page" */ './LandingPage'),
+    ),
   ),
 };
 
@@ -20,7 +22,9 @@ export const REGISTER = {
   icon: FaUserEdit,
   visibleInDrawerNav: false,
   component: LoadableComponent(() =>
-    import(/* webpackChunkName: "public.register" */ './RegisterRoute'),
+    withMaxDelay(
+      import(/* webpackChunkName: "public.register" */ './RegisterRoute'),
+    ),
   ),
 };
 
@@ -31,7 +35,7 @@ export const LOGIN = {
   icon: FaSignInAlt,
   visibleInDrawerNav: false,
   component: LoadableComponent(() =>
-    import(/* webpackChunkName: "public.login" */ './LoginRoute'),
+    withMaxDelay(import(/* webpackChunkName: "public.login" */ './LoginRoute')),
   ),
 };
 
@@ -42,8 +46,10 @@ export const RESET_PASSWORD = {
   icon: FaUnlockAlt,
   visibleInDrawerNav: false,
   component: LoadableComponent(() =>
-    import(
-      /* webpackChunkName: "public.reset_password" */ './ResetPasswordRoute'
+    withMaxDelay(
+      import(
+        /* webpackChunkName: "public.reset_password" */ './ResetPasswordRoute'
+      ),
     ),
   ),
 };

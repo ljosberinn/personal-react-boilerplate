@@ -1,34 +1,18 @@
+import loadable from '@loadable/component';
+import { timeout } from 'promise-timeout';
 import React from 'react';
-import Loadable from 'react-loadable';
 
 import { Loader } from '../components';
 
 /**
  *
- * @param {Error} error
- * @param {boolean} pastDelay
+ * @param {Promise<React.ComponentType>} component
+ * @param {number} delay
  */
-const Loading = ({ error, pastDelay }) => {
-  if (error) {
-    throw error;
-  }
+export const withMaxDelay = (component, delay = 5000) =>
+  timeout(component, delay);
 
-  if (pastDelay) {
-    return <Loader isFullPage />;
-  }
-
-  return null;
-};
-
-/**
- *
- * @param {() => Promise<JSX.Element>} loader
- */
-const LoadableComponent = loader =>
-  Loadable({
-    loader,
-    loading: Loading,
-    delay: 750,
+export default component =>
+  loadable(component, {
+    fallback: <Loader isFullPage defer />,
   });
-
-export default LoadableComponent;

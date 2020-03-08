@@ -2,6 +2,7 @@ import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import { useTimeout } from '../hooks';
 import Icon from './Icon';
 
 /**
@@ -10,11 +11,18 @@ import Icon from './Icon';
  * @see https://github.com/buefy/buefy/blob/dev/src/components/loading/Loading.vue
  *
  * @param {{
- * isFullPage?: boolean,
- * icon?: import('react-icons').IconType,
+ * isFullPage?: boolean;
+ * icon?: import('react-icons').IconType;
+ * defer?: boolean;
  * }}
  */
-export default function Loader({ icon, isFullPage = false }) {
+export default function Loader({ icon, isFullPage = false, defer = false }) {
+  const isTimedOut = useTimeout(defer ? 1500 : 0);
+
+  if (!isTimedOut) {
+    return null;
+  }
+
   return (
     <div
       className={classnames(
@@ -35,5 +43,6 @@ export default function Loader({ icon, isFullPage = false }) {
 
 Loader.propTypes = {
   isFullPage: PropTypes.bool,
+  defer: PropTypes.bool,
   icon: PropTypes.elementType,
 };

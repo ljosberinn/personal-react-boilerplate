@@ -1,6 +1,6 @@
 import { FaCog, FaHome } from 'react-icons/fa';
 
-import LoadableComponent from '../loadUtils';
+import LoadableComponent, { withMaxDelay } from '../loadUtils';
 
 export const LANDING_PAGE = {
   routerPath: '/',
@@ -9,7 +9,9 @@ export const LANDING_PAGE = {
   icon: FaHome,
   visibleInDrawerNav: false,
   component: LoadableComponent(() =>
-    import(/* webpackChunkName: "public.landing_page" */ './LandingPage'),
+    withMaxDelay(
+      import(/* webpackChunkName: "public.landing_page" */ './LandingPage'),
+    ),
   ),
 };
 
@@ -20,6 +22,8 @@ export const SETTINGS = {
   icon: FaCog,
   visibleInDrawerNav: false,
   component: LoadableComponent(() =>
-    import(/* webpackChunkName: "private.settings" */ './SettingsRoute'),
+    withMaxDelay(
+      import(/* webpackChunkName: "private.settings" */ './SettingsRoute'),
+    ),
   ),
 };

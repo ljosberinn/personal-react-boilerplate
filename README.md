@@ -56,6 +56,8 @@
 - [react-countup](https://github.com/glennreyes/react-countup)
 - [react-reveal](https://www.react-reveal.com/docs/) & [react-awesome-reveal](https://github.com/dennismorello/react-awesome-reveal)
 - [react-router](https://reacttraining.com/react-router/web/guides/quick-start)
+- [@loadable/component](https://github.com/gregberge/loadable-components)
+- [react-toastify](https://github.com/fkhadra/react-toastify)
 
 ## Help translating
 

@@ -1,6 +1,6 @@
 import { FaBookReader, FaShieldAlt } from 'react-icons/fa';
 
-import LoadableComponent from '../loadUtils';
+import LoadableComponent, { withMaxDelay } from '../loadUtils';
 
 export const TOS = {
   routerPath: '/tos',
@@ -9,9 +9,10 @@ export const TOS = {
   icon: FaBookReader,
   visibleInDrawerNav: false,
   component: LoadableComponent(() =>
-    import(/* webpackChunkName: "shared.tos" */ './TosRoute'),
+    withMaxDelay(import(/* webpackChunkName: "shared.tos" */ './TosRoute')),
   ),
 };
+
 export const PRIVACY_POLICY = {
   routerPath: '/privacy-policy',
   clientPath: '/privacy-policy',
@@ -19,8 +20,10 @@ export const PRIVACY_POLICY = {
   icon: FaShieldAlt,
   visibleInDrawerNav: false,
   component: LoadableComponent(() =>
-    import(
-      /* webpackChunkName: "shared.privacypolicy" */ './PrivacyPolicyRoute'
+    withMaxDelay(
+      import(
+        /* webpackChunkName: "shared.privacypolicy" */ './PrivacyPolicyRoute'
+      ),
     ),
   ),
 };

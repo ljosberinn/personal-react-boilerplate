@@ -4,9 +4,11 @@ import { Switch, Route } from 'react-router-dom';
 import { ENABLED_LANGUAGES } from '../constants/env';
 import { useNavigationContext } from '../hooks';
 import LANGUAGE_ROUTE from './LanguageRoute';
-import LoadableComponent from './loadUtils';
+import LoadableComponent, { withMaxDelay } from './loadUtils';
 
-const RedirectToHome = LoadableComponent(() => import('./RedirectToHome'));
+const RedirectToHome = LoadableComponent(() =>
+  withMaxDelay(import('./RedirectToHome')),
+);
 
 export default memo(function Routes() {
   const { routes } = useNavigationContext();

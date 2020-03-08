@@ -44,3 +44,5 @@ export function useServiceWorker(): {
   registration?: ServiceWorkerRegistration;
   options?: RegistrationOptions;
 };
+
+export function useTimeout(timeout: number): boolean;
