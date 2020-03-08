@@ -2,7 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
 
-import { useNavigationContext } from '../../hooks';
+import { useNavigationContext } from '../../context';
 import Icon from '../Icon';
 
 export default function UnauthenticatedLinks() {

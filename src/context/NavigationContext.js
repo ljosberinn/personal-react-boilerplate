@@ -3,6 +3,7 @@ import React, {
   createElement,
   useState,
   useEffect,
+  useContext,
   useCallback,
 } from 'react';
 import { useIdentityContext } from 'react-netlify-identity';
@@ -13,7 +14,11 @@ import * as PRIVATE_ROUTES from '../routes/private';
 import * as PUBLIC_ROUTES from '../routes/public';
 import * as SHARED_ROUTES from '../routes/shared';
 
-export const NavigationContext = createContext();
+const NavigationContext = createContext();
+
+export function useNavigationContext() {
+  return useContext(NavigationContext);
+}
 
 const computeRoutes = isLoggedIn => ({
   ...SHARED_ROUTES,

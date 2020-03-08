@@ -10,8 +10,8 @@ import {
   LoginProviderGroup,
   PasswordSelection,
 } from '../../../components';
+import { useNavigationContext } from '../../../context';
 import { withSuspense } from '../../../hocs';
-import { useNavigationContext } from '../../../hooks';
 import { isValidPassword, isValidMail } from '../../../utils/validators';
 
 const MailInUseWarning = withSuspense(

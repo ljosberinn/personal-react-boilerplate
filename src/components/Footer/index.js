@@ -6,8 +6,8 @@ import { NavLink } from 'react-router-dom';
 
 import { ReactComponent as LogoIpsumSvg } from '../../assets/svg/logoIpsum.svg';
 import { BRAND_NAME } from '../../constants/env';
+import { useNavigationContext } from '../../context';
 import withSuspense from '../../hocs/withSuspense';
-import { useNavigationContext } from '../../hooks';
 import DiscordLink from '../DiscordLink';
 import ExternalLink from '../ExternalLink';
 import GithubLink from '../GithubLink';

@@ -3,7 +3,8 @@ import { Menu } from 'rbx';
 import React, { lazy } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { useNavigationContext, useMediaQuery } from '../../hooks';
+import { useNavigationContext } from '../../context';
+import { useMediaQuery } from '../../hooks';
 
 const NavigationLink = lazy(() =>
   import(

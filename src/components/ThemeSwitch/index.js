@@ -5,7 +5,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaSun, FaMoon } from 'react-icons/fa';
 
-import { useTheme } from '../../hooks';
+import { useTheme } from '../../context';
 import Icon from '../Icon';
 import Switch from '../Switch';
 import styles from './ThemeSwitch.module.scss';

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { useNavigationContext } from '../../hooks';
+import { useNavigationContext } from '../../context';
 import Icon from '../Icon';
 
 export default function AuthenticatedLinks() {

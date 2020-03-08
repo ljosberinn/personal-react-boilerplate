@@ -6,8 +6,9 @@ import { FaSignOutAlt } from 'react-icons/fa';
 import { useIdentityContext } from 'react-netlify-identity';
 import { useLocation } from 'react-router-dom';
 
+import { useNavigationContext } from '../../context';
 import { withSuspense } from '../../hocs';
-import { useNavigate, useNavigationContext } from '../../hooks';
+import { useNavigate } from '../../hooks';
 import Icon from '../Icon';
 import Loader from '../Loader';
 

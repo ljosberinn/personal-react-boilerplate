@@ -1,4 +1,10 @@
-import React, { createContext, useState, useEffect, useCallback } from 'react';
+import React, {
+  createContext,
+  useState,
+  useEffect,
+  useCallback,
+  useContext,
+} from 'react';
 
 import { hasLocalStorage } from '../constants/browserAPIs';
 import useDetectColorScheme, {
@@ -34,7 +40,18 @@ const storeTheme = theme =>
 const changeThemeOnRoot = theme => {
   document.documentElement.dataset.theme = theme;
 };
-export const ThemeContext = createContext();
+
+const ThemeContext = createContext();
+
+/**
+ * @returns {{
+ * theme: 'light' | 'dark',
+ * toggleTheme: () => void,
+ * }}
+ */
+export function useTheme() {
+  return useContext(ThemeContext);
+}
 
 export default function ThemeProvider({ children }) {
   const detectedTheme = useDetectColorScheme();

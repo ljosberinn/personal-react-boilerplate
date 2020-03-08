@@ -1,7 +1,7 @@
 import React from 'react';
 
 import getThemeBasedSvgColor from '../../constants/svgColor';
-import { useTheme } from '../../hooks';
+import { useTheme } from '../../context';
 
 export default function LandingPageSvg() {
   const { theme } = useTheme();

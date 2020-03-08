@@ -5,8 +5,8 @@ import { useTranslation } from 'react-i18next';
 import { useIdentityContext } from 'react-netlify-identity';
 
 import { TemplatedHelmet, Form } from '../../../components';
+import { useNavigationContext, useTheme } from '../../../context';
 import { withSentry } from '../../../hocs';
-import { useTheme, useNavigationContext } from '../../../hooks';
 import styles from './Register.module.scss';
 import RegistrationForm from './RegistrationForm';
 

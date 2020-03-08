@@ -5,7 +5,7 @@ import { FaGithub, FaGoogle } from 'react-icons/fa';
 import { useIdentityContext } from 'react-netlify-identity';
 
 import { ENABLED_PROVIDER } from '../../constants/env';
-import { useTheme } from '../../hooks';
+import { useTheme } from '../../context';
 import { upperCaseFirstCharacter } from '../../utils';
 import Icon from '../Icon';
 import styles from './LoginProviderGroup.module.scss';

@@ -2,8 +2,9 @@ import React from 'react';
 import { useIdentityContext } from 'react-netlify-identity';
 import { useLocation, Redirect } from 'react-router-dom';
 
+import { useNavigationContext } from './context';
 import { withSuspense } from './hocs';
-import { useScrollToTop, useNavigationContext } from './hooks';
+import { useScrollToTop } from './hooks';
 import Routes from './routes';
 
 export default withSuspense(function App() {

@@ -25,8 +25,8 @@ import {
   Error,
   LoginProviderGroup,
 } from '../../../components';
+import { useNavigationContext } from '../../../context';
 import { withSentry } from '../../../hocs';
-import { useNavigationContext } from '../../../hooks';
 import {
   validate,
   pattern,

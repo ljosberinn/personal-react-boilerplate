@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import { supportsServiceWorker } from '../constants/browserAPIs';
-import { useServiceWorker } from '../hooks';
+import { useServiceWorker } from '../context';
 import toast from '../utils/toast';
 
 /**

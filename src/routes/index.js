@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 import { Switch, Route } from 'react-router-dom';
 
 import { ENABLED_LANGUAGES } from '../constants/env';
-import { useNavigationContext } from '../hooks';
+import { useNavigationContext } from '../context';
 import LANGUAGE_ROUTE from './LanguageRoute';
 import LoadableComponent, { withMaxDelay } from './loadUtils';
 

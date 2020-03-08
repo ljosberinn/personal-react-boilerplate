@@ -2,8 +2,9 @@ import { Button } from 'rbx';
 import React, { lazy } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { useNavigationContext } from '../../context';
+import { useTheme } from '../../context';
 import { withSuspense } from '../../hocs';
-import { useTheme, useNavigationContext } from '../../hooks';
 import Icon from '../Icon';
 
 const NavButton = lazy(() =>

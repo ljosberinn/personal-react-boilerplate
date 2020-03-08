@@ -1,10 +1,19 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect, useContext } from 'react';
 
 import { supportsServiceWorker } from '../constants/browserAPIs';
 
-export const ServiceWorkerContext = createContext({
-  isSupported: false,
-});
+const ServiceWorkerContext = createContext();
+
+/**
+ * @returns {{
+ * isSupported: boolean;
+ * registration?: ServiceWorkerRegistration;
+ * options?: RegistrationOptions;
+ * }}
+ */
+export function useServiceWorker() {
+  return useContext(ServiceWorkerContext);
+}
 
 function onControllerChange(event) {
   if (event.currentTarget !== navigator.serviceWorker.controller) {
