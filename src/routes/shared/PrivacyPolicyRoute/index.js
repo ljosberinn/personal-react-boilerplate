@@ -17,7 +17,7 @@ import styles from './PrivacyPolicy.module.scss';
 
 const content = [
   {
-    key: 'analytics',
+    element: 'analytics',
     entries: [
       { id: 1, placeholder: '' },
       { id: 2, placeholder: '' },
@@ -36,7 +36,7 @@ const content = [
     icon: AnalyticsSvg,
   },
   {
-    key: 'thirdParty',
+    element: 'thirdParty',
     entries: [
       { id: 1, placeholder: '' },
       {
@@ -61,7 +61,7 @@ const content = [
     icon: SecuritySvg,
   },
   {
-    key: 'cookies',
+    element: 'cookies',
     entries: [
       {
         id: 1,
@@ -78,7 +78,7 @@ const content = [
     icon: CookieSvg,
   },
   {
-    key: 'ads',
+    element: 'ads',
     entries: [
       { id: 1, placeholder: '' },
       { id: 2, placeholder: '' },
@@ -102,7 +102,7 @@ export default withSentry(function PrivacyPolicy() {
         </Fade>
         <div>
           {content.map((dataset, index) => (
-            <Slide dataset={dataset} index={index} t={t} key={index} />
+            <Slide {...dataset} index={index} t={t} key={index} />
           ))}
         </div>
       </Section>
@@ -113,16 +113,14 @@ export default withSentry(function PrivacyPolicy() {
 /**
  *
  * @param {{
- * dataset: {
- *  title: string;
- *  entries: (string | JSX.Element)[];
- *  icon: import('react-icons').IconType;
- *  t: import('i18next').TFunction;
- * };
+ * element: string;
+ * entries: { id: number, placeholder: string | JSX.Element }[];
+ * icon: import('react-icons').IconType;
+ * t: import('i18next').TFunction;
  * index: number;
  * }}
  */
-function Slide({ dataset: { key, icon: Icon, entries }, index, t }) {
+function Slide({ element, icon: Icon, entries, index, t }) {
   const direction = index % 2 === 0 ? 'left' : 'right';
 
   return (
@@ -139,7 +137,7 @@ function Slide({ dataset: { key, icon: Icon, entries }, index, t }) {
         <Card className={styles.card}>
           <Card.Header className={styles.cardHeader}>
             <Card.Header.Title as="h2">
-              {t(`privacyPolicy:${key}Title`)}
+              {t(`privacyPolicy:${element}Title`)}
             </Card.Header.Title>
           </Card.Header>
           <Card.Content>
@@ -150,13 +148,13 @@ function Slide({ dataset: { key, icon: Icon, entries }, index, t }) {
                 </Column>
                 <Column size={9}>
                   <ul className={styles.ul}>
-                    {entries.map(({ id, placeholder }, index) => (
+                    {entries.map(({ id, placeholder }) => (
                       <Trans
-                        i18nKey={`${key}${id}`}
+                        i18nKey={`${element}${id}`}
                         ns="privacyPolicy"
                         parent="li"
                         className={styles.li}
-                        key={index}
+                        key={id}
                       >
                         {placeholder}
                       </Trans>
@@ -173,14 +171,14 @@ function Slide({ dataset: { key, icon: Icon, entries }, index, t }) {
 }
 
 Slide.propTypes = {
-  dataset: PropTypes.shape({
-    title: PropTypes.string,
-    entries: PropTypes.arrayOf(
-      PropTypes.oneOf([PropTypes.string, PropTypes.elementType]),
-    ),
-    icon: PropTypes.func,
-    t: PropTypes.func,
-  }).isRequired,
-
+  element: PropTypes.string.isRequired,
+  entries: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number,
+      placeholder: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
+    }),
+  ).isRequired,
+  icon: PropTypes.func.isRequired,
+  t: PropTypes.func.isRequired,
   index: PropTypes.number.isRequired,
 };
