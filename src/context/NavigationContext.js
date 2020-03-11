@@ -5,6 +5,7 @@ import React, {
   useEffect,
   useContext,
   useCallback,
+  useMemo,
 } from 'react';
 import { useIdentityContext } from 'react-netlify-identity';
 import { Link } from 'react-router-dom';
@@ -29,15 +30,7 @@ const preloadedMap = new Map();
 
 export default function NavigationProvider({ children }) {
   const { isLoggedIn } = useIdentityContext();
-  const previousLoggedIn = usePrevious(isLoggedIn);
-  const [routes, setRoutes] = useState(computeRoutes(isLoggedIn));
-
-  useEffect(() => {
-    // skip initial render effect
-    if (isLoggedIn !== previousLoggedIn) {
-      setRoutes(computeRoutes(isLoggedIn));
-    }
-  }, [isLoggedIn, previousLoggedIn]);
+  const routes = useMemo(() => computeRoutes(isLoggedIn), [isLoggedIn]);
 
   const PreloadingLink = useCallback(
     ({
