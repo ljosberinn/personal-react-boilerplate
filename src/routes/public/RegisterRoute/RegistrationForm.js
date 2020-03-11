@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { Block, Label, Button, Divider, Control, Input } from 'rbx';
 import React, { lazy } from 'react';
 import { Trans } from 'react-i18next';
@@ -25,7 +26,7 @@ const MailInUseWarning = withSuspense(
 /**
  *
  * @param {{
- * error: string;
+ * error?: string;
  * handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
  * isLoading: boolean;
  * mail: string;
@@ -144,3 +145,14 @@ export default function RegistrationForm({
     </Shake>
   );
 }
+
+RegistrationForm.propTypes = {
+  error: PropTypes.string,
+  handleChange: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool.isRequired,
+  mail: PropTypes.string.isRequired,
+  password: PropTypes.string.isRequired,
+  confirmPassword: PropTypes.string.isRequired,
+  tos: PropTypes.bool.isRequired,
+  t: PropTypes.func.isRequired,
+};
