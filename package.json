@@ -9,7 +9,7 @@
   "private": true,
   "dependencies": {
     "@loadable/component": "^5.12.0",
-    "@sentry/browser": "^5.13.0",
+    "@sentry/browser": "^5.14.0",
     "bulma-checkradio": "^1.1.1",
     "classnames": "^2.2.6",
     "i18next": "^19.3.2",
