@@ -4,12 +4,12 @@ import { Tag, Box, Modal } from 'rbx';
 import React, { lazy } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import withSuspense from '../../hocs/withSuspense';
+import withSuspense from '../../../hocs/withSuspense';
 import styles from './Mobile.module.scss';
 
 const RouteList = withSuspense(
   lazy(() =>
-    import(/* webpackChunkName: "drawer_nav.route_list" */ './RouteList'),
+    import(/* webpackChunkName: "drawer_nav.route_list" */ '../RouteList'),
   ),
 );
 

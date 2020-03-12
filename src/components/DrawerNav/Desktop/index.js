@@ -4,13 +4,13 @@ import React, { lazy } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaAngleDoubleDown } from 'react-icons/fa';
 
-import withSuspense from '../../hocs/withSuspense';
-import Icon from '../Icon';
+import withSuspense from '../../../hocs/withSuspense';
+import Icon from '../../Icon';
 import styles from './Desktop.module.scss';
 
 const RouteList = withSuspense(
   lazy(() =>
-    import(/* webpackChunkName: "drawer_nav.route_list" */ './RouteList'),
+    import(/* webpackChunkName: "drawer_nav.route_list" */ '../RouteList'),
   ),
 );
 

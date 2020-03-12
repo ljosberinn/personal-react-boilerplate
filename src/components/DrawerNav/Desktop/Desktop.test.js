@@ -1,8 +1,9 @@
 import { fireEvent } from '@testing-library/react';
 import React from 'react';
 
-import render from '../../utils/testUtils';
-import Desktop from './Desktop';
+import render from '../../../utils/testUtils';
+
+import Desktop from '.';
 
 const defaultProps = {
   toggleMenu: jest.fn(),

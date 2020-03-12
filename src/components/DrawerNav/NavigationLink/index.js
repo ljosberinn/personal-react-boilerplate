@@ -1,8 +1,9 @@
+import PropTypes from 'prop-types';
 import { Menu } from 'rbx';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import Icon from '../Icon';
+import Icon from '../../Icon';
 
 /**
  *
@@ -34,7 +35,7 @@ export default function NavigationLink({
       to={to}
       active={matchPath(to)}
       tooltip={isExpanded ? undefined : children}
-      tooltipPosition="right"
+      tooltipPosition={isExpanded ? undefined : 'right'}
       onClick={onClick}
     >
       <Icon svg={svg} />
@@ -42,3 +43,11 @@ export default function NavigationLink({
     </Menu.List.Item>
   );
 }
+
+NavigationLink.propTypes = {
+  to: PropTypes.string.isRequired,
+  svg: PropTypes.func.isRequired,
+  isExpanded: PropTypes.bool.isRequired,
+  children: PropTypes.string.isRequired,
+  onClick: PropTypes.func,
+};
