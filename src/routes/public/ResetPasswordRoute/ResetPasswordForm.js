@@ -29,14 +29,14 @@ const INITIAL_STATE = {
   mailSent: false,
 };
 
-const reducer = (state, action) => {
-  switch (action.type) {
+const reducer = (state, { type, value }) => {
+  switch (type) {
     case 'SET_LOADING':
       return { ...state, isLoading: !state.isLoading };
     case 'SET_MAIL':
-      return { ...state, mail: action.value };
+      return { ...state, mail: value };
     case 'SET_ERROR':
-      return { ...state, error: action.value };
+      return { ...state, error: value };
     case 'SET_MAIL_SENT':
       return { ...state, mailSent: !state.mailSent };
     default:
@@ -52,49 +52,50 @@ export default function ResetPasswordForm() {
     INITIAL_STATE,
   );
 
-  const handleChange = useCallback(({ target: { name, value } }) => {
+  const handleChange = useCallback(({ target: { value } }) => {
     dispatch({ type: 'SET_MAIL', value });
   }, []);
 
-  const handleSubmit = async event => {
+  function handleSubmit(event) {
     event.preventDefault();
 
     dispatch({ type: 'SET_LOADING' });
 
-    try {
-      await requestPasswordRecovery(mail);
+    requestPasswordRecovery(mail)
+      .then(() => {
+        dispatch({
+          type: 'SET_MAIL_SENT',
+        });
 
-      dispatch({
-        type: 'SET_MAIL_SENT',
+        if (error) {
+          dispatch({
+            type: 'SET_ERROR',
+            value: null,
+          });
+        }
+      })
+      .catch(error => {
+        if (error?.json?.msg) {
+          const { msg } = error.json;
+
+          dispatch({
+            type: 'SET_ERROR',
+            value: errors[msg] ? errors[msg] : 'unknownError',
+          });
+        }
+        console.error(error);
+      })
+      .finally(() => {
+        dispatch({ type: 'SET_LOADING' });
       });
-
-      if (error) {
-        dispatch({
-          type: 'SET_ERROR',
-          value: null,
-        });
-      }
-    } catch (error) {
-      if (error?.json?.msg) {
-        const { msg } = error.json;
-
-        dispatch({
-          type: 'SET_ERROR',
-          value: errors[msg] ? errors[msg] : 'unknownError',
-        });
-      }
-      console.error(error);
-    }
-
-    dispatch({ type: 'SET_LOADING' });
-  };
+  }
 
   const isDisabled = mail.length === 0 || !isValidMail(mail);
 
   if (mailSent) {
     return (
       <Fade>
-        <Message color="success">
+        <Message color="success" data-testid="success-message">
           <Message.Header>{t('success')}</Message.Header>
           <Message.Body>{t('mailSent')}</Message.Body>
         </Message>
@@ -133,6 +134,7 @@ export default function ResetPasswordForm() {
                         placeholder="email@example.com"
                         name="mail"
                         id="mail"
+                        data-testid="mail-input"
                         onInput={handleChange}
                         autoFocus
                         required
@@ -148,6 +150,7 @@ export default function ResetPasswordForm() {
                       state={isLoading ? 'loading' : undefined}
                       fullwidth
                       disabled={isDisabled}
+                      data-testid="submit-button"
                     >
                       {t('requestRecovery')}
                     </Button>
