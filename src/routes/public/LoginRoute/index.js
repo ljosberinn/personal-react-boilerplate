@@ -19,7 +19,7 @@ import Shake from 'react-reveal/Shake';
 import { Link, useParams } from 'react-router-dom';
 
 import {
-  ValidityIconLeft,
+  ValidityIcon,
   TemplatedHelmet,
   Form,
   Error,
@@ -172,7 +172,11 @@ export default withSentry(function LoginRoute() {
                                     defaultValue={mail}
                                     data-testid="mail"
                                   />
-                                  <ValidityIconLeft type="mail" value={mail} />
+                                  <ValidityIcon
+                                    align="left"
+                                    type="mail"
+                                    value={mail}
+                                  />
                                 </Control>
 
                                 {error &&
@@ -203,7 +207,8 @@ export default withSentry(function LoginRoute() {
                                     data-testid="password"
                                     minLength={passwordMinLength}
                                   />
-                                  <ValidityIconLeft
+                                  <ValidityIcon
+                                    align="left"
                                     type="password"
                                     value={password}
                                   />

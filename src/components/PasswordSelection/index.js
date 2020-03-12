@@ -10,7 +10,7 @@ import {
 } from '../../utils/validators';
 import Field from '../Field';
 import Icon from '../Icon';
-import ValidityIconLeft from '../ValidityIconLeft';
+import ValidityIcon from '../ValidityIcon';
 import PasswordCriteria from './PasswordCriteria';
 
 /**
@@ -70,7 +70,7 @@ export default memo(function PasswordSelection({
             data-testid="password"
             minLength={passwordMinLength}
           />
-          <ValidityIconLeft type="password" value={password} />
+          <ValidityIcon align="left" type="password" value={password} />
 
           {!isLoading && (
             <Icon

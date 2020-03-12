@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { FaLock, FaLockOpen, FaIdCard, FaEnvelope } from 'react-icons/fa';
+import { FaLock, FaLockOpen, FaEnvelope } from 'react-icons/fa';
 
-import { validate } from '../utils/validators';
-import Icon from './Icon';
+import { validate } from '../../utils/validators';
+import Icon from '../Icon';
 
-const iconMap = {
+export const iconMap = {
   password: {
     success: FaLock,
     error: FaLockOpen,
@@ -14,20 +14,17 @@ const iconMap = {
     success: FaEnvelope,
     error: undefined,
   },
-  username: {
-    success: FaIdCard,
-    error: undefined,
-  },
 };
 
 /**
  *
  * @param {{
- * type: 'password' | 'mail' | 'username',
- * value: string
+ * type: 'password' | 'mail';
+ * align: 'left' | 'right';
+ * value: string;
  * }}
  */
-export default function ValidityIconLeft({ type, value = '' }) {
+export default function ValidityIcon({ type, align, value }) {
   const { success, error } = iconMap[type];
 
   const color =
@@ -40,17 +37,18 @@ export default function ValidityIconLeft({ type, value = '' }) {
   if (error) {
     return (
       <Icon
-        align="left"
+        align={align}
         color={color}
         svg={color === 'success' ? success : error}
       />
     );
   }
 
-  return <Icon align="left" color={color} svg={success} />;
+  return <Icon align={align} color={color} svg={success} />;
 }
 
-ValidityIconLeft.propTypes = {
-  type: PropTypes.oneOf(['password', 'mail', 'username']).isRequired,
+ValidityIcon.propTypes = {
+  type: PropTypes.oneOf(Object.keys(iconMap)).isRequired,
   value: PropTypes.string.isRequired,
+  align: PropTypes.oneOf(['left', 'right']).isRequired,
 };

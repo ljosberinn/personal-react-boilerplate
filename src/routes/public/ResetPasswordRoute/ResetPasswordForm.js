@@ -15,7 +15,7 @@ import { useTranslation, Trans } from 'react-i18next';
 import { useIdentityContext } from 'react-netlify-identity';
 import { Link } from 'react-router-dom';
 
-import { ValidityIconLeft, Field, Form, Error } from '../../../components';
+import { ValidityIcon, Field, Form, Error } from '../../../components';
 import { isValidMail } from '../../../utils/validators';
 
 const errors = {
@@ -138,7 +138,7 @@ export default function ResetPasswordForm() {
                         required
                         autoComplete="username"
                       />
-                      <ValidityIconLeft type="mail" value={mail} />
+                      <ValidityIcon align="left" type="mail" value={mail} />
                     </Control>
                   </Field>
 

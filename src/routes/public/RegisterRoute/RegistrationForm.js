@@ -5,7 +5,7 @@ import { Trans } from 'react-i18next';
 import Shake from 'react-reveal/Shake';
 
 import {
-  ValidityIconLeft,
+  ValidityIcon,
   Checkbox,
   Field,
   LoginProviderGroup,
@@ -86,7 +86,7 @@ export default function RegistrationForm({
               color={mailInUse ? 'danger' : undefined}
               data-testid="mail"
             />
-            <ValidityIconLeft type="mail" value={mail} />
+            <ValidityIcon align="left" type="mail" value={mail} />
           </Control>
 
           {mailInUse && <MailInUseWarning />}

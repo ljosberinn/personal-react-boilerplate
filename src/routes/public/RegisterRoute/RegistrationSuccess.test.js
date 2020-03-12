@@ -1,9 +1,7 @@
 import React from 'react';
 
-import render, { defineIntersectionObserver } from '../../../utils/testUtils';
+import render from '../../../utils/testUtils';
 import RegistrationSuccess from './RegistrationSuccess';
-
-defineIntersectionObserver();
 
 const mail = 'some@mail.com';
 

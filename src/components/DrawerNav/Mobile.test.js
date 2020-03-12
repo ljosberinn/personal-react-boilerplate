@@ -1,9 +1,7 @@
 import React from 'react';
 
-import render, { defineMatchMedia } from '../../utils/testUtils';
+import render from '../../utils/testUtils';
 import Mobile from './Mobile';
-
-defineMatchMedia();
 
 const defaultProps = {
   toggleMenu: jest.fn(),

@@ -1,10 +1,8 @@
 import { fireEvent } from '@testing-library/react';
 import React from 'react';
 
-import render, { defineMatchMedia } from '../../utils/testUtils';
+import render from '../../utils/testUtils';
 import Desktop from './Desktop';
-
-defineMatchMedia();
 
 const defaultProps = {
   toggleMenu: jest.fn(),
