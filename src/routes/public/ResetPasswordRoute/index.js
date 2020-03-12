@@ -29,11 +29,7 @@ export default withSentry(function ResetPasswordRoute() {
           <Column widescreen={{ size: 5 }} tablet={{ size: 8 }}>
             <Card>
               <Card.Content>
-                {token ? (
-                  <ConfirmPasswordResetForm token={token} />
-                ) : (
-                  <ResetPasswordForm />
-                )}
+                {token ? <ConfirmPasswordResetForm /> : <ResetPasswordForm />}
               </Card.Content>
             </Card>
           </Column>
