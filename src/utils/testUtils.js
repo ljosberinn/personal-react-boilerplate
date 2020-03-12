@@ -9,6 +9,80 @@ import { SITE_URL } from '../constants/env';
 import { ThemeProvider, NavigationProvider } from '../context';
 import i18n from './testi18n';
 
+export default function render(
+  component,
+  {
+    route = '/',
+    history = createMemoryHistory({
+      initialEntries: [route],
+    }),
+  } = {},
+) {
+  const Component = withTranslation()(props => ({
+    ...component,
+    props: { ...component.props, ...props },
+  }));
+
+  function Wrapper({ children }) {
+    return (
+      <ThemeProvider>
+        <Router history={history}>
+          <IdentityContextProvider url={SITE_URL}>
+            <I18nextProvider i18n={i18n}>
+              <NavigationProvider>
+                <Suspense fallback={null}>{children}</Suspense>
+              </NavigationProvider>
+            </I18nextProvider>
+          </IdentityContextProvider>
+        </Router>
+      </ThemeProvider>
+    );
+  }
+
+  return {
+    ...rtlRender(<Component />, {
+      wrapper: Wrapper,
+    }),
+    history,
+  };
+}
+
+beforeEach(() => {
+  Object.defineProperty(window, 'matchMedia', {
+    writable: true,
+    value: jest.fn().mockImplementation(query => ({
+      matches: false,
+      media: query,
+      onchange: null,
+      addListener: jest.fn(), // deprecated
+      removeListener: jest.fn(), // deprecated
+      addEventListener: jest.fn(),
+      removeEventListener: jest.fn(),
+      dispatchEvent: jest.fn(),
+    })),
+  });
+
+  class IntersectionObserver {
+    observe = jest.fn();
+    unobserve = jest.fn();
+    disconnect = jest.fn();
+  }
+
+  Object.defineProperty(window, 'IntersectionObserver', {
+    writable: true,
+    configurable: true,
+    value: IntersectionObserver,
+  });
+
+  Object.defineProperty(global, 'IntersectionObserver', {
+    writable: true,
+    configurable: true,
+    value: IntersectionObserver,
+  });
+});
+
+jest.mock('react-reveal/Shake', () => ({ children }) => children);
+
 const mockInstantlyResolvedPromise = () => Promise.resolve({});
 
 jest.mock('react-netlify-identity', () => ({
@@ -82,75 +156,3 @@ jest.mock('react-netlify-identity', () => ({
     );
   },
 }));
-
-export default function render(
-  component,
-  {
-    route = '/',
-    history = createMemoryHistory({
-      initialEntries: [route],
-    }),
-  } = {},
-) {
-  const Component = withTranslation()(props => ({
-    ...component,
-    props: { ...component.props, ...props },
-  }));
-
-  function Wrapper({ children }) {
-    return (
-      <ThemeProvider>
-        <Router history={history}>
-          <IdentityContextProvider url={SITE_URL}>
-            <I18nextProvider i18n={i18n}>
-              <NavigationProvider>
-                <Suspense fallback={null}>{children}</Suspense>
-              </NavigationProvider>
-            </I18nextProvider>
-          </IdentityContextProvider>
-        </Router>
-      </ThemeProvider>
-    );
-  }
-
-  return {
-    ...rtlRender(<Component />, {
-      wrapper: Wrapper,
-    }),
-    history,
-  };
-}
-
-beforeEach(() => {
-  Object.defineProperty(window, 'matchMedia', {
-    writable: true,
-    value: jest.fn().mockImplementation(query => ({
-      matches: false,
-      media: query,
-      onchange: null,
-      addListener: jest.fn(), // deprecated
-      removeListener: jest.fn(), // deprecated
-      addEventListener: jest.fn(),
-      removeEventListener: jest.fn(),
-      dispatchEvent: jest.fn(),
-    })),
-  });
-
-  class IntersectionObserver {
-    observe = jest.fn();
-    unobserve = jest.fn();
-    disconnect = jest.fn();
-  }
-
-  Object.defineProperty(window, 'IntersectionObserver', {
-    writable: true,
-    configurable: true,
-    value: IntersectionObserver,
-  });
-
-  Object.defineProperty(global, 'IntersectionObserver', {
-    writable: true,
-    configurable: true,
-    value: IntersectionObserver,
-  });
-});
