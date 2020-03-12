@@ -1,8 +1,9 @@
 import { createMemoryHistory } from 'history';
 import React from 'react';
 
-import render from '../utils/testUtils';
-import RedirectToHome from './RedirectToHome';
+import render from '../../utils/testUtils';
+
+import RedirectToHome from '.';
 
 describe('<RedirectToHome />', () => {
   it('should render without crashing', () => {

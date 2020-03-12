@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 /**
@@ -21,3 +22,10 @@ export default function Form({
     </form>
   );
 }
+
+Form.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+  children: PropTypes.element.isRequired,
+  spellCheck: PropTypes.bool,
+  autoCorrect: PropTypes.oneOf(['off', 'on']),
+};

@@ -2,9 +2,10 @@ import { createMemoryHistory } from 'history';
 import i18n from 'i18next';
 import React from 'react';
 
-import { ENABLED_LANGUAGES } from '../constants/env';
-import render from '../utils/testUtils';
-import LanguageRoute from './LanguageRoute';
+import { ENABLED_LANGUAGES } from '../../constants/env';
+import render from '../../utils/testUtils';
+
+import LanguageRoute from '.';
 
 describe('<LanguageRoute />', () => {
   it('should render without crashing && do nothing on "/"', () => {
