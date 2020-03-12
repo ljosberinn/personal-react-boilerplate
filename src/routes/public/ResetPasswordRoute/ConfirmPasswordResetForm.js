@@ -13,13 +13,7 @@ const errors = {
   isProvider: 'isProvider',
 };
 
-/**
- *
- * @param {{
- * token: string
- * }}
- */
-export default function ConfirmPasswordResetForm({ token }) {
+export default function ConfirmPasswordResetForm() {
   const { t } = useTranslation(['resetPassword', 'error', 'settings']);
   const { replace } = useHistory();
   const { recoverAccount, setUser, updateUser } = useIdentityContext();
@@ -34,11 +28,19 @@ export default function ConfirmPasswordResetForm({ token }) {
   const [error, setError] = useState(null);
   const [userObj, setUserObj] = useState(null);
 
-  const handleChange = ({ target: { value, name } }) => {
+  /**
+   *
+   * @param {React.ChangeEvent<HTMLInputElement>} event
+   */
+  function handleChange({ target: { value, name } }) {
     setPassword(data => ({ ...data, [name]: value }));
-  };
+  }
 
-  const handleSubmit = event => {
+  /**
+   *
+   * @param {React.FormEvent<HTMLFormElement>} event
+   */
+  function handleSubmit(event) {
     event.preventDefault();
 
     if (!userObj) {
@@ -56,7 +58,7 @@ export default function ConfirmPasswordResetForm({ token }) {
         // ignore errors here - react-netlify-identity
         console.error(error);
       });
-  };
+  }
 
   // only runs if a token exists that hasn't been validated yet
   useEffect(() => {
@@ -110,7 +112,12 @@ export default function ConfirmPasswordResetForm({ token }) {
                     handleChange={handleChange}
                   />
 
-                  <Button type="submit" color="primary" disabled={isDisabled}>
+                  <Button
+                    type="submit"
+                    color="primary"
+                    disabled={isDisabled}
+                    data-testid="submit-button"
+                  >
                     {t('settings:changePassword')}
                   </Button>
                 </fieldset>
