@@ -1,4 +1,4 @@
-import { fireEvent, wait } from '@testing-library/react';
+import { fireEvent, waitFor } from '@testing-library/react';
 import i18n from 'i18next';
 import React from 'react';
 
@@ -50,7 +50,7 @@ describe('<LanguageSwitch />', () => {
         fireEvent.click(otherLanguageElement);
 
         // changing language is async
-        await wait(() => i18n.language.includes(randomOtherLanguage), {
+        await waitFor(() => i18n.language.includes(randomOtherLanguage), {
           interval: 25,
         });
 

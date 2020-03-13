@@ -1,4 +1,4 @@
-import { fireEvent, wait } from '@testing-library/react';
+import { fireEvent, waitFor } from '@testing-library/react';
 import React from 'react';
 
 import render from '../../../../utils/testUtils';
@@ -28,7 +28,7 @@ describe('<ResetPasswordForm />', () => {
 
     fireEvent.click(submitButton);
 
-    await wait(() => getByTestId('success-message') !== null);
+    await waitFor(() => getByTestId('success-message') !== null);
 
     [mailInput, submitButton].forEach(element => {
       expect(element).not.toBeInTheDocument();

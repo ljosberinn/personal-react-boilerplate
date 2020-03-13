@@ -1,4 +1,4 @@
-//import { fireEvent, wait } from '@testing-library/react';
+//import { fireEvent, waitFor } from '@testing-library/react';
 //import { createMemoryHistory } from 'history';
 import React from 'react';
 import { act } from 'react-dom/test-utils';
@@ -41,7 +41,7 @@ describe('<ConfirmPasswordResetForm />', () => {
 
       fireEvent.click(submitButton);
 
-      await wait(() => history.location.pathname === LOGIN.clientPath);
+      await waitFor(() => history.location.pathname === LOGIN.clientPath);
       console.log(container.outerHTML);
     });
   });
