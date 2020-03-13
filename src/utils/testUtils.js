@@ -1,3 +1,4 @@
+import MutationObserver from '@sheerun/mutationobserver-shim';
 import { render as rtlRender } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 import React, { Suspense, createContext as mockCreateContext } from 'react';
@@ -48,6 +49,8 @@ export default function render(
 }
 
 beforeEach(() => {
+  window.MutationObserver = MutationObserver;
+
   Object.defineProperty(window, 'matchMedia', {
     writable: true,
     value: jest.fn().mockImplementation(query => ({
