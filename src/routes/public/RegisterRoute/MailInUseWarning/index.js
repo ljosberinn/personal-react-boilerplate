@@ -3,7 +3,7 @@ import React from 'react';
 import { Fade } from 'react-awesome-reveal';
 import { Trans } from 'react-i18next';
 
-import { useNavigationContext } from '../../../context';
+import { useNavigationContext } from '../../../../context';
 
 export default function MailInUseWarning() {
   const {

@@ -15,8 +15,8 @@ import { useTranslation, Trans } from 'react-i18next';
 import { useIdentityContext } from 'react-netlify-identity';
 import { Link } from 'react-router-dom';
 
-import { ValidityIcon, Field, Form, Error } from '../../../components';
-import { isValidMail } from '../../../utils/validators';
+import { ValidityIcon, Field, Form, Error } from '../../../../components';
+import { isValidMail } from '../../../../utils/validators';
 
 const errors = {
   'User not found': 'unknownUser',

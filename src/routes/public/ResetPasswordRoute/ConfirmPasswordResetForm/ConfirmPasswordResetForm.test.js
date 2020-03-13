@@ -3,9 +3,10 @@
 import React from 'react';
 import { act } from 'react-dom/test-utils';
 
-import render from '../../../utils/testUtils';
+import render from '../../../../utils/testUtils';
+
 //import { LOGIN, RESET_PASSWORD } from '../index';
-import ConfirmPasswordResetForm from './ConfirmPasswordResetForm';
+import ConfirmPasswordResetForm from '.';
 
 describe('<ConfirmPasswordResetForm />', () => {
   it('should render without crashing', async () => {

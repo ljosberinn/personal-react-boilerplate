@@ -1,7 +1,8 @@
 import React from 'react';
 
-import render from '../../../utils/testUtils';
-import RegistrationSuccess from './RegistrationSuccess';
+import render from '../../../../utils/testUtils';
+
+import RegistrationSuccess from '.';
 
 const mail = 'some@mail.com';
 

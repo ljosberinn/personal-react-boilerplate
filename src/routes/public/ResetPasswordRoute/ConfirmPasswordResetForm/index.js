@@ -4,9 +4,9 @@ import { useTranslation } from 'react-i18next';
 import { useIdentityContext } from 'react-netlify-identity';
 import { useHistory } from 'react-router-dom';
 
-import { PasswordSelection, Form, Error } from '../../../components';
-import { useNavigationContext } from '../../../context';
-import { isValidPassword } from '../../../utils/validators';
+import { PasswordSelection, Form, Error } from '../../../../components';
+import { useNavigationContext } from '../../../../context';
+import { isValidPassword } from '../../../../utils/validators';
 
 const errors = {
   invalidToken: 'invalidToken',

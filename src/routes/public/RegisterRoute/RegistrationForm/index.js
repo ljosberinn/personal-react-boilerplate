@@ -10,15 +10,15 @@ import {
   Field,
   LoginProviderGroup,
   PasswordSelection,
-} from '../../../components';
-import { useNavigationContext } from '../../../context';
-import { withSuspense } from '../../../hocs';
-import { isValidPassword, isValidMail } from '../../../utils/validators';
+} from '../../../../components';
+import { useNavigationContext } from '../../../../context';
+import { withSuspense } from '../../../../hocs';
+import { isValidPassword, isValidMail } from '../../../../utils/validators';
 
 const MailInUseWarning = withSuspense(
   lazy(() =>
     import(
-      /* webpackChunkName: "registration_form.mail_in_use_warning"*/ './MailInUseWarning'
+      /* webpackChunkName: "registration_form.mail_in_use_warning"*/ '../MailInUseWarning'
     ),
   ),
 );
