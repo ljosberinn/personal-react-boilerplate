@@ -1,4 +1,5 @@
 import classnames from 'classnames';
+import PropTypes from 'prop-types';
 import React from 'react';
 
 /**
@@ -21,6 +22,7 @@ export default function Checkbox({
   return (
     <input
       type="checkbox"
+      data-testid="checkbox"
       className={classnames(
         'is-checkradio',
         size && `is-${size}`,
@@ -33,3 +35,11 @@ export default function Checkbox({
     />
   );
 }
+
+Checkbox.propTypes = {
+  className: PropTypes.string,
+  circled: PropTypes.bool,
+  size: PropTypes.oneOf(['small', 'medium', 'large']),
+  blocked: PropTypes.bool,
+  borderless: PropTypes.bool,
+};
