@@ -11,6 +11,7 @@ export default function Radio({ className, ...rest }) {
   return (
     <input
       type="radio"
+      data-testid="radio"
       className={classnames('is-checkradio', className)}
       {...rest}
     />
