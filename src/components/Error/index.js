@@ -11,7 +11,7 @@ import { Fade } from 'react-awesome-reveal';
 export default function Error({ children, ...rest }) {
   return (
     <Fade triggerOnce {...rest}>
-      <Help color="danger" role="alert">
+      <Help color="danger" role="alert" data-testid="error">
         {children}
       </Help>
     </Fade>
