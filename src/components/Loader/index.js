@@ -2,8 +2,8 @@ import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import { useTimeout } from '../hooks';
-import Icon from './Icon';
+import { useTimeout } from '../../hooks';
+import Icon from '../Icon';
 
 /**
  *
@@ -25,6 +25,7 @@ export default function Loader({ icon, isFullPage = false, defer = false }) {
 
   return (
     <div
+      data-testid="loader"
       className={classnames(
         'loading-overlay',
         'is-active',
