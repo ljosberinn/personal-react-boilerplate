@@ -36,7 +36,7 @@ describe('<Icon />', () => {
       expect(getByTestId('icon-rbx-wrap')).toBeInTheDocument();
     });
 
-    it('shoud always have aria-hidden & focusable="false" on svgs', () => {
+    it('should always have aria-hidden & focusable="false" on svgs', () => {
       const { container } = render(<Intercepti18n svg={icon} />);
 
       const svg = container.querySelector('svg');

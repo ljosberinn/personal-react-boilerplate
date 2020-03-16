@@ -9,27 +9,21 @@ import React from 'react';
  * @param {{
  * size: import('rbx/elements/form/input').InputVariablesDefaults['sizes'][number],
  * color: import('rbx/base/helpers/variables').VariablesDefaults['colors'][number],
- * name: string,
  * disabled: boolean,
  * rounded: boolean,
  * outlined: boolean,
  * text: string|number,
- * value: string | number | boolean,
  * onChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
- * checked?: boolean
  * }}
  */
 export default function Switch({
   color,
   disabled,
-  name,
   size,
   rounded,
   outlined,
-  value,
   text,
   onChange,
-  checked,
   ...rest
 }) {
   return (
@@ -41,13 +35,13 @@ export default function Switch({
         size && `is-${size}`,
         outlined && `is-outlined`,
       )}
+      data-testid="switch-label"
     >
       <input
         type="checkbox"
-        value={value}
-        checked={checked}
-        name={name}
         onChange={onChange}
+        disabled={disabled}
+        data-testid="switch-checkbox"
         {...rest}
       />
       <span className={classnames('check', color && `is-${color}`)} />
@@ -59,11 +53,8 @@ export default function Switch({
 Switch.propTypes = {
   color: PropTypes.string,
   disabled: PropTypes.bool,
-  name: PropTypes.string,
-  size: PropTypes.string,
+  size: PropTypes.oneOf(['small', 'medium', 'large']),
   outlined: PropTypes.bool,
-  value: PropTypes.oneOf([PropTypes.string, PropTypes.number]),
-  text: PropTypes.oneOf([PropTypes.string, PropTypes.number]),
+  text: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   onChange: PropTypes.func,
-  checked: PropTypes.bool,
 };
