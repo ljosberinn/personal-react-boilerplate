@@ -46,7 +46,7 @@ const persistExpansionToLocalStorage = isExpanded => {
 };
 
 export default memo(
-  withSuspense(function DrawerNav() {
+  withSuspense(function DrawerNav(props) {
     const isDesktop = useMediaQuery('(min-width: 1024px)');
     const wasPreviouslyDesktop = usePrevious(isDesktop);
 
@@ -72,9 +72,13 @@ export default memo(
     }
 
     if (isDesktop) {
-      return <Desktop toggleMenu={toggleMenu} isExpanded={isExpanded} />;
+      return (
+        <Desktop toggleMenu={toggleMenu} isExpanded={isExpanded} {...props} />
+      );
     }
 
-    return <Mobile toggleMenu={toggleMenu} isExpanded={isExpanded} />;
+    return (
+      <Mobile toggleMenu={toggleMenu} isExpanded={isExpanded} {...props} />
+    );
   }),
 );

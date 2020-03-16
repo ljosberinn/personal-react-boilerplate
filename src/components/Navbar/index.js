@@ -18,7 +18,7 @@ const Menu = withSuspense(
 );
 
 export default memo(
-  withSuspense(function Navbar() {
+  withSuspense(function Navbar(props) {
     const { t } = useTranslation('navigation');
 
     const [shouldBeVisibleByDefault] = useBreakpointBasedVisibility(
@@ -29,7 +29,7 @@ export default memo(
     );
 
     return (
-      <header>
+      <header {...props}>
         <RBXNavbar
           aria-label="secondary navigation"
           role={undefined}

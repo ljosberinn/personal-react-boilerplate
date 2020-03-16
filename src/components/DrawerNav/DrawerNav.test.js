@@ -4,8 +4,10 @@ import render from '../../utils/testUtils';
 
 import DrawerNav from '.';
 
+const Intercepti18n = ({ tReady, i18n, t, ...rest }) => <DrawerNav {...rest} />;
+
 describe('<DrawerNav />', () => {
   it('should render without crashing', () => {
-    render(<DrawerNav />);
+    render(<Intercepti18n />);
   });
 });

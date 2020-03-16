@@ -4,6 +4,8 @@ import render from '../../../utils/testUtils';
 
 import Mobile from '.';
 
+const Intercepti18n = ({ tReady, i18n, t, ...rest }) => <Mobile {...rest} />;
+
 const defaultProps = {
   toggleMenu: jest.fn(),
 };
@@ -11,7 +13,7 @@ const defaultProps = {
 describe('<DrawerNavMobile />', () => {
   it('should render a modal when isExpanded is false', () => {
     const { queryByTestId } = render(
-      <Mobile {...defaultProps} isExpanded={false} />,
+      <Intercepti18n {...defaultProps} isExpanded={false} />,
     );
 
     expect(queryByTestId('drawer-nav-mobile-modal')).toBeNull();
@@ -19,7 +21,7 @@ describe('<DrawerNavMobile />', () => {
 
   it('should render a modal when isExpanded is true', () => {
     const { getByTestId } = render(
-      <Mobile {...defaultProps} isExpanded={true} />,
+      <Intercepti18n {...defaultProps} isExpanded={true} />,
     );
 
     expect(getByTestId('drawer-nav-mobile-modal')).toBeInTheDocument();

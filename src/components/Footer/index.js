@@ -28,7 +28,7 @@ const AuthenticatedLinks = lazy(() =>
 );
 
 export default memo(
-  withSuspense(function Footer() {
+  withSuspense(function Footer(props) {
     const { isLoggedIn, isConfirmedUser } = useIdentityContext();
     const { t } = useTranslation(['footer', 'routes', 'navigation']);
     const {
@@ -44,7 +44,7 @@ export default memo(
       );
 
     return (
-      <RBXFooter as="footer" className={styles.footer}>
+      <RBXFooter as="footer" className={styles.footer} {...props}>
         <Container as="nav" aria-label="meta navigation">
           <Column.Group>
             <Column size={5} widescreen={{ size: 4 }}>

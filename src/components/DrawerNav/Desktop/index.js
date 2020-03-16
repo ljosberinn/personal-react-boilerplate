@@ -14,11 +14,15 @@ const RouteList = withSuspense(
   ),
 );
 
-export default function Desktop({ isExpanded, toggleMenu }) {
+export default function Desktop({ isExpanded, toggleMenu, ...rest }) {
   const { t } = useTranslation('navigation');
 
   return (
-    <Column size={isExpanded ? 2 : 1} className={styles.transitionAll}>
+    <Column
+      size={isExpanded ? 2 : 1}
+      className={styles.transitionAll}
+      {...rest}
+    >
       <Box as={Menu} className={styles.box}>
         <nav aria-label="primary navigation">
           <RouteList isExpanded={isExpanded} />

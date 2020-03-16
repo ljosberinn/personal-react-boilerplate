@@ -17,3 +17,4 @@ export { default as Switch } from './Switch';
 export { default as TemplatedHelmet } from './TemplatedHelmet';
 export { default as ValidityIcon } from './ValidityIcon';
 export { default as ThemeSwitch } from './ThemeSwitch';
+export { default as Layout } from './Layout';

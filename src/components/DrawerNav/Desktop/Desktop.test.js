@@ -5,6 +5,8 @@ import render from '../../../utils/testUtils';
 
 import Desktop from '.';
 
+const Intercepti18n = ({ tReady, i18n, t, ...rest }) => <Desktop {...rest} />;
+
 const defaultProps = {
   toggleMenu: jest.fn(),
   isExpanded: false,
@@ -12,12 +14,12 @@ const defaultProps = {
 
 describe('<DrawerNavDesktop />', () => {
   it('should render without crashing', () => {
-    render(<Desktop {...defaultProps} />);
+    render(<Intercepti18n {...defaultProps} />);
   });
 
   it('should have no tooltip when expanded', () => {
     const { getByTestId } = render(
-      <Desktop {...defaultProps} isExpanded={true} />,
+      <Intercepti18n {...defaultProps} isExpanded={true} />,
     );
 
     expect(getByTestId('drawer-nav-desktop-toggle').dataset.tooltip).toBe(
@@ -27,7 +29,7 @@ describe('<DrawerNavDesktop />', () => {
 
   it('should have no tooltip when expanded', () => {
     const { getByTestId } = render(
-      <Desktop {...defaultProps} isExpanded={false} />,
+      <Intercepti18n {...defaultProps} isExpanded={false} />,
     );
 
     expect(getByTestId('drawer-nav-desktop-toggle').dataset.tooltip).not.toBe(
@@ -36,7 +38,7 @@ describe('<DrawerNavDesktop />', () => {
   });
 
   it('should toggle the menu onClick', () => {
-    const { getByTestId } = render(<Desktop {...defaultProps} />);
+    const { getByTestId } = render(<Intercepti18n {...defaultProps} />);
 
     const toggle = getByTestId('drawer-nav-desktop-toggle');
 

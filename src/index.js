@@ -6,8 +6,7 @@ import { IdentityContextProvider } from 'react-netlify-identity';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import App from './App';
-import Layout from './Layout';
-import { ServiceWorker } from './components';
+import { ServiceWorker, Layout } from './components';
 import { LOGROCKET_ID, SITE_URL, IS_LIVE } from './constants/env';
 import {
   ThemeProvider,

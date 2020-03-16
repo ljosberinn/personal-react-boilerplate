@@ -13,7 +13,7 @@ const RouteList = withSuspense(
   ),
 );
 
-export default function Mobile({ isExpanded, toggleMenu }) {
+export default function Mobile({ isExpanded, toggleMenu, ...rest }) {
   const { t } = useTranslation('navigation');
 
   return (
@@ -25,6 +25,7 @@ export default function Mobile({ isExpanded, toggleMenu }) {
         className={styles.absoluteButton}
         role="button"
         aria-label={t('toggleMenu')}
+        {...rest}
       >
         <div className={classnames('navbar-burger', isExpanded && 'is-active')}>
           <span />
