@@ -6109,10 +6109,10 @@ http-proxy-middleware@0.19.1:
     lodash "^4.17.11"
     micromatch "^3.1.10"
 
-http-proxy-middleware@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/http-proxy-middleware/-/http-proxy-middleware-1.0.2.tgz#63e8d6b039c72e7148e410e7a4690be6dc1a3b8d"
-  integrity sha512-JHBdMgynLHdKXK9I3BjP8XUKERBCqxvA7dtWj2Da5Bqdo2CRCRQMuUdI36eK1FUFyh6JFIOCBQiQ2ZS+LOs7ww==
+http-proxy-middleware@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/http-proxy-middleware/-/http-proxy-middleware-1.0.3.tgz#f73daad8dac622d51fe1769960c914b9b1f75a72"
+  integrity sha512-GHvPeBD+A357zS5tHjzj6ISrVOjjCiy0I92bdyTJz0pNmIjFxO0NX/bX+xkGgnclKQE/5hHAB9JEQ7u9Pw4olg==
   dependencies:
     "@types/http-proxy" "^1.17.3"
     http-proxy "^1.18.0"
