@@ -37,6 +37,10 @@ export default withSuspense(function AuthenticatedNavButtons() {
   const { t } = useTranslation(['navigation', 'routes']);
   const navigate = useNavigate();
 
+  if (!SETTINGS) {
+    return null;
+  }
+
   function handleLogout() {
     navigate('/');
     setIsLoggingOut(true);
