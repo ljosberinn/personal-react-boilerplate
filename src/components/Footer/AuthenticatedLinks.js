@@ -11,6 +11,10 @@ export default function AuthenticatedLinks() {
     PreloadingLink,
   } = useNavigationContext();
 
+  if (!SETTINGS) {
+    return null;
+  }
+
   return (
     <li>
       <PreloadingLink to={SETTINGS}>
