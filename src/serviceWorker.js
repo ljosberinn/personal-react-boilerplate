@@ -1,36 +1,11 @@
 /* eslint-disable no-restricted-globals */
 
-import { CacheableResponsePlugin } from 'workbox-cacheable-response';
 import { cacheNames, setCacheNameDetails } from 'workbox-core';
-import { ExpirationPlugin } from 'workbox-expiration';
 import { getCacheKeyForURL, precacheAndRoute } from 'workbox-precaching';
-import { NavigationRoute, registerRoute, Router } from 'workbox-routing';
-import { CacheFirst, StaleWhileRevalidate } from 'workbox-strategies';
+import { NavigationRoute, Router } from 'workbox-routing';
 
 const CONFIG = {};
 const ENTRIES = [];
-
-registerRoute(
-  /^https:\/\/fonts\.googleapis\.com/,
-  new StaleWhileRevalidate({
-    cacheName: 'google-fonts-stylesheets',
-  }),
-);
-
-registerRoute(
-  /^https:\/\/fonts\.gstatic\.com/,
-  new CacheFirst({
-    cacheName: 'google-fonts-webfonts',
-    plugins: [
-      new CacheableResponsePlugin({
-        statuses: [0, 200],
-      }),
-      new ExpirationPlugin({
-        maxAgeSeconds: 60 * 60 * 24 * 365,
-      }),
-    ],
-  }),
-);
 
 /**
  * @param {Event} event
@@ -107,16 +82,6 @@ async function getFromCacheOrNetwork(request) {
 
 router.registerRoute(
   new NavigationRoute(async ({ url }) => {
-    if (await isWaitingWithOneClient()) {
-      self.registration.waiting.postMessage({
-        type: 'SKIP_WAITING',
-        payload: undefined,
-      });
-
-      // refresh the tab by returning a blank response
-      return new Response('', { headers: { Refresh: '0' } });
-    }
-
     if (!CONFIG.precache) {
       return fetch(url.href);
     }
