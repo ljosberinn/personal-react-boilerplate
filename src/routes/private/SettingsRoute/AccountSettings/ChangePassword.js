@@ -1,11 +1,17 @@
-import { Title, Button, Message } from 'rbx';
-import React, { useState, useCallback, useEffect } from 'react';
-import { Flip } from 'react-awesome-reveal';
-import CountUp from 'react-countup';
+import { Title, Button } from 'rbx';
+import React, { useState, useCallback, useEffect, lazy } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useIdentityContext } from 'react-netlify-identity';
 
 import { PasswordSelection, Form, Error } from '../../../../components';
 import { isValidPassword } from '../../../../utils/validators';
+import { SUCCESS_MSG_DISPLAY_SECONDS } from './SuccessfulPasswordChange';
+
+const SuccessfulPasswordChange = lazy(() =>
+  import(
+    /* webpackChunkName: private.settings.account.successful_password_change */ './SuccessfulPasswordChange'
+  ),
+);
 
 const INITIAL_STATE = {
   password: '',
@@ -16,14 +22,8 @@ const errors = {
   'Invalid Refresh Token': 'refreshTokenInvalid',
 };
 
-const SUCCESS_MSG_DISPLAY_SECONDS = 10;
-
-/**
- * @param {{
- * updatePassword: (password:string) => Promise<void>
- * }}
- */
-export default function ChangePassword({ updatePassword }) {
+export default function ChangePassword() {
+  const { updateUser } = useIdentityContext();
   const [{ password, confirmPassword }, setPasswords] = useState(INITIAL_STATE);
   const [changeSuccessful, setWasSuccessfullyChanged] = useState(false);
   const [error, setError] = useState(null);
@@ -42,16 +42,24 @@ export default function ChangePassword({ updatePassword }) {
     }
   }, [changeSuccessful]);
 
-  const handleSubmit = useCallback(
-    async event => {
-      event.preventDefault();
+  /**
+   *
+   * @param {string} password
+   */
+  async function updatePassword(password) {
+    await updateUser({ password });
+  }
 
-      setIsLoading(true);
+  function handleSubmit(event) {
+    event.preventDefault();
 
-      try {
-        await updatePassword(password);
+    setIsLoading(true);
+
+    updatePassword(password)
+      .then(() => {
         setWasSuccessfullyChanged(true);
-      } catch (error) {
+      })
+      .catch(error => {
         if (error?.json?.error_description) {
           const { error_description } = error.json;
           setError(
@@ -61,16 +69,19 @@ export default function ChangePassword({ updatePassword }) {
           );
         }
         console.error(error);
-      } finally {
+      })
+      .finally(() => {
         setIsLoading(false);
-      }
-    },
-    [password, updatePassword],
-  );
+      });
+  }
 
   const handleChange = useCallback(({ target: { name, value } }) => {
     setPasswords(passwords => ({ ...passwords, [name]: value }));
   }, []);
+
+  if (changeSuccessful) {
+    return <SuccessfulPasswordChange />;
+  }
 
   const passwordsAreMatching =
     password.length > 0 &&
@@ -78,43 +89,29 @@ export default function ChangePassword({ updatePassword }) {
     password === confirmPassword &&
     isValidPassword(password);
 
-  if (changeSuccessful) {
-    return (
-      <Flip direction="vertical">
-        <Message color="success">
-          <Message.Header>
-            <span>{t('success')}</span>
-            <CountUp
-              duration={SUCCESS_MSG_DISPLAY_SECONDS}
-              start={SUCCESS_MSG_DISPLAY_SECONDS}
-              end={0}
-              useEasing={false}
-            />
-          </Message.Header>
-          <Message.Body>{t('changePasswordSuccess')}</Message.Body>
-        </Message>
-      </Flip>
-    );
-  }
-
   return (
     <Form onSubmit={handleSubmit}>
-      <legend>
-        <Title as="h3">{t('changePassword')}</Title>
-      </legend>
-
       <fieldset disabled={isLoading}>
+        <legend>
+          <Title as="h3">{t('changePassword')}</Title>
+        </legend>
+
         <PasswordSelection
           {...{ password, confirmPassword, handleChange, isLoading }}
         />
 
-        {error && <Error className="field">{t(error)}</Error>}
+        {error && (
+          <Error className="field" data-testid="change-password-error">
+            {t(error)}
+          </Error>
+        )}
 
         <Button
           type="submit"
           state={isLoading ? 'loading' : undefined}
           color="primary"
           disabled={!passwordsAreMatching}
+          data-testid="change-password-submit"
         >
           {t('changePassword')}
         </Button>
