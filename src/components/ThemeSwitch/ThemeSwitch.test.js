@@ -1,9 +1,21 @@
-import { fireEvent } from '@testing-library/react';
 import React from 'react';
+import {
+  useIdentityContext,
+  IdentityContextProvider,
+} from 'react-netlify-identity';
 
-import render from '../../utils/testUtils';
+import { IdentityContextProvider as mockIdentityContextProvider } from '../../../__mocks__/react-netlify-identity';
+import { render, fireEvent } from '../../utils/testUtils';
 
 import ThemeSwitch, { validOrigins } from '.';
+
+jest.mock('react-netlify-identity');
+
+beforeEach(() => {
+  IdentityContextProvider.mockImplementation(mockIdentityContextProvider);
+
+  useIdentityContext.mockReturnValue({});
+});
 
 const primaryColorClassName = 'has-text-primary';
 

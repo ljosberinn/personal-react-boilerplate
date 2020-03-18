@@ -2,11 +2,28 @@
 //import { createMemoryHistory } from 'history';
 import React from 'react';
 import { act } from 'react-dom/test-utils';
+import {
+  useIdentityContext,
+  IdentityContextProvider,
+} from 'react-netlify-identity';
 
-import render from '../../../../utils/testUtils';
+import { IdentityContextProvider as mockIdentityContextProvider } from '../../../../../__mocks__/react-netlify-identity';
+import { render } from '../../../../utils/testUtils';
 
 //import { LOGIN, RESET_PASSWORD } from '../index';
 import ConfirmPasswordResetForm from '.';
+
+jest.mock('react-netlify-identity');
+
+beforeEach(() => {
+  jest.clearAllMocks();
+
+  IdentityContextProvider.mockImplementationOnce(mockIdentityContextProvider);
+
+  useIdentityContext.mockReturnValue({
+    recoverAccount: () => Promise.resolve(),
+  });
+});
 
 describe('<ConfirmPasswordResetForm />', () => {
   it('should render without crashing', async () => {

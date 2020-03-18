@@ -1,22 +1,22 @@
 import React from 'react';
 
-import render from '../../utils/testUtils';
+import { render } from '../../utils/testUtils';
 
 import Error from '.';
 
 describe('<Error />', () => {
   it('should render without crashing', () => {
-    render(<Error />);
+    render(<Error>hello friend</Error>);
   });
 
   it('should always have the color "danger"', () => {
-    const { getByTestId } = render(<Error />);
+    const { getByTestId } = render(<Error>hello friend</Error>);
 
     expect(getByTestId('error').classList.contains('is-danger')).toBe(true);
   });
 
   it('should always have the role "alert"', () => {
-    const { getByTestId } = render(<Error />);
+    const { getByTestId } = render(<Error>hello friend</Error>);
 
     expect(getByTestId('error').getAttribute('role')).toBe('alert');
   });

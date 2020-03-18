@@ -25,7 +25,7 @@ export default function Form({
 
 Form.propTypes = {
   onSubmit: PropTypes.func.isRequired,
-  children: PropTypes.element.isRequired,
+  children: PropTypes.node.isRequired,
   spellCheck: PropTypes.bool,
   autoCorrect: PropTypes.oneOf(['off', 'on']),
 };

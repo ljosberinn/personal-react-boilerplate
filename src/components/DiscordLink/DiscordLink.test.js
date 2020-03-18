@@ -1,10 +1,22 @@
 import React from 'react';
+import {
+  useIdentityContext,
+  IdentityContextProvider,
+} from 'react-netlify-identity';
 
+import { IdentityContextProvider as mockIdentityContextProvider } from '../../../__mocks__/react-netlify-identity';
 import { DISCORD_LINK } from '../../constants/env';
-import render from '../../utils/testUtils';
+import { render } from '../../utils/testUtils';
 
 import DiscordLink, { validOrigins } from '.';
 
+jest.mock('react-netlify-identity');
+
+beforeEach(() => {
+  IdentityContextProvider.mockImplementation(mockIdentityContextProvider);
+
+  useIdentityContext.mockReturnValue({});
+});
 describe('<DiscordLink />', () => {
   validOrigins.forEach(origin => {
     it('should render without crashing', () => {

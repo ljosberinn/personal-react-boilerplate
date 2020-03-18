@@ -3,7 +3,7 @@ import i18n from 'i18next';
 import React from 'react';
 
 import { ENABLED_LANGUAGES } from '../../constants/env';
-import render from '../../utils/testUtils';
+import { render } from '../../utils/testUtils';
 
 import LanguageRoute from '.';
 

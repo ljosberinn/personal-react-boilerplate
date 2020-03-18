@@ -1,10 +1,25 @@
 import { fireEvent } from '@testing-library/react';
 import React from 'react';
+import {
+  useIdentityContext,
+  IdentityContextProvider,
+} from 'react-netlify-identity';
 import { Route } from 'react-router-dom';
 
-import render from '../../../utils/testUtils';
+import { IdentityContextProvider as mockIdentityContextProvider } from '../../../../__mocks__/react-netlify-identity';
+import { render } from '../../../utils/testUtils';
 
-import LoginRoute from './';
+import LoginRoute from '.';
+
+jest.mock('react-netlify-identity');
+
+beforeEach(() => {
+  jest.clearAllMocks();
+
+  IdentityContextProvider.mockImplementationOnce(mockIdentityContextProvider);
+
+  useIdentityContext.mockReturnValue({});
+});
 
 const path = '/login/:mail?';
 

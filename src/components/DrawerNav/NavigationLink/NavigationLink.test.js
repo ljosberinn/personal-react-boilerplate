@@ -1,10 +1,22 @@
 import React from 'react';
 import { FaHome } from 'react-icons/fa';
+import {
+  useIdentityContext,
+  IdentityContextProvider,
+} from 'react-netlify-identity';
 
-import render from '../../../utils/testUtils';
+import { IdentityContextProvider as mockIdentityContextProvider } from '../../../../__mocks__/react-netlify-identity';
+import { render } from '../../../utils/testUtils';
 
 import NavigationLink from '.';
 
+jest.mock('react-netlify-identity');
+
+beforeEach(() => {
+  IdentityContextProvider.mockImplementation(mockIdentityContextProvider);
+
+  useIdentityContext.mockReturnValue({});
+});
 const defaultProps = {
   to: '/settings',
   svg: FaHome,
