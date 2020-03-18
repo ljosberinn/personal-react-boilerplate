@@ -9,7 +9,7 @@ import { SUCCESS_MSG_DISPLAY_SECONDS } from './SuccessfulPasswordChange';
 
 const SuccessfulPasswordChange = lazy(() =>
   import(
-    /* webpackChunkName: private.settings.account.successful_password_change */ './SuccessfulPasswordChange'
+    /* webpackChunkName: "private.settings.account.successful_password_change" */ './SuccessfulPasswordChange'
   ),
 );
 
