@@ -4,15 +4,6 @@ module.exports = {
   skipWaiting: false,
   runtimeCaching: [
     {
-      urlPattern: /^https:\/\/fonts\.googleapis\.com/,
-      handler: 'cacheFirst',
-      options: {
-        cache: {
-          name: 'google-fonts-stylesheets',
-        },
-      },
-    },
-    {
       urlPattern: /^https:\/\/fonts\.gstatic\.com/,
       handler: 'cacheFirst',
       options: {
