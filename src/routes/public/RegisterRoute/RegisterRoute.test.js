@@ -1,10 +1,6 @@
 import React from 'react';
-import {
-  useIdentityContext,
-  IdentityContextProvider,
-} from 'react-netlify-identity';
+import { useIdentityContext } from 'react-netlify-identity';
 
-import { IdentityContextProvider as mockIdentityContextProvider } from '../../../../__mocks__/react-netlify-identity';
 import { render, fireEvent } from '../../../utils/testUtils';
 
 import RegisterRoute from '.';
@@ -12,10 +8,6 @@ import RegisterRoute from '.';
 jest.mock('react-netlify-identity');
 
 beforeEach(() => {
-  jest.clearAllMocks();
-
-  IdentityContextProvider.mockImplementationOnce(mockIdentityContextProvider);
-
   useIdentityContext.mockReturnValue({});
 });
 

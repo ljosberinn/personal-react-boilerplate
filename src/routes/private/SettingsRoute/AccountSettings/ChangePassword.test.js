@@ -1,11 +1,7 @@
 import React from 'react';
 import { act } from 'react-dom/test-utils';
-import {
-  useIdentityContext,
-  IdentityContextProvider,
-} from 'react-netlify-identity';
+import { useIdentityContext } from 'react-netlify-identity';
 
-import { IdentityContextProvider as mockIdentityContextProvider } from '../../../../../__mocks__/react-netlify-identity';
 import { render, fireEvent, waitFor } from '../../../../utils/testUtils';
 import ChangePassword from './ChangePassword';
 
@@ -15,8 +11,6 @@ let mockUpdateUser = jest.fn();
 
 beforeEach(() => {
   jest.clearAllMocks();
-
-  IdentityContextProvider.mockImplementationOnce(mockIdentityContextProvider);
 
   useIdentityContext.mockReturnValue({
     isLoggedIn: true,

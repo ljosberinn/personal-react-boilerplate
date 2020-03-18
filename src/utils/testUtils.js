@@ -6,6 +6,7 @@ import { I18nextProvider, withTranslation } from 'react-i18next';
 import { IdentityContextProvider } from 'react-netlify-identity';
 import { Router } from 'react-router-dom';
 
+import { IdentityContextProvider as mockIdentityContextProvider } from '../../__mocks__/react-netlify-identity';
 import { SITE_URL } from '../constants/env';
 import { ThemeProvider, NavigationProvider } from '../context';
 import i18n from './testi18n';
@@ -51,7 +52,11 @@ function customRender(
 export * from '@testing-library/react';
 export { customRender as render };
 
+jest.mock('react-netlify-identity');
+
 beforeEach(() => {
+  IdentityContextProvider.mockImplementation(mockIdentityContextProvider);
+
   window.MutationObserver = MutationObserver;
 
   Object.defineProperty(window, 'matchMedia', {

@@ -1,24 +1,18 @@
-import { fireEvent, waitFor } from '@testing-library/react';
 import i18n from 'i18next';
 import React from 'react';
-import {
-  useIdentityContext,
-  IdentityContextProvider,
-} from 'react-netlify-identity';
+import { useIdentityContext } from 'react-netlify-identity';
 
-import { IdentityContextProvider as mockIdentityContextProvider } from '../../../__mocks__/react-netlify-identity';
 import { ENABLED_LANGUAGES } from '../../constants/env';
-import { render } from '../../utils/testUtils';
+import { render, fireEvent, waitFor } from '../../utils/testUtils';
 
 import LanguageSwitch, { validOrigins } from '.';
 
 jest.mock('react-netlify-identity');
 
 beforeEach(() => {
-  IdentityContextProvider.mockImplementation(mockIdentityContextProvider);
-
   useIdentityContext.mockReturnValue({});
 });
+
 const activeClass = 'is-active';
 
 describe('<LanguageSwitch />', () => {

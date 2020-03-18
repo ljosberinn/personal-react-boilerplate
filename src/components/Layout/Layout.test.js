@@ -1,10 +1,6 @@
 import React from 'react';
-import {
-  useIdentityContext,
-  IdentityContextProvider,
-} from 'react-netlify-identity';
+import { useIdentityContext } from 'react-netlify-identity';
 
-import { IdentityContextProvider as mockIdentityContextProvider } from '../../../__mocks__/react-netlify-identity';
 import { render } from '../../utils/testUtils';
 
 import Layout from '.';
@@ -12,10 +8,9 @@ import Layout from '.';
 jest.mock('react-netlify-identity');
 
 beforeEach(() => {
-  IdentityContextProvider.mockImplementation(mockIdentityContextProvider);
-
   useIdentityContext.mockReturnValue({});
 });
+
 describe('<Layout />', () => {
   it('should render without crashing', () => {
     render(<Layout />);

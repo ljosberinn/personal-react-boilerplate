@@ -1,8 +1,15 @@
 import React from 'react';
+import { useIdentityContext } from 'react-netlify-identity';
 
 import { render } from '../../utils/testUtils';
 
 import Error from '.';
+
+jest.mock('react-netlify-identity');
+
+beforeEach(() => {
+  useIdentityContext.mockReturnValue({});
+});
 
 describe('<Error />', () => {
   it('should render without crashing', () => {

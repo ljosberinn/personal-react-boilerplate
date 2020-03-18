@@ -1,10 +1,6 @@
 import React from 'react';
-import {
-  useIdentityContext,
-  IdentityContextProvider,
-} from 'react-netlify-identity';
+import { useIdentityContext } from 'react-netlify-identity';
 
-import { IdentityContextProvider as mockIdentityContextProvider } from '../../../__mocks__/react-netlify-identity';
 import { render, fireEvent } from '../../utils/testUtils';
 
 import PasswordSelection from '.';
@@ -12,8 +8,6 @@ import PasswordSelection from '.';
 jest.mock('react-netlify-identity');
 
 beforeEach(() => {
-  IdentityContextProvider.mockImplementation(mockIdentityContextProvider);
-
   useIdentityContext.mockReturnValue({});
 });
 
