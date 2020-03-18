@@ -1,27 +1,24 @@
 import { Content } from 'rbx';
-import React from 'react';
+import React, { lazy } from 'react';
 import { useIdentityContext } from 'react-netlify-identity';
 
-import ChangePassword from './ChangePassword';
 //import { Icon } from '../../../../components';
 //import { faExclamationTriangle } from 'react-icons/fa';
 
-export default function AccountSettings() {
-  const { user, updateUser } = useIdentityContext();
+const ChangePassword = lazy(() =>
+  import(
+    /* webpackChunkName: "private.settings.change_password" */ './ChangePassword'
+  ),
+);
 
-  /**
-   *
-   * @param {string} password
-   */
-  async function updatePassword(password) {
-    await updateUser({ password });
-  }
+export default function AccountSettings() {
+  const {
+    user: { app_metadata },
+  } = useIdentityContext();
 
   return (
     <Content>
-      {user?.app_metadata?.provider === 'email' && (
-        <ChangePassword updatePassword={updatePassword} />
-      )}
+      {app_metadata.provider === 'email' && <ChangePassword />}
 
       {/* 
         <Message color="danger">
