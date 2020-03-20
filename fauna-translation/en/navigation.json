@@ -4,6 +4,8 @@
   "i18n": {
     "logout": "Logout",
     "login": "Login",
-    "contribute": "Contribute"
+    "contribute": "Contribute",
+    "toggleMenu": "toggle menu",
+    "toggleNavigation": "toggle navigation"
   }
 }
