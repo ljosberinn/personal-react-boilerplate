@@ -15,9 +15,13 @@ export function useServiceWorker() {
   return useContext(ServiceWorkerContext);
 }
 
+/**
+ *
+ * @param {Event} event
+ */
 function onControllerChange(event) {
-  if (event.currentTarget !== navigator.serviceWorker.controller) {
-    return window.location.reload();
+  if (event.currentTarget !== navigator.serviceWorker) {
+    window.location.reload();
   }
 }
 
