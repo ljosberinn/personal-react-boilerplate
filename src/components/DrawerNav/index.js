@@ -4,12 +4,12 @@ import { hasLocalStorage } from '../../constants/browserAPIs';
 import withSuspense from '../../hocs/withSuspense';
 import { useMediaQuery, usePrevious } from '../../hooks';
 
-const Mobile = lazy(() =>
-  import(/* webpackChunkName: "drawer_nav.mobile" */ './Mobile'),
+const Mobile = withSuspense(
+  lazy(() => import(/* webpackChunkName: "drawer_nav.mobile" */ './Mobile')),
 );
 
-const Desktop = lazy(() =>
-  import(/* webpackChunkName: "drawer_nav.desktop" */ './Desktop'),
+const Desktop = withSuspense(
+  lazy(() => import(/* webpackChunkName: "drawer_nav.desktop" */ './Desktop')),
 );
 
 const localStorageMeta = {
@@ -45,40 +45,34 @@ const persistExpansionToLocalStorage = isExpanded => {
   }
 };
 
-export default memo(
-  withSuspense(function DrawerNav(props) {
-    const isDesktop = useMediaQuery('(min-width: 1024px)');
-    const wasPreviouslyDesktop = usePrevious(isDesktop);
+export default memo(function DrawerNav(props) {
+  const isDesktop = useMediaQuery('(min-width: 1024px)');
+  const wasPreviouslyDesktop = usePrevious(isDesktop);
 
-    const [isExpanded, setIsExpanded] = useState(
-      getExpansionFromLocalStorage(isDesktop),
-    );
+  const [isExpanded, setIsExpanded] = useState(
+    getExpansionFromLocalStorage(isDesktop),
+  );
 
-    useEffect(() => {
-      // ignore auto-expanding the mobile nav when coming from desktop
-      if (!isDesktop && wasPreviouslyDesktop && isExpanded) {
-        setIsExpanded(false);
-      }
-
-      // auto expand desktop nav when increasing width
-      if (isDesktop && !wasPreviouslyDesktop && !isExpanded) {
-        setIsExpanded(true);
-      }
-    }, [isDesktop, isExpanded, wasPreviouslyDesktop]);
-
-    function toggleMenu() {
-      setIsExpanded(!isExpanded);
-      persistExpansionToLocalStorage(!isExpanded);
+  useEffect(() => {
+    // ignore auto-expanding the mobile nav when coming from desktop
+    if (!isDesktop && wasPreviouslyDesktop && isExpanded) {
+      setIsExpanded(false);
     }
 
-    if (isDesktop) {
-      return (
-        <Desktop toggleMenu={toggleMenu} isExpanded={isExpanded} {...props} />
-      );
+    // auto expand desktop nav when increasing width
+    if (isDesktop && !wasPreviouslyDesktop && !isExpanded) {
+      setIsExpanded(true);
     }
+  }, [isDesktop, isExpanded, wasPreviouslyDesktop]);
 
-    return (
-      <Mobile toggleMenu={toggleMenu} isExpanded={isExpanded} {...props} />
-    );
-  }),
-);
+  function toggleMenu() {
+    setIsExpanded(!isExpanded);
+    persistExpansionToLocalStorage(!isExpanded);
+  }
+
+  const Component = isDesktop ? Desktop : Mobile;
+
+  return (
+    <Component toggleMenu={toggleMenu} isExpanded={isExpanded} {...props} />
+  );
+});

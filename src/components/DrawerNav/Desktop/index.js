@@ -1,18 +1,12 @@
 import PropTypes from 'prop-types';
 import { Column, Menu, Box } from 'rbx';
-import React, { lazy } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaAngleDoubleDown } from 'react-icons/fa';
 
-import withSuspense from '../../../hocs/withSuspense';
 import Icon from '../../Icon';
+import RouteList from '../RouteList';
 import styles from './Desktop.module.scss';
-
-const RouteList = withSuspense(
-  lazy(() =>
-    import(/* webpackChunkName: "drawer_nav.route_list" */ '../RouteList'),
-  ),
-);
 
 export default function Desktop({ isExpanded, toggleMenu, ...rest }) {
   const { t } = useTranslation('navigation');
