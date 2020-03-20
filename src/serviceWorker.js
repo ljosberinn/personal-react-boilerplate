@@ -42,15 +42,6 @@ self.addEventListener('fetch', event => {
   }
 });
 
-/**
- * Check if Service Worker is waiting for activation, but there is only one client
- */
-async function isWaitingWithOneClient() {
-  const clients = await self.clients.matchAll();
-
-  return self.registration.waiting && clients.length <= 1;
-}
-
 async function getFromCacheOrNetwork(request) {
   try {
     const response = await caches.match(request, {

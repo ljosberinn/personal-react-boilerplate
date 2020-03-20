@@ -66,12 +66,14 @@ export default function ServiceWorker() {
 
     if (isWaiting) {
       function skipWaiting() {
-        return registration.waiting
-          ? registration.waiting.postMessage({
+        return () => {
+          if (registration.waiting) {
+            registration.waiting.postMessage({
               type: 'SKIP_WAITING',
               payload: undefined,
-            })
-          : () => {};
+            });
+          }
+        };
       }
 
       toast({
