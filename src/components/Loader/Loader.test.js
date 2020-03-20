@@ -55,7 +55,7 @@ describe('<Loader />', () => {
 
     expect(container.querySelector(`[data-testid="${testId}"]`)).toBe(null);
 
-    await waitFor(() => getByTestId(testId) === null, { timeout: 1550 });
+    await waitFor(() => getByTestId(testId) === null, { timeout: 2000 });
 
     expect(getByTestId(testId)).not.toBe(null);
   });
