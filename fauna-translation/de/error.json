@@ -5,7 +5,7 @@
     "reloadPage": "Neu laden und nochmal versuchen",
     "boundaryInfo": "Sorry, hier hat sich ein Fehler eingeschlichen. Wir wurden bereits darüber informiert! :)",
     "title": "Fehler",
-    "open-issue": "Fehlermeldung einreichen",
+    "openIssue": "Fehlermeldung einreichen",
     "invalidToken": "Dieser Token ist entweder ungültig oder bereits verwendet worden.",
     "isProvider": "Dieser Account wurde nicht via Mail sondern über einen Drittanbieter wie bspw. Google registriert. Eine Passwortänderung ist nur beim Anbieter selbst möglich.",
     "mailUnconfirmed": "Die Mail dieses Accounts wurde noch nicht bestätigt. Bitte überprüfe deine Mails.",
