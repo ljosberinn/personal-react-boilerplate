@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
@@ -31,3 +32,7 @@ export default function TemplatedHelmet({ children }) {
     </Helmet>
   );
 }
+
+TemplatedHelmet.propTypes = {
+  children: PropTypes.node,
+};
