@@ -16,7 +16,7 @@
     "i18next-browser-languagedetector": "^4.0.2",
     "i18next-chained-backend": "^2.0.1",
     "i18next-localstorage-backend": "^3.1.1",
-    "i18next-multiload-backend-adapter": "^0.1.1",
+    "i18next-multiload-backend-adapter": "^1.0.0",
     "i18next-xhr-backend": "^3.2.2",
     "logrocket": "^1.0.6",
     "logrocket-react": "^4.0.1",
