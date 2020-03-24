@@ -6384,10 +6384,10 @@ i18next-localstorage-backend@^3.1.1:
   dependencies:
     "@babel/runtime" "^7.4.5"
 
-i18next-multiload-backend-adapter@^0.1.1:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/i18next-multiload-backend-adapter/-/i18next-multiload-backend-adapter-0.1.1.tgz#8351b4f56d317d4b626c7eb6fdd15a66b501face"
-  integrity sha512-OxvmRl2H8rnke9BoI5cqQmTZ21Ay7Fn/gJzmBgZ/ZnDI1VBGyQfbFYXg0dRAVhj0KD6+RrFvtBs3mWwHXZsULw==
+i18next-multiload-backend-adapter@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/i18next-multiload-backend-adapter/-/i18next-multiload-backend-adapter-1.0.0.tgz#3cc3ea102814273bb9059a317d04a3b6e4316121"
+  integrity sha512-rZd/Qmr7KkGktVgJa78GPLXEnd51OyB2I9qmbI/mXKPm3MWbXwplIApqmZgxkPC9ce+b8Jnk227qX62W9SaLPQ==
 
 i18next-xhr-backend@^3.2.2:
   version "3.2.2"
