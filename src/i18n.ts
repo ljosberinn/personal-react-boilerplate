@@ -1,9 +1,9 @@
 import i18n from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import Backend from 'i18next-chained-backend';
-// import LocalStorageBackend from 'i18next-localstorage-backend';
-// import BackendAdapter from 'i18next-multiload-backend-adapter';
-// import XHR from 'i18next-xhr-backend';
+import LocalStorageBackend from 'i18next-localstorage-backend';
+import BackendAdapter from 'i18next-multiload-backend-adapter';
+import XHR from 'i18next-xhr-backend';
 import { initReactI18next } from 'react-i18next';
 
 import { ENABLED_LANGUAGES } from './constants/env';
@@ -28,29 +28,29 @@ i18n
       de: {},
       en: {},
     },
-    // backend: {
-    //   backends: [
-    //     LocalStorageBackend,
-    //     new BackendAdapter(null, {
-    //       backend: new XHR(null, {
-    //         loadPath: '/.netlify/functions/geti18n?lng={{lng}}&ns={{ns}}',
-    //         addPath:
-    //           '/.netlify/functions/addi18n?language={{lng}}&namespace={{ns}}',
-    //         allowMultiLoading: true,
-    //         parsePayload: (namespace, key, fallbackValue) => ({
-    //           key: fallbackValue || '',
-    //         }),
-    //       }),
-    //     }),
-    //   ], // order defines lookup pattern
-    //   backendOptions: [
-    //     {
-    //       prefix: 'i18n-',
-    //       expirationTime: 28 * 24 * 60 * 60 * 1000,
-    //     },
-    //     {},
-    //   ],
-    // },
+    backend: {
+      backends: [
+        LocalStorageBackend,
+        new BackendAdapter(null, {
+          backend: new XHR(null, {
+            loadPath: '/.netlify/functions/geti18n?lng={{lng}}&ns={{ns}}',
+            addPath:
+              '/.netlify/functions/addi18n?language={{lng}}&namespace={{ns}}',
+            allowMultiLoading: true,
+            parsePayload: (namespace, key, fallbackValue) => ({
+              key: fallbackValue || '',
+            }),
+          }),
+        }),
+      ], // order defines lookup pattern
+      backendOptions: [
+        {
+          prefix: 'i18n-',
+          expirationTime: 28 * 24 * 60 * 60 * 1000,
+        },
+        {},
+      ],
+    },
     ns: [], // removes 'translation' default key from backend query,
     whitelist: ENABLED_LANGUAGES,
     saveMissing: true,
