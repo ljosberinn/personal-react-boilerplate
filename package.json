@@ -37,7 +37,7 @@
   },
   "devDependencies": {
     "@sheerun/mutationobserver-shim": "^0.3.3",
-    "@testing-library/jest-dom": "^5.1.1",
+    "@testing-library/jest-dom": "^5.2.0",
     "@testing-library/react": "^10.0.1",
     "bulmaswatch": "^0.8.0",
     "cssom": "^0.4.4",
