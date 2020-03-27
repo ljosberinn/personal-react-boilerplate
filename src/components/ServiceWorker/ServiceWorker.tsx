@@ -23,9 +23,9 @@ export default function ServiceWorker() {
     }
 
     function onUpdateFound() {
-      if (registration!.installing) {
-        registration!.installing.addEventListener('statechange', () => {
-          if (registration!.installing!.state === 'installed') {
+      if (registration?.installing) {
+        registration.installing.addEventListener('statechange', () => {
+          if (registration?.installing?.state === 'installed') {
             setIsInstalled(true);
           }
         });
