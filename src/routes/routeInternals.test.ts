@@ -1,4 +1,4 @@
-import { dynamicPathMatcherFactory } from './loadInternals';
+import { dynamicPathMatcherFactory } from './routeInternals';
 
 const INDEX_PATH = '/';
 

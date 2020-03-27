@@ -2,9 +2,7 @@ import { Spinner } from '@chakra-ui/core';
 import load, { DefaultComponent } from '@loadable/component';
 import React from 'react';
 
-export type DynamicPathMatcherFactory = ReturnType<
-  typeof dynamicPathMatcherFactory
->;
+export type DynamicPathMatcher = ReturnType<typeof dynamicPathMatcherFactory>;
 type PathArguments = { [key: string]: string | number | undefined };
 
 const PATH_DELIMITER = '/';
