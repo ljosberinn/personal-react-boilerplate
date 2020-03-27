@@ -5,7 +5,7 @@ import React from 'react';
 export type DynamicPathMatcherFactory = ReturnType<
   typeof dynamicPathMatcherFactory
 >;
-type PathArguments = { [key: string]: string | number };
+type PathArguments = { [key: string]: string | number | undefined };
 
 const PATH_DELIMITER = '/';
 const VARIABLE_DELIMITER = ':';

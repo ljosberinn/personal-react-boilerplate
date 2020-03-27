@@ -1,4 +1,4 @@
-import { dynamicPathFactory } from './loadInternals';
+import { dynamicPathMatcherFactory } from './loadInternals';
 
 const INDEX_PATH = '/';
 
@@ -20,15 +20,15 @@ const cases = [
   },
 ];
 
-describe('fn dynamicPathFactory', () => {
+describe('fn dynamicPathMatcherFactory', () => {
   it('should return a function', () => {
-    const fn = dynamicPathFactory(INDEX_PATH);
+    const fn = dynamicPathMatcherFactory(INDEX_PATH);
 
     expect(typeof fn).toBe('function');
   });
 
   it('should return the same path as given if it does not include variables', () => {
-    const fn = dynamicPathFactory(INDEX_PATH);
+    const fn = dynamicPathMatcherFactory(INDEX_PATH);
 
     expect(fn()).toBe(INDEX_PATH);
   });
@@ -37,7 +37,7 @@ describe('fn dynamicPathFactory', () => {
     it(`should return a converted path if given a path with variables, case ${
       index + 1
     }`, () => {
-      const fn = dynamicPathFactory(path);
+      const fn = dynamicPathMatcherFactory(path);
 
       expect(fn(params)).toBe(expected);
     });
@@ -45,7 +45,7 @@ describe('fn dynamicPathFactory', () => {
 
   it('should throw an error on a missing param', () => {
     const path = '/user/:id/inbox/:message?';
-    const fn = dynamicPathFactory(path);
+    const fn = dynamicPathMatcherFactory(path);
 
     const proxy = () => fn({ message: 1 });
 
