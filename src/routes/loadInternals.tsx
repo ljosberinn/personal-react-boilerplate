@@ -2,13 +2,16 @@ import { Spinner } from '@chakra-ui/core';
 import load, { DefaultComponent } from '@loadable/component';
 import React from 'react';
 
+export type DynamicPathMatcherFactory = ReturnType<
+  typeof dynamicPathMatcherFactory
+>;
 type PathArguments = { [key: string]: string | number };
 
 const PATH_DELIMITER = '/';
 const VARIABLE_DELIMITER = ':';
 const OPTIONAL_VARIABLE_DELIMITER = '?';
 
-export const dynamicPathFactory = (
+export const dynamicPathMatcherFactory = (
   targetPath: string
 ): ((args?: PathArguments) => string) => {
   return args => {
@@ -25,7 +28,7 @@ export const dynamicPathFactory = (
     return (
       PATH_DELIMITER +
       params
-        .reduce((carry, param, index) => {
+        .reduce<string[]>((carry, param, index) => {
           if (bailEarly) {
             return carry;
           }
@@ -57,7 +60,7 @@ export const dynamicPathFactory = (
             );
           }
 
-          return [...carry, value];
+          return [...carry, value.toString()];
         }, [])
         .join(PATH_DELIMITER)
     );
