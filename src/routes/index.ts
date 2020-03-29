@@ -46,7 +46,11 @@ export const INDEX: RouteConfiguration = {
     router: '/',
     client: dynamicPathMatcherFactory('/'),
   },
-  component: loadable(() => import(/* webpackChunkName: "start" */ './Start')),
+  component: loadable(() =>
+    import(
+      /* webpackPrefetch: true */ /* webpackChunkName: "start" */ './Start'
+    )
+  ),
   icon: FaHome,
   childRoutes: [],
 };

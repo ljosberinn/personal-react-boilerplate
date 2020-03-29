@@ -14,10 +14,9 @@ interface ServiceWorkerContextDefinition {
   options?: RegistrationOptions;
 }
 
-const ServiceWorkerContext = createContext<ServiceWorkerContextDefinition>({
-  isSupported: supportsServiceWorker,
-  registration: null,
-});
+const ServiceWorkerContext = createContext<
+  ServiceWorkerContextDefinition | undefined
+>(undefined);
 
 export function useServiceWorker() {
   return useContext(ServiceWorkerContext);

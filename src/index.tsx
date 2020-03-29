@@ -5,7 +5,8 @@ import { BrowserRouter as Router } from 'react-router-dom';
 
 import App from './App';
 import { ServiceWorker } from './components';
-import { ServiceWorkerContext } from './context';
+import { ServiceWorkerContext, NavigationContext } from './context';
+
 import './i18n';
 
 render(
@@ -17,7 +18,9 @@ render(
           <ServiceWorker />
         </ServiceWorkerContext>
         <Router>
-          <App />
+          <NavigationContext>
+            <App />
+          </NavigationContext>
         </Router>
       </ColorModeProvider>
     </ThemeProvider>
