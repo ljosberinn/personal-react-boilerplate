@@ -5,6 +5,7 @@ import React, { Suspense, ReactNode } from 'react';
 import { I18nextProvider, withTranslation } from 'react-i18next';
 import { Router } from 'react-router-dom';
 
+import { NavigationContext } from '../context';
 import i18n from './i18n';
 
 function Wrapper({ children }: { children: ReactNode }): JSX.Element {
@@ -19,8 +20,18 @@ function Wrapper({ children }: { children: ReactNode }): JSX.Element {
 }
 
 type NavigationTestProps = {
+  /**
+   * initial route to to render history with
+   */
   route?: string;
+  /**
+   * createMemoryHistory to be manipulated in the test
+   */
   history?: MemoryHistory<History.PoorMansUnknown>;
+  /**
+   * whether to include the i18n.t prop - defaults to true
+   */
+  includeTranslation?: boolean;
 };
 
 function render(
@@ -28,19 +39,23 @@ function render(
   {
     route = '/',
     history = createMemoryHistory({ initialEntries: [route] }),
+    includeTranslation = true,
   }: NavigationTestProps = {}
 ) {
-  const Component = withTranslation()(props => ({
+  // ignore i18n and tReady props generally
+  const Component = withTranslation()(({ i18n, t, tReady }) => ({
     ...component,
-    props: { ...component.props, ...props },
+    props: { ...component.props, t: includeTranslation ? t : undefined },
   }));
 
   return {
     ...rtlRender(
       <Router history={history}>
-        <Suspense fallback={null}>
-          <Component />
-        </Suspense>
+        <NavigationContext>
+          <Suspense fallback={null}>
+            <Component />
+          </Suspense>
+        </NavigationContext>
       </Router>,
       {
         //@ts-ignore
