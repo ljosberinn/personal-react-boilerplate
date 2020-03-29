@@ -1,10 +1,10 @@
 import React from 'react';
 
 import { render } from '../../testUtils';
-import Start from './Start';
+import Imprint from './Imprint';
 
-describe('<Start />', () => {
+describe('<Imprint />', () => {
   it('should render without crashing', () => {
-    render(<Start />);
+    render(<Imprint />);
   });
 });

@@ -1,6 +1,6 @@
-import { render } from '@testing-library/react';
 import React from 'react';
 
+import { render } from '../../testUtils';
 import Login from './Login';
 
 describe('<Login />', () => {
