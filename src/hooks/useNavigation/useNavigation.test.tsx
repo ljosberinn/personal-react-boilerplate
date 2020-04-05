@@ -1,8 +1,9 @@
 import { renderHook } from '@testing-library/react-hooks';
 import React, { PropsWithChildren, isValidElement } from 'react';
 
+import { NavigationProvider } from '../../context';
 import { render, fireEvent } from '../../testUtils';
-import NavigationProvider, { useNavigation } from './NavigationContext';
+import useNavigation from './useNavigation';
 
 type EmptyProps = PropsWithChildren<{}>;
 

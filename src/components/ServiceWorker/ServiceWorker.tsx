@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 
 import { supportsServiceWorker } from '../../constants/browser';
-import { useServiceWorker } from '../../context';
+import { useServiceWorker } from '../../hooks';
 
 /**
  *

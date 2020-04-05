@@ -2,8 +2,8 @@ import React from 'react';
 import './App.scss';
 import { Switch, Route } from 'react-router-dom';
 
-import { ThemeSwitch, ScrollToTop } from './components';
-import { useNavigation } from './context';
+import { ThemeSwitch, ScrollToTop, Navigation } from './components';
+import { useNavigation } from './hooks';
 import AuthAwareRedirect from './routes/AuthAwareRedirect';
 
 export default function App() {
@@ -14,7 +14,7 @@ export default function App() {
       <ScrollToTop />
       <header>
         <nav>
-          <ThemeSwitch />
+          <Navigation />
         </nav>
       </header>
       <main>

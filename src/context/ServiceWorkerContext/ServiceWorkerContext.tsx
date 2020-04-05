@@ -2,7 +2,6 @@ import React, {
   createContext,
   useState,
   useEffect,
-  useContext,
   PropsWithChildren,
 } from 'react';
 
@@ -14,13 +13,9 @@ interface ServiceWorkerContextDefinition {
   options?: RegistrationOptions;
 }
 
-const ServiceWorkerContext = createContext<
-  ServiceWorkerContextDefinition | undefined
->(undefined);
-
-export function useServiceWorker() {
-  return useContext(ServiceWorkerContext);
-}
+export const ServiceWorkerContext = createContext<ServiceWorkerContextDefinition | null>(
+  null
+);
 
 function onControllerChange(event: Event) {
   if (event.currentTarget !== navigator.serviceWorker) {

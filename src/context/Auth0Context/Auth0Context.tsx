@@ -2,13 +2,7 @@
 
 import createAuth0Client from '@auth0/auth0-spa-js';
 import Auth0Client from '@auth0/auth0-spa-js/dist/typings/Auth0Client';
-import React, {
-  useState,
-  useEffect,
-  createContext,
-  useContext,
-  useCallback,
-} from 'react';
+import React, { useState, useEffect, createContext, useCallback } from 'react';
 
 export interface Auth0RedirectState {
   targetUrl?: string;
@@ -34,11 +28,7 @@ interface Auth0ProviderOptions {
   onRedirectCallback(result: RedirectLoginResult): void;
 }
 
-const Auth0Context = createContext<Auth0Context | null>(null);
-
-export function useAuth0() {
-  return useContext(Auth0Context)!;
-}
+export const Auth0Context = createContext<Auth0Context | null>(null);
 
 export default function Auth0Provider({
   children,

@@ -2,7 +2,6 @@ import React, {
   createContext,
   createElement,
   useCallback,
-  useContext,
   useMemo,
   PropsWithChildren,
   MouseEvent,
@@ -33,13 +32,9 @@ interface NavigationContextDefinition {
   ) => CElement<LinkProps<unknown>, Link<unknown>>;
 }
 
-const NavigationContext = createContext<
+export const NavigationContext = createContext<
   NavigationContextDefinition | undefined
 >(undefined);
-
-export function useNavigation() {
-  return useContext(NavigationContext);
-}
 
 const computeCurrentRoutes = (isAuthenticated: boolean) => {
   const visibilityCriteria = ['static', isAuthenticated ? 'private' : 'public'];
