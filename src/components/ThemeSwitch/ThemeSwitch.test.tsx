@@ -23,4 +23,21 @@ describe('<ThemeSwitch />', () => {
     expect(sun.classList.toString()).not.toBe(sunClassListBefore);
     expect(moon.classList.toString()).not.toBe(moonClassListBefore);
   });
+
+  ['sun', 'moon'].forEach(icon => {
+    it(`allows changing the theme by clicking an icon alternatively - icon ${icon}`, () => {
+      const { getByTestId } = render(<ThemeSwitch />);
+
+      const sun = getByTestId('theme-switch-sun');
+      const moon = getByTestId('theme-switch-moon');
+
+      const sunClassListBefore = sun.classList.toString();
+      const moonClassListBefore = moon.classList.toString();
+
+      fireEvent.click(icon === 'sun' ? sun : moon);
+
+      expect(sun.classList.toString()).not.toBe(sunClassListBefore);
+      expect(moon.classList.toString()).not.toBe(moonClassListBefore);
+    });
+  });
 });

@@ -20,29 +20,33 @@ export default function ThemeSwitch() {
   const { colorMode, toggleColorMode } = useColorMode();
 
   return (
-    <Flex pr="0" pb="0">
+    <Flex cursor="pointer" pt={2} pb={2}>
       <Box
-        height="22px"
+        height={6}
         d="inline-block"
         as={FaSun}
         color={colorMap.sun[colorMode]}
-        ml="8px"
+        ml={2}
         data-testid="theme-switch-sun"
+        onClick={toggleColorMode}
       />
       <Switch
         data-testid="theme-switch"
         aria-label="toggle theme"
         isChecked={colorMode === 'dark'}
         onChange={toggleColorMode}
-        ml="8px"
-        mr="8px"
+        ml={2}
+        mr={2}
+        display="flex"
+        alignItems="center  "
       />
       <Box
-        height="22px"
+        height={6}
         d="inline-block"
         as={FaMoon}
         color={colorMap.moon[colorMode]}
         data-testid="theme-switch-moon"
+        onClick={toggleColorMode}
       />
     </Flex>
   );
