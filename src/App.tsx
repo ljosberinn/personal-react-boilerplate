@@ -2,9 +2,10 @@ import React from 'react';
 import './App.scss';
 import { Switch, Route } from 'react-router-dom';
 
-import { ThemeSwitch, ScrollToTop, Navigation } from './components';
-import { useNavigation } from './hooks';
-import AuthAwareRedirect from './routes/AuthAwareRedirect';
+import { Navigation } from './components/Navigation';
+import { ScrollToTop } from './components/ScrollToTop';
+import { useNavigation } from './hooks/useNavigation';
+import { AuthAwareRedirect } from './routes/AuthAwareRedirect';
 
 export default function App() {
   const { routes } = useNavigation();
@@ -19,14 +20,16 @@ export default function App() {
       </header>
       <main>
         <Switch>
-          {routes.map(({ exact, component, path: { router } }) => (
-            <Route
-              path={router}
-              component={component}
-              exact={exact}
-              key={router}
-            />
-          ))}
+          {Object.values(routes).map(
+            ({ exact, component, path: { router } }) => (
+              <Route
+                path={router}
+                component={component}
+                exact={exact}
+                key={router}
+              />
+            )
+          )}
           <Route component={AuthAwareRedirect} />
         </Switch>
       </main>

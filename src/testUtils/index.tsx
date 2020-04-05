@@ -10,7 +10,9 @@ import React, {
 import { I18nextProvider, withTranslation } from 'react-i18next';
 import { Router } from 'react-router-dom';
 
-import { NavigationProvider } from '../context';
+import { Auth0ContextDefinition } from '../context/Auth0/context';
+import { NavigationProvider } from '../context/Navigation';
+import { createAuthWrapper } from './authWrapper';
 import i18n from './i18n';
 
 function Wrapper({ children }: { children: ReactNode }): JSX.Element {
@@ -41,6 +43,7 @@ type NavigationTestProps = {
    * an optional additional wrapper, e.g. mocked context providers such as Auth0
    */
   wrapper?: ComponentType;
+  authProviderProps?: Partial<Auth0ContextDefinition>;
 };
 
 function render(
@@ -49,6 +52,7 @@ function render(
     route = '/',
     history = createMemoryHistory({ initialEntries: [route] }),
     includeTranslation = true,
+    authProviderProps = {},
     //@ts-ignore
     wrapper: AdditionalWrapper = ({ children }: PropsWithChildren<{}>) =>
       children,
@@ -60,16 +64,20 @@ function render(
     props: { ...component.props, t: includeTranslation ? t : undefined },
   }));
 
+  const AuthProvider = createAuthWrapper(authProviderProps);
+
   return {
     ...rtlRender(
       <Router history={history}>
-        <NavigationProvider>
-          <Suspense fallback={null}>
-            <AdditionalWrapper>
-              <Component />
-            </AdditionalWrapper>
-          </Suspense>
-        </NavigationProvider>
+        <AuthProvider>
+          <NavigationProvider>
+            <Suspense fallback={null}>
+              <AdditionalWrapper>
+                <Component />
+              </AdditionalWrapper>
+            </Suspense>
+          </NavigationProvider>
+        </AuthProvider>
       </Router>,
       {
         //@ts-ignore

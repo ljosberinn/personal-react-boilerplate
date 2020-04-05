@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import { createPortal } from 'react-dom';
 
-import { usePortal } from '../../hooks';
+import { usePortal } from '../../hooks/usePortal';
 
 interface Props {
   id: string;

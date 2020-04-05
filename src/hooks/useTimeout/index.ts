@@ -1,1 +1,1 @@
-export { default } from './useTimeout';
+export { default as useTimeout } from './useTimeout';

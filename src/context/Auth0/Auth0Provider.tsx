@@ -2,33 +2,18 @@
 
 import createAuth0Client from '@auth0/auth0-spa-js';
 import Auth0Client from '@auth0/auth0-spa-js/dist/typings/Auth0Client';
-import React, { useState, useEffect, createContext, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+
+import { Auth0Context, Auth0User } from './context';
 
 export interface Auth0RedirectState {
   targetUrl?: string;
 }
 
-export interface Auth0User extends Omit<IdToken, '__raw'> {}
-
-export interface Auth0ContextDefinition {
-  user?: Auth0User;
-  isAuthenticated: boolean;
-  isInitializing: boolean;
-  isPopupOpen: boolean;
-  loginWithPopup(o?: PopupLoginOptions): Promise<void>;
-  handleRedirectCallback(): Promise<RedirectLoginResult>;
-  getIdTokenClaims(o?: getIdTokenClaimsOptions): Promise<IdToken>;
-  loginWithRedirect(o?: RedirectLoginOptions): Promise<void>;
-  getTokenSilently(o?: GetTokenSilentlyOptions): Promise<string | undefined>;
-  getTokenWithPopup(o?: GetTokenWithPopupOptions): Promise<string | undefined>;
-  logout(o?: LogoutOptions): void;
-}
 interface Auth0ProviderOptions {
   children: React.ReactElement;
   onRedirectCallback(result: RedirectLoginResult): void;
 }
-
-export const Auth0Context = createContext<Auth0ContextDefinition | null>(null);
 
 export default function Auth0Provider({
   children,
@@ -123,6 +108,10 @@ export default function Auth0Provider({
       auth0Client!.getTokenWithPopup(options),
     [auth0Client]
   );
+
+  if (isInitializing) {
+    return null;
+  }
 
   return (
     <Auth0Context.Provider

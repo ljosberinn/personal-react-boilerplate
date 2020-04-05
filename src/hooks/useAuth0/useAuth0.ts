@@ -1,1 +1,1 @@
-export { default } from '../../context/Auth0Context/useAuth0';
+export { default } from '../../context/Auth0/useAuth0';

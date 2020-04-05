@@ -1,1 +1,1 @@
-export { default } from '../../context/ServiceWorkerContext/useServiceWorker';
+export { default } from '../../context/ServiceWorker/useServiceWorker';
