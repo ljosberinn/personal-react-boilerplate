@@ -1,20 +1,28 @@
 import { renderHook } from '@testing-library/react-hooks';
 import React, { PropsWithChildren, isValidElement } from 'react';
 
-import { NavigationProvider } from '../../context';
+import { Auth0ContextDefinition } from '../../context/Auth0/context';
+import { NavigationProvider } from '../../context/Navigation';
 import { render, fireEvent } from '../../testUtils';
+import { createAuthWrapper } from '../../testUtils/authWrapper';
 import useNavigation from './useNavigation';
 
-type EmptyProps = PropsWithChildren<{}>;
+const createAuthHookWrapper = (values?: Partial<Auth0ContextDefinition>) => ({
+  children,
+}: PropsWithChildren<{}>) => {
+  const AuthWrapper = createAuthWrapper(values);
 
-function HookWrapper({ children }: EmptyProps) {
-  return <NavigationProvider>{children}</NavigationProvider>;
-}
+  return (
+    <AuthWrapper>
+      <NavigationProvider>{children}</NavigationProvider>
+    </AuthWrapper>
+  );
+};
 
 describe('useNavigation', () => {
   test('should return the component PreloadingLink ', () => {
     const { result } = renderHook(useNavigation, {
-      wrapper: HookWrapper,
+      wrapper: createAuthHookWrapper(),
     });
 
     const PreloadingLink = result.current?.PreloadingLink;
@@ -31,7 +39,7 @@ describe('useNavigation', () => {
 
   test('PreloadingLink should return a HTMLAnchorElement', () => {
     const { result } = renderHook(useNavigation, {
-      wrapper: HookWrapper,
+      wrapper: createAuthHookWrapper(),
     });
 
     const PreloadingLink = result.current?.PreloadingLink;
@@ -53,7 +61,7 @@ describe('useNavigation', () => {
 
   test('PreloadingLink should link to the given route', () => {
     const { result } = renderHook(useNavigation, {
-      wrapper: HookWrapper,
+      wrapper: createAuthHookWrapper(),
     });
 
     const PreloadingLink = result.current?.PreloadingLink;
@@ -74,9 +82,9 @@ describe('useNavigation', () => {
     }
   });
 
-  test('PreloadingLink should preload a component onMouseOver', () => {
+  test('PreloadingLink should preload a component onMouseOver, once', () => {
     const { result } = renderHook(useNavigation, {
-      wrapper: HookWrapper,
+      wrapper: createAuthHookWrapper(),
     });
 
     const PreloadingLink = result.current?.PreloadingLink;
@@ -106,6 +114,38 @@ describe('useNavigation', () => {
       fireEvent.mouseOver(link);
 
       expect(fakeRoute.component.preload).toHaveBeenCalledTimes(1);
+
+      fireEvent.mouseOver(link);
+
+      expect(fakeRoute.component.preload).toHaveBeenCalledTimes(1);
     }
+  });
+
+  test('should not expose private routes when logged in', () => {
+    const { result } = renderHook(useNavigation, {
+      wrapper: createAuthHookWrapper({ isAuthenticated: false }),
+    });
+
+    expect(result.current.routes.DASHBOARD).toBe(undefined);
+    expect(result.current.routes.INDEX).not.toBe(undefined);
+  });
+
+  test('should expose private routes when logged in', () => {
+    const { result } = renderHook(useNavigation, {
+      wrapper: createAuthHookWrapper({ isAuthenticated: true }),
+    });
+
+    expect(result.current.routes.DASHBOARD).not.toBe(undefined);
+    expect(result.current.routes.INDEX).toBe(undefined);
+  });
+
+  test('should always expose shared routes regardless of auth', () => {
+    [true, false].forEach(bool => {
+      const { result } = renderHook(useNavigation, {
+        wrapper: createAuthHookWrapper({ isAuthenticated: bool }),
+      });
+
+      expect(result.current.routes.PRIVACY_POLICY).not.toBe(undefined);
+    });
   });
 });
