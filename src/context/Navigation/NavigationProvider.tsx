@@ -33,11 +33,19 @@ export const computeCurrentRoutes = (
     );
   }
 
-  return Object.fromEntries(
-    Object.entries(cachedFlattenedRoutes).filter(([_, { visibility }]) =>
-      visibilityCriteria.includes(visibility)
-    )
-  );
+  return Object.entries(cachedFlattenedRoutes)
+    .filter(([_, { visibility }]) => visibilityCriteria.includes(visibility))
+    .reduce<FlattenedRoutes>((carry, [name, route]) => {
+      carry[name] = route;
+      return carry;
+    }, {});
+
+  // disabled until netlify build image supports Object.fromEntries
+  // return Object.fromEntries(
+  //   Object.entries(cachedFlattenedRoutes).filter(([_, { visibility }]) =>
+  //     visibilityCriteria.includes(visibility)
+  //   )
+  // );
 };
 
 type Props = PropsWithChildren<{}>;
