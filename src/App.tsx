@@ -1,7 +1,9 @@
+import { Box } from '@chakra-ui/core';
 import React from 'react';
 import './App.scss';
 import { Switch, Route } from 'react-router-dom';
 
+import { Footer } from './components/Footer';
 import { Navigation } from './components/Navigation';
 import { ScrollToTop } from './components/ScrollToTop';
 import { useNavigation } from './hooks/useNavigation';
@@ -18,7 +20,7 @@ export default function App() {
           <Navigation />
         </nav>
       </header>
-      <main>
+      <Box as="main" p={4}>
         <Switch>
           {Object.values(routes).map(
             ({ exact, component, path: { router } }) => (
@@ -32,8 +34,8 @@ export default function App() {
           )}
           <Route component={AuthAwareRedirect} />
         </Switch>
-      </main>
-      <footer />
+      </Box>
+      <Footer />
     </>
   );
 }
