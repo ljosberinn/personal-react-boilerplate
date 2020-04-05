@@ -66,12 +66,12 @@ export const DASHBOARD: RouteDefinition = {
   },
 };
 
-export const SETTINGS_ACCOUNT: RouteDefinition = {
+export const SETTINGS_SITE: RouteDefinition = {
   visibility: 'static',
   title: 'Site',
   path: {
     router: '/settings/site',
-    client: dynamicPathMatcherFactory('/settings/account'),
+    client: dynamicPathMatcherFactory('/settings/site'),
   },
   icon: FaSlidersH,
   component: loadable(() =>
@@ -80,7 +80,7 @@ export const SETTINGS_ACCOUNT: RouteDefinition = {
   exact: true,
 };
 
-export const SETTINGS_SITE: RouteDefinition = {
+export const SETTINGS_ACCOUNT: RouteDefinition = {
   visibility: 'private',
   title: 'Account',
   path: {
