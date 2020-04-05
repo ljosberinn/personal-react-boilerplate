@@ -10,7 +10,7 @@ export interface Auth0RedirectState {
 
 export interface Auth0User extends Omit<IdToken, '__raw'> {}
 
-interface Auth0Context {
+export interface Auth0ContextDefinition {
   user?: Auth0User;
   isAuthenticated: boolean;
   isInitializing: boolean;
@@ -28,7 +28,7 @@ interface Auth0ProviderOptions {
   onRedirectCallback(result: RedirectLoginResult): void;
 }
 
-export const Auth0Context = createContext<Auth0Context | null>(null);
+export const Auth0Context = createContext<Auth0ContextDefinition | null>(null);
 
 export default function Auth0Provider({
   children,

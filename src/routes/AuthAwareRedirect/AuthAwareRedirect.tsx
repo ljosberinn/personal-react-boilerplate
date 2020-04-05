@@ -2,7 +2,14 @@ import React from 'react';
 import { Redirect } from 'react-router-dom';
 
 import { DASHBOARD, INDEX } from '../';
+import { useAuth0 } from '../../hooks';
 
 export default function AuthAwareRedirect() {
-  return <Redirect to={false ? DASHBOARD.path.router : INDEX.path.router} />;
+  const { isAuthenticated } = useAuth0();
+
+  return (
+    <Redirect
+      to={isAuthenticated ? DASHBOARD.path.router : INDEX.path.router}
+    />
+  );
 }
