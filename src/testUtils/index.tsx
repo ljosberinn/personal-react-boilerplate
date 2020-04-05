@@ -43,6 +43,9 @@ type NavigationTestProps = {
    * an optional additional wrapper, e.g. mocked context providers such as Auth0
    */
   wrapper?: ComponentType;
+  /**
+   * props to mock Auth0Provider with
+   */
   authProviderProps?: Partial<Auth0ContextDefinition>;
 };
 

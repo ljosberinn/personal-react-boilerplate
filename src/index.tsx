@@ -4,15 +4,12 @@ import { render } from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import App from './App';
-import { ServiceWorker } from './components';
+import { ServiceWorker } from './components/ServiceWorker';
 import { AUTH0_CLIENT_ID, AUTH0_DOMAIN } from './constants/env';
 import history from './constants/history';
-import {
-  ServiceWorkerProvider,
-  NavigationProvider,
-  Auth0Provider,
-} from './context';
-
+import { Auth0Provider } from './context/Auth0';
+import { NavigationProvider } from './context/Navigation';
+import { ServiceWorkerProvider } from './context/ServiceWorker';
 import './i18n';
 
 const onAuthRedirectCallback = (redirectResult?: RedirectLoginResult) => {
@@ -38,16 +35,16 @@ render(
           <ServiceWorker />
         </ServiceWorkerProvider>
         <Router>
-          <NavigationProvider>
-            <Auth0Provider
-              domain={AUTH0_DOMAIN}
-              client_id={AUTH0_CLIENT_ID}
-              redirect_uri={window.location.origin}
-              onRedirectCallback={onAuthRedirectCallback}
-            >
+          <Auth0Provider
+            domain={AUTH0_DOMAIN}
+            client_id={AUTH0_CLIENT_ID}
+            redirect_uri={window.location.origin}
+            onRedirectCallback={onAuthRedirectCallback}
+          >
+            <NavigationProvider>
               <App />
-            </Auth0Provider>
-          </NavigationProvider>
+            </NavigationProvider>
+          </Auth0Provider>
         </Router>
       </ColorModeProvider>
     </ThemeProvider>

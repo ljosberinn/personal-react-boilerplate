@@ -49,36 +49,32 @@ export default function NavigationProvider({ children }: Props) {
     isAuthenticated,
   ]);
 
-  const PreloadingLink = useCallback(
-    ({
-      onMouseOver: parentMouseOver,
-      to: { path, component },
-      params,
-      nav,
-      ...rest
-    }: PreloadingLinkProps) => {
-      function onMouseOver(event: MouseEvent) {
-        if (parentMouseOver) {
-          parentMouseOver(event);
-        }
-
-        try {
-          component.preload();
-        } catch (error) {
-          console.error(error);
-
-          // clean up in case of error as .preload is obviously asnc
-        }
+  const PreloadingLink = useCallback(function PreloadingLink({
+    onMouseOver: parentMouseOver,
+    to: { path, component },
+    params,
+    nav,
+    ...rest
+  }: PreloadingLinkProps) {
+    function onMouseOver(event: MouseEvent) {
+      if (parentMouseOver) {
+        parentMouseOver(event);
       }
 
-      return createElement(nav ? NavLink : Link, {
-        ...rest,
-        onMouseOver,
-        to: path.client(params),
-      });
-    },
-    []
-  );
+      try {
+        component.preload();
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    return createElement(nav ? NavLink : Link, {
+      ...rest,
+      onMouseOver,
+      to: path.client(params),
+    });
+  },
+  []);
 
   return (
     <NavigationContext.Provider value={{ PreloadingLink, routes }}>

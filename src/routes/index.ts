@@ -2,8 +2,6 @@ import { LoadableComponent } from '@loadable/component';
 import { IconType } from 'react-icons';
 import {
   FaHome,
-  FaSignInAlt,
-  FaUserEdit,
   FaTachometerAlt,
   FaCog,
   FaBookReader,
@@ -35,11 +33,7 @@ export interface RouteDefinition {
   component: LoadableComponent<unknown>;
 }
 
-interface RouteConfiguration extends RouteDefinition {
-  childRoutes: RouteConfiguration[];
-}
-
-export const INDEX: RouteConfiguration = {
+export const INDEX: RouteDefinition = {
   visibility: 'public',
   exact: true,
   path: {
@@ -52,10 +46,9 @@ export const INDEX: RouteConfiguration = {
     )
   ),
   icon: FaHome,
-  childRoutes: [],
 };
 
-export const DASHBOARD: RouteConfiguration = {
+export const DASHBOARD: RouteDefinition = {
   visibility: 'private',
   exact: true,
   title: 'Dashboard',
@@ -67,43 +60,14 @@ export const DASHBOARD: RouteConfiguration = {
   component: loadable(() =>
     import(/* webpackChunkName: "dashboard" */ './Dashboard')
   ),
-  childRoutes: [],
   drawerPosition: {
     group: 1,
     position: 1,
   },
 };
 
-export const LOGIN: RouteConfiguration = {
-  visibility: 'public',
-  exact: true,
-  title: 'Login',
-  path: {
-    router: '*/login',
-    client: dynamicPathMatcherFactory('/login'),
-  },
-  icon: FaSignInAlt,
-  component: loadable(() => import(/* webpackChunkName: "login" */ './Login')),
-  childRoutes: [],
-};
-
-export const REGISTRATION: RouteConfiguration = {
-  visibility: 'public',
-  exact: true,
-  title: 'Register',
-  childRoutes: [],
-  icon: FaUserEdit,
-  component: loadable(() =>
-    import(/* webpackChunkName: "registration" */ './Registration')
-  ),
-  path: {
-    router: '/register',
-    client: dynamicPathMatcherFactory('/register'),
-  },
-};
-
-const SETTINGS_ACCOUNT: RouteConfiguration = {
-  visibility: 'public',
+export const SETTINGS_ACCOUNT: RouteDefinition = {
+  visibility: 'static',
   title: 'Site',
   path: {
     router: '/settings/site',
@@ -114,10 +78,9 @@ const SETTINGS_ACCOUNT: RouteConfiguration = {
     import(/* webpackChunkName: "settings_site" */ './SettingsSite')
   ),
   exact: true,
-  childRoutes: [],
 };
 
-const SETTIGS_PRIVATE: RouteConfiguration = {
+export const SETTINGS_SITE: RouteDefinition = {
   visibility: 'private',
   title: 'Account',
   path: {
@@ -129,14 +92,12 @@ const SETTIGS_PRIVATE: RouteConfiguration = {
     import(/* webpackChunkName: "settings_account" */ './SettingsAccount')
   ),
   exact: true,
-  childRoutes: [],
 };
 
-export const SETTINGS: RouteConfiguration = {
+export const SETTINGS: RouteDefinition = {
   visibility: 'public',
   exact: true,
   title: 'Settings',
-  childRoutes: [SETTINGS_ACCOUNT, SETTIGS_PRIVATE],
   icon: FaCog,
   path: {
     router: '/settings',
@@ -147,7 +108,7 @@ export const SETTINGS: RouteConfiguration = {
   ),
 };
 
-export const TOS: RouteConfiguration = {
+export const TOS: RouteDefinition = {
   visibility: 'static',
   exact: true,
   title: 'Terms of Service',
@@ -159,10 +120,9 @@ export const TOS: RouteConfiguration = {
   component: loadable(() =>
     import(/* webpackChunkName: "terms_of_service" */ './Tos')
   ),
-  childRoutes: [],
 };
 
-export const IMPRINT: RouteConfiguration = {
+export const IMPRINT: RouteDefinition = {
   visibility: 'static',
   exact: true,
   title: 'Imprint',
@@ -174,10 +134,9 @@ export const IMPRINT: RouteConfiguration = {
     import(/* webpackChunkName: "imprint" */ './Imprint')
   ),
   icon: FaStamp,
-  childRoutes: [],
 };
 
-export const PRIVACY_POLICY: RouteConfiguration = {
+export const PRIVACY_POLICY: RouteDefinition = {
   visibility: 'static',
   exact: true,
   title: 'Privacy Policy',
@@ -189,5 +148,4 @@ export const PRIVACY_POLICY: RouteConfiguration = {
   component: loadable(() =>
     import(/* webpackChunkName: "privacy_policy" */ './PrivacyPolicy')
   ),
-  childRoutes: [],
 };

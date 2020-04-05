@@ -1,7 +1,5 @@
 import React from 'react';
 
-interface Props {}
-
-export default function Mobile({}: Props) {
+export default function Mobile() {
   return <h1>Mobile</h1>;
 }
