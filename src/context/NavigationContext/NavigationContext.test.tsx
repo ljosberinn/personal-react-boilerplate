@@ -1,18 +1,18 @@
 import React from 'react';
 
 import { render } from '../../testUtils';
-import NavigationContext from './NavigationContext';
+import NavigationProvider from './NavigationContext';
 
-describe('<NavigationContext />', () => {
+describe('<NavigationProvider />', () => {
   it('should render without crashing', () => {
-    render(<NavigationContext />);
+    render(<NavigationProvider />);
   });
 
   it('renders children', () => {
     const { getByTestId } = render(
-      <NavigationContext>
+      <NavigationProvider>
         <h1 data-testid="hello-friend">hello friend</h1>
-      </NavigationContext>
+      </NavigationProvider>
     );
 
     expect(getByTestId('hello-friend')).toBeInTheDocument();

@@ -37,7 +37,7 @@ const NavigationContext = createContext<
   NavigationContextDefinition | undefined
 >(undefined);
 
-export function useNavigationContext() {
+export function useNavigation() {
   return useContext(NavigationContext);
 }
 
@@ -53,7 +53,7 @@ type Props = PropsWithChildren<{}>;
 
 const preloadedMap = new Map<string, boolean>();
 
-export default function NavigationContextProvider({ children }: Props) {
+export default function NavigationProvider({ children }: Props) {
   const isAuthenticated = false;
 
   const routes = useMemo(() => computeCurrentRoutes(isAuthenticated), [

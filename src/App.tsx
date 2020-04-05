@@ -3,11 +3,11 @@ import './App.scss';
 import { Switch, Route } from 'react-router-dom';
 
 import { ThemeSwitch, ScrollToTop } from './components';
-import { useNavigationContext } from './context';
+import { useNavigation } from './context';
 import AuthAwareRedirect from './routes/AuthAwareRedirect';
 
 export default function App() {
-  const { routes } = useNavigationContext();
+  const { routes } = useNavigation();
 
   return (
     <>

@@ -2,17 +2,17 @@ import { renderHook } from '@testing-library/react-hooks';
 import React, { PropsWithChildren, isValidElement } from 'react';
 
 import { render, fireEvent } from '../../testUtils';
-import NavigationContext, { useNavigationContext } from './NavigationContext';
+import NavigationProvider, { useNavigation } from './NavigationContext';
 
 type EmptyProps = PropsWithChildren<{}>;
 
 function HookWrapper({ children }: EmptyProps) {
-  return <NavigationContext>{children}</NavigationContext>;
+  return <NavigationProvider>{children}</NavigationProvider>;
 }
 
-describe('useNavigationContext', () => {
+describe('useNavigation', () => {
   test('should return the component PreloadingLink ', () => {
-    const { result } = renderHook(useNavigationContext, {
+    const { result } = renderHook(useNavigation, {
       wrapper: HookWrapper,
     });
 
@@ -29,7 +29,7 @@ describe('useNavigationContext', () => {
   });
 
   test('PreloadingLink should return a HTMLAnchorElement', () => {
-    const { result } = renderHook(useNavigationContext, {
+    const { result } = renderHook(useNavigation, {
       wrapper: HookWrapper,
     });
 
@@ -51,7 +51,7 @@ describe('useNavigationContext', () => {
   });
 
   test('PreloadingLink should link to the given route', () => {
-    const { result } = renderHook(useNavigationContext, {
+    const { result } = renderHook(useNavigation, {
       wrapper: HookWrapper,
     });
 
@@ -74,7 +74,7 @@ describe('useNavigationContext', () => {
   });
 
   test('PreloadingLink should preload a component onMouseOver', () => {
-    const { result } = renderHook(useNavigationContext, {
+    const { result } = renderHook(useNavigation, {
       wrapper: HookWrapper,
     });
 
