@@ -1,6 +1,7 @@
-import { Spinner } from '@chakra-ui/core';
 import load, { DefaultComponent } from '@loadable/component';
 import React from 'react';
+
+import { Spinner } from '../components/Spinner';
 
 export type DynamicPathMatcher = ReturnType<typeof dynamicPathMatcherFactory>;
 type PathArguments = { [key: string]: string | number | undefined };
@@ -69,7 +70,5 @@ export const loadable = (
   component: (props: unknown) => Promise<DefaultComponent<unknown>>
 ) =>
   load(component, {
-    fallback: (
-      <Spinner thickness="4px" speed="0.65s" emptyColor="blue.500" size="xl" />
-    ),
+    fallback: <Spinner timeout={1500} />,
   });
