@@ -28,7 +28,8 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1",
     "react-use": "^14.0.0",
-    "typescript": "3.9.0-dev.20200404"
+    "typescript": "3.9.0-dev.20200404",
+    "webpack-bundle-analyzer": "^3.6.1"
   },
   "devDependencies": {
     "@sheerun/mutationobserver-shim": "^0.3.3",
@@ -49,13 +50,16 @@
     "lint-staged": "^10.1.2",
     "node-sass": "^4.13.1",
     "prettier": "^2.0.2",
-    "react-test-renderer": "16.13.1"
+    "react-test-renderer": "16.13.1",
+    "rimraf": "^3.0.2"
   },
   "peerDependencies": {
     "@testing-library/dom": "^7.2.0",
     "prop-types": "15.7.2"
   },
   "scripts": {
+    "analyze": "node scripts/bundle-analyzer.js",
+    "nuke": "rimraf node_modules && rm yarn.lock && yarn",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
