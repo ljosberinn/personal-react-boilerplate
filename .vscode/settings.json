@@ -10,5 +10,9 @@
   "editor.suggest.maxVisibleSuggestions": 5,
   "editor.rulers": [80],
   "editor.formatOnSave": true,
-  "eslint.packageManager": "yarn"
+  "eslint.packageManager": "yarn",
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/build": true
+  }
 }

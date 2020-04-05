@@ -1,12 +1,16 @@
 import { ThemeProvider, ColorModeProvider, CSSReset } from '@chakra-ui/core';
 import { render as rtlRender } from '@testing-library/react';
 import { createMemoryHistory, MemoryHistory, History } from 'history';
-import React, { Suspense, ReactNode } from 'react';
+import React, {
+  Suspense,
+  ReactNode,
+  ComponentType,
+  PropsWithChildren,
+} from 'react';
 import { I18nextProvider, withTranslation } from 'react-i18next';
 import { Router } from 'react-router-dom';
 
-import { AUTH0_CLIENT_ID, AUTH0_DOMAIN } from '../constants/env';
-import { NavigationProvider, Auth0Provider } from '../context';
+import { NavigationProvider } from '../context';
 import i18n from './i18n';
 
 function Wrapper({ children }: { children: ReactNode }): JSX.Element {
@@ -33,6 +37,10 @@ type NavigationTestProps = {
    * whether to include the i18n.t prop - defaults to true
    */
   includeTranslation?: boolean;
+  /**
+   * an optional additional wrapper, e.g. mocked context providers such as Auth0
+   */
+  wrapper?: ComponentType;
 };
 
 function render(
@@ -41,6 +49,9 @@ function render(
     route = '/',
     history = createMemoryHistory({ initialEntries: [route] }),
     includeTranslation = true,
+    //@ts-ignore
+    wrapper: AdditionalWrapper = ({ children }: PropsWithChildren<{}>) =>
+      children,
   }: NavigationTestProps = {}
 ) {
   // ignore i18n and tReady props generally
@@ -53,15 +64,11 @@ function render(
     ...rtlRender(
       <Router history={history}>
         <NavigationProvider>
-          {/* <Auth0Provider
-            onRedirectCallback={() => {}}
-            domain={AUTH0_DOMAIN}
-            client_id={AUTH0_CLIENT_ID}
-          > */}
           <Suspense fallback={null}>
-            <Component />
+            <AdditionalWrapper>
+              <Component />
+            </AdditionalWrapper>
           </Suspense>
-          {/* </Auth0Provider> */}
         </NavigationProvider>
       </Router>,
       {

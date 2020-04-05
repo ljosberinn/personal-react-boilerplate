@@ -102,40 +102,41 @@ export const REGISTRATION: RouteConfiguration = {
   },
 };
 
+const SETTINGS_ACCOUNT: RouteConfiguration = {
+  visibility: 'public',
+  title: 'Site',
+  path: {
+    router: '/settings/site',
+    client: dynamicPathMatcherFactory('/settings/account'),
+  },
+  icon: FaSlidersH,
+  component: loadable(() =>
+    import(/* webpackChunkName: "settings_site" */ './SettingsSite')
+  ),
+  exact: true,
+  childRoutes: [],
+};
+
+const SETTIGS_PRIVATE: RouteConfiguration = {
+  visibility: 'private',
+  title: 'Account',
+  path: {
+    router: '/settings/account',
+    client: dynamicPathMatcherFactory('/settings/account'),
+  },
+  icon: FaUserCog,
+  component: loadable(() =>
+    import(/* webpackChunkName: "settings_account" */ './SettingsAccount')
+  ),
+  exact: true,
+  childRoutes: [],
+};
+
 export const SETTINGS: RouteConfiguration = {
   visibility: 'public',
   exact: true,
   title: 'Settings',
-  childRoutes: [
-    {
-      visibility: 'public',
-      title: 'Site',
-      path: {
-        router: '/settings/site',
-        client: dynamicPathMatcherFactory('/settings/account'),
-      },
-      icon: FaSlidersH,
-      component: loadable(() =>
-        import(/* webpackChunkName: "settings_site" */ './SettingsSite')
-      ),
-      exact: true,
-      childRoutes: [],
-    },
-    {
-      visibility: 'private',
-      title: 'Account',
-      path: {
-        router: '/settings/account',
-        client: dynamicPathMatcherFactory('/settings/account'),
-      },
-      icon: FaUserCog,
-      component: loadable(() =>
-        import(/* webpackChunkName: "settings_account" */ './SettingsAccount')
-      ),
-      exact: true,
-      childRoutes: [],
-    },
-  ],
+  childRoutes: [SETTINGS_ACCOUNT, SETTIGS_PRIVATE],
   icon: FaCog,
   path: {
     router: '/settings',
