@@ -5,7 +5,8 @@ import React, { Suspense, ReactNode } from 'react';
 import { I18nextProvider, withTranslation } from 'react-i18next';
 import { Router } from 'react-router-dom';
 
-import { NavigationContext } from '../context';
+import { AUTH0_CLIENT_ID, AUTH0_DOMAIN } from '../constants/env';
+import { NavigationProvider, Auth0Provider } from '../context';
 import i18n from './i18n';
 
 function Wrapper({ children }: { children: ReactNode }): JSX.Element {
@@ -51,11 +52,17 @@ function render(
   return {
     ...rtlRender(
       <Router history={history}>
-        <NavigationContext>
+        <NavigationProvider>
+          {/* <Auth0Provider
+            onRedirectCallback={() => {}}
+            domain={AUTH0_DOMAIN}
+            client_id={AUTH0_CLIENT_ID}
+          > */}
           <Suspense fallback={null}>
             <Component />
           </Suspense>
-        </NavigationContext>
+          {/* </Auth0Provider> */}
+        </NavigationProvider>
       </Router>,
       {
         //@ts-ignore
