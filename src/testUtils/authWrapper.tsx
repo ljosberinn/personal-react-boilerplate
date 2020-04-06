@@ -5,7 +5,8 @@ import { Auth0Context, Auth0ContextDefinition } from '../context/Auth0/context';
 export const createAuthWrapper = (
   partial?: Partial<Auth0ContextDefinition>
 ) => ({ children }: PropsWithChildren<{}>) => {
-  const value = {
+  return (
+    <Auth0Context.Provider value={{
     loginWithPopup: jest.fn(),
     logout: jest.fn(),
     handleRedirectCallback: jest.fn(),
@@ -18,9 +19,8 @@ export const createAuthWrapper = (
     isInitializing: false,
     user: undefined,
     ...partial,
-  };
-
-  return (
-    <Auth0Context.Provider value={value}>{children}</Auth0Context.Provider>
+  }}>
+    {children}
+  </Auth0Context.Provider>
   );
 };
