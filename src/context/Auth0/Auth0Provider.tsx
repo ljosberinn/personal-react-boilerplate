@@ -2,7 +2,8 @@
 
 import createAuth0Client from '@auth0/auth0-spa-js';
 import Auth0Client from '@auth0/auth0-spa-js/dist/typings/Auth0Client';
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
+import { useEffectOnce } from 'react-use';
 
 import { Auth0Context, Auth0User } from './context';
 
@@ -26,7 +27,7 @@ export default function Auth0Provider({
   const [user, setUser] = useState<Auth0User>();
   const [auth0Client, setAuth0Client] = useState<Auth0Client>();
 
-  useEffect(() => {
+  useEffectOnce(() => {
     createAuth0Client(initOptions)
       .then(async auth0FromHook => {
         if (window.location.search.includes('code=')) {
@@ -47,7 +48,7 @@ export default function Auth0Provider({
       .finally(() => setIsInitializing(false));
 
     // eslint-disable-next-line react-hooks/exhaustive-deps ,
-  }, []);
+  });
 
   const loginWithPopup = useCallback(
     async (options?: PopupLoginOptions) => {

@@ -8,8 +8,8 @@ import { useServiceWorker } from '../../hooks/useServiceWorker';
  * @see https://github.com/deity-io/falcon/blob/master/packages/falcon-service-worker/src/ServiceWorker.tsx
  */
 export default function ServiceWorker() {
-  const [isWaiting, setIsWaiting] = useState(false);
-  const [isInstalled, setIsInstalled] = useState(false);
+  const [, setIsWaiting] = useState(false);
+  const [, setIsInstalled] = useState(false);
   const { registration } = useServiceWorker();
 
   useEffect(() => {
