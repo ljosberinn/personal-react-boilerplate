@@ -16,6 +16,7 @@ import { FaSignInAlt, FaSignOutAlt } from 'react-icons/fa';
 import { PROJECT_NAME } from '../../../constants/env';
 import { useAuth0 } from '../../../hooks/useAuth0';
 import { useNavigation } from '../../../hooks/useNavigation';
+import { LanguageSwitch } from '../../LanguageSwitch';
 import { ThemeSwitch } from '../../ThemeSwitch';
 
 export default function Desktop() {
@@ -33,6 +34,7 @@ export default function Desktop() {
         </PreloadingLink>
       </Flex>
       <Flex align="end">
+        <LanguageSwitch />
         <ThemeSwitch />
         {isAuthenticated ? <Authenticated /> : <Unauthenticated />}
       </Flex>

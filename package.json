@@ -33,6 +33,7 @@
     "logrocket-react": "^4.0.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-flag-kit": "^0.3.1",
     "react-helmet": "^6.0.0-beta.2",
     "react-i18next": "^11.3.4",
     "react-icons": "^3.9.0",

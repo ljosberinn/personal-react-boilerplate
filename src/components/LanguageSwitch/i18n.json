@@ -1,0 +1,16 @@
+{
+  "de": {
+    "menu-toggle": "Sprache anpassen",
+    "available-languages": "Sprachauswahl",
+    "help-cta": "Hilf beim Übersetzen",
+    "de": "Deutsch",
+    "en": "Englisch"
+  },
+  "en": {
+    "menu-toggle": "Adjust language",
+    "available-languages": "Language selection",
+    "help-cta": "Help translating",
+    "de": "German",
+    "en": "English"
+  }
+}
