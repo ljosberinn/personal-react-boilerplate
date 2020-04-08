@@ -53,7 +53,6 @@ function render(
     ...rtlRender(
       <ThemeProvider>
         <ColorModeProvider>
-          <CSSReset />
           <I18nextProvider i18n={i18n}>
             <Router history={history}>
               <AuthProvider>

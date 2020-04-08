@@ -1615,10 +1615,10 @@
     dom-accessibility-api "^0.4.2"
     pretty-format "^25.1.0"
 
-"@testing-library/jest-dom@^5.3.0":
-  version "5.3.0"
-  resolved "https://registry.yarnpkg.com/@testing-library/jest-dom/-/jest-dom-5.3.0.tgz#2ae813b8b0eb69e8808f75d3af8efa3f0dc4d7ec"
-  integrity sha512-Cdhpc3BHL888X55qBNyra9eM0UG63LCm/FqCWTa1Ou/0MpsUbQTM9vW1NU6/jBQFoSLgkFfDG5XVpm2V0dOm/A==
+"@testing-library/jest-dom@^5.4.0":
+  version "5.4.0"
+  resolved "https://registry.yarnpkg.com/@testing-library/jest-dom/-/jest-dom-5.4.0.tgz#9ac08b6dc7a750fe3bf7658116dd246890f836d2"
+  integrity sha512-dsXGGNiZhZVrBgQ7lxznZmzKvJ3DfhmTH7jkgfyDCjgyGbviLrGVWLQO6rXYfootU81mw96HaYH2L7DthJEC7A==
   dependencies:
     "@babel/runtime" "^7.9.2"
     "@types/testing-library__jest-dom" "^5.0.2"
@@ -1759,10 +1759,15 @@
   resolved "https://registry.yarnpkg.com/@types/minimatch/-/minimatch-3.0.3.tgz#3dca0e3f33b200fc7d1139c0cd96c1268cadfd9d"
   integrity sha512-tHq6qdbT9U1IRSGf14CL0pUlULksvY9OZ+5eEgl1N7t+OA3tGvNpxJCzuKQlsNgCVwbAs670L1vcVQi8j9HjnA==
 
-"@types/node@*", "@types/node@^13.11.0":
+"@types/node@*":
   version "13.11.0"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-13.11.0.tgz#390ea202539c61c8fa6ba4428b57e05bc36dc47b"
   integrity sha512-uM4mnmsIIPK/yeO+42F2RQhGUIs39K2RFmugcJANppXe6J1nvH87PvzPZYpza7Xhhs8Yn9yIAVdLZ84z61+0xQ==
+
+"@types/node@^13.11.1":
+  version "13.11.1"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-13.11.1.tgz#49a2a83df9d26daacead30d0ccc8762b128d53c7"
+  integrity sha512-eWQGP3qtxwL8FGneRrC5DwrJLGN4/dH1clNTuLfN81HCrxVtxRjygDTUoZJ5ASlDEeo0ppYFQjQIlXhtXpOn6g==
 
 "@types/parse-json@^4.0.0":
   version "4.0.0"
@@ -1817,10 +1822,18 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react@*", "@types/react@^16.8.10", "@types/react@^16.9.32":
+"@types/react@*", "@types/react@^16.8.10":
   version "16.9.32"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-16.9.32.tgz#f6368625b224604148d1ddf5920e4fefbd98d383"
   integrity sha512-fmejdp0CTH00mOJmxUPPbWCEBWPvRIL4m8r0qD+BSDUqmutPyGQCHifzMpMzdvZwROdEdL78IuZItntFWgPXHQ==
+  dependencies:
+    "@types/prop-types" "*"
+    csstype "^2.2.0"
+
+"@types/react@^16.9.33":
+  version "16.9.33"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.9.33.tgz#a5274520f0d28cbbb73c8652ddd48646fd4bcae5"
+  integrity sha512-ovgoy7p9999HDzwv8Sewhl8GJjn/r0GRsFrM9UMwp1uodh0kQ0pwIHLQ6LNfqGSyjNzJ8II/HIg0BL7Yn/B9yA==
   dependencies:
     "@types/prop-types" "*"
     csstype "^2.2.0"
@@ -5936,10 +5949,10 @@ i18next-xhr-backend@^3.2.2:
   dependencies:
     "@babel/runtime" "^7.5.5"
 
-i18next@^19.3.4:
-  version "19.3.4"
-  resolved "https://registry.yarnpkg.com/i18next/-/i18next-19.3.4.tgz#512de50ee6075df825c646e1ce646a104f0938c9"
-  integrity sha512-ef7AxxutzdhBsBNugE9jgqsbwesG1muJOtZ9ZrPARPs/jXegViTp4+8JCeMp8BAyTIo1Zn0giqc8+2UpqFjU0w==
+i18next@^19.4.0:
+  version "19.4.0"
+  resolved "https://registry.yarnpkg.com/i18next/-/i18next-19.4.0.tgz#492a03aac701d9efeeee86509d101a09d960b000"
+  integrity sha512-NvSz/Pb5KiLqhL+nqHu5SXNUtWDpHkVosVwD6PRSZWtBpVs6pXzqrRhyFdFvVivQcQheSxiHD3Oq1WKxoWy1ow==
   dependencies:
     "@babel/runtime" "^7.3.1"
 
@@ -9999,10 +10012,10 @@ react-test-renderer@16.13.1:
     react-is "^16.8.6"
     scheduler "^0.19.1"
 
-react-use@^14.0.0:
-  version "14.0.0"
-  resolved "https://registry.yarnpkg.com/react-use/-/react-use-14.0.0.tgz#a46d055346bb8728b966f50d665ce22aa535e74c"
-  integrity sha512-ZJJRaRTreBYn2zT5OBpKpiU/muoWioFkZABfIXJf2PsnBYwnn6XYTV7NvVQnmuuvn24B+R/setmEJQsB13okXw==
+react-use@^14.1.0:
+  version "14.1.0"
+  resolved "https://registry.yarnpkg.com/react-use/-/react-use-14.1.0.tgz#62a5d2d5b5af29b753acaa690207981f8e434dde"
+  integrity sha512-ps4r2mbwoFxaWaAuKdv8Ow7ygHGtglwshuHCMxRz0SGJqUo/k4Cg1W41WgAEVaXm0XMYyrSch9nOp5x7QylMDQ==
   dependencies:
     "@types/js-cookie" "2.2.5"
     "@xobotyi/scrollbar-width" "1.9.5"
@@ -11791,10 +11804,10 @@ typedarray@^0.0.6:
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
-typescript@3.9.0-dev.20200407:
-  version "3.9.0-dev.20200407"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.9.0-dev.20200407.tgz#6f11737b42308f601bd6a1f0b9a40be7f8e55714"
-  integrity sha512-DCGwu+3goRNUl9J3kYqs4gAsUIdLIb9vWSoPalapEt8gezvrRChowBCPXApsfpiY91iqcEHFN+afhFe5dX6pWw==
+typescript@3.9.0-dev.20200408:
+  version "3.9.0-dev.20200408"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.9.0-dev.20200408.tgz#a2f4d3a20e0126cf0fdf72ffdb08625068d5ba0a"
+  integrity sha512-VxFnT5htyQ1eVm6TZeICKCrpu0xl5O+NZdVEIRrNNiEqAPpYeYNwQy1BWmbwvzBFAMQC05pY1JD4isUi9TkJUA==
 
 unfetch@^4.1.0:
   version "4.1.0"
