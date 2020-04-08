@@ -1,30 +1,14 @@
 import { ThemeProvider, ColorModeProvider, CSSReset } from '@chakra-ui/core';
 import { render as rtlRender } from '@testing-library/react';
 import { createMemoryHistory, MemoryHistory, History } from 'history';
-import React, {
-  Suspense,
-  ReactNode,
-  ComponentType,
-  PropsWithChildren,
-} from 'react';
-import { I18nextProvider, withTranslation } from 'react-i18next';
+import React, { Suspense, ReactNode } from 'react';
+import { I18nextProvider, I18nContext } from 'react-i18next';
 import { Router } from 'react-router-dom';
 
 import { Auth0ContextDefinition } from '../context/Auth0/context';
 import { NavigationProvider } from '../context/Navigation';
 import { createAuthWrapper } from './authWrapper';
 import i18n from './i18n';
-
-function Wrapper({ children }: { children: ReactNode }): JSX.Element {
-  return (
-    <ThemeProvider>
-      <ColorModeProvider>
-        <CSSReset />
-        <I18nextProvider i18n={i18n}>{children}</I18nextProvider>
-      </ColorModeProvider>
-    </ThemeProvider>
-  );
-}
 
 type NavigationTestProps = {
   /**
@@ -40,14 +24,18 @@ type NavigationTestProps = {
    */
   includeTranslation?: boolean;
   /**
-   * an optional additional wrapper, e.g. mocked context providers such as Auth0
+   * an optional additional wrapper, e.g. mocked context providers
    */
-  wrapper?: ComponentType;
+  wrapper?: typeof ChildrenPassthrough;
   /**
    * props to mock Auth0Provider with
    */
   authProviderProps?: Partial<Auth0ContextDefinition>;
 };
+
+function ChildrenPassthrough({ children }: { children: ReactNode }) {
+  return <>{children}</>;
+}
 
 function render(
   component: JSX.Element,
@@ -56,36 +44,43 @@ function render(
     history = createMemoryHistory({ initialEntries: [route] }),
     includeTranslation = true,
     authProviderProps = {},
-    //@ts-ignore
-    wrapper: AdditionalWrapper = ({ children }: PropsWithChildren<{}>) =>
-      children,
+    wrapper: AdditionalWrapper = ChildrenPassthrough,
   }: NavigationTestProps = {}
 ) {
-  // ignore i18n and tReady props generally
-  const Component = withTranslation()(({ i18n, t, tReady }) => ({
-    ...component,
-    props: { ...component.props, t: includeTranslation ? t : undefined },
-  }));
-
   const AuthProvider = createAuthWrapper(authProviderProps);
 
   return {
     ...rtlRender(
-      <Router history={history}>
-        <AuthProvider>
-          <NavigationProvider>
-            <Suspense fallback={null}>
-              <AdditionalWrapper>
-                <Component />
-              </AdditionalWrapper>
-            </Suspense>
-          </NavigationProvider>
-        </AuthProvider>
-      </Router>,
-      {
-        //@ts-ignore
-        wrapper: Wrapper,
-      }
+      <ThemeProvider>
+        <ColorModeProvider>
+          <CSSReset />
+          <I18nextProvider i18n={i18n}>
+            <Router history={history}>
+              <AuthProvider>
+                <NavigationProvider>
+                  <Suspense fallback={null}>
+                    <AdditionalWrapper>
+                      <I18nContext.Consumer>
+                        {({ t }) => {
+                          // this allows usage of render(<Component some="prop" />) in tests
+                          // translation won't break because the actual tFunction will be injected if necessary
+                          return {
+                            ...component,
+                            props: {
+                              ...component.props,
+                              t: includeTranslation ? t : undefined,
+                            },
+                          };
+                        }}
+                      </I18nContext.Consumer>
+                    </AdditionalWrapper>
+                  </Suspense>
+                </NavigationProvider>
+              </AuthProvider>
+            </Router>
+          </I18nextProvider>
+        </ColorModeProvider>
+      </ThemeProvider>
     ),
     history,
   };

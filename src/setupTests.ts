@@ -11,6 +11,17 @@ beforeEach(() => {
     writable: true,
   });
 
+  // needed for <Menu /> + <MenuButton /> of chakra
+  document.createRange = () => ({
+    setStart: () => {},
+    setEnd: () => {},
+    // @ts-expect-error
+    commonAncestorContainer: {
+      nodeName: 'BODY',
+      ownerDocument: document,
+    },
+  });
+
   const resizeEvent = document.createEvent('Event');
   resizeEvent.initEvent('resize', true, true);
 
