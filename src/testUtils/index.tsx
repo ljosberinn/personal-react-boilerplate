@@ -1,4 +1,4 @@
-import { ThemeProvider, ColorModeProvider, CSSReset } from '@chakra-ui/core';
+import { ThemeProvider, ColorModeProvider } from '@chakra-ui/core';
 import { render as rtlRender } from '@testing-library/react';
 import { createMemoryHistory, MemoryHistory, History } from 'history';
 import React, { Suspense, ReactNode } from 'react';
