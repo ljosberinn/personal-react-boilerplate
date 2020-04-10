@@ -1,6 +1,8 @@
-import { Switch, useColorMode, Box, Flex } from '@chakra-ui/core';
+import { Switch, useColorMode, Flex } from '@chakra-ui/core';
 import React from 'react';
 import { FaSun, FaMoon } from 'react-icons/fa';
+
+import { CustomIcon } from '../CustomIcon';
 
 const gray = 'gray.500';
 const yellow = 'yellow.500';
@@ -21,12 +23,10 @@ export default function ThemeSwitch() {
 
   return (
     <Flex cursor="pointer" pt={2} pb={2}>
-      <Box
+      <CustomIcon
+        icon={FaSun}
         height={6}
-        d="inline-block"
-        as={FaSun}
         color={colorMap.sun[colorMode]}
-        ml={2}
         data-testid="theme-switch-sun"
         onClick={toggleColorMode}
       />
@@ -36,17 +36,16 @@ export default function ThemeSwitch() {
         isChecked={colorMode === 'dark'}
         onChange={toggleColorMode}
         ml={2}
-        mr={2}
         display="flex"
-        alignItems="center  "
+        alignItems="center"
       />
-      <Box
+      <CustomIcon
+        icon={FaMoon}
         height={6}
-        d="inline-block"
-        as={FaMoon}
         color={colorMap.moon[colorMode]}
         data-testid="theme-switch-moon"
         onClick={toggleColorMode}
+        ml={2}
       />
     </Flex>
   );

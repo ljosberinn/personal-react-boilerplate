@@ -34,8 +34,8 @@ export default function Desktop() {
         </PreloadingLink>
       </Flex>
       <Flex align="end">
-        <LanguageSwitch />
         <ThemeSwitch />
+        <LanguageSwitch ml={2} mr={2} />
         {isAuthenticated ? <Authenticated /> : <Unauthenticated />}
       </Flex>
     </Flex>
@@ -55,7 +55,7 @@ function Authenticated() {
 
   return (
     <Menu>
-      <MenuButton ml={4} as={Button}>
+      <MenuButton as={Button}>
         {user?.picture && (
           <Image
             size={6}
@@ -89,7 +89,7 @@ function Unauthenticated() {
   const { loginWithPopup } = useAuth0();
 
   return (
-    <Button ml={4} onClick={loginWithPopup}>
+    <Button ml={2} onClick={loginWithPopup}>
       <Box as={FaSignInAlt} mr={2} /> Login
     </Button>
   );
