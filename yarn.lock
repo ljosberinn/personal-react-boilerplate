@@ -10648,10 +10648,10 @@ react-is@^16.12.0, react-is@^16.6.0, react-is@^16.7.0, react-is@^16.8.1, react-i
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.0.tgz#0f37c3613c34fe6b37cd7f763a0d6293ab15c527"
   integrity sha512-GFMtL0vHkiBv9HluwNZTggSn/sCyEt9n02aM0dSAjGGyqyNlAyftYm4phPxdvCigG15JreC5biwxCgTAJZ7yAA==
 
-react-netlify-identity@^0.2.3:
-  version "0.2.3"
-  resolved "https://registry.yarnpkg.com/react-netlify-identity/-/react-netlify-identity-0.2.3.tgz#050a752e2d80b078822ab7cae1379e4a6579a172"
-  integrity sha512-jfNhUvl0oa8fpmWhSKHjwPVZiAIXIOd77oRv24+0uWh9v9B7tqtLxodq7bOY6fGgZuC4jUsft/WM3yxB+z6RtA==
+react-netlify-identity@^0.2.4:
+  version "0.2.4"
+  resolved "https://registry.yarnpkg.com/react-netlify-identity/-/react-netlify-identity-0.2.4.tgz#921eb71a0fc50d8e6de0570301556f95fa392bf2"
+  integrity sha512-N2krAr1X96bUB7Tz0rJHqHgR/+XaINviNHPempusudHwiFMq9lYvHVwB5gmXKSsNuQGslrrWRq05f+hzSh+0uw==
   dependencies:
     gotrue-js "^0.9.25"
     tsdx "^0.12.3"
