@@ -1,7 +1,7 @@
 export const ENABLED_LANGUAGES = process.env.REACT_APP_ENABLED_LANGUAGES!.split(
   ','
 );
-export const REPO_LINK = process.env.REACT_APP_REPO_LINK!;
+export const REPO_LINK = process.env.REACT_APP_REPO_LINK;
 export const PROJECT_NAME = process.env.REACT_APP_PROJECT_NAME;
 
 export const SENTRY_DSN = process.env.REACT_APP_SENTRY_DSN;
