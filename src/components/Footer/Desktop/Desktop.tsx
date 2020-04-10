@@ -4,8 +4,10 @@ import React, { PropsWithChildren } from 'react';
 import { PROJECT_NAME } from '../../../constants/env';
 import { useNavigation } from '../../../hooks/useNavigation';
 import { RouteDefinition } from '../../../routes';
+import { CustomIcon } from '../../CustomIcon';
+import { DiscordLink } from '../../DiscordLink';
 import { ExternalLink } from '../../ExternalLink';
-import { ThemeSwitch } from '../../ThemeSwitch';
+import { GithubLink } from '../../GithubLink';
 
 export default function Desktop() {
   const {
@@ -37,8 +39,9 @@ export default function Desktop() {
               <Link to={TOS} />
             </Box>
             <Box>
-              <Heading>Other</Heading>
-              <ThemeSwitch />
+              <Heading>Links</Heading>
+              <GithubLink />
+              <DiscordLink />
             </Box>
           </SimpleGrid>
         </Box>
@@ -53,10 +56,8 @@ function Link({ to }: { to: RouteDefinition }) {
   return (
     <Text mt={1} mb={1}>
       <PreloadingLink to={to}>
-        <Box display="inline-block" as={to.icon} />{' '}
-        <Box as="span" ml={2}>
-          {to.title}
-        </Box>
+        <CustomIcon icon={to.icon} mr={2} />
+        <Box as="span">{to.title}</Box>
       </PreloadingLink>
     </Text>
   );
