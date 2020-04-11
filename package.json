@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "dev": "node scripts/spawn-dev-env.js",
-    "install": "cd client && yarn && cd ../server && yarn",
+    "install": "npm-run-all --parallel install:*",
+    "install:client": "cd client && yarn",
+    "install:server": "cd server && yarn",
     "purge": "npm-run-all --parallel purge:* && rimraf yarn.lock && rimraf node_modules",
     "purge:client": "rimraf client/node_modules && rimraf client/yarn.lock",
     "purge:server": "rimraf server/node_modules && rimraf server/yarn.lock"
