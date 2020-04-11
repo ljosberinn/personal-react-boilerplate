@@ -1101,6 +1101,11 @@ typedarray-to-buffer@^3.1.5:
   dependencies:
     is-typedarray "^1.0.0"
 
+typescript@^3.9.0-dev.20200411:
+  version "3.9.0-dev.20200411"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.9.0-dev.20200411.tgz#27921fd7ebe959ff7ce20caf54d846393dd95b60"
+  integrity sha512-fkVBNCtK9ncGhHhpWRDvulDe+ngVKWRqAz4DioeArgtSOAJe/5Iv2jwlotdSzCuacGYfUMInoWz3ct4D76kCdA==
+
 undefsafe@^2.0.2:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/undefsafe/-/undefsafe-2.0.3.tgz#6b166e7094ad46313b2202da7ecc2cd7cc6e7aae"
