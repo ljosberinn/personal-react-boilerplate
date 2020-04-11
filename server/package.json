@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon -x ts-node --files ./src/index.ts",
-    "start": "tsnode ./src/index.ts"
+    "start": "ts-node ./src/index.ts"
   },
   "keywords": [],
   "author": "",
