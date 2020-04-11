@@ -9,6 +9,10 @@ import { ScrollToTop } from './components/ScrollToTop';
 import { useNavigation } from './hooks/useNavigation';
 import { AuthAwareRedirect } from './routes/AuthAwareRedirect';
 
+fetch('/status')
+  .then(response => response.json())
+  .then(console.log);
+
 export default function App() {
   const { routes } = useNavigation();
 

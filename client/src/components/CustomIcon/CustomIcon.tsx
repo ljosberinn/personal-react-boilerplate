@@ -1,4 +1,4 @@
-import { PseudoBox, IconProps } from '@chakra-ui/core';
+import { Box, IconProps } from '@chakra-ui/core';
 import React from 'react';
 import { IconType } from 'react-icons';
 
@@ -14,7 +14,8 @@ export default function CustomIcon({
   ...rest
 }: Props) {
   return (
-    <PseudoBox
+    <Box
+      verticalAlign="unset"
       as={icon}
       display={display}
       role={role}

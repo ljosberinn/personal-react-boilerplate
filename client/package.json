@@ -1,0 +1,78 @@
+{
+  "name": "personal-react-boilerplate",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@auth0/auth0-spa-js": "^1.6.5",
+    "@chakra-ui/core": "^0.7.0",
+    "@emotion/core": "^10.0.28",
+    "@emotion/styled": "^10.0.27",
+    "@loadable/component": "^5.12.0",
+    "@sentry/browser": "^5.15.4",
+    "@sheerun/mutationobserver-shim": "^0.3.3",
+    "@testing-library/jest-dom": "^5.5.0",
+    "@testing-library/react": "^10.0.2",
+    "@testing-library/react-hooks": "^3.2.1",
+    "@types/history": "^4.7.5",
+    "@types/jest": "^25.2.1",
+    "@types/loadable__component": "^5.10.0",
+    "@types/node": "^13.11.1",
+    "@types/react": "^16.9.34",
+    "@types/react-dom": "^16.9.6",
+    "@types/react-helmet": "^5.0.15",
+    "@types/react-router-dom": "^5.1.4",
+    "classnames": "^2.2.6",
+    "emotion-theming": "^10.0.27",
+    "i18next": "^19.4.1",
+    "i18next-browser-languagedetector": "^4.0.2",
+    "i18next-chained-backend": "^2.0.1",
+    "i18next-localstorage-backend": "^3.1.1",
+    "i18next-multiload-backend-adapter": "^1.0.0",
+    "i18next-xhr-backend": "^3.2.2",
+    "logrocket": "^1.0.7",
+    "logrocket-react": "^4.0.1",
+    "prop-types": "^15.7.2",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-flag-kit": "^0.3.1",
+    "react-helmet": "^6.0.0",
+    "react-i18next": "^11.3.4",
+    "react-icons": "^3.9.0",
+    "react-router": "^5.1.2",
+    "react-router-dom": "^5.1.2",
+    "react-scripts": "^3.4.1",
+    "react-test-renderer": "16.13.1",
+    "react-use": "^14.1.1",
+    "typescript": "^3.9.0-dev.20200411",
+    "webpack": "4.42.0",
+    "webpack-bundle-analyzer": "^3.6.1"
+  },
+  "devDependencies": {
+    "node-sass": "^4.13.1",
+    "react-cosmos": "^5.1.0",
+    "rimraf": "^3.0.2"
+  },
+  "scripts": {
+    "analyze": "node scripts/bundle-analyzer.js",
+    "nuke": "rimraf node_modules && rm yarn.lock && yarn",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "cosmos": "cosmos",
+    "cosmos:export": "cosmos-export"
+  },
+  "proxy": "http://localhost:5050",
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

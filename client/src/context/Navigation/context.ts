@@ -1,10 +1,11 @@
 import {
   createContext,
   PropsWithChildren,
-  CElement,
   MouseEventHandler,
+  RefAttributes,
+  FunctionComponentElement,
 } from 'react';
-import { Link, LinkProps } from 'react-router-dom';
+import { NavLinkProps } from 'react-router-dom';
 
 import { RouteDefinition } from '../../routes';
 
@@ -21,7 +22,9 @@ interface NavigationContextDefinition {
   routes: FlattenedRoutes;
   PreloadingLink: (
     props: PropsWithChildren<PreloadingLinkProps>
-  ) => CElement<LinkProps<unknown>, Link<unknown>>;
+  ) => FunctionComponentElement<
+    NavLinkProps<unknown> & RefAttributes<HTMLAnchorElement>
+  >;
 }
 
 export const NavigationContext = createContext<
