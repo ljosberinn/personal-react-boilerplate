@@ -10,7 +10,7 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "sourceMap": true,
-    "outDir": "./dist"
+    "outDir": "./build"
   },
   "include": ["./src/**/*.ts"],
   "exclude": ["node_modules"]
