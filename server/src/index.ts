@@ -15,7 +15,7 @@ server.register(statusRoutes);
 
 const start = async () => {
   try {
-    await server.listen(5050, '0.0.0.0');
+    await server.listen(parseInt(process.env.PORT, 10) || 5050);
     server.blipp();
   } catch (err) {
     console.log(err);
