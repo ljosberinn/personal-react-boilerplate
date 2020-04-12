@@ -1,8 +1,9 @@
 import * as fastify from 'fastify';
 import * as fastifyBlipp from 'fastify-blipp';
+import * as fastifyFormBody from 'fastify-formbody';
 import { Server, IncomingMessage, ServerResponse } from 'http';
 
-import statusRoutes from './routes/status';
+import i18n from './routes/i18n';
 
 const server: fastify.FastifyInstance<
   Server,
@@ -10,8 +11,9 @@ const server: fastify.FastifyInstance<
   ServerResponse
 > = fastify();
 
+server.register(fastifyFormBody);
 server.register(fastifyBlipp);
-server.register(statusRoutes);
+server.register(i18n);
 
 const start = async () => {
   try {
