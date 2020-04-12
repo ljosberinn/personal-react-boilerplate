@@ -11,6 +11,7 @@ import {
   Box,
 } from '@chakra-ui/core';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { FaSignInAlt, FaSignOutAlt } from 'react-icons/fa';
 
 import { PROJECT_NAME } from '../../../constants/env';
@@ -43,6 +44,7 @@ export default function Desktop() {
 }
 
 function Authenticated() {
+  const { t } = useTranslation();
   const { user, logout } = useAuth0();
   const {
     PreloadingLink,
@@ -70,15 +72,15 @@ function Authenticated() {
       <MenuList>
         <MenuGroup title="Profile">
           <MenuItem as={PreloadingLink} {...{ to: SETTINGS_ACCOUNT }}>
-            <Box as={SETTINGS_ACCOUNT.icon} mr={2} /> My Account
+            <Box as={SETTINGS_ACCOUNT.icon} mr={2} /> {t('my-account')}
           </MenuItem>
           <MenuItem as={PreloadingLink} {...{ to: SETTINGS_SITE }}>
-            <Box as={SETTINGS_SITE.icon} mr={2} /> Settings
+            <Box as={SETTINGS_SITE.icon} mr={2} /> {t('settings')}
           </MenuItem>
         </MenuGroup>
         <MenuDivider />
         <MenuItem onClick={handleLogout}>
-          <Box as={FaSignOutAlt} mr={2} /> Logout
+          <Box as={FaSignOutAlt} mr={2} /> {t('logout')}
         </MenuItem>
       </MenuList>
     </Menu>
@@ -86,11 +88,12 @@ function Authenticated() {
 }
 
 function Unauthenticated() {
+  const { t } = useTranslation();
   const { loginWithPopup } = useAuth0();
 
   return (
     <Button ml={2} onClick={loginWithPopup}>
-      <Box as={FaSignInAlt} mr={2} /> Login
+      <Box as={FaSignInAlt} mr={2} /> {t('login')}
     </Button>
   );
 }

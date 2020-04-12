@@ -2,8 +2,8 @@ import i18n from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import Backend from 'i18next-chained-backend';
 import LocalStorageBackend from 'i18next-localstorage-backend';
-/*import BackendAdapter from 'i18next-multiload-backend-adapter';
-import XHR from 'i18next-xhr-backend';*/
+import BackendAdapter from 'i18next-multiload-backend-adapter';
+import XHR from 'i18next-xhr-backend';
 import { initReactI18next } from 'react-i18next';
 
 import { ENABLED_LANGUAGES } from './constants/env';
@@ -24,24 +24,19 @@ i18n
       caches: ['localStorage'], // where to cache
       order: ['localStorage', 'navigator'], // in which order to search for a language
     },
-    resources: {
-      de: {},
-      en: {},
-    },
     backend: {
       backends: [
         LocalStorageBackend,
-        /*new BackendAdapter(null, {
+        new BackendAdapter(null, {
           backend: new XHR(null, {
-            loadPath: '/.netlify/functions/geti18n?lng={{lng}}&ns={{ns}}',
-            addPath:
-              '/.netlify/functions/addi18n?language={{lng}}&namespace={{ns}}',
+            loadPath: '/i18n/get?language={{lng}}&namespace={{ns}}',
+            addPath: '/i18n/add?language={{lng}}&namespace={{ns}}',
             allowMultiLoading: true,
             parsePayload: (namespace, key, fallbackValue) => ({
               key: fallbackValue || '',
             }),
           }),
-        }),*/
+        }),
       ], // order defines lookup pattern
       backendOptions: [
         {
@@ -52,9 +47,7 @@ i18n
       ],
     },
     ns: [], // removes 'translation' default key from backend query,
+    defaultNS: 'core',
     whitelist: ENABLED_LANGUAGES,
-    //saveMissing: true,
-    react: {
-      useSuspense: false,
-    },
+    saveMissing: true,
   });

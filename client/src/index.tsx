@@ -1,5 +1,5 @@
 import { ThemeProvider, CSSReset, ColorModeProvider } from '@chakra-ui/core';
-import React, { StrictMode } from 'react';
+import React, { StrictMode, Suspense } from 'react';
 import { render } from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
 
@@ -42,7 +42,9 @@ render(
             onRedirectCallback={onAuthRedirectCallback}
           >
             <NavigationProvider>
-              <App />
+              <Suspense fallback={null}>
+                <App />
+              </Suspense>
             </NavigationProvider>
           </Auth0Provider>
         </Router>

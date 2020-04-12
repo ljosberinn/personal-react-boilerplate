@@ -17,7 +17,6 @@ import { MdTranslate } from 'react-icons/md';
 import { ENABLED_LANGUAGES } from '../../constants/env';
 import { CustomIcon } from '../CustomIcon';
 import { ExternalLink } from '../ExternalLink';
-import { ns } from './i18n';
 
 const flagMap = {
   en: 'GB',
@@ -30,7 +29,7 @@ interface Props {
 }
 
 export default function LanguageSwitch({ ml = 0, mr = 0 }: Props) {
-  const { i18n, t } = useTranslation(ns);
+  const { i18n, t } = useTranslation();
 
   function handleLanguageChange(slug: string) {
     return () => {

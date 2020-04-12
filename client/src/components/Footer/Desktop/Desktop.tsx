@@ -1,5 +1,6 @@
 import { SimpleGrid, Box, Text } from '@chakra-ui/core';
 import React, { PropsWithChildren } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { PROJECT_NAME } from '../../../constants/env';
 import { useNavigation } from '../../../hooks/useNavigation';
@@ -10,6 +11,7 @@ import { ExternalLink } from '../../ExternalLink';
 import { GithubLink } from '../../GithubLink';
 
 export default function Desktop() {
+  const { t } = useTranslation();
   const {
     routes: { PRIVACY_POLICY, TOS },
   } = useNavigation();
@@ -34,12 +36,12 @@ export default function Desktop() {
               <Heading>{PROJECT_NAME}</Heading>
             </Box>
             <Box>
-              <Heading>Legal</Heading>
+              <Heading>{t('legal')}</Heading>
               <Link to={PRIVACY_POLICY} />
               <Link to={TOS} />
             </Box>
             <Box>
-              <Heading>Links</Heading>
+              <Heading>{t('links')}</Heading>
               <GithubLink />
               <DiscordLink />
             </Box>
@@ -51,13 +53,14 @@ export default function Desktop() {
 }
 
 function Link({ to }: { to: RouteDefinition }) {
+  const { t } = useTranslation();
   const { PreloadingLink } = useNavigation();
 
   return (
     <Text mt={1} mb={1}>
       <PreloadingLink to={to}>
         <CustomIcon icon={to.icon} mr={2} />
-        <Box as="span">{to.title}</Box>
+        <Box as="span">{t(to.title as string)}</Box>
       </PreloadingLink>
     </Text>
   );

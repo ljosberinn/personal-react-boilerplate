@@ -51,7 +51,7 @@ export const INDEX: RouteDefinition = {
 export const DASHBOARD: RouteDefinition = {
   visibility: 'private',
   exact: true,
-  title: 'Dashboard',
+  title: 'dashboard',
   path: {
     router: '/dashboard',
     client: dynamicPathMatcherFactory('/dashboard'),
@@ -68,7 +68,7 @@ export const DASHBOARD: RouteDefinition = {
 
 export const SETTINGS_SITE: RouteDefinition = {
   visibility: 'static',
-  title: 'Site',
+  title: 'site',
   path: {
     router: '/settings/site',
     client: dynamicPathMatcherFactory('/settings/site'),
@@ -82,7 +82,7 @@ export const SETTINGS_SITE: RouteDefinition = {
 
 export const SETTINGS_ACCOUNT: RouteDefinition = {
   visibility: 'private',
-  title: 'Account',
+  title: 'account',
   path: {
     router: '/settings/account',
     client: dynamicPathMatcherFactory('/settings/account'),
@@ -97,7 +97,7 @@ export const SETTINGS_ACCOUNT: RouteDefinition = {
 export const SETTINGS: RouteDefinition = {
   visibility: 'public',
   exact: true,
-  title: 'Settings',
+  title: 'settings',
   icon: FaCog,
   path: {
     router: '/settings',
@@ -111,7 +111,7 @@ export const SETTINGS: RouteDefinition = {
 export const TOS: RouteDefinition = {
   visibility: 'static',
   exact: true,
-  title: 'Terms of Service',
+  title: 'terms-of-service',
   path: {
     router: '/terms-of-service',
     client: dynamicPathMatcherFactory('/terms-of-service'),
@@ -125,7 +125,7 @@ export const TOS: RouteDefinition = {
 export const IMPRINT: RouteDefinition = {
   visibility: 'static',
   exact: true,
-  title: 'Imprint',
+  title: 'imprint',
   path: {
     router: '/imprint',
     client: dynamicPathMatcherFactory('/imprint'),
@@ -139,7 +139,7 @@ export const IMPRINT: RouteDefinition = {
 export const PRIVACY_POLICY: RouteDefinition = {
   visibility: 'static',
   exact: true,
-  title: 'Privacy Policy',
+  title: 'privacy-policy',
   path: {
     router: '/privacy-policy',
     client: dynamicPathMatcherFactory('/privacy-policy'),
