@@ -16,7 +16,7 @@ describe('<ExternalLink />', () => {
       { includeTranslation: false }
     );
 
-    const link = queryByText(/test/);
+    const link = queryByText(/test/) as HTMLAnchorElement;
 
     expect(link.getAttribute('target')).toBe('_blank');
   });
@@ -29,7 +29,7 @@ describe('<ExternalLink />', () => {
       { includeTranslation: false }
     );
 
-    const link = queryByText(/test/);
+    const link = queryByText(/test/) as HTMLAnchorElement;
 
     expect(link.getAttribute('target')).toBe(null);
   });
@@ -40,7 +40,7 @@ describe('<ExternalLink />', () => {
       { includeTranslation: false }
     );
 
-    const link = queryByText(/test/);
+    const link = queryByText(/test/) as HTMLAnchorElement;
 
     expect(link.getAttribute('rel')).toBe('noreferrer noopener');
   });
@@ -53,7 +53,7 @@ describe('<ExternalLink />', () => {
       { includeTranslation: false }
     );
 
-    const link = queryByText(/test/);
+    const link = queryByText(/test/) as HTMLAnchorElement;
 
     expect(link.getAttribute('rel')).toBe(null);
   });

@@ -3,14 +3,7 @@ import React from 'react';
 import { SETTINGS_ACCOUNT, SETTINGS_SITE } from '../../../../routes';
 import { render, waitFor, fireEvent } from '../../../../testUtils';
 import Authenticated from './Authenticated';
-
-export const authProviderProps = {
-  isAuthenticated: true,
-  user: {
-    name: 'Gerrit Alex',
-    picture: 'https://avatars0.githubusercontent.com/u/29307652',
-  },
-};
+import { auth0Partial as authProviderProps } from './Authenticated.fixture';
 
 describe('<Authenticated />', () => {
   it('should render without crashing', () => {
