@@ -1,10 +1,10 @@
 import React from 'react';
 
 import { render } from '../../../testUtils';
-import Mobile from './Mobile';
+import Heading from './Heading';
 
-describe('<Mobile />', () => {
+describe('<Heading />', () => {
   it('should render without crashing', () => {
-    render(<Mobile />);
+    render(<Heading />);
   });
 });
