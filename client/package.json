@@ -45,7 +45,7 @@
     "react-use": "^14.1.1",
     "typescript": "^3.9.0-dev.20200411",
     "webpack": "4.42.0",
-    "webpack-bundle-analyzer": "^3.6.1"
+    "webpack-bundle-analyzer": "^3.7.0"
   },
   "devDependencies": {
     "node-sass": "^4.13.1",
