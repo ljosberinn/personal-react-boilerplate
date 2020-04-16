@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 
 import { SETTINGS_ACCOUNT, SETTINGS_SITE } from '../../../../routes';
 import { render, waitFor, fireEvent } from '../../../../testUtils';

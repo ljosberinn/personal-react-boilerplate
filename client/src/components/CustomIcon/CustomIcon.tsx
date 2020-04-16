@@ -1,5 +1,5 @@
 import { Box, IconProps } from '@chakra-ui/core';
-import React from 'react';
+import * as React from 'react';
 import { IconType } from 'react-icons';
 
 interface Props extends IconProps {

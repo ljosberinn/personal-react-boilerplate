@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 
 import { SETTINGS } from '../../../routes';
 import Link from './Link';

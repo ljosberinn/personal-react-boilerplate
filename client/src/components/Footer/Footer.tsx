@@ -1,5 +1,5 @@
 import { SimpleGrid, Box, Text } from '@chakra-ui/core';
-import React from 'react';
+import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { PROJECT_NAME } from '../../constants/env';

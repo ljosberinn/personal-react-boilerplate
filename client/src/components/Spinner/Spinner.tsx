@@ -1,5 +1,5 @@
 import { Spinner as ChakraSpinner, Box } from '@chakra-ui/core';
-import React from 'react';
+import * as React from 'react';
 import { useTimeout } from 'react-use';
 
 interface Props {

@@ -1,5 +1,5 @@
 import load, { DefaultComponent } from '@loadable/component';
-import React from 'react';
+import * as React from 'react';
 
 import { Spinner } from '../components/Spinner';
 

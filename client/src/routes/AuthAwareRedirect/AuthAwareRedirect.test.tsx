@@ -1,5 +1,5 @@
 import { createMemoryHistory } from 'history';
-import React from 'react';
+import * as React from 'react';
 
 import { INDEX, DASHBOARD } from '..';
 import { render } from '../../testUtils';

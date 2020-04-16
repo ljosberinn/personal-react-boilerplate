@@ -1,7 +1,7 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { createMemoryHistory } from 'history';
 import { PropsWithChildren } from 'react';
-import React from 'react';
+import * as React from 'react';
 import { Router } from 'react-router-dom';
 
 import useNavigate from './useNavigate';

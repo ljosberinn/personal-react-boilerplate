@@ -10,7 +10,7 @@ import {
   Button,
   Icon,
 } from '@chakra-ui/core';
-import React from 'react';
+import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaSignOutAlt } from 'react-icons/fa';
 

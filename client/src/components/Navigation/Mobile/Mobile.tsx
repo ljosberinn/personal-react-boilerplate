@@ -1,5 +1,15 @@
-import React from 'react';
+import { Menu, MenuButton, MenuList, Box } from '@chakra-ui/core';
+import * as React from 'react';
+import { FaWhatsapp, FaFacebookMessenger, FaSms } from 'react-icons/fa';
+
+import { CustomIcon } from '../../CustomIcon';
 
 export default function Mobile() {
-  return <h1>Mobile</h1>;
+  return (
+    <>
+      <CustomIcon size="4" icon={FaWhatsapp} />
+      <CustomIcon icon={FaFacebookMessenger} />
+      <CustomIcon icon={FaSms} />
+    </>
+  );
 }

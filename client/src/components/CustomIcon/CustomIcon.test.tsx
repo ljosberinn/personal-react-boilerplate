@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { FaGithub } from 'react-icons/fa';
 
 import { render } from '../../testUtils';

@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { FaDiscord } from 'react-icons/fa';
 
 import { DISCORD_LINK } from '../../constants/env';

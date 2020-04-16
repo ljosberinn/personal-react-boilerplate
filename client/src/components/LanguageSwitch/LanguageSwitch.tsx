@@ -9,7 +9,7 @@ import {
   MenuDivider,
   Button,
 } from '@chakra-ui/core';
-import React from 'react';
+import * as React from 'react';
 import { FlagIcon, FlagIconCode } from 'react-flag-kit';
 import { useTranslation } from 'react-i18next';
 import { MdTranslate } from 'react-icons/md';
