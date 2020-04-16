@@ -6395,10 +6395,10 @@ husky@^4.2.5:
     slash "^3.0.0"
     which-pm-runs "^1.0.0"
 
-i18next-browser-languagedetector@^4.0.2:
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/i18next-browser-languagedetector/-/i18next-browser-languagedetector-4.0.2.tgz#eb02535cc5e57dd534fc60abeede05a3823a8551"
-  integrity sha512-AK4IZ3XST4HIKShgpB2gOFeDPrMOnZx56GLA6dGo/8rvkiczIlq05lV8w77c3ShEZxtTZeUVRI4Q/cBFFVXS/w==
+i18next-browser-languagedetector@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/i18next-browser-languagedetector/-/i18next-browser-languagedetector-4.1.0.tgz#16477c44f799e8f7d12313b075f6ab56d523688e"
+  integrity sha512-Ffsd/gpiJpsPRuLbhIB1RktHXNCuHRaMiKNZRwY5BwVthG9P+qg2WFL0ULpy/KW50+yNBSE4Y/gM5u8CmV5wdA==
   dependencies:
     "@babel/runtime" "^7.5.5"
 
