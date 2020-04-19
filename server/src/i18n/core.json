@@ -14,7 +14,8 @@
     "legal": "Rechtliches",
     "links": "Links",
     "privacy-policy": "Datenschutz",
-    "terms-of-service": "Nutzungsbedingungen"
+    "terms-of-service": "Nutzungsbedingungen",
+    "community": "Community"
   },
   "en": {
     "menu-toggle": "Adjust language",
@@ -31,6 +32,7 @@
     "legal": "Legal",
     "links": "Links",
     "privacy-policy": "Privacy Policy",
-    "terms-of-service": "Terms of Service"
+    "terms-of-service": "Terms of Service",
+    "community": "Community"
   }
 }
