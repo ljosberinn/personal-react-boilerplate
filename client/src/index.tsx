@@ -1,3 +1,4 @@
+import { RedirectLoginResult } from '@auth0/auth0-spa-js';
 import { ThemeProvider, CSSReset, ColorModeProvider } from '@chakra-ui/core';
 import React, { StrictMode, Suspense } from 'react';
 import { render } from 'react-dom';

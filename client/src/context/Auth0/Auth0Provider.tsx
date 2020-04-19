@@ -1,6 +1,14 @@
 // taken from https://github.com/tommedema/startup-boilerplate/blob/master/packages/react-app/src/lib/auth0.tsx
-
-import createAuth0Client from '@auth0/auth0-spa-js';
+import createAuth0Client, {
+  Auth0ClientOptions,
+  RedirectLoginResult,
+  PopupLoginOptions,
+  RedirectLoginOptions,
+  GetTokenSilentlyOptions,
+  LogoutOptions,
+  getIdTokenClaimsOptions,
+  GetTokenWithPopupOptions,
+} from '@auth0/auth0-spa-js';
 import Auth0Client from '@auth0/auth0-spa-js/dist/typings/Auth0Client';
 import React, { useState, useCallback } from 'react';
 import { useEffectOnce } from 'react-use';

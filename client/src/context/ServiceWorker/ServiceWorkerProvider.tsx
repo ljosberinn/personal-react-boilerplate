@@ -17,7 +17,7 @@ function whenReady(callback: () => void) {
   }
 }
 
-const { origin } = new URL(process.env.PUBLIC_URL, window.location.href);
+const { origin } = new URL(window.location.href);
 const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`;
 
 type Props = PropsWithChildren<{ options?: RegistrationOptions }>;

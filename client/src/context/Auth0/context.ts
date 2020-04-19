@@ -1,4 +1,14 @@
 import { createContext } from 'react';
+import {
+  IdToken,
+  PopupLoginOptions,
+  RedirectLoginResult,
+  getIdTokenClaimsOptions,
+  RedirectLoginOptions,
+  GetTokenSilentlyOptions,
+  GetTokenWithPopupOptions,
+  LogoutOptions,
+} from '@auth0/auth0-spa-js';
 
 export interface Auth0User extends Omit<IdToken, '__raw'> {}
 
