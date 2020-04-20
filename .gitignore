@@ -27,3 +27,5 @@ yarn-error.log*
 wrangler.toml
 .env
 /workers-site
+
+.idea/
