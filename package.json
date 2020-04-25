@@ -1,125 +1,54 @@
 {
   "name": "personal-react-boilerplate",
-  "license": "MIT",
-  "author": {
-    "name": "Gerrit Alex",
-    "url": "https://github.com/ljosberinn"
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "next start",
+    "type-check": "tsc"
   },
-  "version": "0.1.0",
-  "private": true,
   "dependencies": {
-    "@loadable/component": "^5.12.0",
+    "@chakra-ui/core": "^0.7.0",
+    "@emotion/core": "^10.0.28",
+    "@emotion/styled": "^10.0.27",
     "@sentry/browser": "^5.15.5",
-    "bulma-checkradio": "^1.1.1",
-    "classnames": "^2.2.6",
-    "i18next": "^19.4.3",
-    "i18next-browser-languagedetector": "^4.1.1",
-    "i18next-chained-backend": "^2.0.1",
-    "i18next-localstorage-backend": "^3.1.1",
-    "i18next-multiload-backend-adapter": "^1.0.0",
-    "i18next-xhr-backend": "^3.2.2",
-    "logrocket": "^1.0.7",
-    "logrocket-react": "^4.0.1",
-    "promise-timeout": "^1.3.0",
-    "rbx": "^2.2.0",
+    "@sentry/integrations": "^5.15.5",
+    "@sentry/node": "^5.15.5",
+    "@zeit/next-source-maps": "^0.0.4-canary.1",
+    "cookie-parser": "^1.4.5",
+    "emotion-theming": "^10.0.27",
+    "express": "^4.17.1",
+    "isomorphic-unfetch": "3.0.0",
+    "js-cookie": "^2.2.1",
+    "next": "latest",
     "react": "^16.13.1",
-    "react-awesome-reveal": "^2.4.2",
-    "react-countup": "^4.3.3",
     "react-dom": "^16.13.1",
-    "react-helmet": "^6.0.0",
-    "react-i18next": "^11.3.5",
-    "react-icons": "^3.10.0",
-    "react-netlify-identity": "^0.2.5",
-    "react-reveal": "^1.2.2",
-    "react-router-dom": "^5.1.2",
-    "react-scripts": "3.4.1",
-    "react-toastify": "^5.5.0",
-    "@sheerun/mutationobserver-shim": "^0.3.3",
-    "@testing-library/jest-dom": "^5.5.0",
-    "@testing-library/react": "^10.0.3",
-    "bulmaswatch": "^0.8.0",
-    "cssom": "^0.4.4",
-    "customize-cra": "^0.9.1",
-    "dotenv-webpack": "^1.7.0",
-    "encoding": "^0.1.12",
-    "faunadb": "^2.13.1",
-    "http-proxy-middleware": "^1.0.3",
-    "netlify-lambda": "^1.6.3",
-    "node-sass": "^4.14.0",
-    "npm-run-all": "^4.1.5",
-    "react-app-rewired": "^2.1.5",
-    "sw-precache-cra": "^1.0.0",
-    "webpack-node-externals": "^1.7.2"
+    "uuid": "^7.0.3"
   },
   "devDependencies": {
+    "@commitlint/cli": "^8.3.5",
+    "@commitlint/config-conventional": "^8.3.4",
+    "@types/cookie-parser": "^1.4.2",
+    "@types/express": "^4.17.6",
+    "@types/js-cookie": "^2.2.6",
+    "@types/node": "^13.13.2",
+    "@types/react": "^16.9.34",
+    "@types/react-dom": "^16.9.6",
+    "@types/uuid": "^7.0.3",
+    "@typescript-eslint/eslint-plugin": "^2.29.0",
+    "@typescript-eslint/parser": "^2.29.0",
+    "babel-eslint": "^10.1.0",
     "eslint": "^6.8.0",
-    "eslint-plugin-import": "^2.20.2",
+    "eslint-config-react-app": "^5.2.1",
+    "eslint-plugin-flowtype": "4.7.0",
+    "eslint-plugin-import": "2.20.2",
+    "eslint-plugin-jsx-a11y": "6.2.3",
+    "eslint-plugin-react": "7.19.0",
+    "eslint-plugin-react-hooks": "3.0.0",
     "husky": "^4.2.5",
     "lint-staged": "^10.1.7",
     "prettier": "^2.0.5",
-    "rimraf": "^3.0.2",
-    "webpack-bundle-analyzer": "^3.7.0"
+    "typescript": "3.9.0-dev.20200425"
   },
-  "scripts": {
-    "analyze": "node scripts/bundle-analyzer.js",
-    "build": "run-p build:**",
-    "build:app": "react-app-rewired build && sw-precache-cra --config ./config/sw-config.js && yarn make-styles",
-    "build:lambda": "netlify-lambda build -c ./config/lambda-webpack.js src/lambda",
-    "nuke": "rimraf node_modules && yarn install",
-    "make-styles": "run-p precompile:** && node scripts/transform-css-colors-to-vars && node scripts/compress",
-    "precompile:light": "node-sass src/assets/scss/theme.light.scss src/assets/light.css --output-style=expanded",
-    "precompile:dark": "node-sass src/assets/scss/theme.dark.scss src/assets/dark.css --output-style=expanded",
-    "start": "run-p start:**",
-    "start:app": "react-app-rewired start",
-    "start:lambda": "netlify-lambda serve -c ./config/lambda-webpack.js src/lambda",
-    "test": "react-app-rewired test --coverage"
-  },
-  "eslintConfig": {
-    "extends": "react-app",
-    "rules": {
-      "import/order": [
-        "error",
-        {
-          "groups": [
-            [
-              "builtin",
-              "external",
-              "internal"
-            ],
-            [
-              "unknown",
-              "parent",
-              "sibling"
-            ],
-            "index"
-          ],
-          "alphabetize": {
-            "order": "asc"
-          },
-          "newlines-between": "always"
-        }
-      ]
-    }
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": "prettier --write",
-    "*.js": "eslint --fix"
-  }
+  "license": "ISC"
 }
