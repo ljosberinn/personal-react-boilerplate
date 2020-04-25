@@ -6,15 +6,19 @@ import {
 } from '@chakra-ui/core';
 import React, { PropsWithChildren } from 'react';
 
+import { ThemeSwitch } from './components/ThemeSwitch';
+import theme from './theme';
+
 export default function Layout({ children }: PropsWithChildren<{}>) {
   return (
     <>
-      <ThemeProvider>
+      <ThemeProvider theme={theme}>
         <ColorModeProvider value="dark">
           <CSSReset />
-
           <header>
-            <nav></nav>
+            <nav>
+              <ThemeSwitch />
+            </nav>
           </header>
           <Box as="main" p={4}>
             {children}
