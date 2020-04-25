@@ -1,8 +1,8 @@
-import { Box, IconProps } from '@chakra-ui/core';
-import * as React from 'react';
+import { Box, IconProps as ChakraIconProps } from '@chakra-ui/core';
+import React from 'react';
 import { IconType } from 'react-icons';
 
-interface Props extends IconProps {
+interface IconProps extends ChakraIconProps {
   icon: IconType;
 }
 
@@ -12,7 +12,7 @@ export default function CustomIcon({
   role = 'presentation',
   focusable = false,
   ...rest
-}: Props) {
+}: IconProps) {
   return (
     <Box
       verticalAlign="unset"

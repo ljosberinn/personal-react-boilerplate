@@ -6,7 +6,7 @@ import {
 } from '@chakra-ui/core';
 import React, { PropsWithChildren } from 'react';
 
-import { ThemeSwitch } from './components/ThemeSwitch';
+import { ThemeSwitch } from './common/ThemeSwitch';
 import theme from './theme';
 
 export default function Layout({ children }: PropsWithChildren<{}>) {

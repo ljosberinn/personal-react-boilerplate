@@ -4,7 +4,11 @@ import sentry from '../../../../utils/sentry';
 
 const { Sentry, captureException } = sentry();
 
-export default class ErrorBoundary extends Component {
+interface ErrorBoundaryProps {
+  onErrorMessage?: JSX.Element;
+}
+
+export default class ErrorBoundary extends Component<ErrorBoundaryProps> {
   state = {
     hasError: false,
     errorEventId: undefined,
@@ -26,6 +30,10 @@ export default class ErrorBoundary extends Component {
 
   render() {
     if (this.state.hasError) {
+      if (this.props.onErrorMessage) {
+        return this.props.onErrorMessage;
+      }
+
       return (
         <section>
           <h1>There was an error!</h1>

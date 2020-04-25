@@ -4,25 +4,31 @@ import next from 'next';
 import uuidv4 from 'uuid/v4';
 
 import SentrySetup from '../../utils/sentry';
+
 const port = parseInt(process.env.PORT!, 10) || 3000;
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 const handler = app.getRequestHandler();
-function sessionCookie(req: Request, res: Response, next: NextFunction) {
+
+const sessionCookie = (req: Request, res: Response, next: NextFunction) => {
   const htmlPage =
     !req.path.match(/^\/(_next|static)/) &&
     !req.path.match(/\.(js|map)$/) &&
     req.accepts('text/html', 'text/css', 'image/png') === 'text/html';
+
   if (!htmlPage) {
     next();
     return;
   }
+
   if (!req.cookies.sid || req.cookies.sid.length === 0) {
     req.cookies.sid = uuidv4();
     res.cookie('sid', req.cookies.sid);
   }
+
   next();
-}
+};
+
 const sourcemapsForSentryOnly = (token: string) => (
   req: Request,
   res: Response,
@@ -37,14 +43,20 @@ const sourcemapsForSentryOnly = (token: string) => (
       );
     return;
   }
+
   next();
 };
+
 (async () => {
   await app.prepare();
+
   // app.buildId is only available after app.prepare(), hence why we setup here
   const { Sentry } = SentrySetup(app.buildId);
+
   const server = express();
+
   server.all('*', (req: Request, res: Response) => handler(req, res));
+
   server
     .use(Sentry.Handlers.requestHandler())
     .use(cookieParser())
