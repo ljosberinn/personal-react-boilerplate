@@ -23,6 +23,10 @@ export default function Layout({ children }: PropsWithChildren<{}>) {
           <Box as="main" p={4}>
             {children}
           </Box>
+          <footer>
+            Build Time: {process.env.BUILD_TIME} - Build Timestamp:{' '}
+            {process.env.BUILD_TIMESTAMP}
+          </footer>
         </ColorModeProvider>
       </ThemeProvider>
       <style jsx global>
