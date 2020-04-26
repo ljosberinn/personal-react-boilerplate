@@ -1,0 +1,17 @@
+.commitlintrc
+.env
+.eslintrc
+.gitignore
+.huskyrc
+.lintstagedrc
+.mergify.yml
+.prettierrc
+
+CONTRIBUTING.md
+README.MD
+LICENSE
+
+.vscode/
+.next/
+.now/
+node_modules/

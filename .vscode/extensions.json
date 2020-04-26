@@ -2,6 +2,8 @@
   "recommendations": [
     "dbaeumer.vscode-eslint",
     "esbenp.prettier-vscode",
-    "msjsdiag.debugger-for-chrome"
+    "wix.vscode-import-cost",
+    "eamodio.gitlens",
+    "kisstkondoros.vscode-gutter-preview"
   ]
 }

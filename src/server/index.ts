@@ -3,7 +3,7 @@ import express, { Request, Response, NextFunction } from 'express';
 import next from 'next';
 import uuidv4 from 'uuid/v4';
 
-import SentrySetup from '../../utils/sentry';
+import setupSentry from '../../utils/sentry';
 
 const port = parseInt(process.env.PORT!, 10) || 3000;
 const dev = process.env.NODE_ENV !== 'production';
@@ -50,23 +50,22 @@ const sourcemapsForSentryOnly = (token: string) => (
 (async () => {
   await app.prepare();
 
-  // app.buildId is only available after app.prepare(), hence why we setup here
-  const { Sentry } = SentrySetup(app.buildId);
+  const {
+    Sentry: { Handlers },
+  } = setupSentry(app.buildId);
 
-  const server = express();
-
-  server.all('*', (req: Request, res: Response) => handler(req, res));
-
-  server
-    .use(Sentry.Handlers.requestHandler())
+  express()
+    .use(Handlers.requestHandler())
     .use(cookieParser())
     .use(sessionCookie)
-    .get(/\.map$/, sourcemapsForSentryOnly(process.env.SENTRY_TOKEN!))
     // This handles errors if they are thrown before reaching the app
-    .use(Sentry.Handlers.errorHandler())
-    .listen(port, err => {
-      if (err) {
-        throw err;
+    .use(Handlers.errorHandler())
+    .get(/\.map$/, sourcemapsForSentryOnly(process.env.SENTRY_TOKEN!))
+    .all('*', (req, res) => handler(req, res))
+
+    .listen(port, (error: Error) => {
+      if (error) {
+        throw error;
       }
       // eslint-disable-next-line no-console
       console.log(`> Ready on http://localhost:${port}`);
