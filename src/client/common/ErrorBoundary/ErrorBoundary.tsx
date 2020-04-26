@@ -28,6 +28,16 @@ export default class ErrorBoundary extends Component<ErrorBoundaryProps> {
     this.setState({ errorEventId });
   }
 
+  showReportDialog = () => {
+    Sentry.showReportDialog({
+      eventId: this.state.errorEventId,
+    });
+  };
+
+  reload = () => {
+    window.location.reload(true);
+  };
+
   render() {
     if (this.state.hasError) {
       if (this.props.onErrorMessage) {
@@ -38,25 +48,12 @@ export default class ErrorBoundary extends Component<ErrorBoundaryProps> {
         <section>
           <h1>There was an error!</h1>
           <p>
-            <a
-              href="#"
-              onClick={() =>
-                // @ts-ignore
-                Sentry.showReportDialog({
-                  eventId: this.state.errorEventId,
-                })
-              }
-            >
+            <a href="#" onClick={this.showReportDialog}>
               📣 Report this error
             </a>
           </p>
           <p>
-            <a
-              href="#"
-              onClick={() => {
-                window.location.reload(true);
-              }}
-            >
+            <a href="#" onClick={this.reload}>
               Or, try reloading the page
             </a>
           </p>
