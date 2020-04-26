@@ -1,14 +1,12 @@
-// NOTE: This require will be replaced with `@sentry/browser`
-// client side thanks to the webpack config in next.config.js
+import * as Sentry from '@sentry/browser';
+import { BrowserOptions } from '@sentry/browser';
 import { Debug } from '@sentry/integrations';
-import * as Sentry from '@sentry/node';
-import { NodeOptions } from '@sentry/node';
 import Cookie from 'js-cookie';
 
 export default function (release = process.env.SENTRY_RELEASE) {
   const isProd = process.env.NODE_ENV === 'production';
 
-  const sentryOptions: NodeOptions = {
+  const sentryOptions: BrowserOptions = {
     dsn: process.env.SENTRY_DSN,
     release,
     maxBreadcrumbs: 50,

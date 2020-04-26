@@ -1,14 +1,15 @@
-const webpack = require('webpack');
 const nextSourceMaps = require('@zeit/next-source-maps')();
+const webpack = require('webpack');
 
 const date = new Date();
 
-console.debug(`Building on NODE_ENV="${process.env.NODE_ENV}"`);
+console.debug(`> Building on NODE_ENV="${process.env.NODE_ENV}"`);
 
 module.exports = nextSourceMaps({
   env: {
     // api
     SENTRY_DSN: process.env.SENTRY_DSN,
+    SENTRY_TOKEN: process.env.SENTRY_TOKEN,
 
     // meta
     BUILD_TIME: date.toString(),
@@ -20,10 +21,6 @@ module.exports = nextSourceMaps({
         'process.env.SENTRY_RELEASE': JSON.stringify(buildId),
       })
     );
-
-    if (!isServer) {
-      config.resolve.alias['@sentry/node'] = '@sentry/browser';
-    }
 
     return config;
   },

@@ -2,11 +2,9 @@
   "name": "personal-react-boilerplate",
   "version": "1.0.0",
   "scripts": {
-    "dev": "ts-node --project tsconfig.server.json src/server/index.ts",
-    "build": "set NODE_ENV=production && yarn run build:next && yarn run build:server",
-    "build:next": "next build",
-    "build:server": "tsc --project tsconfig.server.json",
-    "start": "node dist/index.js"
+    "dev": "next",
+    "build": "next build",
+    "start": "next start"
   },
   "dependencies": {
     "@chakra-ui/core": "^0.7.0",
@@ -16,27 +14,21 @@
     "@sentry/integrations": "^5.15.5",
     "@sentry/node": "^5.15.5",
     "@zeit/next-source-maps": "^0.0.4-canary.1",
-    "cookie-parser": "^1.4.5",
     "emotion-theming": "^10.0.27",
-    "express": "^4.17.1",
     "isomorphic-unfetch": "3.0.0",
     "js-cookie": "^2.2.1",
     "next": "latest",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-icons": "^3.10.0",
-    "uuid": "^7.0.3"
+    "react-icons": "^3.10.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^8.3.5",
     "@commitlint/config-conventional": "^8.3.4",
-    "@types/cookie-parser": "^1.4.2",
-    "@types/express": "^4.17.6",
     "@types/js-cookie": "^2.2.6",
-    "@types/node": "^13.13.2",
+    "@types/node": "^13.13.4",
     "@types/react": "^16.9.34",
     "@types/react-dom": "^16.9.6",
-    "@types/uuid": "^7.0.3",
     "@typescript-eslint/eslint-plugin": "^2.29.0",
     "@typescript-eslint/parser": "^2.29.0",
     "babel-eslint": "^10.1.0",
@@ -50,8 +42,7 @@
     "husky": "^4.2.5",
     "lint-staged": "^10.1.7",
     "prettier": "^2.0.5",
-    "ts-node": "^8.9.1",
-    "typescript": "3.9.0-dev.20200425"
+    "typescript": "3.9.0-dev.20200426"
   },
   "license": "ISC"
 }

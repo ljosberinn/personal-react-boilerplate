@@ -6,6 +6,9 @@
 .lintstagedrc
 .mergify.yml
 .prettierrc
+.nowignore
+.eslintignore
+.prettierignore
 
 CONTRIBUTING.md
 README.MD
