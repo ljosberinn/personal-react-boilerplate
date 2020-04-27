@@ -42,7 +42,7 @@
     "husky": "^4.2.5",
     "lint-staged": "^10.1.7",
     "prettier": "^2.0.5",
-    "typescript": "3.9.0-dev.20200426"
+    "typescript": "3.9.0-dev.20200427"
   },
   "license": "ISC"
 }
