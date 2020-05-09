@@ -7,7 +7,10 @@ console.debug(`> Building on NODE_ENV="${process.env.NODE_ENV}"`);
 
 module.exports = nextSourceMaps({
   env: {
-    // api
+    // core
+    ENABLED_LANGUAGES: process.env.ENABLED_LANGUAGES,
+
+    // sentry
     SENTRY_DSN: process.env.SENTRY_DSN,
     SENTRY_TOKEN: process.env.SENTRY_TOKEN,
 
