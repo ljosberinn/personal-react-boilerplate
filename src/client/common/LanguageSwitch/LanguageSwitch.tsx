@@ -9,6 +9,8 @@ import {
   MenuDivider,
   Button,
 } from '@chakra-ui/core';
+import { COOKIE_LOOKUP_KEY_LANG } from '@unly/universal-language-detector';
+import cookies from 'js-cookie';
 import React from 'react';
 import { FlagIcon, FlagIconCode } from 'react-flag-kit';
 import { useTranslation } from 'react-i18next';
@@ -43,10 +45,14 @@ export default function LanguageSwitch({ ml = 0, mr = 0 }: Props) {
       );
 
       bundles.forEach((bundle, index) => {
-        const namespace = missingNamespaces[index];
-
-        i18n.addResourceBundle(slug, namespace, bundle);
+        i18n.addResourceBundle(slug, missingNamespaces[index], bundle);
       });
+
+      if (slug === SUPPORTED_LANGUAGES_MAP.en) {
+        cookies.remove(COOKIE_LOOKUP_KEY_LANG);
+      } else {
+        cookies.set(COOKIE_LOOKUP_KEY_LANG, slug);
+      }
 
       i18n.changeLanguage(slug);
     };
