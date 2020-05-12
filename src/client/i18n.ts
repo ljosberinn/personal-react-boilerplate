@@ -1,6 +1,5 @@
 // contains lots of inspiration from https://github.com/UnlyEd/next-right-now/blob/v1-ssr-mst-aptd-gcms-lcz-sty/src/utils/i18nextLocize.ts
 import i18n from 'i18next';
-import HttpApi from 'i18next-http-backend';
 import { initReactI18next } from 'react-i18next';
 import {
   SUPPORTED_LANGUAGES_MAP,
@@ -14,7 +13,7 @@ export const defaultNamespace = 'common';
 const endpoint = '/api/i18n?language={{lng}}&namespace={{ns}}';
 
 export const initI18Next = (lang: string, defaultLocales: I18nextResources) => {
-  const i18nInstance = i18n.use(HttpApi).use(initReactI18next);
+  const i18nInstance = i18n.use(initReactI18next);
 
   i18nInstance.init({
     lng: lang,
@@ -35,9 +34,6 @@ export const initI18Next = (lang: string, defaultLocales: I18nextResources) => {
     whitelist: ENABLED_LANGUAGES,
     react: {
       useSuspense: false, // Not compatible with SSR
-    },
-    backend: {
-      loadPath: endpoint,
     },
   });
 
