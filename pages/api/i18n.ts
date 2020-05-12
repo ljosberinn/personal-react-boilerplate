@@ -1,10 +1,8 @@
 import de_common from 'locales/de/common.json';
 import en_common from 'locales/en/common.json';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { I18nextResourceLocale, I18nextResources } from 'src/client/i18n';
+import { I18nextResources, I18nextNamespace } from 'src/client/i18n';
 import { FORBIDDEN, BAD_REQUEST } from 'utils/statusCodes';
-
-export type i18nResponse = undefined | I18nextResourceLocale;
 
 const i18nCache: I18nextResources = {
   de: {
@@ -17,7 +15,7 @@ const i18nCache: I18nextResources = {
 
 export default function handler(
   req: NextApiRequest,
-  res: NextApiResponse<string | I18nextResourceLocale>
+  res: NextApiResponse<I18nextNamespace>
 ) {
   const { language, namespace } = req.query;
 

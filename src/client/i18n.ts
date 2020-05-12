@@ -1,5 +1,6 @@
 // contains lots of inspiration from https://github.com/UnlyEd/next-right-now/blob/v1-ssr-mst-aptd-gcms-lcz-sty/src/utils/i18nextLocize.ts
 import i18n from 'i18next';
+import { basename } from 'path';
 import { initReactI18next } from 'react-i18next';
 import {
   SUPPORTED_LANGUAGES_MAP,
@@ -12,7 +13,10 @@ export const defaultNamespace = 'common';
 
 const endpoint = '/api/i18n?language={{lng}}&namespace={{ns}}';
 
-export const initI18Next = (lang: string, defaultLocales: I18nextResources) => {
+export const initI18Next = (
+  lang: string,
+  defaultLocales: I18nextResourceLocale
+) => {
   const i18nInstance = i18n.use(initReactI18next);
 
   i18nInstance.init({
@@ -28,7 +32,11 @@ export const initI18Next = (lang: string, defaultLocales: I18nextResources) => {
     },
     cleanCode: true,
     load: 'languageOnly', // Remove if you want to use localization (en-US, en-GB)
-    resources: defaultLocales,
+    resources: {
+      [lang]: {
+        [defaultNamespace]: defaultLocales,
+      },
+    },
     ns: [defaultNamespace], // removes 'translation' default key from backend query,
     defaultNS: defaultNamespace,
     whitelist: ENABLED_LANGUAGES,
@@ -38,6 +46,10 @@ export const initI18Next = (lang: string, defaultLocales: I18nextResources) => {
   });
 
   return i18nInstance;
+};
+
+export declare type I18nextNamespace = {
+  [key: string]: string;
 };
 
 /**
@@ -51,7 +63,7 @@ export const initI18Next = (lang: string, defaultLocales: I18nextResources) => {
  *
  */
 export declare type I18nextResourceLocale = {
-  [i18nKey: string]: string | I18nextResourceLocale; // The value can either be a string, or a nested object, itself containing either a string, or a nest object, etc.
+  [namespace: string]: I18nextNamespace;
 };
 
 /**
@@ -89,7 +101,7 @@ export declare type MemoizedI18nextResources = {
  * @private
  */
 const _memoizedI18nextResources: {
-  [locizeAPIEndpoint: string]: MemoizedI18nextResources;
+  [endpoint: string]: MemoizedI18nextResources;
 } = {};
 
 /**
@@ -112,11 +124,11 @@ export const fetchTranslations = async (
     const date = +new Date();
 
     if (date - memoizedI18nextResources.ts < memoizedCacheMaxAge) {
-      return memoizedI18nextResources.resources;
+      return memoizedI18nextResources.resources[lang][namespace];
     }
   }
 
-  let locales = {};
+  let locales: I18nextNamespace = {};
 
   try {
     // TODO

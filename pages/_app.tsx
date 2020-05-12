@@ -6,10 +6,9 @@ import { NextRouter } from 'next/router';
 import React from 'react';
 import { I18nextProvider } from 'react-i18next';
 import {
-  I18nextResources,
   fetchTranslations,
   initI18Next,
-  defaultNamespace,
+  I18nextNamespace,
 } from 'src/client/i18n';
 import { ENABLED_LANGUAGES, SUPPORTED_LANGUAGES_MAP } from 'src/constants';
 
@@ -43,7 +42,7 @@ export declare type AppRenderProps = {
     }; // Headers made public to the client-side
     bestCountryCodes: string[];
     lang: string;
-    defaultLocales: I18nextResources;
+    defaultLocales: I18nextNamespace;
   };
   err?: Error; // Only defined if there was an error
 
@@ -71,11 +70,7 @@ export default class App extends NextApp {
       serverCookies: readonlyCookies,
     });
 
-    const defaultLocales = {
-      [lang]: {
-        [defaultNamespace]: await fetchTranslations(lang),
-      },
-    };
+    const defaultLocales = await fetchTranslations(lang);
 
     appProps.pageProps = {
       bestCountryCodes: [
