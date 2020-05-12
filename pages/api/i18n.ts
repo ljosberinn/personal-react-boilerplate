@@ -20,7 +20,7 @@ export default function handler(
   const { language, namespace } = req.query;
 
   if (!language || !namespace) {
-    return res.status(FORBIDDEN);
+    res.status(FORBIDDEN).end();
   }
 
   const data = i18nCache[language as string][namespace as string];
