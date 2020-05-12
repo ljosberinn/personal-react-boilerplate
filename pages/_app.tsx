@@ -58,7 +58,7 @@ export default class App extends NextApp {
     props: AppInitialProps
   ): Promise<AppRenderProps> {
     const { ctx }: AppInitialProps = props;
-    const { req, res }: NextPageContext = ctx;
+    const { req }: NextPageContext = ctx;
 
     const appProps: AppRenderProps = await NextApp.getInitialProps(props);
 
