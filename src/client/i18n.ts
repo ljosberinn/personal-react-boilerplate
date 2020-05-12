@@ -55,7 +55,7 @@ export const initI18Next = (lang: string, defaultLocales: I18nextResources) => {
  *
  */
 export declare type I18nextResourceLocale = {
-  [i18nKey: string]: I18nextResourceLocale; // The value can either be a string, or a nested object, itself containing either a string, or a nest object, etc.
+  [i18nKey: string]: string | I18nextResourceLocale; // The value can either be a string, or a nested object, itself containing either a string, or a nest object, etc.
 };
 
 /**
