@@ -2,20 +2,19 @@ import * as Sentry from '@sentry/browser';
 import { BrowserOptions } from '@sentry/browser';
 import { Debug } from '@sentry/integrations';
 import Cookie from 'js-cookie';
+import { IS_PROD, IS_BROWSER } from 'src/constants';
 
 export default function (release = process.env.SENTRY_RELEASE) {
-  const isProd = process.env.NODE_ENV === 'production';
-
   const sentryOptions: BrowserOptions = {
     dsn: process.env.SENTRY_DSN,
     release,
     maxBreadcrumbs: 50,
     attachStacktrace: true,
-    enabled: isProd,
+    enabled: IS_PROD,
   };
 
   // When we're developing locally
-  if (!isProd) {
+  if (!IS_PROD) {
     // Don't actually send the errors to Sentry
     sentryOptions.beforeSend = () => null;
 
@@ -51,7 +50,7 @@ export default function (release = process.env.SENTRY_RELEASE) {
             scope.setExtra('statusCode', res.statusCode);
           }
 
-          if (typeof window !== 'undefined') {
+          if (IS_BROWSER) {
             scope.setTag('ssr', 'false');
             scope.setExtra('query', query);
             scope.setExtra('pathname', pathname);

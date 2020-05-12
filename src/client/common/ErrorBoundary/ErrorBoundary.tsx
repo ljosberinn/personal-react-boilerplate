@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-
-import sentry from '../../../../utils/sentry';
+import sentry from 'utils/sentry';
 
 const { Sentry, captureException } = sentry();
 

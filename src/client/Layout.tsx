@@ -6,6 +6,7 @@ import {
 } from '@chakra-ui/core';
 import React, { PropsWithChildren } from 'react';
 
+import { LanguageSwitch } from './common/LanguageSwitch';
 import { ThemeSwitch } from './common/ThemeSwitch';
 import theme from './theme';
 
@@ -18,6 +19,7 @@ export default function Layout({ children }: PropsWithChildren<{}>) {
           <header>
             <nav>
               <ThemeSwitch />
+              <LanguageSwitch />
             </nav>
           </header>
           <Box as="main" p={4}>
