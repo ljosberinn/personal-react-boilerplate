@@ -47,12 +47,8 @@ export default function LanguageSwitch({ ml = 0, mr = 0 }: Props) {
       bundles.forEach((bundle, index) => {
         i18n.addResourceBundle(slug, missingNamespaces[index], bundle);
       });
-
-      if (slug === SUPPORTED_LANGUAGES_MAP.en) {
-        cookies.remove(COOKIE_LOOKUP_KEY_LANG);
-      } else {
-        cookies.set(COOKIE_LOOKUP_KEY_LANG, slug);
-      }
+     
+      cookies.set(COOKIE_LOOKUP_KEY_LANG, slug);
 
       i18n.changeLanguage(slug);
     };
