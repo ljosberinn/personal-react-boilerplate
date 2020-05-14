@@ -47,7 +47,7 @@
     "json-schema": "^0.2.5",
     "lint-staged": "^10.2.2",
     "prettier": "^2.0.5",
-    "typescript": "4.0.0-dev.20200512"
+    "typescript": "4.0.0-dev.20200514"
   },
   "license": "ISC"
 }
