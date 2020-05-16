@@ -13,6 +13,7 @@ import theme from './theme';
 export default function Layout({ children }: PropsWithChildren<{}>) {
   return (
     <>
+      {/* @ts-ignore */}
       <ThemeProvider theme={theme}>
         <ColorModeProvider value="dark">
           <CSSReset />
