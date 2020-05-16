@@ -4,6 +4,7 @@
     "esbenp.prettier-vscode",
     "wix.vscode-import-cost",
     "eamodio.gitlens",
-    "kisstkondoros.vscode-gutter-preview"
+    "kisstkondoros.vscode-gutter-preview",
+    "github.vscode-pull-request-github"
   ]
 }
