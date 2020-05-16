@@ -1,14 +1,15 @@
 import universalLanguageDetect from '@unly/universal-language-detector';
+import absoluteUrl from 'next-absolute-url';
 import NextCookies from 'next-cookies';
 import NextApp, { AppContext } from 'next/app';
-import { AppTreeType, NextPageContext } from 'next/dist/next-server/lib/utils';
+import { AppTreeType } from 'next/dist/next-server/lib/utils';
 import { NextRouter } from 'next/router';
 import React from 'react';
 import { I18nextProvider } from 'react-i18next';
 import {
   fetchTranslations,
   initI18Next,
-  I18nextNamespace,
+  I18nextResourceLocale,
 } from 'src/client/i18n';
 import { ENABLED_LANGUAGES, SUPPORTED_LANGUAGES_MAP } from 'src/constants';
 
@@ -40,24 +41,75 @@ export declare type AppRenderProps = {
       'user-agent'?: string;
       host?: string;
     }; // Headers made public to the client-side
-    bestCountryCodes: string[];
     lang: string;
-    defaultLocales: I18nextNamespace;
+    defaultLocales: I18nextResourceLocale;
   };
   err?: Error; // Only defined if there was an error
 
   // XXX Props that are somehow injected by the Next.js framework between _app:getInitialProps and _app:render
   //  They're marked as optional because they aren't defined in _app:getInitialProps but will be defined in _app:render
-  Component?: Function; // eslint-disable-line @typescript-eslint/no-explicit-any
+  Component?: Function;
   router?: NextRouter;
 };
 
+export default function App({ Component, pageProps }: AppRenderProps) {
+  if (!Component) {
+    return null;
+  }
+
+  const i18nInstance = initI18Next(pageProps.lang, pageProps.defaultLocales);
+
+  return (
+    <ErrorBoundary>
+      <I18nextProvider i18n={i18nInstance}>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </I18nextProvider>
+    </ErrorBoundary>
+  );
+}
+
+App.getInitialProps = async function (
+  props: AppInitialProps
+): Promise<AppRenderProps> {
+  const { ctx } = props;
+  const { req } = ctx;
+
+  const { host, protocol } = absoluteUrl(req);
+  const baseUrl = `${protocol}//${host}`;
+
+  /* i18n start */
+  const lang = universalLanguageDetect({
+    supportedLanguages: ENABLED_LANGUAGES,
+    fallbackLanguage: SUPPORTED_LANGUAGES_MAP.en,
+    acceptLanguageHeader: req?.headers['accept-language'],
+    serverCookies: NextCookies(ctx),
+  });
+
+  const defaultLocales = await fetchTranslations(lang, baseUrl);
+  /* i18n end */
+
+  const appProps: AppRenderProps = await NextApp.getInitialProps(props);
+
+  appProps.pageProps = {
+    defaultLocales,
+    lang,
+    headers: {},
+  };
+
+  return {
+    ...appProps,
+  };
+};
+
+/*
 export default class App extends NextApp {
   static async getInitialProps(
     props: AppInitialProps
   ): Promise<AppRenderProps> {
-    const { ctx }: AppInitialProps = props;
-    const { req }: NextPageContext = ctx;
+    const { ctx } = props;
+    const { req } = ctx;
 
     const appProps: AppRenderProps = await NextApp.getInitialProps(props);
 
@@ -73,12 +125,6 @@ export default class App extends NextApp {
     const defaultLocales = await fetchTranslations(lang);
 
     appProps.pageProps = {
-      bestCountryCodes: [
-        lang,
-        lang === SUPPORTED_LANGUAGES_MAP.en
-          ? SUPPORTED_LANGUAGES_MAP.de
-          : SUPPORTED_LANGUAGES_MAP.en,
-      ],
       defaultLocales,
       lang,
       headers: {},
@@ -105,3 +151,4 @@ export default class App extends NextApp {
     );
   }
 }
+*/

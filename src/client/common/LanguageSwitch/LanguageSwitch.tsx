@@ -26,30 +26,33 @@ const flagMap = {
   [SUPPORTED_LANGUAGES_MAP.de]: 'DE',
 } as { [key: string]: FlagIconCode };
 
-interface Props {
+interface LanguageSwitchProps {
   ml?: number;
   mr?: number;
 }
 
-export default function LanguageSwitch({ ml = 0, mr = 0 }: Props) {
+export default function LanguageSwitch({
+  ml = 0,
+  mr = 0,
+}: LanguageSwitchProps) {
   const { i18n, t } = useTranslation();
 
   function handleLanguageChange(slug: string) {
     return async () => {
-      const missingNamespaces = i18n.reportNamespaces
-        .getUsedNamespaces()
-        .filter(namespace => !i18n.hasResourceBundle(slug, namespace));
+      // prevent loading data 2x which happens for some reason when
+      // going from initial language -> other lang -> back
+      if (!i18n.getDataByLanguage(slug)) {
+        const { protocol, host } = window.location;
+        const baseUrl = `${protocol}//${host}`;
 
-      const bundles = await Promise.all(
-        missingNamespaces.map(namespace => fetchTranslations(slug, namespace))
-      );
+        const bundles = await fetchTranslations(slug, baseUrl);
 
-      bundles.forEach((bundle, index) => {
-        i18n.addResourceBundle(slug, missingNamespaces[index], bundle);
-      });
-     
+        Object.entries(bundles).forEach(([ns, bundle]) => {
+          i18n.addResourceBundle(slug, ns, bundle);
+        });
+      }
+
       cookies.set(COOKIE_LOOKUP_KEY_LANG, slug);
-
       i18n.changeLanguage(slug);
     };
   }

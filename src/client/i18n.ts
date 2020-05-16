@@ -10,7 +10,28 @@ import {
 
 export const defaultNamespace = 'common';
 
-const endpoint = '/api/i18n?language={{lng}}&namespace={{ns}}';
+const endpoint = '/api/i18n?language={{lng}}';
+
+const reduceToNamespaces = (locales: I18nextNamespace) =>
+  Object.entries(locales).reduce<I18nextResourceLocale>(
+    (carry, [str, value]) => {
+      if (!IS_PROD && !str.includes('.')) {
+        console.error(`i18n key "${str}" MUST have a namespace`);
+        return carry;
+      }
+
+      const [namespace, key] = str.split('.');
+
+      if (!carry[namespace]) {
+        carry[namespace] = { [key]: value };
+        return carry;
+      }
+
+      carry[namespace][key] = value;
+      return carry;
+    },
+    {}
+  );
 
 export const initI18Next = (
   lang: string,
@@ -32,9 +53,7 @@ export const initI18Next = (
     cleanCode: true,
     load: 'languageOnly', // Remove if you want to use localization (en-US, en-GB)
     resources: {
-      [lang]: {
-        [defaultNamespace]: defaultLocales,
-      },
+      [lang]: defaultLocales,
     },
     ns: [defaultNamespace], // removes 'translation' default key from backend query,
     defaultNS: defaultNamespace,
@@ -87,7 +106,7 @@ export declare type I18nextResources = {
  * The timestamp's value is the time when the memoized cache was created
  */
 export declare type MemoizedI18nextResources = {
-  resources: I18nextResources;
+  resources: I18nextResourceLocale;
   ts: number; // Timestamp in milliseconds
 };
 
@@ -108,14 +127,10 @@ const _memoizedI18nextResources: {
  */
 const memoizedCacheMaxAge = (IS_BROWSER || IS_PROD ? 60 * 60 : 60) * 1000;
 
-const interpolateEndpoint = (lang: string, namespace: string) =>
-  endpoint.replace('{{lng}}', lang).replace('{{ns}}', namespace);
+const interpolateEndpoint = (lang: string) => endpoint.replace('{{lng}}', lang);
 
-export const fetchTranslations = async (
-  lang: string,
-  namespace = defaultNamespace
-) => {
-  const url = interpolateEndpoint(lang, namespace);
+export const fetchTranslations = async (lang: string, baseUrl: string) => {
+  const url = interpolateEndpoint(lang);
 
   const memoizedI18nextResources = _memoizedI18nextResources[url];
 
@@ -123,19 +138,14 @@ export const fetchTranslations = async (
     const date = +new Date();
 
     if (date - memoizedI18nextResources.ts < memoizedCacheMaxAge) {
-      return memoizedI18nextResources.resources[lang][namespace];
+      return memoizedI18nextResources.resources;
     }
   }
 
   let locales: I18nextNamespace = {};
 
   try {
-    // TODO
-    const response = await fetch(
-      IS_PROD
-        ? `https://personal-react-boilerplate.now.sh${url}`
-        : `http://localhost:3000${url}`
-    );
+    const response = await fetch(`${baseUrl}${url}`);
     try {
       locales = await response.json();
     } catch (error) {
@@ -145,14 +155,12 @@ export const fetchTranslations = async (
     console.error(error.message, 'Failed to fetch i18n');
   }
 
+  const namespaces = reduceToNamespaces(locales);
+
   _memoizedI18nextResources[url] = {
-    resources: {
-      [lang]: {
-        [namespace]: locales,
-      },
-    },
+    resources: namespaces,
     ts: +new Date(),
   };
 
-  return locales;
+  return namespaces;
 };

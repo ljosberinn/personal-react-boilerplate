@@ -19,6 +19,7 @@
     "i18next": "^19.4.4",
     "js-cookie": "^2.2.1",
     "next": "9.4.0",
+    "next-absolute-url": "^1.2.2",
     "next-cookies": "^2.0.3",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
