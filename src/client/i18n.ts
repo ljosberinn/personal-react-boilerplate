@@ -135,7 +135,7 @@ export const fetchTranslations = async (lang: string, baseUrl: string) => {
   const memoizedI18nextResources = _memoizedI18nextResources[url];
 
   if (memoizedI18nextResources) {
-    const date = +new Date();
+    const date = Date.now();
 
     if (date - memoizedI18nextResources.ts < memoizedCacheMaxAge) {
       return memoizedI18nextResources.resources;
@@ -159,7 +159,7 @@ export const fetchTranslations = async (lang: string, baseUrl: string) => {
 
   _memoizedI18nextResources[url] = {
     resources: namespaces,
-    ts: +new Date(),
+    ts: Date.now(),
   };
 
   return namespaces;
