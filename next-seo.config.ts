@@ -2,7 +2,7 @@ import { DefaultSeoProps } from 'next-seo';
 
 const title = 'Batteries-included Next.js boilerplate';
 const description =
-  'Personal React boilerplate of Gerrit Alex - includes support for TypeScript, testing, i18n, error handling and auth.';
+  'Personal Next.js boilerplate of Gerrit Alex - includes support for TypeScript, testing, i18n, error handling and auth.';
 const keywords = [
   'next.js',
   'react',
