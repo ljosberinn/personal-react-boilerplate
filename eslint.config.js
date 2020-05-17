@@ -1,19 +1,19 @@
 module.exports = {
-  "extends": "react-app",
-  "rules": {
-    "import/order": [
-      "warn",
+  extends: 'react-app',
+  rules: {
+    'import/order': [
+      'warn',
       {
-        "groups": [
-          ["builtin", "external", "internal"],
-          ["unknown", "parent", "sibling"],
-          "index"
+        groups: [
+          ['builtin', 'external', 'internal'],
+          ['unknown', 'parent', 'sibling'],
+          'index',
         ],
-        "alphabetize": {
-          "order": "asc"
+        alphabetize: {
+          order: 'asc',
         },
-        "newlines-between": "always"
-      }
-    ]
-  }
-}}
+        'newlines-between': 'always',
+      },
+    ],
+  },
+};
