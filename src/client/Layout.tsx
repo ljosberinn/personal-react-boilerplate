@@ -21,9 +21,9 @@ export default function Layout({ children }: PropsWithChildren<{}>) {
       </ThemeProvider>
       <style jsx global>
         {`
-          html {
-            transition: background-color 300ms ease-in-out,
-              color 300ms ease-in-out;
+          html,
+          div {
+            transition: background-color 250ms ease-in-out;
           }
         `}
       </style>
