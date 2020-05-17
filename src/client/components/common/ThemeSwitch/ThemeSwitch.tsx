@@ -24,7 +24,7 @@ export default function ThemeSwitch(props: ThemeSwitchProps) {
   const { t } = useTranslation();
 
   return (
-    <Flex cursor="pointer" {...props}>
+    <Flex cursor="pointer" d="inline-flex" {...props}>
       <Box
         d="inline-block"
         as={FaSun}

@@ -31,7 +31,7 @@ export default function DemoComponent({
           <ListItem key={index}>{feature}</ListItem>
         ))}
       </List>
-      {component}
+      <Box>{component}</Box>
       {warning && (
         <Box as="small" color="red.500">
           <em>

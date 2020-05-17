@@ -62,7 +62,11 @@ export default function LanguageSwitch(props: LanguageSwitchProps) {
   return (
     <Box {...props}>
       <Menu>
-        <MenuButton as={Button} data-testid="language-switch-btn">
+        <MenuButton
+          as={Button}
+          {...{ variantColor: 'teal' }}
+          data-testid="language-switch-btn"
+        >
           <Box d="inline-block" as={MdTranslate} mr={2} />
           {t('menu-toggle')}
         </MenuButton>
