@@ -1,20 +1,21 @@
 import universalLanguageDetect from '@unly/universal-language-detector';
 import absoluteUrl from 'next-absolute-url';
 import NextCookies from 'next-cookies';
+import { DefaultSeo } from 'next-seo';
+import SEO from 'next-seo.config';
 import NextApp, { AppContext } from 'next/app';
 import { AppTreeType } from 'next/dist/next-server/lib/utils';
 import { NextRouter } from 'next/router';
 import React from 'react';
 import { I18nextProvider } from 'react-i18next';
+import Layout from 'src/client/Layout';
+import { ErrorBoundary } from 'src/client/components/common/ErrorBoundary';
 import {
   fetchTranslations,
   initI18Next,
   I18nextResourceLocale,
 } from 'src/client/i18n';
 import { ENABLED_LANGUAGES, SUPPORTED_LANGUAGES_MAP } from 'src/constants';
-
-import Layout from '../src/client/Layout';
-import { ErrorBoundary } from '../src/client/components/common/ErrorBoundary';
 
 /**
  * Props that are provided to the _app:getInitialProps method
@@ -60,13 +61,17 @@ export default function App({ Component, pageProps }: AppRenderProps) {
   const i18nInstance = initI18Next(pageProps.lang, pageProps.defaultLocales);
 
   return (
-    <ErrorBoundary>
-      <I18nextProvider i18n={i18nInstance}>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      </I18nextProvider>
-    </ErrorBoundary>
+    <>
+      <DefaultSeo {...SEO} />
+
+      <ErrorBoundary>
+        <I18nextProvider i18n={i18nInstance}>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </I18nextProvider>
+      </ErrorBoundary>
+    </>
   );
 }
 

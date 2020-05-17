@@ -108,6 +108,13 @@ export default function Index() {
             </Feature>
 
             <Feature state={FeatureState.DONE}>
+              easier SEO via{' '}
+              <ExternalLink href="//github.com/garmeeh/next-seo">
+                next-seo
+              </ExternalLink>
+            </Feature>
+
+            <Feature state={FeatureState.DONE}>
               testing via <ExternalLink href="//jestjs.io/">Jest</ExternalLink>{' '}
               +{' '}
               <ExternalLink href="//testing-library.com/docs/react-testing-library/intro">
