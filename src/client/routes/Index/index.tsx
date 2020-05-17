@@ -71,8 +71,8 @@ export default function Index() {
         </Text>
       </section>
 
-      <Box as="section" mt={2}>
-        <Heading as="h2" size="lg">
+      <Box as="section">
+        <Heading as="h2" size="lg" mt={4} mb={2}>
           What's included?
         </Heading>
 
@@ -179,8 +179,8 @@ export default function Index() {
         </Box>
       </Box>
 
-      <Box as="section" mt={2}>
-        <Heading as="h2" size="lg">
+      <Box as="section">
+        <Heading as="h2" size="lg" mt={4} mb={2}>
           Demo
         </Heading>
 
@@ -207,6 +207,8 @@ export default function Index() {
             ]}
             warning="until @chakra-ui/core v1 is released, your theme preference won't be persisted nor automatically detected"
           />
+
+          <Divider borderColor="teal.900" maxWidth="90%" ml="auto" mr="auto" />
 
           <DemoComponent
             title="<LanguageSwitch />"
