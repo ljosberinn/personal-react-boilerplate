@@ -8,6 +8,8 @@ import {
   MenuItemOption,
   MenuDivider,
   Button,
+  BoxProps,
+  useColorMode,
 } from '@chakra-ui/core';
 import { COOKIE_LOOKUP_KEY_LANG } from '@unly/universal-language-detector';
 import cookies from 'js-cookie';
@@ -16,26 +18,26 @@ import { FlagIcon, FlagIconCode } from 'react-flag-kit';
 import { useTranslation } from 'react-i18next';
 import { MdTranslate } from 'react-icons/md';
 import { fetchTranslations } from 'src/client/i18n';
-import { ENABLED_LANGUAGES, SUPPORTED_LANGUAGES_MAP } from 'src/constants';
+import {
+  ENABLED_LANGUAGES,
+  SUPPORTED_LANGUAGES_MAP,
+  REPOSITORY_LINK,
+} from 'src/constants';
 
-import { CustomIcon } from '../CustomIcon';
 import { ExternalLink } from '../ExternalLink';
 
-const flagMap = {
+type FlapMap = { [key: string]: FlagIconCode };
+
+const flagMap: FlapMap = {
   [SUPPORTED_LANGUAGES_MAP.en]: 'GB',
   [SUPPORTED_LANGUAGES_MAP.de]: 'DE',
-} as { [key: string]: FlagIconCode };
+};
 
-interface LanguageSwitchProps {
-  ml?: number;
-  mr?: number;
-}
+type LanguageSwitchProps = BoxProps;
 
-export default function LanguageSwitch({
-  ml = 0,
-  mr = 0,
-}: LanguageSwitchProps) {
+export default function LanguageSwitch(props: LanguageSwitchProps) {
   const { i18n, t } = useTranslation();
+  const { colorMode } = useColorMode();
 
   function handleLanguageChange(slug: string) {
     return async () => {
@@ -58,10 +60,10 @@ export default function LanguageSwitch({
   }
 
   return (
-    <Box ml={ml} mr={mr}>
+    <Box {...props}>
       <Menu>
         <MenuButton as={Button} data-testid="language-switch-btn">
-          <CustomIcon icon={MdTranslate} mr={2} />
+          <Box d="inline-block" as={MdTranslate} mr={2} />
           {t('menu-toggle')}
         </MenuButton>
         <MenuList>
@@ -92,13 +94,18 @@ export default function LanguageSwitch({
             })}
           </MenuOptionGroup>
           <MenuDivider />
-          <MenuItem>
-            <ExternalLink
-              href="//github.com/ljosberinn"
-              data-testid="language-switch-help-cta"
-            >
-              {t('help-cta')}
-            </ExternalLink>
+          <MenuItem
+            as={ExternalLink}
+            _focus={{
+              boxShadow: 'unset',
+              // see https://github.com/chakra-ui/chakra-ui/blob/master/packages/chakra-ui/src/Menu/styles.js#L38
+              backgroundColor:
+                colorMode === 'light' ? 'gray.100' : 'whiteAlpha.100',
+            }}
+            data-testid="language-switch-help-cta"
+            {...{ href: REPOSITORY_LINK }}
+          >
+            {t('help-cta')}
           </MenuItem>
         </MenuList>
       </Menu>
