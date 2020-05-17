@@ -13,7 +13,7 @@ import {
 } from '@chakra-ui/core';
 import { COOKIE_LOOKUP_KEY_LANG } from '@unly/universal-language-detector';
 import cookies from 'js-cookie';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { FlagIcon, FlagIconCode } from 'react-flag-kit';
 import { useTranslation } from 'react-i18next';
 import { MdTranslate } from 'react-icons/md';
@@ -22,6 +22,7 @@ import {
   ENABLED_LANGUAGES,
   SUPPORTED_LANGUAGES_MAP,
   REPOSITORY_LINK,
+  IS_BROWSER,
 } from 'src/constants';
 
 import { ExternalLink } from '../ExternalLink';
@@ -58,6 +59,12 @@ export default function LanguageSwitch(props: LanguageSwitchProps) {
       i18n.changeLanguage(slug);
     };
   }
+
+  useEffect(() => {
+    if (IS_BROWSER) {
+      document.querySelector('html')!.setAttribute('lang', i18n.language);
+    }
+  }, [i18n.language]);
 
   return (
     <Box {...props}>

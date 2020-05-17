@@ -22,7 +22,7 @@ import { FeatureState } from './Feature/types';
 export default function Index() {
   const { colorMode } = useColorMode();
 
-  const boxBg = colorMode === 'dark' ? 'blue.900' : 'gray.100';
+  const boxBg = colorMode === 'dark' ? 'gray.900' : 'gray.100';
 
   return (
     <>
@@ -94,6 +94,10 @@ export default function Index() {
             <Feature state={FeatureState.DONE}>hooks only</Feature>
 
             <Feature state={FeatureState.DONE}>
+              near-perfect lighthouse audit (97/100/100/100)
+            </Feature>
+
+            <Feature state={FeatureState.DONE}>
               UI via{' '}
               <ExternalLink href="//chakra-ui.com/">
                 @chakra-ui/core
@@ -104,6 +108,13 @@ export default function Index() {
               i18n via{' '}
               <ExternalLink href="//react.i18next.com/">
                 react-i18next
+              </ExternalLink>
+            </Feature>
+
+            <Feature state={FeatureState.DONE}>
+              server-side language detection via{' '}
+              <ExternalLink href="//github.com/UnlyEd/universal-language-detector">
+                universal-language-detector
               </ExternalLink>
             </Feature>
 
@@ -159,6 +170,7 @@ export default function Index() {
               auth via{' '}
               <ExternalLink href="//passportjs.org/">passport.js</ExternalLink>
             </Feature>
+
             <Feature state={FeatureState.NYI}>
               React footprint reduced via{' '}
               <ExternalLink href="//preactjs.com">preact</ExternalLink>

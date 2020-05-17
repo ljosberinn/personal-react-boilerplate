@@ -33,9 +33,9 @@ export default function DemoComponent({
       </List>
       <Box>{component}</Box>
       {warning && (
-        <Box as="small" color="red.500">
+        <Box as="small" color="red.400">
           <em>
-            <Icon name="warning" color="red.500" /> {warning}
+            <Icon name="warning" color="red.400" /> {warning}
           </em>
         </Box>
       )}
