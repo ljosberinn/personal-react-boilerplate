@@ -8,7 +8,7 @@ import {
   Text,
   useColorMode,
 } from '@chakra-ui/core';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { FaTwitter, FaGithub, FaGlobe } from 'react-icons/fa';
 import { ExternalLink } from 'src/client/components/common/ExternalLink';
 import { LanguageSwitch } from 'src/client/components/common/LanguageSwitch';
@@ -20,7 +20,20 @@ import { Feature } from './Feature';
 import { FeatureState } from './Feature/types';
 
 export default function Index() {
-  const { colorMode } = useColorMode();
+  const { colorMode, toggleColorMode } = useColorMode();
+
+  /**
+   * ignore this; just a fix to enable persistent dark mode in 0.x of chakra
+   */
+  useEffect(() => {
+    if (colorMode === 'dark') {
+      setTimeout(() => {
+        toggleColorMode();
+        toggleColorMode();
+      }, 0);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const boxBg = colorMode === 'dark' ? 'gray.700' : 'gray.100';
 
@@ -205,7 +218,7 @@ export default function Index() {
                 is included
               </>,
             ]}
-            warning="until @chakra-ui/core v1 is released, your theme preference won't be persisted nor automatically detected"
+            warning="until @chakra-ui/core v1 is released, your theme preference won't be automatically detected"
           />
 
           <Divider borderColor="teal.500" maxWidth="90%" ml="auto" mr="auto" />
@@ -230,9 +243,7 @@ export default function Index() {
               "previously fetched bundles won't be refetched",
               'serverless-compatible; all assets are automatically bundled at build time',
             ]}
-            warning="only commonly used
-            components will be translated; the boilerplate doesn't ship i18n
-            for this throwaway index"
+            warning="only commonly used components will be translated; the boilerplate doesn't ship i18n for this throwaway index"
           />
         </Box>
       </Box>
