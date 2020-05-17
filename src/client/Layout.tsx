@@ -12,7 +12,7 @@ export default function Layout({ children }: PropsWithChildren<{}>) {
   return (
     <>
       <ThemeProvider theme={theme}>
-        <ColorModeProvider value="dark">
+        <ColorModeProvider>
           <CSSReset />
           <Box as="main" p={4}>
             {children}

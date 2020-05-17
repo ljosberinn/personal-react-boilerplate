@@ -22,7 +22,7 @@ import { FeatureState } from './Feature/types';
 export default function Index() {
   const { colorMode } = useColorMode();
 
-  const boxBg = colorMode === 'dark' ? 'gray.900' : 'gray.100';
+  const boxBg = colorMode === 'dark' ? 'gray.700' : 'gray.100';
 
   return (
     <Box maxWidth="72rem" ml="auto" mr="auto">
@@ -208,7 +208,7 @@ export default function Index() {
             warning="until @chakra-ui/core v1 is released, your theme preference won't be persisted nor automatically detected"
           />
 
-          <Divider borderColor="teal.900" maxWidth="90%" ml="auto" mr="auto" />
+          <Divider borderColor="teal.500" maxWidth="90%" ml="auto" mr="auto" />
 
           <DemoComponent
             title="<LanguageSwitch />"
