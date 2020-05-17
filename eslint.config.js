@@ -1,4 +1,4 @@
-{
+module.exports = {
   "extends": "react-app",
   "rules": {
     "import/order": [
@@ -16,4 +16,4 @@
       }
     ]
   }
-}
+}}
