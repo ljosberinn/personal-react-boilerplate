@@ -6,8 +6,6 @@ import {
 } from '@chakra-ui/core';
 import React, { PropsWithChildren } from 'react';
 
-import { LanguageSwitch } from './components/common/LanguageSwitch';
-import { ThemeSwitch } from './components/common/ThemeSwitch';
 import theme from './theme';
 
 export default function Layout({ children }: PropsWithChildren<{}>) {
@@ -16,19 +14,9 @@ export default function Layout({ children }: PropsWithChildren<{}>) {
       <ThemeProvider theme={theme}>
         <ColorModeProvider value="dark">
           <CSSReset />
-          <header>
-            <nav>
-              <ThemeSwitch />
-              <LanguageSwitch />
-            </nav>
-          </header>
           <Box as="main" p={4}>
             {children}
           </Box>
-          <footer>
-            Build Time: {process.env.BUILD_TIME} - Build Timestamp:{' '}
-            {process.env.BUILD_TIMESTAMP}
-          </footer>
         </ColorModeProvider>
       </ThemeProvider>
       <style jsx global>

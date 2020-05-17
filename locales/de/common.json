@@ -14,5 +14,9 @@
   "links": "Links",
   "privacy-policy": "Datenschutz",
   "terms-of-service": "Nutzungsbedingungen",
-  "community": "Community"
+  "community": "Community",
+  "set-light-theme": "helles Erscheinungsbild aktivieren",
+  "is-light-theme": "helles Erscheinungsbild ist aktiv",
+  "set-dark-theme": "dunkles Erscheinungsbild aktivieren",
+  "is-dark-theme": "dunkles Erscheinungsbild ist aktiv"
 }

@@ -48,7 +48,10 @@ export default class ErrorBoundary extends Component<ErrorBoundaryProps> {
           <h1>There was an error!</h1>
           <p>
             <a href="#" onClick={this.showReportDialog}>
-              📣 Report this error
+              <span role="img" aria-label="warning">
+                📣
+              </span>{' '}
+              Report this error
             </a>
           </p>
           <p>
