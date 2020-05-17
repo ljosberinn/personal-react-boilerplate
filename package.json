@@ -6,7 +6,8 @@
     "build": "next build",
     "start": "next start",
     "test": "jest --watch",
-    "test:ci": "jest --ci"
+    "test:ci": "jest --ci",
+    "postinstall": "yarn-deduplicate -l"
   },
   "dependencies": {
     "@chakra-ui/core": "^0.8.0",
@@ -58,7 +59,8 @@
     "lint-staged": "^10.2.2",
     "prettier": "^2.0.5",
     "react-test-renderer": "^16.13.1",
-    "typescript": "4.0.0-dev.20200516"
+    "typescript": "4.0.0-dev.20200517",
+    "yarn-deduplicate": "^2.0.0"
   },
   "license": "ISC"
 }
