@@ -25,7 +25,7 @@ export default function Index() {
   const boxBg = colorMode === 'dark' ? 'gray.900' : 'gray.100';
 
   return (
-    <>
+    <Box maxWidth="72rem" ml="auto" mr="auto">
       <section>
         <Heading as="h1" size="xl">
           Batteries-included Next.js boilerplate
@@ -234,6 +234,6 @@ export default function Index() {
           />
         </Box>
       </Box>
-    </>
+    </Box>
   );
 }
