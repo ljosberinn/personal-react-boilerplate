@@ -6,8 +6,8 @@ import {
 } from '@chakra-ui/core';
 import React, { PropsWithChildren } from 'react';
 
-import { LanguageSwitch } from './common/LanguageSwitch';
-import { ThemeSwitch } from './common/ThemeSwitch';
+import { LanguageSwitch } from './components/common/LanguageSwitch';
+import { ThemeSwitch } from './components/common/ThemeSwitch';
 import theme from './theme';
 
 export default function Layout({ children }: PropsWithChildren<{}>) {

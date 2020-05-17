@@ -14,7 +14,7 @@ import {
 import { ENABLED_LANGUAGES, SUPPORTED_LANGUAGES_MAP } from 'src/constants';
 
 import Layout from '../src/client/Layout';
-import { ErrorBoundary } from '../src/client/common/ErrorBoundary';
+import { ErrorBoundary } from '../src/client/components/common/ErrorBoundary';
 
 /**
  * Props that are provided to the _app:getInitialProps method

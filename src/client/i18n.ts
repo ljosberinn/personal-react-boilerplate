@@ -12,27 +12,6 @@ export const defaultNamespace = 'common';
 
 const endpoint = '/api/i18n?language={{lng}}';
 
-const reduceToNamespaces = (locales: I18nextNamespace) =>
-  Object.entries(locales).reduce<I18nextResourceLocale>(
-    (carry, [str, value]) => {
-      if (!IS_PROD && !str.includes('.')) {
-        console.error(`i18n key "${str}" MUST have a namespace`);
-        return carry;
-      }
-
-      const [namespace, key] = str.split('.');
-
-      if (!carry[namespace]) {
-        carry[namespace] = { [key]: value };
-        return carry;
-      }
-
-      carry[namespace][key] = value;
-      return carry;
-    },
-    {}
-  );
-
 export const initI18Next = (
   lang: string,
   defaultLocales: I18nextResourceLocale
@@ -131,7 +110,6 @@ const interpolateEndpoint = (lang: string) => endpoint.replace('{{lng}}', lang);
 
 export const fetchTranslations = async (lang: string, baseUrl: string) => {
   const url = interpolateEndpoint(lang);
-
   const memoizedI18nextResources = _memoizedI18nextResources[url];
 
   if (memoizedI18nextResources) {
@@ -142,20 +120,18 @@ export const fetchTranslations = async (lang: string, baseUrl: string) => {
     }
   }
 
-  let locales: I18nextNamespace = {};
+  let namespaces: I18nextResourceLocale = {};
 
   try {
     const response = await fetch(`${baseUrl}${url}`);
     try {
-      locales = await response.json();
+      namespaces = await response.json();
     } catch (error) {
       console.error('Failed to parse i18n JSON');
     }
   } catch (error) {
     console.error(error.message, 'Failed to fetch i18n');
   }
-
-  const namespaces = reduceToNamespaces(locales);
 
   _memoizedI18nextResources[url] = {
     resources: namespaces,
