@@ -68,7 +68,7 @@
       }
     },
     "git-legal": {
-      "enabled": true
+      "enabled": false
     }
   },
   "exclude_patterns": [
@@ -85,6 +85,7 @@
     "**/test/",
     "**/tests/",
     "**/vendor/",
-    "**/*.d.ts"
+    "**/*.d.ts",
+    ".codeclimate.json"
   ]
 }
