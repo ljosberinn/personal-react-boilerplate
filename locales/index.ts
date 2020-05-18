@@ -1,5 +1,5 @@
-import { I18nextResources, I18nextResourceLocale } from 'src/client/i18n';
-import { ENABLED_LANGUAGES } from 'src/constants';
+import { I18nextResources, I18nextResourceLocale } from '../src/client/i18n';
+import { ENABLED_LANGUAGES } from '../src/constants';
 
 const namespaces = ['common'];
 

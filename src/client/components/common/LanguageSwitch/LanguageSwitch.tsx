@@ -17,14 +17,14 @@ import React, { useEffect } from 'react';
 import { FlagIcon, FlagIconCode } from 'react-flag-kit';
 import { useTranslation } from 'react-i18next';
 import { MdTranslate } from 'react-icons/md';
-import { fetchTranslations } from 'src/client/i18n';
-import {
-  ENABLED_LANGUAGES,
-  SUPPORTED_LANGUAGES_MAP,
-  REPOSITORY_LINK,
-  IS_BROWSER,
-} from 'src/constants';
 
+import {
+  SUPPORTED_LANGUAGES_MAP,
+  IS_BROWSER,
+  ENABLED_LANGUAGES,
+  REPOSITORY_LINK,
+} from '../../../../constants';
+import { fetchTranslations } from '../../../i18n';
 import { ExternalLink } from '../ExternalLink';
 
 type FlapMap = { [key: string]: FlagIconCode };

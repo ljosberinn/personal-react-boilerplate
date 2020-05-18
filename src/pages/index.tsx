@@ -1,5 +1,6 @@
 import React from 'react';
-import IndexPage from 'src/client/routes/Index';
+
+import IndexPage from '../client/routes/Index';
 
 export default function Index() {
   return <IndexPage />;

@@ -10,11 +10,11 @@ import {
 } from '@chakra-ui/core';
 import React, { useEffect } from 'react';
 import { FaTwitter, FaGithub, FaGlobe } from 'react-icons/fa';
-import { ExternalLink } from 'src/client/components/common/ExternalLink';
-import { LanguageSwitch } from 'src/client/components/common/LanguageSwitch';
-import { ThemeSwitch } from 'src/client/components/common/ThemeSwitch';
-import { REPOSITORY_LINK } from 'src/constants';
 
+import { REPOSITORY_LINK } from '../../../constants';
+import { ExternalLink } from '../../components/common/ExternalLink';
+import { LanguageSwitch } from '../../components/common/LanguageSwitch';
+import { ThemeSwitch } from '../../components/common/ThemeSwitch';
 import DemoComponent from './DemoComponent';
 import { Feature } from './Feature';
 import { FeatureState } from './Feature/types';

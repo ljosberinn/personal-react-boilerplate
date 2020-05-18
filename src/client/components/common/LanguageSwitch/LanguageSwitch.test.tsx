@@ -1,8 +1,8 @@
 import i18n from 'i18next';
 import React from 'react';
-import { ENABLED_LANGUAGES } from 'src/constants';
-import { render, fireEvent, waitFor } from 'testUtils';
 
+import { render, fireEvent, waitFor } from '../../../../../testUtils';
+import { ENABLED_LANGUAGES } from '../../../../constants';
 import LanguageSwitch from './LanguageSwitch';
 
 describe('<LanguageSwitch />', () => {

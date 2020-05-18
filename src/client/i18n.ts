@@ -1,12 +1,13 @@
 // contains lots of inspiration from https://github.com/UnlyEd/next-right-now/blob/v1-ssr-mst-aptd-gcms-lcz-sty/src/utils/i18nextLocize.ts
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
+
 import {
   SUPPORTED_LANGUAGES_MAP,
   IS_PROD,
   ENABLED_LANGUAGES,
   IS_BROWSER,
-} from 'src/constants';
+} from '../constants';
 
 export const defaultNamespace = 'common';
 
