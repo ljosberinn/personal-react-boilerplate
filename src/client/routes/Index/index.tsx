@@ -8,7 +8,7 @@ import {
   Text,
   useColorMode,
 } from '@chakra-ui/core';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { FaTwitter, FaGithub, FaGlobe } from 'react-icons/fa';
 
 import { REPOSITORY_LINK } from '../../../constants';
@@ -20,20 +20,7 @@ import { Feature } from './Feature';
 import { FeatureState } from './Feature/types';
 
 export default function Index() {
-  const { colorMode, toggleColorMode } = useColorMode();
-
-  /**
-   * ignore this; just a fix to enable persistent dark mode in 0.x of chakra
-   */
-  useEffect(() => {
-    if (colorMode === 'dark') {
-      setTimeout(() => {
-        toggleColorMode();
-        toggleColorMode();
-      }, 0);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const { colorMode } = useColorMode();
 
   const boxBg = colorMode === 'dark' ? 'gray.700' : 'gray.100';
 
