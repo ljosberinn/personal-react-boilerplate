@@ -21,7 +21,7 @@
     "emotion-theming": "^10.0.27",
     "i18next": "^19.4.4",
     "js-cookie": "^2.2.1",
-    "next": "9.4.1",
+    "next": "9.4.2",
     "next-absolute-url": "^1.2.2",
     "next-cookies": "^2.0.3",
     "next-seo": "^4.5.0",
