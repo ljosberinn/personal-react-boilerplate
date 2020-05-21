@@ -5,6 +5,7 @@ import {
   Divider,
   Code,
   Flex,
+  Button,
   Text,
   useColorMode,
 } from '@chakra-ui/core';
@@ -15,17 +16,23 @@ import { REPOSITORY_LINK } from '../../../constants';
 import { ExternalLink } from '../../components/common/ExternalLink';
 import { LanguageSwitch } from '../../components/common/LanguageSwitch';
 import { ThemeSwitch } from '../../components/common/ThemeSwitch';
+import { useAuth } from '../../context/AuthContext';
 import DemoComponent from './DemoComponent';
 import { Feature } from './Feature';
 import { FeatureState } from './Feature/types';
 
 export default function Index() {
   const { colorMode } = useColorMode();
+  const { login, user, isAuthenticated, logout } = useAuth();
 
   const boxBg = colorMode === 'dark' ? 'gray.700' : 'gray.100';
 
   return (
     <Box maxWidth="72rem" ml="auto" mr="auto">
+      <Button type="button" onClick={isAuthenticated ? logout : login}>
+        {JSON.stringify(user)}
+      </Button>
+
       <section>
         <Heading as="h1" size="xl">
           Batteries-included Next.js boilerplate
