@@ -11,6 +11,7 @@ import { I18nextProvider } from 'react-i18next';
 import SEO from '../../next-seo.config';
 import Layout from '../client/Layout';
 import { ErrorBoundary } from '../client/components/common/ErrorBoundary';
+import { AuthContextProvider } from '../client/context/AuthContext';
 import {
   fetchTranslations,
   initI18Next,
@@ -67,9 +68,11 @@ export default function App({ Component, pageProps }: AppRenderProps) {
 
       <ErrorBoundary>
         <I18nextProvider i18n={i18nInstance}>
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
+          <AuthContextProvider>
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+          </AuthContextProvider>
         </I18nextProvider>
       </ErrorBoundary>
     </>
