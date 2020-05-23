@@ -1,5 +1,5 @@
 import universalLanguageDetect from '@unly/universal-language-detector';
-import NextCookies from 'next-cookies';
+import nextCookies from 'next-cookies';
 import { DefaultSeo } from 'next-seo';
 import NextApp, { AppContext } from 'next/app';
 import { AppTreeType } from 'next/dist/next-server/lib/utils';
@@ -9,8 +9,10 @@ import { I18nextProvider } from 'react-i18next';
 
 import SEO from '../../next-seo.config';
 import Layout from '../client/Layout';
+import { getSessionData } from '../client/auth';
 import { ErrorBoundary } from '../client/components/common/ErrorBoundary';
 import { AuthContextProvider } from '../client/context/AuthContext';
+import { User } from '../client/context/AuthContext/AuthContext';
 import {
   fetchTranslations,
   initI18Next,
@@ -38,13 +40,9 @@ interface AppInitialProps extends AppContext {
  */
 export declare type AppRenderProps = {
   pageProps: {
-    headers: {
-      'accept-language'?: string;
-      'user-agent'?: string;
-      host?: string;
-    }; // Headers made public to the client-side
     lang: string;
     defaultLocales: I18nextResourceLocale;
+    session: User | null;
   };
   err?: Error; // Only defined if there was an error
 
@@ -67,9 +65,9 @@ export default function App({ Component, pageProps }: AppRenderProps) {
 
       <ErrorBoundary>
         <I18nextProvider i18n={i18nInstance}>
-          <AuthContextProvider>
+          <AuthContextProvider session={pageProps.session}>
             <Layout>
-              <Component {...pageProps} />
+              <Component />
             </Layout>
           </AuthContextProvider>
         </I18nextProvider>
@@ -84,23 +82,29 @@ App.getInitialProps = async function (
   const { ctx } = props;
   const { req } = ctx;
 
+  const cookies = nextCookies(ctx);
+
   /* i18n start */
   const lang = universalLanguageDetect({
     supportedLanguages: ENABLED_LANGUAGES,
     fallbackLanguage: SUPPORTED_LANGUAGES_MAP.en,
     acceptLanguageHeader: req?.headers['accept-language'],
-    serverCookies: NextCookies(ctx),
+    serverCookies: cookies,
   });
 
   const defaultLocales = await fetchTranslations(lang, req);
   /* i18n end */
+
+  /* auth start */
+  const session = getSessionData(cookies);
+  /* auth end */
 
   const appProps: AppRenderProps = await NextApp.getInitialProps(props);
 
   appProps.pageProps = {
     defaultLocales,
     lang,
-    headers: {},
+    session,
   };
 
   return {

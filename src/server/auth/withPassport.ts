@@ -1,22 +1,33 @@
-// see https://github.com/andycmaj/nextjs-passport-session-auth/blob/master/lib/withPassport.ts
 import cookieSession from 'cookie-session';
+import { Request, Response } from 'express';
 // @ts-expect-error
 import redirect from 'micro-redirect';
 import { NextApiResponse, NextApiRequest } from 'next';
 import absoluteUrl from 'next-absolute-url';
 import passport from 'passport';
-import { Profile } from 'passport-github2';
+import { Profile as GithubProfile } from 'passport-github2';
 
-import { github } from './provider';
+import { IS_PROD } from '../../constants';
+import { FOUND_MOVED_TEMPORARILY } from '../../utils/statusCodes';
+import { SESSION_COOKIE_NAME } from './constants';
+import { github, google, isGithubProfile } from './provider';
 
 export { default as passport } from 'passport';
 
+passport.use(google);
 passport.use(github);
 
-passport.serializeUser((user: Profile, done) => {
-  const { id, displayName, username, profileUrl } = user;
+type MaybeProfile = GithubProfile | object;
 
-  done(null, { id, displayName, username, profileUrl });
+passport.serializeUser((user: MaybeProfile, done) => {
+  if (isGithubProfile(user)) {
+    const { id, displayName, username, profileUrl, photos } = user;
+
+    done(null, { id, displayName, username, profileUrl, photos });
+    return;
+  }
+
+  done(new Error('unknown provider'));
 });
 
 passport.deserializeUser((serializedUser, done) => {
@@ -27,36 +38,59 @@ passport.deserializeUser((serializedUser, done) => {
   done(null, serializedUser);
 });
 
-const middleware = (fn: Function) => (
+/**
+ * Helper fn which might get extracted into a separate cookies.ts if needed.
+ */
+export const createSessionHandler = (
+  req: NextApiRequest,
+  options: CookieSessionInterfaces.CookieSessionOptions = {}
+) => {
+  const { host } = absoluteUrl(req);
+  // localhost includes port, which isnt a valid cookie target
+  const domain = IS_PROD ? host : host.split(':')[0];
+
+  return cookieSession({
+    domain,
+    name: SESSION_COOKIE_NAME,
+    secure: IS_PROD,
+    maxAge: 8 * 60 * 60 * 1000,
+    sameSite: true,
+    signed: false,
+    ...options,
+  });
+};
+
+type ProviderHandler = (req: NextApiRequest, res: NextApiResponse) => void;
+
+const middleware = (providerHandler: ProviderHandler) => (
   req: NextApiRequest,
   res: NextApiResponse
 ) => {
-  // @ts-expect-error
-  if (!res.redirect) {
-    // @ts-expect-error
-    res.redirect = (location: string) => redirect(res, 302, location);
+  // TS-friendly monkey patch NextApiResponse to support passports redirect
+  if (!('redirect' in res)) {
+    Object.defineProperty(res, 'redirect', {
+      value: (location: string) =>
+        redirect(res, FOUND_MOVED_TEMPORARILY, location),
+      writable: false,
+    });
   }
 
-  const { host } = absoluteUrl(req);
+  const sessionHandler = createSessionHandler(req);
 
-  const sessionHandler = cookieSession({
-    name: 'passportSession',
-    signed: false,
-    domain: host,
-    maxAge: 8 * 60 * 60 * 1000, // 8 hours
-  });
+  // see https://github.com/andycmaj/nextjs-passport-session-auth/blob/master/lib/withPassport.ts
+  sessionHandler(
+    (req as unknown) as Request,
+    (res as unknown) as Response,
+    () => {
+      const handler = passport.initialize();
 
-  // @ts-expect-error
-  sessionHandler(req, res, () => {
-    const handler = passport.initialize();
+      handler((req as unknown) as Request, (res as unknown) as Response, () => {
+        const authenticatedHandler = passport.session();
 
-    // @ts-expect-error
-    handler(req, res, () => {
-      const authenticatedHandler = passport.session();
-
-      authenticatedHandler(req, res, () => fn(req, res));
-    });
-  });
+        authenticatedHandler(req, res, () => providerHandler(req, res));
+      });
+    }
+  );
 };
 
 export default middleware;

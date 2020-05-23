@@ -1,19 +1,27 @@
 import React, { PropsWithChildren, useState } from 'react';
 
-import { AuthContext, User } from './AuthContext';
+import { AuthContext, User, LoginOptions } from './AuthContext';
 
-type AuthContextProviderProps = PropsWithChildren<{}>;
+type AuthContextProviderProps = PropsWithChildren<{ session: User | null }>;
 
 export default function AuthContextProvider({
   children,
+  session,
 }: AuthContextProviderProps) {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<User | null>(session);
 
-  async function login() {
-    setUser({ name: 'galex' });
+  async function login(options: LoginOptions) {
+    if ('provider' in options) {
+      window.location.href = `/api/auth/${options.provider}`;
+      return;
+    }
+
+    // const { mail, password } = options;
+    // todo: local login
   }
 
   async function logout() {
+    await fetch('/api/auth/logout');
     setUser(null);
   }
 

@@ -29,7 +29,10 @@ export default function Index() {
 
   return (
     <Box maxWidth="72rem" ml="auto" mr="auto">
-      <Button type="button" onClick={isAuthenticated ? logout : login}>
+      <Button
+        type="button"
+        onClick={isAuthenticated ? logout : () => login({ provider: 'github' })}
+      >
         {JSON.stringify(user)}
       </Button>
 
