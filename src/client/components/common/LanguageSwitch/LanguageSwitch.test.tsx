@@ -11,20 +11,20 @@ describe('<LanguageSwitch />', () => {
   });
 
   it('should include a request for translation help', () => {
-    const { getByTestId } = render(<LanguageSwitch />);
+    const { getByRole } = render(<LanguageSwitch />);
 
     // actually open the menu as other elements are not rendered before
-    const btn = getByTestId('language-switch-btn');
+    const btn = getByRole('button');
     fireEvent.click(btn);
 
-    const cta = getByTestId('language-switch-help-cta');
+    const cta = getByRole('menuitem', { name: 'help-cta' });
 
     expect(cta).toBeInTheDocument();
     expect(cta.getAttribute('href')).not.toBe(undefined);
   });
 
   it('should always change the language on click', async () => {
-    const { getByTestId, getByRole } = render(<LanguageSwitch />);
+    const { getByRole } = render(<LanguageSwitch />);
 
     // actually open the menu as other elements are not rendered before
     const btn = getByRole('button');
@@ -43,7 +43,7 @@ describe('<LanguageSwitch />', () => {
 
     // helper fn
     const getElementByLanguage = (language: string) =>
-      getByTestId(`language-switch-option-${language}`);
+      getByRole('menuitemradio', { name: language });
 
     const currentLanguageElement = getElementByLanguage(currentLanguage);
 

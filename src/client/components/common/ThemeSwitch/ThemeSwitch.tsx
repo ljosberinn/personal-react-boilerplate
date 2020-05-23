@@ -38,7 +38,6 @@ export default function ThemeSwitch(props: ThemeSwitchProps) {
         mr={2}
       />
       <Switch
-        data-testid="theme-switch"
         aria-label="toggle theme"
         isChecked={colorMode === 'dark'}
         onChange={toggleColorMode}

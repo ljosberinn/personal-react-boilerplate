@@ -12,6 +12,7 @@ import {
   useColorMode,
 } from '@chakra-ui/core';
 import { COOKIE_LOOKUP_KEY_LANG } from '@unly/universal-language-detector';
+import { TFunction } from 'i18next';
 import cookies from 'js-cookie';
 import React, { useEffect } from 'react';
 import { FlagIcon, FlagIconCode } from 'react-flag-kit';
@@ -45,10 +46,7 @@ export default function LanguageSwitch(props: LanguageSwitchProps) {
       // prevent loading data 2x which happens for some reason when
       // going from initial language -> other lang -> back
       if (!i18n.getDataByLanguage(slug)) {
-        const { protocol, host } = window.location;
-        const baseUrl = `${protocol}//${host}`;
-
-        const bundles = await fetchTranslations(slug, baseUrl);
+        const bundles = await fetchTranslations(slug);
 
         Object.entries(bundles).forEach(([ns, bundle]) => {
           i18n.addResourceBundle(slug, ns, bundle);
@@ -69,11 +67,7 @@ export default function LanguageSwitch(props: LanguageSwitchProps) {
   return (
     <Box {...props}>
       <Menu>
-        <MenuButton
-          as={Button}
-          {...{ variantColor: 'teal' }}
-          data-testid="language-switch-btn"
-        >
+        <MenuButton as={Button} {...{ variantColor: 'teal' }}>
           <Box d="inline-block" as={MdTranslate} mr={2} />
           {t('menu-toggle')}
         </MenuButton>
@@ -82,27 +76,15 @@ export default function LanguageSwitch(props: LanguageSwitchProps) {
             title={t('available-languages')}
             value={i18n.language}
           >
-            {ENABLED_LANGUAGES.map(slug => {
-              const isCurrentLanguage = slug === i18n.language;
-
-              return (
-                <MenuItemOption
-                  data-testid={`language-switch-option-${slug}`}
-                  type="radio"
-                  value={slug}
-                  isDisabled={isCurrentLanguage}
-                  onClick={
-                    isCurrentLanguage ? undefined : handleLanguageChange(slug)
-                  }
-                  key={slug}
-                >
-                  <Box mr={2} display="inline-block">
-                    <FlagIcon aria-hidden="true" code={flagMap[slug]} />
-                  </Box>
-                  {t(slug)}
-                </MenuItemOption>
-              );
-            })}
+            {ENABLED_LANGUAGES.map(slug => (
+              <LanguageOption
+                t={t}
+                slug={slug}
+                isCurrentLanguage={slug === i18n.language}
+                handleLanguageChange={handleLanguageChange}
+                key={slug}
+              />
+            ))}
           </MenuOptionGroup>
           <MenuDivider />
           <MenuItem
@@ -113,7 +95,6 @@ export default function LanguageSwitch(props: LanguageSwitchProps) {
               backgroundColor:
                 colorMode === 'light' ? 'gray.100' : 'whiteAlpha.100',
             }}
-            data-testid="language-switch-help-cta"
             {...{ href: REPOSITORY_LINK }}
           >
             {t('help-cta')}
@@ -121,5 +102,35 @@ export default function LanguageSwitch(props: LanguageSwitchProps) {
         </MenuList>
       </Menu>
     </Box>
+  );
+}
+
+interface LanguageOptionProps {
+  slug: string;
+  isCurrentLanguage: boolean;
+  handleLanguageChange: (slug: string) => () => Promise<void>;
+  t: TFunction;
+}
+
+function LanguageOption({
+  slug,
+  isCurrentLanguage,
+  handleLanguageChange,
+  t,
+}: LanguageOptionProps) {
+  return (
+    <MenuItemOption
+      type="radio"
+      value={slug}
+      isDisabled={isCurrentLanguage}
+      isChecked={isCurrentLanguage}
+      onClick={isCurrentLanguage ? undefined : handleLanguageChange(slug)}
+      key={slug}
+    >
+      <Box mr={2} display="inline-block">
+        <FlagIcon aria-hidden="true" code={flagMap[slug]} />
+      </Box>
+      {t(slug)}
+    </MenuItemOption>
   );
 }
