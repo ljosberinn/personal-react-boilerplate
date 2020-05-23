@@ -1,5 +1,4 @@
 import universalLanguageDetect from '@unly/universal-language-detector';
-import absoluteUrl from 'next-absolute-url';
 import NextCookies from 'next-cookies';
 import { DefaultSeo } from 'next-seo';
 import NextApp, { AppContext } from 'next/app';
@@ -60,7 +59,7 @@ export default function App({ Component, pageProps }: AppRenderProps) {
     return null;
   }
 
-  const i18nInstance = initI18Next(pageProps.lang, pageProps.defaultLocales);
+  const i18nInstance = initI18Next(pageProps);
 
   return (
     <>
@@ -85,9 +84,6 @@ App.getInitialProps = async function (
   const { ctx } = props;
   const { req } = ctx;
 
-  const { host, protocol } = absoluteUrl(req);
-  const baseUrl = `${protocol}//${host}`;
-
   /* i18n start */
   const lang = universalLanguageDetect({
     supportedLanguages: ENABLED_LANGUAGES,
@@ -96,7 +92,7 @@ App.getInitialProps = async function (
     serverCookies: NextCookies(ctx),
   });
 
-  const defaultLocales = await fetchTranslations(lang, baseUrl);
+  const defaultLocales = await fetchTranslations(lang, req);
   /* i18n end */
 
   const appProps: AppRenderProps = await NextApp.getInitialProps(props);
@@ -111,53 +107,3 @@ App.getInitialProps = async function (
     ...appProps,
   };
 };
-
-/*
-export default class App extends NextApp {
-  static async getInitialProps(
-    props: AppInitialProps
-  ): Promise<AppRenderProps> {
-    const { ctx } = props;
-    const { req } = ctx;
-
-    const appProps: AppRenderProps = await NextApp.getInitialProps(props);
-
-    const readonlyCookies = NextCookies(ctx); // Parses Next.js cookies in a universal way (server + client)
-
-    const lang = universalLanguageDetect({
-      supportedLanguages: ENABLED_LANGUAGES,
-      fallbackLanguage: SUPPORTED_LANGUAGES_MAP.en,
-      acceptLanguageHeader: req?.headers['accept-language'],
-      serverCookies: readonlyCookies,
-    });
-
-    const defaultLocales = await fetchTranslations(lang);
-
-    appProps.pageProps = {
-      defaultLocales,
-      lang,
-      headers: {},
-    };
-
-    return {
-      ...appProps,
-    };
-  }
-
-  render() {
-    const { Component, pageProps } = this.props;
-
-    const i18nInstance = initI18Next(pageProps.lang, pageProps.defaultLocales);
-
-    return (
-      <ErrorBoundary>
-        <I18nextProvider i18n={i18nInstance}>
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
-        </I18nextProvider>
-      </ErrorBoundary>
-    );
-  }
-}
-*/
