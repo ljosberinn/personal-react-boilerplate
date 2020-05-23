@@ -1,5 +1,7 @@
 // contains lots of inspiration from https://github.com/UnlyEd/next-right-now/blob/v1-ssr-mst-aptd-gcms-lcz-sty/src/utils/i18nextLocize.ts
+import { IncomingMessage } from 'http';
 import i18n from 'i18next';
+import absoluteUrl from 'next-absolute-url';
 import { initReactI18next } from 'react-i18next';
 
 import {
@@ -8,15 +10,16 @@ import {
   ENABLED_LANGUAGES,
   IS_BROWSER,
 } from '../constants';
+import { AppRenderProps } from '../pages/_app';
 
 export const defaultNamespace = 'common';
 
 const endpoint = '/api/i18n?language={{lng}}';
 
-export const initI18Next = (
-  lang: string,
-  defaultLocales: I18nextResourceLocale
-) => {
+export const initI18Next = ({
+  lang,
+  defaultLocales,
+}: AppRenderProps['pageProps']) => {
   const i18nInstance = i18n.use(initReactI18next);
 
   i18nInstance.init({
@@ -109,7 +112,10 @@ const memoizedCacheMaxAge = (IS_BROWSER || IS_PROD ? 60 * 60 : 60) * 1000;
 
 const interpolateEndpoint = (lang: string) => endpoint.replace('{{lng}}', lang);
 
-export const fetchTranslations = async (lang: string, baseUrl: string) => {
+export const fetchTranslations = async (
+  lang: string,
+  req?: IncomingMessage
+) => {
   const url = interpolateEndpoint(lang);
   const memoizedI18nextResources = _memoizedI18nextResources[url];
 
@@ -124,7 +130,9 @@ export const fetchTranslations = async (lang: string, baseUrl: string) => {
   let namespaces: I18nextResourceLocale = {};
 
   try {
-    const response = await fetch(`${baseUrl}${url}`);
+    const { origin } = absoluteUrl(req);
+
+    const response = await fetch(origin + url);
     try {
       namespaces = await response.json();
     } catch (error) {
