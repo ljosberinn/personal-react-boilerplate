@@ -4,8 +4,21 @@ export interface User {
   name: string;
 }
 
+export type Provider = 'github' | 'google';
+
+export interface ExternalLoginOptions {
+  provider: Provider;
+}
+
+export interface LocalLoginOptions {
+  mail: string;
+  password: string;
+}
+
+export type LoginOptions = ExternalLoginOptions | LocalLoginOptions;
+
 interface AuthContextDefinition {
-  login: () => Promise<void>;
+  login: (options: LoginOptions) => Promise<void>;
   logout: () => void;
   isAuthenticated: boolean;
   user: User | null;

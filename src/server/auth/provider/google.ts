@@ -9,13 +9,13 @@ import { config } from '../config';
 
 const verify: VerifyFunctionWithRequest = (
   _: Request,
+  // @ts-ignore
   accessToken: string,
+  // @ts-ignore
   refreshToken: string,
   profile: any,
   done: VerifyCallback
 ) => {
-  console.log({ accessToken, refreshToken, profile });
-
   // TODO: database
   done(null, profile);
 };
