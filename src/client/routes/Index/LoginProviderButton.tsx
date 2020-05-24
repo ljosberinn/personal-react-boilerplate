@@ -46,7 +46,7 @@ export default function LoginProviderButton({
 
   return (
     <>
-      <ButtonGroup>
+      <ButtonGroup d="block">
         <Button
           type="button"
           variantColor="blue"
@@ -64,7 +64,6 @@ export default function LoginProviderButton({
         <Button
           type="button"
           variant="outline"
-          variantColor="grey"
           onClick={handleRequestClick}
           isLoading={loading}
         >
@@ -74,8 +73,7 @@ export default function LoginProviderButton({
           </Code>
         </Button>
       </ButtonGroup>
-      <br />
-      profile:{' '}
+      <p>profile:</p>
       <Code w="100%" d="block" wordBreak="break-all">
         {user && validator(user)
           ? JSON.stringify(user)

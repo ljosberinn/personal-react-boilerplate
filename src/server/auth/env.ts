@@ -1,3 +1,5 @@
+export const TOKEN_SECRET = process.env.TOKEN_SECRET!;
+
 export const GITHUB_CLIENT_ID = process.env.GITHUB_CLIENT_ID!;
 export const GITHUB_CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET!;
 

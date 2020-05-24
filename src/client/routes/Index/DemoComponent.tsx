@@ -1,4 +1,4 @@
-import { Box, Heading, List, ListItem, Icon } from '@chakra-ui/core';
+import { Text, Box, Heading, List, ListItem, Icon } from '@chakra-ui/core';
 import React from 'react';
 
 interface DemoComponentProps {
@@ -22,7 +22,10 @@ export default function DemoComponent({
     <Box as="article" m={4} id={id}>
       <a href={`#${id}`}>
         <Heading as="h3" size="md">
-          # {title}
+          <Text as="span" color="grey">
+            #
+          </Text>{' '}
+          {title}
         </Heading>
       </a>
 
@@ -35,7 +38,9 @@ export default function DemoComponent({
           <ListItem key={index}>{feature}</ListItem>
         ))}
       </List>
+
       <Box>{component}</Box>
+
       {warning && (
         <Box as="small" color="red.400">
           <em>
