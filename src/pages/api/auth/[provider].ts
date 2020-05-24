@@ -1,20 +1,32 @@
-import { NextApiResponse, NextApiRequest } from 'next';
+import nextConnect from 'next-connect';
 
 import { Provider } from '../../../client/context/AuthContext/AuthContext';
 import { ENABLED_PROVIDER } from '../../../constants';
-import withPassport, { passport } from '../../../server/auth/withPassport';
-import { NOT_FOUND } from '../../../utils/statusCodes';
+import {
+  authMiddleware,
+  promisifyAuthentication,
+} from '../../../server/auth/middleware';
+import { NOT_FOUND, BAD_REQUEST, CREATED } from '../../../utils/statusCodes';
 
-const handler = (req: NextApiRequest, res: NextApiResponse) => {
-  const provider = req.query.provider as Provider;
+export default nextConnect()
+  .use(authMiddleware)
+  .get(async (req, res) => {
+    const provider = req.query.provider as Provider;
 
-  if (!provider || !ENABLED_PROVIDER.includes(provider)) {
-    res.status(NOT_FOUND).end();
-  }
+    if (!provider || !ENABLED_PROVIDER.includes(provider)) {
+      res.status(NOT_FOUND).end();
+    }
 
-  const authenticate = passport.authenticate(provider);
+    await promisifyAuthentication(provider, req, res);
 
-  authenticate(req, res, () => res.end());
-};
+    res.end();
+  })
+  .post(async (req, res) => {
+    const { mail, password } = req.body;
 
-export default withPassport(handler);
+    if (!mail || !password) {
+      res.status(BAD_REQUEST).end();
+    }
+
+    res.status(CREATED).end();
+  });

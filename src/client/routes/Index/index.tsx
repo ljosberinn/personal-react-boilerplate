@@ -176,9 +176,17 @@ export default function Index() {
               <ExternalLink href="//sentry.io">sentry</ExternalLink>
             </Feature>
 
-            <Feature state={FeatureState.NYI}>
+            <Feature
+              state={FeatureState.WIP}
+              info="supporting GitHub & Google as well as Local strategies out of
+              the box"
+            >
               auth via{' '}
-              <ExternalLink href="//passportjs.org/">passport.js</ExternalLink>
+              <ExternalLink href="//passportjs.org/">passport.js</ExternalLink>{' '}
+              &{' '}
+              <ExternalLink href="//github.com/hoangvvo/next-connect#readme">
+                next-connect
+              </ExternalLink>
             </Feature>
 
             <Feature state={FeatureState.NYI}>
@@ -241,6 +249,20 @@ export default function Index() {
               'serverless-compatible; all assets are automatically bundled at build time',
             ]}
             warning="only commonly used components will be translated; the boilerplate doesn't ship i18n for this throwaway index"
+          />
+
+          <Divider borderColor="teal.500" maxWidth="90%" ml="auto" mr="auto" />
+
+          <DemoComponent
+            title="Auth"
+            description="SSR-compatible, httpOnly cookie-based authentication - try refreshing after logging in!"
+            component={<h1>WIP</h1>}
+            features={[
+              <>
+                implements Oauth2 via <Code>passport.js</Code>
+              </>,
+              'comes with an <AuthContextProvider />, exposing both a hook (useAuth)',
+            ]}
           />
         </Box>
       </Box>

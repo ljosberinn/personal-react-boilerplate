@@ -5,7 +5,7 @@ import {
   VerifyCallback,
 } from 'passport-google-oauth2';
 
-import { config } from '../config';
+import { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } from '../env';
 
 const verify: VerifyFunctionWithRequest = (
   _: Request,
@@ -21,6 +21,11 @@ const verify: VerifyFunctionWithRequest = (
 };
 
 export default new GoogleStrategy(
-  { ...config.google, passReqToCallback: true },
+  {
+    clientID: GOOGLE_CLIENT_ID,
+    clientSecret: GOOGLE_CLIENT_SECRET,
+    callbackURL: 'https://localhost:3000/api/auth/callback/google',
+    passReqToCallback: true,
+  },
   verify
 );
