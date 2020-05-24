@@ -1,7 +1,10 @@
 // contains lots of inspiration from https://github.com/UnlyEd/next-right-now/blob/v1-ssr-mst-aptd-gcms-lcz-sty/src/utils/i18nextLocize.ts
+import universalLanguageDetect from '@unly/universal-language-detector';
 import { IncomingMessage } from 'http';
 import i18n from 'i18next';
+import { NextPageContext } from 'next';
 import absoluteUrl from 'next-absolute-url';
+import nextCookies from 'next-cookies';
 import { initReactI18next } from 'react-i18next';
 
 import {
@@ -148,4 +151,32 @@ export const fetchTranslations = async (
   };
 
   return namespaces;
+};
+
+/**
+ * Dynamically detects the users preferred language based on
+ *
+ * - request header
+ * - cookies
+ *
+ * and picks the best match from existing languages.
+ *
+ * Then, fetches the corresponding data.
+ */
+export const detectAndGetTranslation = async (ctx: NextPageContext) => {
+  const { req } = ctx;
+
+  const lang = universalLanguageDetect({
+    supportedLanguages: ENABLED_LANGUAGES,
+    fallbackLanguage: SUPPORTED_LANGUAGES_MAP.en,
+    acceptLanguageHeader: req?.headers['accept-language'],
+    serverCookies: nextCookies(ctx),
+  });
+
+  const defaultLocales = await fetchTranslations(lang, req);
+
+  return {
+    lang,
+    defaultLocales,
+  };
 };
