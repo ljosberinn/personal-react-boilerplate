@@ -5,9 +5,9 @@ import {
   Divider,
   Code,
   Flex,
-  Button,
   Text,
   useColorMode,
+  Badge,
 } from '@chakra-ui/core';
 import React from 'react';
 import { FaTwitter, FaGithub, FaGlobe } from 'react-icons/fa';
@@ -16,26 +16,18 @@ import { REPOSITORY_LINK } from '../../../constants';
 import { ExternalLink } from '../../components/common/ExternalLink';
 import { LanguageSwitch } from '../../components/common/LanguageSwitch';
 import { ThemeSwitch } from '../../components/common/ThemeSwitch';
-import { useAuth } from '../../context/AuthContext';
 import DemoComponent from './DemoComponent';
 import { Feature } from './Feature';
 import { FeatureState } from './Feature/types';
+import LoginProviderButton from './LoginProviderButton';
 
 export default function Index() {
   const { colorMode } = useColorMode();
-  const { login, user, isAuthenticated, logout } = useAuth();
 
   const boxBg = colorMode === 'dark' ? 'gray.700' : 'gray.100';
 
   return (
     <Box maxWidth="72rem" ml="auto" mr="auto">
-      <Button
-        type="button"
-        onClick={isAuthenticated ? logout : () => login({ provider: 'github' })}
-      >
-        {JSON.stringify(user)}
-      </Button>
-
       <section>
         <Heading as="h1" size="xl">
           Batteries-included Next.js boilerplate
@@ -107,14 +99,14 @@ export default function Index() {
               near-perfect lighthouse audit (97/100/100/100)
             </Feature>
 
-            <Feature state={FeatureState.DONE}>
+            <Feature state={FeatureState.DONE} id="theming">
               UI via{' '}
               <ExternalLink href="//chakra-ui.com/">
                 @chakra-ui/core
               </ExternalLink>{' '}
             </Feature>
 
-            <Feature state={FeatureState.DONE}>
+            <Feature state={FeatureState.DONE} id="internationalization">
               i18n via{' '}
               <ExternalLink href="//react.i18next.com/">
                 react-i18next
@@ -176,11 +168,7 @@ export default function Index() {
               <ExternalLink href="//sentry.io">sentry</ExternalLink>
             </Feature>
 
-            <Feature
-              state={FeatureState.WIP}
-              info="supporting GitHub & Google as well as Local strategies out of
-              the box"
-            >
+            <Feature state={FeatureState.WIP} id="auth">
               auth via{' '}
               <ExternalLink href="//passportjs.org/">passport.js</ExternalLink>{' '}
               &{' '}
@@ -204,7 +192,7 @@ export default function Index() {
 
         <Box backgroundColor={boxBg} borderRadius={5} m={1} p={1}>
           <DemoComponent
-            title="<ThemeSwitch />"
+            title="Theming"
             description={
               <>
                 <ExternalLink href="//chakra-ui.com/">
@@ -223,13 +211,13 @@ export default function Index() {
                 is included
               </>,
             ]}
-            warning="until @chakra-ui/core v1 is released, your theme preference won't be automatically detected"
+            warning="until @chakra-ui/core v1 is released, automatic theme detection can be buggy"
           />
 
           <Divider borderColor="teal.500" maxWidth="90%" ml="auto" mr="auto" />
 
           <DemoComponent
-            title="<LanguageSwitch />"
+            title="Internationalization"
             description="SSR-compatible, cookie-based i18n demo - try refreshing after
             switching the language!"
             component={<LanguageSwitch mt={2} mb={2} />}
@@ -256,12 +244,29 @@ export default function Index() {
           <DemoComponent
             title="Auth"
             description="SSR-compatible, httpOnly cookie-based authentication - try refreshing after logging in!"
-            component={<h1>WIP</h1>}
+            component={[
+              <LoginProviderButton provider="github" key="github" />,
+              <br key="br" />,
+              <LoginProviderButton provider="google" key="google" />,
+            ]}
             features={[
               <>
-                implements Oauth2 via <Code>passport.js</Code>
+                implements OAuth2 via <Code>passport.js</Code>
               </>,
-              'comes with an <AuthContextProvider />, exposing both a hook (useAuth)',
+              <>
+                includes an <Code>{'<AuthContextProvider />'}</Code>, exposing a
+                hook (<Code>useAuth</Code>)
+              </>,
+              <>
+                includes a <Code>protectedResourceMiddleware</Code> as easy
+                catch-all API route protection solution
+              </>,
+              <>
+                ships with <Badge variant="outline">Google</Badge>,{' '}
+                <Badge variant="outline">Github</Badge> &{' '}
+                <Badge variant="outline">Local</Badge> <Code>passport.js</Code>{' '}
+                strategies
+              </>,
             ]}
           />
         </Box>

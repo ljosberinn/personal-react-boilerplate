@@ -2,7 +2,7 @@ import { Box, Heading, List, ListItem, Icon } from '@chakra-ui/core';
 import React from 'react';
 
 interface DemoComponentProps {
-  component: JSX.Element;
+  component: JSX.Element | JSX.Element[];
   title: string;
   description: string | JSX.Element;
   warning?: string;
@@ -16,11 +16,15 @@ export default function DemoComponent({
   warning,
   features,
 }: DemoComponentProps) {
+  const id = title.toLowerCase();
+
   return (
-    <Box as="article" m={4}>
-      <Heading as="h3" size="md">
-        {title}
-      </Heading>
+    <Box as="article" m={4} id={id}>
+      <a href={`#${id}`}>
+        <Heading as="h3" size="md">
+          # {title}
+        </Heading>
+      </a>
 
       <Box as="p" mt={2}>
         {description}

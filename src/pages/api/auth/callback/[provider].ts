@@ -6,11 +6,12 @@ import { encryptSession, setTokenCookie } from '../../../../server/auth/cookie';
 import {
   authMiddleware,
   promisifyAuthentication,
-} from '../../../../server/auth/middleware';
-import { isGithubProfile } from '../../../../server/auth/provider';
+  getProfileData,
+} from '../../../../server/auth/middlewares';
 import {
   NOT_FOUND,
   FOUND_MOVED_TEMPORARILY,
+  BAD_REQUEST,
 } from '../../../../utils/statusCodes';
 
 export default nextConnect()
@@ -22,38 +23,21 @@ export default nextConnect()
       res.status(NOT_FOUND).end();
     }
 
-    const user = await promisifyAuthentication(provider, req, res);
-    const payload = getProfileData(user);
+    let errored = false;
 
-    const token = await encryptSession(payload);
+    try {
+      const user = await promisifyAuthentication(provider, req, res);
+      const token = await encryptSession(getProfileData(user));
 
-    setTokenCookie(res, token);
+      setTokenCookie(res, token);
+    } catch (error) {
+      console.error(error);
+      errored = true;
+    }
 
-    res.writeHead(FOUND_MOVED_TEMPORARILY, { Location: '/' }).end();
+    res
+      .writeHead(errored ? BAD_REQUEST : FOUND_MOVED_TEMPORARILY, {
+        Location: '/',
+      })
+      .end();
   });
-
-const getProfileData = (data: unknown) => {
-  if (isGithubProfile(data)) {
-    const {
-      id,
-      displayName,
-      username,
-      profileUrl,
-      photos,
-      emails,
-      name,
-    } = data;
-
-    return {
-      id,
-      displayName,
-      username,
-      profileUrl,
-      photos,
-      emails,
-      name,
-    };
-  }
-
-  return data;
-};

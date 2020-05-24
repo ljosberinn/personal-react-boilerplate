@@ -30,8 +30,8 @@ export default function AuthContextProvider({
   const value = {
     login,
     logout,
-    isAuthenticated: !!user,
     user,
+    isAuthenticated: !!user,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
