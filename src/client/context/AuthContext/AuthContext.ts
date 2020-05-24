@@ -1,8 +1,9 @@
+import { Profile as GithubProfile } from 'passport-github2';
 import { createContext } from 'react';
 
-export interface User {
-  name: string;
-}
+import { GoogleProfile } from '../../../server/auth/provider/google/validator';
+
+export type User = GithubProfile | GoogleProfile;
 
 export type Provider = 'github' | 'google' | 'local';
 
