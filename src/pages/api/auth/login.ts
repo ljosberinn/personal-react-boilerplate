@@ -4,7 +4,7 @@ import { encryptSession, setTokenCookie } from '../../../server/auth/cookie';
 import {
   promisifyAuthentication,
   authMiddleware,
-} from '../../../server/auth/middleware';
+} from '../../../server/auth/middlewares';
 import { OK, UNAUTHORIZED } from '../../../utils/statusCodes';
 
 export default nextConnect()

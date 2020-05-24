@@ -5,7 +5,7 @@ import { ENABLED_PROVIDER } from '../../../constants';
 import {
   authMiddleware,
   promisifyAuthentication,
-} from '../../../server/auth/middleware';
+} from '../../../server/auth/middlewares';
 import { NOT_FOUND, BAD_REQUEST, CREATED } from '../../../utils/statusCodes';
 
 export default nextConnect()
@@ -22,9 +22,9 @@ export default nextConnect()
     res.end();
   })
   .post(async (req, res) => {
-    const { mail, password } = req.body;
+    const { username, password } = req.body;
 
-    if (!mail || !password) {
+    if (!username || !password) {
       res.status(BAD_REQUEST).end();
     }
 

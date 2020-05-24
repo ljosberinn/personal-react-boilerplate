@@ -17,7 +17,7 @@ const colorMap = {
   },
 };
 
-type ThemeSwitchProps = FlexProps;
+export type ThemeSwitchProps = FlexProps;
 
 export default function ThemeSwitch(props: ThemeSwitchProps) {
   const { colorMode, toggleColorMode } = useColorMode();
