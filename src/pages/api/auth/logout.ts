@@ -1,19 +1,10 @@
-import cookie from 'cookie';
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import { SESSION_COOKIE_NAME } from '../../../server/auth/constants';
+import { removeTokenCookie } from '../../../server/auth/cookie';
+import { FOUND_MOVED_TEMPORARILY } from '../../../utils/statusCodes';
 
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.cookies[SESSION_COOKIE_NAME]) {
-    res.setHeader(
-      'Set-Cookie',
+export default function handler(_: NextApiRequest, res: NextApiResponse) {
+  removeTokenCookie(res);
 
-      cookie.serialize(SESSION_COOKIE_NAME, '', {
-        path: '/',
-        expires: new Date(0),
-      })
-    );
-  }
-
-  res.end();
+  res.writeHead(FOUND_MOVED_TEMPORARILY, { Location: '/' }).end();
 }

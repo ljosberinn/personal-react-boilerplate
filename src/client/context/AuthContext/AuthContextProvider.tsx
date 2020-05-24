@@ -16,8 +16,10 @@ export default function AuthContextProvider({
       return;
     }
 
-    // const { mail, password } = options;
-    // todo: local login
+    await fetch('/api/auth/local', {
+      method: 'POST',
+      body: JSON.stringify(options),
+    });
   }
 
   async function logout() {
