@@ -21,7 +21,7 @@ export const setTokenCookie = (res: NextApiResponse, token: string) => {
     httpOnly: true,
     secure: IS_PROD,
     path: '/',
-    sameSite: 'strict',
+    sameSite: 'lax',
   });
 
   res.setHeader('Set-Cookie', cookie);
