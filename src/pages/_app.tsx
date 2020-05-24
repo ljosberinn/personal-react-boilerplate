@@ -1,8 +1,6 @@
-import universalLanguageDetect from '@unly/universal-language-detector';
-import nextCookies from 'next-cookies';
 import { DefaultSeo } from 'next-seo';
 import NextApp, { AppContext } from 'next/app';
-import { AppTreeType, NextApiRequest } from 'next/dist/next-server/lib/utils';
+import { AppTreeType } from 'next/dist/next-server/lib/utils';
 import { NextRouter } from 'next/router';
 import React from 'react';
 import { I18nextProvider } from 'react-i18next';
@@ -13,11 +11,10 @@ import { ErrorBoundary } from '../client/components/common/ErrorBoundary';
 import { AuthContextProvider } from '../client/context/AuthContext';
 import { User } from '../client/context/AuthContext/AuthContext';
 import {
-  fetchTranslations,
   initI18Next,
   I18nextResourceLocale,
+  detectAndGetTranslation,
 } from '../client/i18n';
-import { ENABLED_LANGUAGES, SUPPORTED_LANGUAGES_MAP } from '../constants';
 import { getSession } from '../server/auth/cookie';
 
 /**
@@ -79,22 +76,14 @@ App.getInitialProps = async function (
   props: AppInitialProps
 ): Promise<AppRenderProps> {
   const { ctx } = props;
-  const { req } = ctx;
-
-  /* i18n start */
-  const lang = universalLanguageDetect({
-    supportedLanguages: ENABLED_LANGUAGES,
-    fallbackLanguage: SUPPORTED_LANGUAGES_MAP.en,
-    acceptLanguageHeader: req?.headers['accept-language'],
-    serverCookies: nextCookies(ctx),
-  });
-
-  const defaultLocales = await fetchTranslations(lang, req);
-  /* i18n end */
 
   /* auth start */
-  const session = await getSession((req as unknown) as NextApiRequest);
+  const session = await getSession(ctx.req);
   /* auth end */
+
+  /* i18n start */
+  const { lang, defaultLocales } = await detectAndGetTranslation(ctx);
+  /* i18n end */
 
   const appProps: AppRenderProps = await NextApp.getInitialProps(props);
 
