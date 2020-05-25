@@ -2,7 +2,7 @@ import { Text, Box, Heading, List, ListItem, Icon } from '@chakra-ui/core';
 import React from 'react';
 
 interface DemoComponentProps {
-  component: JSX.Element | JSX.Element[];
+  component: JSX.Element;
   title: string;
   description: string | JSX.Element;
   warning?: string;
