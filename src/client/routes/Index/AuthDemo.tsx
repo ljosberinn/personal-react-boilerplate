@@ -19,7 +19,7 @@ import {
   Input,
   ButtonGroup,
 } from '@chakra-ui/core';
-import React, { useState, useRef, MutableRefObject, FormEvent } from 'react';
+import * as React from 'react';
 import { FaGithub, FaGoogle } from 'react-icons/fa';
 
 import { ENABLED_PROVIDER } from '../../../constants';
@@ -28,8 +28,8 @@ import { useAuth } from '../../hooks/useAuth';
 export default function AuthDemo() {
   const { login, isAuthenticated, logout } = useAuth();
 
-  const [isOpen, setIsOpen] = useState(false);
-  const firstFieldRef = useRef<HTMLInputElement | null>(null);
+  const [isOpen, setIsOpen] = React.useState(false);
+  const firstFieldRef = React.useRef<HTMLInputElement | null>(null);
 
   function toggle() {
     setIsOpen(!isOpen);
@@ -118,15 +118,15 @@ export default function AuthDemo() {
 }
 
 interface FormProps {
-  firstFieldRef: MutableRefObject<HTMLInputElement | null>;
+  firstFieldRef: React.MutableRefObject<HTMLInputElement | null>;
   onCancel: () => void;
 }
 
 function Form({ firstFieldRef, onCancel }: FormProps) {
   const { login } = useAuth();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = React.useState(false);
 
-  async function handleSubmit(event: FormEvent) {
+  async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
 
     const start = Date.now();
@@ -186,8 +186,8 @@ function Form({ firstFieldRef, onCancel }: FormProps) {
 }
 
 function AuthenticatedDummyRequest() {
-  const [loading, setLoading] = useState(false);
-  const count = useRef(0);
+  const [loading, setLoading] = React.useState(false);
+  const count = React.useRef(0);
 
   async function handleRequestClick() {
     if (count.current >= 10) {

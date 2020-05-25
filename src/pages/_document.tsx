@@ -5,7 +5,7 @@ import NextDocument, {
   NextScript,
   DocumentContext,
 } from 'next/document';
-import React from 'react';
+import * as React from 'react';
 
 export default class Document extends NextDocument {
   static async getInitialProps(ctx: DocumentContext) {

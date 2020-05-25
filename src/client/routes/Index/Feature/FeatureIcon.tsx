@@ -1,5 +1,5 @@
 import { Tooltip, Icon } from '@chakra-ui/core';
-import React from 'react';
+import * as React from 'react';
 
 import { FeatureState } from './types';
 

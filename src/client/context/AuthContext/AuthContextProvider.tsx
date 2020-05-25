@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, useState } from 'react';
+import * as React from 'react';
 
 import {
   AuthContext,
@@ -7,7 +7,7 @@ import {
   LocalLoginOptions,
 } from './AuthContext';
 
-export type AuthContextProviderProps = PropsWithChildren<{
+export type AuthContextProviderProps = React.PropsWithChildren<{
   session: User | null;
 }>;
 
@@ -15,7 +15,7 @@ export default function AuthContextProvider({
   children,
   session,
 }: AuthContextProviderProps) {
-  const [user, setUser] = useState<User | null>(session);
+  const [user, setUser] = React.useState<User | null>(session);
 
   async function login(options: LoginOptions) {
     if ('provider' in options) {

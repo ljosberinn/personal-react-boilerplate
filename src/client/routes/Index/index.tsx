@@ -9,7 +9,7 @@ import {
   useColorMode,
   Badge,
 } from '@chakra-ui/core';
-import React from 'react';
+import * as React from 'react';
 import { FaTwitter, FaGithub, FaGlobe } from 'react-icons/fa';
 
 import { REPOSITORY_LINK } from '../../../constants';
