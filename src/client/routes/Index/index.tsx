@@ -16,10 +16,11 @@ import { REPOSITORY_LINK } from '../../../constants';
 import { ExternalLink } from '../../components/common/ExternalLink';
 import { LanguageSwitch } from '../../components/common/LanguageSwitch';
 import { ThemeSwitch } from '../../components/common/ThemeSwitch';
+import { ThemeSwitchAlt } from '../../components/common/ThemeSwitchAlt';
+import AuthDemo from './AuthDemo';
 import DemoComponent from './DemoComponent';
 import { Feature } from './Feature';
 import { FeatureState } from './Feature/types';
-import LoginProviderButton from './LoginProviderButton';
 
 export default function Index() {
   const { colorMode } = useColorMode();
@@ -192,63 +193,9 @@ export default function Index() {
 
         <Box backgroundColor={boxBg} borderRadius={5} m={1} p={1}>
           <DemoComponent
-            title="Theming"
-            description={
-              <>
-                <ExternalLink href="//chakra-ui.com/">
-                  @chakra-ui/core
-                </ExternalLink>{' '}
-                components are automatically dark-mode compatible
-              </>
-            }
-            component={<ThemeSwitch mt={2} mb={2} />}
-            features={[
-              <>
-                a premade component using{' '}
-                <ExternalLink href="//react-icons.netlify.com/">
-                  <Code>react-icons</Code>
-                </ExternalLink>{' '}
-                is included
-              </>,
-            ]}
-            warning="until @chakra-ui/core v1 is released, automatic theme detection can be buggy"
-          />
-
-          <Divider borderColor="teal.500" maxWidth="90%" ml="auto" mr="auto" />
-
-          <DemoComponent
-            title="Internationalization"
-            description="SSR-compatible, cookie-based i18n demo - try refreshing after
-            switching the language!"
-            component={<LanguageSwitch mt={2} mb={2} />}
-            features={[
-              <>
-                a premade component using{' '}
-                <ExternalLink href="//github.com/umidbekkarimov/react-flag-kit">
-                  <Code>react-flag-kit</Code>
-                </ExternalLink>{' '}
-                is included
-              </>,
-              <>
-                a single request will be made to the <Code>/api/i18n</Code>{' '}
-                endpoint
-              </>,
-              "previously fetched bundles won't be refetched",
-              'serverless-compatible; all assets are automatically bundled at build time',
-            ]}
-            warning="only commonly used components will be translated; the boilerplate doesn't ship i18n for this throwaway index"
-          />
-
-          <Divider borderColor="teal.500" maxWidth="90%" ml="auto" mr="auto" />
-
-          <DemoComponent
             title="Auth"
             description="SSR-compatible, httpOnly cookie-based authentication - try refreshing after logging in!"
-            component={[
-              <LoginProviderButton provider="github" key="github" />,
-              <br key="br" />,
-              <LoginProviderButton provider="google" key="google" />,
-            ]}
+            component={<AuthDemo />}
             features={[
               <>
                 implements OAuth2 via <Code>passport.js</Code>
@@ -269,8 +216,78 @@ export default function Index() {
               </>,
             ]}
           />
+
+          <Divider
+            borderColor="teal.500"
+            maxWidth="90%"
+            ml="auto"
+            mr="auto"
+            mt={8}
+            mb={8}
+          />
+
+          <DemoComponent
+            title="Internationalization"
+            description="SSR-compatible, cookie-based i18n demo - try refreshing after switching the language!"
+            component={<LanguageSwitch mt={2} mb={2} />}
+            features={[
+              <>
+                a premade component using{' '}
+                <ExternalLink href="//github.com/umidbekkarimov/react-flag-kit">
+                  <Code>react-flag-kit</Code>
+                </ExternalLink>{' '}
+                is included
+              </>,
+              <>
+                a single request will be made to the <Code>/api/i18n</Code>{' '}
+                endpoint
+              </>,
+              "previously fetched bundles won't be refetched",
+              'serverless-compatible; all assets are automatically bundled at build time',
+            ]}
+            warning="only commonly used components will be translated; the boilerplate doesn't ship i18n for this throwaway index"
+          />
+
+          <Divider
+            borderColor="teal.500"
+            maxWidth="90%"
+            ml="auto"
+            mr="auto"
+            mt={8}
+            mb={8}
+          />
+
+          <DemoComponent
+            title="Theming"
+            description={
+              <>
+                <ExternalLink href="//chakra-ui.com/">
+                  @chakra-ui/core
+                </ExternalLink>{' '}
+                components are automatically dark-mode compatible
+              </>
+            }
+            component={
+              <Stack isInline>
+                <ThemeSwitch mt={2} mb={2} />
+                <ThemeSwitchAlt ml={2} />
+              </Stack>
+            }
+            features={[
+              <>
+                two premade components using{' '}
+                <ExternalLink href="//react-icons.netlify.com/">
+                  <Code>react-icons</Code>
+                </ExternalLink>{' '}
+                are included
+              </>,
+            ]}
+            warning="until @chakra-ui/core v1 is released, automatic theme detection can be buggy"
+          />
         </Box>
       </Box>
+
+      <Box as="footer">MIT (c) @ljosberinn</Box>
     </Box>
   );
 }
