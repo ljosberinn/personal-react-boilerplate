@@ -1,4 +1,5 @@
-import Sentry, { BrowserOptions } from '@sentry/browser';
+import * as Sentry from '@sentry/browser';
+import { BrowserOptions } from '@sentry/browser';
 import { Debug } from '@sentry/integrations';
 import Cookie from 'js-cookie';
 
