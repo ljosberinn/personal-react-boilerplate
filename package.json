@@ -19,7 +19,7 @@
     "@unly/universal-language-detector": "^2.0.3",
     "@zeit/next-source-maps": "^0.0.4-canary.1",
     "emotion-theming": "^10.0.27",
-    "i18next": "^19.4.4",
+    "i18next": "^19.4.5",
     "js-cookie": "^2.2.1",
     "next": "9.4.1",
     "next-absolute-url": "^1.2.2",
