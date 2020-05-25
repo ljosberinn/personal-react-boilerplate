@@ -1,10 +1,10 @@
 import { Box } from '@chakra-ui/core';
-import * as React from 'react';
+import React, { PropsWithChildren } from 'react';
 
 import FeatureIcon from './FeatureIcon';
 import { FeatureState } from './types';
 
-type FeatureProps = React.PropsWithChildren<{
+type FeatureProps = PropsWithChildren<{
   state: FeatureState;
   info?: string;
   id?: string;

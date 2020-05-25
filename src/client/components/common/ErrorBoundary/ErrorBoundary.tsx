@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { Component } from 'react';
 
 import sentry from '../../../../utils/sentry';
 
@@ -8,7 +8,7 @@ interface ErrorBoundaryProps {
   onErrorMessage?: JSX.Element;
 }
 
-export default class ErrorBoundary extends React.Component<ErrorBoundaryProps> {
+export default class ErrorBoundary extends Component<ErrorBoundaryProps> {
   state = {
     hasError: false,
     errorEventId: undefined,

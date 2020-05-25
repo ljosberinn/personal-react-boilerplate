@@ -1,5 +1,5 @@
 import i18n from 'i18next';
-import * as React from 'react';
+import React from 'react';
 
 import { render, fireEvent, waitFor } from '../../../../../testUtils';
 import { ENABLED_LANGUAGES } from '../../../../constants';

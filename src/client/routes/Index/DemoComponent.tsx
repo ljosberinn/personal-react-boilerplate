@@ -1,5 +1,5 @@
 import { Text, Box, Heading, List, ListItem, Icon } from '@chakra-ui/core';
-import * as React from 'react';
+import React from 'react';
 
 interface DemoComponentProps {
   component: JSX.Element;

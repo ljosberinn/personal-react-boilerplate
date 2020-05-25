@@ -2,7 +2,7 @@ import { DefaultSeo } from 'next-seo';
 import NextApp, { AppContext } from 'next/app';
 import { AppTreeType } from 'next/dist/next-server/lib/utils';
 import { NextRouter } from 'next/router';
-import * as React from 'react';
+import React from 'react';
 import { I18nextProvider } from 'react-i18next';
 
 import SEO from '../../next-seo.config';

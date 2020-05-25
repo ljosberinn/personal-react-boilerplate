@@ -1,7 +1,7 @@
 import { Link, Icon, LinkProps } from '@chakra-ui/core';
-import * as React from 'react';
+import React, { PropsWithChildren } from 'react';
 
-type ExternalLinkProps = React.PropsWithChildren<
+type ExternalLinkProps = PropsWithChildren<
   {
     href: string;
     rel?: string;

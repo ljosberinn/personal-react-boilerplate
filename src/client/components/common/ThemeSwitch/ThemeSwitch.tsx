@@ -1,5 +1,5 @@
 import { Switch, useColorMode, Flex, FlexProps, Box } from '@chakra-ui/core';
-import * as React from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaSun, FaMoon } from 'react-icons/fa';
 

@@ -4,11 +4,11 @@ import {
   CSSReset,
   Box,
 } from '@chakra-ui/core';
-import * as React from 'react';
+import React, { PropsWithChildren } from 'react';
 
 import theme from './theme';
 
-export default function Layout({ children }: React.PropsWithChildren<{}>) {
+export default function Layout({ children }: PropsWithChildren<{}>) {
   return (
     <>
       <ThemeProvider theme={theme}>

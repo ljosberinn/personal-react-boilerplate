@@ -1,6 +1,6 @@
 import { ThemeProvider, ColorModeProvider } from '@chakra-ui/core';
 import { render as rtlRender } from '@testing-library/react';
-import * as React from 'react';
+import React, { cloneElement, ReactNode } from 'react';
 import { I18nextProvider, I18nContext } from 'react-i18next';
 
 import i18n from './i18n';
@@ -14,7 +14,7 @@ type TestOptions = {
   wrapper?: typeof ChildrenPassthrough;
 };
 
-function ChildrenPassthrough({ children }: { children: React.ReactNode }) {
+function ChildrenPassthrough({ children }: { children: ReactNode }) {
   return <>{children}</>;
 }
 
@@ -35,7 +35,7 @@ function render(
                 {({ t }) =>
                   // this allows usage of render(<Component some="prop" />) in tests
                   // translation won't break because the actual tFunction will be injected if necessary
-                  React.cloneElement(component, {
+                  cloneElement(component, {
                     t: includeTranslation ? t : undefined,
                   })
                 }

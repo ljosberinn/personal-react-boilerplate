@@ -1,5 +1,5 @@
 import { renderHook } from '@testing-library/react-hooks';
-import * as React from 'react';
+import React from 'react';
 
 import { AuthContextProvider } from '../../context/AuthContext';
 import { AuthContextProviderProps } from '../../context/AuthContext/AuthContextProvider';
