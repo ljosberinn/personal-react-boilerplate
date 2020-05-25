@@ -23,7 +23,7 @@ export default nextConnect()
     res.end();
   })
   // local login route
-  .post(async (req, res) => {
+  .post((req, res) => {
     if (req.body.length === 0) {
       res.status(BAD_REQUEST).end();
     }

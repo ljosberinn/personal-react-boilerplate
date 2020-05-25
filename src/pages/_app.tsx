@@ -63,7 +63,7 @@ export default function App({ Component, pageProps }: AppRenderProps) {
         <I18nextProvider i18n={i18nInstance}>
           <AuthContextProvider session={pageProps.session}>
             <Layout>
-              <Component />
+              <Component {...pageProps} />
             </Layout>
           </AuthContextProvider>
         </I18nextProvider>

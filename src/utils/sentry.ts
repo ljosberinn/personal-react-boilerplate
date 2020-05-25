@@ -1,11 +1,10 @@
-import * as Sentry from '@sentry/browser';
-import { BrowserOptions } from '@sentry/browser';
+import Sentry, { BrowserOptions } from '@sentry/browser';
 import { Debug } from '@sentry/integrations';
 import Cookie from 'js-cookie';
 
 import { IS_PROD, IS_BROWSER } from '../constants';
 
-export default function (release = process.env.SENTRY_RELEASE) {
+export default function setupSentry(release = process.env.SENTRY_RELEASE) {
   const sentryOptions: BrowserOptions = {
     dsn: process.env.SENTRY_DSN,
     release,

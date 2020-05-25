@@ -1,6 +1,9 @@
 module.exports = {
   extends: ['react-app', 'kentcdodds/jest'],
   rules: {
+    'no-alert': 'error',
+    'no-console': 'warn',
+    'require-await': 'error',
     'import/order': [
       'warn',
       {

@@ -12,7 +12,7 @@ type SSRCompatibleRequest = NextApiRequest | IncomingMessage;
 export const encryptSession = (session: unknown) =>
   seal(session, TOKEN_SECRET, defaults);
 
-export const getSession = async (req: SSRCompatibleRequest | undefined) => {
+export const getSession = (req: SSRCompatibleRequest | undefined) => {
   if (!req) {
     return null;
   }

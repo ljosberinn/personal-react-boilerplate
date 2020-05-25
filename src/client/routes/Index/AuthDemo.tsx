@@ -191,6 +191,7 @@ function AuthenticatedDummyRequest() {
 
   async function handleRequestClick() {
     if (count.current >= 10) {
+      // eslint-disable-next-line no-alert
       alert("Sorry, you're doing this too often.");
       return;
     }
@@ -215,6 +216,7 @@ function AuthenticatedDummyRequest() {
       setTimeout(
         () => {
           setLoading(false);
+          // eslint-disable-next-line no-alert
           alert(JSON.stringify(newResponse));
         },
         diff >= 750 ? 0 : 750 - diff

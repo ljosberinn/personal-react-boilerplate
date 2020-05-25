@@ -5,7 +5,7 @@ import { BAD_REQUEST, CREATED } from '../../../utils/statusCodes';
 
 export default nextConnect()
   .use(authMiddleware)
-  .post(async (req, res) => {
+  .post((req, res) => {
     if (req.body.length === 0) {
       res.status(BAD_REQUEST).end();
     }
