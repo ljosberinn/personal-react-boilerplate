@@ -1,5 +1,9 @@
+import { Provider } from './client/context/AuthContext/AuthContext';
+
 export const REPOSITORY_LINK = process.env.NEXT_PUBLIC_REPO_LINK!;
-export const ENABLED_PROVIDER = process.env.NEXT_PUBLIC_ENABLED_PROVIDER!;
+export const ENABLED_PROVIDER = process.env.NEXT_PUBLIC_ENABLED_PROVIDER!.split(
+  ','
+) as Provider[];
 
 /* i18n start */
 export const ENABLED_LANGUAGES = process.env.NEXT_PUBLIC_ENABLED_LANGUAGES!.split(
