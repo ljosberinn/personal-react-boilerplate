@@ -1,8 +1,15 @@
 import React, { PropsWithChildren, useState } from 'react';
 
-import { AuthContext, User, LoginOptions } from './AuthContext';
+import {
+  AuthContext,
+  User,
+  LoginOptions,
+  LocalLoginOptions,
+} from './AuthContext';
 
-type AuthContextProviderProps = PropsWithChildren<{ session: User | null }>;
+export type AuthContextProviderProps = PropsWithChildren<{
+  session: User | null;
+}>;
 
 export default function AuthContextProvider({
   children,
@@ -27,10 +34,26 @@ export default function AuthContextProvider({
     setUser(null);
   }
 
+  async function signup(options: LocalLoginOptions) {
+    try {
+      const response = await fetch('/api/auth/signup', {
+        method: 'POST',
+        body: JSON.stringify(options),
+      });
+
+      const json = await response.json();
+
+      setUser(json);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   const value = {
+    user,
+    signup,
     login,
     logout,
-    user,
     isAuthenticated: !!user,
   };
 

@@ -19,10 +19,11 @@ export interface LocalLoginOptions {
 export type LoginOptions = ExternalLoginOptions | LocalLoginOptions;
 
 export interface AuthContextDefinition {
+  user: User | null;
+  signup: (options: LocalLoginOptions) => Promise<void>;
   login: (options: LoginOptions) => Promise<void>;
   logout: () => void;
   isAuthenticated: boolean;
-  user: User | null;
 }
 
 export const AuthContext = createContext<AuthContextDefinition | null>(null);
