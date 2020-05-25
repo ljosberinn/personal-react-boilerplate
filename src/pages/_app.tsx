@@ -75,7 +75,10 @@ export default function App({ Component, pageProps }: AppRenderProps) {
 App.getInitialProps = async function (
   props: AppInitialProps
 ): Promise<AppRenderProps> {
-  const { ctx } = props;
+  const {
+    ctx,
+    Component: { getInitialProps },
+  } = props;
 
   /* auth start */
   const session = await getSession(ctx.req);
@@ -86,6 +89,12 @@ App.getInitialProps = async function (
   /* i18n end */
 
   const appProps: AppRenderProps = await NextApp.getInitialProps(props);
+  const componentPageProps = getInitialProps ? await getInitialProps(ctx) : {};
 
-  return { ...appProps, pageProps: { defaultLocales, lang, session } };
+  const defaultPageProps = { defaultLocales, lang, session };
+
+  return {
+    ...appProps,
+    pageProps: { ...defaultPageProps, ...componentPageProps },
+  };
 };
