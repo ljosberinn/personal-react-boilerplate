@@ -8,7 +8,7 @@ describe('<ThemeSwitch />', () => {
     render(<ThemeSwitch />);
   });
 
-  it('it indicates the current theme visually', () => {
+  it('indicates the current theme visually', () => {
     const { getByTestId } = render(<ThemeSwitch />);
 
     const input = getByTestId('theme-switch').querySelector('input')!;
