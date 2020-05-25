@@ -6,10 +6,11 @@ import {
   authMiddleware,
   promisifyAuthentication,
 } from '../../../server/auth/middlewares';
-import { NOT_FOUND, BAD_REQUEST, CREATED } from '../../../utils/statusCodes';
+import { NOT_FOUND, BAD_REQUEST, OK } from '../../../utils/statusCodes';
 
 export default nextConnect()
   .use(authMiddleware)
+  // redirect login route
   .get(async (req, res) => {
     const provider = req.query.provider as Provider;
 
@@ -21,12 +22,22 @@ export default nextConnect()
 
     res.end();
   })
+  // local login route
   .post(async (req, res) => {
-    const { username, password } = req.body;
-
-    if (!username || !password) {
+    if (req.body.length === 0) {
       res.status(BAD_REQUEST).end();
     }
 
-    res.status(CREATED).end();
+    // req.body might still be anything
+    try {
+      const { username, password } = JSON.parse(req.body);
+
+      if (!username || !password) {
+        res.status(BAD_REQUEST).end();
+      }
+
+      res.status(OK).end();
+    } catch (error) {
+      res.status(BAD_REQUEST).end();
+    }
   });
