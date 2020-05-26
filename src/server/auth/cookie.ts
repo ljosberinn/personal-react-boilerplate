@@ -12,6 +12,9 @@ type SSRCompatibleRequest = NextApiRequest | IncomingMessage;
 export const encryptSession = (session: unknown) =>
   seal(session, TOKEN_SECRET, defaults);
 
+/**
+ * extracts & decrypts the session cookie, if existing
+ */
 export const getSession = (req: SSRCompatibleRequest | undefined) => {
   if (!req) {
     return null;
