@@ -47,8 +47,8 @@ export default function AuthDemo() {
   }
 
   const providerButtonProps = {
-    width: ['initial', '100%', '100%', 'initial'],
     variantColor: 'teal',
+    width: ['initial', '100%', '100%', 'initial'],
   };
 
   return (
@@ -137,7 +137,10 @@ function Form({ firstFieldRef, onCancel }: FormProps) {
     setLoading(true);
 
     try {
-      await login({ username: 'ljosberinn', password: 'next-with-batteries!' });
+      await login({
+        password: 'next-with-batteries!',
+        username: 'ljosberinn',
+      });
     } catch (error) {
       console.error(error);
     } finally {

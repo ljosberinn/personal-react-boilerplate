@@ -8,7 +8,8 @@
     "test": "jest --watch",
     "test:ci": "jest --ci",
     "postinstall": "yarn-deduplicate -l",
-    "lint": "eslint src ./.eslintrc.js && eslint pages ./.eslintrc.js"
+    "lint": "eslint src && eslint pages",
+    "lint-fix": "eslint src --fix && eslint pages --fix && prettier --write src && prettier --write pages"
   },
   "dependencies": {
     "@chakra-ui/core": "^0.8.0",
@@ -56,6 +57,7 @@
     "@types/react-dom": "^16.9.8",
     "@typescript-eslint/eslint-plugin": "^3.0.1",
     "@typescript-eslint/parser": "^3.0.1",
+    "eslint-plugin-sort-keys-fix": "^1.1.1",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^26.0.1",
     "cookie": "^0.4.1",

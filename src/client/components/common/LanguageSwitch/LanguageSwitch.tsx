@@ -90,10 +90,10 @@ export default function LanguageSwitch(props: LanguageSwitchProps) {
           <MenuItem
             as={ExternalLink}
             _focus={{
-              boxShadow: 'unset',
               // see https://github.com/chakra-ui/chakra-ui/blob/master/packages/chakra-ui/src/Menu/styles.js#L38
               backgroundColor:
                 colorMode === 'light' ? 'gray.100' : 'whiteAlpha.100',
+              boxShadow: 'unset',
             }}
             {...{ href: REPOSITORY_LINK }}
           >

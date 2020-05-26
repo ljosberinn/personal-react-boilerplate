@@ -24,8 +24,8 @@ export default function AuthContextProvider({
     }
 
     const response = await fetch('/api/auth/login', {
-      method: 'POST',
       body: JSON.stringify(options),
+      method: 'POST',
     });
 
     const json = await response.json();
@@ -41,8 +41,8 @@ export default function AuthContextProvider({
   async function signup(options: LocalLoginOptions) {
     try {
       const response = await fetch('/api/auth/signup', {
-        method: 'POST',
         body: JSON.stringify(options),
+        method: 'POST',
       });
 
       const json = await response.json();
@@ -54,11 +54,11 @@ export default function AuthContextProvider({
   }
 
   const value = {
-    user,
-    signup,
+    isAuthenticated: !!user,
     login,
     logout,
-    isAuthenticated: !!user,
+    signup,
+    user,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

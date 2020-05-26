@@ -5,8 +5,8 @@ import { FeatureState } from './types';
 
 const iconMap = {
   done: { color: 'green.500', icon: 'check-circle', label: 'done' },
-  wip: { color: 'orange.500', icon: 'time', label: 'work in progress' },
   nyi: { color: 'red.500', icon: 'warning', label: 'not yet implemented' },
+  wip: { color: 'orange.500', icon: 'time', label: 'work in progress' },
 };
 
 interface FeatureIconProps {

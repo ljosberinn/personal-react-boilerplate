@@ -7,10 +7,10 @@ interface LocalDBDataset extends Omit<Profile, 'provider'> {
 
 const localDB: LocalDBDataset[] = [
   {
-    username: 'ljosberinn',
-    password: 'next-with-batteries!',
-    id: '1',
     displayName: 'gerrit alex',
+    id: '1',
+    password: 'next-with-batteries!',
+    username: 'ljosberinn',
   },
 ];
 

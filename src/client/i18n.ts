@@ -26,27 +26,29 @@ export const initI18Next = ({
   const i18nInstance = i18n.use(initReactI18next);
 
   i18nInstance.init({
-    lng: lang,
+    cleanCode: true,
+    debug: !IS_PROD,
+    defaultNS: defaultNamespace,
     fallbackLng:
       lang === SUPPORTED_LANGUAGES_MAP.en
         ? SUPPORTED_LANGUAGES_MAP.de
         : SUPPORTED_LANGUAGES_MAP.en,
-    debug: !IS_PROD,
-    lowerCaseLng: true,
+
     interpolation: {
       escapeValue: false, // not needed with react
     },
-    cleanCode: true,
-    load: 'languageOnly', // Remove if you want to use localization (en-US, en-GB)
+    lng: lang,
+    // remove if you want to use localization (en-US, en-GB)
+    load: 'languageOnly',
+    lowerCaseLng: true,
+    ns: [defaultNamespace], // removes 'translation' default key from backend query,
+    react: {
+      useSuspense: false, // not compatible with SSR
+    },
     resources: {
       [lang]: defaultLocales,
     },
-    ns: [defaultNamespace], // removes 'translation' default key from backend query,
-    defaultNS: defaultNamespace,
     whitelist: ENABLED_LANGUAGES,
-    react: {
-      useSuspense: false, // Not compatible with SSR
-    },
   });
 
   return i18nInstance;
@@ -167,16 +169,16 @@ export const detectAndGetTranslation = async (ctx: NextPageContext) => {
   const { req } = ctx;
 
   const lang = universalLanguageDetect({
-    supportedLanguages: ENABLED_LANGUAGES,
-    fallbackLanguage: SUPPORTED_LANGUAGES_MAP.en,
     acceptLanguageHeader: req?.headers['accept-language'],
+    fallbackLanguage: SUPPORTED_LANGUAGES_MAP.en,
     serverCookies: nextCookies(ctx),
+    supportedLanguages: ENABLED_LANGUAGES,
   });
 
   const defaultLocales = await fetchTranslations(lang, req);
 
   return {
-    lang,
     defaultLocales,
+    lang,
   };
 };

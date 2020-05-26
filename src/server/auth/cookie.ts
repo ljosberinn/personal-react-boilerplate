@@ -27,13 +27,13 @@ export const getSession = (req: SSRCompatibleRequest | undefined) => {
 
 export const setTokenCookie = (res: NextApiResponse, token: string) => {
   const cookie = serialize(SESSION_COOKIE_NAME, token, {
-    maxAge: MAX_AGE,
     expires: new Date(Date.now() + MAX_AGE),
     httpOnly: true,
-    secure: IS_PROD,
+    maxAge: MAX_AGE,
     path: '/',
     // required for OAuth2 to work instantly in FF
     sameSite: 'lax',
+    secure: IS_PROD,
   });
 
   res.setHeader('Set-Cookie', cookie);

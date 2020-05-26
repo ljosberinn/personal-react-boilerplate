@@ -7,13 +7,13 @@ const gray = 'gray.500';
 const yellow = 'yellow.500';
 
 const colorMap = {
-  sun: {
-    light: yellow,
-    dark: gray,
-  },
   moon: {
-    light: gray,
     dark: yellow,
+    light: gray,
+  },
+  sun: {
+    dark: gray,
+    light: yellow,
   },
 };
 

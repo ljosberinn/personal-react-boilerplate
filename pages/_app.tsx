@@ -68,9 +68,9 @@ App.getInitialProps = async function (
   return {
     ...appProps,
     pageProps: {
-      session,
       defaultLocales,
       lang,
+      session,
     },
   };
 
