@@ -6,38 +6,21 @@ import {
   authMiddleware,
   promisifyAuthentication,
 } from '../../../server/auth/middlewares';
-import { NOT_FOUND, BAD_REQUEST, OK } from '../../../utils/statusCodes';
+import { NOT_FOUND, INTERNAL_SERVER_ERROR } from '../../../utils/statusCodes';
 
 export default nextConnect()
   .use(authMiddleware)
-  // redirect login route
   .get(async (req, res) => {
     const provider = req.query.provider as Provider;
 
     if (!provider || !ENABLED_PROVIDER.includes(provider)) {
-      res.status(NOT_FOUND).end();
+      return res.status(NOT_FOUND).end();
     }
 
-    await promisifyAuthentication(provider, req, res);
-
-    res.end();
-  })
-  // local login route
-  .post((req, res) => {
-    if (req.body.length === 0) {
-      res.status(BAD_REQUEST).end();
-    }
-
-    // req.body might still be anything
     try {
-      const { username, password } = JSON.parse(req.body);
-
-      if (!username || !password) {
-        res.status(BAD_REQUEST).end();
-      }
-
-      res.status(OK).end();
+      await promisifyAuthentication(provider, req, res);
     } catch (error) {
-      res.status(BAD_REQUEST).end();
+      console.error(error);
+      res.status(INTERNAL_SERVER_ERROR).end();
     }
   });

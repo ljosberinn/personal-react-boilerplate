@@ -23,10 +23,14 @@ export default function AuthContextProvider({
       return;
     }
 
-    await fetch('/api/auth/local', {
+    const response = await fetch('/api/auth/login', {
       method: 'POST',
       body: JSON.stringify(options),
     });
+
+    const json = await response.json();
+
+    setUser(json);
   }
 
   async function logout() {
