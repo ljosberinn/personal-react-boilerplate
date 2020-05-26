@@ -1,7 +1,17 @@
+import { Profile } from 'passport';
 import { Profile as GithubProfile } from 'passport-github2';
 import { createContext } from 'react';
 
-import { GoogleProfile } from '../../../server/auth/provider/google/validator';
+export interface GoogleProfile extends Profile {
+  email: string;
+  email_verified: boolean;
+  family_name: string;
+  given_name: string;
+  language: string;
+  picture: string;
+  sub: string;
+  verified: boolean;
+}
 
 export type User = GithubProfile | GoogleProfile;
 

@@ -5,8 +5,8 @@ import {
   VerifyCallback,
 } from 'passport-google-oauth2';
 
-import { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } from '../../env';
-import { RawResponse } from '../../middlewares';
+import { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } from '../env';
+import { RawResponse } from '../middlewares';
 
 const verify: VerifyFunctionWithRequest = (
   _: Request,

@@ -1,8 +1,8 @@
 import { Strategy as GithubStrategy } from 'passport-github2';
 import { VerifyFunction, VerifyCallback } from 'passport-oauth2';
 
-import { GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET } from '../../env';
-import { RawResponse } from '../../middlewares';
+import { GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET } from '../env';
+import { RawResponse } from '../middlewares';
 
 const verify: VerifyFunction = (
   // @ts-ignore
