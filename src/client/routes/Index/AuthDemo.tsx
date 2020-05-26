@@ -19,21 +19,37 @@ import {
   Input,
   ButtonGroup,
 } from '@chakra-ui/core';
-import React, { useState, useRef, MutableRefObject, FormEvent } from 'react';
+import React, {
+  useState,
+  useRef,
+  MutableRefObject,
+  FormEvent,
+  useEffect,
+} from 'react';
 import { FaGithub, FaGoogle } from 'react-icons/fa';
 
 import { ENABLED_PROVIDER } from '../../../constants';
 import { useAuth } from '../../hooks/useAuth';
 
 export default function AuthDemo() {
-  const { login, isAuthenticated, logout } = useAuth();
-
   const [isOpen, setIsOpen] = useState(false);
   const firstFieldRef = useRef<HTMLInputElement | null>(null);
+  const { login, isAuthenticated, logout } = useAuth();
+
+  useEffect(() => {
+    if (isAuthenticated && isOpen) {
+      setIsOpen(false);
+    }
+  }, [isAuthenticated, isOpen]);
 
   function toggle() {
     setIsOpen(!isOpen);
   }
+
+  const providerButtonProps = {
+    width: ['initial', '100%', '100%', 'initial'],
+    variantColor: 'teal',
+  };
 
   return (
     <Flex
@@ -41,48 +57,35 @@ export default function AuthDemo() {
       flexDirection={['row', 'column', 'column', 'row']}
     >
       <Box>
-        <Menu>
-          <MenuButton
-            as={Button}
-            width={['initial', '100%', '100%', 'initial']}
-            {...{ variantColor: 'teal' }}
-            onClick={isAuthenticated ? logout : undefined}
-          >
-            {isAuthenticated ? (
-              'Logout'
-            ) : (
-              <>
-                Choose an external provider
-                <Icon ml={2} name="chevron-down" />
-              </>
-            )}
-          </MenuButton>
-          {!isAuthenticated && (
+        {isAuthenticated ? (
+          <Button {...providerButtonProps} onClick={logout}>
+            Logout
+          </Button>
+        ) : (
+          <Menu>
+            <MenuButton as={Button} {...providerButtonProps}>
+              Choose an external provider
+              <Icon ml={2} name="chevron-down" />
+            </MenuButton>
             <MenuList>
               {ENABLED_PROVIDER.map(provider => (
                 <MenuItem
                   key={provider}
                   onClick={isAuthenticated ? logout : () => login({ provider })}
                 >
-                  {isAuthenticated ? (
-                    'Logout'
-                  ) : (
-                    <>
-                      Login via{' '}
-                      <Box
-                        as={provider === 'github' ? FaGithub : FaGoogle}
-                        ml={2}
-                        mr={2}
-                      />
-                      {provider.charAt(0).toUpperCase()}
-                      {provider.substr(1)}
-                    </>
-                  )}
+                  Login via{' '}
+                  <Box
+                    as={provider === 'github' ? FaGithub : FaGoogle}
+                    ml={2}
+                    mr={1}
+                  />
+                  {provider.charAt(0).toUpperCase()}
+                  {provider.substr(1)}
                 </MenuItem>
               ))}
             </MenuList>
-          )}
-        </Menu>
+          </Menu>
+        )}
 
         <Popover
           isOpen={isOpen}
@@ -99,6 +102,7 @@ export default function AuthDemo() {
               mt={[0, 2, 2, 0]}
               width={['initial', '100%', '100%', 'initial']}
               variantColor="teal"
+              isDisabled={isAuthenticated}
             >
               or login via your own API
             </Button>
@@ -192,8 +196,7 @@ function AuthenticatedDummyRequest() {
   async function handleRequestClick() {
     if (count.current >= 10) {
       // eslint-disable-next-line no-alert
-      alert("Sorry, you're doing this too often.");
-      return;
+      return alert("Sorry, you're doing this too often.");
     }
 
     count.current += 1;
