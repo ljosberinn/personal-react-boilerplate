@@ -8,7 +8,7 @@
     "test": "jest --watch",
     "test:ci": "jest --ci",
     "postinstall": "yarn-deduplicate -l",
-    "lint": "eslint src ./.eslintrc.js"
+    "lint": "eslint src ./.eslintrc.js && eslint pages ./.eslintrc.js"
   },
   "dependencies": {
     "@chakra-ui/core": "^0.8.0",
@@ -54,8 +54,8 @@
     "@types/passport-local": "^1.0.33",
     "@types/react": "^16.9.35",
     "@types/react-dom": "^16.9.8",
-    "@typescript-eslint/eslint-plugin": "^2.34.0",
-    "@typescript-eslint/parser": "^2.34.0",
+    "@typescript-eslint/eslint-plugin": "^3.0.1",
+    "@typescript-eslint/parser": "^3.0.1",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^26.0.1",
     "cookie": "^0.4.1",
@@ -67,7 +67,7 @@
     "eslint-plugin-import": "2.20.2",
     "eslint-plugin-jsx-a11y": "6.2.3",
     "eslint-plugin-react": "7.20.0",
-    "eslint-plugin-react-hooks": "4.0.2",
+    "eslint-plugin-react-hooks": "4.0.3",
     "husky": "^4.2.5",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^26.0.1",
@@ -76,7 +76,7 @@
     "passport-oauth2": "^1.5.0",
     "prettier": "^2.0.5",
     "react-test-renderer": "^16.13.1",
-    "typescript": "4.0.0-dev.20200524",
+    "typescript": "4.0.0-dev.20200526",
     "yarn-deduplicate": "^2.0.0"
   },
   "license": "ISC"

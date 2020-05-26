@@ -3,7 +3,7 @@ import nextConnect from 'next-connect';
 import {
   protectedResourceMiddleware,
   AuthenticatedNextApiRequest,
-} from '../../../server/auth/middlewares';
+} from '../../../src/server/auth/middlewares';
 
 export default nextConnect()
   .use(protectedResourceMiddleware)

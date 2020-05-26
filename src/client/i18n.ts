@@ -7,13 +7,13 @@ import absoluteUrl from 'next-absolute-url';
 import nextCookies from 'next-cookies';
 import { initReactI18next } from 'react-i18next';
 
+import { AppRenderProps } from '../../pages/_app';
 import {
   SUPPORTED_LANGUAGES_MAP,
   IS_PROD,
   ENABLED_LANGUAGES,
   IS_BROWSER,
 } from '../constants';
-import { AppRenderProps } from '../pages/_app';
 
 export const defaultNamespace = 'common';
 

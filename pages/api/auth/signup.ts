@@ -1,7 +1,7 @@
 import nextConnect from 'next-connect';
 
-import { authMiddleware } from '../../../server/auth/middlewares';
-import { BAD_REQUEST, CREATED } from '../../../utils/statusCodes';
+import { authMiddleware } from '../../../src/server/auth/middlewares';
+import { BAD_REQUEST, CREATED } from '../../../src/utils/statusCodes';
 
 export default nextConnect()
   .use(authMiddleware)

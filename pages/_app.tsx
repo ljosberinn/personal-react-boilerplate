@@ -5,17 +5,17 @@ import { NextRouter } from 'next/router';
 import React from 'react';
 import { I18nextProvider } from 'react-i18next';
 
-import SEO from '../../next-seo.config';
-import Layout from '../client/Layout';
-import { ErrorBoundary } from '../client/components/common/ErrorBoundary';
-import { AuthContextProvider } from '../client/context/AuthContext';
-import { User } from '../client/context/AuthContext/AuthContext';
+import SEO from '../next-seo.config';
+import Layout from '../src/client/Layout';
+import { ErrorBoundary } from '../src/client/components/common/ErrorBoundary';
+import { AuthContextProvider } from '../src/client/context/AuthContext';
+import { User } from '../src/client/context/AuthContext/AuthContext';
 import {
   initI18Next,
   I18nextResourceLocale,
   detectAndGetTranslation,
-} from '../client/i18n';
-import { getSession } from '../server/auth/cookie';
+} from '../src/client/i18n';
+import { getSession } from '../src/server/auth/cookie';
 
 /**
  * Props that are provided to the _app:getInitialProps method

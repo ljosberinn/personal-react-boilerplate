@@ -1,12 +1,15 @@
 import nextConnect from 'next-connect';
 
-import { Provider } from '../../../client/context/AuthContext/AuthContext';
-import { ENABLED_PROVIDER } from '../../../constants';
+import { Provider } from '../../../src/client/context/AuthContext/AuthContext';
+import { ENABLED_PROVIDER } from '../../../src/constants';
 import {
   authMiddleware,
   promisifyAuthentication,
-} from '../../../server/auth/middlewares';
-import { NOT_FOUND, INTERNAL_SERVER_ERROR } from '../../../utils/statusCodes';
+} from '../../../src/server/auth/middlewares';
+import {
+  NOT_FOUND,
+  INTERNAL_SERVER_ERROR,
+} from '../../../src/utils/statusCodes';
 
 export default nextConnect()
   .use(authMiddleware)
