@@ -60,7 +60,7 @@
     "cookie": "^0.4.1",
     "dotenv": "^8.2.0",
     "eslint": "^7.1.0",
-    "eslint-config-galex": "^0.1.0",
+    "eslint-config-galex": "^0.2.1",
     "husky": "^4.2.5",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^26.0.1",

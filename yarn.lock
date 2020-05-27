@@ -4478,10 +4478,10 @@ escodegen@^1.14.1:
   optionalDependencies:
     source-map "~0.6.1"
 
-eslint-config-galex@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/eslint-config-galex/-/eslint-config-galex-0.1.0.tgz#4e94a7b705347e96409bed0f5f09da7692706d5b"
-  integrity sha512-7vKKodY9uND1EGRqJsW9ny7HBTeOuQ4WR9I/BVOpIEALQN65jJUBNjOoduOibDj/i36UoDgUGfKnSQpdFV1fFQ==
+eslint-config-galex@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/eslint-config-galex/-/eslint-config-galex-0.2.1.tgz#b73522da7bd208c6f7854ec517460aa1c71b0f08"
+  integrity sha512-kwhhvPqUNeuWCYh1g71PxDV44GkQZIWvg7dekE53pYX6NqCg5PXAqCRgznCbAhrlvU0VKSOB8u69Vkcb6PlstQ==
   dependencies:
     "@typescript-eslint/eslint-plugin" "3.0.1"
     "@typescript-eslint/parser" "3.0.1"
@@ -4497,6 +4497,7 @@ eslint-config-galex@^0.1.0:
     eslint-plugin-react-hooks "4.0.3"
     eslint-plugin-sort-keys-fix "^1.1.1"
     eslint-plugin-testing-library "^3.1.3"
+    read-pkg-up "^7.0.1"
     typescript "3.9.3"
 
 eslint-config-kentcdodds@^14.13.0:

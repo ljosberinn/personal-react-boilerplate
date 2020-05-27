@@ -3,6 +3,7 @@ import { serialize, parse } from 'cookie';
 import { IncomingMessage } from 'http';
 import { NextApiRequest, NextApiResponse } from 'next';
 
+import { User } from '../../client/context/AuthContext/AuthContext';
 import { IS_PROD } from '../../constants';
 import { MAX_AGE, SESSION_COOKIE_NAME } from './authConstants';
 import { TOKEN_SECRET } from './env';
@@ -15,7 +16,9 @@ export const encryptSession = (session: unknown) =>
 /**
  * extracts & decrypts the session cookie, if existing
  */
-export const getSession = (req: SSRCompatibleRequest | undefined) => {
+export const getSession = (
+  req: SSRCompatibleRequest | undefined
+): null | Promise<User> => {
   if (!req) {
     return null;
   }

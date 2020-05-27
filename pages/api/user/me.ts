@@ -10,5 +10,5 @@ export default nextConnect()
   // TODO: find better way for types here?
   // @ts-expect-error
   .get((req: AuthenticatedNextApiRequest, res) => {
-    res.json({ ...req.session });
+    res.json(req.session);
   });
