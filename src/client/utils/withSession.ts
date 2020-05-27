@@ -10,17 +10,12 @@ export interface WithSessionOptions {
   /**
    * Response Status Code, defaults to 302
    */
-  status: number;
+  status?: number;
   /**
    * Response Headers, defaults to a Redirect to /
    */
   headers?: OutgoingHttpHeaders;
 }
-
-const defaultOptions = {
-  headers: { Location: '/' },
-  status: FOUND_MOVED_TEMPORARILY,
-};
 
 type AuthenticatedGetServerSideProps<
   P extends { [key: string]: any } = { [key: string]: any },
@@ -32,7 +27,10 @@ type AuthenticatedGetServerSideProps<
 
 export const withSession = (
   handler: AuthenticatedGetServerSideProps,
-  { headers, status }: WithSessionOptions = defaultOptions
+  {
+    headers = { Location: '/' },
+    status = FOUND_MOVED_TEMPORARILY,
+  }: WithSessionOptions = {}
 ) => async (ctx: GetServerSidePropsContext) => {
   const session = await getSession(ctx.req);
 
