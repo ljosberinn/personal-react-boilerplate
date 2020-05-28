@@ -1,6 +1,6 @@
 import nextConnect from 'next-connect';
 
-import { protectedResourceMiddleware } from '../../../src/server/auth/middlewares';
+import { protectedResourceMiddleware } from '../../../../src/server/auth/middlewares';
 
 export default nextConnect()
   .use(protectedResourceMiddleware)

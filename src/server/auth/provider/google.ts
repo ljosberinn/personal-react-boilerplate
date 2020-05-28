@@ -23,7 +23,7 @@ const verify: VerifyFunctionWithRequest = (
 
 export default new GoogleStrategy(
   {
-    callbackURL: '/api/auth/callback/google',
+    callbackURL: '/api/v1/auth/callback/google',
     clientID: GOOGLE_CLIENT_ID,
     clientSecret: GOOGLE_CLIENT_SECRET,
     passReqToCallback: true,

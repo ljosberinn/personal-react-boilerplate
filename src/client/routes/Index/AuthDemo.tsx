@@ -211,7 +211,7 @@ function AuthenticatedDummyRequest() {
     let newResponse: object | null = null;
 
     try {
-      const response = await fetch('/api/user/me');
+      const response = await fetch('/api/v1/user/me');
       newResponse = await response.json();
     } catch (error) {
       console.error(error);

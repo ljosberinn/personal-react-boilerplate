@@ -19,11 +19,11 @@ export default function AuthContextProvider({
 
   async function login(options: LoginOptions) {
     if ('provider' in options) {
-      window.location.href = `/api/auth/${options.provider}`;
+      window.location.href = `/api/v1/auth/${options.provider}`;
       return;
     }
 
-    const response = await fetch('/api/auth/login', {
+    const response = await fetch('/api/v1/auth/login', {
       body: JSON.stringify(options),
       method: 'POST',
     });
@@ -34,13 +34,13 @@ export default function AuthContextProvider({
   }
 
   async function logout() {
-    await fetch('/api/auth/logout');
+    await fetch('/api/v1/auth/logout');
     setUser(null);
   }
 
   async function signup(options: LocalLoginOptions) {
     try {
-      const response = await fetch('/api/auth/signup', {
+      const response = await fetch('/api/v1/auth/signup', {
         body: JSON.stringify(options),
         method: 'POST',
       });

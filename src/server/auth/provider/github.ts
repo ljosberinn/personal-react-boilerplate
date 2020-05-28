@@ -18,7 +18,7 @@ const verify: VerifyFunction = (
 
 export default new GithubStrategy(
   {
-    callbackURL: '/api/auth/callback/github',
+    callbackURL: '/api/v1/auth/callback/github',
     clientID: GITHUB_CLIENT_ID,
     clientSecret: GITHUB_CLIENT_SECRET,
     passReqToCallback: false,

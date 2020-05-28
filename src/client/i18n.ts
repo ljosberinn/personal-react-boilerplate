@@ -17,7 +17,7 @@ import {
 
 export const defaultNamespace = 'common';
 
-const endpoint = '/api/i18n?language={{lng}}';
+const endpoint = '/api/v1/i18n?language={{lng}}';
 
 export const initI18Next = ({
   lang,

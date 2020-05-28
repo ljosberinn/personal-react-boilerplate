@@ -1,21 +1,21 @@
 import nextConnect from 'next-connect';
 
-import { Provider } from '../../../../src/client/context/AuthContext/AuthContext';
-import { ENABLED_PROVIDER } from '../../../../src/constants';
+import { Provider } from '../../../../../src/client/context/AuthContext/AuthContext';
+import { ENABLED_PROVIDER } from '../../../../../src/constants';
 import {
   encryptSession,
   setTokenCookie,
-} from '../../../../src/server/auth/cookie';
+} from '../../../../../src/server/auth/cookie';
 import {
   authMiddleware,
   promisifyAuthentication,
   getProfileData,
-} from '../../../../src/server/auth/middlewares';
+} from '../../../../../src/server/auth/middlewares';
 import {
   NOT_FOUND,
   FOUND_MOVED_TEMPORARILY,
   BAD_REQUEST,
-} from '../../../../src/utils/statusCodes';
+} from '../../../../../src/utils/statusCodes';
 
 export default nextConnect()
   .use(authMiddleware)

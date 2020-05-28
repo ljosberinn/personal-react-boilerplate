@@ -1,8 +1,8 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import i18nCache from '../../locales';
-import { I18nextResourceLocale } from '../../src/client/i18n';
-import { FORBIDDEN, BAD_REQUEST } from '../../src/utils/statusCodes';
+import i18nCache from '../../../locales';
+import { I18nextResourceLocale } from '../../../src/client/i18n';
+import { FORBIDDEN, BAD_REQUEST } from '../../../src/utils/statusCodes';
 
 export default function handler(
   { query: { language } }: NextApiRequest,

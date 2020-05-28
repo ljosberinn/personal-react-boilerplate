@@ -1,15 +1,15 @@
 import nextConnect from 'next-connect';
 
-import { Provider } from '../../../src/client/context/AuthContext/AuthContext';
+import { Provider } from '../../../../src/client/context/AuthContext/AuthContext';
 import {
   encryptSession,
   setTokenCookie,
-} from '../../../src/server/auth/cookie';
+} from '../../../../src/server/auth/cookie';
 import {
   promisifyAuthentication,
   authMiddleware,
-} from '../../../src/server/auth/middlewares';
-import { OK, UNAUTHORIZED, NOT_FOUND } from '../../../src/utils/statusCodes';
+} from '../../../../src/server/auth/middlewares';
+import { OK, UNAUTHORIZED, NOT_FOUND } from '../../../../src/utils/statusCodes';
 
 const provider: Provider = 'local';
 
