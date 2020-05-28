@@ -9753,10 +9753,10 @@ typedarray@^0.0.6:
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
-typescript@4.0.0-dev.20200520:
-  version "4.0.0-dev.20200520"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.0.0-dev.20200520.tgz#a340b6336dc8d40672e86df82aaa541c74556cba"
-  integrity sha512-a+E+3oVsrVGuPrcu8yUi3RMyWkLfDSiRglsjVE1C2GBrFdB2IK82PpqIU6I21Lyrros5zzy23A0zH5tGdNUVXA==
+typescript@4.0.0-dev.20200528:
+  version "4.0.0-dev.20200528"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.0.0-dev.20200528.tgz#604c2ad48a34ec87ea6b567025926c41509e87a7"
+  integrity sha512-tQE2cCwjRGYSO8g8ghX6k1HKvOz5LAafQEzhFwUwN0frqBOuuS7c5/Cdgjct0Sci/7LLuFLP+gg59LiIb1BtkQ==
 
 unicode-canonical-property-names-ecmascript@^1.0.4:
   version "1.0.4"
