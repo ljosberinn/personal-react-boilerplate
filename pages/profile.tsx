@@ -26,7 +26,7 @@ interface Todo {
 }
 
 export const getServerSideProps = withSession(async ({ req }, session) => {
-  const json = await authenticatedFetch.get<Todo>(['user', 'todo'], req);
+  const json = await authenticatedFetch.get<Todo>(['v1', 'user', 'todo'], req);
 
   return {
     props: {

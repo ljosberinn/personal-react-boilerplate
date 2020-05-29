@@ -9,8 +9,7 @@ import React from 'react';
 
 export default class Document extends NextDocument {
   static async getInitialProps(ctx: DocumentContext) {
-    const initialProps = await NextDocument.getInitialProps(ctx);
-    return initialProps;
+    return await NextDocument.getInitialProps(ctx);
   }
 
   render() {

@@ -1,6 +1,16 @@
 import { Profile } from 'passport';
-import { Profile as GithubProfile } from 'passport-github2';
+import { Profile as DiscordProfile } from 'passport-discord';
+import { Profile as BaseGithubProfile } from 'passport-github2';
 import { createContext } from 'react';
+
+export interface TwitterProfile extends Profile {
+  _accessLevel: 'read';
+  provider: 'twitter';
+}
+
+export interface GithubProfile extends BaseGithubProfile {
+  provider: 'github';
+}
 
 export interface GoogleProfile extends Profile {
   email: string;
@@ -11,11 +21,25 @@ export interface GoogleProfile extends Profile {
   picture: string;
   sub: string;
   verified: boolean;
+  provider: 'google';
 }
 
-export type User = GithubProfile | GoogleProfile;
+export interface FacebookProfile {
+  username: never;
+  name: {};
+  emails: never;
+  photos: never;
+  provider: 'facebook';
+}
 
-export type Provider = 'github' | 'google' | 'local';
+export type User =
+  | GithubProfile
+  | GoogleProfile
+  | FacebookProfile
+  | DiscordProfile
+  | TwitterProfile;
+
+export type Provider = 'github' | 'google' | 'facebook' | 'twitter' | 'discord';
 
 export interface ExternalLoginOptions {
   provider: Provider;

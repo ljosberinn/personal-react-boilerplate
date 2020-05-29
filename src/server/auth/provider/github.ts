@@ -1,8 +1,8 @@
-import { Strategy as GithubStrategy } from 'passport-github2';
+import { Strategy as GithubStrategy, StrategyOptions } from 'passport-github2';
 import { VerifyFunction, VerifyCallback } from 'passport-oauth2';
 
 import { GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET } from '../env';
-import { RawResponse } from '../middlewares';
+import { RawResponse } from '../types';
 
 const verify: VerifyFunction = (
   // @ts-ignore
@@ -16,13 +16,11 @@ const verify: VerifyFunction = (
   done(null, profile);
 };
 
-export default new GithubStrategy(
-  {
-    callbackURL: '/api/v1/auth/callback/github',
-    clientID: GITHUB_CLIENT_ID,
-    clientSecret: GITHUB_CLIENT_SECRET,
-    passReqToCallback: false,
-    scope: ['user:email'],
-  },
-  verify
-);
+const options: StrategyOptions = {
+  callbackURL: '/api/v1/auth/callback/github',
+  clientID: GITHUB_CLIENT_ID,
+  clientSecret: GITHUB_CLIENT_SECRET,
+  scope: ['user:email'],
+};
+
+export default new GithubStrategy(options, verify);

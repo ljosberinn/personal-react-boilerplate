@@ -17,6 +17,9 @@ export interface WithSessionOptions {
   headers?: OutgoingHttpHeaders;
 }
 
+/**
+ * monkey patch GetServerSideProps
+ */
 type AuthenticatedGetServerSideProps<
   P extends { [key: string]: any } = { [key: string]: any },
   Q extends ParsedUrlQuery = ParsedUrlQuery

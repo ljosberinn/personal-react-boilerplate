@@ -1,9 +1,13 @@
 import nextConnect from 'next-connect';
 
-import { protectedResourceMiddleware } from '../../../../src/server/auth/middlewares';
+import {
+  authNSecurityMiddleware,
+  expectJSONBodyMiddleware,
+} from '../../../../src/server/auth/middlewares';
 
 export default nextConnect()
-  .use(protectedResourceMiddleware)
+  .use(authNSecurityMiddleware)
+  .use(expectJSONBodyMiddleware)
   .get(async (_, res) => {
     try {
       const response = await fetch(

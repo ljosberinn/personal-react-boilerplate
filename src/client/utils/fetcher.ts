@@ -14,29 +14,37 @@ const methods = [
 
 type RequestInitMethod = typeof methods[number];
 
+const sanitizePathname = (endpoint: string | string[]) => {
+  if (Array.isArray(endpoint)) {
+    return endpoint.join('/').replace('//', '/');
+  }
+
+  return endpoint.startsWith('/') ? endpoint.substr(1) : endpoint;
+};
+
 const makeAuthenticatedFetch = (method: RequestInitMethod) => <T>(
   endpoint: string | string[],
   req: IncomingMessage,
   options: RequestInit = {}
 ): Promise<T> => {
   const { origin } = absoluteUrl(req);
+  const url = [origin, 'api', sanitizePathname(endpoint)].join('/');
 
-  const segments = Array.isArray(endpoint) ? endpoint : [endpoint];
-
-  const url = [origin, 'api', ...segments].join('/');
-
-  return fetch(url, {
-    ...options,
-    headers: {
-      Accept: 'application/json',
-      'Content-type': 'application/json',
-      ...options.headers,
-      ...(req?.headers.cookie ? { cookie: req.headers.cookie } : {}),
-    },
-    method,
-  })
-    .then(response => response.json())
-    .then(data => data.json || data);
+  return (
+    fetch(url, {
+      ...options,
+      headers: {
+        Accept: 'application/json',
+        'Content-type': 'application/json',
+        ...options.headers,
+        cookie: req.headers.cookie || '',
+      },
+      method,
+    })
+      .then(response => response.json())
+      // .json` because api endpoints finished with `.json(data)`
+      .then(data => data.json || data)
+  );
 };
 
 type AuthenticatedFetchMap = {

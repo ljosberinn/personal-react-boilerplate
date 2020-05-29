@@ -1,26 +1,28 @@
 import nextConnect from 'next-connect';
 
 import { Provider } from '../../../../../src/client/context/AuthContext/AuthContext';
+import {
+  promisifyAuthentication,
+  getProfileData,
+} from '../../../../../src/client/utils/auth';
 import { ENABLED_PROVIDER } from '../../../../../src/constants';
 import {
   encryptSession,
   setTokenCookie,
 } from '../../../../../src/server/auth/cookie';
-import {
-  authMiddleware,
-  promisifyAuthentication,
-  getProfileData,
-} from '../../../../../src/server/auth/middlewares';
+import { passportMiddleware } from '../../../../../src/server/auth/middlewares';
 import {
   NOT_FOUND,
   FOUND_MOVED_TEMPORARILY,
   BAD_REQUEST,
 } from '../../../../../src/utils/statusCodes';
 
+import '../../../../../src/server/auth/passportSetup';
+
 export default nextConnect()
-  .use(authMiddleware)
+  .use(passportMiddleware)
   .get(async (req, res) => {
-    const provider = req.query.provider as Provider;
+    const provider = req.query.provider as Exclude<Provider, 'local'>;
 
     if (!provider || !ENABLED_PROVIDER.includes(provider)) {
       res.status(NOT_FOUND).end();
@@ -28,8 +30,10 @@ export default nextConnect()
 
     let errored = false;
 
+    // TODO: fix twitter login; maybe await cookie creation of express-session?
     try {
       const user = await promisifyAuthentication(provider, req, res);
+
       const token = await encryptSession(getProfileData(user));
 
       setTokenCookie(res, token);

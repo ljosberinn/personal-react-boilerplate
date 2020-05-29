@@ -26,10 +26,29 @@ import React, {
   FormEvent,
   useEffect,
 } from 'react';
-import { FaGithub, FaGoogle } from 'react-icons/fa';
+import {
+  FaGithub,
+  FaGoogle,
+  FaFacebook,
+  FaTwitter,
+  FaDiscord,
+} from 'react-icons/fa';
+import { IconType } from 'react-icons/lib';
 
 import { ENABLED_PROVIDER } from '../../../constants';
 import { useAuth } from '../../hooks/useAuth';
+
+type ProviderIconMap = {
+  [key in typeof ENABLED_PROVIDER[number]]: IconType;
+};
+
+const providerIconMap: ProviderIconMap = {
+  discord: FaDiscord,
+  facebook: FaFacebook,
+  github: FaGithub,
+  google: FaGoogle,
+  twitter: FaTwitter,
+};
 
 export default function AuthDemo() {
   const [isOpen, setIsOpen] = useState(false);
@@ -73,12 +92,7 @@ export default function AuthDemo() {
                   key={provider}
                   onClick={isAuthenticated ? logout : () => login({ provider })}
                 >
-                  Login via{' '}
-                  <Box
-                    as={provider === 'github' ? FaGithub : FaGoogle}
-                    ml={2}
-                    mr={1}
-                  />
+                  Login via <Box as={providerIconMap[provider]} ml={2} mr={1} />
                   {provider.charAt(0).toUpperCase()}
                   {provider.substr(1)}
                 </MenuItem>

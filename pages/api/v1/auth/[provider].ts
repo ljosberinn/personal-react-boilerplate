@@ -1,18 +1,17 @@
 import nextConnect from 'next-connect';
 
 import { Provider } from '../../../../src/client/context/AuthContext/AuthContext';
+import { promisifyAuthentication } from '../../../../src/client/utils/auth';
 import { ENABLED_PROVIDER } from '../../../../src/constants';
-import {
-  authMiddleware,
-  promisifyAuthentication,
-} from '../../../../src/server/auth/middlewares';
+import { passportMiddleware } from '../../../../src/server/auth/middlewares';
 import {
   NOT_FOUND,
   INTERNAL_SERVER_ERROR,
 } from '../../../../src/utils/statusCodes';
+import '../../../../src/server/auth/passportSetup';
 
 export default nextConnect()
-  .use(authMiddleware)
+  .use(passportMiddleware)
   .get(async (req, res) => {
     const provider = req.query.provider as Provider;
 

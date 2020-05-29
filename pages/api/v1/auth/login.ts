@@ -1,20 +1,22 @@
 import nextConnect from 'next-connect';
 
-import { Provider } from '../../../../src/client/context/AuthContext/AuthContext';
+import { promisifyAuthentication } from '../../../../src/client/utils/auth';
 import {
   encryptSession,
   setTokenCookie,
 } from '../../../../src/server/auth/cookie';
 import {
-  promisifyAuthentication,
-  authMiddleware,
+  passportMiddleware,
+  expectJSONBodyMiddleware,
 } from '../../../../src/server/auth/middlewares';
 import { OK, UNAUTHORIZED, NOT_FOUND } from '../../../../src/utils/statusCodes';
+import '../../../../src/server/auth/passportSetup';
 
-const provider: Provider = 'local';
+const provider = 'local';
 
 export default nextConnect()
-  .use(authMiddleware)
+  .use(passportMiddleware)
+  .use(expectJSONBodyMiddleware)
   .post(async (req, res) => {
     try {
       const user = await promisifyAuthentication(provider, req, res);
