@@ -1,10 +1,11 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import { removeTokenCookie } from '../../../../src/server/auth/cookie';
+import { SESSION_COOKIE_NAME } from '../../../../src/server/auth/authConstants';
+import { removeCookie } from '../../../../src/server/auth/cookie';
 import { OK } from '../../../../src/utils/statusCodes';
 
 export default function handler(_: NextApiRequest, res: NextApiResponse) {
-  removeTokenCookie(res);
+  removeCookie(SESSION_COOKIE_NAME, res);
 
   res.status(OK).end();
 }

@@ -3,7 +3,7 @@ import nextConnect from 'next-connect';
 import { promisifyAuthentication } from '../../../../src/client/utils/auth';
 import {
   encryptSession,
-  setTokenCookie,
+  setSessionCookie,
 } from '../../../../src/server/auth/cookie';
 import {
   passportMiddleware,
@@ -27,7 +27,7 @@ export default nextConnect()
 
       const token = await encryptSession(user);
 
-      setTokenCookie(res, token);
+      setSessionCookie(token, res);
 
       res.status(OK).json(user);
     } catch (error) {

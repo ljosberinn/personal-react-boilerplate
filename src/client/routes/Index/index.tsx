@@ -8,11 +8,12 @@ import {
   Text,
   useColorMode,
   Badge,
+  Tooltip,
 } from '@chakra-ui/core';
 import React from 'react';
 import { FaTwitter, FaGithub, FaGlobe } from 'react-icons/fa';
 
-import { REPOSITORY_LINK } from '../../../constants';
+import { REPOSITORY_LINK, ENABLED_PROVIDER } from '../../../constants';
 import { ExternalLink } from '../../components/common/ExternalLink';
 import { LanguageSwitch } from '../../components/common/LanguageSwitch';
 import { ThemeSwitch } from '../../components/common/ThemeSwitch';
@@ -209,10 +210,14 @@ export default function Index() {
                 catch-all API route protection solution
               </>,
               <>
-                ships with <Badge variant="outline">Google</Badge>,{' '}
-                <Badge variant="outline">Github</Badge> &{' '}
-                <Badge variant="outline">Local</Badge> <Code>passport.js</Code>{' '}
-                strategies
+                ships with{' '}
+                <Tooltip
+                  label={ENABLED_PROVIDER.join(', ')}
+                  aria-label={ENABLED_PROVIDER.join(', ')}
+                >
+                  <Badge variant="outline">{ENABLED_PROVIDER.length}*</Badge>
+                </Tooltip>{' '}
+                <Code>passport.js</Code> strategies
               </>,
             ]}
           />

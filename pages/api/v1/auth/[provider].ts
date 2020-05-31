@@ -1,6 +1,6 @@
 import nextConnect from 'next-connect';
 
-import { Provider } from '../../../../src/client/context/AuthContext/AuthContext';
+import { ExternalProvider } from '../../../../src/client/context/AuthContext/AuthContext';
 import { promisifyAuthentication } from '../../../../src/client/utils/auth';
 import { ENABLED_PROVIDER } from '../../../../src/constants';
 import { passportMiddleware } from '../../../../src/server/auth/middlewares';
@@ -13,7 +13,7 @@ import '../../../../src/server/auth/passportSetup';
 export default nextConnect()
   .use(passportMiddleware)
   .get(async (req, res) => {
-    const provider = req.query.provider as Provider;
+    const provider = req.query.provider as ExternalProvider;
 
     if (!provider || !ENABLED_PROVIDER.includes(provider)) {
       return res.status(NOT_FOUND).end();

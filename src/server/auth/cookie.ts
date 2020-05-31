@@ -1,5 +1,5 @@
 import { seal, unseal, defaults } from '@hapi/iron';
-import { serialize, parse } from 'cookie';
+import { serialize, parse, CookieSerializeOptions } from 'cookie';
 import { IncomingMessage } from 'http';
 import { NextApiRequest, NextApiResponse } from 'next';
 
@@ -23,13 +23,31 @@ export const getSession = (
     return null;
   }
 
-  const token = getTokenCookie(req);
+  const token = getSessionCookie(req);
 
   return token ? unseal(token, TOKEN_SECRET, defaults) : null;
 };
 
-export const setTokenCookie = (res: NextApiResponse, token: string) => {
-  const cookie = serialize(SESSION_COOKIE_NAME, token, {
+interface NewCookieOptions {
+  name: string;
+  value: string;
+  options?: CookieSerializeOptions;
+}
+
+/**
+ * Sets new cookies on the res object via `Set-Cookie`.
+ */
+export const setCookie = (
+  { name, value, options }: NewCookieOptions,
+  res: NextApiResponse
+) => {
+  const header = serialize(name, value, options);
+
+  res.setHeader('Set-Cookie', header);
+};
+
+export const setSessionCookie = (token: string, res: NextApiResponse) => {
+  const options: CookieSerializeOptions = {
     expires: new Date(Date.now() + MAX_AGE),
     httpOnly: true,
     maxAge: MAX_AGE,
@@ -37,18 +55,25 @@ export const setTokenCookie = (res: NextApiResponse, token: string) => {
     // required for OAuth2 to work instantly in FF
     sameSite: 'lax',
     secure: IS_PROD,
-  });
+  };
 
-  res.setHeader('Set-Cookie', cookie);
+  setCookie(
+    {
+      name: SESSION_COOKIE_NAME,
+      options,
+      value: token,
+    },
+    res
+  );
 };
 
-export const removeTokenCookie = (res: NextApiResponse) => {
-  const cookie = serialize(SESSION_COOKIE_NAME, '', {
+export const removeCookie = (name: string, res: NextApiResponse) => {
+  const value = serialize(name, '', {
     maxAge: -1,
     path: '/',
   });
 
-  res.setHeader('Set-Cookie', cookie);
+  res.setHeader('Set-Cookie', value);
 };
 
 export const parseCookies = (req: SSRCompatibleRequest) => {
@@ -62,5 +87,5 @@ export const parseCookies = (req: SSRCompatibleRequest) => {
   return parse(cookie || '');
 };
 
-export const getTokenCookie = (req: SSRCompatibleRequest) =>
+export const getSessionCookie = (req: SSRCompatibleRequest) =>
   parseCookies(req)[SESSION_COOKIE_NAME];

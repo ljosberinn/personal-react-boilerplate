@@ -32,14 +32,16 @@ import {
   FaFacebook,
   FaTwitter,
   FaDiscord,
+  FaSignInAlt,
 } from 'react-icons/fa';
 import { IconType } from 'react-icons/lib';
 
 import { ENABLED_PROVIDER } from '../../../constants';
+import { Provider } from '../../context/AuthContext/AuthContext';
 import { useAuth } from '../../hooks/useAuth';
 
 type ProviderIconMap = {
-  [key in typeof ENABLED_PROVIDER[number]]: IconType;
+  [key in Provider]: IconType;
 };
 
 const providerIconMap: ProviderIconMap = {
@@ -47,6 +49,7 @@ const providerIconMap: ProviderIconMap = {
   facebook: FaFacebook,
   github: FaGithub,
   google: FaGoogle,
+  local: FaSignInAlt,
   twitter: FaTwitter,
 };
 
@@ -87,16 +90,21 @@ export default function AuthDemo() {
               <Icon ml={2} name="chevron-down" />
             </MenuButton>
             <MenuList>
-              {ENABLED_PROVIDER.map(provider => (
-                <MenuItem
-                  key={provider}
-                  onClick={isAuthenticated ? logout : () => login({ provider })}
-                >
-                  Login via <Box as={providerIconMap[provider]} ml={2} mr={1} />
-                  {provider.charAt(0).toUpperCase()}
-                  {provider.substr(1)}
-                </MenuItem>
-              ))}
+              {ENABLED_PROVIDER.filter(provider => provider !== 'local').map(
+                provider => (
+                  <MenuItem
+                    key={provider}
+                    onClick={
+                      isAuthenticated ? logout : () => login({ provider })
+                    }
+                  >
+                    Login via{' '}
+                    <Box as={providerIconMap[provider]} ml={2} mr={1} />
+                    {provider.charAt(0).toUpperCase()}
+                    {provider.substr(1)}
+                  </MenuItem>
+                )
+              )}
             </MenuList>
           </Menu>
         )}
@@ -118,7 +126,8 @@ export default function AuthDemo() {
               variantColor="teal"
               isDisabled={isAuthenticated}
             >
-              or login via your own API
+              or login via <Box d="inline" as={providerIconMap.local} mr={1} />{' '}
+              your own API
             </Button>
           </PopoverTrigger>
           <PopoverContent zIndex={4} p={5}>

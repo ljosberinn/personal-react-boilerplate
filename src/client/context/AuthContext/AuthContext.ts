@@ -39,7 +39,15 @@ export type User =
   | DiscordProfile
   | TwitterProfile;
 
-export type Provider = 'github' | 'google' | 'facebook' | 'twitter' | 'discord';
+export type Provider =
+  | 'github'
+  | 'google'
+  | 'facebook'
+  | 'twitter'
+  | 'discord'
+  | 'local';
+
+export type ExternalProvider = Exclude<Provider, 'local'>;
 
 export interface ExternalLoginOptions {
   provider: Provider;

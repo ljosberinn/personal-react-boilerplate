@@ -8,7 +8,7 @@ import {
 import { ENABLED_PROVIDER } from '../../../../../src/constants';
 import {
   encryptSession,
-  setTokenCookie,
+  setSessionCookie,
 } from '../../../../../src/server/auth/cookie';
 import { passportMiddleware } from '../../../../../src/server/auth/middlewares';
 import {
@@ -16,7 +16,6 @@ import {
   FOUND_MOVED_TEMPORARILY,
   BAD_REQUEST,
 } from '../../../../../src/utils/statusCodes';
-
 import '../../../../../src/server/auth/passportSetup';
 
 export default nextConnect()
@@ -30,13 +29,11 @@ export default nextConnect()
 
     let errored = false;
 
-    // TODO: fix twitter login; maybe await cookie creation of express-session?
     try {
       const user = await promisifyAuthentication(provider, req, res);
-
       const token = await encryptSession(getProfileData(user));
 
-      setTokenCookie(res, token);
+      setSessionCookie(token, res);
     } catch (error) {
       console.error(error);
       errored = true;
