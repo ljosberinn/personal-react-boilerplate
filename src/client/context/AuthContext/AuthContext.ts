@@ -3,11 +3,6 @@ import { Profile as DiscordProfile } from 'passport-discord';
 import { Profile as BaseGithubProfile } from 'passport-github2';
 import { createContext } from 'react';
 
-export interface TwitterProfile extends Profile {
-  _accessLevel: 'read';
-  provider: 'twitter';
-}
-
 export interface GithubProfile extends BaseGithubProfile {
   provider: 'github';
 }
@@ -36,16 +31,9 @@ export type User =
   | GithubProfile
   | GoogleProfile
   | FacebookProfile
-  | DiscordProfile
-  | TwitterProfile;
+  | DiscordProfile;
 
-export type Provider =
-  | 'github'
-  | 'google'
-  | 'facebook'
-  | 'twitter'
-  | 'discord'
-  | 'local';
+export type Provider = 'github' | 'google' | 'facebook' | 'discord' | 'local';
 
 export type ExternalProvider = Exclude<Provider, 'local'>;
 

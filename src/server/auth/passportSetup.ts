@@ -1,7 +1,7 @@
 import passport from 'passport';
 
-import { github, google, local, facebook, twitter, discord } from './provider';
+import { github, google, local, facebook, discord } from './provider';
 
-[local, github, google, facebook, twitter, discord].forEach(provider =>
+[local, github, google, facebook, discord].forEach(provider =>
   passport.use(provider)
 );

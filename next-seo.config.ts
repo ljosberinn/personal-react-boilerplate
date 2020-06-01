@@ -14,22 +14,22 @@ const keywords = [
 ];
 
 const seo: DefaultSeoProps = {
-  title,
+  additionalMetaTags: [
+    { content: 'global', name: 'distribution' },
+    { content: '7 days', name: 'revisit-after' },
+    { content: 'Gerrit Alex', name: 'author' },
+    { content: keywords.join(', '), name: 'keywords' },
+  ],
   description,
   openGraph: {
-    type: 'website',
     title,
+    type: 'website',
   },
+  title,
   twitter: {
-    handle: '@gerrit_alex',
     cardType: 'summary',
+    handle: '@gerrit_alex',
   },
-  additionalMetaTags: [
-    { name: 'distribution', content: 'global' },
-    { name: 'revisit-after', content: '7 days' },
-    { name: 'author', content: 'Gerrit Alex' },
-    { name: 'keywords', content: keywords.join(', ') },
-  ],
 };
 
 export default seo;

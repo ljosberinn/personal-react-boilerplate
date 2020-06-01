@@ -30,7 +30,6 @@ import {
   FaGithub,
   FaGoogle,
   FaFacebook,
-  FaTwitter,
   FaDiscord,
   FaSignInAlt,
 } from 'react-icons/fa';
@@ -50,7 +49,6 @@ const providerIconMap: ProviderIconMap = {
   github: FaGithub,
   google: FaGoogle,
   local: FaSignInAlt,
-  twitter: FaTwitter,
 };
 
 export default function AuthDemo() {
