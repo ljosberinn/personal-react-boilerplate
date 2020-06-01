@@ -8,7 +8,7 @@ import React, { PropsWithChildren } from 'react';
 
 import theme from './theme';
 
-export default function Layout({ children }: PropsWithChildren<{}>) {
+export default function Chakra({ children }: PropsWithChildren<{}>) {
   return (
     <>
       <ThemeProvider theme={theme}>
