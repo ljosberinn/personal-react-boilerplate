@@ -12,7 +12,7 @@ const error = 'You must be authorized to access this resource.';
  *
  * Bails with `401 - UNAUTHORIZED` if not.
  *
- * Patches `req`, adding property `SESSION_COOKIE_NAME` witih the decrypted
+ * Patches `req`, adding property `SESSION_COOKIE_NAME` with the decrypted
  * cookie.
  */
 const authNSecurityMiddleware: Middleware = async (req, res, next) => {
