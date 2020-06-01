@@ -6,6 +6,8 @@
 
 ## Steps
 
+- go to [github.com/settings/developers](https://github.com/settings/developers) and create a `New OAuth App`
+
 ## PSA
 
-https://github.com/settings/developers
+Github does not allow multiple redirect URLs. For each environment (localhost/staging/production), you will need a separate app.
