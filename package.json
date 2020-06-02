@@ -61,7 +61,7 @@
     "lint-staged": "^10.2.4",
     "prettier": "^2.0.5",
     "react-test-renderer": "^16.13.1",
-    "typescript": "4.0.0-dev.20200520",
+    "typescript": "4.0.0-dev.20200602",
     "yarn-deduplicate": "^2.0.0"
   },
   "license": "ISC"
