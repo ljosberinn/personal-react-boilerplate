@@ -7,6 +7,7 @@ import absoluteUrl from 'next-absolute-url';
 import nextCookies from 'next-cookies';
 import { initReactI18next } from 'react-i18next';
 
+import { namespaces } from '../../locales';
 import { AppRenderProps } from '../../pages/_app';
 import {
   SUPPORTED_LANGUAGES_MAP,
@@ -14,8 +15,6 @@ import {
   ENABLED_LANGUAGES,
   IS_BROWSER,
 } from '../constants';
-
-export const defaultNamespace = 'common';
 
 const endpoint = '/api/v1/i18n?language={{lng}}';
 
@@ -28,7 +27,7 @@ export const initI18Next = ({
   i18nInstance.init({
     cleanCode: true,
     debug: !IS_PROD,
-    defaultNS: defaultNamespace,
+    defaultNS: 'common',
     fallbackLng:
       lang === SUPPORTED_LANGUAGES_MAP.en
         ? SUPPORTED_LANGUAGES_MAP.de
@@ -41,7 +40,7 @@ export const initI18Next = ({
     // remove if you want to use localization (en-US, en-GB)
     load: 'languageOnly',
     lowerCaseLng: true,
-    ns: [defaultNamespace], // removes 'translation' default key from backend query,
+    ns: namespaces, // removes 'translation' default key from backend query,
     react: {
       useSuspense: false, // not compatible with SSR
     },

@@ -1,0 +1,6 @@
+{
+  "set-light-theme": "switch to light theme",
+  "is-light-theme": "light theme is active",
+  "set-dark-theme": "switch to dark theme",
+  "is-dark-theme": "dark theme is active"
+}
