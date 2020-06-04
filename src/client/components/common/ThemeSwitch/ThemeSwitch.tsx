@@ -21,7 +21,7 @@ export type ThemeSwitchProps = FlexProps;
 
 export default function ThemeSwitch(props: ThemeSwitchProps) {
   const { colorMode, toggleColorMode } = useColorMode();
-  const { t } = useTranslation();
+  const { t } = useTranslation('theme');
 
   return (
     <Flex cursor="pointer" d="inline-flex" {...props}>

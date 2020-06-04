@@ -38,7 +38,7 @@ const flagMap: FlapMap = {
 type LanguageSwitchProps = BoxProps;
 
 export default function LanguageSwitch(props: LanguageSwitchProps) {
-  const { i18n, t } = useTranslation();
+  const { i18n, t } = useTranslation('i18n');
   const { colorMode } = useColorMode();
 
   function handleLanguageChange(slug: string) {
@@ -54,7 +54,7 @@ export default function LanguageSwitch(props: LanguageSwitchProps) {
       }
 
       cookies.set(COOKIE_LOOKUP_KEY_LANG, slug);
-      i18n.changeLanguage(slug);
+      await i18n.changeLanguage(slug);
     };
   }
 
@@ -69,7 +69,7 @@ export default function LanguageSwitch(props: LanguageSwitchProps) {
       <Menu>
         <MenuButton as={Button} {...{ variantColor: 'teal' }}>
           <Box d="inline-block" as={MdTranslate} mr={2} />
-          {t('menu-toggle')}
+          {t('language-toggle')}
         </MenuButton>
         <MenuList>
           <MenuOptionGroup

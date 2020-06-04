@@ -5,7 +5,7 @@ import { FaSun, FaMoon } from 'react-icons/fa';
 
 export default function ThemeSwitchAlt(props: Omit<ButtonProps, 'children'>) {
   const { colorMode, toggleColorMode } = useColorMode();
-  const { t } = useTranslation();
+  const { t } = useTranslation('theme');
 
   const isLightMode = colorMode === 'light';
 
