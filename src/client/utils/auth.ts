@@ -5,7 +5,7 @@ import { RawResponse } from '../../server/auth/types';
 import { Provider } from '../context/AuthContext/AuthContext';
 
 export const promisifyAuthentication = (
-  method: Provider | 'local',
+  method: Provider,
   req: NextApiRequest,
   res: NextApiResponse,
   options: AuthenticateOptions = {}
