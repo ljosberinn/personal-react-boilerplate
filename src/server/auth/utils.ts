@@ -1,8 +1,8 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import passport, { AuthenticateOptions, Profile } from 'passport';
 
-import { RawResponse } from '../../server/auth/types';
-import { Provider } from '../context/AuthContext/AuthContext';
+import { Provider } from '../../client/context/AuthContext/AuthContext';
+import { RawResponse } from './types';
 
 export const promisifyAuthentication = (
   method: Provider,

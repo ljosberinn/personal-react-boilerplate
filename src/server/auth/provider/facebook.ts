@@ -2,7 +2,7 @@
 import { Strategy as FacebookStrategy } from '@passport-next/passport-facebook';
 import { VerifyFunction, VerifyCallback } from 'passport-oauth2';
 
-import { FACEBOOK_CLIENT_ID, FACEBOOK_CLIENT_SECRET } from '../env';
+import { FACEBOOK_CLIENT_ID, FACEBOOK_CLIENT_SECRET } from '../../../constants';
 import { RawResponse } from '../types';
 
 const verify: VerifyFunction = (

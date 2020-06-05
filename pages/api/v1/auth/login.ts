@@ -1,6 +1,5 @@
 import nextConnect from 'next-connect';
 
-import { promisifyAuthentication } from '../../../../src/client/utils/auth';
 import {
   encryptSession,
   setSessionCookie,
@@ -9,6 +8,7 @@ import {
   passportMiddleware,
   expectJSONBodyMiddleware,
 } from '../../../../src/server/auth/middlewares';
+import { promisifyAuthentication } from '../../../../src/server/auth/utils';
 import { OK, UNAUTHORIZED, NOT_FOUND } from '../../../../src/utils/statusCodes';
 import '../../../../src/server/auth/passportSetup';
 

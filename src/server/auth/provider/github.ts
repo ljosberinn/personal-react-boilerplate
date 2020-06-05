@@ -1,7 +1,7 @@
 import { Strategy as GithubStrategy, StrategyOptions } from 'passport-github2';
 import { VerifyFunction, VerifyCallback } from 'passport-oauth2';
 
-import { GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET } from '../env';
+import { GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET } from '../../../constants';
 import { RawResponse } from '../types';
 
 const verify: VerifyFunction = (

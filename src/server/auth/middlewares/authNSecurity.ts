@@ -1,7 +1,7 @@
 import { Middleware } from 'next-connect';
 
+import { SESSION_COOKIE_NAME } from '../../../constants';
 import { UNAUTHORIZED } from '../../../utils/statusCodes';
-import { SESSION_COOKIE_NAME } from '../authConstants';
 import { getSession } from '../cookie';
 import { AuthenticatedRequest } from '../types';
 

@@ -5,7 +5,7 @@ import {
   StrategyOptions,
 } from 'passport-google-oauth2';
 
-import { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } from '../env';
+import { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } from '../../../constants';
 import { RawResponse } from '../types';
 
 const verify: VerifyFunction = (

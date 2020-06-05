@@ -5,7 +5,7 @@ import {
 } from 'passport-discord';
 import { VerifyCallback } from 'passport-oauth2';
 
-import { DISCORD_CLIENT_ID, DISCORD_CLIENT_SECRET } from '../env';
+import { DISCORD_CLIENT_ID, DISCORD_CLIENT_SECRET } from '../../../constants';
 
 const verify = (
   // @ts-ignore

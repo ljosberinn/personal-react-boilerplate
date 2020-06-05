@@ -1,9 +1,9 @@
 import nextConnect from 'next-connect';
 
 import { ExternalProvider } from '../../../../src/client/context/AuthContext/AuthContext';
-import { promisifyAuthentication } from '../../../../src/client/utils/auth';
 import { ENABLED_PROVIDER } from '../../../../src/constants';
 import { passportMiddleware } from '../../../../src/server/auth/middlewares';
+import { promisifyAuthentication } from '../../../../src/server/auth/utils';
 import {
   NOT_FOUND,
   INTERNAL_SERVER_ERROR,

@@ -1,16 +1,16 @@
 import nextConnect from 'next-connect';
 
 import { Provider } from '../../../../../src/client/context/AuthContext/AuthContext';
-import {
-  promisifyAuthentication,
-  getProfileData,
-} from '../../../../../src/client/utils/auth';
 import { ENABLED_PROVIDER } from '../../../../../src/constants';
 import {
   encryptSession,
   setSessionCookie,
 } from '../../../../../src/server/auth/cookie';
 import { passportMiddleware } from '../../../../../src/server/auth/middlewares';
+import {
+  promisifyAuthentication,
+  getProfileData,
+} from '../../../../../src/server/auth/utils';
 import {
   NOT_FOUND,
   FOUND_MOVED_TEMPORARILY,

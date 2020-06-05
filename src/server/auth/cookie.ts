@@ -4,14 +4,17 @@ import { IncomingMessage } from 'http';
 import { NextApiRequest, NextApiResponse } from 'next';
 
 import { User } from '../../client/context/AuthContext/AuthContext';
-import { IS_PROD } from '../../constants';
-import { MAX_AGE, SESSION_COOKIE_NAME } from './authConstants';
-import { TOKEN_SECRET } from './env';
+import {
+  IS_PROD,
+  SESSION_COOKIE_SECRET,
+  SESSION_LIFETIME,
+  SESSION_COOKIE_NAME,
+} from '../../constants';
 
 type SSRCompatibleRequest = NextApiRequest | IncomingMessage;
 
 export const encryptSession = (session: unknown) =>
-  seal(session, TOKEN_SECRET, defaults);
+  seal(session, SESSION_COOKIE_SECRET, defaults);
 
 /**
  * extracts & decrypts the session cookie, if existing
@@ -25,7 +28,7 @@ export const getSession = (
 
   const token = getSessionCookie(req);
 
-  return token ? unseal(token, TOKEN_SECRET, defaults) : null;
+  return token ? unseal(token, SESSION_COOKIE_SECRET, defaults) : null;
 };
 
 interface NewCookieOptions {
@@ -48,9 +51,9 @@ export const setCookie = (
 
 export const setSessionCookie = (token: string, res: NextApiResponse) => {
   const options: CookieSerializeOptions = {
-    expires: new Date(Date.now() + MAX_AGE),
+    expires: new Date(Date.now() + SESSION_LIFETIME),
     httpOnly: true,
-    maxAge: MAX_AGE,
+    maxAge: SESSION_LIFETIME,
     path: '/',
     // required for OAuth2 to work instantly in FF
     sameSite: 'lax',
