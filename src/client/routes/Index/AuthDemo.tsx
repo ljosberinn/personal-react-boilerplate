@@ -149,13 +149,9 @@ interface FormProps {
 
 function Form({ firstFieldRef, onCancel }: FormProps) {
   const { login } = useAuth();
-  const [loading, setLoading] = useState(false);
 
   async function handleSubmit(event: FormEvent) {
     event.preventDefault();
-
-    const start = Date.now();
-    setLoading(true);
 
     try {
       await login({
@@ -164,21 +160,12 @@ function Form({ firstFieldRef, onCancel }: FormProps) {
       });
     } catch (error) {
       console.error(error);
-    } finally {
-      const diff = Date.now() - start;
-
-      setTimeout(
-        () => {
-          setLoading(false);
-        },
-        diff >= 750 ? 0 : 750 - diff
-      );
     }
   }
 
   return (
     <form onSubmit={handleSubmit}>
-      <Stack as="fieldset" spacing={4} {...{ disabled: loading }}>
+      <Stack as="fieldset" spacing={4}>
         <Box as="legend">This showcase uses hardcoded credentials.</Box>
         <FormControl>
           <FormLabel htmlFor="username">Username</FormLabel>
@@ -204,7 +191,7 @@ function Form({ firstFieldRef, onCancel }: FormProps) {
           <Button variant="outline" onClick={onCancel}>
             Cancel
           </Button>
-          <Button type="submit" variantColor="teal" isLoading={loading}>
+          <Button type="submit" variantColor="teal">
             Login
           </Button>
         </ButtonGroup>

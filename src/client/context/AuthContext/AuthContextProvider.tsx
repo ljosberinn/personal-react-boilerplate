@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, useState } from 'react';
+import React, { useState, ReactNode } from 'react';
 
 import {
   AuthContext,
@@ -7,9 +7,10 @@ import {
   LocalLoginOptions,
 } from './AuthContext';
 
-export type AuthContextProviderProps = PropsWithChildren<{
+export interface AuthContextProviderProps {
   session: User | null;
-}>;
+  children: ReactNode;
+}
 
 export default function AuthContextProvider({
   children,

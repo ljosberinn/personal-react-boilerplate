@@ -13,7 +13,7 @@ import {
 import React from 'react';
 import { FaTwitter, FaGithub, FaGlobe } from 'react-icons/fa';
 
-import { REPOSITORY_LINK, ENABLED_PROVIDER } from '../../../constants';
+import { ENABLED_PROVIDER } from '../../../constants';
 import { ExternalLink } from '../../components/common/ExternalLink';
 import { LanguageSwitch } from '../../components/common/LanguageSwitch';
 import { ThemeSwitch } from '../../components/common/ThemeSwitch';
@@ -43,7 +43,7 @@ export default function Index() {
           justifyContent="space-between"
           flexDirection={['row', 'column', 'row', 'row']}
         >
-          <ExternalLink href={REPOSITORY_LINK}>
+          <ExternalLink href="//github.com/ljosberinn/next-with-batteries">
             <Box d="inline-block" as={FaGithub} /> Repository
           </ExternalLink>
 

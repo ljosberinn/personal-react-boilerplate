@@ -23,7 +23,6 @@ import {
   SUPPORTED_LANGUAGES_MAP,
   IS_BROWSER,
   ENABLED_LANGUAGES,
-  REPOSITORY_LINK,
 } from '../../../../constants';
 import { fetchTranslations } from '../../../i18n';
 import { ExternalLink } from '../ExternalLink';
@@ -95,7 +94,7 @@ export default function LanguageSwitch(props: LanguageSwitchProps) {
                 colorMode === 'light' ? 'gray.100' : 'whiteAlpha.100',
               boxShadow: 'unset',
             }}
-            {...{ href: REPOSITORY_LINK }}
+            {...{ href: '//github.com/ljosberinn/next-with-batteries' }}
           >
             {t('help-cta')}
           </MenuItem>
