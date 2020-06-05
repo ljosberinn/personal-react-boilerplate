@@ -7,14 +7,18 @@ import {
   Flex,
   Text,
   useColorMode,
+  Badge,
+  Tooltip,
 } from '@chakra-ui/core';
 import React from 'react';
 import { FaTwitter, FaGithub, FaGlobe } from 'react-icons/fa';
 
-import { REPOSITORY_LINK } from '../../../constants';
+import { ENABLED_PROVIDER } from '../../../constants';
 import { ExternalLink } from '../../components/common/ExternalLink';
 import { LanguageSwitch } from '../../components/common/LanguageSwitch';
 import { ThemeSwitch } from '../../components/common/ThemeSwitch';
+import { ThemeSwitchAlt } from '../../components/common/ThemeSwitchAlt';
+import AuthDemo from './AuthDemo';
 import DemoComponent from './DemoComponent';
 import { Feature } from './Feature';
 import { FeatureState } from './Feature/types';
@@ -39,7 +43,7 @@ export default function Index() {
           justifyContent="space-between"
           flexDirection={['row', 'column', 'row', 'row']}
         >
-          <ExternalLink href={REPOSITORY_LINK}>
+          <ExternalLink href="//github.com/ljosberinn/next-with-batteries">
             <Box d="inline-block" as={FaGithub} /> Repository
           </ExternalLink>
 
@@ -97,14 +101,14 @@ export default function Index() {
               near-perfect lighthouse audit (97/100/100/100)
             </Feature>
 
-            <Feature state={FeatureState.DONE}>
+            <Feature state={FeatureState.DONE} id="theming">
               UI via{' '}
               <ExternalLink href="//chakra-ui.com/">
                 @chakra-ui/core
               </ExternalLink>{' '}
             </Feature>
 
-            <Feature state={FeatureState.DONE}>
+            <Feature state={FeatureState.DONE} id="internationalization">
               i18n via{' '}
               <ExternalLink href="//react.i18next.com/">
                 react-i18next
@@ -166,9 +170,13 @@ export default function Index() {
               <ExternalLink href="//sentry.io">sentry</ExternalLink>
             </Feature>
 
-            <Feature state={FeatureState.NYI}>
+            <Feature state={FeatureState.WIP} id="auth">
               auth via{' '}
-              <ExternalLink href="//passportjs.org/">passport.js</ExternalLink>
+              <ExternalLink href="//passportjs.org/">passport.js</ExternalLink>{' '}
+              &{' '}
+              <ExternalLink href="//github.com/hoangvvo/next-connect#readme">
+                next-connect
+              </ExternalLink>
             </Feature>
 
             <Feature state={FeatureState.NYI}>
@@ -186,34 +194,46 @@ export default function Index() {
 
         <Box backgroundColor={boxBg} borderRadius={5} m={1} p={1}>
           <DemoComponent
-            title="<ThemeSwitch />"
-            description={
-              <>
-                <ExternalLink href="//chakra-ui.com/">
-                  @chakra-ui/core
-                </ExternalLink>{' '}
-                components are automatically dark-mode compatible
-              </>
-            }
-            component={<ThemeSwitch mt={2} mb={2} />}
+            title="Auth"
+            description="SSR-compatible, httpOnly cookie-based authentication - try refreshing after logging in!"
+            component={<AuthDemo />}
             features={[
               <>
-                a premade component using{' '}
-                <ExternalLink href="//react-icons.netlify.com/">
-                  <Code>react-icons</Code>
-                </ExternalLink>{' '}
-                is included
+                implements OAuth2 via <Code>passport.js</Code>
+              </>,
+              <>
+                includes an <Code>{'<AuthContextProvider />'}</Code>, exposing a
+                hook (<Code>useAuth</Code>)
+              </>,
+              <>
+                includes a <Code>protectedResourceMiddleware</Code> as easy
+                catch-all API route protection solution
+              </>,
+              <>
+                ships with{' '}
+                <Tooltip
+                  label={ENABLED_PROVIDER.join(', ')}
+                  aria-label={ENABLED_PROVIDER.join(', ')}
+                >
+                  <Badge variant="outline">{ENABLED_PROVIDER.length}*</Badge>
+                </Tooltip>{' '}
+                <Code>passport.js</Code> strategies
               </>,
             ]}
-            warning="until @chakra-ui/core v1 is released, your theme preference won't be automatically detected"
           />
 
-          <Divider borderColor="teal.500" maxWidth="90%" ml="auto" mr="auto" />
+          <Divider
+            borderColor="teal.500"
+            maxWidth="90%"
+            ml="auto"
+            mr="auto"
+            mt={8}
+            mb={8}
+          />
 
           <DemoComponent
-            title="<LanguageSwitch />"
-            description="SSR-compatible, cookie-based i18n demo - try refreshing after
-            switching the language!"
+            title="Internationalization"
+            description="SSR-compatible, cookie-based i18n demo - try refreshing after switching the language!"
             component={<LanguageSwitch mt={2} mb={2} />}
             features={[
               <>
@@ -232,8 +252,47 @@ export default function Index() {
             ]}
             warning="only commonly used components will be translated; the boilerplate doesn't ship i18n for this throwaway index"
           />
+
+          <Divider
+            borderColor="teal.500"
+            maxWidth="90%"
+            ml="auto"
+            mr="auto"
+            mt={8}
+            mb={8}
+          />
+
+          <DemoComponent
+            title="Theming"
+            description={
+              <>
+                <ExternalLink href="//chakra-ui.com/">
+                  @chakra-ui/core
+                </ExternalLink>{' '}
+                components are automatically dark-mode compatible
+              </>
+            }
+            component={
+              <Stack isInline>
+                <ThemeSwitch mt={2} mb={2} />
+                <ThemeSwitchAlt ml={2} />
+              </Stack>
+            }
+            features={[
+              <>
+                two premade components using{' '}
+                <ExternalLink href="//react-icons.netlify.com/">
+                  <Code>react-icons</Code>
+                </ExternalLink>{' '}
+                are included
+              </>,
+            ]}
+            warning="until @chakra-ui/core v1 is released, automatic theme detection can be buggy"
+          />
         </Box>
       </Box>
+
+      <Box as="footer">MIT (c) @ljosberinn</Box>
     </Box>
   );
 }

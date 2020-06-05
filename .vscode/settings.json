@@ -16,5 +16,8 @@
     "**/build": true,
     "**/.next": true,
     "**/.now": true
+  },
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
   }
 }

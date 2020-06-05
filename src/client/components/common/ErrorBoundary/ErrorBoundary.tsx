@@ -10,8 +10,8 @@ interface ErrorBoundaryProps {
 
 export default class ErrorBoundary extends Component<ErrorBoundaryProps> {
   state = {
-    hasError: false,
     errorEventId: undefined,
+    hasError: false,
   };
 
   static getDerivedStateFromError() {

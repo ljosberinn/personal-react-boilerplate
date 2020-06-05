@@ -7,21 +7,21 @@ const gray = 'gray.500';
 const yellow = 'yellow.500';
 
 const colorMap = {
-  sun: {
-    light: yellow,
-    dark: gray,
-  },
   moon: {
-    light: gray,
     dark: yellow,
+    light: gray,
+  },
+  sun: {
+    dark: gray,
+    light: yellow,
   },
 };
 
-type ThemeSwitchProps = FlexProps;
+export type ThemeSwitchProps = FlexProps;
 
 export default function ThemeSwitch(props: ThemeSwitchProps) {
   const { colorMode, toggleColorMode } = useColorMode();
-  const { t } = useTranslation();
+  const { t } = useTranslation('theme');
 
   return (
     <Flex cursor="pointer" d="inline-flex" {...props}>
@@ -38,7 +38,6 @@ export default function ThemeSwitch(props: ThemeSwitchProps) {
         mr={2}
       />
       <Switch
-        data-testid="theme-switch"
         aria-label="toggle theme"
         isChecked={colorMode === 'dark'}
         onChange={toggleColorMode}

@@ -9,6 +9,7 @@ module.exports = nextSourceMaps({
   env: {
     // core
     ENABLED_LANGUAGES: process.env.NEXT_PUBLIC_ENABLED_LANGUAGES,
+    ENABLED_PROVIDER: process.env.NEXT_PUBLIC_ENABLED_PROVIDER,
 
     // sentry
     SENTRY_DSN: process.env.NEXT_PUBLIC_SENTRY_DSN,

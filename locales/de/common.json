@@ -1,22 +1,10 @@
 {
-  "menu-toggle": "Sprache anpassen",
-  "available-languages": "Sprachauswahl",
-  "help-cta": "Hilf beim Übersetzen",
-  "de": "Deutsch",
-  "en": "Englisch",
   "github-link": "Mitwirken",
   "discord-link": "Community",
-  "login": "Login",
-  "my-account": "Mein Account",
-  "settings": "Einstellungen",
-  "logout": "Logout",
+
   "legal": "Rechtliches",
   "links": "Links",
   "privacy-policy": "Datenschutz",
   "terms-of-service": "Nutzungsbedingungen",
-  "community": "Community",
-  "set-light-theme": "helles Erscheinungsbild aktivieren",
-  "is-light-theme": "helles Erscheinungsbild ist aktiv",
-  "set-dark-theme": "dunkles Erscheinungsbild aktivieren",
-  "is-dark-theme": "dunkles Erscheinungsbild ist aktiv"
+  "community": "Community"
 }

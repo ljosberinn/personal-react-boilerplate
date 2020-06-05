@@ -4,14 +4,14 @@ import { initReactI18next } from 'react-i18next';
 import i18nCache from '../locales';
 
 i18n.use(initReactI18next).init({
-  lng: 'en',
   debug: false,
-  load: 'languageOnly',
-  resources: i18nCache,
   interpolation: {
     escapeValue: false,
   },
+  lng: 'en',
+  load: 'languageOnly',
   react: { useSuspense: false },
+  resources: i18nCache,
 });
 
 export default i18n;

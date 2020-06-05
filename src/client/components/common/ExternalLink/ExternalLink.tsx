@@ -1,14 +1,13 @@
 import { Link, Icon, LinkProps } from '@chakra-ui/core';
-import React, { PropsWithChildren } from 'react';
+import React, { ReactNode } from 'react';
 
-type ExternalLinkProps = PropsWithChildren<
-  {
-    href: string;
-    rel?: string;
-    target?: string;
-    withIcon?: boolean;
-  } & LinkProps
->;
+export interface ExternalLinkProps extends LinkProps {
+  href: string;
+  rel?: string;
+  target?: string;
+  withIcon?: boolean;
+  children: ReactNode;
+}
 
 export default function ExternalLink({
   children,
