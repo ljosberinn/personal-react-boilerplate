@@ -71,7 +71,7 @@
     "passport-oauth2": "^1.5.0",
     "prettier": "^2.0.5",
     "react-test-renderer": "^16.13.1",
-    "typescript": "4.0.0-dev.20200603",
+    "typescript": "4.0.0-dev.20200604",
     "yarn-deduplicate": "^2.0.0"
   },
   "license": "ISC"
