@@ -56,7 +56,7 @@ App.getInitialProps = async function (
 ): Promise<AppRenderProps> {
   const {
     ctx,
-    // Component : { getInitialProps } ,
+    Component: { getInitialProps },
   } = props;
 
   const session = await getSession(ctx.req);
@@ -65,28 +65,33 @@ App.getInitialProps = async function (
 
   const appProps: AppRenderProps = await NextApp.getInitialProps(props);
 
+  // return {
+  //   ...appProps,
+  //   pageProps: {
+  //     defaultLocales,
+  //     lang,
+  //     session,
+  //   },
+  // };
+
+  /*
+   * Uncomment these lines as well as the destructuring above to disable support
+   * for subcomponent `getInitialProps` if you dont need it.
+   *
+   * It's currently required for the custom _error page.
+   *
+   * @see https://nextjs.org/docs/api-reference/data-fetching/getInitialProps
+   */
+
+  const componentPageProps = getInitialProps ? await getInitialProps(ctx) : {};
+
   return {
     ...appProps,
     pageProps: {
       defaultLocales,
       lang,
       session,
+      ...componentPageProps,
     },
   };
-
-  /*
-   * Uncomment these lines as well as the one above to enable support for
-   * subcomponent `getInitialProps` if you really need it
-   *
-   * @see https://nextjs.org/docs/api-reference/data-fetching/getInitialProps
-   */
-
-  // const componentPageProps = getInitialProps ? await getInitialProps(ctx) : {};
-
-  // const defaultPageProps = { defaultLocales, lang, session };
-
-  // return {
-  //   ...appProps,
-  //   pageProps: { ...defaultPageProps, ...componentPageProps },
-  // };
 };
