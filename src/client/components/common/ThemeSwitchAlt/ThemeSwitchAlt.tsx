@@ -17,6 +17,9 @@ export default function ThemeSwitchAlt(props: Omit<ButtonProps, 'children'>) {
       role="checkbox"
       aria-checked={!isLightMode}
       aria-label={t(isLightMode ? 'set-dark-theme' : 'set-light-theme')}
+      border="none"
+      background="none"
+      _hover={{ backgroundColor: isLightMode ? 'gray.300' : 'gray.600' }}
       {...props}
     >
       <Box

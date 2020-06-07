@@ -165,12 +165,7 @@ export default function Index() {
               </ExternalLink>
             </Feature>
 
-            <Feature state={FeatureState.WIP} info="currently frontend only">
-              error tracking via{' '}
-              <ExternalLink href="//sentry.io">sentry</ExternalLink>
-            </Feature>
-
-            <Feature state={FeatureState.WIP} id="auth">
+            <Feature state={FeatureState.DONE} id="auth">
               auth via{' '}
               <ExternalLink href="//passportjs.org/">passport.js</ExternalLink>{' '}
               &{' '}
@@ -179,7 +174,12 @@ export default function Index() {
               </ExternalLink>
             </Feature>
 
-            <Feature state={FeatureState.NYI}>
+            <Feature state={FeatureState.WIP} info="currently frontend only">
+              error tracking via{' '}
+              <ExternalLink href="//sentry.io">sentry</ExternalLink>
+            </Feature>
+
+            <Feature state={FeatureState.OPT}>
               React footprint reduced via{' '}
               <ExternalLink href="//preactjs.com">preact</ExternalLink>
             </Feature>

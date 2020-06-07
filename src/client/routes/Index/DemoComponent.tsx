@@ -1,4 +1,12 @@
-import { Text, Box, Heading, List, ListItem, Icon } from '@chakra-ui/core';
+import {
+  Text,
+  Box,
+  Heading,
+  List,
+  ListItem,
+  Icon,
+  useColorMode,
+} from '@chakra-ui/core';
 import React from 'react';
 
 interface DemoComponentProps {
@@ -17,6 +25,8 @@ export default function DemoComponent({
   features,
 }: DemoComponentProps) {
   const id = title.toLowerCase();
+  const { colorMode } = useColorMode();
+  const isDark = colorMode === 'dark';
 
   return (
     <Box as="article" m={4} id={id}>
@@ -42,9 +52,10 @@ export default function DemoComponent({
       <Box>{component}</Box>
 
       {warning && (
-        <Box as="small" color="red.400">
+        <Box as="small" color={isDark ? 'red.300' : 'red.600'}>
           <em>
-            <Icon name="warning" color="red.400" /> {warning}
+            <Icon name="warning" color={isDark ? 'red.300' : 'red.600'} />{' '}
+            {warning}
           </em>
         </Box>
       )}

@@ -6,6 +6,7 @@ import { FeatureState } from './types';
 const iconMap = {
   done: { color: 'green.500', icon: 'check-circle', label: 'done' },
   nyi: { color: 'red.500', icon: 'warning', label: 'not yet implemented' },
+  opt: { color: 'yellow.500', icon: 'question', label: 'optionally available' },
   wip: { color: 'orange.500', icon: 'time', label: 'work in progress' },
 };
 

@@ -1,4 +1,4 @@
-import { Link, Icon, LinkProps } from '@chakra-ui/core';
+import { Link, Icon, LinkProps, useColorMode } from '@chakra-ui/core';
 import React, { ReactNode } from 'react';
 
 export interface ExternalLinkProps extends LinkProps {
@@ -14,8 +14,15 @@ export default function ExternalLink({
   withIcon = true,
   ...rest
 }: ExternalLinkProps) {
+  const { colorMode } = useColorMode();
+
   return (
-    <Link isExternal rel="noreferrer noopener" color="teal.500" {...rest}>
+    <Link
+      isExternal
+      rel="noreferrer noopener"
+      color={colorMode === 'dark' ? 'teal.400' : 'teal.700'}
+      {...rest}
+    >
       {children} {withIcon && <Icon name="external-link" ml={1} />}
     </Link>
   );
