@@ -4,25 +4,26 @@ import NextDocument, {
   Main,
   NextScript,
   DocumentContext,
+  DocumentProps,
 } from 'next/document';
 import React from 'react';
 
-export default class Document extends NextDocument {
-  static async getInitialProps(ctx: DocumentContext) {
-    return await NextDocument.getInitialProps(ctx);
-  }
+export default function Document({ __NEXT_DATA__: { props } }: DocumentProps) {
+  const { lang } = props.pageProps;
 
-  render() {
-    const { lang } = this.props.__NEXT_DATA__.props.pageProps;
-
-    return (
-      <Html lang={lang}>
-        <Head />
-        <body>
-          <Main />
-          <NextScript />
-        </body>
-      </Html>
-    );
-  }
+  return (
+    <Html lang={lang}>
+      <Head />
+      <body>
+        <Main />
+        <NextScript />
+      </body>
+    </Html>
+  );
 }
+
+Document.renderDocument = NextDocument.renderDocument;
+
+Document.getInitialProps = async (ctx: DocumentContext) => {
+  return await NextDocument.getInitialProps(ctx);
+};

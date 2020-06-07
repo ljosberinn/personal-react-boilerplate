@@ -7,7 +7,7 @@ interface ErrorProps {
   statusCode: number | null | undefined;
 }
 
-export default function ErrorPage({ statusCode }: ErrorProps) {
+export default function Error({ statusCode }: ErrorProps) {
   if (statusCode === NOT_FOUND) {
     return <h1>404</h1>;
   }
@@ -19,7 +19,7 @@ export default function ErrorPage({ statusCode }: ErrorProps) {
   return <h1>client side error</h1>;
 }
 
-ErrorPage.getInitialProps = ({ res, err }: NextPageContext): ErrorProps => {
+Error.getInitialProps = ({ res, err }: NextPageContext): ErrorProps => {
   const statusCode = res ? res.statusCode : err ? err.statusCode : null;
 
   return { statusCode };
