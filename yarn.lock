@@ -4515,10 +4515,10 @@ escodegen@^1.14.1:
   optionalDependencies:
     source-map "~0.6.1"
 
-eslint-config-galex@^0.3.8:
-  version "0.3.8"
-  resolved "https://registry.yarnpkg.com/eslint-config-galex/-/eslint-config-galex-0.3.8.tgz#9fe85718f24b6310a3dc8a15ac6290ca7664f654"
-  integrity sha512-N2vp3LZsQl8V0LGar+uMBnXMuNUzlUJPYopnBlRt5wmkT0/1QZyTXc6aJc09O3bbJ4q0NX5UDCezsgT8or6C2Q==
+eslint-config-galex@^0.3.9:
+  version "0.3.9"
+  resolved "https://registry.yarnpkg.com/eslint-config-galex/-/eslint-config-galex-0.3.9.tgz#c2622ab8696c3023c5f8792fc1cc3ca25fe80a15"
+  integrity sha512-RvAYorPW49nh6Y/geaKXx3NdGyiPP4lT0tcPNG6+GBZML9/bmudTPbK2+Tpt2U4XIERhRpiK/kAN4BTrDhJ5ow==
   dependencies:
     "@typescript-eslint/eslint-plugin" "3.1.0"
     "@typescript-eslint/parser" "3.1.0"
