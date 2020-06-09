@@ -7251,10 +7251,10 @@ next-absolute-url@^1.2.2:
   resolved "https://registry.yarnpkg.com/next-absolute-url/-/next-absolute-url-1.2.2.tgz#9aba5adcee8effcffd63271d99e13213ad04c23b"
   integrity sha512-Z2+LZXQTthhw2je9u4eq8QWXxXd57a6b54x9exBfQX4Dct6YxaMjcXZWNLHd9AOlCue84EsMpdSGP7wACqUnPg==
 
-next-connect@^0.7.0:
-  version "0.7.0"
-  resolved "https://registry.yarnpkg.com/next-connect/-/next-connect-0.7.0.tgz#4dd4c7ce7e5f83ae4e56a1bd39bdfc06db737407"
-  integrity sha512-wiLg7REMk8/o4CFJ01kXKtKEZykIEitSgdctQhquZ26jTQAn9BGLxVNbJW/8FpyTuh0vdXtWLGz8aBdlMVfN9g==
+next-connect@^0.7.1:
+  version "0.7.1"
+  resolved "https://registry.yarnpkg.com/next-connect/-/next-connect-0.7.1.tgz#c62bb466d924585f1b5fc39e4828672e2bc66007"
+  integrity sha512-EQ4BIlEEpQyneRXrPGAGBHMGK9kghKEPcvWWZWO1Vzn1TJP16YLw+8y0qtT54/x/FlD0dC0AQCwZydKWqqAQBQ==
   dependencies:
     trouter "^3.1.0"
 

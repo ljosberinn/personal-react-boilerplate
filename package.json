@@ -29,7 +29,7 @@
     "js-cookie": "^2.2.1",
     "next": "9.4.4",
     "next-absolute-url": "^1.2.2",
-    "next-connect": "^0.7.0",
+    "next-connect": "^0.7.1",
     "next-cookies": "^2.0.3",
     "next-seo": "^4.5.0",
     "passport": "^0.4.1",
