@@ -17,7 +17,7 @@
     "@emotion/styled": "^10.0.27",
     "@hapi/iron": "^6.0.0",
     "@passport-next/passport-facebook": "^3.1.2",
-    "@sentry/browser": "^5.16.1",
+    "@sentry/browser": "^5.17.0",
     "@sentry/integrations": "^5.16.1",
     "@sentry/node": "^5.16.1",
     "@types/passport-discord": "^0.1.3",
