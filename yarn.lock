@@ -2147,10 +2147,18 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react@*", "@types/react@^16.8.10", "@types/react@^16.9.35":
+"@types/react@*", "@types/react@^16.8.10":
   version "16.9.35"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-16.9.35.tgz#a0830d172e8aadd9bd41709ba2281a3124bbd368"
   integrity sha512-q0n0SsWcGc8nDqH2GJfWQWUOmZSJhXV64CjVN5SvcNti3TdEaA3AH0D8DwNmMdzjMAC/78tB8nAZIlV8yTz+zQ==
+  dependencies:
+    "@types/prop-types" "*"
+    csstype "^2.2.0"
+
+"@types/react@^16.9.36":
+  version "16.9.36"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.9.36.tgz#ade589ff51e2a903e34ee4669e05dbfa0c1ce849"
+  integrity sha512-mGgUb/Rk/vGx4NCvquRuSH0GHBQKb1OqpGS9cT9lFxlTLHZgkksgI60TuIxubmn7JuCb+sENHhQciqa0npm0AQ==
   dependencies:
     "@types/prop-types" "*"
     csstype "^2.2.0"
@@ -4523,10 +4531,10 @@ escodegen@^1.14.1:
   optionalDependencies:
     source-map "~0.6.1"
 
-eslint-config-galex@^0.3.11:
-  version "0.3.11"
-  resolved "https://registry.yarnpkg.com/eslint-config-galex/-/eslint-config-galex-0.3.11.tgz#8d437cb0d64ddde365c3b43cf7ef7a6a5ca0b799"
-  integrity sha512-X2B0FEc3F60hFWqKWcERu0JCy05YV3hwg6rdT+B994YKk+CepX9F1WZjSDOs+zY/6sPEHjlkKyF6oPgCfcwadQ==
+eslint-config-galex@^0.3.12:
+  version "0.3.12"
+  resolved "https://registry.yarnpkg.com/eslint-config-galex/-/eslint-config-galex-0.3.12.tgz#70998558d8ad6af3827f6ec0a2c404c0fc756969"
+  integrity sha512-fHfi37x1pdXWdCfyNdEAVPoG4Nz63tedOVjRPVbnnl0k0suIbkrXQUEF+KjKvbI/26Tfo72zDs7T9MpAGubP4A==
   dependencies:
     "@typescript-eslint/eslint-plugin" "3.2.0"
     "@typescript-eslint/parser" "3.2.0"
@@ -10177,10 +10185,10 @@ typedarray@^0.0.6:
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
-typescript@4.0.0-dev.20200609:
-  version "4.0.0-dev.20200609"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.0.0-dev.20200609.tgz#c35a84902eb522dc858fe61c018003928051a465"
-  integrity sha512-+FFUGuOqBW5+eZf7IboN14yKVtciZ5NHQApru8/e+Leka0953ixdaU3euouPnJ/S7i/e5MtNWgxLG5TNBOuN/Q==
+typescript@^4.0.0-dev.20200610:
+  version "4.0.0-dev.20200610"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.0.0-dev.20200610.tgz#cfbe176e65dcd989b92da36f966477d1cd52d0fa"
+  integrity sha512-WtC/cVuzuOotVT6TSXTATqzr0xdHrGe8DqmuVrzCYiheMCmMyh+Wm+gn2IhxtqkePWqsTFPgLKnPz2TJhGAKVg==
 
 uid2@0.0.x:
   version "0.0.3"
