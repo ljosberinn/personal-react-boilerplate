@@ -99,7 +99,7 @@ export default function AuthDemo() {
                     Login via{' '}
                     <Box as={providerIconMap[provider]} ml={2} mr={1} />
                     {provider.charAt(0).toUpperCase()}
-                    {provider.substr(1)}
+                    {provider.slice(1)}
                   </MenuItem>
                 )
               )}

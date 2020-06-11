@@ -28,7 +28,7 @@ describe('<LanguageSwitch />', () => {
     });
 
     expect(cta).toBeInTheDocument();
-    expect(cta.getAttribute('href')).not.toBe(undefined);
+    expect(cta.getAttribute('href')).toBeDefined();
   });
 
   it('should always change the language on click', async () => {

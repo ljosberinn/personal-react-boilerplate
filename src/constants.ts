@@ -28,7 +28,7 @@ export const SESSION_COOKIE_SECRET = process.env.SESSION_COOKIE_SECRET!;
 // TS does not like this variable coming out of env
 export const SESSION_COOKIE_NAME = 'session';
 export const SESSION_LIFETIME = process.env.SESSION_LIFETIME
-  ? parseInt(process.env.SESSION_LIFETIME!) * 1000
+  ? Number.parseInt(process.env.SESSION_LIFETIME!) * 1000
   : 60 * 60 * 8;
 
 export const GITHUB_CLIENT_ID = process.env.GITHUB_CLIENT_ID!;

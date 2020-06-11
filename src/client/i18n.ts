@@ -140,7 +140,7 @@ export const fetchTranslations = async (
     try {
       namespaces = await response.json();
     } catch (error) {
-      console.error('Failed to parse i18n JSON');
+      console.error(error.message, 'Failed to parse i18n JSON');
     }
   } catch (error) {
     console.error(error.message, 'Failed to fetch i18n');

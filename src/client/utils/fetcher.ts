@@ -19,7 +19,7 @@ const sanitizePathname = (endpoint: string | string[]) => {
     return endpoint.join('/').replace('//', '/');
   }
 
-  return endpoint.startsWith('/') ? endpoint.substr(1) : endpoint;
+  return endpoint.startsWith('/') ? endpoint.slice(1) : endpoint;
 };
 
 const makeAuthenticatedFetch = (method: RequestInitMethod) => <T>(
