@@ -10307,10 +10307,10 @@ typedarray@^0.0.6:
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
-typescript@^4.0.0-dev.20200610:
-  version "4.0.0-dev.20200610"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.0.0-dev.20200610.tgz#cfbe176e65dcd989b92da36f966477d1cd52d0fa"
-  integrity sha512-WtC/cVuzuOotVT6TSXTATqzr0xdHrGe8DqmuVrzCYiheMCmMyh+Wm+gn2IhxtqkePWqsTFPgLKnPz2TJhGAKVg==
+typescript@^4.0.0-dev.20200611:
+  version "4.0.0-dev.20200611"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.0.0-dev.20200611.tgz#1f6606d2d0603e8beea50edfef3eaa8ebe1f211d"
+  integrity sha512-ojO8mQ6MScv4T9CStxgU6X+O23EgDZfwcMICC7HTVaIDveTcbtEoUpcIaoQKDealvB6/oTXkMqtImyfjJezkJw==
 
 uid2@0.0.x:
   version "0.0.3"
