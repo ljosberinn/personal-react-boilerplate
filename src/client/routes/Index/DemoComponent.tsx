@@ -29,14 +29,7 @@ export default function DemoComponent({
   const isDark = colorMode === 'dark';
 
   return (
-    <Box
-      as="article"
-      m={4}
-      id={id}
-      onClick={() => {
-        throw new Error('test');
-      }}
-    >
+    <Box as="article" m={4} id={id}>
       <a href={`#${id}`}>
         <Heading as="h3" size="md">
           <Text as="span" color="grey">
