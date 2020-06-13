@@ -23,13 +23,16 @@ export const IS_BROWSER = typeof window !== 'undefined';
 export const IS_PROD = process.env.NODE_ENV === 'production';
 /* utils end */
 
+/* sentry start */
+export const SENTRY_DSN = process.env.NEXT_PUBLIC_SENTRY_DSN!;
+/* sentry end */
+
 /* auth start */
 export const SESSION_COOKIE_SECRET = process.env.SESSION_COOKIE_SECRET!;
 // TS does not like this variable coming out of env
 export const SESSION_COOKIE_NAME = 'session';
-export const SESSION_LIFETIME = process.env.SESSION_LIFETIME
-  ? Number.parseInt(process.env.SESSION_LIFETIME!) * 1000
-  : 60 * 60 * 8;
+export const SESSION_LIFETIME =
+  Number.parseInt(process.env.SESSION_LIFETIME!) * 1000;
 
 export const GITHUB_CLIENT_ID = process.env.GITHUB_CLIENT_ID!;
 export const GITHUB_CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET!;

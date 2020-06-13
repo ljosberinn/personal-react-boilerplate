@@ -15,6 +15,7 @@ import {
   initI18Next,
 } from '../src/client/i18n';
 import { getSession } from '../src/server/auth/cookie';
+import '../src/utils/sentry';
 
 export type AppRenderProps = {
   pageProps: {

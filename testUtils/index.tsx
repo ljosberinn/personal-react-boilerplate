@@ -10,6 +10,7 @@ import i18n from './i18n';
 type TestOptions = {
   /**
    * whether to include the i18n.t prop
+   * defaults to true
    */
   includeTranslation?: boolean;
   /**

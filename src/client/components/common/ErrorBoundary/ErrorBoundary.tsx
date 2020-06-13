@@ -1,8 +1,5 @@
+import * as Sentry from '@sentry/node';
 import React, { Component } from 'react';
-
-import sentry from '../../../../utils/sentry';
-
-const { Sentry, captureException } = sentry();
 
 interface ErrorBoundaryProps {
   onErrorMessage?: JSX.Element;
@@ -15,13 +12,17 @@ export default class ErrorBoundary extends Component<ErrorBoundaryProps> {
   };
 
   static getDerivedStateFromError() {
-    // React Error Boundary here allows us to set state flagging the error (and
-    // later render a fallback UI).
     return { hasError: true };
   }
 
   componentDidCatch(error: Error | null, errorInfo: object) {
-    const errorEventId = captureException(error, { errorInfo });
+    Sentry.configureScope(scope => {
+      scope.setTag('ssr', `${typeof window === 'undefined'}`);
+    });
+
+    console.log({ error, errorInfo });
+
+    const errorEventId = Sentry.captureException(error, errorInfo);
 
     // Store the event id at this point as we don't have access to it within
     // `getDerivedStateFromError`.
@@ -29,6 +30,9 @@ export default class ErrorBoundary extends Component<ErrorBoundaryProps> {
   }
 
   showReportDialog = () => {
+    // due to next.config.js, this is actually @sentry/browser which has that
+    // method available
+    // @ts-expect-error
     Sentry.showReportDialog({
       eventId: this.state.errorEventId,
     });
