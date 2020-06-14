@@ -35,7 +35,9 @@ export default function CustomDocument({
 
   return (
     <Html lang={language}>
-      <Head />
+      <Head>
+        <link rel="manifest" href="/manifest.json" />
+      </Head>
       <body>
         <Main />
         <NextScript />

@@ -1,0 +1,21 @@
+{
+  "name": "next-with-batteries",
+  "short_name": "next-with-batteries",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "background_color": "#FFFFFF",
+  "description": "next-with-batteries",
+  "display": "fullscreen",
+  "start_url": "/",
+  "theme_color": "#000"
+}

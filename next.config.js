@@ -2,6 +2,8 @@
 // publicly available on the servers, only to the error reporting
 const nextSourceMaps = require('@zeit/next-source-maps')();
 const SentryWebpackPlugin = require('@sentry/webpack-plugin');
+const withOffline = require('next-offline');
+const { withPlugins } = require('next-compose-plugins');
 
 const {
   NEXT_PUBLIC_SENTRY_DSN: SENTRY_DSN,
@@ -15,7 +17,34 @@ const date = new Date();
 
 console.debug(`> Building on NODE_ENV="${NODE_ENV}"`);
 
-module.exports = nextSourceMaps({
+const offlineConfig = {
+  target: 'serverless',
+  transformManifest: manifest => ['/'].concat(manifest), // add the homepage to the cache
+  // turn on the SW in dev mode so that we can actually test it
+  generateInDevMode: true,
+  workboxOpts: {
+    swDest: '../public/service-worker.js',
+    runtimeCaching: [
+      {
+        urlPattern: /^https?.*/,
+        handler: 'NetworkFirst',
+        options: {
+          cacheName: 'https-calls',
+          networkTimeoutSeconds: 15,
+          expiration: {
+            maxEntries: 150,
+            maxAgeSeconds: 30 * 24 * 60 * 60, // 1 month
+          },
+          cacheableResponse: {
+            statuses: [0, 200],
+          },
+        },
+      },
+    ],
+  },
+};
+
+const defaultConfig = {
   env: {
     BUILD_TIME: date.toString(),
     BUILD_TIMESTAMP: +date,
@@ -44,4 +73,13 @@ module.exports = nextSourceMaps({
 
     return config;
   },
-});
+  reactStrictMode: true,
+  // experimental: {
+  //   modern: true,
+  // },
+};
+
+module.exports = withPlugins([
+  [nextSourceMaps, defaultConfig],
+  [withOffline, offlineConfig],
+]);

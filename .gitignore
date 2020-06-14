@@ -11,6 +11,8 @@
 # next.js
 /.next/
 /out/
+/public/service-worker.js
+/public/service-worker.js.map
 
 # production
 /build
@@ -32,5 +34,3 @@ yarn-error.log*
 
 .now
 .env
-
-.next/

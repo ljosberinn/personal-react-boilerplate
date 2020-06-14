@@ -98,12 +98,13 @@ export const attachRoutingContext = (
     });
   });
 
+  // in prod, this will make components show up with their minified name!
   attachComponentBreadcrumb(name);
 };
 
 export const attachComponentBreadcrumb = (name: string) => {
   Sentry.addBreadcrumb({
     level: Sentry.Severity.Debug,
-    message: `Preparing ${name} (${IS_BROWSER ? 'in browser' : 'on server'})`,
+    message: `Preparing "${name}" (${IS_BROWSER ? 'in browser' : 'on server'})`,
   });
 };
