@@ -6,7 +6,10 @@ import {
   encryptSession,
   setSessionCookie,
 } from '../../../../../src/server/auth/cookie';
-import { passportMiddleware } from '../../../../../src/server/auth/middlewares';
+import {
+  passportMiddleware,
+  sentryMiddleware,
+} from '../../../../../src/server/auth/middlewares';
 import {
   promisifyAuthentication,
   getProfileData,
@@ -19,6 +22,7 @@ import {
 import '../../../../../src/server/auth/passportSetup';
 
 export default nextConnect()
+  .use(sentryMiddleware)
   .use(passportMiddleware)
   .get(async (req, res) => {
     const provider = req.query.provider as Exclude<Provider, 'local'>;

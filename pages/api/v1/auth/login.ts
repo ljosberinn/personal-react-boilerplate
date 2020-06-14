@@ -7,6 +7,7 @@ import {
 import {
   passportMiddleware,
   expectJSONBodyMiddleware,
+  sentryMiddleware,
 } from '../../../../src/server/auth/middlewares';
 import { promisifyAuthentication } from '../../../../src/server/auth/utils';
 import { OK, UNAUTHORIZED, NOT_FOUND } from '../../../../src/utils/statusCodes';
@@ -15,6 +16,7 @@ import '../../../../src/server/auth/passportSetup';
 const provider = 'local';
 
 export default nextConnect()
+  .use(sentryMiddleware)
   .use(passportMiddleware)
   .use(expectJSONBodyMiddleware)
   .post(async (req, res) => {

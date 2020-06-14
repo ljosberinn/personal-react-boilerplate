@@ -4,6 +4,7 @@ import { Profile } from 'passport';
 import {
   passportMiddleware,
   expectJSONBodyMiddleware,
+  sentryMiddleware,
 } from '../../../../src/server/auth/middlewares';
 import { BAD_REQUEST, CREATED } from '../../../../src/utils/statusCodes';
 
@@ -27,6 +28,7 @@ const implementProfileInterface = ({
 };
 
 export default nextConnect()
+  .use(sentryMiddleware)
   .use(passportMiddleware)
   .use(expectJSONBodyMiddleware)
   .post((req, res) => {
