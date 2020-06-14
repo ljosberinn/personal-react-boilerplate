@@ -8,7 +8,6 @@ import absoluteUrl from 'next-absolute-url';
 import nextCookies from 'next-cookies';
 import { initReactI18next } from 'react-i18next';
 
-import { namespaces } from '../../locales';
 import { AppRenderProps } from '../../pages/_app';
 import {
   SUPPORTED_LANGUAGES_MAP,
@@ -16,6 +15,7 @@ import {
   ENABLED_LANGUAGES,
   IS_BROWSER,
 } from '../constants';
+import { namespaces } from '../server/i18n';
 
 const endpoint = '/api/v1/i18n?language={{lng}}';
 

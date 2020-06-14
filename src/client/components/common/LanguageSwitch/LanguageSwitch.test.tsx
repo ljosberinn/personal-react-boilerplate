@@ -1,9 +1,9 @@
 import i18n from 'i18next';
 import React from 'react';
 
-import i18nCache from '../../../../../locales';
 import { render, fireEvent, waitFor } from '../../../../../testUtils';
 import { ENABLED_LANGUAGES } from '../../../../constants';
+import i18nCache from '../../../../server/i18n';
 import LanguageSwitch from './LanguageSwitch';
 
 const findCurrentLanguage = () =>

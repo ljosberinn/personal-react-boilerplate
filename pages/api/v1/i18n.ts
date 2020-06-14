@@ -1,9 +1,9 @@
 import { NextApiResponse } from 'next';
 import nextConnect from 'next-connect';
 
-import i18nCache from '../../../locales';
 import { I18nextResourceLocale } from '../../../src/client/i18n';
 import { sentryMiddleware } from '../../../src/server/auth/middlewares';
+import i18nCache from '../../../src/server/i18n';
 import { FORBIDDEN, BAD_REQUEST } from '../../../src/utils/statusCodes';
 
 export default nextConnect()

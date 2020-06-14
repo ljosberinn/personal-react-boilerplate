@@ -1,7 +1,7 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
-import i18nCache from '../locales';
+import i18nCache from '../src/server/i18n';
 
 i18n.use(initReactI18next).init({
   debug: false,
