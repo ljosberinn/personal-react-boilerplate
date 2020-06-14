@@ -1,7 +1,10 @@
 import { Debug } from '@sentry/integrations';
 import * as Sentry from '@sentry/node';
+import { IncomingMessage } from 'http';
+import { NextApiRequest } from 'next';
+import { NextRouter } from 'next/router';
 
-import { SENTRY_DSN, IS_PROD } from '../constants';
+import { SENTRY_DSN, IS_PROD, IS_BROWSER } from '../constants';
 
 const sentryOptions: Sentry.NodeOptions = {
   attachStacktrace: true,
@@ -23,3 +26,84 @@ if (!IS_PROD) {
 }
 
 Sentry.init(sentryOptions);
+
+Sentry.configureScope(scope => {
+  scope.setTag('nodejs', process.version);
+  scope.setTag('buildTime', process.env.BUILD_TIME!);
+});
+
+/**
+ * Attaches lambda request data to Sentry
+ */
+export const attachLambdaContext = (req: NextApiRequest) => {
+  Sentry.configureScope(scope => {
+    scope.setTag('host', req.headers.host || '');
+    scope.setTag('url', req.url || '');
+    scope.setTag('method', req.method || '');
+    scope.setContext('query', req.query);
+    scope.setContext('cookies', req.cookies);
+    scope.setContext('body', req.body);
+    scope.setContext('headers', req.headers);
+  });
+};
+
+interface InitialContextArgs {
+  req?: IncomingMessage;
+  language: string;
+  session: Sentry.User | null;
+}
+
+/**
+ * Attaches app boot data to Sentry
+ */
+export const attachInitialContext = ({
+  req,
+  language,
+  session,
+}: InitialContextArgs) => {
+  Sentry.addBreadcrumb({
+    level: Sentry.Severity.Debug,
+    message: `Booting (${IS_BROWSER ? 'in browser' : 'on server'})`,
+  });
+
+  Sentry.configureScope(scope => {
+    scope.setExtra('language', language);
+
+    if (req) {
+      scope.setContext('headers', req.headers);
+    }
+
+    if (session) {
+      scope.setContext('session', session);
+      scope.setTag('provider', session.provider);
+    }
+  });
+};
+
+/**
+ * Attaches routing data to Sentry
+ *
+ * @see https://github.com/UnlyEd/next-right-now/blob/v1-ssr-mst-aptd-gcms-lcz-sty/src/pages/_app.tsx#L158
+ */
+export const attachRoutingContext = (
+  { route, pathname, query, asPath }: NextRouter,
+  name: string = 'unknown'
+) => {
+  Sentry.configureScope(scope => {
+    scope.setContext('router', {
+      asPath,
+      pathname,
+      query,
+      route,
+    });
+  });
+
+  attachComponentBreadcrumb(name);
+};
+
+export const attachComponentBreadcrumb = (name: string) => {
+  Sentry.addBreadcrumb({
+    level: Sentry.Severity.Debug,
+    message: `Preparing ${name} (${IS_BROWSER ? 'in browser' : 'on server'})`,
+  });
+};

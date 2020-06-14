@@ -11,26 +11,36 @@ import { AuthContextProvider } from '../src/client/context/AuthContext';
 import { User } from '../src/client/context/AuthContext/AuthContext';
 import {
   I18nextResourceLocale,
-  detectAndGetTranslation,
   initI18Next,
+  getI18N,
+  detectLanguage,
 } from '../src/client/i18n';
 import { getSession } from '../src/server/auth/cookie';
-import '../src/utils/sentry';
+import {
+  attachInitialContext,
+  attachRoutingContext,
+} from '../src/utils/sentry';
 
-export type AppRenderProps = {
-  pageProps: {
-    lang: string;
-    defaultLocales: I18nextResourceLocale;
-    session: User | null;
-  };
+export interface PageProps {
+  language: string;
+  i18nBundle: I18nextResourceLocale;
+  session: User | null;
+}
+
+export interface AppRenderProps {
+  pageProps: PageProps;
   err?: Error;
   Component?: Function;
   router?: NextRouter;
-};
+}
 
-export default function App({ Component, pageProps }: AppRenderProps) {
+export default function App({ Component, pageProps, router }: AppRenderProps) {
   if (!Component) {
     return null;
+  }
+
+  if (router) {
+    attachRoutingContext(router, Component.name);
   }
 
   const i18nInstance = initI18Next(pageProps);
@@ -62,15 +72,18 @@ App.getInitialProps = async function (
 
   const session = await getSession(ctx.req);
 
-  const { lang, defaultLocales } = await detectAndGetTranslation(ctx);
+  const language = detectLanguage(ctx);
+  const i18nBundle = await getI18N(language, ctx.req);
 
   const appProps: AppRenderProps = await NextApp.getInitialProps(props);
+
+  attachInitialContext({ language, req: props.ctx.req, session });
 
   // return {
   //   ...appProps,
   //   pageProps: {
-  //     defaultLocales,
-  //     lang,
+  //     i18nBundle,
+  //     language,
   //     session,
   //   },
   // };
@@ -79,7 +92,7 @@ App.getInitialProps = async function (
    * Uncomment these lines as well as the destructuring above to disable support
    * for subcomponent `getInitialProps` if you dont need it.
    *
-   * It's currently required for the custom _error page.
+   * It's currently required for the custom _error & _document page.
    *
    * @see https://nextjs.org/docs/api-reference/data-fetching/getInitialProps
    */
@@ -89,8 +102,8 @@ App.getInitialProps = async function (
   return {
     ...appProps,
     pageProps: {
-      defaultLocales,
-      lang,
+      i18nBundle,
+      language,
       session,
       ...componentPageProps,
     },

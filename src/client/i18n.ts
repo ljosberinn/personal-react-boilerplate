@@ -1,4 +1,5 @@
 // contains lots of inspiration from https://github.com/UnlyEd/next-right-now/blob/v1-ssr-mst-aptd-gcms-lcz-sty/src/utils/i18nextLocize.ts
+import * as Sentry from '@sentry/node';
 import universalLanguageDetect from '@unly/universal-language-detector';
 import { IncomingMessage } from 'http';
 import i18n from 'i18next';
@@ -19,8 +20,8 @@ import {
 const endpoint = '/api/v1/i18n?language={{lng}}';
 
 export const initI18Next = ({
-  lang,
-  defaultLocales,
+  language,
+  i18nBundle,
 }: AppRenderProps['pageProps']) => {
   const i18nInstance = i18n.use(initReactI18next);
 
@@ -29,14 +30,14 @@ export const initI18Next = ({
     debug: !IS_PROD,
     defaultNS: 'common',
     fallbackLng:
-      lang === SUPPORTED_LANGUAGES_MAP.en
+      language === SUPPORTED_LANGUAGES_MAP.en
         ? SUPPORTED_LANGUAGES_MAP.de
         : SUPPORTED_LANGUAGES_MAP.en,
 
     interpolation: {
       escapeValue: false, // not needed with react
     },
-    lng: lang,
+    lng: language,
     // remove if you want to use localization (en-US, en-GB)
     load: 'languageOnly',
     lowerCaseLng: true,
@@ -45,7 +46,7 @@ export const initI18Next = ({
       useSuspense: false, // not compatible with SSR
     },
     resources: {
-      [lang]: defaultLocales,
+      [language]: i18nBundle,
     },
     whitelist: ENABLED_LANGUAGES,
   });
@@ -116,10 +117,7 @@ const memoizedCacheMaxAge = (IS_BROWSER || IS_PROD ? 60 * 60 : 60) * 1000;
 
 const interpolateEndpoint = (lang: string) => endpoint.replace('{{lng}}', lang);
 
-export const fetchTranslations = async (
-  lang: string,
-  req?: IncomingMessage
-) => {
+export const getI18N = async (lang: string, req?: IncomingMessage) => {
   const url = interpolateEndpoint(lang);
   const memoizedI18nextResources = _memoizedI18nextResources[url];
 
@@ -161,23 +159,23 @@ export const fetchTranslations = async (
  * - cookies
  *
  * and picks the best match from existing languages.
- *
- * Then, fetches the corresponding data.
  */
-export const detectAndGetTranslation = async (ctx: NextPageContext) => {
-  const { req } = ctx;
+export const detectLanguage = (ctx: NextPageContext) =>
+  universalLanguageDetect({
+    acceptLanguageHeader: ctx.req?.headers['accept-language'],
+    errorHandler: (error, level, origin, context) => {
+      Sentry.withScope(scope => {
+        scope.setExtra('level', level);
+        scope.setExtra('origin', origin);
 
-  const lang = universalLanguageDetect({
-    acceptLanguageHeader: req?.headers['accept-language'],
+        if (context) {
+          scope.setContext('context', context);
+        }
+
+        Sentry.captureException(error);
+      });
+    },
     fallbackLanguage: SUPPORTED_LANGUAGES_MAP.en,
     serverCookies: nextCookies(ctx),
     supportedLanguages: ENABLED_LANGUAGES,
   });
-
-  const defaultLocales = await fetchTranslations(lang, req);
-
-  return {
-    defaultLocales,
-    lang,
-  };
-};

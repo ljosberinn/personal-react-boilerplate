@@ -24,7 +24,7 @@ import {
   IS_BROWSER,
   ENABLED_LANGUAGES,
 } from '../../../../constants';
-import { fetchTranslations } from '../../../i18n';
+import { getI18N } from '../../../i18n';
 import { ExternalLink } from '../ExternalLink';
 
 type FlapMap = { [key: string]: FlagIconCode };
@@ -45,7 +45,7 @@ export default function LanguageSwitch(props: LanguageSwitchProps) {
       // prevent loading data 2x which happens for some reason when
       // going from initial language -> other lang -> back
       if (!i18n.getDataByLanguage(slug)) {
-        const bundles = await fetchTranslations(slug);
+        const bundles = await getI18N(slug);
 
         Object.entries(bundles).forEach(([ns, bundle]) => {
           i18n.addResourceBundle(slug, ns, bundle);

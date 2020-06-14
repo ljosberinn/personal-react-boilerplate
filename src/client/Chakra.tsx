@@ -6,6 +6,7 @@ import {
 } from '@chakra-ui/core';
 import React, { ReactNode } from 'react';
 
+import { attachComponentBreadcrumb } from '../utils/sentry';
 import theme from './theme';
 
 export interface ChakraProps {
@@ -13,6 +14,8 @@ export interface ChakraProps {
 }
 
 export default function Chakra({ children }: ChakraProps) {
+  attachComponentBreadcrumb('chakra');
+
   return (
     <>
       <ThemeProvider theme={theme}>

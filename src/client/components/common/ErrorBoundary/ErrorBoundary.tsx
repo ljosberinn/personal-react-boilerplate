@@ -1,5 +1,5 @@
 import * as Sentry from '@sentry/node';
-import React, { Component } from 'react';
+import React, { Component, ErrorInfo } from 'react';
 
 interface ErrorBoundaryProps {
   onErrorMessage?: JSX.Element;
@@ -15,14 +15,15 @@ export default class ErrorBoundary extends Component<ErrorBoundaryProps> {
     return { hasError: true };
   }
 
-  componentDidCatch(error: Error | null, errorInfo: object) {
-    Sentry.configureScope(scope => {
+  componentDidCatch(error: Error | null, errorInfo: ErrorInfo) {
+    Sentry.withScope(scope => {
       scope.setTag('ssr', `${typeof window === 'undefined'}`);
+      scope.setExtra('componentStack', errorInfo.componentStack);
+
+      Sentry.captureException(error);
     });
 
-    console.log({ error, errorInfo });
-
-    const errorEventId = Sentry.captureException(error, errorInfo);
+    const errorEventId = Sentry.captureException(error);
 
     // Store the event id at this point as we don't have access to it within
     // `getDerivedStateFromError`.

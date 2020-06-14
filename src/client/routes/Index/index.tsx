@@ -174,7 +174,7 @@ export default function Index() {
               </ExternalLink>
             </Feature>
 
-            <Feature state={FeatureState.WIP} info="currently frontend only">
+            <Feature state={FeatureState.DONE}>
               error tracking via{' '}
               <ExternalLink href="//sentry.io">sentry</ExternalLink>
             </Feature>
