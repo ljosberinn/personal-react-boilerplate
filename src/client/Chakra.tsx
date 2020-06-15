@@ -7,6 +7,7 @@ import {
 import React, { ReactNode } from 'react';
 
 import { attachComponentBreadcrumb } from '../utils/sentry';
+import ServiceWorker from './ServiceWorker';
 import theme from './theme';
 
 export interface ChakraProps {
@@ -21,6 +22,7 @@ export default function Chakra({ children }: ChakraProps) {
       <ThemeProvider theme={theme}>
         <ColorModeProvider value="dark">
           <CSSReset />
+          <ServiceWorker />
           <Box as="main" p={4}>
             {children}
           </Box>

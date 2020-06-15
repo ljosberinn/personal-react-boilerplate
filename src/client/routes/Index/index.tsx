@@ -179,6 +179,13 @@ export default function Index() {
               <ExternalLink href="//sentry.io">sentry</ExternalLink>
             </Feature>
 
+            <Feature state={FeatureState.WIP}>
+              basic PWA capabilities (caching & notifying service worker) via{' '}
+              <ExternalLink href="//github.com/hanford/next-offline">
+                next-offline
+              </ExternalLink>
+            </Feature>
+
             <Feature state={FeatureState.OPT}>
               React footprint reduced via{' '}
               <ExternalLink href="//preactjs.com">preact</ExternalLink>

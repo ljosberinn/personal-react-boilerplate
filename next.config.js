@@ -22,6 +22,7 @@ const offlineConfig = {
   transformManifest: manifest => ['/'].concat(manifest), // add the homepage to the cache
   // turn on the SW in dev mode so that we can actually test it
   generateInDevMode: true,
+  dontAutoRegisterSw: true,
   workboxOpts: {
     swDest: '../public/service-worker.js',
     runtimeCaching: [
