@@ -179,7 +179,7 @@ export default function Index() {
               <ExternalLink href="//sentry.io">sentry</ExternalLink>
             </Feature>
 
-            <Feature state={FeatureState.WIP}>
+            <Feature state={FeatureState.DONE}>
               basic PWA capabilities (caching & notifying service worker) via{' '}
               <ExternalLink href="//github.com/hanford/next-offline">
                 next-offline
