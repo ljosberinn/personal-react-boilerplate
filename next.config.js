@@ -25,6 +25,7 @@ const offlineConfig = {
   dontAutoRegisterSw: true,
   workboxOpts: {
     swDest: '../public/service-worker.js',
+    clientsClaim: true,
     skipWaiting: true,
     runtimeCaching: [
       {
