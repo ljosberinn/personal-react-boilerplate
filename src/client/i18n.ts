@@ -138,9 +138,11 @@ export const getI18N = async (lang: string, req?: IncomingMessage) => {
     try {
       namespaces = await response.json();
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(error.message, 'Failed to parse i18n JSON');
     }
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error(error.message, 'Failed to fetch i18n');
   }
 

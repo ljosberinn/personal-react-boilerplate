@@ -159,6 +159,7 @@ function Form({ firstFieldRef, onCancel }: FormProps) {
         username: 'ljosberinn',
       });
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(error);
     }
   }
@@ -222,6 +223,7 @@ function AuthenticatedDummyRequest() {
       const response = await fetch('/api/v1/user/me');
       newResponse = await response.json();
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(error);
       newResponse = error;
     } finally {

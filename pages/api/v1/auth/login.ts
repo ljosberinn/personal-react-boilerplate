@@ -33,6 +33,7 @@ export default nextConnect()
 
       res.status(OK).json(user);
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(error);
       res.status(UNAUTHORIZED).end();
     }

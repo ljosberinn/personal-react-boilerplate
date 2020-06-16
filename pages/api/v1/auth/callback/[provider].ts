@@ -39,6 +39,7 @@ export default nextConnect()
 
       setSessionCookie(token, res);
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(error);
       errored = true;
     }

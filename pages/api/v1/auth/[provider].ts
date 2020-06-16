@@ -26,6 +26,7 @@ export default nextConnect()
     try {
       await promisifyAuthentication(provider, req, res);
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(error);
       res.status(INTERNAL_SERVER_ERROR).end();
     }

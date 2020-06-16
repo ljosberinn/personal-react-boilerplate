@@ -10,6 +10,7 @@ const expectJSONBodyMiddleware: Middleware = (req, res, next) => {
     try {
       req.body = JSON.parse(req.body);
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(error);
       return res.status(BAD_REQUEST).end();
     }
