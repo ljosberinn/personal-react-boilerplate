@@ -1,9 +1,9 @@
 import { Middleware } from 'next-connect';
 
-import { SESSION_COOKIE_NAME } from '../../../constants';
-import { UNAUTHORIZED } from '../../../utils/statusCodes';
-import { getSession } from '../cookie';
-import { AuthenticatedRequest } from '../types';
+import { SESSION_COOKIE_NAME } from '../../constants';
+import { UNAUTHORIZED } from '../../utils/statusCodes';
+import { getSession } from '../auth/cookie';
+import { AuthenticatedRequest } from '../auth/types';
 
 const error = 'You must be authorized to access this resource.';
 

@@ -6,6 +6,8 @@ import { NextRouter } from 'next/router';
 
 import { SENTRY_DSN, IS_PROD, IS_BROWSER } from '../constants';
 
+const { init, configureScope, addBreadcrumb, Severity } = Sentry;
+
 const sentryOptions: Sentry.NodeOptions = {
   attachStacktrace: true,
   dsn: SENTRY_DSN,
@@ -25,9 +27,9 @@ if (!IS_PROD) {
   ];
 }
 
-Sentry.init(sentryOptions);
+init(sentryOptions);
 
-Sentry.configureScope(scope => {
+configureScope(scope => {
   scope.setTag('nodejs', process.version);
   scope.setTag('buildTime', process.env.BUILD_TIME!);
 });
@@ -36,7 +38,7 @@ Sentry.configureScope(scope => {
  * Attaches lambda request data to Sentry
  */
 export const attachLambdaContext = (req: NextApiRequest) => {
-  Sentry.configureScope(scope => {
+  configureScope(scope => {
     scope.setTag('host', req.headers.host || '');
     scope.setTag('url', req.url || '');
     scope.setTag('method', req.method || '');
@@ -61,12 +63,12 @@ export const attachInitialContext = ({
   language,
   session,
 }: InitialContextArgs) => {
-  Sentry.addBreadcrumb({
-    level: Sentry.Severity.Debug,
+  addBreadcrumb({
+    level: Severity.Debug,
     message: `Booting (${IS_BROWSER ? 'in browser' : 'on server'})`,
   });
 
-  Sentry.configureScope(scope => {
+  configureScope(scope => {
     scope.setExtra('language', language);
 
     if (req) {
@@ -89,7 +91,7 @@ export const attachRoutingContext = (
   { route, pathname, query, asPath }: NextRouter,
   name: string = 'unknown'
 ) => {
-  Sentry.configureScope(scope => {
+  configureScope(scope => {
     scope.setContext('router', {
       asPath,
       pathname,
@@ -103,8 +105,8 @@ export const attachRoutingContext = (
 };
 
 export const attachComponentBreadcrumb = (name: string) => {
-  Sentry.addBreadcrumb({
-    level: Sentry.Severity.Debug,
+  addBreadcrumb({
+    level: Severity.Debug,
     message: `Preparing "${name}" (${IS_BROWSER ? 'in browser' : 'on server'})`,
   });
 };

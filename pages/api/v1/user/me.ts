@@ -1,11 +1,11 @@
 import nextConnect from 'next-connect';
 
 import { SESSION_COOKIE_NAME } from '../../../../src/constants';
+import { AuthenticatedRequest } from '../../../../src/server/auth/types';
 import {
   authNSecurityMiddleware,
   sentryMiddleware,
-} from '../../../../src/server/auth/middlewares';
-import { AuthenticatedRequest } from '../../../../src/server/auth/types';
+} from '../../../../src/server/middlewares';
 
 export default nextConnect()
   .use(sentryMiddleware)

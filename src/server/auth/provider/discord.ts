@@ -20,7 +20,7 @@ const verify = (
 };
 
 const options: StrategyOptions = {
-  callbackURL: '/api/v1/auth/callback/discord',
+  callbackURL: '/api/v1/auth/discord',
   clientID: DISCORD_CLIENT_ID,
   clientSecret: DISCORD_CLIENT_SECRET,
   scope: ['identify'],

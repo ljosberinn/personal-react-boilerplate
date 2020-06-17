@@ -21,7 +21,7 @@ const verify: VerifyFunction = (
 };
 
 const options: StrategyOptions = {
-  callbackURL: '/api/v1/auth/callback/google',
+  callbackURL: '/api/v1/auth/google',
   clientID: GOOGLE_CLIENT_ID,
   clientSecret: GOOGLE_CLIENT_SECRET,
   scope: ['openid', 'profile', 'email'],

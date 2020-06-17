@@ -35,7 +35,7 @@ export default function AuthContextProvider({
   }
 
   async function logout() {
-    await fetch('/api/v1/auth/logout');
+    await fetch('/api/v1/auth/logout', { method: 'DELETE' });
     setUser(null);
   }
 

@@ -1,6 +1,6 @@
 import { Middleware } from 'next-connect';
 
-import { BAD_REQUEST } from '../../../utils/statusCodes';
+import { BAD_REQUEST } from '../../utils/statusCodes';
 
 /**
  * Middleware accepting exclusively valid JSON as req.body, if existing

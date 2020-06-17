@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import passport, { AuthenticateOptions, Profile } from 'passport';
+import passport, { AuthenticateOptions } from 'passport';
 
 import { Provider } from '../../client/context/AuthContext/AuthContext';
 import { RawResponse } from './types';
@@ -25,9 +25,3 @@ export const promisifyAuthentication = (
 
     authenticationHandler(req, res);
   });
-
-export const getProfileData = (data: RawResponse): Profile => {
-  const { _json, _raw, ...props } = data;
-
-  return props;
-};

@@ -18,7 +18,7 @@ const verify: VerifyFunction = (
 };
 
 const options = {
-  callbackURL: '/api/v1/auth/callback/facebook',
+  callbackURL: '/api/v1/auth/facebook',
   clientID: FACEBOOK_CLIENT_ID,
   clientSecret: FACEBOOK_CLIENT_SECRET,
   graphApiVersion: 'v7.0',

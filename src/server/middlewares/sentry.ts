@@ -1,6 +1,6 @@
 import { Middleware } from 'next-connect';
 
-import { attachLambdaContext } from '../../../utils/sentry';
+import { attachLambdaContext } from '../../utils/sentry';
 
 /**
  * Middleware setting up sentry to process lambdas
