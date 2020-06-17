@@ -1,6 +1,9 @@
 import { Box, useToast, Flex, Icon } from '@chakra-ui/core';
 import React, { useEffect } from 'react';
 
+import { IS_PROD } from '../constants';
+import { attachComponentBreadcrumb } from '../utils/sentry';
+
 const sw = '/service-worker.js';
 
 /**
@@ -30,32 +33,48 @@ const RefreshToast = () => (
 );
 
 export default function ServiceWorker() {
+  attachComponentBreadcrumb('ServiceWorker');
+
   const toast = useToast();
 
   useEffect(() => {
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register(sw).then(registration => {
-        registration.addEventListener('updatefound', () => {
-          const installingWorker = registration.installing;
+      navigator.serviceWorker
+        .register(sw)
+        .then(registration => {
+          registration.addEventListener('updatefound', () => {
+            const installingWorker = registration.installing;
 
-          if (!installingWorker) {
-            return;
-          }
-
-          installingWorker.addEventListener('statechange', () => {
-            if (
-              installingWorker.state !== 'installed' ||
-              !navigator.serviceWorker.controller
-            ) {
+            if (!installingWorker) {
               return;
             }
 
-            toast({
-              render: RefreshToast,
+            installingWorker.addEventListener('statechange', () => {
+              if (
+                installingWorker.state !== 'installed' ||
+                !navigator.serviceWorker.controller
+              ) {
+                return;
+              }
+
+              toast({
+                render: RefreshToast,
+              });
             });
           });
+        })
+        .catch(error => {
+          if (!IS_PROD && error instanceof TypeError) {
+            // eslint-disable-next-line no-console
+            console.info(
+              'ServiceWorker is currently deactivated.\nIf this is unintentional, please change `next.config.js.offlineConfig.generateInDevMode` to `true`.'
+            );
+            return;
+          }
+
+          // eslint-disable-next-line no-console
+          console.error(error);
         });
-      });
     }
   }, [toast]);
 

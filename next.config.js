@@ -21,7 +21,7 @@ const offlineConfig = {
   target: 'serverless',
   transformManifest: manifest => ['/'].concat(manifest), // add the homepage to the cache
   // turn on the SW in dev mode so that we can actually test it
-  generateInDevMode: true,
+  generateInDevMode: false,
   dontAutoRegisterSw: true,
   workboxOpts: {
     swDest: '../public/service-worker.js',
