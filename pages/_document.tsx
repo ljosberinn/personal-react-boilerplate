@@ -34,7 +34,7 @@ export default function CustomDocument({
   attachComponentBreadcrumb('document');
 
   return (
-    <Html lang={language}>
+    <Html lang={language} dir="auto">
       <Head>
         <link rel="manifest" href="/manifest.json" />
       </Head>

@@ -43,7 +43,7 @@ export default function Index() {
           justifyContent="space-between"
           flexDirection={['row', 'column', 'row', 'row']}
         >
-          <ExternalLink href="//github.com/ljosberinn/next-with-batteries">
+          <ExternalLink href="//github.com/ljosberinn/personal-react-boilerplate">
             <Box d="inline-block" as={FaGithub} /> Repository
           </ExternalLink>
 

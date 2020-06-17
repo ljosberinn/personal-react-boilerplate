@@ -14,14 +14,13 @@ import {
 import { COOKIE_LOOKUP_KEY_LANG } from '@unly/universal-language-detector';
 import { TFunction } from 'i18next';
 import cookies from 'js-cookie';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { FlagIcon, FlagIconCode } from 'react-flag-kit';
 import { useTranslation } from 'react-i18next';
 import { MdTranslate } from 'react-icons/md';
 
 import {
   SUPPORTED_LANGUAGES_MAP,
-  IS_BROWSER,
   ENABLED_LANGUAGES,
 } from '../../../../constants';
 import { getI18N } from '../../../i18n';
@@ -42,8 +41,6 @@ export default function LanguageSwitch(props: LanguageSwitchProps) {
 
   function handleLanguageChange(slug: string) {
     return async () => {
-      // prevent loading data 2x which happens for some reason when
-      // going from initial language -> other lang -> back
       if (!i18n.getDataByLanguage(slug)) {
         const bundles = await getI18N(slug);
 
@@ -56,12 +53,6 @@ export default function LanguageSwitch(props: LanguageSwitchProps) {
       await i18n.changeLanguage(slug);
     };
   }
-
-  useEffect(() => {
-    if (IS_BROWSER) {
-      document.querySelector('html')!.setAttribute('lang', i18n.language);
-    }
-  }, [i18n.language]);
 
   return (
     <Box {...props}>
@@ -94,7 +85,7 @@ export default function LanguageSwitch(props: LanguageSwitchProps) {
                 colorMode === 'light' ? 'gray.100' : 'whiteAlpha.100',
               boxShadow: 'unset',
             }}
-            {...{ href: '//github.com/ljosberinn/next-with-batteries' }}
+            {...{ href: '//github.com/chevron-9/next-with-batteries-docs' }}
           >
             {t('help-cta')}
           </MenuItem>

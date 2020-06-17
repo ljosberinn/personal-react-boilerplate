@@ -17,7 +17,21 @@ import {
 } from '../constants';
 import { namespaces } from '../server/i18n';
 
-const endpoint = '/api/v1/i18n?language={{lng}}';
+// see https://meta.wikimedia.org/wiki/Template:List_of_language_names_ordered_by_code
+const RTL_LANGUAGES = new Set([
+  'ar', // Arabic
+  'arc', // Aramaic
+  'dv', // Divehi
+  'fa', // Persian
+  'ha', // Hakka Chinese
+  'he', // Hebrew
+  'khw', // Khowar
+  'ks', // Kashmiri
+  'ku', // Kurdish
+  'ps', // Pashto
+  'ur', // Urdu
+  'yi', // Yiddish
+]);
 
 export const initI18Next = ({
   language,
@@ -50,6 +64,15 @@ export const initI18Next = ({
     },
     whitelist: ENABLED_LANGUAGES,
   });
+
+  if (IS_BROWSER) {
+    i18nInstance.on('languageChanged', lang => {
+      const html = document.querySelector('html');
+
+      html?.setAttribute('lang', lang);
+      html?.setAttribute('dir', RTL_LANGUAGES.has(lang) ? 'rtl' : 'ltr');
+    });
+  }
 
   return i18nInstance;
 };
@@ -115,10 +138,9 @@ const _memoizedI18nextResources: {
  */
 const memoizedCacheMaxAge = (IS_BROWSER || IS_PROD ? 60 * 60 : 60) * 1000;
 
-const interpolateEndpoint = (lang: string) => endpoint.replace('{{lng}}', lang);
-
 export const getI18N = async (lang: string, req?: IncomingMessage) => {
-  const url = interpolateEndpoint(lang);
+  const url = '/api/v1/i18n/' + lang;
+
   const memoizedI18nextResources = _memoizedI18nextResources[url];
 
   if (memoizedI18nextResources) {
