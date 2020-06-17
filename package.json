@@ -57,7 +57,7 @@
     "@types/passport-github2": "^1.2.4",
     "@types/passport-google-oauth2": "^0.1.3",
     "@types/passport-local": "^1.0.33",
-    "@types/react": "^16.9.36",
+    "@types/react": "^16.9.38",
     "@types/react-dom": "^16.9.8",
     "babel-jest": "^26.0.1",
     "cookie": "^0.4.1",
