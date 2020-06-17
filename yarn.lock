@@ -5024,6 +5024,13 @@ eslint-plugin-testing-library@^3.1.3, eslint-plugin-testing-library@^3.2.1:
   dependencies:
     "@typescript-eslint/experimental-utils" "^2.29.0"
 
+eslint-plugin-tsc@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-tsc/-/eslint-plugin-tsc-1.2.0.tgz#d89acfcf3a8386d085f40649286419c99eeccc52"
+  integrity sha512-5FzOmpKAVhKY/ZzXVodVDGt6kdPIvR+Iks2pIrvRgLdRgAAKJ4URVn9PPeLIhU5PtJVgSf5ZbvmRN1GVS/ViCQ==
+  dependencies:
+    typescript-service "^2.0.0"
+
 eslint-plugin-unicorn@^20.1.0:
   version "20.1.0"
   resolved "https://registry.yarnpkg.com/eslint-plugin-unicorn/-/eslint-plugin-unicorn-20.1.0.tgz#a43f60ffc98406d72ec2a5fcc6dad24ba0192bc9"
@@ -10712,6 +10719,13 @@ typedarray@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
+
+typescript-service@^2.0.0:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/typescript-service/-/typescript-service-2.0.3.tgz#3a0a61500c4c1b3b2fe54f6b74a004307fd894ce"
+  integrity sha512-FzRlqRp965UBzGvGwc6rbeko84jLILZrHf++I4cN8usZUB7F8Lh8/WDiCOUvy2l5os+jBWEz4fbYkkj1DhYJcw==
+  dependencies:
+    tslib "^1.9.3"
 
 typescript@^4.0.0-dev.20200615:
   version "4.0.0-dev.20200615"
