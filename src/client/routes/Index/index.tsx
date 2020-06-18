@@ -98,7 +98,7 @@ export default function Index() {
             <Feature state={FeatureState.DONE}>hooks only</Feature>
 
             <Feature state={FeatureState.DONE}>
-              near-perfect lighthouse audit (97/100/100/100)
+              near-perfect lighthouse audit (99/100/100/100)
             </Feature>
 
             <Feature state={FeatureState.DONE} id="theming">
@@ -180,7 +180,8 @@ export default function Index() {
             </Feature>
 
             <Feature state={FeatureState.DONE}>
-              basic PWA capabilities (caching & notifying service worker) via{' '}
+              basic PWA capabilities (caching & notifying service worker &
+              custom install prompt) via{' '}
               <ExternalLink href="//github.com/hanford/next-offline">
                 next-offline
               </ExternalLink>
