@@ -7,6 +7,7 @@ import {
 import React, { ReactNode } from 'react';
 
 import { attachComponentBreadcrumb } from '../utils/sentry';
+//import PWAInstall from './PWAInstall';
 import ServiceWorker from './ServiceWorker';
 import theme from './theme';
 
@@ -23,6 +24,7 @@ export default function Chakra({ children }: ChakraProps) {
         <ColorModeProvider value="dark">
           <CSSReset />
           <ServiceWorker />
+          {/* <PWAInstall /> */}
           <Box as="main" p={4}>
             {children}
           </Box>
