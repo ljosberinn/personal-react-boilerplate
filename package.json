@@ -5,7 +5,7 @@
     "dev": "next",
     "build": "next build",
     "start": "next start",
-    "test": "jest --watch",
+    "test": "jest --watch --coverage",
     "test:ci": "jest --ci",
     "postinstall": "yarn-deduplicate -l",
     "lint": "eslint src && eslint pages && tsc --noEmit",

@@ -18,4 +18,5 @@ module.exports = {
     '^.+\\.module\\.(css|sass|scss)$': 'identity-obj-proxy',
   },
   modulePaths: ['<rootDir>'],
+  coverageDirectory: 'coverage',
 };

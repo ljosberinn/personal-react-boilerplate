@@ -6,6 +6,7 @@
     "eamodio.gitlens",
     "kisstkondoros.vscode-gutter-preview",
     "github.vscode-pull-request-github",
-    "ms-vscode.vscode-typescript-next"
+    "ms-vscode.vscode-typescript-next",
+    "ryanluker.vscode-coverage-gutters"
   ]
 }
