@@ -1,8 +1,8 @@
 import { Box, useToast, Flex, Icon } from '@chakra-ui/core';
 import React, { useEffect } from 'react';
 
-import { IS_PROD } from '../constants';
-import { attachComponentBreadcrumb } from '../utils/sentry';
+import { IS_PROD } from '../../../../constants';
+import { attachComponentBreadcrumb } from '../../../../utils/sentry';
 
 const sw = '/service-worker.js';
 
