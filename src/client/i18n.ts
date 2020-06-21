@@ -42,27 +42,28 @@ export const initI18Next = ({
   i18nInstance.init({
     cleanCode: true,
     debug: !IS_PROD,
-    defaultNS: 'common',
+    defaultNS: 'common', // removes 'translation' default key from backend query,
     fallbackLng:
       language === SUPPORTED_LANGUAGES_MAP.en
         ? SUPPORTED_LANGUAGES_MAP.de
         : SUPPORTED_LANGUAGES_MAP.en,
-
     interpolation: {
-      escapeValue: false, // not needed with react
+      // not needed with react
+      escapeValue: false,
     },
     lng: language,
     // remove if you want to use localization (en-US, en-GB)
     load: 'languageOnly',
     lowerCaseLng: true,
-    ns: namespaces, // removes 'translation' default key from backend query,
+    ns: namespaces,
     react: {
-      useSuspense: false, // not compatible with SSR
+      // not compatible with SSR
+      useSuspense: false,
     },
     resources: {
       [language]: i18nBundle,
     },
-    whitelist: ENABLED_LANGUAGES,
+    supportedLngs: ENABLED_LANGUAGES,
   });
 
   if (IS_BROWSER) {

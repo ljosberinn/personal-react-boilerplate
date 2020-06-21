@@ -42,8 +42,8 @@
     "react-icons": "^3.10.0"
   },
   "devDependencies": {
-    "@commitlint/cli": "^8.3.5",
-    "@commitlint/config-conventional": "^8.3.4",
+    "@commitlint/cli": "^9.0.1",
+    "@commitlint/config-conventional": "^9.0.1",
     "@sentry/webpack-plugin": "^1.11.1",
     "@testing-library/jest-dom": "^5.10.1",
     "@testing-library/react": "^10.3.0",
@@ -75,7 +75,7 @@
     "passport-oauth2": "^1.5.0",
     "prettier": "^2.0.5",
     "react-test-renderer": "^16.13.1",
-    "typescript": "^4.0.0-dev.20200620",
+    "typescript": "^4.0.0-dev.20200621",
     "yarn-deduplicate": "^2.0.0"
   },
   "license": "ISC"
