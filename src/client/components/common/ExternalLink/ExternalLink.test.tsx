@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { render } from '../../../../../testUtils';
+import { render, screen } from '../../../../../testUtils';
 import ExternalLink, { ExternalLinkProps } from './ExternalLink';
 
 const defaultProps: ExternalLinkProps = {
@@ -14,10 +14,10 @@ describe('<ExternalLink />', () => {
   });
 
   it('should optionally render an icon after its text', () => {
-    const { getByRole } = render(<ExternalLink {...defaultProps} withIcon />);
+    render(<ExternalLink {...defaultProps} withIcon />);
 
-    const link = getByRole('link');
-    const svg = getByRole('presentation');
+    const link = screen.getByRole('link');
+    const svg = screen.getByRole('presentation');
 
     expect(svg).toBeInTheDocument();
     expect(svg.parentElement).toBe(link);

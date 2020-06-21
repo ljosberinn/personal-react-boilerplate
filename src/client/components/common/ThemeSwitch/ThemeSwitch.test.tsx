@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { render, fireEvent } from '../../../../../testUtils';
+import { render, fireEvent, screen } from '../../../../../testUtils';
 import ThemeSwitch from './ThemeSwitch';
 
 describe('<ThemeSwitch />', () => {
@@ -9,11 +9,11 @@ describe('<ThemeSwitch />', () => {
   });
 
   it('indicates the current theme visually', () => {
-    const { getByTestId, getByRole } = render(<ThemeSwitch />);
+    render(<ThemeSwitch />);
 
-    const input = getByRole('checkbox');
-    const sun = getByTestId('theme-switch-sun');
-    const moon = getByTestId('theme-switch-moon');
+    const input = screen.getByRole('checkbox');
+    const sun = screen.getByTestId('theme-switch-sun');
+    const moon = screen.getByTestId('theme-switch-moon');
 
     const sunClassListBefore = sun.classList.toString();
     const moonClassListBefore = moon.classList.toString();
@@ -26,10 +26,10 @@ describe('<ThemeSwitch />', () => {
 
   ['sun', 'moon'].forEach(icon => {
     it(`allows changing the theme by clicking an icon alternatively - icon ${icon}`, () => {
-      const { getByTestId } = render(<ThemeSwitch />);
+      render(<ThemeSwitch />);
 
-      const sun = getByTestId('theme-switch-sun');
-      const moon = getByTestId('theme-switch-moon');
+      const sun = screen.getByTestId('theme-switch-sun');
+      const moon = screen.getByTestId('theme-switch-moon');
 
       const sunClassListBefore = sun.classList.toString();
       const moonClassListBefore = moon.classList.toString();

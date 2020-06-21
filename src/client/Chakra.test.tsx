@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { render } from '../../testUtils';
+import { render, screen } from '../../testUtils';
 import Chakra from './Chakra';
 
 describe('<Chakra />', () => {
@@ -11,12 +11,12 @@ describe('<Chakra />', () => {
   it('should accept child components', () => {
     const Child = () => <span>child</span>;
 
-    const { getByText } = render(
+    render(
       <Chakra>
         <Child />
       </Chakra>
     );
 
-    expect(getByText('child')).toBeInTheDocument();
+    expect(screen.getByText('child')).toBeInTheDocument();
   });
 });

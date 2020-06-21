@@ -127,6 +127,7 @@ describe('<LanguageSwitch />', () => {
     fireEvent.click(otherLanguageElement);
 
     await waitFor(() => expect(mockSet).toHaveBeenCalledTimes(1));
+
     expect(mockSet).toHaveBeenCalledWith(
       COOKIE_LOOKUP_KEY_LANG,
       randomOtherLanguage

@@ -1,7 +1,7 @@
 import React from 'react';
 import { FaSun, FaMoon } from 'react-icons/fa';
 
-import { render, fireEvent } from '../../../../../testUtils';
+import { render, fireEvent, screen } from '../../../../../testUtils';
 import ThemeSwitchAlt from './ThemeSwitchAlt';
 
 describe('<ThemeSwitchAlt />', () => {
@@ -16,14 +16,14 @@ describe('<ThemeSwitchAlt />', () => {
    * - continues to work given any prop on the `Box` component
    */
   it('indicates the current theme visually', () => {
-    const { getByRole } = render(<ThemeSwitchAlt />);
+    render(<ThemeSwitchAlt />);
     const sun = render(<FaSun />);
     const moon = render(<FaMoon />);
 
     const sunPath = sun.container.querySelector('path')!.outerHTML;
     const moonPath = moon.container.querySelector('path')!.outerHTML;
 
-    const button = getByRole('checkbox');
+    const button = screen.getByRole('checkbox');
 
     const isInitiallyLight =
       button.querySelector('path')!.outerHTML === sunPath;
