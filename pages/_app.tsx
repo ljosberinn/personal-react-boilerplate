@@ -6,7 +6,7 @@ import { I18nextProvider } from 'react-i18next';
 
 import SEO from '../next-seo.config';
 import Chakra from '../src/client/Chakra';
-//import PWAInstall from '../src/client/PWAInstall';
+// import { CustomPWAInstallPrompt } from '../src/client/components/common/CustomPWAInstallPrompt';
 import { ErrorBoundary as TopLevelErrorBoundary } from '../src/client/components/common/ErrorBoundary';
 import ServiceWorker from '../src/client/components/common/ServiceWorker/ServiceWorker';
 import { AuthContextProvider } from '../src/client/context/AuthContext';
@@ -56,7 +56,7 @@ export default function App({ Component, pageProps, router }: AppRenderProps) {
           <AuthContextProvider session={pageProps.session}>
             <Chakra>
               <ServiceWorker />
-              {/* <PWAInstall /> */}
+              {/* <CustomPWAInstallPrompt /> */}
               <Component {...pageProps} />
             </Chakra>
           </AuthContextProvider>
