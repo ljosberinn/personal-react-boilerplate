@@ -9,7 +9,7 @@ import {
   MenuDivider,
   Button,
   BoxProps,
-  useColorMode,
+  useColorModeValue,
 } from '@chakra-ui/core';
 import { COOKIE_LOOKUP_KEY_LANG } from '@unly/universal-language-detector';
 import { TFunction } from 'i18next';
@@ -37,11 +37,11 @@ type LanguageSwitchProps = BoxProps;
 
 export default function LanguageSwitch(props: LanguageSwitchProps) {
   const { i18n, t } = useTranslation('i18n');
-  const { colorMode } = useColorMode();
+  const backgroundColor = useColorModeValue('gray.100', 'whiteAlpha.100');
 
   function handleLanguageChange(slug: string) {
     return async () => {
-      if (!i18n.getDataByLanguage(slug)) {
+      if (!i18n.hasResourceBundle(slug, 'i18n')) {
         const bundles = await getI18N(slug);
 
         Object.entries(bundles).forEach(([ns, bundle]) => {
@@ -57,14 +57,15 @@ export default function LanguageSwitch(props: LanguageSwitchProps) {
   return (
     <Box {...props}>
       <Menu>
-        <MenuButton as={Button} {...{ variantColor: 'teal' }}>
+        <MenuButton as={Button} colorScheme="teal">
           <Box d="inline-block" as={MdTranslate} mr={2} />
           {t('language-toggle')}
         </MenuButton>
-        <MenuList>
+        <MenuList sx={undefined}>
           <MenuOptionGroup
             title={t('available-languages')}
             value={i18n.language}
+            type="radio"
           >
             {ENABLED_LANGUAGES.map(slug => (
               <LanguageOption
@@ -80,12 +81,10 @@ export default function LanguageSwitch(props: LanguageSwitchProps) {
           <MenuItem
             as={ExternalLink}
             _focus={{
-              // see https://github.com/chakra-ui/chakra-ui/blob/master/packages/chakra-ui/src/Menu/styles.js#L38
-              backgroundColor:
-                colorMode === 'light' ? 'gray.100' : 'whiteAlpha.100',
+              backgroundColor,
               boxShadow: 'unset',
             }}
-            {...{ href: '//github.com/chevron-9/next-with-batteries-docs' }}
+            href="//github.com/chevron-9/next-with-batteries-docs"
           >
             {t('help-cta')}
           </MenuItem>
@@ -110,12 +109,11 @@ function LanguageOption({
 }: LanguageOptionProps) {
   return (
     <MenuItemOption
-      type="radio"
       value={slug}
       isDisabled={isCurrentLanguage}
+      // @ts-expect-error
       isChecked={isCurrentLanguage}
       onClick={isCurrentLanguage ? undefined : handleLanguageChange(slug)}
-      key={slug}
     >
       <Box mr={2} display="inline-block">
         <FlagIcon aria-hidden="true" code={flagMap[slug]} />

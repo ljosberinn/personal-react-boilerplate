@@ -1,3 +1,4 @@
+import { InitializeColorMode } from '@chakra-ui/core';
 import * as Sentry from '@sentry/node';
 import NextDocument, {
   Html,
@@ -39,6 +40,7 @@ export default function CustomDocument({
         <link rel="manifest" href="/manifest.json" />
       </Head>
       <body>
+        <InitializeColorMode />
         <Main />
         <NextScript />
       </body>

@@ -1,10 +1,11 @@
-import { ThemeProvider, ColorModeProvider } from '@chakra-ui/core';
+import { ChakraProvider } from '@chakra-ui/core';
 import { render as rtlRender } from '@testing-library/react';
 import React, { cloneElement, ReactNode } from 'react';
 import { I18nextProvider, I18nContext } from 'react-i18next';
 
 import { AuthContextProvider } from '../src/client/context/AuthContext';
 import { User } from '../src/client/context/AuthContext/AuthContext';
+import { customTheme } from '../src/client/theme';
 import i18n from './i18n';
 
 type TestOptions = {
@@ -37,25 +38,23 @@ function render(
 ) {
   return {
     ...rtlRender(
-      <ThemeProvider>
-        <ColorModeProvider>
-          <I18nextProvider i18n={i18n}>
-            <AuthContextProvider session={session}>
-              <AdditionalWrapper>
-                <I18nContext.Consumer>
-                  {({ t }) =>
-                    // this allows usage of render(<Component some="prop" />) in tests
-                    // of components that receive `t` via props
-                    cloneElement(component, {
-                      t: includeTranslation ? t : undefined,
-                    })
-                  }
-                </I18nContext.Consumer>
-              </AdditionalWrapper>
-            </AuthContextProvider>
-          </I18nextProvider>
-        </ColorModeProvider>
-      </ThemeProvider>
+      <ChakraProvider theme={customTheme}>
+        <I18nextProvider i18n={i18n}>
+          <AuthContextProvider session={session}>
+            <AdditionalWrapper>
+              <I18nContext.Consumer>
+                {({ t }) =>
+                  // this allows usage of render(<Component some="prop" />) in tests
+                  // of components that receive `t` via props
+                  cloneElement(component, {
+                    t: includeTranslation ? t : undefined,
+                  })
+                }
+              </I18nContext.Consumer>
+            </AdditionalWrapper>
+          </AuthContextProvider>
+        </I18nextProvider>
+      </ChakraProvider>
     ),
   };
 }

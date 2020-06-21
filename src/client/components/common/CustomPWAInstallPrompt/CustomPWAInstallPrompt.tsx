@@ -1,6 +1,6 @@
 import {
   Button,
-  SlideIn,
+  Slide,
   Modal,
   ModalOverlay,
   ModalContent,
@@ -71,19 +71,39 @@ export default function CustomPWAInstallPrompt() {
   }
 
   return (
-    <SlideIn from="top" in={isOpen} items>
-      {(styles: any): any => (
+    <Slide placement="top" in={isOpen}>
+      {({
+        left,
+        right,
+        top,
+        maxWidth,
+        willChange,
+        position,
+        transition,
+        transform,
+      }) => (
         <Modal onClose={onClose} isOpen={true}>
-          <ModalOverlay opacity={styles.opacity} />
-          <ModalContent pb={5} {...styles}>
-            <ModalHeader>Install now</ModalHeader>
-            <ModalCloseButton onClick={onClose} />
-            <ModalBody>
+          <ModalOverlay sx={undefined} />
+          <ModalContent
+            pb={5}
+            left={left}
+            right={right}
+            top={top}
+            maxWidth={maxWidth}
+            willChange={willChange}
+            position={position}
+            transition={transition}
+            transform={transform}
+            sx={undefined}
+          >
+            <ModalHeader sx={undefined}>Install now</ModalHeader>
+            <ModalCloseButton onClick={onClose} sx={undefined} />
+            <ModalBody sx={undefined}>
               <Button onClick={install}>install</Button>
             </ModalBody>
           </ModalContent>
         </Modal>
       )}
-    </SlideIn>
+    </Slide>
   );
 }

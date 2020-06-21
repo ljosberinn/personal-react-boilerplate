@@ -4,7 +4,6 @@ import {
   Menu,
   MenuButton,
   Button,
-  Icon,
   MenuList,
   MenuItem,
   Popover,
@@ -19,6 +18,7 @@ import {
   Input,
   ButtonGroup,
 } from '@chakra-ui/core';
+import { ChevronDownIcon } from '@chakra-ui/icons';
 import React, {
   useState,
   useRef,
@@ -67,7 +67,7 @@ export default function AuthDemo() {
   }
 
   const providerButtonProps = {
-    variantColor: 'teal',
+    colorScheme: 'teal',
     width: ['initial', '100%', '100%', 'initial'],
   };
 
@@ -85,9 +85,9 @@ export default function AuthDemo() {
           <Menu>
             <MenuButton as={Button} {...providerButtonProps}>
               Choose an external provider
-              <Icon ml={2} name="chevron-down" />
+              <ChevronDownIcon ml={2} sx={undefined} />
             </MenuButton>
-            <MenuList>
+            <MenuList sx={undefined}>
               {ENABLED_PROVIDER.filter(provider => provider !== 'local').map(
                 provider => (
                   <MenuItem
@@ -121,14 +121,14 @@ export default function AuthDemo() {
               ml={[2, 0, 0, 2]}
               mt={[0, 2, 2, 0]}
               width={['initial', '100%', '100%', 'initial']}
-              variantColor="teal"
+              colorScheme="teal"
               isDisabled={isAuthenticated}
             >
               or login via <Box d="inline" as={providerIconMap.local} mr={1} />{' '}
               your own API
             </Button>
           </PopoverTrigger>
-          <PopoverContent zIndex={4} p={5}>
+          <PopoverContent zIndex={4} p={5} sx={undefined}>
             <PopoverArrow bg="white" />
             <PopoverCloseButton />
             <Form firstFieldRef={firstFieldRef} onCancel={toggle} />
@@ -166,10 +166,12 @@ function Form({ firstFieldRef, onCancel }: FormProps) {
 
   return (
     <form onSubmit={handleSubmit}>
-      <Stack as="fieldset" spacing={4}>
+      <Stack as="fieldset" spacing={4} sx={undefined}>
         <Box as="legend">This showcase uses hardcoded credentials.</Box>
         <FormControl>
-          <FormLabel htmlFor="username">Username</FormLabel>
+          <FormLabel htmlFor="username" sx={undefined}>
+            Username
+          </FormLabel>
           <Input
             id="username"
             ref={firstFieldRef}
@@ -179,7 +181,9 @@ function Form({ firstFieldRef, onCancel }: FormProps) {
         </FormControl>
 
         <FormControl>
-          <FormLabel htmlFor="password">Password</FormLabel>
+          <FormLabel htmlFor="password" sx={undefined}>
+            Password
+          </FormLabel>
           <Input
             id="password"
             type="password"
@@ -188,11 +192,11 @@ function Form({ firstFieldRef, onCancel }: FormProps) {
           />
         </FormControl>
 
-        <ButtonGroup d="flex" justifyContent="flex-end">
+        <ButtonGroup justifyContent="flex-end" sx={undefined}>
           <Button variant="outline" onClick={onCancel}>
             Cancel
           </Button>
-          <Button type="submit" variantColor="teal">
+          <Button type="submit" colorScheme="teal">
             Login
           </Button>
         </ButtonGroup>
@@ -243,7 +247,7 @@ function AuthenticatedDummyRequest() {
   return (
     <Button
       variant="outline"
-      variantColor="teal"
+      colorScheme="teal"
       width={['initial', '100%', '100%', 'initial']}
       onClick={handleRequestClick}
       isLoading={loading}

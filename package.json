@@ -12,9 +12,9 @@
     "lint:fix": "eslint src --fix && eslint pages --fix && prettier --write src && prettier --write pages"
   },
   "dependencies": {
-    "@chakra-ui/core": "^0.8.0",
-    "@emotion/core": "^10.0.28",
-    "@emotion/styled": "^10.0.27",
+    "@chakra-ui/core": "1.0.0-next.1",
+    "@chakra-ui/icons": "^1.0.0-next.1",
+    "@chakra-ui/theme": "^1.0.0-next.1",
     "@hapi/iron": "^6.0.0",
     "@passport-next/passport-facebook": "^3.1.2",
     "@sentry/browser": "^5.17.0",
@@ -22,7 +22,6 @@
     "@sentry/node": "^5.17.0",
     "@unly/universal-language-detector": "^2.0.3",
     "cookies": "^0.8.0",
-    "emotion-theming": "^10.0.27",
     "i18next": "^19.5.0",
     "js-cookie": "^2.2.1",
     "next": "9.4.4",

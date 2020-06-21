@@ -1,13 +1,8 @@
-import {
-  ThemeProvider,
-  ColorModeProvider,
-  CSSReset,
-  Box,
-} from '@chakra-ui/core';
+import { ChakraProvider, CSSReset, Box } from '@chakra-ui/core';
 import React, { ReactNode } from 'react';
 
 import { attachComponentBreadcrumb } from '../utils/sentry';
-import theme from './theme';
+import { customTheme } from './theme';
 
 export interface ChakraProps {
   children: ReactNode;
@@ -18,17 +13,15 @@ export default function Chakra({ children }: ChakraProps) {
 
   return (
     <>
-      <ThemeProvider theme={theme}>
-        <ColorModeProvider value="dark">
-          <CSSReset />
-          <Box as="main" p={4}>
-            {children}
-          </Box>
-        </ColorModeProvider>
-      </ThemeProvider>
+      <ChakraProvider theme={customTheme}>
+        <CSSReset />
+        <Box as="main" p={4}>
+          {children}
+        </Box>
+      </ChakraProvider>
       <style jsx global>
         {`
-          html,
+          body,
           div {
             transition: background-color 250ms ease-in-out;
           }

@@ -4,10 +4,12 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaSun, FaMoon } from 'react-icons/fa';
 
-import theme from '../../../theme';
+import { customTheme } from '../../../theme';
 
-export default function ThemeSwitchAlt(props: Omit<ButtonProps, 'children'>) {
-  const { colorMode, toggleColorMode } = useColorMode();
+export type ThemeSwitchAltProps = Omit<ButtonProps, 'children'>;
+
+export default function ThemeSwitchAlt(props: ButtonProps) {
+  const [colorMode, toggleColorMode] = useColorMode();
   const { t } = useTranslation('theme');
 
   const isLightTheme = colorMode === 'light';
@@ -17,7 +19,11 @@ export default function ThemeSwitchAlt(props: Omit<ButtonProps, 'children'>) {
       <Head>
         <meta
           name="theme-color"
-          content={isLightTheme ? theme.colors.white : theme.colors.gray[800]}
+          content={
+            isLightTheme
+              ? customTheme.colors.white
+              : customTheme.colors.gray[800]
+          }
         />
       </Head>
       <Button

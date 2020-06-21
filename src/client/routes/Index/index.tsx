@@ -6,9 +6,9 @@ import {
   Code,
   Flex,
   Text,
-  useColorMode,
   Badge,
   Tooltip,
+  useColorModeValue,
 } from '@chakra-ui/core';
 import React from 'react';
 import { FaTwitter, FaGithub, FaGlobe } from 'react-icons/fa';
@@ -24,9 +24,7 @@ import { Feature } from './Feature';
 import { FeatureState } from './Feature/types';
 
 export default function Index() {
-  const { colorMode } = useColorMode();
-
-  const boxBg = colorMode === 'dark' ? 'gray.700' : 'gray.100';
+  const boxBg = useColorModeValue('gray.100', 'gray.700');
 
   return (
     <Box maxWidth="72rem" ml="auto" mr="auto">
@@ -56,11 +54,11 @@ export default function Index() {
             >
               <Box d="inline-block" as={FaTwitter} /> @gerrit_alex
             </ExternalLink>
-            <Divider borderColor="green.200" orientation="vertical" />
+            <Divider borderColor="green.200" variant="vertical" ml={2} mr={2} />
             <ExternalLink withIcon={false} href="//github.com/ljosberinn">
               <Box d="inline-block" as={FaGithub} /> ljosberinn
             </ExternalLink>
-            <Divider borderColor="green.200" orientation="vertical" />
+            <Divider borderColor="green.200" variant="vertical" ml={2} mr={2} />
             <ExternalLink withIcon={false} href="//gerritalex.de">
               <Box d="inline-block" as={FaGlobe} /> gerritalex.de
             </ExternalLink>
@@ -81,7 +79,7 @@ export default function Index() {
         </Heading>
 
         <Box backgroundColor={boxBg} borderRadius={5} m={1} p={1}>
-          <Stack spacing={1} m={4}>
+          <Stack spacing={1} m={4} sx={undefined}>
             <Feature state={FeatureState.DONE}>
               built with{' '}
               <ExternalLink href="//nextjs.org/">Next.js</ExternalLink>, powered
@@ -222,6 +220,7 @@ export default function Index() {
                 <Tooltip
                   label={ENABLED_PROVIDER.join(', ')}
                   aria-label={ENABLED_PROVIDER.join(', ')}
+                  sx={undefined}
                 >
                   <Badge variant="outline">{ENABLED_PROVIDER.length}*</Badge>
                 </Tooltip>{' '}
@@ -281,7 +280,7 @@ export default function Index() {
               </>
             }
             component={
-              <Stack isInline>
+              <Stack direction="row" sx={undefined}>
                 <ThemeSwitch mt={2} mb={2} />
                 <ThemeSwitchAlt ml={2} />
               </Stack>
@@ -295,7 +294,6 @@ export default function Index() {
                 are included
               </>,
             ]}
-            warning="until @chakra-ui/core v1 is released, automatic theme detection can be buggy"
           />
         </Box>
       </Box>

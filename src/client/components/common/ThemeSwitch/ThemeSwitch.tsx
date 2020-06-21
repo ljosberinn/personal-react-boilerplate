@@ -4,7 +4,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaSun, FaMoon } from 'react-icons/fa';
 
-import theme from '../../../theme';
+import { customTheme } from '../../../theme';
 
 const gray = 'gray.500';
 const yellow = 'yellow.500';
@@ -23,7 +23,7 @@ const colorMap = {
 export type ThemeSwitchProps = FlexProps;
 
 export default function ThemeSwitch(props: ThemeSwitchProps) {
-  const { colorMode, toggleColorMode } = useColorMode();
+  const [colorMode, toggleColorMode] = useColorMode();
   const { t } = useTranslation('theme');
 
   const isLightTheme = colorMode === 'light';
@@ -33,7 +33,11 @@ export default function ThemeSwitch(props: ThemeSwitchProps) {
       <Head>
         <meta
           name="theme-color"
-          content={isLightTheme ? theme.colors.white : theme.colors.gray[800]}
+          content={
+            isLightTheme
+              ? customTheme.colors.white
+              : customTheme.colors.gray[800]
+          }
         />
       </Head>
       <Flex cursor="pointer" d="inline-flex" {...props}>
@@ -49,10 +53,11 @@ export default function ThemeSwitch(props: ThemeSwitchProps) {
         />
         <Switch
           aria-label="toggle theme"
-          isChecked={colorMode === 'dark'}
+          isChecked={!isLightTheme}
           onChange={toggleColorMode}
           display="flex"
           alignItems="center"
+          sx={undefined}
         />
         <Box
           d="inline-block"

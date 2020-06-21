@@ -4,9 +4,9 @@ import {
   Heading,
   List,
   ListItem,
-  Icon,
-  useColorMode,
+  useColorModeValue,
 } from '@chakra-ui/core';
+import { WarningIcon } from '@chakra-ui/icons';
 import React from 'react';
 
 interface DemoComponentProps {
@@ -25,8 +25,7 @@ export default function DemoComponent({
   features,
 }: DemoComponentProps) {
   const id = title.toLowerCase();
-  const { colorMode } = useColorMode();
-  const isDark = colorMode === 'dark';
+  const color = useColorModeValue('red.600', 'red.300');
 
   return (
     <Box as="article" m={4} id={id}>
@@ -43,7 +42,7 @@ export default function DemoComponent({
         {description}
       </Box>
 
-      <List styleType="disc" m={4}>
+      <List styleType="disc" stylePosition="inside" m={4}>
         {features.map((feature, index) => (
           <ListItem key={index}>{feature}</ListItem>
         ))}
@@ -52,10 +51,9 @@ export default function DemoComponent({
       <Box>{component}</Box>
 
       {warning && (
-        <Box as="small" color={isDark ? 'red.300' : 'red.600'}>
+        <Box as="small" color={color}>
           <em>
-            <Icon name="warning" color={isDark ? 'red.300' : 'red.600'} />{' '}
-            {warning}
+            <WarningIcon color={color} sx={undefined} /> {warning}
           </em>
         </Box>
       )}

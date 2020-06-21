@@ -42,7 +42,8 @@ export const initI18Next = ({
   i18nInstance.init({
     cleanCode: true,
     debug: !IS_PROD,
-    defaultNS: 'common', // removes 'translation' default key from backend query,
+    // removes translation default key
+    defaultNS: undefined,
     fallbackLng:
       language === SUPPORTED_LANGUAGES_MAP.en
         ? SUPPORTED_LANGUAGES_MAP.de

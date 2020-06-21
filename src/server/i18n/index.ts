@@ -1,7 +1,7 @@
 import { I18nextResources, I18nextResourceLocale } from '../../client/i18n';
 import { ENABLED_LANGUAGES } from '../../constants';
 
-export const namespaces = ['common', 'i18n', 'auth', 'theme', 'serviceWorker'];
+export const namespaces = ['i18n', 'auth', 'theme', 'serviceWorker'];
 
 const i18nCache = ENABLED_LANGUAGES.reduce<I18nextResources>(
   (carry, language) => {

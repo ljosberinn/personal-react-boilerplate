@@ -1,4 +1,6 @@
-import { Box, useToast, Flex, Icon } from '@chakra-ui/core';
+import { Box, useToast, Flex } from '@chakra-ui/core';
+import { InfoIcon } from '@chakra-ui/icons';
+import { TFunction } from 'i18next';
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -14,9 +16,7 @@ function handleClick() {
 /**
  * Currently mimics toast({status: 'info'}) to allow a global onClick
  */
-const RefreshToast = () => {
-  const { t } = useTranslation('serviceWorker');
-
+const RefreshToast = ({ t }: { t: TFunction }) => {
   return (
     <Flex
       backgroundColor="blue.500"
@@ -25,12 +25,12 @@ const RefreshToast = () => {
       pt={3}
       pb={3}
       borderRadius="0.25rem"
-      m={2}
+      mb={4}
       onClick={handleClick}
       cursor="pointer"
       role="alert"
     >
-      <Icon name="info" width="1.25rem" height="1.25rem" mr="0.75rem" />
+      <InfoIcon width="1.25rem" height="1.25rem" mr="0.75rem" sx={undefined} />
       <Box textAlign="left">
         <Box as="p" fontWeight="bold">
           {t('newVersion')}
@@ -42,9 +42,10 @@ const RefreshToast = () => {
 };
 
 export default function ServiceWorker() {
-  attachComponentBreadcrumb('ServiceWorker');
-
+  const { t } = useTranslation('serviceWorker');
   const toast = useToast();
+
+  attachComponentBreadcrumb('ServiceWorker');
 
   useEffect(() => {
     if ('serviceWorker' in navigator) {
@@ -67,7 +68,7 @@ export default function ServiceWorker() {
               }
 
               toast({
-                render: RefreshToast,
+                render: () => <RefreshToast t={t} />,
               });
             });
           });
@@ -85,7 +86,7 @@ export default function ServiceWorker() {
           console.error(error);
         });
     }
-  }, [toast]);
+  }, [toast, t]);
 
   return null;
 }
