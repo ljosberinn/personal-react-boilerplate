@@ -1,9 +1,12 @@
 // Use the hidden-source-map option when you don't want the source maps to be
 // publicly available on the servers, only to the error reporting
-const nextSourceMaps = require('@zeit/next-source-maps')();
+const withSourceMaps = require('@zeit/next-source-maps')();
 const SentryWebpackPlugin = require('@sentry/webpack-plugin');
 const withOffline = require('next-offline');
 const { withPlugins } = require('next-compose-plugins');
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+});
 
 const {
   NEXT_PUBLIC_SENTRY_DSN: SENTRY_DSN,
@@ -83,6 +86,6 @@ const defaultConfig = {
 };
 
 module.exports = withPlugins([
-  [nextSourceMaps, defaultConfig],
+  [withSourceMaps, withBundleAnalyzer(defaultConfig)],
   [withOffline, offlineConfig],
 ]);
