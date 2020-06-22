@@ -73,76 +73,45 @@ export const externalProviderHandler: RequestHandler = async (
   const [provider] = req.query.authRouter as ExternalProvider[];
 
   if (ENABLED_PROVIDER.includes(provider)) {
-    // initial request
     const { origin } = absoluteUrl(req);
 
-    const {
-      authorizationUrl,
-      tokenUrl,
-      client_secret,
-      client_id,
-      scope,
-      profileDataUrl,
-    } = config[provider];
     const redirect_uri = origin + '/api/v1/auth/' + provider;
 
-    if (Object.keys(req.query).length === 1) {
-      const params = new URLSearchParams({
-        client_id,
-        redirect_uri,
-        response_type: 'code',
-        scope: scope.join(' '),
-      }).toString();
+    const { authorizationUrl, tokenUrl, profileDataUrl } = config[provider];
 
-      const url = [authorizationUrl, params].join('?');
+    // prepare redirect to provider - no get params given
+    if (Object.keys(req.query).length === 1) {
+      const url = getRedirectUrl(authorizationUrl, redirect_uri, provider);
 
       res.status(FOUND_MOVED_TEMPORARILY).setHeader('Location', url);
-
       return res.end();
     }
 
-    // redirect
-    const { code, error, prompt } = req.query as { [key: string]: string };
+    // get params given; must be callback from provider
+    const { code, error, prompt, state } = req.query as {
+      [key: string]: string;
+    };
 
     if (!code || Array.isArray(code) || error) {
+      if (error) {
+        // eslint-disable-next-line no-console
+        console.error(error);
+      }
+
       return res.status(INTERNAL_SERVER_ERROR).end();
     }
 
-    const params = new URLSearchParams({
-      client_id,
-      client_secret,
+    const oauthResponse = await getOAuthData(tokenUrl, {
       code,
-      grant_type: 'authorization_code',
       prompt,
+      provider,
       redirect_uri,
-    }).toString();
-
-    const response = await fetch(tokenUrl, {
-      body: params,
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      method: 'POST',
+      state,
     });
 
-    const { access_token, token_type }: OAuth2Response = await response.json();
+    const profileJson = await getProfileData(profileDataUrl, oauthResponse);
 
-    const profileParams = new URLSearchParams({
-      access_token,
-    });
-
-    const profileUrl = [profileDataUrl, profileParams].join('?');
-
-    const profileResponse = await fetch(profileUrl, {
-      headers: {
-        authorization: [token_type, access_token].join(' '),
-      },
-      method: 'GET',
-    });
-
-    const profileJson = await profileResponse.json();
     const token = await encryptSession(profileJson);
-
     setSessionCookie(token, res);
 
     res.status(FOUND_MOVED_TEMPORARILY).setHeader('Location', origin);
@@ -151,6 +120,85 @@ export const externalProviderHandler: RequestHandler = async (
   }
 
   next();
+};
+
+const getRedirectUrl = (
+  url: string,
+  redirect_uri: string,
+  provider: ExternalProvider
+) => {
+  const { scope, client_id } = config[provider];
+
+  const params = new URLSearchParams({
+    client_id,
+    redirect_uri,
+    response_type: 'code',
+    scope: scope.join(' '),
+  }).toString();
+
+  return [url, params].join('?');
+};
+
+interface RequiredOAuthParams {
+  code: string;
+  redirect_uri: string;
+  provider: ExternalProvider;
+  state?: string;
+  prompt?: string;
+}
+
+const getOAuthData = async (
+  url: string,
+
+  { code, state, prompt, redirect_uri, provider }: RequiredOAuthParams
+): Promise<OAuth2Response> => {
+  const { client_id, client_secret } = config[provider];
+
+  const tokenParams = Object.fromEntries(
+    Object.entries({
+      client_id,
+      client_secret,
+      code,
+      grant_type: 'authorization_code',
+      prompt, // only used by google
+      redirect_uri,
+      state, // only used by github
+    }).filter(([_, value]) => !!value)
+  );
+
+  // @ts-ignore TODO: fix this; ts is silly about it being string | undefined
+  const params = new URLSearchParams(tokenParams).toString();
+
+  const response = await fetch(url, {
+    body: params,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    method: 'POST',
+  });
+
+  return await response.json();
+};
+
+const getProfileData = async (
+  url: string,
+  { access_token, token_type }: OAuth2Response
+): Promise<object> => {
+  const profileParams = new URLSearchParams({
+    access_token,
+  });
+
+  const profileUrl = [url, profileParams].join('?');
+  const authorization = [token_type, access_token].join(' ');
+
+  const response = await fetch(profileUrl, {
+    headers: {
+      authorization,
+    },
+    method: 'GET',
+  });
+
+  return await response.json();
 };
 
 interface OAuth2Response {

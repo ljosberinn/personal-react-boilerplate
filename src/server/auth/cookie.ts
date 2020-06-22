@@ -13,7 +13,7 @@ import {
 
 type SSRCompatibleRequest = NextApiRequest | IncomingMessage;
 
-export const encryptSession = (session: unknown) =>
+export const encryptSession = (session: object) =>
   seal(session, SESSION_COOKIE_SECRET, defaults);
 
 /**
