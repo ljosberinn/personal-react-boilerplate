@@ -79,7 +79,7 @@ export default function Index() {
         </Heading>
 
         <Box backgroundColor={boxBg} borderRadius={5} m={1} p={1}>
-          <Stack spacing={1} m={4} sx={undefined}>
+          <Stack spacing={1} m={4}>
             <Feature state={FeatureState.DONE}>
               built with{' '}
               <ExternalLink href="//nextjs.org/">Next.js</ExternalLink>, powered
@@ -111,10 +111,7 @@ export default function Index() {
               <ExternalLink href="//react.i18next.com/">
                 react-i18next
               </ExternalLink>
-            </Feature>
-
-            <Feature state={FeatureState.DONE}>
-              server-side language detection via{' '}
+              , automatically detected by{' '}
               <ExternalLink href="//github.com/UnlyEd/universal-language-detector">
                 universal-language-detector
               </ExternalLink>
@@ -163,10 +160,8 @@ export default function Index() {
               </ExternalLink>
             </Feature>
 
-            <Feature state={FeatureState.DONE} id="auth">
-              auth via{' '}
-              <ExternalLink href="//passportjs.org/">passport.js</ExternalLink>{' '}
-              &{' '}
+            <Feature state={FeatureState.DONE} id="api">
+              easier API routes via
               <ExternalLink href="//github.com/hoangvvo/next-connect#readme">
                 next-connect
               </ExternalLink>
@@ -204,9 +199,7 @@ export default function Index() {
             description="SSR-compatible, httpOnly cookie-based authentication - try refreshing after logging in!"
             component={<AuthDemo />}
             features={[
-              <>
-                implements OAuth2 via <Code>passport.js</Code>
-              </>,
+              <>implements OAuth2</>,
               <>
                 includes an <Code>{'<AuthContextProvider />'}</Code>, exposing a
                 hook (<Code>useAuth</Code>)
@@ -220,11 +213,10 @@ export default function Index() {
                 <Tooltip
                   label={ENABLED_PROVIDER.join(', ')}
                   aria-label={ENABLED_PROVIDER.join(', ')}
-                  sx={undefined}
                 >
                   <Badge variant="outline">{ENABLED_PROVIDER.length}*</Badge>
                 </Tooltip>{' '}
-                <Code>passport.js</Code> strategies
+                provider options
               </>,
             ]}
           />
@@ -251,8 +243,8 @@ export default function Index() {
                 is included
               </>,
               <>
-                a single request will be made to the <Code>/api/i18n</Code>{' '}
-                endpoint
+                a single request will be made to the{' '}
+                <Code>/api/i18n/:language</Code> endpoint
               </>,
               "previously fetched bundles won't be refetched",
               'serverless-compatible; all assets are automatically bundled at build time',
@@ -280,7 +272,7 @@ export default function Index() {
               </>
             }
             component={
-              <Stack direction="row" sx={undefined}>
+              <Stack direction="row">
                 <ThemeSwitch mt={2} mb={2} />
                 <ThemeSwitchAlt ml={2} />
               </Stack>

@@ -1,24 +1,6 @@
 import { RequestHandler } from 'next-connect';
-import { Profile } from 'passport';
 
 import { BAD_REQUEST, CREATED } from '../../../utils/statusCodes';
-
-const implementProfileInterface = ({
-  provider = 'local',
-  displayName,
-  emails,
-  id,
-  name,
-  photos,
-  username,
-}: Partial<Profile>): Profile => ({
-  displayName: displayName || username!,
-  emails: emails || [],
-  id: id || `${Math.floor(Math.random() * 1000)}`,
-  name: name || undefined,
-  photos: photos || [],
-  provider,
-});
 
 const registrationHandler: RequestHandler = (
   { body: { username, password }, query: { authRouter } },
@@ -32,7 +14,7 @@ const registrationHandler: RequestHandler = (
       return res.status(BAD_REQUEST).end();
     }
 
-    return res.status(CREATED).json(implementProfileInterface({ username }));
+    return res.status(CREATED).json({ username });
   }
 
   next();

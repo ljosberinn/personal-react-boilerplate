@@ -83,7 +83,7 @@ export default function CustomPWAInstallPrompt() {
         transform,
       }) => (
         <Modal onClose={onClose} isOpen={true}>
-          <ModalOverlay sx={undefined} />
+          <ModalOverlay />
           <ModalContent
             pb={5}
             left={left}
@@ -94,11 +94,10 @@ export default function CustomPWAInstallPrompt() {
             position={position}
             transition={transition}
             transform={transform}
-            sx={undefined}
           >
-            <ModalHeader sx={undefined}>Install now</ModalHeader>
-            <ModalCloseButton onClick={onClose} sx={undefined} />
-            <ModalBody sx={undefined}>
+            <ModalHeader>Install now</ModalHeader>
+            <ModalCloseButton onClick={onClose} />
+            <ModalBody>
               <Button onClick={install}>install</Button>
             </ModalBody>
           </ModalContent>

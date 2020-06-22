@@ -28,8 +28,8 @@ export default function FeatureIcon({ state }: FeatureIconProps) {
   const { icon: Icon, color, label } = iconMap[state];
 
   return (
-    <Tooltip hasArrow aria-label={label} label={label} sx={undefined}>
-      <Icon color={color} sx={undefined} />
+    <Tooltip hasArrow aria-label={label} label={label}>
+      <Icon color={color} />
     </Tooltip>
   );
 }

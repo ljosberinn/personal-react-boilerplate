@@ -85,9 +85,9 @@ export default function AuthDemo() {
           <Menu>
             <MenuButton as={Button} {...providerButtonProps}>
               Choose an external provider
-              <ChevronDownIcon ml={2} sx={undefined} />
+              <ChevronDownIcon ml={2} />
             </MenuButton>
-            <MenuList sx={undefined}>
+            <MenuList>
               {ENABLED_PROVIDER.filter(provider => provider !== 'local').map(
                 provider => (
                   <MenuItem
@@ -112,8 +112,7 @@ export default function AuthDemo() {
           initialFocusRef={firstFieldRef}
           onOpen={toggle}
           onClose={toggle}
-          placement="right"
-          closeOnBlur={false}
+          placement="auto"
         >
           <PopoverTrigger>
             <Button
@@ -128,7 +127,7 @@ export default function AuthDemo() {
               your own API
             </Button>
           </PopoverTrigger>
-          <PopoverContent zIndex={4} p={5} sx={undefined}>
+          <PopoverContent zIndex={4} p={5}>
             <PopoverArrow bg="white" />
             <PopoverCloseButton />
             <Form firstFieldRef={firstFieldRef} onCancel={toggle} />
@@ -166,12 +165,10 @@ function Form({ firstFieldRef, onCancel }: FormProps) {
 
   return (
     <form onSubmit={handleSubmit}>
-      <Stack as="fieldset" spacing={4} sx={undefined}>
+      <Stack as="fieldset" spacing={4}>
         <Box as="legend">This showcase uses hardcoded credentials.</Box>
         <FormControl>
-          <FormLabel htmlFor="username" sx={undefined}>
-            Username
-          </FormLabel>
+          <FormLabel htmlFor="username">Username</FormLabel>
           <Input
             id="username"
             ref={firstFieldRef}
@@ -181,9 +178,7 @@ function Form({ firstFieldRef, onCancel }: FormProps) {
         </FormControl>
 
         <FormControl>
-          <FormLabel htmlFor="password" sx={undefined}>
-            Password
-          </FormLabel>
+          <FormLabel htmlFor="password">Password</FormLabel>
           <Input
             id="password"
             type="password"
@@ -192,7 +187,7 @@ function Form({ firstFieldRef, onCancel }: FormProps) {
           />
         </FormControl>
 
-        <ButtonGroup justifyContent="flex-end" sx={undefined}>
+        <ButtonGroup justifyContent="flex-end">
           <Button variant="outline" onClick={onCancel}>
             Cancel
           </Button>

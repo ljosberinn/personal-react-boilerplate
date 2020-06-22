@@ -18,7 +18,7 @@ function ExternalLink(
 
   return (
     <Link isExternal color={color} {...rest} ref={ref}>
-      {children} {withIcon && <ExternalLinkIcon ml={1} sx={undefined} />}
+      {children} {withIcon && <ExternalLinkIcon ml={1} />}
     </Link>
   );
 }

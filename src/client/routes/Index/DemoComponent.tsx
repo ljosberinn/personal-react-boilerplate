@@ -53,7 +53,7 @@ export default function DemoComponent({
       {warning && (
         <Box as="small" color={color}>
           <em>
-            <WarningIcon color={color} sx={undefined} /> {warning}
+            <WarningIcon color={color} /> {warning}
           </em>
         </Box>
       )}

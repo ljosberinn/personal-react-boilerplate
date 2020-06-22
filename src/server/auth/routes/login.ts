@@ -2,14 +2,53 @@ import { RequestHandler } from 'next-connect';
 
 import { NOT_FOUND, OK, UNAUTHORIZED } from '../../../utils/statusCodes';
 import { encryptSession, setSessionCookie } from '../cookie';
-import { promisifyAuthentication } from '../utils';
 
-const loginHandler: RequestHandler = async (req, res, next) => {
-  const [action] = req.query.authRouter;
+interface LocalDBDataset {
+  password: string;
+  displayName: string;
+  id: string;
+  username: string;
+}
+
+const localDB: LocalDBDataset[] = [
+  {
+    displayName: 'gerrit alex',
+    id: '1',
+    password: 'next-with-batteries!',
+    username: 'ljosberinn',
+  },
+];
+
+interface VerifyArg {
+  username: string;
+  password: string;
+}
+
+const verify = ({ username, password }: VerifyArg) => {
+  // custom logic for your db goes here!
+  const user = localDB.find(
+    user => user.username === username && user.password === password
+  );
+
+  if (!user) {
+    return null;
+  }
+
+  const { password: omittedPassword, ...response } = user;
+
+  return response;
+};
+
+const loginHandler: RequestHandler = async (
+  { query: { authRouter }, body },
+  res,
+  next
+) => {
+  const [action] = authRouter;
 
   if (action === 'login') {
     try {
-      const user = await promisifyAuthentication('local', req, res);
+      const user = verify(body);
 
       if (!user) {
         return res.status(NOT_FOUND).end();

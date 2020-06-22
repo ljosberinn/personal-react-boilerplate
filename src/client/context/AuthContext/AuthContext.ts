@@ -1,30 +1,34 @@
-import { Profile } from 'passport';
-import { Profile as DiscordProfile } from 'passport-discord';
-import { Profile as BaseGithubProfile } from 'passport-github2';
 import { createContext } from 'react';
 
-export interface GithubProfile extends BaseGithubProfile {
-  provider: 'github';
-}
-
-export interface GoogleProfile extends Profile {
+interface GoogleProfile {
+  sub: string;
+  name: string;
+  given_name: string;
+  family_name: string;
+  picture: string;
   email: string;
   email_verified: boolean;
-  family_name: string;
-  given_name: string;
-  language: string;
-  picture: string;
-  sub: string;
-  verified: boolean;
-  provider: 'google';
+  locale: string;
 }
 
-export interface FacebookProfile {
-  username: never;
-  name: {};
-  emails: never;
-  photos: never;
-  provider: 'facebook';
+interface GithubProfile {}
+
+interface FacebookProfile {
+  id: string;
+  name: string;
+}
+
+interface DiscordProfile {
+  avatar: string;
+  discriminator: string;
+  email: string;
+  flags: number;
+  id: string;
+  locale: string;
+  mfa_enabled: boolean;
+  public_flags: number;
+  username: string;
+  verified: boolean;
 }
 
 export type User =

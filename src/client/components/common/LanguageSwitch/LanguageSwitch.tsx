@@ -61,7 +61,7 @@ export default function LanguageSwitch(props: LanguageSwitchProps) {
           <Box d="inline-block" as={MdTranslate} mr={2} />
           {t('language-toggle')}
         </MenuButton>
-        <MenuList sx={undefined}>
+        <MenuList>
           <MenuOptionGroup
             title={t('available-languages')}
             value={i18n.language}

@@ -57,7 +57,6 @@ export default function ThemeSwitch(props: ThemeSwitchProps) {
           onChange={toggleColorMode}
           display="flex"
           alignItems="center"
-          sx={undefined}
         />
         <Box
           d="inline-block"
