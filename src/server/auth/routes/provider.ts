@@ -109,7 +109,11 @@ export const externalProviderHandler: RequestHandler = async (
       state,
     });
 
-    const profileJson = await getProfileData(profileDataUrl, oauthResponse);
+    const profileJson = await getProfileData(
+      profileDataUrl,
+      provider,
+      oauthResponse
+    );
 
     const token = await encryptSession(profileJson);
     setSessionCookie(token, res);
@@ -182,6 +186,7 @@ const getOAuthData = async (
 
 const getProfileData = async (
   url: string,
+  provider: ExternalProvider,
   { access_token, token_type }: OAuth2Response
 ): Promise<object> => {
   const profileParams = new URLSearchParams({
@@ -189,7 +194,10 @@ const getProfileData = async (
   });
 
   const profileUrl = [url, profileParams].join('?');
-  const authorization = [token_type, access_token].join(' ');
+  const authorization = [
+    provider === 'github' ? 'token' : token_type,
+    access_token,
+  ].join(' ');
 
   const response = await fetch(profileUrl, {
     headers: {
