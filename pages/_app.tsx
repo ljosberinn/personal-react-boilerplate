@@ -1,7 +1,4 @@
-import {
-  ErrorBoundary as TopLevelErrorBoundary,
-  Profiler,
-} from '@sentry/react';
+import { ErrorBoundary as TopLevelErrorBoundary } from '@sentry/react';
 import { DefaultSeo } from 'next-seo';
 import NextApp, { AppContext } from 'next/app';
 import { NextRouter } from 'next/router';
@@ -56,17 +53,15 @@ export default function App({ Component, pageProps, router }: AppRenderProps) {
       <DefaultSeo {...SEO} />
 
       <TopLevelErrorBoundary showDialog>
-        <Profiler name="App">
-          <I18nextProvider i18n={i18nInstance}>
-            <AuthContextProvider session={pageProps.session}>
-              <Chakra>
-                <ServiceWorker />
-                {/* <CustomPWAInstallPrompt /> */}
-                <Component {...pageProps} />
-              </Chakra>
-            </AuthContextProvider>
-          </I18nextProvider>
-        </Profiler>
+        <I18nextProvider i18n={i18nInstance}>
+          <AuthContextProvider session={pageProps.session}>
+            <Chakra>
+              <ServiceWorker />
+              {/* <CustomPWAInstallPrompt /> */}
+              <Component {...pageProps} />
+            </Chakra>
+          </AuthContextProvider>
+        </I18nextProvider>
       </TopLevelErrorBoundary>
     </>
   );

@@ -5315,9 +5315,9 @@ eslint-config-galex@^0.4.10:
     read-pkg-up "^7.0.1"
 
 eslint-config-kentcdodds@^14.13.0:
-  version "14.14.0"
-  resolved "https://registry.yarnpkg.com/eslint-config-kentcdodds/-/eslint-config-kentcdodds-14.14.0.tgz#3a1f31b75c3000993d57c6d7a6159b7e6fa59225"
-  integrity sha512-hlPeUrfMwYoTZryjGjaMEqJLA5norxNY7USt1UYmw8kwFaw/3SM0cAN5c7sG0yzF1FBWH9zrTNjKAc3812ZfuQ==
+  version "14.14.1"
+  resolved "https://registry.yarnpkg.com/eslint-config-kentcdodds/-/eslint-config-kentcdodds-14.14.1.tgz#4f9d42d9d0a8770f70fd898c14afe5d7ce673637"
+  integrity sha512-2DE3cQvssImMnPFqdQdiQQ9nCAlQqbqWKuWzi5rPhf4YhJqjZWzkgIOr0GmGrGCYhG12n29STnRGf4XaXUOjFg==
   dependencies:
     babel-eslint "^10.1.0"
     eslint-config-prettier "^6.11.0"
