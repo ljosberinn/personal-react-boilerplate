@@ -1,3 +1,7 @@
+import {
+  ErrorBoundary as TopLevelErrorBoundary,
+  Profiler,
+} from '@sentry/react';
 import { DefaultSeo } from 'next-seo';
 import NextApp, { AppContext } from 'next/app';
 import { NextRouter } from 'next/router';
@@ -7,7 +11,7 @@ import { I18nextProvider } from 'react-i18next';
 import SEO from '../next-seo.config';
 import Chakra from '../src/client/Chakra';
 // import { CustomPWAInstallPrompt } from '../src/client/components/common/CustomPWAInstallPrompt';
-import { ErrorBoundary as TopLevelErrorBoundary } from '../src/client/components/common/ErrorBoundary';
+//import { ErrorBoundary as TopLevelErrorBoundary } from '../src/client/components/common/ErrorBoundary';
 import ServiceWorker from '../src/client/components/common/ServiceWorker/ServiceWorker';
 import { AuthContextProvider } from '../src/client/context/AuthContext';
 import { User } from '../src/client/context/AuthContext/AuthContext';
@@ -51,16 +55,18 @@ export default function App({ Component, pageProps, router }: AppRenderProps) {
     <>
       <DefaultSeo {...SEO} />
 
-      <TopLevelErrorBoundary>
-        <I18nextProvider i18n={i18nInstance}>
-          <AuthContextProvider session={pageProps.session}>
-            <Chakra>
-              <ServiceWorker />
-              {/* <CustomPWAInstallPrompt /> */}
-              <Component {...pageProps} />
-            </Chakra>
-          </AuthContextProvider>
-        </I18nextProvider>
+      <TopLevelErrorBoundary showDialog>
+        <Profiler name="App">
+          <I18nextProvider i18n={i18nInstance}>
+            <AuthContextProvider session={pageProps.session}>
+              <Chakra>
+                <ServiceWorker />
+                {/* <CustomPWAInstallPrompt /> */}
+                <Component {...pageProps} />
+              </Chakra>
+            </AuthContextProvider>
+          </I18nextProvider>
+        </Profiler>
       </TopLevelErrorBoundary>
     </>
   );

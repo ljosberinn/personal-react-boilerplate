@@ -1,4 +1,5 @@
 import { ChakraProvider, CSSReset, Box } from '@chakra-ui/core';
+import { Profiler } from '@sentry/react';
 import React, { ReactNode } from 'react';
 
 import { attachComponentBreadcrumb } from '../utils/sentry';
@@ -12,7 +13,7 @@ export default function Chakra({ children }: ChakraProps) {
   attachComponentBreadcrumb('chakra');
 
   return (
-    <>
+    <Profiler name="Chakra">
       <ChakraProvider theme={customTheme}>
         <CSSReset />
         <Box as="main" p={4}>
@@ -27,6 +28,6 @@ export default function Chakra({ children }: ChakraProps) {
           }
         `}
       </style>
-    </>
+    </Profiler>
   );
 }

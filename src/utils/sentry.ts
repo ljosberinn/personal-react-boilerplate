@@ -1,18 +1,29 @@
+import { Integrations as ApmIntegrations } from '@sentry/apm';
 import { Debug } from '@sentry/integrations';
 import * as Sentry from '@sentry/node';
 import { IncomingMessage } from 'http';
 import { NextApiRequest } from 'next';
 import { NextRouter } from 'next/router';
 
+import { User } from '../client/context/AuthContext/AuthContext';
 import { SENTRY_DSN, IS_PROD, IS_BROWSER } from '../constants';
 
 const { init, configureScope, addBreadcrumb, Severity } = Sentry;
+
+/**
+ * @see https://docs.sentry.io/performance/getting-started/?platform=javascript
+ */
+const tracingOptions: Sentry.NodeOptions = {
+  integrations: [new ApmIntegrations.Tracing()],
+  tracesSampleRate: 0.25,
+};
 
 const sentryOptions: Sentry.NodeOptions = {
   attachStacktrace: true,
   dsn: SENTRY_DSN,
   enabled: true,
   maxBreadcrumbs: 50,
+  ...tracingOptions,
 };
 
 if (!IS_PROD) {
@@ -52,7 +63,7 @@ export const attachLambdaContext = (req: NextApiRequest) => {
 interface InitialContextArgs {
   req?: IncomingMessage;
   language: string;
-  session: Sentry.User | null;
+  session: User | null;
 }
 
 /**
@@ -77,7 +88,6 @@ export const attachInitialContext = ({
 
     if (session) {
       scope.setContext('session', session);
-      scope.setTag('provider', session.provider);
     }
   });
 };

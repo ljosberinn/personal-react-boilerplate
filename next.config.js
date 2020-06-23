@@ -57,7 +57,7 @@ const defaultConfig = {
   },
   webpack: (config, { isServer, buildId }) => {
     if (!isServer) {
-      config.resolve.alias['@sentry/node'] = '@sentry/browser';
+      config.resolve.alias['@sentry/node'] = '@sentry/react';
     }
 
     if (
