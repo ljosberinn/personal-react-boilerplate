@@ -88,7 +88,7 @@ export const externalProviderHandler: RequestHandler = async (
     }
 
     // get params given; must be callback from provider
-    const { code, error, prompt, state } = req.query as {
+    const { code, error, prompt } = req.query as {
       [key: string]: string;
     };
 
@@ -106,7 +106,6 @@ export const externalProviderHandler: RequestHandler = async (
       prompt,
       provider,
       redirect_uri,
-      state,
     });
 
     const profileJson = await getProfileData(
@@ -147,14 +146,13 @@ interface RequiredOAuthParams {
   code: string;
   redirect_uri: string;
   provider: ExternalProvider;
-  state?: string;
   prompt?: string;
 }
 
 const getOAuthData = async (
   url: string,
 
-  { code, state, prompt, redirect_uri, provider }: RequiredOAuthParams
+  { code, prompt, redirect_uri, provider }: RequiredOAuthParams
 ): Promise<OAuth2Response> => {
   const { client_id, client_secret } = config[provider];
 
@@ -163,10 +161,9 @@ const getOAuthData = async (
       client_id,
       client_secret,
       code,
-      grant_type: 'authorization_code',
+      grant_type: provider !== 'github' && 'authorization_code',
       prompt, // only used by google
       redirect_uri,
-      state, // only used by github
     }).filter(([_, value]) => !!value)
   );
 
@@ -176,6 +173,7 @@ const getOAuthData = async (
   const response = await fetch(url, {
     body: params,
     headers: {
+      Accept: 'application/json', // required for github to return json
       'Content-Type': 'application/x-www-form-urlencoded',
     },
     method: 'POST',
