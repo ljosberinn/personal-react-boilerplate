@@ -7,6 +7,8 @@ import { NextRouter } from 'next/router';
 import { User } from '../client/context/AuthContext/AuthContext';
 import { SENTRY_DSN, IS_PROD, IS_BROWSER } from '../constants';
 
+export { ErrorBoundary } from '@sentry/react';
+
 const { init, configureScope, addBreadcrumb, Severity } = Sentry;
 
 const sentryOptions: Sentry.NodeOptions = {
