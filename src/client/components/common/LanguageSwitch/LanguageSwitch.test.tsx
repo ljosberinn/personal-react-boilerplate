@@ -54,7 +54,7 @@ describe('<LanguageSwitch />', () => {
     });
 
     expect(cta).toBeInTheDocument();
-    expect(cta.getAttribute('href')).toBeDefined();
+    expect(cta).toHaveAttribute('href');
   });
 
   it('verifies bundle existence on i18n on languageChanged', async () => {
@@ -143,13 +143,13 @@ describe('<LanguageSwitch />', () => {
     const currentLanguageElement = screen.getByRole('menuitemradio', {
       name: i18nCache[currentLanguage].i18n[currentLanguage],
     });
-    expect(currentLanguageElement.getAttribute('aria-checked')).toBe('true');
+    expect(currentLanguageElement).not.toBeChecked();
 
     // e.g. i18n.en.i18n.de
     const otherLanguageElement = screen.getByRole('menuitemradio', {
       name: i18nCache[currentLanguage].i18n[randomOtherLanguage],
     });
-    expect(otherLanguageElement.getAttribute('aria-checked')).toBe('false');
+    expect(otherLanguageElement).not.toBeChecked();
 
     fireEvent.click(otherLanguageElement);
 
@@ -161,20 +161,16 @@ describe('<LanguageSwitch />', () => {
 
     expect(
       // i18n.de.i18n.en
-      screen
-        .getByRole('menuitemradio', {
-          name: i18nCache[randomOtherLanguage].i18n[currentLanguage],
-        })
-        .getAttribute('aria-checked')
-    ).toBe('false');
+      screen.getByRole('menuitemradio', {
+        name: i18nCache[randomOtherLanguage].i18n[currentLanguage],
+      })
+    ).not.toBeChecked();
 
     expect(
       // i18n.de.i18n.de
-      screen
-        .getByRole('menuitemradio', {
-          name: i18nCache[randomOtherLanguage].i18n[randomOtherLanguage],
-        })
-        .getAttribute('aria-checked')
-    ).toBe('true');
+      screen.getByRole('menuitemradio', {
+        name: i18nCache[randomOtherLanguage].i18n[randomOtherLanguage],
+      })
+    ).not.toBeChecked();
   });
 });
