@@ -45,7 +45,7 @@
     "@types/jest": "^26.0.0",
     "@types/js-cookie": "^2.2.6",
     "@types/node": "^14.0.13",
-    "@types/react": "^16.9.38",
+    "@types/react": "^16.9.40",
     "@types/react-dom": "^16.9.8",
     "@types/theme-ui": "^0.3.4",
     "@zeit/next-source-maps": "^0.0.4-canary.1",
