@@ -27,7 +27,7 @@
     "next-absolute-url": "^1.2.2",
     "next-connect": "^0.7.1",
     "next-cookies": "^2.0.3",
-    "next-seo": "^4.5.0",
+    "next-seo": "^4.6.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-flag-kit": "^0.3.1",
