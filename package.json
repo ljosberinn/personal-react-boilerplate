@@ -10,7 +10,8 @@
     "test:ci": "jest --ci",
     "postinstall": "yarn-deduplicate -l",
     "lint": "eslint src && eslint pages && tsc --noEmit",
-    "lint:fix": "eslint src --fix && eslint pages --fix && prettier --write src && prettier --write pages"
+    "lint:fix": "eslint src --fix && eslint pages --fix && prettier --write src && prettier --write pages",
+    "post-deps-update": "yarn && yarn lint && yarn test:ci"
   },
   "dependencies": {
     "@chakra-ui/core": "1.0.0-next.2",
@@ -27,7 +28,7 @@
     "next-absolute-url": "^1.2.2",
     "next-connect": "^0.7.1",
     "next-cookies": "^2.0.3",
-    "next-seo": "^4.5.0",
+    "next-seo": "^4.6.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-flag-kit": "^0.3.1",
@@ -40,9 +41,9 @@
     "@next/bundle-analyzer": "^9.4.4",
     "@sentry/webpack-plugin": "^1.11.1",
     "@testing-library/jest-dom": "^5.10.1",
-    "@testing-library/react": "^10.4.1",
+    "@testing-library/react": "^10.4.3",
     "@testing-library/react-hooks": "^3.3.0",
-    "@types/jest": "^26.0.2",
+    "@types/jest": "^26.0.3",
     "@types/js-cookie": "^2.2.6",
     "@types/node": "^14.0.14",
     "@types/react": "^16.9.41",
@@ -62,7 +63,7 @@
     "next-compose-plugins": "^2.2.0",
     "next-offline": "^5.0.2",
     "prettier": "^2.0.5",
-    "typescript": "^4.0.0-dev.20200624",
+    "typescript": "^4.0.0-dev.20200625",
     "yarn-deduplicate": "^2.0.0"
   },
   "license": "MIT"
