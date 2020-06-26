@@ -18,7 +18,7 @@
     "@chakra-ui/theme": "1.0.0-next.2",
     "@hapi/iron": "^6.0.0",
     "@sentry/integrations": "^5.18.0",
-    "@sentry/node": "^5.18.0",
+    "@sentry/node": "^5.18.1",
     "@sentry/react": "^5.18.0",
     "@unly/universal-language-detector": "^2.0.3",
     "i18next": "^19.5.1",
