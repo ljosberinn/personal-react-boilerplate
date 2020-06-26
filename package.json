@@ -19,7 +19,7 @@
     "@hapi/iron": "^6.0.0",
     "@sentry/integrations": "^5.18.0",
     "@sentry/node": "^5.18.0",
-    "@sentry/react": "^5.18.0",
+    "@sentry/react": "^5.18.1",
     "@unly/universal-language-detector": "^2.0.3",
     "i18next": "^19.5.1",
     "js-cookie": "^2.2.1",
