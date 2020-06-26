@@ -2611,12 +2611,7 @@
   resolved "https://registry.yarnpkg.com/@types/minimist/-/minimist-1.2.0.tgz#69a23a3ad29caf0097f06eda59b361ee2f0639f6"
   integrity sha1-aaI6OtKcrwCX8G7aWbNh7i8GOfY=
 
-"@types/node@*":
-  version "14.0.13"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.0.13.tgz#ee1128e881b874c371374c1f72201893616417c9"
-  integrity sha512-rouEWBImiRaSJsVA+ITTFM6ZxibuAlTuNOCyxVbwreu6k6+ujs7DfnU9o+PShFhET78pMBl3eH+AGSI5eOTkPA==
-
-"@types/node@^14.0.14":
+"@types/node@*", "@types/node@^14.0.14":
   version "14.0.14"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-14.0.14.tgz#24a0b5959f16ac141aeb0c5b3cd7a15b7c64cbce"
   integrity sha512-syUgf67ZQpaJj01/tRTknkMNoBBLWJOBODF0Zm4NrXmiSuxjymFrxnTu1QVYRubhVkRcZLYZG8STTwJRdVm/WQ==
@@ -8260,11 +8255,12 @@ next-compose-plugins@^2.2.0:
   resolved "https://registry.yarnpkg.com/next-compose-plugins/-/next-compose-plugins-2.2.0.tgz#95cd8eb40ab0652070d76572fb648354191628b0"
   integrity sha512-ChUlpT9tWfJ7YxqGw/WQ2T1gf8EeX93n1XqeQw0lkvGa7seszahvF4eOZUJoq7Hetsbzg4UHVnPoCXfXTyQR3g==
 
-next-connect@^0.7.1:
-  version "0.7.1"
-  resolved "https://registry.yarnpkg.com/next-connect/-/next-connect-0.7.1.tgz#c62bb466d924585f1b5fc39e4828672e2bc66007"
-  integrity sha512-EQ4BIlEEpQyneRXrPGAGBHMGK9kghKEPcvWWZWO1Vzn1TJP16YLw+8y0qtT54/x/FlD0dC0AQCwZydKWqqAQBQ==
+next-connect@^0.7.2:
+  version "0.7.2"
+  resolved "https://registry.yarnpkg.com/next-connect/-/next-connect-0.7.2.tgz#1cad82eacc708caa82f0df3379511318bab4d0eb"
+  integrity sha512-gLqkfc5rpG2w5rTD72FMKev2YI4mubMe8OHtddv3izS5v3atCcSSsOsPckm//8C8tFnq0XIYXx5AxdRObiCEtw==
   dependencies:
+    "@types/node" "^14.0.14"
     trouter "^3.1.0"
 
 next-cookies@^2.0.3:
