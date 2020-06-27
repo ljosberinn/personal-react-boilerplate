@@ -83,15 +83,16 @@ describe('<LanguageSwitch />', () => {
 
     const { currentLanguage, randomOtherLanguage } = setup();
 
-    const mockGetI18N = jest.spyOn(clientSideI18n, 'getI18N');
-    mockGetI18N.mockImplementationOnce(
-      () =>
-        new Promise(resolve => {
-          resolve({
-            i18n: {},
-          });
-        })
-    );
+    const mockGetI18N = jest
+      .spyOn(clientSideI18n, 'getI18N')
+      .mockImplementationOnce(
+        () =>
+          new Promise(resolve => {
+            resolve({
+              i18n: {},
+            });
+          })
+      );
 
     // e.g. i18n.en.i18n.de
     const otherLanguageElement = screen.getByRole('menuitemradio', {
@@ -143,7 +144,8 @@ describe('<LanguageSwitch />', () => {
     const currentLanguageElement = screen.getByRole('menuitemradio', {
       name: i18nCache[currentLanguage].i18n[currentLanguage],
     });
-    expect(currentLanguageElement).not.toBeChecked();
+
+    expect(currentLanguageElement).toBeChecked();
 
     // e.g. i18n.en.i18n.de
     const otherLanguageElement = screen.getByRole('menuitemradio', {
@@ -171,6 +173,6 @@ describe('<LanguageSwitch />', () => {
       screen.getByRole('menuitemradio', {
         name: i18nCache[randomOtherLanguage].i18n[randomOtherLanguage],
       })
-    ).not.toBeChecked();
+    ).toBeChecked();
   });
 });
