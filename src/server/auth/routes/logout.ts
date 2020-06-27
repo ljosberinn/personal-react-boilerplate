@@ -1,7 +1,8 @@
-import { RequestHandler } from 'next-connect';
+import nextConnect from 'next-connect';
 
 import { SESSION_COOKIE_NAME } from '../../../constants';
 import { OK } from '../../../utils/statusCodes';
+import { RequestHandler } from '../../types';
 import { removeCookie } from '../cookie';
 
 const logoutHandler: RequestHandler = (
@@ -20,4 +21,4 @@ const logoutHandler: RequestHandler = (
   next();
 };
 
-export default logoutHandler;
+export default nextConnect().delete(logoutHandler);

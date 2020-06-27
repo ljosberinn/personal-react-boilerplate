@@ -1,6 +1,12 @@
-import { RequestHandler } from 'next-connect';
+import nextConnect from 'next-connect';
 
-import { NOT_FOUND, OK, UNAUTHORIZED } from '../../../utils/statusCodes';
+import {
+  NOT_FOUND,
+  OK,
+  UNAUTHORIZED,
+  BAD_REQUEST,
+} from '../../../utils/statusCodes';
+import { RequestHandler } from '../../types';
 import { encryptSession, setSessionCookie } from '../cookie';
 
 interface LocalDBDataset {
@@ -40,7 +46,7 @@ const verify = ({ username, password }: VerifyArg) => {
 };
 
 const loginHandler: RequestHandler = async (
-  { query: { authRouter }, body },
+  { query: { authRouter = [] }, body },
   res,
   next
 ) => {
@@ -48,6 +54,10 @@ const loginHandler: RequestHandler = async (
 
   if (action === 'login') {
     try {
+      if (body.toString().length === 0) {
+        return res.status(BAD_REQUEST).end();
+      }
+
       const user = verify(body);
 
       if (!user) {
@@ -69,4 +79,4 @@ const loginHandler: RequestHandler = async (
   next();
 };
 
-export default loginHandler;
+export default nextConnect().post(loginHandler);

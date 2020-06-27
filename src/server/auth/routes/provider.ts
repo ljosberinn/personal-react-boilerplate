@@ -1,5 +1,5 @@
 import absoluteUrl from 'next-absolute-url';
-import { RequestHandler } from 'next-connect';
+import nextConnect from 'next-connect';
 
 import { ExternalProvider } from '../../../client/context/AuthContext/AuthContext';
 import {
@@ -17,6 +17,7 @@ import {
   FOUND_MOVED_TEMPORARILY,
   INTERNAL_SERVER_ERROR,
 } from '../../../utils/statusCodes';
+import { RequestHandler } from '../../types';
 import { encryptSession, setSessionCookie } from '../cookie';
 
 type Config = {
@@ -215,4 +216,4 @@ interface OAuth2Response {
   token_type: string;
 }
 
-export default externalProviderHandler;
+export default nextConnect().get(externalProviderHandler);

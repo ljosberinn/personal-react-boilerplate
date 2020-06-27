@@ -1,14 +1,12 @@
-import { NextApiResponse } from 'next';
-import { RequestHandler } from 'next-connect';
-
 import { I18nextResourceLocale } from '../../../../src/client/i18n';
 import { ENABLED_LANGUAGES } from '../../../../src/constants';
 import i18nCache from '../../../../src/server/i18n';
-import { FORBIDDEN, BAD_REQUEST } from '../../../../src/utils/statusCodes';
+import { BAD_REQUEST, FORBIDDEN } from '../../../../src/utils/statusCodes';
+import { RequestHandler } from '../../types';
 
-const i18nGetHandler: RequestHandler = (
+const i18nGetHandler: RequestHandler<{}, I18nextResourceLocale> = (
   { query: { language } },
-  res: NextApiResponse<I18nextResourceLocale>
+  res
 ) => {
   const [nextLanguage] = language;
 

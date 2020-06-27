@@ -1,6 +1,7 @@
-import { RequestHandler } from 'next-connect';
+import nextConnect from 'next-connect';
 
 import { BAD_REQUEST, CREATED } from '../../../utils/statusCodes';
+import { RequestHandler } from '../../types';
 
 const registrationHandler: RequestHandler = (
   { body: { username, password }, query: { authRouter } },
@@ -20,4 +21,4 @@ const registrationHandler: RequestHandler = (
   next();
 };
 
-export default registrationHandler;
+export default nextConnect().post(registrationHandler);

@@ -14,7 +14,7 @@ import {
 export default nextConnect()
   .use(sentryMiddleware)
   .use(expectJSONBodyMiddleware)
-  .get(externalProviderHandler)
-  .post(registrationHandler)
-  .post(loginHandler)
-  .delete(logoutHandler);
+  .use(externalProviderHandler)
+  .use(registrationHandler)
+  .use(loginHandler)
+  .use(logoutHandler);

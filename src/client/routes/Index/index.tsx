@@ -161,7 +161,7 @@ export default function Index() {
             </Feature>
 
             <Feature state={FeatureState.DONE} id="api">
-              easier API routes via
+              easier API routes via{' '}
               <ExternalLink href="//github.com/hoangvvo/next-connect#readme">
                 next-connect
               </ExternalLink>
