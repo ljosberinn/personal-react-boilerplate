@@ -1,7 +1,9 @@
+import nextConnect from 'next-connect';
+
 import { I18nextResourceLocale } from '../../../../src/client/i18n';
 import { ENABLED_LANGUAGES } from '../../../../src/constants';
 import i18nCache from '../../../../src/server/i18n';
-import { BAD_REQUEST, FORBIDDEN } from '../../../../src/utils/statusCodes';
+import { BAD_REQUEST } from '../../../../src/utils/statusCodes';
 import { RequestHandler } from '../../types';
 
 const i18nGetHandler: RequestHandler<{}, I18nextResourceLocale> = (
@@ -15,7 +17,7 @@ const i18nGetHandler: RequestHandler<{}, I18nextResourceLocale> = (
     !ENABLED_LANGUAGES.includes(nextLanguage) ||
     Array.isArray(nextLanguage)
   ) {
-    return res.status(FORBIDDEN).end();
+    return res.status(BAD_REQUEST).end();
   }
 
   const data = i18nCache[nextLanguage];
@@ -24,8 +26,12 @@ const i18nGetHandler: RequestHandler<{}, I18nextResourceLocale> = (
     return res.status(BAD_REQUEST).end();
   }
 
-  res.setHeader('Content-Type', 'application/json');
-  res.json(data);
+  const json = JSON.stringify(data);
+
+  res.setHeader('Content-length', json.length);
+  res.setHeader('Content-type', 'application/json');
+
+  return res.send(json);
 };
 
-export default i18nGetHandler;
+export default nextConnect().get(i18nGetHandler);

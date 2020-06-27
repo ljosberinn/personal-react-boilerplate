@@ -7,13 +7,47 @@ import listen from 'test-listen';
 
 import { Middleware } from '../src/server/types';
 
+export const RequestMethods: RequestInit['method'][] = [
+  'PUT',
+  'PATCH',
+  'GET',
+  'DELETE',
+  'HEAD',
+  'POST',
+  'OPTIONS',
+  'TRACE',
+];
+
 interface UrlArguments {
+  /**
+   * the endpoint to test
+   */
   url: string;
+  /**
+   * optional search params
+   */
   searchParams?: Record<string, string> | URLSearchParams;
+  /**
+   * HTTP request method
+   * @default GET
+   */
   method?: RequestInit['method'];
+  /**
+   * any JSON payload
+   */
   body?: Record<string, string>;
+  /**
+   * required to test a catchall lambda
+   */
   catchAllName?: string;
+  /**
+   * next-connect compatible middleware(s)
+   */
   middleware?: Middleware | Middleware[];
+  /**
+   * optional headers passed to the request
+   */
+  headers?: Record<string, string>;
 }
 
 const getUrl = (
@@ -22,6 +56,13 @@ const getUrl = (
   maybeParams: UrlArguments['searchParams'] = {}
 ) => {
   const url = maybeUrl instanceof URL ? maybeUrl : new URL(index + maybeUrl);
+
+  if (url.search) {
+    throw new Error(
+      'Use `searchParams` instead of appending `?foo=bar` to the url'
+    );
+  }
+
   const params =
     maybeParams instanceof URLSearchParams
       ? maybeParams
@@ -34,6 +75,12 @@ const getUrl = (
   return url.toString();
 };
 
+/**
+ * Applies middlewares to tested lambdas
+ *
+ * @param handler
+ * @param middleware
+ */
 const withMiddleware = (
   handler: NextConnect,
   middleware?: UrlArguments['middleware']
@@ -66,6 +113,7 @@ export const testLambda = async (
     body,
     catchAllName,
     middleware,
+    headers,
   }: UrlArguments
 ) => {
   const server = createServer((req, res) =>
@@ -86,7 +134,7 @@ export const testLambda = async (
       /**
        * Next doesnt allow nested catch all routes such as
        * /api/[...foo]/bar/[...baz].js
-       * so we only care about
+       * so we only have to care about
        * /api/[...foo].js
        */
       const lastSegment = path.pop() as string;
@@ -99,11 +147,14 @@ export const testLambda = async (
 
       /**
        * workaround for catchall routes
-       * append the same key twice automatically makes it an array which is
+       * appending the same key twice automatically makes it an array which is
        * required for the catchall logic in the handler to work as expected
        *
        * downside: the empty value will show up in the lambda as 2nd argument
-       * probably won't matter though
+       * e.g. [...authRouter].ts will have
+       * req.query.authRouter === ['login', '']
+       *
+       * probably won't matter though as we only care about [0]
        */
       const query = [
         params.toString(),
@@ -126,6 +177,7 @@ export const testLambda = async (
 
   return await fetch(urlToFetch, {
     body: body ? JSON.stringify(body) : undefined,
+    headers,
     method,
   });
 };
