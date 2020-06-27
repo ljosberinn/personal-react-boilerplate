@@ -1,5 +1,5 @@
 import { waitFor } from '../../../../testUtils';
-import { testLambda } from '../../../../testUtils/lambda';
+import { testLambda, RequestMethods } from '../../../../testUtils/lambda';
 import { NOT_FOUND, BAD_REQUEST, OK } from '../../../utils/statusCodes';
 import { expectJSONBodyMiddleware } from '../../middlewares';
 import * as cookieHandling from '../cookie';
@@ -19,7 +19,7 @@ afterEach(jest.clearAllMocks);
 const url = '/api/v1/auth/login';
 const catchAllName = 'authRouter';
 const middleware = expectJSONBodyMiddleware;
-const method = 'POST';
+const method: RequestInit['method'] = 'POST';
 
 describe('api/login', () => {
   test('should be a function', () => {
@@ -35,24 +35,20 @@ describe('api/login', () => {
     expect(response.status).toBe(NOT_FOUND);
   });
 
-  ([
-    'PUT',
-    'PATCH',
-    'GET',
-    'DELETE',
-    'HEAD',
-  ] as RequestInit['method'][]).forEach(method => {
-    test(`does nothing on method "${method}"`, async () => {
-      const response = await testLambda(login, {
-        catchAllName,
-        method,
-        middleware,
-        url,
-      });
+  RequestMethods.filter(requestMethod => requestMethod !== method).forEach(
+    method => {
+      test(`does nothing on method "${method}"`, async () => {
+        const response = await testLambda(login, {
+          catchAllName,
+          method,
+          middleware,
+          url,
+        });
 
-      expect(response.status).toBe(NOT_FOUND);
-    });
-  });
+        expect(response.status).toBe(NOT_FOUND);
+      });
+    }
+  );
 
   test('responds with BAD_REQUEST on a POST request without body', async () => {
     const response = await testLambda(login, {
