@@ -14,11 +14,9 @@ const config: ChakraConfig = {
   useSystemColorMode: false,
 };
 
-const theme = {
+export const theme = {
   ...foundations,
   components,
   config,
   styles,
 };
-
-export default theme;

@@ -3,7 +3,7 @@ import { render as rtlRender } from '@testing-library/react';
 import React, { cloneElement, ReactNode } from 'react';
 import { I18nextProvider, I18nContext } from 'react-i18next';
 
-import theme from '../chakra';
+import { theme } from '../chakra';
 import { AuthContextProvider } from '../src/client/context/AuthContext';
 import { User } from '../src/client/context/AuthContext/AuthContext';
 import i18n from './i18n';

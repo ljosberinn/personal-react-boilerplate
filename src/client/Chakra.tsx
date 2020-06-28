@@ -1,8 +1,9 @@
 import { ChakraProvider, CSSReset, Box } from '@chakra-ui/core';
 import React, { ReactNode } from 'react';
 
-import customTheme from '../../chakra';
+import { theme } from '../../chakra';
 import { attachComponentBreadcrumb } from '../utils/sentry';
+import { MetaThemeColorSynchronizer } from './components/common/MetaThemeColorSynchronizer';
 
 export interface ChakraProps {
   children: ReactNode;
@@ -13,8 +14,9 @@ export default function Chakra({ children }: ChakraProps) {
 
   return (
     <>
-      <ChakraProvider theme={customTheme}>
+      <ChakraProvider theme={theme}>
         <CSSReset />
+        <MetaThemeColorSynchronizer />
         <Box as="main" p={4}>
           {children}
         </Box>

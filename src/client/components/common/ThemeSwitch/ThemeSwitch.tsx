@@ -1,12 +1,4 @@
-import {
-  Switch,
-  useColorMode,
-  Flex,
-  FlexProps,
-  Box,
-  useColorModeValue,
-} from '@chakra-ui/core';
-import Head from 'next/head';
+import { Switch, useColorMode, Flex, FlexProps, Box } from '@chakra-ui/core';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaSun, FaMoon } from 'react-icons/fa';
@@ -29,45 +21,39 @@ export type ThemeSwitchProps = FlexProps;
 
 export default function ThemeSwitch(props: ThemeSwitchProps) {
   const { colorMode, toggleColorMode } = useColorMode();
-  const metaContent = useColorModeValue('white', 'gray.800');
   const { t } = useTranslation('theme');
 
   const isLightTheme = colorMode === 'light';
 
   return (
-    <>
-      <Head>
-        <meta name="theme-color" content={metaContent} />
-      </Head>
-      <Flex cursor="pointer" d="inline-flex" {...props}>
-        <Box
-          d="inline-block"
-          as={FaSun}
-          height={6}
-          color={colorMap.sun[colorMode]}
-          data-testid="theme-switch-sun"
-          onClick={toggleColorMode}
-          aria-label={t(isLightTheme ? 'is-light-theme' : 'set-light-theme')}
-          mr={2}
-        />
-        <Switch
-          aria-label="toggle theme"
-          isChecked={!isLightTheme}
-          onChange={toggleColorMode}
-          display="flex"
-          alignItems="center"
-        />
-        <Box
-          d="inline-block"
-          as={FaMoon}
-          height={6}
-          color={colorMap.moon[colorMode]}
-          data-testid="theme-switch-moon"
-          onClick={toggleColorMode}
-          aria-label={t(isLightTheme ? 'set-dark-theme' : 'is-dark-theme')}
-          ml={2}
-        />
-      </Flex>
-    </>
+    <Flex cursor="pointer" d="inline-flex" {...props}>
+      <Box
+        d="inline-block"
+        as={FaSun}
+        height={6}
+        color={colorMap.sun[colorMode]}
+        data-testid="theme-switch-sun"
+        onClick={toggleColorMode}
+        aria-label={t(isLightTheme ? 'is-light-theme' : 'set-light-theme')}
+        mr={2}
+      />
+      <Switch
+        aria-label="toggle theme"
+        isChecked={!isLightTheme}
+        onChange={toggleColorMode}
+        display="flex"
+        alignItems="center"
+      />
+      <Box
+        d="inline-block"
+        as={FaMoon}
+        height={6}
+        color={colorMap.moon[colorMode]}
+        data-testid="theme-switch-moon"
+        onClick={toggleColorMode}
+        aria-label={t(isLightTheme ? 'set-dark-theme' : 'is-dark-theme')}
+        ml={2}
+      />
+    </Flex>
   );
 }
