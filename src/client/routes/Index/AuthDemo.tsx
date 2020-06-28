@@ -68,13 +68,13 @@ export default function AuthDemo() {
 
   const providerButtonProps = {
     colorScheme: 'teal',
-    width: ['initial', '100%', '100%', 'initial'],
+    width: ['initial', 'initial', '100%', '100%'],
   };
 
   return (
     <Flex
       justifyContent="space-between"
-      flexDirection={['row', 'column', 'column', 'row']}
+      flexDirection={['row', 'row', 'column', 'column']}
     >
       <Box>
         {isAuthenticated ? (
@@ -116,10 +116,10 @@ export default function AuthDemo() {
         >
           <PopoverTrigger>
             <Button
-              d={['initial', 'block', 'block', 'initial']}
-              ml={[2, 0, 0, 2]}
-              mt={[0, 2, 2, 0]}
-              width={['initial', '100%', '100%', 'initial']}
+              d={['initial', 'initial', 'block', 'block']}
+              ml={[2, 2, 0, 0]}
+              mt={[0, 0, 2, 2]}
+              width={['initial', 'initial', '100%', '100%']}
               colorScheme="teal"
               isDisabled={isAuthenticated}
             >
@@ -134,7 +134,7 @@ export default function AuthDemo() {
           </PopoverContent>
         </Popover>
       </Box>
-      <Box mt={[0, 2, 2, 0]} mb={2}>
+      <Box mt={[0, 0, 2, 2]} mb={2}>
         <AuthenticatedDummyRequest />
       </Box>
     </Flex>

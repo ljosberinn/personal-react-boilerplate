@@ -1,30 +1,31 @@
-import { useColorMode, Box, Button, ButtonProps } from '@chakra-ui/core';
+import {
+  useColorMode,
+  Box,
+  Button,
+  ButtonProps,
+  useColorModeValue,
+} from '@chakra-ui/core';
 import Head from 'next/head';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaSun, FaMoon } from 'react-icons/fa';
 
-import { customTheme } from '../../../theme';
-
 export type ThemeSwitchAltProps = Omit<ButtonProps, 'children'>;
 
 export default function ThemeSwitchAlt(props: ButtonProps) {
-  const [colorMode, toggleColorMode] = useColorMode();
   const { t } = useTranslation('theme');
+
+  const { colorMode, toggleColorMode } = useColorMode();
+
+  const metaContent = useColorModeValue('white', 'gray.800');
+  const hoverBackgroundColor = useColorModeValue('gray.300', 'gray.600');
 
   const isLightTheme = colorMode === 'light';
 
   return (
     <>
       <Head>
-        <meta
-          name="theme-color"
-          content={
-            isLightTheme
-              ? customTheme.colors.white
-              : customTheme.colors.gray[800]
-          }
-        />
+        <meta name="theme-color" content={metaContent} />
       </Head>
       <Button
         type="button"
@@ -35,7 +36,7 @@ export default function ThemeSwitchAlt(props: ButtonProps) {
         aria-label={t(isLightTheme ? 'set-dark-theme' : 'set-light-theme')}
         border="none"
         background="none"
-        _hover={{ backgroundColor: isLightTheme ? 'gray.300' : 'gray.600' }}
+        _hover={{ backgroundColor: hoverBackgroundColor }}
         {...props}
       >
         <Box

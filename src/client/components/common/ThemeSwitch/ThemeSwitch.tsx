@@ -1,10 +1,15 @@
-import { Switch, useColorMode, Flex, FlexProps, Box } from '@chakra-ui/core';
+import {
+  Switch,
+  useColorMode,
+  Flex,
+  FlexProps,
+  Box,
+  useColorModeValue,
+} from '@chakra-ui/core';
 import Head from 'next/head';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaSun, FaMoon } from 'react-icons/fa';
-
-import { customTheme } from '../../../theme';
 
 const gray = 'gray.500';
 const yellow = 'yellow.500';
@@ -23,7 +28,8 @@ const colorMap = {
 export type ThemeSwitchProps = FlexProps;
 
 export default function ThemeSwitch(props: ThemeSwitchProps) {
-  const [colorMode, toggleColorMode] = useColorMode();
+  const { colorMode, toggleColorMode } = useColorMode();
+  const metaContent = useColorModeValue('white', 'gray.800');
   const { t } = useTranslation('theme');
 
   const isLightTheme = colorMode === 'light';
@@ -31,14 +37,7 @@ export default function ThemeSwitch(props: ThemeSwitchProps) {
   return (
     <>
       <Head>
-        <meta
-          name="theme-color"
-          content={
-            isLightTheme
-              ? customTheme.colors.white
-              : customTheme.colors.gray[800]
-          }
-        />
+        <meta name="theme-color" content={metaContent} />
       </Head>
       <Flex cursor="pointer" d="inline-flex" {...props}>
         <Box

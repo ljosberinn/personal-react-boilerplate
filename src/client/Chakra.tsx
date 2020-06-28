@@ -1,8 +1,8 @@
 import { ChakraProvider, CSSReset, Box } from '@chakra-ui/core';
 import React, { ReactNode } from 'react';
 
+import customTheme from '../../chakra';
 import { attachComponentBreadcrumb } from '../utils/sentry';
-import { customTheme } from './theme';
 
 export interface ChakraProps {
   children: ReactNode;

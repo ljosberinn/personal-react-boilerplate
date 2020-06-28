@@ -3,9 +3,9 @@ import { render as rtlRender } from '@testing-library/react';
 import React, { cloneElement, ReactNode } from 'react';
 import { I18nextProvider, I18nContext } from 'react-i18next';
 
+import theme from '../chakra';
 import { AuthContextProvider } from '../src/client/context/AuthContext';
 import { User } from '../src/client/context/AuthContext/AuthContext';
-import { customTheme } from '../src/client/theme';
 import i18n from './i18n';
 
 type TestOptions = {
@@ -38,7 +38,7 @@ function render(
 ) {
   return {
     ...rtlRender(
-      <ChakraProvider theme={customTheme}>
+      <ChakraProvider theme={theme}>
         <I18nextProvider i18n={i18n}>
           <AuthContextProvider session={session}>
             <AdditionalWrapper>
