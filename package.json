@@ -16,7 +16,7 @@
   "dependencies": {
     "@chakra-ui/core": "1.0.0-next.2",
     "@chakra-ui/icons": "1.0.0-next.2",
-    "@chakra-ui/theme": "1.0.0-next.2",
+    "@chakra-ui/theme": "1.0.0-next.3",
     "@hapi/iron": "^6.0.0",
     "@sentry/integrations": "^5.18.1",
     "@sentry/node": "^5.18.1",
