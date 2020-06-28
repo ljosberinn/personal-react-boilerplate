@@ -1367,19 +1367,19 @@
     compute-scroll-into-view "1.0.11"
     copy-to-clipboard "3.3.1"
 
-"@chakra-ui/icon@^1.0.0-next.2":
-  version "1.0.0-next.2"
-  resolved "https://registry.yarnpkg.com/@chakra-ui/icon/-/icon-1.0.0-next.2.tgz#0e74a5f5fa911bd6f9256a78204c9b6ebf9254e3"
-  integrity sha512-XUcE81R6EhRE0ryQqTDIFfOWT9hpT0+BFXMuJ7xL+G0kJYDB/dsga24soCXYBZhyKiMkWOjDswRVj5wWAeiHlg==
+"@chakra-ui/icon@^1.0.0-next.2", "@chakra-ui/icon@^1.0.0-next.3":
+  version "1.0.0-next.3"
+  resolved "https://registry.yarnpkg.com/@chakra-ui/icon/-/icon-1.0.0-next.3.tgz#d37d51458afe19e5d998f8606e233c759344c455"
+  integrity sha512-+HEcJX4aL2ayxJI5qeGgeAP/nevKGp9BAYP8Bn7RZZsn6QTdhbu/cPv1GX6GXd6e8W2pRPm5JStoJpDBpQfEOQ==
   dependencies:
-    "@chakra-ui/utils" "^1.0.0-next.2"
+    "@chakra-ui/utils" "^1.0.0-next.3"
 
-"@chakra-ui/icons@1.0.0-next.2":
-  version "1.0.0-next.2"
-  resolved "https://registry.yarnpkg.com/@chakra-ui/icons/-/icons-1.0.0-next.2.tgz#e6df0f12e99eb8e3feb129ef72d65ea02e10c795"
-  integrity sha512-iAEbaDCGxvEkkO3Of1kjJ1SLCciZKUBdSEW0K7c5jw6pNiwgVpkAdXXxBaSj6oydUjtvt5RK9D+t95DocQOnag==
+"@chakra-ui/icons@1.0.0-next.3":
+  version "1.0.0-next.3"
+  resolved "https://registry.yarnpkg.com/@chakra-ui/icons/-/icons-1.0.0-next.3.tgz#464b69b1b0063590f4fa26144c25387b67880536"
+  integrity sha512-+FM+pwu/IVLJEEjDcihzohJusziVLEsSlvTeFWdrvUdRIzlf3bJxPmZyRgpLMVs0/onwUdrWHUfOUMMIOrpVng==
   dependencies:
-    "@chakra-ui/icon" "^1.0.0-next.2"
+    "@chakra-ui/icon" "^1.0.0-next.3"
 
 "@chakra-ui/image@^1.0.0-next.2":
   version "1.0.0-next.2"
@@ -1658,6 +1658,15 @@
   version "1.0.0-next.2"
   resolved "https://registry.yarnpkg.com/@chakra-ui/utils/-/utils-1.0.0-next.2.tgz#6a3aa42d27d81a7b29aa41a57a62298dd8ccbde9"
   integrity sha512-vmngXTh+5CP1ihRoLi1MUjyGq+GrMAMZxYT8M2jwtwyTYGzhyYjHLiUJgGfwUc6PevF2pa3kIu8osJuLspTNDg==
+  dependencies:
+    css-box-model "1.2.1"
+    deepmerge "4.2.2"
+    memoize-one "5.1.1"
+
+"@chakra-ui/utils@^1.0.0-next.3":
+  version "1.0.0-next.3"
+  resolved "https://registry.yarnpkg.com/@chakra-ui/utils/-/utils-1.0.0-next.3.tgz#b1019152a3caa2811c63858ea8021b9b85bee096"
+  integrity sha512-bHCvHRIUKPL9WY0k+HcVrtfoHNucS7kP3xvEhzm8h1UNmWtCKMCp6vLHwn8QszJH/UG1Xi0xi550rOQW9gXSXA==
   dependencies:
     css-box-model "1.2.1"
     deepmerge "4.2.2"
