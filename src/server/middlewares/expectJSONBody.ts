@@ -7,7 +7,13 @@ import { Middleware } from '../types';
 const expectJSONBodyMiddleware: Middleware = (req, res, next) => {
   if (req.body.length > 0) {
     try {
-      req.body = JSON.parse(req.body);
+      const body = JSON.parse(req.body);
+
+      if (!(body instanceof Object)) {
+        return res.status(BAD_REQUEST).end();
+      }
+
+      req.body = body;
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error(error);
