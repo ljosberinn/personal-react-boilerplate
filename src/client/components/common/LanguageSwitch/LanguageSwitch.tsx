@@ -11,9 +11,7 @@ import {
   BoxProps,
   useColorModeValue,
 } from '@chakra-ui/core';
-import { COOKIE_LOOKUP_KEY_LANG } from '@unly/universal-language-detector';
 import { TFunction } from 'i18next';
-import cookies from 'js-cookie';
 import React from 'react';
 import { FlagIcon, FlagIconCode } from 'react-flag-kit';
 import { useTranslation } from 'react-i18next';
@@ -49,7 +47,6 @@ export default function LanguageSwitch(props: LanguageSwitchProps) {
         });
       }
 
-      cookies.set(COOKIE_LOOKUP_KEY_LANG, slug);
       await i18n.changeLanguage(slug);
     };
   }

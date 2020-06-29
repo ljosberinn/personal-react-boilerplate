@@ -28,8 +28,8 @@ const i18nGetHandler: RequestHandler<{}, I18nextResourceLocale> = (
 
   const json = JSON.stringify(data);
 
-  res.setHeader('Content-length', json.length);
-  res.setHeader('Content-type', 'application/json');
+  res.setHeader('Content-Length', json.length);
+  res.setHeader('Content-Type', 'application/json');
 
   return res.send(json);
 };

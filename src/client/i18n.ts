@@ -1,8 +1,10 @@
 // contains lots of inspiration from https://github.com/UnlyEd/next-right-now/blob/v1-ssr-mst-aptd-gcms-lcz-sty/src/utils/i18nextLocize.ts
 import * as Sentry from '@sentry/node';
 import universalLanguageDetect from '@unly/universal-language-detector';
+import { COOKIE_LOOKUP_KEY_LANG } from '@unly/universal-language-detector';
 import { IncomingMessage } from 'http';
 import i18n from 'i18next';
+import cookies from 'js-cookie';
 import { NextPageContext } from 'next';
 import absoluteUrl from 'next-absolute-url';
 import nextCookies from 'next-cookies';
@@ -73,6 +75,8 @@ export const initI18Next = ({
 
       html?.setAttribute('lang', lang);
       html?.setAttribute('dir', RTL_LANGUAGES.has(lang) ? 'rtl' : 'ltr');
+
+      cookies.set(COOKIE_LOOKUP_KEY_LANG, lang);
     });
   }
 
