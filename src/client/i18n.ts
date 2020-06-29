@@ -20,7 +20,7 @@ import {
 import { namespaces } from '../server/i18n';
 
 // see https://meta.wikimedia.org/wiki/Template:List_of_language_names_ordered_by_code
-const RTL_LANGUAGES = new Set([
+export const RTL_LANGUAGES = new Set([
   'ar', // Arabic
   'arc', // Aramaic
   'dv', // Divehi

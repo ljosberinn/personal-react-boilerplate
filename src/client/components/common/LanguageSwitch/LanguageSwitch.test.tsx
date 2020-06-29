@@ -127,15 +127,15 @@ describe('<LanguageSwitch />', () => {
 
     fireEvent.click(otherLanguageElement);
 
-    await waitFor(() => expect(mockSet).toHaveBeenCalledTimes(1));
-
-    expect(mockSet).toHaveBeenCalledWith(
-      COOKIE_LOOKUP_KEY_LANG,
-      randomOtherLanguage
+    await waitFor(() =>
+      expect(mockSet).toHaveBeenCalledWith(
+        COOKIE_LOOKUP_KEY_LANG,
+        randomOtherLanguage
+      )
     );
   });
 
-  it('should always change the language on click', async () => {
+  it('changes the language on click', async () => {
     makeHasResourceBundleMock(true);
 
     const { button, currentLanguage, randomOtherLanguage } = setup();
@@ -174,5 +174,37 @@ describe('<LanguageSwitch />', () => {
         name: i18nCache[randomOtherLanguage].i18n[randomOtherLanguage],
       })
     ).toBeChecked();
+  });
+
+  it('changes the "lang" attribute on <html>', async () => {
+    const qsSpy = jest.spyOn(document, 'querySelector');
+    const setAttributeSpy = jest.spyOn(HTMLElement.prototype, 'setAttribute');
+
+    const { currentLanguage, randomOtherLanguage } = setup();
+
+    const otherLanguageElement = screen.getByRole('menuitemradio', {
+      name: i18nCache[currentLanguage].i18n[randomOtherLanguage],
+    });
+
+    fireEvent.click(otherLanguageElement);
+
+    await waitFor(() => expect(qsSpy).toHaveBeenLastCalledWith('html'));
+    expect(setAttributeSpy).toHaveBeenCalledWith('lang', randomOtherLanguage);
+  });
+
+  it('changes the "dir" attribute on <html>', async () => {
+    const qsSpy = jest.spyOn(document, 'querySelector');
+    const setAttributeSpy = jest.spyOn(HTMLElement.prototype, 'setAttribute');
+
+    const { currentLanguage, randomOtherLanguage } = setup();
+
+    const otherLanguageElement = screen.getByRole('menuitemradio', {
+      name: i18nCache[currentLanguage].i18n[randomOtherLanguage],
+    });
+
+    fireEvent.click(otherLanguageElement);
+
+    await waitFor(() => expect(qsSpy).toHaveBeenLastCalledWith('html'));
+    expect(setAttributeSpy).toHaveBeenCalledWith('dir', expect.any(String));
   });
 });
