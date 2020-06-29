@@ -7,7 +7,7 @@ import listen from 'test-listen';
 
 import { Middleware } from '../src/server/types';
 
-export const RequestMethods: RequestInit['method'][] = [
+export const RequestMethods = [
   'PUT',
   'PATCH',
   'GET',
@@ -16,7 +16,7 @@ export const RequestMethods: RequestInit['method'][] = [
   'POST',
   'OPTIONS',
   'TRACE',
-];
+] as const;
 
 interface UrlArguments {
   /**
@@ -35,7 +35,7 @@ interface UrlArguments {
   /**
    * any JSON payload
    */
-  body?: Record<string, string>;
+  body?: Record<string, string> | string;
   /**
    * required to test a catchall lambda
    */
