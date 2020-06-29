@@ -1607,6 +1607,13 @@
     "@types/tinycolor2" "1.4.2"
     tinycolor2 "1.4.1"
 
+"@chakra-ui/theme@^1.0.0-next.3":
+  version "1.0.0-next.3"
+  resolved "https://registry.yarnpkg.com/@chakra-ui/theme/-/theme-1.0.0-next.3.tgz#e652154ce77bb8505df2b634a1bc3be7ee409ee0"
+  integrity sha512-ndQCzUwnohx+HZG/mlaMnoRyGd3VIKvb01fDimpRQqH5xibPvC8tGo8vPce7KNohW0HHsATj5GZr7z/FgckRMw==
+  dependencies:
+    "@chakra-ui/theme-tools" "^1.0.0-next.3"
+
 "@chakra-ui/toast@^1.0.0-next.3":
   version "1.0.0-next.3"
   resolved "https://registry.yarnpkg.com/@chakra-ui/toast/-/toast-1.0.0-next.3.tgz#6629b0925b5fdcba39ef6f94e85d51802b181107"

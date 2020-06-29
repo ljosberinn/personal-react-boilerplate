@@ -1,4 +1,5 @@
 import { ColorMode } from '@chakra-ui/core';
+import { Theme } from '@chakra-ui/theme';
 
 import components from './components';
 import foundations from './foundations';
@@ -14,7 +15,7 @@ const config: ChakraConfig = {
   useSystemColorMode: false,
 };
 
-export const theme = {
+export const theme: Theme = {
   ...foundations,
   components,
   config,
