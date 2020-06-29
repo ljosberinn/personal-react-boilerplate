@@ -9,14 +9,14 @@ import { attachComponentBreadcrumb } from '../../../../utils/sentry';
 
 const sw = '/service-worker.js';
 
-function handleClick() {
-  window.location.reload();
+interface RefreshToastProps {
+  t: TFunction;
 }
 
 /**
  * Currently mimics toast({status: 'info'}) to allow a global onClick
  */
-const RefreshToast = ({ t }: { t: TFunction }) => {
+const RefreshToast = ({ t }: RefreshToastProps) => {
   return (
     <Flex
       backgroundColor="blue.500"
@@ -26,7 +26,7 @@ const RefreshToast = ({ t }: { t: TFunction }) => {
       pb={3}
       borderRadius="0.25rem"
       mb={4}
-      onClick={handleClick}
+      onClick={() => window.location.reload()}
       cursor="pointer"
       role="alert"
     >

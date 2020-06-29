@@ -3,60 +3,14 @@ import React from 'react';
 import { render, waitFor, screen, fireEvent } from '../../../../../testUtils';
 import ServiceWorker from './ServiceWorker';
 
-interface MockRegisterArgs {
-  shouldReject: boolean;
-  registration: ReturnType<typeof jest.fn>;
-  addEventListener: ReturnType<typeof jest.fn>;
-}
-
-const makeMockRegister = ({
-  shouldReject,
-  registration,
-  addEventListener,
-}: MockRegisterArgs) => {
-  class Worker {
-    addEventListener = addEventListener;
-    state: ServiceWorkerState = 'installed';
-  }
-
-  class MockRegistration {
-    registration = registration;
-    addEventListener = addEventListener;
-    installing = new Worker();
-  }
-
-  const mockRegister = jest.fn().mockImplementationOnce(
-    (_swPath: string) =>
-      new Promise((resolve, reject) => {
-        if (shouldReject) {
-          reject();
-        } else {
-          resolve(new MockRegistration());
-        }
-      })
-  );
-
-  Object.defineProperty(navigator, 'serviceWorker', {
-    value: {
-      controller: true,
-      register: mockRegister,
-    },
-    writable: true,
-  });
-
-  return mockRegister;
-};
-
-const makeMockAddEventListener = () =>
-  jest
-    .fn()
-    .mockImplementation((_event: string, listener: Function) => listener());
-
 afterEach(() => {
   Object.defineProperty(navigator, 'serviceWorker', {
+    configurable: true,
     value: undefined,
     writable: true,
   });
+
+  jest.clearAllMocks();
 });
 
 describe('<ServiceWorker />', () => {
@@ -65,50 +19,59 @@ describe('<ServiceWorker />', () => {
   });
 
   it('does not crash if a registration fails', async () => {
-    // eslint-disable-next-line no-console
-    const realConsoleError = console.error;
-    const mockConsoleError = jest.fn();
-    // eslint-disable-next-line no-console
-    console.error = mockConsoleError;
+    const consoleErrorSpy = jest
+      .spyOn(console, 'error')
+      .mockImplementationOnce(() => {});
 
-    const { addEventListener, registration, shouldReject } = {
-      addEventListener: makeMockAddEventListener(),
-      registration: jest.fn(),
-      shouldReject: true,
-    };
+    const errorMessage = 'rejected';
 
-    const mockRegister = makeMockRegister({
-      addEventListener,
-      registration,
-      shouldReject,
+    const registerSpy = jest
+      .fn()
+      .mockImplementationOnce(
+        () => new Promise((_resolve, reject) => reject(errorMessage))
+      );
+
+    Object.defineProperty(navigator, 'serviceWorker', {
+      configurable: true,
+      value: {
+        register: registerSpy,
+      },
+      writable: true,
     });
 
     render(<ServiceWorker />);
 
-    expect(mockRegister).toHaveBeenCalledWith(expect.any(String));
+    await waitFor(() =>
+      expect(registerSpy).toHaveBeenCalledWith(expect.any(String))
+    );
 
-    await waitFor(() => expect(mockConsoleError).toHaveBeenCalledTimes(1));
-
-    // eslint-disable-next-line no-console
-    console.error = realConsoleError;
+    expect(consoleErrorSpy).toHaveBeenCalledWith(errorMessage);
   });
 
   it('listens to a ServiceWorkerRegistration onupdatefound', async () => {
-    const addEventListener = makeMockAddEventListener();
-    const registration = jest.fn();
+    const addEventListenerSpy = jest.fn();
 
-    const mockRegister = makeMockRegister({
-      addEventListener,
-      registration,
-      shouldReject: false,
+    const registerSpy = jest.fn().mockImplementationOnce(
+      () =>
+        new Promise(resolve =>
+          resolve({
+            addEventListener: addEventListenerSpy,
+          })
+        )
+    );
+
+    Object.defineProperty(navigator, 'serviceWorker', {
+      configurable: true,
+      value: {
+        register: registerSpy,
+      },
+      writable: true,
     });
 
     render(<ServiceWorker />);
 
-    expect(mockRegister).toHaveBeenCalledWith(expect.any(String));
-
     await waitFor(() =>
-      expect(addEventListener).toHaveBeenCalledWith(
+      expect(addEventListenerSpy).toHaveBeenCalledWith(
         'updatefound',
         expect.any(Function)
       )
@@ -116,41 +79,110 @@ describe('<ServiceWorker />', () => {
   });
 
   it('listens to an installing workers statechange', async () => {
-    const addEventListener = makeMockAddEventListener();
-    const registration = jest.fn();
+    const addEventListenerSpy = jest
+      .fn()
+      .mockImplementationOnce((_event: string, listener: Function) =>
+        listener()
+      );
 
-    const mockRegister = makeMockRegister({
-      addEventListener,
-      registration,
-      shouldReject: false,
+    const registerSpy = jest.fn().mockImplementationOnce(
+      () =>
+        new Promise(resolve =>
+          resolve({
+            addEventListener: addEventListenerSpy,
+            installing: {
+              addEventListener: addEventListenerSpy,
+            },
+          })
+        )
+    );
+
+    Object.defineProperty(navigator, 'serviceWorker', {
+      configurable: true,
+      value: {
+        register: registerSpy,
+      },
+      writable: true,
     });
 
     render(<ServiceWorker />);
 
-    expect(mockRegister).toHaveBeenCalledWith(expect.any(String));
+    await waitFor(() =>
+      expect(addEventListenerSpy).toHaveBeenCalledWith(
+        'updatefound',
+        expect.any(Function)
+      )
+    );
 
     await waitFor(() =>
-      expect(addEventListener).toHaveBeenLastCalledWith(
+      expect(addEventListenerSpy).toHaveBeenCalledWith(
         'statechange',
         expect.any(Function)
       )
     );
   });
 
-  it('renders a toast onupdatefound triggering site reload on click', async () => {
-    const mockReload = jest.fn();
+  it('renders a toast onupdatefound', async () => {
+    const addEventListenerSpy = jest
+      .fn()
+      .mockImplementation((_event: string, listener: Function) => listener());
 
-    Object.defineProperty(window, 'location', {
+    const registerSpy = jest.fn().mockImplementationOnce(
+      () =>
+        new Promise(resolve =>
+          resolve({
+            addEventListener: addEventListenerSpy,
+            installing: {
+              addEventListener: addEventListenerSpy,
+              state: 'installed',
+            },
+          })
+        )
+    );
+
+    Object.defineProperty(navigator, 'serviceWorker', {
+      configurable: true,
       value: {
-        reload: mockReload,
+        controller: true,
+        register: registerSpy,
       },
       writable: true,
     });
 
-    makeMockRegister({
-      addEventListener: makeMockAddEventListener(),
-      registration: jest.fn(),
-      shouldReject: false,
+    render(<ServiceWorker />);
+
+    await screen.findByRole('alert');
+  });
+
+  it('reloads the page on toast click', async () => {
+    const consoleErrorSpy = jest
+      .spyOn(console, 'error')
+      .mockImplementationOnce(() => {});
+
+    const addEventListenerSpy = jest
+      .fn()
+      .mockImplementation((_event: string, listener: Function) => listener());
+
+    const registerSpy = jest.fn().mockImplementationOnce(
+      () =>
+        new Promise(resolve =>
+          resolve({
+            addEventListener: addEventListenerSpy,
+            installing: {
+              addEventListener: addEventListenerSpy,
+              state: 'installed',
+            },
+          })
+        )
+    );
+
+    Object.defineProperty(navigator, 'serviceWorker', {
+      configurable: true,
+      value: {
+        controller: true,
+        register: registerSpy,
+      },
+      writable: true,
     });
 
     render(<ServiceWorker />);
@@ -159,6 +191,11 @@ describe('<ServiceWorker />', () => {
 
     fireEvent.click(toast);
 
-    expect(mockReload).toHaveBeenCalledTimes(1);
+    // window.location.reload can't be spied on
+    expect(
+      consoleErrorSpy.mock.calls[0][0].startsWith(
+        'Error: Not implemented: navigation (except hash changes)'
+      )
+    ).toBeTruthy();
   });
 });

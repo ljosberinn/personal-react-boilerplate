@@ -8250,9 +8250,9 @@ next-offline@^5.0.2:
     workbox-webpack-plugin "^5.0.0"
 
 next-seo@^4.6.0:
-  version "4.6.0"
-  resolved "https://registry.yarnpkg.com/next-seo/-/next-seo-4.6.0.tgz#c22a8f49ae8272460962e065159551605257f088"
-  integrity sha512-j7Ju/+0TBArH4402SsCm5ZkFQSDY7mX+jyUn+NcE4nZAOuMbBQsvA3Cm4n2ls1/LZwwjY18v4uYukyhyqtE8cQ==
+  version "4.7.0"
+  resolved "https://registry.yarnpkg.com/next-seo/-/next-seo-4.7.0.tgz#cbf356505136b1750547b41e88336a7cef01bee5"
+  integrity sha512-Ps/sseJCE3VTLSLLiVfgsYQxeh0sRstBd15Fc54XPHcAC/6aSd5CFQ55Z5BjSHEe+LES84pLwKN2bRn8uWFwkA==
 
 next-tick@~1.0.0:
   version "1.0.0"
