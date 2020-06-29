@@ -80,9 +80,9 @@ const defaultConfig = {
     return config;
   },
   reactStrictMode: true,
-  // experimental: {
-  //   modern: true,
-  // },
+  experimental: {
+    modern: true,
+  },
 };
 
 module.exports = withPlugins([
