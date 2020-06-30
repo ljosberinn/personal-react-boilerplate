@@ -9,11 +9,9 @@ describe('<Chakra />', () => {
   });
 
   it('should accept child components', () => {
-    const Child = () => <span>child</span>;
-
     render(
       <Chakra>
-        <Child />
+        <span>child</span>
       </Chakra>
     );
 

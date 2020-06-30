@@ -16,21 +16,21 @@ interface RefreshToastProps {
 /**
  * Currently mimics toast({status: 'info'}) to allow a global onClick
  */
-const RefreshToast = ({ t }: RefreshToastProps) => {
+function RefreshToast({ t }: RefreshToastProps) {
   return (
     <Flex
       backgroundColor="blue.500"
+      borderRadius="0.25rem"
+      cursor="pointer"
+      mb={4}
+      onClick={() => window.location.reload()}
+      pb={3}
       pl={4}
       pr={8}
       pt={3}
-      pb={3}
-      borderRadius="0.25rem"
-      mb={4}
-      onClick={() => window.location.reload()}
-      cursor="pointer"
       role="alert"
     >
-      <InfoIcon width="1.25rem" height="1.25rem" mr="0.75rem" />
+      <InfoIcon height="1.25rem" mr="0.75rem" width="1.25rem" />
       <Box textAlign="left">
         <Box as="p" fontWeight="bold">
           {t('newVersion')}
@@ -39,7 +39,7 @@ const RefreshToast = ({ t }: RefreshToastProps) => {
       </Box>
     </Flex>
   );
-};
+}
 
 export default function ServiceWorker() {
   const { t } = useTranslation('serviceWorker');
@@ -68,6 +68,7 @@ export default function ServiceWorker() {
               }
 
               toast({
+                // eslint-disable-next-line react/display-name
                 render: () => <RefreshToast t={t} />,
               });
             });

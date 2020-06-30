@@ -10,7 +10,7 @@ import {
   Tooltip,
   useColorModeValue,
 } from '@chakra-ui/core';
-import React from 'react';
+import React, { Fragment } from 'react';
 import { FaTwitter, FaGithub, FaGlobe } from 'react-icons/fa';
 
 import { ENABLED_PROVIDER } from '../../../constants';
@@ -202,16 +202,16 @@ export default function Index() {
             description="SSR-compatible, httpOnly cookie-based authentication - try refreshing after logging in!"
             component={<AuthDemo />}
             features={[
-              <>implements OAuth2</>,
-              <>
+              <Fragment key="1">implements OAuth2</Fragment>,
+              <Fragment key="2">
                 includes an <Code>{'<AuthContextProvider />'}</Code>, exposing a
                 hook (<Code>useAuth</Code>)
-              </>,
-              <>
+              </Fragment>,
+              <Fragment key="3">
                 includes a <Code>protectedResourceMiddleware</Code> as easy
                 catch-all API route protection solution
-              </>,
-              <>
+              </Fragment>,
+              <Fragment key="4">
                 ships with{' '}
                 <Tooltip
                   label={ENABLED_PROVIDER.join(', ')}
@@ -220,7 +220,7 @@ export default function Index() {
                   <Badge variant="outline">{ENABLED_PROVIDER.length}*</Badge>
                 </Tooltip>{' '}
                 provider options
-              </>,
+              </Fragment>,
             ]}
           />
 
@@ -240,17 +240,17 @@ export default function Index() {
               <LanguageSwitch mb={2} width={{ base: '100%', lg: 'initial' }} />
             }
             features={[
-              <>
+              <Fragment key="1">
                 a premade component using{' '}
                 <ExternalLink href="//github.com/umidbekkarimov/react-flag-kit">
                   <Code>react-flag-kit</Code>
                 </ExternalLink>{' '}
                 is included
-              </>,
-              <>
+              </Fragment>,
+              <Fragment key="2">
                 a single request will be made to the{' '}
                 <Code>/api/i18n/:language</Code> endpoint
-              </>,
+              </Fragment>,
               "previously fetched bundles won't be refetched",
               'serverless-compatible; all assets are automatically bundled at build time',
             ]}
@@ -283,13 +283,13 @@ export default function Index() {
               </Stack>
             }
             features={[
-              <>
+              <Fragment key="1">
                 two premade components using{' '}
                 <ExternalLink href="//react-icons.netlify.com/">
                   <Code>react-icons</Code>
                 </ExternalLink>{' '}
                 are included
-              </>,
+              </Fragment>,
             ]}
           />
         </Box>

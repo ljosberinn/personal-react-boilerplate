@@ -82,7 +82,7 @@ export default function CustomPWAInstallPrompt() {
         transition,
         transform,
       }) => (
-        <Modal onClose={onClose} isOpen={true}>
+        <Modal onClose={onClose} isOpen>
           <ModalOverlay />
           <ModalContent
             pb={5}

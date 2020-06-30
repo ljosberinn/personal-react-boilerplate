@@ -8,7 +8,7 @@
     "start": "next start",
     "test": "jest --watch --coverage",
     "test:ci": "jest --ci",
-    "postinstall": "yarn-deduplicate -l",
+    "postinstall": "yarn-deduplicate -l && yarn test:ci",
     "lint": "eslint src && eslint pages && eslint chakra && tsc --noEmit",
     "lint:fix": "eslint src --fix && eslint pages --fix && eslint chakra --fix && prettier --write src && prettier --write pages && prettier --write chakra",
     "post-deps-update": "yarn && yarn lint && yarn test:ci"
@@ -28,7 +28,7 @@
     "next-absolute-url": "^1.2.2",
     "next-connect": "^0.7.2",
     "next-cookies": "^2.0.3",
-    "next-seo": "^4.6.0",
+    "next-seo": "^4.7.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-flag-kit": "^0.3.1",
@@ -56,7 +56,7 @@
     "cookie": "^0.4.1",
     "dotenv": "^8.2.0",
     "eslint": "^7.3.1",
-    "eslint-config-galex": "^0.4.14",
+    "eslint-config-galex": "^0.5.1",
     "eslint-plugin-tsc": "^1.2.0",
     "husky": "^4.2.5",
     "identity-obj-proxy": "^3.0.0",
@@ -66,7 +66,7 @@
     "next-offline": "^5.0.2",
     "prettier": "^2.0.5",
     "test-listen": "^1.1.0",
-    "typescript": "^4.0.0-dev.20200629",
+    "typescript": "^4.0.0-dev.20200630",
     "yarn-deduplicate": "^2.0.0"
   },
   "license": "MIT"
