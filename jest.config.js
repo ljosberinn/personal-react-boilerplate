@@ -9,6 +9,7 @@ module.exports = {
     '!**/public/**',
     '!**/coverage/**',
     '!**/.eslintrc.js',
+    '!**/chakra/**',
   ],
   setupFilesAfterEnv: ['<rootDir>/setupTests.js'],
   testPathIgnorePatterns: ['/node_modules/', '/.next/'],
