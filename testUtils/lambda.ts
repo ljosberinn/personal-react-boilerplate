@@ -1,3 +1,4 @@
+import { serialize } from 'cookie';
 import { createServer } from 'http';
 import nextConnect, { NextConnect } from 'next-connect';
 import { apiResolver } from 'next/dist/next-server/server/api-utils';
@@ -43,11 +44,16 @@ interface UrlArguments {
   /**
    * next-connect compatible middleware(s)
    */
-  middleware?: Middleware | Middleware[];
+  middleware?: Middleware<any, any> | Middleware<any, any>[];
   /**
    * optional headers passed to the request
    */
-  headers?: Record<string, string>;
+  headers?:
+    | Record<string, string>
+    | {
+        cookie: Record<string, string> | string;
+        [key: string]: any;
+      };
 }
 
 const getUrl = (
@@ -174,6 +180,12 @@ export const testLambda = async (
 
     return url || searchParams ? getUrl(index, url, searchParams) : index;
   })();
+
+  if (headers?.cookie) {
+    headers.cookie = Object.entries(headers.cookie)
+      .map(([key, value]) => serialize(key, value))
+      .join(';');
+  }
 
   return await fetch(urlToFetch, {
     body: body ? JSON.stringify(body) : undefined,

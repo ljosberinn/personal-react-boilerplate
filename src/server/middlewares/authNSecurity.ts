@@ -20,21 +20,20 @@ const authNSecurityMiddleware: Middleware<AuthenticatedRequest> = async (
   res,
   next
 ) => {
-  // bail instantly if no session cookie exists
-  if (!req.cookies[SESSION_COOKIE_NAME]) {
+  try {
+    // verify & decrypt the cookie
+    const session = await getSession(req);
+
+    if (!session) {
+      return res.status(UNAUTHORIZED).json({ error });
+    }
+
+    req[SESSION_COOKIE_NAME] = session;
+
+    next();
+  } catch {
     return res.status(UNAUTHORIZED).json({ error });
   }
-
-  // verify & decrypt the cookie
-  const session = await getSession(req);
-
-  if (!session) {
-    return res.status(UNAUTHORIZED).json({ error });
-  }
-
-  req[SESSION_COOKIE_NAME] = session;
-
-  next();
 };
 
 export default authNSecurityMiddleware;
