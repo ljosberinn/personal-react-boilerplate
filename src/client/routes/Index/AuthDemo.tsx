@@ -68,13 +68,19 @@ export default function AuthDemo() {
 
   const providerButtonProps = {
     colorScheme: 'teal',
-    width: ['initial', 'initial', '100%', '100%'],
+    width: {
+      base: '100%',
+      lg: 'initial',
+    },
   };
 
   return (
     <Flex
       justifyContent="space-between"
-      flexDirection={['row', 'row', 'column', 'column']}
+      flexDirection={{
+        base: 'column',
+        lg: 'initial',
+      }}
     >
       <Box>
         {isAuthenticated ? (
@@ -116,10 +122,22 @@ export default function AuthDemo() {
         >
           <PopoverTrigger>
             <Button
-              d={['initial', 'initial', 'block', 'block']}
-              ml={[2, 2, 0, 0]}
-              mt={[0, 0, 2, 2]}
-              width={['initial', 'initial', '100%', '100%']}
+              d={{
+                base: 'block',
+                lg: 'initial',
+              }}
+              ml={{
+                base: 0,
+                lg: 2,
+              }}
+              mt={{
+                base: 2,
+                lg: 0,
+              }}
+              width={{
+                base: '100%',
+                lg: 'initial',
+              }}
               colorScheme="teal"
               isDisabled={isAuthenticated}
             >
@@ -134,9 +152,8 @@ export default function AuthDemo() {
           </PopoverContent>
         </Popover>
       </Box>
-      <Box mt={[0, 0, 2, 2]} mb={2}>
-        <AuthenticatedDummyRequest />
-      </Box>
+
+      <AuthenticatedDummyRequest />
     </Flex>
   );
 }
@@ -240,17 +257,25 @@ function AuthenticatedDummyRequest() {
   }
 
   return (
-    <Button
-      variant="outline"
-      colorScheme="teal"
-      width={['initial', '100%', '100%', 'initial']}
-      onClick={handleRequestClick}
-      isLoading={loading}
+    <Box
+      mt={{
+        base: 2,
+        lg: 0,
+      }}
+      mb={2}
     >
-      fire an auth-protected request to{' '}
-      <Code ml={2} fontSize="1rem">
-        /api/user/me
-      </Code>
-    </Button>
+      <Button
+        variant="outline"
+        colorScheme="teal"
+        width={['initial', 'initial', '100%', '100%']}
+        onClick={handleRequestClick}
+        isLoading={loading}
+      >
+        fire an auth-protected request to{' '}
+        <Code ml={2} fontSize="1rem">
+          /api/user/me
+        </Code>
+      </Button>
+    </Box>
   );
 }

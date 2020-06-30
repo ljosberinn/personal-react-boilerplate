@@ -39,7 +39,10 @@ export default function Index() {
           mt={4}
           mb={4}
           justifyContent="space-between"
-          flexDirection={['row', 'column', 'row', 'row']}
+          flexDirection={{
+            base: 'column',
+            lg: 'row',
+          }}
         >
           <ExternalLink href="//github.com/ljosberinn/personal-react-boilerplate">
             <Box d="inline-block" as={FaGithub} /> Repository
@@ -233,7 +236,9 @@ export default function Index() {
           <DemoComponent
             title="Internationalization"
             description="SSR-compatible, cookie-based i18n demo - try refreshing after switching the language!"
-            component={<LanguageSwitch mt={2} mb={2} />}
+            component={
+              <LanguageSwitch mb={2} width={{ base: '100%', lg: 'initial' }} />
+            }
             features={[
               <>
                 a premade component using{' '}
