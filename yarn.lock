@@ -8249,10 +8249,10 @@ next-offline@^5.0.2:
     fs-extra "~8.1.0"
     workbox-webpack-plugin "^5.0.0"
 
-next-seo@^4.6.0:
-  version "4.7.0"
-  resolved "https://registry.yarnpkg.com/next-seo/-/next-seo-4.7.0.tgz#cbf356505136b1750547b41e88336a7cef01bee5"
-  integrity sha512-Ps/sseJCE3VTLSLLiVfgsYQxeh0sRstBd15Fc54XPHcAC/6aSd5CFQ55Z5BjSHEe+LES84pLwKN2bRn8uWFwkA==
+next-seo@^4.7.1:
+  version "4.7.1"
+  resolved "https://registry.yarnpkg.com/next-seo/-/next-seo-4.7.1.tgz#881c88fb685b070ac49e77482d5ec785c39a03c8"
+  integrity sha512-gsNoxmqWLBh5IT9qQLNJoIo4iDiw+ptsFSGca5STVBhHYeJ2yKzaiWSZ9Ovp4opJvCXQQI7M3o2pM7lqQQxA8g==
 
 next-tick@~1.0.0:
   version "1.0.0"
