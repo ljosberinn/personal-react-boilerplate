@@ -8240,10 +8240,10 @@ next-compose-plugins@^2.2.0:
   resolved "https://registry.yarnpkg.com/next-compose-plugins/-/next-compose-plugins-2.2.0.tgz#95cd8eb40ab0652070d76572fb648354191628b0"
   integrity sha512-ChUlpT9tWfJ7YxqGw/WQ2T1gf8EeX93n1XqeQw0lkvGa7seszahvF4eOZUJoq7Hetsbzg4UHVnPoCXfXTyQR3g==
 
-next-connect@^0.7.2:
-  version "0.7.2"
-  resolved "https://registry.yarnpkg.com/next-connect/-/next-connect-0.7.2.tgz#1cad82eacc708caa82f0df3379511318bab4d0eb"
-  integrity sha512-gLqkfc5rpG2w5rTD72FMKev2YI4mubMe8OHtddv3izS5v3atCcSSsOsPckm//8C8tFnq0XIYXx5AxdRObiCEtw==
+next-connect@^0.8.0:
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/next-connect/-/next-connect-0.8.0.tgz#4297c73a346c914d399a00fedd39e7d25852876f"
+  integrity sha512-00KzHiPc5LsOmWV9PoNkCv57YesV09KDINdF9yTBuTSl6xKI16otMoBEl2vzDoQ9BrNdtpHtq0ID1Rr30NCR4Q==
   dependencies:
     "@types/node" "^14.0.14"
     trouter "^3.1.0"
