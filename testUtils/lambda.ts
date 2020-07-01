@@ -1,5 +1,6 @@
 import { serialize } from 'cookie';
 import { createServer } from 'http';
+import { NextApiRequest, NextApiResponse } from 'next';
 import nextConnect, { NextConnect } from 'next-connect';
 import { apiResolver } from 'next/dist/next-server/server/api-utils';
 import { route } from 'next/dist/next-server/server/router';
@@ -88,7 +89,7 @@ const getUrl = (
  * @param middleware
  */
 const withMiddleware = (
-  handler: NextConnect,
+  handler: NextConnect<NextApiRequest, NextApiResponse>,
   middleware?: UrlArguments['middleware']
 ) => {
   if (!middleware) {
@@ -111,7 +112,7 @@ const withMiddleware = (
 };
 
 export const testLambda = async (
-  handler: NextConnect,
+  handler: NextConnect<NextApiRequest, NextApiResponse>,
   {
     url,
     searchParams,

@@ -10,6 +10,7 @@ import Divider from './divider';
 import Editable from './editable';
 import Form from './form';
 import Heading from './heading';
+import Icon from './icon';
 import Input from './input';
 import InputAddon from './input-addon';
 import Kbd from './kbd';
@@ -21,6 +22,7 @@ import PinInput from './pin-input';
 import Popover from './popover';
 import Progress from './progress';
 import Radio from './radio';
+import Select from './select';
 import Skeleton from './skeleton';
 import Slider from './slider';
 import Spinner from './spinner';
@@ -44,6 +46,7 @@ export default {
   Editable,
   Form,
   Heading,
+  Icon,
   Input,
   InputAddon,
   Kbd,
@@ -55,7 +58,7 @@ export default {
   Popover,
   Progress,
   Radio,
-  Select: Input,
+  Select,
   Skeleton,
   Slider,
   Spinner,

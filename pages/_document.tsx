@@ -16,7 +16,8 @@ import { PageProps } from './_app';
 /**
  * Send to Sentry all uncaught exceptions.
  *
- * If such error happens in this file, it will completely crash the server and render "Internal Server Error" on the client.
+ * If such error happens in this file, it will completely crash the server and
+ * render "Internal Server Error" on the client.
  * @see https://leerob.io/blog/configuring-sentry-for-nextjs-apps
  */
 ['unhandledRejection', 'uncaughtException'].forEach(event => {
