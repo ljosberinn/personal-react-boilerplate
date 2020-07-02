@@ -100,7 +100,7 @@ export interface AuthContextDefinition {
   user: User | null;
   signup: (options: LocalLoginOptions) => Promise<void>;
   login: (options: LoginOptions) => Promise<void>;
-  logout: () => void;
+  logout: () => Promise<void>;
   isAuthenticated: boolean;
 }
 
