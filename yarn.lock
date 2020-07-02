@@ -1648,6 +1648,15 @@
     "@chakra-ui/form-control" "^1.0.0-next.4"
     "@chakra-ui/utils" "^1.0.0-next.4"
 
+"@chakra-ui/theme-tools@^1.0.0-next.3":
+  version "1.0.0-next.3"
+  resolved "https://registry.yarnpkg.com/@chakra-ui/theme-tools/-/theme-tools-1.0.0-next.3.tgz#604b03a616d3703a94e2bbaf764547c9f69c5657"
+  integrity sha512-5W8MH1L+3Q4dcCb4urjtcCQXtUUxCPTwvbJmlw6OhypiUj+4AvgYBhCjSGPSvF/eK23CH2cBg8SddweE31VfHw==
+  dependencies:
+    "@chakra-ui/utils" "^1.0.0-next.3"
+    "@types/tinycolor2" "1.4.2"
+    tinycolor2 "1.4.1"
+
 "@chakra-ui/theme-tools@^1.0.0-next.4":
   version "1.0.0-next.4"
   resolved "https://registry.yarnpkg.com/@chakra-ui/theme-tools/-/theme-tools-1.0.0-next.4.tgz#ea83e7f97835cd277a35d193a85c179059cb4cc6"
@@ -1657,12 +1666,12 @@
     "@types/tinycolor2" "1.4.2"
     tinycolor2 "1.4.1"
 
-"@chakra-ui/theme@^1.0.0-next.4":
-  version "1.0.0-next.4"
-  resolved "https://registry.yarnpkg.com/@chakra-ui/theme/-/theme-1.0.0-next.4.tgz#a84ba6ff9c7ebda59e04da367ffd262e339dc208"
-  integrity sha512-jklkUPV+O6mwXXkDGxDxIFRtuqwTF4lPS1ajGfTX4Wr57v9FFpcEDjNwez8lMagH4aD7N1q/bLBsm/yZHlkYxA==
+"@chakra-ui/theme@1.0.0-next.3":
+  version "1.0.0-next.3"
+  resolved "https://registry.yarnpkg.com/@chakra-ui/theme/-/theme-1.0.0-next.3.tgz#e652154ce77bb8505df2b634a1bc3be7ee409ee0"
+  integrity sha512-ndQCzUwnohx+HZG/mlaMnoRyGd3VIKvb01fDimpRQqH5xibPvC8tGo8vPce7KNohW0HHsATj5GZr7z/FgckRMw==
   dependencies:
-    "@chakra-ui/theme-tools" "^1.0.0-next.4"
+    "@chakra-ui/theme-tools" "^1.0.0-next.3"
 
 "@chakra-ui/toast@^1.0.0-next.4":
   version "1.0.0-next.2251"
@@ -5358,10 +5367,10 @@ eslint-ast-utils@^1.1.0:
     lodash.get "^4.4.2"
     lodash.zip "^4.2.0"
 
-eslint-config-galex@^0.5.2:
-  version "0.5.2"
-  resolved "https://registry.yarnpkg.com/eslint-config-galex/-/eslint-config-galex-0.5.2.tgz#78e7b018e09f72c623264975651b8652f133dfc7"
-  integrity sha512-x0QSNLLwC/gkPmtEUdCwlmVaCeeWduVv+Z9znmOSynlWMrrZ2TVT76Q8c5Rgroft4Nev1XvXTPWt5sCK2jgrbw==
+eslint-config-galex@^0.5.3:
+  version "0.5.3"
+  resolved "https://registry.yarnpkg.com/eslint-config-galex/-/eslint-config-galex-0.5.3.tgz#99d3ee105b6a025d54f8914401804ad6ec9da6dd"
+  integrity sha512-2teWuNpn+XFe+Ayv9ZJ/dBmbLIGWIo9zyij8ytBpFCL4M1xA5hHUXhTw0JeZey6oyD+y4eOC8SCl42uhJqkgJQ==
   dependencies:
     "@typescript-eslint/eslint-plugin" "3.5.0"
     "@typescript-eslint/parser" "3.5.0"
@@ -6585,10 +6594,10 @@ i18next@19.0.2:
   dependencies:
     "@babel/runtime" "^7.3.1"
 
-i18next@^19.5.2:
-  version "19.5.2"
-  resolved "https://registry.yarnpkg.com/i18next/-/i18next-19.5.2.tgz#0db0293704b2bb73caa8b54ef4a9ff211aef8ee0"
-  integrity sha512-gkUpnWt+y3Yuz6Lp6VV0VPxJ8oOr/6YQ7PeUkEOBY/u/fE2RqxvoCNTJVhBiuJySWwf4cbtWjmlASoFqf1Y1cg==
+i18next@^19.5.3:
+  version "19.5.3"
+  resolved "https://registry.yarnpkg.com/i18next/-/i18next-19.5.3.tgz#1e8416072c1e1cd0c83afab430e94957a5165a74"
+  integrity sha512-R7ie0TdTpBhybNa2eDhTkJKSCDe7pPsHx6/q0RTtHPFw1mrFp0PEtpUqOPy4KaIRwJc8n2N/phTp+HiOBP5Biw==
   dependencies:
     "@babel/runtime" "^7.10.1"
 
@@ -11399,10 +11408,10 @@ typescript-service@^2.0.0:
   dependencies:
     tslib "^1.9.3"
 
-typescript@^4.0.0-dev.20200701:
-  version "4.0.0-dev.20200701"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.0.0-dev.20200701.tgz#1ae29d654601eb9e98efcd9e7208b993b983fdb2"
-  integrity sha512-0nQ1T9ROoxxZf4ILRHRHKygkLjW/G6UltJ0AlmKPVYofkNI1R0CmPHN6OCcjoU8CtCpwLCSruFspY2lLo7KDDg==
+typescript@^4.0.0-dev.20200702:
+  version "4.0.0-dev.20200702"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.0.0-dev.20200702.tgz#00f3def293ef7a2da8cba8844e7ef2fd1de9c661"
+  integrity sha512-MtHlPeSy04f9I6cej+6mRf4NIiAp4K+EDm+Nv21o1tVbjLOKgQnKDZKPSNQxy6U2WcvSKe5Q4aEvw2B2fmk9+A==
 
 unicode-canonical-property-names-ecmascript@^1.0.4:
   version "1.0.4"

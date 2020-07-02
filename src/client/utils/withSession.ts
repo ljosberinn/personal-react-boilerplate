@@ -28,6 +28,10 @@ type AuthenticatedGetServerSideProps<
   session: User
 ) => Promise<{ props: P }> | { props: P };
 
+/**
+ * Protects a route using getServerSideProps by expection a session
+ * Given no session, redirects to options.headers.Location, defaulting to /
+ */
 export const withSession = (
   handler: AuthenticatedGetServerSideProps,
   {

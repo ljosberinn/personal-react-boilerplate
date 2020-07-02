@@ -8,7 +8,7 @@
     "start": "next start",
     "test": "jest --watch --coverage",
     "test:ci": "jest --ci --coverage",
-    "postinstall": "yarn-deduplicate -l && yarn test:ci",
+    "postinstall": "yarn-deduplicate -l && yarn test:ci && yarn lint",
     "lint": "eslint src && eslint pages && eslint chakra && tsc --noEmit",
     "lint:fix": "eslint src --fix && eslint pages --fix && eslint chakra --fix && prettier --write src && prettier --write pages && prettier --write chakra",
     "post-deps-update": "yarn && yarn lint && yarn test:ci"
@@ -22,7 +22,7 @@
     "@sentry/node": "^5.19.0",
     "@sentry/react": "^5.19.0",
     "@unly/universal-language-detector": "^2.0.3",
-    "i18next": "^19.5.2",
+    "i18next": "^19.5.3",
     "js-cookie": "^2.2.1",
     "next": "9.4.4",
     "next-absolute-url": "^1.2.2",
@@ -36,7 +36,7 @@
     "react-icons": "^3.10.0"
   },
   "devDependencies": {
-    "@chakra-ui/theme": "^1.0.0-next.4",
+    "@chakra-ui/theme": "1.0.0-next.3",
     "@commitlint/cli": "^9.0.1",
     "@commitlint/config-conventional": "^9.0.1",
     "@next/bundle-analyzer": "^9.4.4",
@@ -56,7 +56,7 @@
     "cookie": "^0.4.1",
     "dotenv": "^8.2.0",
     "eslint": "^7.3.1",
-    "eslint-config-galex": "^0.5.2",
+    "eslint-config-galex": "^0.5.3",
     "eslint-plugin-tsc": "^1.2.0",
     "husky": "^4.2.5",
     "identity-obj-proxy": "^3.0.0",
@@ -67,7 +67,7 @@
     "prettier": "^2.0.5",
     "react-test-renderer": "^16.13.1",
     "test-listen": "^1.1.0",
-    "typescript": "^4.0.0-dev.20200701",
+    "typescript": "^4.0.0-dev.20200702",
     "yarn-deduplicate": "^2.0.0"
   },
   "license": "MIT"

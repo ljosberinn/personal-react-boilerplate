@@ -57,7 +57,9 @@ interface UrlArguments {
         cookie: Record<string, string> | string;
         [key: string]: any;
       };
-
+  /**
+   * whether the request should follow a redirect
+   */
   redirect?: RequestRedirect;
 }
 
