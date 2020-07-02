@@ -1,4 +1,8 @@
-import { testLambda, RequestMethods } from '../../../../testUtils/lambda';
+import {
+  testLambda,
+  RequestMethods,
+  RequestMethod,
+} from '../../../../testUtils/lambda';
 import { SESSION_COOKIE_NAME } from '../../../constants';
 import { NOT_FOUND, OK } from '../../../utils/statusCodes';
 import * as cookieHandling from '../cookie';
@@ -6,7 +10,7 @@ import logout from './logout';
 
 const url = '/api/v1/auth/logout';
 const catchAllName = 'authRouter';
-const method: RequestInit['method'] = 'DELETE';
+const method: RequestMethod = 'DELETE';
 
 jest.mock('../cookie', () => ({
   removeCookie: jest.fn(),

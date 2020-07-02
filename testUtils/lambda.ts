@@ -4,7 +4,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import nextConnect, { NextConnect } from 'next-connect';
 import { apiResolver } from 'next/dist/next-server/server/api-utils';
 import { route } from 'next/dist/next-server/server/router';
-import fetch from 'node-fetch';
+import fetch, { RequestRedirect } from 'node-fetch';
 import listen from 'test-listen';
 
 import { Middleware } from '../src/server/types';
@@ -20,6 +20,8 @@ export const RequestMethods = [
   'TRACE',
 ] as const;
 
+export type RequestMethod = typeof RequestMethods[number];
+
 interface UrlArguments {
   /**
    * the endpoint to test
@@ -33,7 +35,7 @@ interface UrlArguments {
    * HTTP request method
    * @default GET
    */
-  method?: RequestInit['method'];
+  method?: RequestMethod;
   /**
    * any JSON payload
    */
@@ -55,6 +57,8 @@ interface UrlArguments {
         cookie: Record<string, string> | string;
         [key: string]: any;
       };
+
+  redirect?: RequestRedirect;
 }
 
 const getUrl = (
@@ -121,6 +125,7 @@ export const testLambda = async (
     catchAllName,
     middleware,
     headers,
+    redirect,
   }: UrlArguments
 ) => {
   const server = createServer((req, res) =>
@@ -192,5 +197,6 @@ export const testLambda = async (
     body: body ? JSON.stringify(body) : undefined,
     headers,
     method,
+    redirect,
   });
 };

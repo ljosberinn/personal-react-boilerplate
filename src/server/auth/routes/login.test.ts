@@ -1,5 +1,9 @@
 import { waitFor } from '../../../../testUtils';
-import { testLambda, RequestMethods } from '../../../../testUtils/lambda';
+import {
+  testLambda,
+  RequestMethods,
+  RequestMethod,
+} from '../../../../testUtils/lambda';
 import { NOT_FOUND, BAD_REQUEST, OK } from '../../../utils/statusCodes';
 import { expectJSONBodyMiddleware } from '../../middlewares';
 import * as cookieHandling from '../cookie';
@@ -19,7 +23,7 @@ afterEach(jest.clearAllMocks);
 const url = '/api/v1/auth/login';
 const catchAllName = 'authRouter';
 const middleware = expectJSONBodyMiddleware;
-const method: RequestInit['method'] = 'POST';
+const method: RequestMethod = 'POST';
 
 describe('api/login', () => {
   test('should be a function', () => {

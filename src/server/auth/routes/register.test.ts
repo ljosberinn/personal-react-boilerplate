@@ -1,11 +1,15 @@
-import { testLambda, RequestMethods } from '../../../../testUtils/lambda';
+import {
+  testLambda,
+  RequestMethods,
+  RequestMethod,
+} from '../../../../testUtils/lambda';
 import { NOT_FOUND, BAD_REQUEST, CREATED } from '../../../utils/statusCodes';
 import { expectJSONBodyMiddleware } from '../../middlewares';
 import register from './register';
 
 const url = '/api/v1/auth/signup';
 const catchAllName = 'authRouter';
-const method: RequestInit['method'] = 'POST';
+const method: RequestMethod = 'POST';
 const middleware = expectJSONBodyMiddleware;
 
 describe('api/signup', () => {

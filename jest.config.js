@@ -10,6 +10,8 @@ module.exports = {
     '!**/coverage/**',
     '!**/.eslintrc.js',
     '!**/chakra/**',
+    // REMOVE THESE WHEN ACTUALLY DEVELOPING!
+    '!**/src/client/routes/**',
   ],
   setupFilesAfterEnv: ['<rootDir>/setupTests.js'],
   testPathIgnorePatterns: ['/node_modules/', '/.next/'],
