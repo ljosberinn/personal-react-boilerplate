@@ -55,7 +55,7 @@
     "babel-jest": "^26.1.0",
     "cookie": "^0.4.1",
     "dotenv": "^8.2.0",
-    "eslint": "^7.3.1",
+    "eslint": "^7.4.0",
     "eslint-config-galex": "^0.5.3",
     "eslint-plugin-tsc": "^1.2.0",
     "husky": "^4.2.5",
