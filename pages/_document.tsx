@@ -26,11 +26,9 @@ import { PageProps } from './_app';
   });
 });
 
-type CustomDocumentProps = DocumentProps & any;
-
 export default function CustomDocument({
   __NEXT_DATA__: { props },
-}: CustomDocumentProps) {
+}: DocumentProps) {
   const { language } = props.pageProps as PageProps;
 
   attachComponentBreadcrumb('document');

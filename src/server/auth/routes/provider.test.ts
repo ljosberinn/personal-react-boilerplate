@@ -56,6 +56,7 @@ describe('api/provider', () => {
       });
 
       test(`errors given an error query (provider: ${externalProvider})`, async () => {
+        // eslint-disable-next-line no-console
         const consoleError = console.error;
         const consoleErrorSpy = jest
           .spyOn(console, 'error')
@@ -77,6 +78,7 @@ describe('api/provider', () => {
 
         expect(response.status).toBe(INTERNAL_SERVER_ERROR);
 
+        // eslint-disable-next-line no-console
         console.error = consoleError;
       });
 
