@@ -22,7 +22,7 @@
     "@sentry/node": "^5.19.0",
     "@sentry/react": "^5.19.0",
     "@unly/universal-language-detector": "^2.0.3",
-    "i18next": "^19.5.3",
+    "i18next": "^19.5.4",
     "js-cookie": "^2.2.1",
     "next": "9.4.4",
     "next-absolute-url": "^1.2.2",
