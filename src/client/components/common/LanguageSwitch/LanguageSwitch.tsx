@@ -39,7 +39,9 @@ export default function LanguageSwitch(props: LanguageSwitchProps) {
 
   function handleLanguageChange(slug: string) {
     return async () => {
-      if (!i18n.hasResourceBundle(slug, 'i18n')) {
+      const hasBundle = !!i18n.getDataByLanguage(slug);
+
+      if (!hasBundle) {
         const bundles = await getI18N(slug);
 
         Object.entries(bundles).forEach(([ns, bundle]) => {

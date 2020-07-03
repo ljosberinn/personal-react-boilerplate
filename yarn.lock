@@ -2383,7 +2383,7 @@
     "@sentry/utils" "5.19.0"
     tslib "^1.9.3"
 
-"@sentry/cli@^1.52.3":
+"@sentry/cli@^1.55.0":
   version "1.55.0"
   resolved "https://registry.yarnpkg.com/@sentry/cli/-/cli-1.55.0.tgz#0da95cd9491e11da52b15796bded72480f69591b"
   integrity sha512-LOpM69Kvfaossq92wgP8cg3+0XBc9lg76udH4OdmpSZhtavS/qxWedBsnTicaT//7rQUNZBUnTPOpmCYnpGEIA==
@@ -2471,12 +2471,12 @@
     "@sentry/types" "5.19.0"
     tslib "^1.9.3"
 
-"@sentry/webpack-plugin@^1.11.1":
-  version "1.11.1"
-  resolved "https://registry.yarnpkg.com/@sentry/webpack-plugin/-/webpack-plugin-1.11.1.tgz#ef14479b92e247777061e69404b1faed39944dc8"
-  integrity sha512-7uQiqHXK84GYy2mL/c+cW/QBtr/D8fNmf8U5nUDN4+44aNrQxSJ4vJmYJbxYg1zO6qN/xZyqJt3uKBlgA3FkZg==
+"@sentry/webpack-plugin@^1.12.0":
+  version "1.12.0"
+  resolved "https://registry.yarnpkg.com/@sentry/webpack-plugin/-/webpack-plugin-1.12.0.tgz#3a8c6f86d545a24a9def5b274dc3898aa881e828"
+  integrity sha512-I3W+G2XAPi53sE4eXgxEeGJLc8kYF6+3c1YF79AS8qKc6K4xmbXUVBCZrfrKBQPAZx5mpD1vHIk4+Og/CKejZA==
   dependencies:
-    "@sentry/cli" "^1.52.3"
+    "@sentry/cli" "^1.55.0"
 
 "@sinonjs/commons@^1.7.0":
   version "1.8.0"
@@ -5367,13 +5367,14 @@ eslint-ast-utils@^1.1.0:
     lodash.get "^4.4.2"
     lodash.zip "^4.2.0"
 
-eslint-config-galex@^0.5.3:
-  version "0.5.3"
-  resolved "https://registry.yarnpkg.com/eslint-config-galex/-/eslint-config-galex-0.5.3.tgz#99d3ee105b6a025d54f8914401804ad6ec9da6dd"
-  integrity sha512-2teWuNpn+XFe+Ayv9ZJ/dBmbLIGWIo9zyij8ytBpFCL4M1xA5hHUXhTw0JeZey6oyD+y4eOC8SCl42uhJqkgJQ==
+eslint-config-galex@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/eslint-config-galex/-/eslint-config-galex-0.6.0.tgz#a29c1184a80f0df7a2b5ee68ab52cdcda2707837"
+  integrity sha512-zrPVoHFOiOq3fhwDYzBeolcTiSRnYOT7eBYbvvEEd1j77LPqtoblZh3DBzr1kH8+J6FTMiL/jUDNyoBWLBHCSg==
   dependencies:
     "@typescript-eslint/eslint-plugin" "3.5.0"
     "@typescript-eslint/parser" "3.5.0"
+    babel-eslint "^10.1.0"
     eslint-config-kentcdodds "^14.14.1"
     eslint-config-prettier "^6.11.0"
     eslint-config-react-app "^5.2.1"
@@ -5630,10 +5631,10 @@ eslint-visitor-keys@^1.0.0, eslint-visitor-keys@^1.1.0, eslint-visitor-keys@^1.2
   resolved "https://registry.yarnpkg.com/eslint-visitor-keys/-/eslint-visitor-keys-1.3.0.tgz#30ebd1ef7c2fdff01c3a4f151044af25fab0523e"
   integrity sha512-6J72N8UNa462wa/KFODt/PJ3IU60SDpC3QXC1Hjc1BXXpfL2C9R5+AU7jhe0F6GREqVMh4Juu+NY7xn+6dipUQ==
 
-eslint@^7.3.1:
-  version "7.3.1"
-  resolved "https://registry.yarnpkg.com/eslint/-/eslint-7.3.1.tgz#76392bd7e44468d046149ba128d1566c59acbe19"
-  integrity sha512-cQC/xj9bhWUcyi/RuMbRtC3I0eW8MH0jhRELSvpKYkWep3C6YZ2OkvcvJVUeO6gcunABmzptbXBuDoXsjHmfTA==
+eslint@^7.4.0:
+  version "7.4.0"
+  resolved "https://registry.yarnpkg.com/eslint/-/eslint-7.4.0.tgz#4e35a2697e6c1972f9d6ef2b690ad319f80f206f"
+  integrity sha512-gU+lxhlPHu45H3JkEGgYhWhkR9wLHHEXC9FbWFnTlEkbKyZKWgWRLgf61E8zWmBuI6g5xKBph9ltg3NtZMVF8g==
   dependencies:
     "@babel/code-frame" "^7.0.0"
     ajv "^6.10.0"
@@ -6594,10 +6595,10 @@ i18next@19.0.2:
   dependencies:
     "@babel/runtime" "^7.3.1"
 
-i18next@^19.5.3:
-  version "19.5.3"
-  resolved "https://registry.yarnpkg.com/i18next/-/i18next-19.5.3.tgz#1e8416072c1e1cd0c83afab430e94957a5165a74"
-  integrity sha512-R7ie0TdTpBhybNa2eDhTkJKSCDe7pPsHx6/q0RTtHPFw1mrFp0PEtpUqOPy4KaIRwJc8n2N/phTp+HiOBP5Biw==
+i18next@^19.5.4:
+  version "19.5.4"
+  resolved "https://registry.yarnpkg.com/i18next/-/i18next-19.5.4.tgz#86e4b44993621f39ab53f95a24afa69caea0a452"
+  integrity sha512-fty+v8v0Unn8KufOajoZ6OR5aKme/lP+BdbT5rirTXE8wdj6LbsbG9DwtI9VtMeru1PEf+L530Cq3IRmovMJGQ==
   dependencies:
     "@babel/runtime" "^7.10.1"
 
@@ -11408,10 +11409,10 @@ typescript-service@^2.0.0:
   dependencies:
     tslib "^1.9.3"
 
-typescript@^4.0.0-dev.20200702:
-  version "4.0.0-dev.20200702"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.0.0-dev.20200702.tgz#00f3def293ef7a2da8cba8844e7ef2fd1de9c661"
-  integrity sha512-MtHlPeSy04f9I6cej+6mRf4NIiAp4K+EDm+Nv21o1tVbjLOKgQnKDZKPSNQxy6U2WcvSKe5Q4aEvw2B2fmk9+A==
+typescript@^4.0.0-dev.20200703:
+  version "4.0.0-dev.20200703"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.0.0-dev.20200703.tgz#18a169ce8cc29d49f329262c665f03c7c27e8ead"
+  integrity sha512-xoluPKssy9HuHbbyc6cMB/xv8JPezBjBO0dpyR5O9WEvUYF4QVu+3TtaGcdG/d+NpwgGBqo0cR6IAeHxJuGmXw==
 
 unicode-canonical-property-names-ecmascript@^1.0.4:
   version "1.0.4"

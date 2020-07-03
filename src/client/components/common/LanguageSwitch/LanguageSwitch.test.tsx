@@ -36,10 +36,10 @@ const setup = () => {
   return { button, currentLanguage, randomOtherLanguage };
 };
 
-const makeHasResourceBundleMock = (returnValue: boolean) =>
+const makeGetDataByLanguageSpy = (bool: boolean) =>
   jest
-    .spyOn(i18nInstance, 'hasResourceBundle')
-    .mockImplementation((_slug, _ns) => returnValue);
+    .spyOn(i18nInstance, 'getDataByLanguage')
+    .mockImplementation(() => (bool ? { translation: {} } : undefined));
 
 describe('<LanguageSwitch />', () => {
   it('should render without crashing', () => {
@@ -58,7 +58,7 @@ describe('<LanguageSwitch />', () => {
   });
 
   it('verifies bundle existence on i18n on languageChanged', async () => {
-    const mockHasResourceBundle = makeHasResourceBundleMock(true);
+    const mockHasResourceBundle = makeGetDataByLanguageSpy(true);
 
     const { currentLanguage, randomOtherLanguage } = setup();
 
@@ -71,14 +71,13 @@ describe('<LanguageSwitch />', () => {
 
     await waitFor(() =>
       expect(mockHasResourceBundle).toHaveBeenLastCalledWith(
-        randomOtherLanguage,
-        expect.any(String)
+        randomOtherLanguage
       )
     );
   });
 
   it('appends new bundles to i18n on languageChanged', async () => {
-    const mockHasResourceBundle = makeHasResourceBundleMock(false);
+    const mockHasResourceBundle = makeGetDataByLanguageSpy(false);
     const mockAddResourceBundle = jest.spyOn(i18nInstance, 'addResourceBundle');
 
     const { currentLanguage, randomOtherLanguage } = setup();
@@ -103,8 +102,7 @@ describe('<LanguageSwitch />', () => {
 
     await waitFor(() =>
       expect(mockHasResourceBundle).toHaveBeenLastCalledWith(
-        randomOtherLanguage,
-        expect.any(String)
+        randomOtherLanguage
       )
     );
     await waitFor(() => expect(mockGetI18N).toHaveBeenCalledTimes(1));
@@ -114,7 +112,7 @@ describe('<LanguageSwitch />', () => {
   });
 
   it('attempts to store language preference in cookie on languageChanged', async () => {
-    makeHasResourceBundleMock(true);
+    makeGetDataByLanguageSpy(true);
 
     const mockSet = jest.spyOn(cookies, 'set');
 
@@ -136,7 +134,7 @@ describe('<LanguageSwitch />', () => {
   });
 
   it('changes the language on click', async () => {
-    makeHasResourceBundleMock(true);
+    makeGetDataByLanguageSpy(true);
 
     const { button, currentLanguage, randomOtherLanguage } = setup();
 
