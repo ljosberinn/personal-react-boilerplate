@@ -1,5 +1,7 @@
 import React, { useState, ReactNode } from 'react';
 
+import { ENABLED_PROVIDER } from '../../../constants';
+import { INTERNAL_SERVER_ERROR } from '../../../utils/statusCodes';
 import {
   AuthContext,
   User,
@@ -12,46 +14,115 @@ export interface AuthContextProviderProps {
   children: ReactNode;
 }
 
+export const endpoints = {
+  login: {
+    method: 'POST',
+    url: '/api/v1/auth/login',
+  },
+  logout: {
+    method: 'DELETE',
+    url: '/api/v1/auth/logout',
+  },
+  provider: {
+    url: '/api/v1/auth/provider',
+  },
+  signup: {
+    method: 'POST',
+    url: '/api/v1/auth/signup',
+  },
+};
+
 export default function AuthContextProvider({
   children,
   session,
 }: AuthContextProviderProps) {
   const [user, setUser] = useState<User | null>(session);
 
+  /**
+   * Given { provider: ENABLED_PROVIDER[number] }, will redirect.
+   *
+   * Given login data, will attempt to login.
+   *
+   * @returns
+   * - nothing when redirecting
+   * - the user when successfully authenticated
+   * - the response status code when failing to authenticate
+   * - INTERNAL_SERVER_ERROR when crashing
+   */
   async function login(options: LoginOptions) {
     if ('provider' in options) {
-      window.location.href = `/api/v1/auth/${options.provider}`;
+      if (ENABLED_PROVIDER.includes(options.provider)) {
+        window.location.assign(
+          endpoints.provider.url.replace('provider', options.provider)
+        );
+      }
+
       return;
     }
 
-    const response = await fetch('/api/v1/auth/login', {
-      body: JSON.stringify(options),
-      method: 'POST',
-    });
-
-    const json = await response.json();
-
-    setUser(json);
-  }
-
-  async function logout() {
-    await fetch('/api/v1/auth/logout', { method: 'DELETE' });
-    setUser(null);
-  }
-
-  async function signup(options: LocalLoginOptions) {
     try {
-      const response = await fetch('/api/v1/auth/signup', {
+      const { url, method } = endpoints.login;
+
+      const response = await fetch(url, {
         body: JSON.stringify(options),
-        method: 'POST',
+        method,
       });
 
-      const json = await response.json();
+      if (response.ok) {
+        const json = await response.json();
 
-      setUser(json);
+        setUser(json);
+        return json;
+      }
+
+      return response.status;
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error(error);
+      return INTERNAL_SERVER_ERROR;
+    }
+  }
+
+  /**
+   * Dispatches a request to the logout endpoint which deletes the session cookie.
+   * Resets User object afterwards.
+   */
+  async function logout() {
+    const { url, method } = endpoints.logout;
+
+    await fetch(url, { method });
+    setUser(null);
+  }
+
+  /**
+   * Will attempt to register the user.
+   *
+   * @returns
+   * - the user when successfully registered
+   * - the response status code when failing to register
+   * - INTERNAL_SERVER_ERROR when crashing
+   */
+  async function signup(options: LocalLoginOptions) {
+    try {
+      const { url, method } = endpoints.signup;
+
+      const response = await fetch(url, {
+        body: JSON.stringify(options),
+        method,
+      });
+
+      if (response.ok) {
+        const json = await response.json();
+
+        setUser(json);
+        return json;
+      }
+
+      return response.status;
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error(error);
+      return INTERNAL_SERVER_ERROR;
     }
   }
 

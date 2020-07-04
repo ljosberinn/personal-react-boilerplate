@@ -4,7 +4,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import nextConnect, { NextConnect } from 'next-connect';
 import { apiResolver } from 'next/dist/next-server/server/api-utils';
 import { route } from 'next/dist/next-server/server/router';
-import fetch, { RequestRedirect } from 'node-fetch';
+import fetch from 'node-fetch';
 import listen from 'test-listen';
 
 import { Middleware } from '../src/server/types';

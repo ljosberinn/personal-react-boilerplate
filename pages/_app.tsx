@@ -98,7 +98,6 @@ App.getInitialProps = async function (
    *
    * @see https://nextjs.org/docs/api-reference/data-fetching/getInitialProps
    */
-
   const componentPageProps = getInitialProps ? await getInitialProps(ctx) : {};
 
   return {

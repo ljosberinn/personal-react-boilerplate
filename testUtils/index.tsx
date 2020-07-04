@@ -1,12 +1,15 @@
 import { ChakraProvider } from '@chakra-ui/core';
 import { render as rtlRender } from '@testing-library/react';
-import React, { cloneElement, ReactNode } from 'react';
+import React, { cloneElement } from 'react';
 import { I18nextProvider, I18nContext } from 'react-i18next';
 
 import { theme } from '../chakra';
 import { AuthContextProvider } from '../src/client/context/AuthContext';
 import { User } from '../src/client/context/AuthContext/AuthContext';
 import i18n from './i18n';
+// may not be in seutpTests.js because lambda-Tests rely on node-fetch
+// which collides with whatwg-fetch
+import 'whatwg-fetch';
 
 type TestOptions = {
   /**
@@ -24,8 +27,8 @@ type TestOptions = {
   session?: User | null;
 };
 
-function ChildrenPassthrough({ children }: { children: ReactNode }) {
-  return <>{children}</>;
+function ChildrenPassthrough({ children }: { children: JSX.Element }) {
+  return children;
 }
 
 function render(

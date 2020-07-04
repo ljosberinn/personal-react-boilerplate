@@ -1,9 +1,37 @@
 import { renderHook, act } from '@testing-library/react-hooks';
+import { rest } from 'msw';
+import { setupServer } from 'msw/node';
 import React from 'react';
 
 import { waitFor } from '../../../../testUtils';
+import { ENABLED_PROVIDER } from '../../../constants';
+import {
+  OK,
+  UNPROCESSABLE_ENTITY,
+  INTERNAL_SERVER_ERROR,
+} from '../../../utils/statusCodes';
 import { AuthContextProvider } from '../../context/AuthContext';
+import { Provider } from '../../context/AuthContext/AuthContext';
+import { endpoints } from '../../context/AuthContext/AuthContextProvider';
 import useAuth from './useAuth';
+
+const server = setupServer();
+
+const realLocation = window.location;
+
+beforeAll(() => {
+  server.listen();
+  // @ts-expect-error
+  delete window.location;
+  window.location = { ...realLocation, assign: jest.fn() };
+});
+
+afterEach(() => server.resetHandlers());
+
+afterAll(() => {
+  server.close();
+  window.location = realLocation;
+});
 
 describe('hooks/useAuth', () => {
   test('executes without crashing', () => {
@@ -38,10 +66,12 @@ describe('hooks/useAuth', () => {
     expect(current.isAuthenticated).toBeTruthy();
   });
 
-  test('on logout, dispatches a delete request', async () => {
-    global.fetch = jest
-      .fn()
-      .mockImplementationOnce(() => Promise.resolve({ ok: true, status: 200 }));
+  test(`on logout, dispatches a ${endpoints.logout.method} request`, async () => {
+    const { url, method } = endpoints.logout;
+
+    const fetchSpy = jest.spyOn(window, 'fetch');
+
+    server.use(rest.delete(url, (_req, res, ctx) => res(ctx.status(OK))));
 
     const user = { id: '1', name: 'ljosberinn' };
 
@@ -55,13 +85,274 @@ describe('hooks/useAuth', () => {
 
     await act(result.current.logout);
 
-    expect(global.fetch).toHaveBeenCalledWith('/api/v1/auth/logout', {
-      method: 'DELETE',
+    expect(fetchSpy).toHaveBeenCalledWith(url, {
+      method,
     });
 
     await waitFor(() => expect(result.current.user).toBe(null));
+  });
 
-    // @ts-expect-error
-    global.fetch = undefined;
+  test(`on signup, dispatches a ${endpoints.signup.method} request`, async () => {
+    const fetchSpy = jest.spyOn(window, 'fetch');
+
+    const user = { username: 'ljosberinn' };
+    const userWithPassword = { ...user, password: 'next-with-batteries!' };
+    const { url, method } = endpoints.signup;
+
+    server.use(rest.post(url, (_req, res, ctx) => res(ctx.json(user))));
+
+    const { result } = renderHook(useAuth, {
+      wrapper: ({ children }) => (
+        <AuthContextProvider session={null}>{children}</AuthContextProvider>
+      ),
+    });
+
+    let response;
+
+    await act(async () => {
+      response = await result.current.signup(userWithPassword);
+    });
+
+    expect(fetchSpy).toHaveBeenCalledWith(url, {
+      body: JSON.stringify(userWithPassword),
+      method,
+    });
+
+    expect(response).toMatchObject(user);
+
+    await waitFor(() => expect(result.current.user).toMatchObject(user));
+  });
+
+  test(`on signup, fails gracefully given invalid response data`, async () => {
+    const fetchSpy = jest.spyOn(window, 'fetch');
+
+    // eslint-disable-next-line no-console
+    const consoleError = console.error;
+    const consoleErrorSpy = jest.fn().mockImplementation(() => {});
+    // eslint-disable-next-line no-console
+    console.error = consoleErrorSpy;
+
+    const user = { username: 'ljosberinn' };
+    const userWithPassword = { ...user, password: 'next-with-batteries!' };
+    const { url, method } = endpoints.signup;
+
+    server.use(
+      rest.post(url, (_req, res, ctx) => res(ctx.body('invalid json' as any)))
+    );
+
+    const { result } = renderHook(useAuth, {
+      wrapper: ({ children }) => (
+        <AuthContextProvider session={null}>{children}</AuthContextProvider>
+      ),
+    });
+
+    let response;
+
+    await act(async () => {
+      response = await result.current.signup(userWithPassword);
+    });
+
+    expect(response).toBe(INTERNAL_SERVER_ERROR);
+
+    expect(fetchSpy).toHaveBeenCalledWith(url, {
+      body: JSON.stringify(userWithPassword),
+      method,
+    });
+
+    expect(consoleErrorSpy).toHaveBeenCalledTimes(1);
+
+    // eslint-disable-next-line no-console
+    console.error = consoleError;
+  });
+
+  test('on signup, fails gracefully when rejected', async () => {
+    const fetchSpy = jest.spyOn(window, 'fetch');
+
+    const user = { username: 'ljosberinn' };
+    const userWithPassword = { ...user, password: 'next-with-batteries!' };
+
+    const { url, method } = endpoints.signup;
+
+    server.use(
+      rest.post(url, (_req, res, ctx) => res(ctx.status(UNPROCESSABLE_ENTITY)))
+    );
+
+    const { result } = renderHook(useAuth, {
+      wrapper: ({ children }) => (
+        <AuthContextProvider session={null}>{children}</AuthContextProvider>
+      ),
+    });
+
+    let response;
+
+    await act(async () => {
+      response = await result.current.signup(userWithPassword);
+    });
+
+    expect(response).toBe(UNPROCESSABLE_ENTITY);
+
+    expect(result.current.user).toBe(null);
+
+    expect(fetchSpy).toHaveBeenCalledWith(url, {
+      body: JSON.stringify(userWithPassword),
+      method,
+    });
+  });
+
+  test('on provider login, does nothing given an invalid provider', async () => {
+    jest.spyOn(window.location, 'assign');
+
+    const provider = 'reddit';
+
+    const { result } = renderHook(useAuth, {
+      wrapper: ({ children }) => (
+        <AuthContextProvider session={null}>{children}</AuthContextProvider>
+      ),
+    });
+
+    let response;
+
+    await act(async () => {
+      response = await result.current.login({
+        provider: (provider as unknown) as Provider,
+      });
+    });
+
+    expect(response).toBeUndefined();
+
+    expect(window.location.assign).not.toHaveBeenCalled();
+  });
+
+  ENABLED_PROVIDER.filter(provider => provider !== 'local').forEach(
+    provider => {
+      test(`on provider login, redirects to a provider when demanded (provider: ${provider})`, async () => {
+        jest.spyOn(window.location, 'assign');
+
+        const { result } = renderHook(useAuth, {
+          wrapper: ({ children }) => (
+            <AuthContextProvider session={null}>{children}</AuthContextProvider>
+          ),
+        });
+
+        let response;
+
+        await act(async () => {
+          response = await result.current.login({ provider });
+        });
+
+        expect(response).toBeUndefined();
+
+        expect(window.location.assign).toHaveBeenCalledWith(
+          endpoints.provider.url.replace('provider', provider)
+        );
+      });
+    }
+  );
+
+  test(`on local login, dispatches a ${endpoints.login.method} request`, async () => {
+    const fetchSpy = jest.spyOn(window, 'fetch');
+
+    const user = { username: 'ljosberinn' };
+    const userWithPassword = { ...user, password: 'next-with-batteries!' };
+
+    const { url, method } = endpoints.login;
+
+    server.use(rest.post(url, (_req, res, ctx) => res(ctx.json(user))));
+
+    const { result } = renderHook(useAuth, {
+      wrapper: ({ children }) => (
+        <AuthContextProvider session={null}>{children}</AuthContextProvider>
+      ),
+    });
+
+    let response;
+
+    await act(async () => {
+      response = await result.current.login(userWithPassword);
+    });
+
+    expect(response).toMatchObject(user);
+
+    expect(fetchSpy).toHaveBeenCalledWith(url, {
+      body: JSON.stringify(userWithPassword),
+      method,
+    });
+
+    await waitFor(() => expect(result.current.user).toMatchObject(user));
+  });
+
+  test(`on local login, fails gracefully given invalid response data`, async () => {
+    const fetchSpy = jest.spyOn(window, 'fetch');
+
+    // eslint-disable-next-line no-console
+    const consoleError = console.error;
+    const consoleErrorSpy = jest.fn().mockImplementation(() => {});
+    // eslint-disable-next-line no-console
+    console.error = consoleErrorSpy;
+
+    const user = { username: 'ljosberinn' };
+    const userWithPassword = { ...user, password: 'next-with-batteries!' };
+
+    const { url, method } = endpoints.login;
+
+    server.use(
+      rest.post(url, (_req, res, ctx) => res(ctx.body('invalid json' as any)))
+    );
+
+    const { result } = renderHook(useAuth, {
+      wrapper: ({ children }) => (
+        <AuthContextProvider session={null}>{children}</AuthContextProvider>
+      ),
+    });
+
+    let response;
+
+    await act(async () => {
+      response = await result.current.login(userWithPassword);
+    });
+
+    expect(response).toBe(INTERNAL_SERVER_ERROR);
+
+    expect(fetchSpy).toHaveBeenCalledWith(url, {
+      body: JSON.stringify(userWithPassword),
+      method,
+    });
+
+    expect(consoleErrorSpy).toHaveBeenCalledTimes(1);
+
+    // eslint-disable-next-line no-console
+    console.error = consoleError;
+  });
+
+  test(`on local login, fails gracefully given invalid login data`, async () => {
+    const fetchSpy = jest.spyOn(window, 'fetch');
+
+    const user = { username: 'ljosberinn' };
+    const userWithPassword = { ...user, password: 'next-with-batteries!' };
+
+    const { url, method } = endpoints.login;
+
+    server.use(
+      rest.post(url, (_req, res, ctx) => res(ctx.status(UNPROCESSABLE_ENTITY)))
+    );
+
+    const { result } = renderHook(useAuth, {
+      wrapper: ({ children }) => (
+        <AuthContextProvider session={null}>{children}</AuthContextProvider>
+      ),
+    });
+
+    let response;
+
+    await act(async () => {
+      response = await result.current.login(userWithPassword);
+    });
+
+    expect(response).toBe(UNPROCESSABLE_ENTITY);
+
+    expect(fetchSpy).toHaveBeenCalledWith(url, {
+      body: JSON.stringify(userWithPassword),
+      method,
+    });
   });
 });
