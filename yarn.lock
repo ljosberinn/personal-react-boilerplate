@@ -11421,10 +11421,10 @@ typescript-service@^2.0.0:
   dependencies:
     tslib "^1.9.3"
 
-typescript@^4.0.0-dev.20200703:
-  version "4.0.0-dev.20200703"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.0.0-dev.20200703.tgz#18a169ce8cc29d49f329262c665f03c7c27e8ead"
-  integrity sha512-xoluPKssy9HuHbbyc6cMB/xv8JPezBjBO0dpyR5O9WEvUYF4QVu+3TtaGcdG/d+NpwgGBqo0cR6IAeHxJuGmXw==
+typescript@^4.0.0-dev.20200704:
+  version "4.0.0-dev.20200704"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.0.0-dev.20200704.tgz#c088e3402367576d400877fbc8f094b9404048e9"
+  integrity sha512-gPaPii6XrtwoHeGktZdhVcskcOUVa4+1KOr7FDCmv1nG5QP4Is/F8R+N8frSc+spzmRrjlMOTQKKYGfN15Olng==
 
 unicode-canonical-property-names-ecmascript@^1.0.4:
   version "1.0.4"

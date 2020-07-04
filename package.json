@@ -67,7 +67,7 @@
     "prettier": "^2.0.5",
     "react-test-renderer": "^16.13.1",
     "test-listen": "^1.1.0",
-    "typescript": "^4.0.0-dev.20200703",
+    "typescript": "^4.0.0-dev.20200704",
     "yarn-deduplicate": "^2.0.0"
   },
   "license": "MIT"
