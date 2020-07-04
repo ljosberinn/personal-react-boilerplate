@@ -35,7 +35,6 @@ export default function ThemeSwitch(props: ThemeSwitchProps) {
         data-testid="theme-switch-sun"
         onClick={toggleColorMode}
         aria-label={t(isLightTheme ? 'is-light-theme' : 'set-light-theme')}
-        mr={2}
       />
       <Switch
         aria-label="toggle theme"
@@ -43,6 +42,8 @@ export default function ThemeSwitch(props: ThemeSwitchProps) {
         onChange={toggleColorMode}
         display="flex"
         alignItems="center"
+        marginLeft={2}
+        marginRight={2}
       />
       <Box
         d="inline-block"
@@ -52,7 +53,6 @@ export default function ThemeSwitch(props: ThemeSwitchProps) {
         data-testid="theme-switch-moon"
         onClick={toggleColorMode}
         aria-label={t(isLightTheme ? 'set-dark-theme' : 'is-dark-theme')}
-        ml={2}
       />
     </Flex>
   );

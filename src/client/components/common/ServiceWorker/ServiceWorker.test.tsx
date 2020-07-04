@@ -27,9 +27,7 @@ describe('<ServiceWorker />', () => {
 
     const registerSpy = jest
       .fn()
-      .mockImplementationOnce(
-        () => new Promise((_resolve, reject) => reject(errorMessage))
-      );
+      .mockImplementationOnce(() => Promise.reject(errorMessage));
 
     Object.defineProperty(navigator, 'serviceWorker', {
       configurable: true,
@@ -51,13 +49,10 @@ describe('<ServiceWorker />', () => {
   it('listens to a ServiceWorkerRegistration onupdatefound', async () => {
     const addEventListenerSpy = jest.fn();
 
-    const registerSpy = jest.fn().mockImplementationOnce(
-      () =>
-        new Promise(resolve =>
-          resolve({
-            addEventListener: addEventListenerSpy,
-          })
-        )
+    const registerSpy = jest.fn().mockImplementationOnce(() =>
+      Promise.resolve({
+        addEventListener: addEventListenerSpy,
+      })
     );
 
     Object.defineProperty(navigator, 'serviceWorker', {
@@ -85,16 +80,13 @@ describe('<ServiceWorker />', () => {
         listener()
       );
 
-    const registerSpy = jest.fn().mockImplementationOnce(
-      () =>
-        new Promise(resolve =>
-          resolve({
-            addEventListener: addEventListenerSpy,
-            installing: {
-              addEventListener: addEventListenerSpy,
-            },
-          })
-        )
+    const registerSpy = jest.fn().mockImplementationOnce(() =>
+      Promise.resolve({
+        addEventListener: addEventListenerSpy,
+        installing: {
+          addEventListener: addEventListenerSpy,
+        },
+      })
     );
 
     Object.defineProperty(navigator, 'serviceWorker', {
@@ -127,17 +119,14 @@ describe('<ServiceWorker />', () => {
       .fn()
       .mockImplementation((_event: string, listener: Function) => listener());
 
-    const registerSpy = jest.fn().mockImplementationOnce(
-      () =>
-        new Promise(resolve =>
-          resolve({
-            addEventListener: addEventListenerSpy,
-            installing: {
-              addEventListener: addEventListenerSpy,
-              state: 'installed',
-            },
-          })
-        )
+    const registerSpy = jest.fn().mockImplementationOnce(() =>
+      Promise.resolve({
+        addEventListener: addEventListenerSpy,
+        installing: {
+          addEventListener: addEventListenerSpy,
+          state: 'installed',
+        },
+      })
     );
 
     Object.defineProperty(navigator, 'serviceWorker', {
@@ -163,17 +152,14 @@ describe('<ServiceWorker />', () => {
       .fn()
       .mockImplementation((_event: string, listener: Function) => listener());
 
-    const registerSpy = jest.fn().mockImplementationOnce(
-      () =>
-        new Promise(resolve =>
-          resolve({
-            addEventListener: addEventListenerSpy,
-            installing: {
-              addEventListener: addEventListenerSpy,
-              state: 'installed',
-            },
-          })
-        )
+    const registerSpy = jest.fn().mockImplementationOnce(() =>
+      Promise.resolve({
+        addEventListener: addEventListenerSpy,
+        installing: {
+          addEventListener: addEventListenerSpy,
+          state: 'installed',
+        },
+      })
     );
 
     Object.defineProperty(navigator, 'serviceWorker', {

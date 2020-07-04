@@ -30,21 +30,17 @@ const makeAuthenticatedFetch = (method: RequestInitMethod) => <T>(
   const { origin } = absoluteUrl(req);
   const url = [origin, 'api', sanitizePathname(endpoint)].join('/');
 
-  return (
-    fetch(url, {
-      ...options,
-      headers: {
-        Accept: 'application/json',
-        'Content-type': 'application/json',
-        ...options.headers,
-        cookie: req.headers.cookie || '',
-      },
-      method,
-    })
-      .then(response => response.json())
-      // .json` because api endpoints finished with `.json(data)`
-      .then(data => data.json || data)
-  );
+  return fetch(url, {
+    ...options,
+    headers: {
+      Accept: 'application/json',
+      'Content-type': 'application/json',
+      ...options.headers,
+      cookie: req.headers.cookie || '',
+    },
+    method,
+    // eslint-disable-next-line promise/prefer-await-to-then
+  }).then(response => response.json());
 };
 
 type AuthenticatedFetchMap = {

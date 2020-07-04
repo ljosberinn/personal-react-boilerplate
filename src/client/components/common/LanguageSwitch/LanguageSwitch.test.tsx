@@ -84,14 +84,7 @@ describe('<LanguageSwitch />', () => {
 
     const mockGetI18N = jest
       .spyOn(clientSideI18n, 'getI18N')
-      .mockImplementationOnce(
-        () =>
-          new Promise(resolve => {
-            resolve({
-              i18n: {},
-            });
-          })
-      );
+      .mockImplementationOnce(() => Promise.resolve({ i18n: {} }));
 
     // e.g. i18n.en.i18n.de
     const otherLanguageElement = screen.getByRole('menuitemradio', {
@@ -149,6 +142,7 @@ describe('<LanguageSwitch />', () => {
     const otherLanguageElement = screen.getByRole('menuitemradio', {
       name: i18nCache[currentLanguage].i18n[randomOtherLanguage],
     });
+
     expect(otherLanguageElement).not.toBeChecked();
 
     fireEvent.click(otherLanguageElement);
@@ -187,6 +181,7 @@ describe('<LanguageSwitch />', () => {
     fireEvent.click(otherLanguageElement);
 
     await waitFor(() => expect(qsSpy).toHaveBeenLastCalledWith('html'));
+
     expect(setAttributeSpy).toHaveBeenCalledWith('lang', randomOtherLanguage);
   });
 
@@ -203,6 +198,7 @@ describe('<LanguageSwitch />', () => {
     fireEvent.click(otherLanguageElement);
 
     await waitFor(() => expect(qsSpy).toHaveBeenLastCalledWith('html'));
+
     expect(setAttributeSpy).toHaveBeenCalledWith('dir', expect.any(String));
   });
 });

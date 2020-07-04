@@ -33,7 +33,7 @@ import Tag from './tag';
 import Textarea from './textarea';
 import Tooltip from './tooltip';
 
-export default {
+const components = {
   Accordion,
   Alert,
   Avatar,
@@ -69,3 +69,5 @@ export default {
   Textarea,
   Tooltip,
 };
+
+export default components;

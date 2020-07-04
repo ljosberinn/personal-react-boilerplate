@@ -39,9 +39,9 @@ describe('hooks/useAuth', () => {
   });
 
   test('on logout, dispatches a delete request', async () => {
-    global.fetch = jest.fn().mockImplementationOnce(() => {
-      return new Promise(resolve => resolve({ ok: true, status: 200 }));
-    });
+    global.fetch = jest
+      .fn()
+      .mockImplementationOnce(() => Promise.resolve({ ok: true, status: 200 }));
 
     const user = { id: '1', name: 'ljosberinn' };
 

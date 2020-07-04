@@ -19,6 +19,16 @@ const catchAllName = 'authRouter';
 const method: RequestMethod = 'GET';
 const redirect = 'manual';
 
+const code = 'code';
+
+const makeMockOauthResponse = () => ({
+  access_token: 'access_token',
+  expires_in: Date.now() + 1000,
+  refresh_token: 'refresh_token',
+  scope: 'scope',
+  token_type: 'token_type',
+});
+
 describe('api/provider', () => {
   test('should be a function', () => {
     expect(provider).toBeInstanceOf(Function);
@@ -116,8 +126,6 @@ describe('api/provider', () => {
       });
 
       test(`attempts to load OAuthData (provider: ${externalProvider})`, async () => {
-        const code = 'code';
-
         const searchParams = new URLSearchParams();
 
         searchParams.append('code', code);
@@ -144,25 +152,15 @@ describe('api/provider', () => {
       });
 
       test(`loads profile data based on data received from getOAuthData (provider: ${externalProvider})`, async () => {
-        const code = 'code';
-
         const searchParams = new URLSearchParams();
 
         searchParams.append('code', code);
 
-        const oauthResponse = {
-          access_token: 'access_token',
-          expires_in: Date.now() + 1000,
-          refresh_token: 'refresh_token',
-          scope: 'scope',
-          token_type: 'token_type',
-        };
+        const oauthResponse = makeMockOauthResponse();
 
         jest
           .spyOn(oauthTools, 'getOAuthData')
-          .mockImplementationOnce(
-            () => new Promise(resolve => resolve(oauthResponse))
-          );
+          .mockImplementationOnce(() => Promise.resolve(oauthResponse));
 
         const getProfileDataSpy = jest.spyOn(oauthTools, 'getProfileData');
 
@@ -183,19 +181,11 @@ describe('api/provider', () => {
       });
 
       test(`encrypts session data (provider: ${externalProvider})`, async () => {
-        const code = 'code';
-
         const searchParams = new URLSearchParams();
 
         searchParams.append('code', code);
 
-        const oauthResponse = {
-          access_token: 'access_token',
-          expires_in: Date.now() + 1000,
-          refresh_token: 'refresh_token',
-          scope: 'scope',
-          token_type: 'token_type',
-        };
+        const oauthResponse = makeMockOauthResponse();
 
         const fakeProfile = {
           user: 'ljosberinn',
@@ -203,15 +193,11 @@ describe('api/provider', () => {
 
         jest
           .spyOn(oauthTools, 'getOAuthData')
-          .mockImplementationOnce(
-            () => new Promise(resolve => resolve(oauthResponse))
-          );
+          .mockImplementationOnce(() => Promise.resolve(oauthResponse));
 
         jest
           .spyOn(oauthTools, 'getProfileData')
-          .mockImplementationOnce(
-            () => new Promise(resolve => resolve(fakeProfile))
-          );
+          .mockImplementationOnce(() => Promise.resolve(fakeProfile));
 
         const encryptSessionSpy = jest.spyOn(cookieUtils, 'encryptSession');
 
@@ -227,19 +213,11 @@ describe('api/provider', () => {
       });
 
       test(`sets the cookie on response (provider: ${externalProvider})`, async () => {
-        const code = 'code';
-
         const searchParams = new URLSearchParams();
 
         searchParams.append('code', code);
 
-        const oauthResponse = {
-          access_token: 'access_token',
-          expires_in: Date.now() + 1000,
-          refresh_token: 'refresh_token',
-          scope: 'scope',
-          token_type: 'token_type',
-        };
+        const oauthResponse = makeMockOauthResponse();
 
         const fakeProfile = {
           user: 'ljosberinn',
@@ -249,21 +227,15 @@ describe('api/provider', () => {
 
         jest
           .spyOn(oauthTools, 'getOAuthData')
-          .mockImplementationOnce(
-            () => new Promise(resolve => resolve(oauthResponse))
-          );
+          .mockImplementationOnce(() => Promise.resolve(oauthResponse));
 
         jest
           .spyOn(oauthTools, 'getProfileData')
-          .mockImplementationOnce(
-            () => new Promise(resolve => resolve(fakeProfile))
-          );
+          .mockImplementationOnce(() => Promise.resolve(fakeProfile));
 
         jest
           .spyOn(cookieUtils, 'encryptSession')
-          .mockImplementationOnce(
-            () => new Promise(resolve => resolve(fakeCookie))
-          );
+          .mockImplementationOnce(() => Promise.resolve(fakeCookie));
 
         const setSessionCookieSpy = jest.spyOn(cookieUtils, 'setSessionCookie');
 
@@ -282,19 +254,11 @@ describe('api/provider', () => {
       });
 
       test(`redirects on successful authentication (provider: ${externalProvider})`, async () => {
-        const code = 'code';
-
         const searchParams = new URLSearchParams();
 
         searchParams.append('code', code);
 
-        const oauthResponse = {
-          access_token: 'access_token',
-          expires_in: Date.now() + 1000,
-          refresh_token: 'refresh_token',
-          scope: 'scope',
-          token_type: 'token_type',
-        };
+        const oauthResponse = makeMockOauthResponse();
 
         const fakeProfile = {
           user: 'ljosberinn',
@@ -304,21 +268,15 @@ describe('api/provider', () => {
 
         jest
           .spyOn(oauthTools, 'getOAuthData')
-          .mockImplementationOnce(
-            () => new Promise(resolve => resolve(oauthResponse))
-          );
+          .mockImplementationOnce(() => Promise.resolve(oauthResponse));
 
         jest
           .spyOn(oauthTools, 'getProfileData')
-          .mockImplementationOnce(
-            () => new Promise(resolve => resolve(fakeProfile))
-          );
+          .mockImplementationOnce(() => Promise.resolve(fakeProfile));
 
         jest
           .spyOn(cookieUtils, 'encryptSession')
-          .mockImplementationOnce(
-            () => new Promise(resolve => resolve(fakeCookie))
-          );
+          .mockImplementationOnce(() => Promise.resolve(fakeCookie));
 
         jest.spyOn(cookieUtils, 'setSessionCookie');
 

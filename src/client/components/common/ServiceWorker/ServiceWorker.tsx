@@ -51,6 +51,7 @@ export default function ServiceWorker() {
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker
         .register(sw)
+        // eslint-disable-next-line promise/prefer-await-to-then
         .then(registration => {
           registration.addEventListener('updatefound', () => {
             const installingWorker = registration.installing;

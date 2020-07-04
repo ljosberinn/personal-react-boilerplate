@@ -12,9 +12,7 @@ import login from './login';
 jest.mock('../cookie', () => ({
   encryptSession: jest
     .fn()
-    .mockImplementation(
-      user => new Promise(resolve => resolve(JSON.stringify(user)))
-    ),
+    .mockImplementation(user => Promise.resolve(JSON.stringify(user))),
   setSessionCookie: jest.fn().mockImplementation((_token, _res) => {}),
 }));
 
