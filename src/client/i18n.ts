@@ -54,7 +54,7 @@ export const initI18Next = ({
   };
 
   // hide debug info in prod AND in tests
-  const debug = !IS_PROD && !i18nCache;
+  const debug = !IS_PROD && !i18nCache && process.env.NODE_ENV !== 'test';
 
   i18nInstance.init({
     cleanCode: true,
@@ -179,10 +179,12 @@ export const getI18N = async (lang: string, req?: IncomingMessage) => {
     try {
       namespaces = await response.json();
     } catch (error) {
+      Sentry.captureException(error);
       // eslint-disable-next-line no-console
       console.error(error.message, 'Failed to parse i18n JSON');
     }
   } catch (error) {
+    Sentry.captureException(error);
     // eslint-disable-next-line no-console
     console.error(error.message, 'Failed to fetch i18n');
   }

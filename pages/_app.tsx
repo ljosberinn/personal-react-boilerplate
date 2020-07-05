@@ -64,7 +64,7 @@ export default function App({ Component, pageProps, router }: AppRenderProps) {
   );
 }
 
-App.getInitialProps = async function (
+export async function getInitialProps(
   props: AppContext
 ): Promise<AppRenderProps> {
   const {
@@ -109,4 +109,6 @@ App.getInitialProps = async function (
       ...componentPageProps,
     },
   };
-};
+}
+
+App.getInitialProps = getInitialProps;
