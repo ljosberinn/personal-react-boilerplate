@@ -4,7 +4,6 @@ import cookies from 'js-cookie';
 import React from 'react';
 
 import { render, fireEvent, waitFor, screen } from '../../../../../testUtils';
-import i18nInstance from '../../../../../testUtils/i18n';
 import { ENABLED_LANGUAGES } from '../../../../constants';
 import i18nCache from '../../../../server/i18n';
 import * as clientSideI18n from '../../../i18n';
@@ -38,7 +37,7 @@ const setup = () => {
 
 const makeGetDataByLanguageSpy = (bool: boolean) =>
   jest
-    .spyOn(i18nInstance, 'getDataByLanguage')
+    .spyOn(i18n, 'getDataByLanguage')
     .mockImplementation(() => (bool ? { translation: {} } : undefined));
 
 describe('<LanguageSwitch />', () => {
@@ -78,7 +77,7 @@ describe('<LanguageSwitch />', () => {
 
   it('appends new bundles to i18n on languageChanged', async () => {
     const mockHasResourceBundle = makeGetDataByLanguageSpy(false);
-    const mockAddResourceBundle = jest.spyOn(i18nInstance, 'addResourceBundle');
+    const mockAddResourceBundle = jest.spyOn(i18n, 'addResourceBundle');
 
     const { currentLanguage, randomOtherLanguage } = setup();
 

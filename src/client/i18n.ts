@@ -10,7 +10,7 @@ import absoluteUrl from 'next-absolute-url';
 import nextCookies from 'next-cookies';
 import { initReactI18next } from 'react-i18next';
 
-import { AppRenderProps } from '../../pages/_app';
+import { PageProps } from '../../pages/_app';
 import {
   SUPPORTED_LANGUAGES_MAP,
   IS_PROD,
@@ -35,15 +35,30 @@ export const RTL_LANGUAGES = new Set([
   'yi', // Yiddish
 ]);
 
+interface InitI18NextArgs extends PageProps {
+  /**
+   * will be set in test environment
+   */
+  i18nCache?: I18nextResources;
+}
+
 export const initI18Next = ({
   language,
   i18nBundle,
-}: AppRenderProps['pageProps']) => {
+  i18nCache,
+}: InitI18NextArgs) => {
   const i18nInstance = i18n.use(initReactI18next);
+
+  const resources = i18nCache || {
+    [language]: i18nBundle,
+  };
+
+  // hide debug info in prod AND in tests
+  const debug = !IS_PROD && !i18nCache;
 
   i18nInstance.init({
     cleanCode: true,
-    debug: !IS_PROD,
+    debug,
     // removes translation default key
     defaultNS: undefined,
     fallbackLng:
@@ -63,9 +78,7 @@ export const initI18Next = ({
       // not compatible with SSR
       useSuspense: false,
     },
-    resources: {
-      [language]: i18nBundle,
-    },
+    resources,
     supportedLngs: ENABLED_LANGUAGES,
   });
 

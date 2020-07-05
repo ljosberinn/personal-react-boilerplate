@@ -6,10 +6,19 @@ import { I18nextProvider, I18nContext } from 'react-i18next';
 import { theme } from '../chakra';
 import { AuthContextProvider } from '../src/client/context/AuthContext';
 import { User } from '../src/client/context/AuthContext/AuthContext';
-import i18n from './i18n';
+import { initI18Next } from '../src/client/i18n';
+import i18nCache from '../src/server/i18n';
+
 // may not be in seutpTests.js because lambda-Tests rely on node-fetch
 // which collides with whatwg-fetch
 import 'whatwg-fetch';
+
+const i18n = initI18Next({
+  i18nBundle: i18nCache['en'],
+  i18nCache,
+  language: 'en',
+  session: null,
+});
 
 type TestOptions = {
   /**
