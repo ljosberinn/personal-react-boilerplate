@@ -12,6 +12,8 @@ module.exports = {
     '!**/chakra/**',
     // REMOVE THESE WHEN ACTUALLY DEVELOPING!
     '!**/src/client/routes/**',
+    // you can keep this if you actually have no logic in there
+    '!**/pages/api/v1/**',
   ],
   setupFilesAfterEnv: ['<rootDir>/setupTests.js'],
   testPathIgnorePatterns: ['/node_modules/', '/.next/'],

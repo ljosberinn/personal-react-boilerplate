@@ -5,7 +5,6 @@ import NextDocument, {
   Head,
   Main,
   NextScript,
-  DocumentContext,
   DocumentProps,
 } from 'next/document';
 import React from 'react';
@@ -48,6 +47,4 @@ export default function CustomDocument({
 }
 
 CustomDocument.renderDocument = NextDocument.renderDocument;
-
-CustomDocument.getInitialProps = (ctx: DocumentContext) =>
-  NextDocument.getInitialProps(ctx);
+CustomDocument.getInitialProps = NextDocument.getInitialProps;
