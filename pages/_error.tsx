@@ -5,7 +5,7 @@ import React from 'react';
 
 import { INTERNAL_SERVER_ERROR, NOT_FOUND } from '../src/utils/statusCodes';
 
-interface ErrorProps {
+export interface ErrorProps {
   statusCode: number | null | undefined;
   hasGetInitialPropsRun: boolean;
   err?: Error;
@@ -27,7 +27,7 @@ export default function CustomError({
   }
 
   if (statusCode === NOT_FOUND) {
-    return <h1>Error: 404</h1>;
+    return <h1>Error: {NOT_FOUND}</h1>;
   }
 
   if (statusCode === INTERNAL_SERVER_ERROR) {
@@ -37,14 +37,7 @@ export default function CustomError({
   return <h1>Client Error</h1>;
 }
 
-CustomError.getInitialProps = async (ctx: NextPageContext) => {
-  const errorInitialProps = await NextErrorComponent.getInitialProps(ctx);
-
-  // Workaround for https://github.com/vercel/next.js/issues/8592, mark when
-  // getInitialProps has run
-  // @ts-expect-error
-  errorInitialProps.hasGetInitialPropsRun = true;
-
+export async function getInitialProps(ctx: NextPageContext) {
   // Running on the server, the response object (err ? err.statusCode : null)
   // Next.js will pass an err on the server if a page's data fetching methods
   // threw or returned a Promise that rejected
@@ -56,11 +49,16 @@ CustomError.getInitialProps = async (ctx: NextPageContext) => {
   //    componentDidMount, etc) that was caught by Next.js's React Error
   //    Boundary. Read more about what types of exceptions are caught by Error
   //    Boundaries: https://reactjs.org/docs/error-boundaries.html
-
   if (ctx.res?.statusCode === NOT_FOUND) {
     // Opinionated: do not record an exception in Sentry for 404
     return { statusCode: NOT_FOUND };
   }
+
+  const errorInitialProps = await NextErrorComponent.getInitialProps(ctx);
+  // Workaround for https://github.com/vercel/next.js/issues/8592, mark when
+  // getInitialProps has run
+  // @ts-expect-error
+  errorInitialProps.hasGetInitialPropsRun = true;
 
   if (ctx.err) {
     Sentry.captureException(ctx.err);
@@ -76,4 +74,6 @@ CustomError.getInitialProps = async (ctx: NextPageContext) => {
   );
 
   return errorInitialProps;
-};
+}
+
+CustomError.getInitialProps = getInitialProps;
