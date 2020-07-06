@@ -8409,10 +8409,10 @@ next-compose-plugins@^2.2.0:
   resolved "https://registry.yarnpkg.com/next-compose-plugins/-/next-compose-plugins-2.2.0.tgz#95cd8eb40ab0652070d76572fb648354191628b0"
   integrity sha512-ChUlpT9tWfJ7YxqGw/WQ2T1gf8EeX93n1XqeQw0lkvGa7seszahvF4eOZUJoq7Hetsbzg4UHVnPoCXfXTyQR3g==
 
-next-connect@^0.8.0:
-  version "0.8.0"
-  resolved "https://registry.yarnpkg.com/next-connect/-/next-connect-0.8.0.tgz#4297c73a346c914d399a00fedd39e7d25852876f"
-  integrity sha512-00KzHiPc5LsOmWV9PoNkCv57YesV09KDINdF9yTBuTSl6xKI16otMoBEl2vzDoQ9BrNdtpHtq0ID1Rr30NCR4Q==
+next-connect@^0.8.1:
+  version "0.8.1"
+  resolved "https://registry.yarnpkg.com/next-connect/-/next-connect-0.8.1.tgz#def20d9045fb8043855a92a3bae40d88ef3f9d3b"
+  integrity sha512-V5O45OV6+neCb/iXfPUpfcFirSJ4czr02+Xay7TyW/8Ybq9KzDLPWpU36lkvPbwNhpdxRXAi/j907c8MIURMww==
   dependencies:
     "@types/node" "^14.0.14"
     trouter "^3.1.0"
@@ -11490,10 +11490,10 @@ typescript-service@^2.0.0:
   dependencies:
     tslib "^1.9.3"
 
-typescript@^4.0.0-dev.20200705:
-  version "4.0.0-dev.20200705"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.0.0-dev.20200705.tgz#4be47176d72af737ae22fec95d74d74773e2c18a"
-  integrity sha512-3+B24SpyFO9i43Awv6vgrPC/LcMBtdiPV6i4AH8Td8ZA6EPug1G9svZ5MHKqnIR4kZjarBUtCtQMFjsC55JFIg==
+typescript@^4.0.0-dev.20200706:
+  version "4.0.0-dev.20200706"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.0.0-dev.20200706.tgz#0edfc9949f87372317f8d556386c7246cc034f42"
+  integrity sha512-zS8fqJoy+rjONkM8BGHkZv4RIB5ZBqM4ZaVa569XNN+zrO44F340BcAHsps4h8DGMKqQevbPZNCLTSOF/+GwFw==
 
 unicode-canonical-property-names-ecmascript@^1.0.4:
   version "1.0.4"
