@@ -28,7 +28,7 @@ const makeAuthenticatedFetch = (method: RequestInitMethod) => <T>(
   options: RequestInit = {}
 ): Promise<T> => {
   const { origin } = absoluteUrl(req);
-  const url = [origin, 'api', sanitizePathname(endpoint)].join('/');
+  const url = [origin, sanitizePathname(endpoint)].join('/');
 
   return fetch(url, {
     ...options,
