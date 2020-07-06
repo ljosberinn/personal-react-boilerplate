@@ -46,12 +46,12 @@ export default function CustomPWAInstallPrompt() {
   const promptEvent = useRef<BeforeInstallPromptEvent>(null!);
 
   useEffect(() => {
-    function onBeforeInstall(event: BeforeInstallPromptEvent) {
+    const onBeforeInstall = (event: BeforeInstallPromptEvent) => {
       event.preventDefault();
 
       promptEvent.current = event;
-      setTimeout(onOpen, 5000);
-    }
+      onOpen();
+    };
 
     // @ts-expect-error
     window.addEventListener('beforeinstallprompt', onBeforeInstall);
@@ -68,6 +68,10 @@ export default function CustomPWAInstallPrompt() {
     // console.log({ outcome, platform });
 
     onClose();
+  }
+
+  if (!isOpen) {
+    return null;
   }
 
   return (
