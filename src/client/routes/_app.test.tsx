@@ -1,13 +1,13 @@
 import { render } from '@testing-library/react';
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
-import { Socket } from 'net';
 import { AppContext, AppInitialProps } from 'next/app';
 import { Router } from 'next/router';
 import fetch from 'node-fetch';
 import React from 'react';
 
 import App, { AppRenderProps, getInitialProps } from '../../../pages/_app';
+import { makeMockIncomingRequest } from '../../../testUtils/api';
 import { SUPPORTED_LANGUAGES_MAP } from '../../constants';
 import * as cookieUtils from '../../server/auth/cookie';
 import i18nCache from '../../server/i18n';
@@ -76,8 +76,6 @@ describe('<App />', () => {
   });
 });
 
-const asyncIterator = () => {};
-
 const appContext: AppContext = {
   AppTree: () => null,
   Component: () => null,
@@ -85,57 +83,7 @@ const appContext: AppContext = {
     AppTree: (_: AppInitialProps) => <h1>test</h1>,
     pathname: '/',
     query: {},
-    req: {
-      _destroy: jest.fn(),
-      _read: jest.fn(),
-      aborted: false,
-      addListener: jest.fn(),
-      complete: false,
-      connection: new Socket(),
-      destroy: jest.fn(),
-      destroyed: false,
-      emit: jest.fn(),
-      eventNames: jest.fn(),
-      getMaxListeners: jest.fn(),
-      headers: {},
-      httpVersion: '1.1',
-      httpVersionMajor: 1,
-      httpVersionMinor: 1,
-      isPaused: jest.fn(),
-      listenerCount: jest.fn(),
-      listeners: jest.fn(),
-      off: jest.fn(),
-      on: jest.fn(),
-      once: jest.fn(),
-      pause: jest.fn(),
-      pipe: jest.fn(),
-      prependListener: jest.fn(),
-      prependOnceListener: jest.fn(),
-      push: jest.fn(),
-      rawHeaders: [],
-      rawListeners: jest.fn(),
-      rawTrailers: [],
-      read: jest.fn(),
-      readable: true,
-      readableEncoding: 'utf-8',
-      readableEnded: false,
-      readableHighWaterMark: 0,
-      readableLength: 0,
-      readableObjectMode: true,
-      removeAllListeners: jest.fn(),
-      removeListener: jest.fn(),
-      resume: jest.fn(),
-      setEncoding: jest.fn(),
-      setMaxListeners: jest.fn(),
-      setTimeout: jest.fn(),
-      socket: new Socket(),
-      trailers: {},
-      unpipe: jest.fn(),
-      unshift: jest.fn(),
-      wrap: jest.fn(),
-      [Symbol.asyncIterator]: () =>
-        (asyncIterator as unknown) as AsyncIterableIterator<any>,
-    },
+    req: makeMockIncomingRequest(),
   },
   router: new Router('/', {}, '', {
     App: () => null,
