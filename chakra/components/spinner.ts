@@ -1,6 +1,6 @@
 import { ComponentTheme } from '@chakra-ui/theme-tools';
 
-const Spinner: ComponentTheme = {
+export const Spinner: ComponentTheme = {
   defaultProps: {
     size: 'md',
   },
@@ -35,5 +35,3 @@ export const SpinnerSizes = {
   xl: 'xl',
   xs: 'xs',
 };
-
-export default Spinner;

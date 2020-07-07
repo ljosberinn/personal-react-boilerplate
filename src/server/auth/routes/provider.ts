@@ -11,11 +11,7 @@ import { RequestHandler } from '../../types';
 import { encryptSession, setSessionCookie } from '../cookie';
 import { config, getRedirectUrl, getOAuthData, getProfileData } from '../oauth';
 
-export const externalProviderHandler: RequestHandler = async (
-  req,
-  res,
-  next
-) => {
+const useExternalProvider: RequestHandler = async (req, res, next) => {
   const [provider] = req.query.authRouter as ExternalProvider[];
 
   if (ENABLED_PROVIDER.includes(provider)) {
@@ -71,4 +67,4 @@ export const externalProviderHandler: RequestHandler = async (
   next();
 };
 
-export default nextConnect().get(externalProviderHandler);
+export const externalProviderHandler = nextConnect().get(useExternalProvider);

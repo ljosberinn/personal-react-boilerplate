@@ -1,4 +1,4 @@
-const typography = {
+export const typography = {
   fontSizes: {
     '2xl': '1.5rem',
     '3xl': '1.875rem',
@@ -47,5 +47,3 @@ const typography = {
 };
 
 export type Typography = typeof typography;
-
-export default typography;

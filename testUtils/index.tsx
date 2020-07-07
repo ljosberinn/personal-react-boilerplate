@@ -7,7 +7,7 @@ import { theme } from '../chakra';
 import { AuthContextProvider } from '../src/client/context/AuthContext';
 import { User } from '../src/client/context/AuthContext/AuthContext';
 import { initI18Next } from '../src/client/i18n';
-import i18nCache from '../src/server/i18n';
+import { i18nCache } from '../src/server/i18n';
 
 // may not be in seutpTests.js because lambda-Tests rely on node-fetch
 // which collides with whatwg-fetch

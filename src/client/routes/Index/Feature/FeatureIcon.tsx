@@ -24,7 +24,7 @@ interface FeatureIconProps {
   state: FeatureState;
 }
 
-export default function FeatureIcon({ state }: FeatureIconProps) {
+export function FeatureIcon({ state }: FeatureIconProps) {
   const { icon: Icon, color, label } = iconMap[state];
 
   return (

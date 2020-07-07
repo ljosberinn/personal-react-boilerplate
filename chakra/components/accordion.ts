@@ -1,6 +1,6 @@
 import { ComponentTheme } from '@chakra-ui/theme-tools';
 
-const Accordion: ComponentTheme = {
+export const Accordion: ComponentTheme = {
   baseStyle: {
     Button: {
       _disabled: {
@@ -31,5 +31,3 @@ const Accordion: ComponentTheme = {
     },
   },
 };
-
-export default Accordion;

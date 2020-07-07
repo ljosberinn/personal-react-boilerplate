@@ -6,7 +6,7 @@ import {
 import { SESSION_COOKIE_NAME } from '../../../constants';
 import { NOT_FOUND, OK } from '../../../utils/statusCodes';
 import * as cookieHandling from '../cookie';
-import logout from './logout';
+import { logoutHandler } from './logout';
 
 const url = '/api/v1/auth/logout';
 const catchAllName = 'authRouter';
@@ -20,11 +20,11 @@ afterEach(jest.clearAllMocks);
 
 describe('api/logout', () => {
   test('should be a function', () => {
-    expect(logout).toBeInstanceOf(Function);
+    expect(logoutHandler).toBeInstanceOf(Function);
   });
 
   test('does nothing given no matching path', async () => {
-    const response = await testLambda(logout, {
+    const response = await testLambda(logoutHandler, {
       catchAllName,
       url,
     });
@@ -35,7 +35,7 @@ describe('api/logout', () => {
   RequestMethods.filter(requestMethod => requestMethod !== method).forEach(
     method => {
       test(`does nothing on method "${method}"`, async () => {
-        const response = await testLambda(logout, {
+        const response = await testLambda(logoutHandler, {
           catchAllName,
           method,
           url,
@@ -52,7 +52,7 @@ describe('api/logout', () => {
     };
 
     test(`tries to unset the SESSION_COOKIE regardless of presence (present: ${bool})`, async () => {
-      const response = await testLambda(logout, {
+      const response = await testLambda(logoutHandler, {
         catchAllName,
         headers: bool ? headers : undefined,
         method,

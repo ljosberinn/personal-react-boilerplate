@@ -45,7 +45,7 @@ const verify = ({ username, password }: VerifyArg) => {
   return response;
 };
 
-const loginHandler: RequestHandler = async (
+const useLogin: RequestHandler = async (
   { query: { authRouter = [] }, body },
   res,
   next
@@ -79,4 +79,4 @@ const loginHandler: RequestHandler = async (
   next();
 };
 
-export default nextConnect().post(loginHandler);
+export const loginHandler = nextConnect().post(useLogin);

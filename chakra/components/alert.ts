@@ -64,7 +64,7 @@ function getSolidStyle(props: Props) {
   };
 }
 
-const Alert: ComponentTheme = {
+export const Alert: ComponentTheme = {
   baseStyle: {
     Icon: {
       boxSize: 5,
@@ -92,5 +92,3 @@ export const AlertVariants = {
   subtle: 'subtle',
   'top-accent': 'top-accent',
 };
-
-export default Alert;

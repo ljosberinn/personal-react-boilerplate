@@ -1,6 +1,6 @@
 import { ComponentTheme } from '@chakra-ui/theme-tools';
 
-const Link: ComponentTheme = {
+export const Link: ComponentTheme = {
   baseStyle: {
     _disabled: {
       cursor: 'not-allowed',
@@ -20,5 +20,3 @@ const Link: ComponentTheme = {
     transition: `all 0.15s ease-out`,
   },
 };
-
-export default Link;

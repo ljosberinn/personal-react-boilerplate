@@ -1,8 +1,8 @@
 import { ComponentTheme } from '@chakra-ui/theme-tools';
 
-import Badge, { BadgeVariants } from './badge';
+import { Badge, BadgeVariants } from './badge';
 
-const Tag: ComponentTheme = {
+export const Tag: ComponentTheme = {
   baseStyle: {
     _focus: {
       boxShadow: 'outline',
@@ -47,5 +47,3 @@ export const TagSizes = {
 };
 
 export const TagVariants = BadgeVariants;
-
-export default Tag;

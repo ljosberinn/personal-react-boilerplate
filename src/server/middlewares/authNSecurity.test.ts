@@ -9,7 +9,7 @@ import { OK, UNAUTHORIZED } from '../../utils/statusCodes';
 import * as cookieUtils from '../auth/cookie';
 import { AuthenticatedRequest } from '../auth/types';
 import { RequestHandler } from '../types';
-import authNSecurityMiddleware from './authNSecurity';
+import { authNSecurityMiddleware } from './authNSecurity';
 
 const dummyHandler: RequestHandler<AuthenticatedRequest> = (req, res) => {
   return res.status(OK).json(req[SESSION_COOKIE_NAME]);

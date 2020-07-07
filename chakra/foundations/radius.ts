@@ -1,4 +1,4 @@
-const radii = {
+export const radii = {
   full: '9999px',
   lg: '0.5rem',
   md: '0.25rem',
@@ -7,5 +7,3 @@ const radii = {
 };
 
 export type Radii = typeof radii;
-
-export default radii;

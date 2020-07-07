@@ -66,7 +66,7 @@ const sizes = {
   },
 };
 
-const Checkbox: ComponentTheme = {
+export const Checkbox: ComponentTheme = {
   baseStyle,
   defaultProps: {
     colorScheme: 'blue',
@@ -80,5 +80,3 @@ export const CheckboxSizes = {
   md: 'md',
   sm: 'sm',
 };
-
-export default Checkbox;

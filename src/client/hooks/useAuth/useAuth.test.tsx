@@ -11,9 +11,10 @@ import {
   INTERNAL_SERVER_ERROR,
 } from '../../../utils/statusCodes';
 import { AuthContextProvider } from '../../context/AuthContext';
+import { endpoints } from '../../context/AuthContext';
 import { Provider } from '../../context/AuthContext/AuthContext';
-import { endpoints } from '../../context/AuthContext/AuthContextProvider';
-import useAuth from './useAuth';
+
+import { useAuth } from '.';
 
 const server = setupServer();
 

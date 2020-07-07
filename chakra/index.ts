@@ -1,9 +1,9 @@
 import { ColorMode } from '@chakra-ui/core';
 import { Theme } from '@chakra-ui/theme';
 
-import components from './components';
-import foundations from './foundations';
-import styles from './styles';
+import { components } from './components';
+import { foundations } from './foundations';
+import { styles } from './styles';
 
 interface ChakraConfig {
   initialColorMode: ColorMode;

@@ -1,8 +1,9 @@
-import i18nCache from '../../../../src/server/i18n';
+import { i18nCache } from '..';
 import { testLambda, RequestMethods } from '../../../../testUtils/lambda';
 import { ENABLED_LANGUAGES } from '../../../constants';
 import { NOT_FOUND, BAD_REQUEST, OK } from '../../../utils/statusCodes';
-import i18nGetHandler from './get';
+
+import { i18nHandler } from '.';
 
 const methods: Set<RequestInit['method']> = new Set(['GET', 'HEAD']);
 const url = '/api/v1/i18n';
@@ -10,13 +11,13 @@ const catchAllName = 'language';
 
 describe('api/i18n', () => {
   test('should be a function', () => {
-    expect(i18nGetHandler).toBeInstanceOf(Function);
+    expect(i18nHandler).toBeInstanceOf(Function);
   });
 
   RequestMethods.filter(requestMethod => !methods.has(requestMethod)).forEach(
     method => {
       test(`does nothing on method "${method}"`, async () => {
-        const response = await testLambda(i18nGetHandler, {
+        const response = await testLambda(i18nHandler, {
           catchAllName,
           method,
           url,
@@ -28,7 +29,7 @@ describe('api/i18n', () => {
   );
 
   test('responds with BAD_REQUEST given no language', async () => {
-    const response = await testLambda(i18nGetHandler, {
+    const response = await testLambda(i18nHandler, {
       catchAllName,
       url,
     });
@@ -37,7 +38,7 @@ describe('api/i18n', () => {
   });
 
   test('responds with BAD_REQUEST given no valid language', async () => {
-    const response = await testLambda(i18nGetHandler, {
+    const response = await testLambda(i18nHandler, {
       catchAllName,
       url: url + '/asdf',
     });
@@ -46,7 +47,7 @@ describe('api/i18n', () => {
   });
 
   test('responds with BAD_REQUEST given no enabled language', async () => {
-    const response = await testLambda(i18nGetHandler, {
+    const response = await testLambda(i18nHandler, {
       catchAllName,
       url: url + '/fr',
     });
@@ -56,7 +57,7 @@ describe('api/i18n', () => {
 
   ENABLED_LANGUAGES.forEach(language => {
     test(`responds with a JSON given an enabled language (lang: ${language})`, async () => {
-      const response = await testLambda(i18nGetHandler, {
+      const response = await testLambda(i18nHandler, {
         catchAllName,
         url: [url, language].join('/'),
       });

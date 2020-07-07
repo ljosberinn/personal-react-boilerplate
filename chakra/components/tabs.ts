@@ -113,7 +113,7 @@ function getSolidRoundedStyle(props: Props): StyleObject {
   };
 }
 
-const Tabs: ComponentTheme = {
+export const Tabs: ComponentTheme = {
   baseStyle: {
     Tab: {
       _focus: {
@@ -181,5 +181,3 @@ export const TabVariants = {
   'solid-rounded': 'solid-rounded',
   unstyled: 'unstyled',
 };
-
-export default Tabs;

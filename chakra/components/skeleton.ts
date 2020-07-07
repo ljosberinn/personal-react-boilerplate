@@ -39,8 +39,6 @@ export function getBaseStyle(props: CustomProps) {
   };
 }
 
-const Skeleton: ComponentTheme<SkeletonProps> = {
+export const Skeleton: ComponentTheme<SkeletonProps> = {
   baseStyle: getBaseStyle,
 };
-
-export default Skeleton;

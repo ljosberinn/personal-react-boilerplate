@@ -33,7 +33,7 @@ const flagMap: FlapMap = {
 
 type LanguageSwitchProps = BoxProps;
 
-export default function LanguageSwitch(props: LanguageSwitchProps) {
+export function LanguageSwitch(props: LanguageSwitchProps) {
   const { i18n, t } = useTranslation('i18n');
   const backgroundColor = useColorModeValue('gray.100', 'whiteAlpha.100');
 

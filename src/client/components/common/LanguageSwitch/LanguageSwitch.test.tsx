@@ -5,9 +5,10 @@ import React from 'react';
 
 import { render, fireEvent, waitFor, screen } from '../../../../../testUtils';
 import { ENABLED_LANGUAGES } from '../../../../constants';
-import i18nCache from '../../../../server/i18n';
+import { i18nCache } from '../../../../server/i18n';
 import * as clientSideI18n from '../../../i18n';
-import LanguageSwitch from './LanguageSwitch';
+
+import { LanguageSwitch } from '.';
 
 beforeEach(() => {
   jest.spyOn(console, 'error').mockImplementation(() => {});

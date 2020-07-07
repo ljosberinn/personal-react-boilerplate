@@ -5,7 +5,7 @@ import { testLambda, RequestMethods } from '../../../testUtils/lambda';
 import * as sentryUtils from '../../utils/sentry';
 import { OK } from '../../utils/statusCodes';
 import { RequestHandler } from '../types';
-import sentryMiddleware from './sentry';
+import { sentryMiddleware } from './sentry';
 
 const dummyHandler: RequestHandler = (_req, res) => {
   return res.status(OK).end();

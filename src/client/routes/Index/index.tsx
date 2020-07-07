@@ -18,12 +18,12 @@ import { ExternalLink } from '../../components/common/ExternalLink';
 import { LanguageSwitch } from '../../components/common/LanguageSwitch';
 import { ThemeSwitch } from '../../components/common/ThemeSwitch';
 import { ThemeSwitchAlt } from '../../components/common/ThemeSwitchAlt';
-import AuthDemo from './AuthDemo';
-import DemoComponent from './DemoComponent';
+import { AuthDemo } from './AuthDemo';
+import { DemoComponent } from './DemoComponent';
 import { Feature } from './Feature';
 import { FeatureState } from './Feature/types';
 
-export default function Index() {
+export function Index() {
   const boxBg = useColorModeValue('gray.100', 'gray.700');
 
   return (

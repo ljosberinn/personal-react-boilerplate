@@ -1,6 +1,6 @@
 import { ComponentTheme, mode } from '@chakra-ui/theme-tools';
 
-const Form: ComponentTheme = {
+export const Form: ComponentTheme = {
   baseStyle: props => ({
     ErrorIcon: {
       color: mode('red.500', 'red.300')(props),
@@ -34,5 +34,3 @@ const Form: ComponentTheme = {
     },
   }),
 };
-
-export default Form;

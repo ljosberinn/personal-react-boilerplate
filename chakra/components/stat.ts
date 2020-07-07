@@ -1,6 +1,6 @@
 import { ComponentTheme } from '@chakra-ui/theme-tools';
 
-const Stat: ComponentTheme = {
+export const Stat: ComponentTheme = {
   baseStyle: {
     HelpText: {
       marginBottom: 2,
@@ -39,5 +39,3 @@ const Stat: ComponentTheme = {
 export const StatSizes = {
   md: 'md',
 };
-
-export default Stat;

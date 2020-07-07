@@ -1,6 +1,6 @@
-import Input, { InputSizes, InputTheme, InputVariants } from './input';
+import { Input, InputSizes, InputTheme, InputVariants } from './input';
 
-const Textarea: InputTheme = {
+export const Textarea: InputTheme = {
   ...Input,
   baseStyle: {
     ...Input.baseStyle,
@@ -12,5 +12,3 @@ const Textarea: InputTheme = {
 
 export const TextareaVariants = InputVariants;
 export const TextareaSizes = InputSizes;
-
-export default Textarea;

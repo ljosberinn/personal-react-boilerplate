@@ -1,8 +1,8 @@
 import { ComponentTheme } from '@chakra-ui/theme-tools';
 
-import Badge, { BadgeVariants } from './badge';
+import { Badge, BadgeVariants } from './badge';
 
-const Code: ComponentTheme = {
+export const Code: ComponentTheme = {
   baseStyle: {
     borderRadius: 'sm',
     fontFamily: 'mono',
@@ -14,5 +14,3 @@ const Code: ComponentTheme = {
 };
 
 export const CodeVariants = BadgeVariants;
-
-export default Code;

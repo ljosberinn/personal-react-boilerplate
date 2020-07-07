@@ -16,7 +16,7 @@ export interface Props {
   scrollBehavior?: 'inside' | 'outside';
 }
 
-const Modal: ComponentTheme<Props> = {
+export const Modal: ComponentTheme<Props> = {
   baseStyle: props => ({
     Body: {
       paddingX: 6,
@@ -79,5 +79,3 @@ export const ModalSizes = {
   xl: 'xl',
   xs: 'xs',
 };
-
-export default Modal;

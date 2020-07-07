@@ -12,7 +12,7 @@ const base: SystemProps = {
   transition: 'all 0.2s',
 };
 
-const Editable: ComponentTheme = {
+export const Editable: ComponentTheme = {
   baseStyle: {
     Input: {
       ...base,
@@ -32,5 +32,3 @@ const Editable: ComponentTheme = {
     },
   },
 };
-
-export default Editable;

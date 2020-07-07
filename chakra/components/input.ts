@@ -125,7 +125,7 @@ const sizes: InputTheme['sizes'] = {
 
 export type InputTheme = ComponentTheme<InputProps>;
 
-const Input: InputTheme = {
+export const Input: InputTheme = {
   baseStyle: {
     lineHeight: 1,
     outline: 0,
@@ -158,5 +158,3 @@ export const InputVariants = {
   outline: 'outline',
   unstyled: 'unstyled',
 };
-
-export default Input;

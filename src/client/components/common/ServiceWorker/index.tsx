@@ -41,7 +41,7 @@ function RefreshToast({ t }: RefreshToastProps) {
   );
 }
 
-export default function ServiceWorker() {
+export function ServiceWorker() {
   const { t } = useTranslation('serviceWorker');
   const toast = useToast();
 

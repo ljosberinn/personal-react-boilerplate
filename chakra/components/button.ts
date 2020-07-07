@@ -127,7 +127,7 @@ const unstyled = {
   padding: 0,
 };
 
-const Button: ComponentTheme = {
+export const Button: ComponentTheme = {
   baseStyle: {
     _disabled: {
       boxShadow: 'none',
@@ -168,5 +168,3 @@ export const ButtonVariants = {
   solid: 'solid',
   subtle: 'subtle',
 };
-
-export default Button;

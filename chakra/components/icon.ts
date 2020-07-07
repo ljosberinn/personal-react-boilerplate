@@ -1,6 +1,6 @@
 import { ComponentTheme } from '@chakra-ui/theme-tools';
 
-const Icon: ComponentTheme = {
+export const Icon: ComponentTheme = {
   defaultProps: {
     size: 'md',
   },
@@ -20,5 +20,3 @@ export const IconSize = {
   xl: 'xl',
   xs: 'xs',
 };
-
-export default Icon;

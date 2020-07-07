@@ -4,7 +4,7 @@ import { Middleware } from '../types';
 /**
  * Middleware accepting exclusively valid JSON as req.body, if existing
  */
-const expectJSONBodyMiddleware: Middleware = (req, res, next) => {
+export const expectJSONBodyMiddleware: Middleware = (req, res, next) => {
   if (req.body.length > 0) {
     try {
       const body = JSON.parse(req.body);
@@ -23,5 +23,3 @@ const expectJSONBodyMiddleware: Middleware = (req, res, next) => {
 
   next();
 };
-
-export default expectJSONBodyMiddleware;

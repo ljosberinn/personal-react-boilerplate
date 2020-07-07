@@ -1,6 +1,6 @@
 import { mode, ComponentTheme } from '@chakra-ui/theme-tools';
 
-const Tooltip: ComponentTheme = {
+export const Tooltip: ComponentTheme = {
   baseStyle: props => ({
     bg: mode(`gray.700`, `gray.300`)(props),
     borderRadius: 'sm',
@@ -14,5 +14,3 @@ const Tooltip: ComponentTheme = {
     pointerEvents: 'none',
   }),
 };
-
-export default Tooltip;

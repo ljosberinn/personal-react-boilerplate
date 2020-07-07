@@ -1,7 +1,8 @@
 import React from 'react';
 
 import { render, screen } from '../../../../../testUtils';
-import ExternalLink, { ExternalLinkProps } from './ExternalLink';
+
+import { ExternalLink, ExternalLinkProps } from '.';
 
 const defaultProps: ExternalLinkProps = {
   children: 'test',

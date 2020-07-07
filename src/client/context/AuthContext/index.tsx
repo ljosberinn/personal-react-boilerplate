@@ -32,7 +32,7 @@ export const endpoints = {
   },
 };
 
-export default function AuthContextProvider({
+export function AuthContextProvider({
   children,
   session,
 }: AuthContextProviderProps) {

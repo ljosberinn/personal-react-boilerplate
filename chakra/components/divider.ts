@@ -1,6 +1,6 @@
 import { ComponentTheme } from '@chakra-ui/theme-tools';
 
-const Divider: ComponentTheme = {
+export const Divider: ComponentTheme = {
   defaultProps: {
     variant: 'horizontal',
   },
@@ -15,5 +15,3 @@ const Divider: ComponentTheme = {
     },
   },
 };
-
-export default Divider;

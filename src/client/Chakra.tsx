@@ -9,7 +9,7 @@ export interface ChakraProps {
   children: ReactNode;
 }
 
-export default function Chakra({ children }: ChakraProps) {
+export function Chakra({ children }: ChakraProps) {
   attachComponentBreadcrumb('chakra');
 
   return (

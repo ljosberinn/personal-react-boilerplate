@@ -5,11 +5,7 @@ import { OK } from '../../../utils/statusCodes';
 import { RequestHandler } from '../../types';
 import { removeCookie } from '../cookie';
 
-const logoutHandler: RequestHandler = (
-  { query: { authRouter } },
-  res,
-  next
-) => {
+const useLogout: RequestHandler = ({ query: { authRouter } }, res, next) => {
   const [action] = authRouter;
 
   if (action === 'logout') {
@@ -21,4 +17,4 @@ const logoutHandler: RequestHandler = (
   next();
 };
 
-export default nextConnect().delete(logoutHandler);
+export const logoutHandler = nextConnect().delete(useLogout);

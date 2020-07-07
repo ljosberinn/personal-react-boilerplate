@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { render, screen } from '../../testUtils';
-import Chakra from './Chakra';
+import { Chakra } from './Chakra';
 
 describe('<Chakra />', () => {
   it('should render without crashing', () => {

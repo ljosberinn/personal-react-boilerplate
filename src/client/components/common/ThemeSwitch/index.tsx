@@ -19,7 +19,7 @@ const colorMap = {
 
 export type ThemeSwitchProps = FlexProps;
 
-export default function ThemeSwitch(props: ThemeSwitchProps) {
+export function ThemeSwitch(props: ThemeSwitchProps) {
   const { colorMode, toggleColorMode } = useColorMode();
   const { t } = useTranslation('theme');
 

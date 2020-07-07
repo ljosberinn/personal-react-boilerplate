@@ -5,8 +5,8 @@ import React from 'react';
 import { I18nextProvider } from 'react-i18next';
 
 import SEO from '../next-seo.config';
-import Chakra from '../src/client/Chakra';
-import ServiceWorker from '../src/client/components/common/ServiceWorker/ServiceWorker';
+import { Chakra } from '../src/client/Chakra';
+import { ServiceWorker } from '../src/client/components/common/ServiceWorker';
 import { AuthContextProvider } from '../src/client/context/AuthContext';
 import { User } from '../src/client/context/AuthContext/AuthContext';
 import {
@@ -35,6 +35,7 @@ export interface AppRenderProps {
   router?: NextRouter;
 }
 
+// eslint-disable-next-line import/no-default-export
 export default function App({ Component, pageProps, router }: AppRenderProps) {
   if (!Component) {
     return null;

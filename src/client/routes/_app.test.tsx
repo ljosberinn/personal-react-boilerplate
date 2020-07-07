@@ -10,7 +10,7 @@ import App, { AppRenderProps, getInitialProps } from '../../../pages/_app';
 import { makeMockIncomingRequest } from '../../../testUtils/api';
 import { SUPPORTED_LANGUAGES_MAP } from '../../constants';
 import * as cookieUtils from '../../server/auth/cookie';
-import i18nCache from '../../server/i18n';
+import { i18nCache } from '../../server/i18n';
 import * as sentryUtils from '../../utils/sentry';
 import * as i18n from '../i18n';
 

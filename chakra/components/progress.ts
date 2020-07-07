@@ -42,7 +42,7 @@ const sizes: ProgressTheme['sizes'] = {
   },
 };
 
-const Progress: ProgressTheme = {
+export const Progress: ProgressTheme = {
   baseStyle: props => ({
     Indicator: {
       height: '100%',
@@ -70,5 +70,3 @@ export const ProgressSizes = {
   sm: 'sm',
   xs: 'xs',
 };
-
-export default Progress;

@@ -45,7 +45,7 @@ const container = {
   xl: '1280px',
 };
 
-const sizes = {
+export const sizes = {
   ...baseSizes,
   ...largeSizes,
   container,
@@ -53,5 +53,3 @@ const sizes = {
 
 export type Sizes = typeof baseSizes &
   typeof largeSizes & { container: typeof container };
-
-export default sizes;

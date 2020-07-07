@@ -41,7 +41,7 @@ interface BeforeInstallPromptEvent extends Event {
   prompt(): Promise<void>;
 }
 
-export default function CustomPWAInstallPrompt() {
+export function CustomPWAInstallPrompt() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const promptEvent = useRef<BeforeInstallPromptEvent>(null!);
 

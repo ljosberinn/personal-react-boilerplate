@@ -1,7 +1,8 @@
 import React from 'react';
 
 import { render, fireEvent, screen } from '../../../../../testUtils';
-import ThemeSwitch from './ThemeSwitch';
+
+import { ThemeSwitch } from '.';
 
 describe('<ThemeSwitch />', () => {
   it('should render without crashing', () => {

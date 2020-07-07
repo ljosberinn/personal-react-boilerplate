@@ -25,6 +25,7 @@ import { PageProps } from './_app';
   });
 });
 
+// eslint-disable-next-line import/no-default-export
 export default function CustomDocument({
   __NEXT_DATA__: { props },
 }: DocumentProps) {

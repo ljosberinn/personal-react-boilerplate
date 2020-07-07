@@ -3,7 +3,7 @@ import nextConnect from 'next-connect';
 import { BAD_REQUEST, CREATED } from '../../../utils/statusCodes';
 import { RequestHandler } from '../../types';
 
-const registrationHandler: RequestHandler = (
+const useRegistration: RequestHandler = (
   { body: { username, password }, query: { authRouter } },
   res,
   next
@@ -21,4 +21,4 @@ const registrationHandler: RequestHandler = (
   next();
 };
 
-export default nextConnect().post(registrationHandler);
+export const registrationHandler = nextConnect().post(useRegistration);

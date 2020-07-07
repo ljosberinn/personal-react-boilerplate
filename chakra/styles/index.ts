@@ -1,6 +1,6 @@
 import { mode, Styles } from '@chakra-ui/theme-tools';
 
-const styles: Styles = {
+export const styles: Styles = {
   global: props => ({
     '*, *::before, &::after': {
       borderColor: mode('gray.200', 'whiteAlpha.300')(props),
@@ -17,5 +17,3 @@ const styles: Styles = {
     lineHeight: 'base',
   }),
 };
-
-export default styles;

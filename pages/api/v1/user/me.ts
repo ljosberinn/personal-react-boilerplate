@@ -16,6 +16,7 @@ const meHandler: RequestHandler<NextApiRequest & AuthenticatedRequest> = (
   return res.json(req[SESSION_COOKIE_NAME]);
 };
 
+// eslint-disable-next-line import/no-default-export
 export default nextConnect()
   .use(sentryMiddleware)
   .use(authNSecurityMiddleware)

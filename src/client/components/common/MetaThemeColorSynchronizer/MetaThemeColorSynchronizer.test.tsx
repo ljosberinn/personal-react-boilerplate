@@ -1,7 +1,8 @@
 import React from 'react';
 
 import { render } from '../../../../../testUtils';
-import MetaThemeColorSynchronizer from './MetaThemeColorSynchronizer';
+
+import { MetaThemeColorSynchronizer } from '.';
 
 /**
  * currently only a smoketest

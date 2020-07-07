@@ -17,7 +17,7 @@ interface DemoComponentProps {
   features: (JSX.Element | string)[];
 }
 
-export default function DemoComponent({
+export function DemoComponent({
   component,
   title,
   description,

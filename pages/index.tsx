@@ -1,7 +1,8 @@
 import React from 'react';
 
-import IndexPage from '../src/client/routes/Index';
+import { Index } from '../src/client/routes/Index';
 
-export default function Index() {
-  return <IndexPage />;
+// eslint-disable-next-line import/no-default-export
+export default function IndexPage() {
+  return <Index />;
 }

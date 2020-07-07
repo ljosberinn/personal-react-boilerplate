@@ -1,3 +1,3 @@
-export { default as authNSecurityMiddleware } from './authNSecurity';
-export { default as expectJSONBodyMiddleware } from './expectJSONBody';
-export { default as sentryMiddleware } from './sentry';
+export { authNSecurityMiddleware } from './authNSecurity';
+export { expectJSONBodyMiddleware } from './expectJSONBody';
+export { sentryMiddleware } from './sentry';

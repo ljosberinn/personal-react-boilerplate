@@ -2,7 +2,8 @@ import React from 'react';
 import { FaSun, FaMoon } from 'react-icons/fa';
 
 import { render, fireEvent, screen } from '../../../../../testUtils';
-import ThemeSwitchAlt from './ThemeSwitchAlt';
+
+import { ThemeSwitchAlt } from '.';
 
 describe('<ThemeSwitchAlt />', () => {
   it('should render without crashing', () => {

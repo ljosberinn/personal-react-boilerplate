@@ -3,7 +3,7 @@ import nextConnect from 'next-connect';
 import { testLambda, RequestMethods } from '../../../testUtils/lambda';
 import { OK, BAD_REQUEST } from '../../utils/statusCodes';
 import { RequestHandler } from '../types';
-import expectJSONBodyMiddleware from './expectJSONBody';
+import { expectJSONBodyMiddleware } from './expectJSONBody';
 
 const dummyHandler: RequestHandler = (req, res) => {
   return res.json({ isObject: req.body instanceof Object });

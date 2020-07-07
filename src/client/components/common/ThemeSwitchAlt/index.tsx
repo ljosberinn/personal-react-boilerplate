@@ -11,7 +11,7 @@ import { FaSun, FaMoon } from 'react-icons/fa';
 
 export type ThemeSwitchAltProps = Omit<ButtonProps, 'children'>;
 
-export default function ThemeSwitchAlt(props: ButtonProps) {
+export function ThemeSwitchAlt(props: ButtonProps) {
   const { t } = useTranslation('theme');
   const { colorMode, toggleColorMode } = useColorMode();
   const hoverBackgroundColor = useColorModeValue('gray.300', 'gray.600');

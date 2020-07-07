@@ -7,7 +7,7 @@ import {
 import { NOT_FOUND, BAD_REQUEST, OK } from '../../../utils/statusCodes';
 import { expectJSONBodyMiddleware } from '../../middlewares';
 import * as cookieHandling from '../cookie';
-import login from './login';
+import { loginHandler } from './login';
 
 jest.mock('../cookie', () => ({
   encryptSession: jest
@@ -25,11 +25,11 @@ const method: RequestMethod = 'POST';
 
 describe('api/login', () => {
   test('should be a function', () => {
-    expect(login).toBeInstanceOf(Function);
+    expect(loginHandler).toBeInstanceOf(Function);
   });
 
   test('does nothing given no matching path', async () => {
-    const response = await testLambda(login, {
+    const response = await testLambda(loginHandler, {
       catchAllName,
       url,
     });
@@ -40,7 +40,7 @@ describe('api/login', () => {
   RequestMethods.filter(requestMethod => requestMethod !== method).forEach(
     method => {
       test(`does nothing on method "${method}"`, async () => {
-        const response = await testLambda(login, {
+        const response = await testLambda(loginHandler, {
           catchAllName,
           method,
           middleware,
@@ -53,7 +53,7 @@ describe('api/login', () => {
   );
 
   test('responds with BAD_REQUEST on a POST request without body', async () => {
-    const response = await testLambda(login, {
+    const response = await testLambda(loginHandler, {
       catchAllName,
       method,
       middleware,
@@ -64,7 +64,7 @@ describe('api/login', () => {
   });
 
   test('responds with NOT_FOUND on a POST request with invalid body', async () => {
-    const response = await testLambda(login, {
+    const response = await testLambda(loginHandler, {
       body: { foo: 'bar' },
       catchAllName,
       method,
@@ -76,7 +76,7 @@ describe('api/login', () => {
   });
 
   test('responds with NOT_FOUND on a POST request with unknown user', async () => {
-    const response = await testLambda(login, {
+    const response = await testLambda(loginHandler, {
       body: { password: 'bar', username: 'foo' },
       catchAllName,
       method,
@@ -88,7 +88,7 @@ describe('api/login', () => {
   });
 
   test('attempts to encrypt session on a POST request with valid body', async () => {
-    await testLambda(login, {
+    await testLambda(loginHandler, {
       body: { password: 'next-with-batteries!', username: 'ljosberinn' },
       catchAllName,
       method,
@@ -105,7 +105,7 @@ describe('api/login', () => {
   });
 
   test('attempts to setSessionCookie on a POST request with valid body', async () => {
-    const response = await testLambda(login, {
+    const response = await testLambda(loginHandler, {
       body: { password: 'next-with-batteries!', username: 'ljosberinn' },
       catchAllName,
       method,

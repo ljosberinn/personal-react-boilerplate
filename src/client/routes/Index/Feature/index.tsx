@@ -1,7 +1,7 @@
 import { Box } from '@chakra-ui/core';
 import React, { ReactNode } from 'react';
 
-import FeatureIcon from './FeatureIcon';
+import { FeatureIcon } from './FeatureIcon';
 import { FeatureState } from './types';
 
 interface FeatureProps {
@@ -11,13 +11,7 @@ interface FeatureProps {
   children: ReactNode;
 }
 
-export default function Feature({
-  children,
-  state,
-  info,
-  id,
-  ...props
-}: FeatureProps) {
+export function Feature({ children, state, info, id, ...props }: FeatureProps) {
   return (
     <Box {...props}>
       <FeatureIcon state={state} /> {children}{' '}

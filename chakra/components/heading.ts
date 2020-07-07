@@ -1,6 +1,6 @@
 import { ComponentTheme } from '@chakra-ui/theme-tools';
 
-const Heading: ComponentTheme = {
+export const Heading: ComponentTheme = {
   baseStyle: {
     fontFamily: 'heading',
     fontWeight: 'bold',
@@ -27,5 +27,3 @@ export const HeadingSizes = {
   xl: 'xl',
   xs: 'xs',
 };
-
-export default Heading;

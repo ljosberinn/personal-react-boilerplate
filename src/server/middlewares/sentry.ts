@@ -6,10 +6,8 @@ import { Middleware } from '../types';
  *
  * @see https://github.com/UnlyEd/next-right-now/blob/v1-ssr-mst-aptd-gcms-lcz-sty/src/utils/sentry.ts#L25
  */
-const sentryMiddleware: Middleware = (req, _, next) => {
+export const sentryMiddleware: Middleware = (req, _, next) => {
   attachLambdaContext(req);
 
   next();
 };
-
-export default sentryMiddleware;

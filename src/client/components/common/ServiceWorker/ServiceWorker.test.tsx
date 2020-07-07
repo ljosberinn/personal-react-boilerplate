@@ -1,7 +1,8 @@
 import React from 'react';
 
 import { render, waitFor, screen, fireEvent } from '../../../../../testUtils';
-import ServiceWorker from './ServiceWorker';
+
+import { ServiceWorker } from '.';
 
 afterEach(() => {
   Object.defineProperty(navigator, 'serviceWorker', {

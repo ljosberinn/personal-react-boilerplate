@@ -54,7 +54,7 @@ const sizes: ComponentTheme['sizes'] = {
   },
 };
 
-const InputAddon: ComponentTheme = {
+export const InputAddon: ComponentTheme = {
   sizes,
   variants: {
     filled: getFilledStyle,
@@ -70,5 +70,3 @@ export const InputAddonVariants = {
   outline: 'outline',
   unstyled: 'unstyled',
 };
-
-export default InputAddon;

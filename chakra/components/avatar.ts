@@ -7,7 +7,7 @@ import {
   Props,
 } from '@chakra-ui/theme-tools';
 
-import sizes from '../foundations/sizes';
+import { sizes } from '../foundations/sizes';
 
 function getSize(size: string) {
   const themeSize = sizes[size as keyof typeof sizes];
@@ -46,7 +46,7 @@ function getRootStyle(props: Props & { name?: string }) {
 
 type AvatarProps = { name?: string };
 
-const Avatar: ComponentTheme<AvatarProps> = {
+export const Avatar: ComponentTheme<AvatarProps> = {
   baseStyle: props => ({
     Badge: {
       border: '0.2em solid',
@@ -87,5 +87,3 @@ export const AvatarSizes = {
   xl: 'xl',
   xs: 'xs',
 };
-
-export default Avatar;

@@ -51,7 +51,7 @@ const providerIconMap: ProviderIconMap = {
   local: FaSignInAlt,
 };
 
-export default function AuthDemo() {
+export function AuthDemo() {
   const [isOpen, setIsOpen] = useState(false);
   const firstFieldRef = useRef<HTMLInputElement | null>(null);
   const { login, isAuthenticated, logout } = useAuth();

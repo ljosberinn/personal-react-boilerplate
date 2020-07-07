@@ -12,7 +12,7 @@ import {
 } from '../../../utils/statusCodes';
 import * as cookieUtils from '../cookie';
 import * as oauthTools from '../oauth';
-import provider from './provider';
+import { externalProviderHandler } from './provider';
 
 const url = '/api/v1/auth/provider';
 const catchAllName = 'authRouter';
@@ -31,13 +31,13 @@ const makeMockOauthResponse = () => ({
 
 describe('api/provider', () => {
   test('should be a function', () => {
-    expect(provider).toBeInstanceOf(Function);
+    expect(externalProviderHandler).toBeInstanceOf(Function);
   });
 
   RequestMethods.filter(requestMethod => requestMethod !== method).forEach(
     method => {
       test(`does nothing on method "${method}"`, async () => {
-        const response = await testLambda(provider, {
+        const response = await testLambda(externalProviderHandler, {
           catchAllName,
           method,
           url,
@@ -51,7 +51,7 @@ describe('api/provider', () => {
   ENABLED_PROVIDER.filter(provider => provider !== 'local').forEach(
     externalProvider => {
       test(`responds with a redirect given no additional params (provider: ${externalProvider})`, async () => {
-        const response = await testLambda(provider, {
+        const response = await testLambda(externalProviderHandler, {
           catchAllName,
           method,
           redirect,
@@ -74,7 +74,7 @@ describe('api/provider', () => {
 
         const error = 'some-error';
 
-        const response = await testLambda(provider, {
+        const response = await testLambda(externalProviderHandler, {
           catchAllName,
           method,
           redirect,
@@ -93,7 +93,7 @@ describe('api/provider', () => {
       });
 
       test(`errors given more than one query param, but no code (provider: ${externalProvider})`, async () => {
-        const response = await testLambda(provider, {
+        const response = await testLambda(externalProviderHandler, {
           catchAllName,
           method,
           redirect,
@@ -114,7 +114,7 @@ describe('api/provider', () => {
         searchParams.append('code', 'a');
         searchParams.append('code', 'b');
 
-        const response = await testLambda(provider, {
+        const response = await testLambda(externalProviderHandler, {
           catchAllName,
           method,
           redirect,
@@ -132,7 +132,7 @@ describe('api/provider', () => {
 
         const getOAuthDataSpy = jest.spyOn(oauthTools, 'getOAuthData');
 
-        await testLambda(provider, {
+        await testLambda(externalProviderHandler, {
           catchAllName,
           method,
           redirect,
@@ -164,7 +164,7 @@ describe('api/provider', () => {
 
         const getProfileDataSpy = jest.spyOn(oauthTools, 'getProfileData');
 
-        await testLambda(provider, {
+        await testLambda(externalProviderHandler, {
           catchAllName,
           method,
           redirect,
@@ -201,7 +201,7 @@ describe('api/provider', () => {
 
         const encryptSessionSpy = jest.spyOn(cookieUtils, 'encryptSession');
 
-        await testLambda(provider, {
+        await testLambda(externalProviderHandler, {
           catchAllName,
           method,
           redirect,
@@ -239,7 +239,7 @@ describe('api/provider', () => {
 
         const setSessionCookieSpy = jest.spyOn(cookieUtils, 'setSessionCookie');
 
-        await testLambda(provider, {
+        await testLambda(externalProviderHandler, {
           catchAllName,
           method,
           redirect,
@@ -280,7 +280,7 @@ describe('api/provider', () => {
 
         jest.spyOn(cookieUtils, 'setSessionCookie');
 
-        const response = await testLambda(provider, {
+        const response = await testLambda(externalProviderHandler, {
           catchAllName,
           method,
           redirect,

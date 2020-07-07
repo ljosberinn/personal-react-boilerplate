@@ -4,7 +4,7 @@ import React from 'react';
 
 import { theme } from '../../../../../chakra';
 
-export default function MetaThemeColorSynchronizer() {
+export function MetaThemeColorSynchronizer() {
   const isLightTheme = useColorMode().colorMode === 'light';
 
   return (

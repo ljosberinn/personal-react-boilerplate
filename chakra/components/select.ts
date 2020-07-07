@@ -1,8 +1,8 @@
 import { ComponentTheme } from '@chakra-ui/theme-tools';
 
-import Input, { InputVariants, InputSizes, InputProps } from './input';
+import { Input, InputVariants, InputSizes, InputProps } from './input';
 
-const Select: ComponentTheme<InputProps> = {
+export const Select: ComponentTheme<InputProps> = {
   ...Input,
   baseStyle: {
     ...Input.baseStyle,
@@ -15,5 +15,3 @@ const Select: ComponentTheme<InputProps> = {
 
 export const SelectSizes = InputSizes;
 export const SelectVariants = InputVariants;
-
-export default Select;

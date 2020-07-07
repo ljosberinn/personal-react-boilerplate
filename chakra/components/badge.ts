@@ -41,7 +41,7 @@ function getOutlineStyle(props: Props) {
   };
 }
 
-const Badge: ComponentTheme = {
+export const Badge: ComponentTheme = {
   baseStyle: {
     borderRadius: 'sm',
     fontSize: 'xs',
@@ -65,5 +65,3 @@ export const BadgeVariants = {
   solid: 'solid',
   subtle: 'subtle',
 };
-
-export default Badge;

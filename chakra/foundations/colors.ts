@@ -13,7 +13,7 @@ export interface ColorHues {
 
 export type Colors = typeof colors;
 
-const colors = {
+export const colors = {
   black: '#000',
   blackAlpha: {
     100: 'rgba(0, 0, 0, 0.06)',
@@ -235,5 +235,3 @@ const colors = {
     900: '#5F370E',
   },
 };
-
-export default colors;

@@ -16,7 +16,7 @@ function getSizeStyle(size: 'sm' | 'md' | 'lg') {
   };
 }
 
-const NumberInput: ComponentTheme = {
+export const NumberInput: ComponentTheme = {
   baseStyle: props => ({
     Stepper: {
       _active: {
@@ -53,5 +53,3 @@ export const NumberInputSizes = {
   md: 'md',
   sm: 'sm',
 };
-
-export default NumberInput;

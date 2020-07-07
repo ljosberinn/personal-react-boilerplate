@@ -5,7 +5,7 @@ import {
 } from '../../../../testUtils/lambda';
 import { NOT_FOUND, BAD_REQUEST, CREATED } from '../../../utils/statusCodes';
 import { expectJSONBodyMiddleware } from '../../middlewares';
-import register from './register';
+import { registrationHandler } from './register';
 
 const url = '/api/v1/auth/signup';
 const catchAllName = 'authRouter';
@@ -14,11 +14,11 @@ const middleware = expectJSONBodyMiddleware;
 
 describe('api/signup', () => {
   test('should be a function', () => {
-    expect(register).toBeInstanceOf(Function);
+    expect(registrationHandler).toBeInstanceOf(Function);
   });
 
   test('does nothing given no matching path', async () => {
-    const response = await testLambda(register, {
+    const response = await testLambda(registrationHandler, {
       catchAllName,
       middleware,
       url,
@@ -30,7 +30,7 @@ describe('api/signup', () => {
   RequestMethods.filter(requestMethod => requestMethod !== method).forEach(
     method => {
       test(`does nothing on method "${method}"`, async () => {
-        const response = await testLambda(register, {
+        const response = await testLambda(registrationHandler, {
           catchAllName,
           method,
           middleware,
@@ -49,7 +49,7 @@ describe('api/signup', () => {
     const affix = `(missing ${'password' in body ? 'username' : 'passsword'})`;
 
     test(`responds with BAD_REQUEST given an incomplete dataset ${affix}`, async () => {
-      const response = await testLambda(register, {
+      const response = await testLambda(registrationHandler, {
         body,
         catchAllName,
         method,
@@ -62,7 +62,7 @@ describe('api/signup', () => {
   });
 
   test('responds with CREATED given a complete dataset', async () => {
-    const response = await testLambda(register, {
+    const response = await testLambda(registrationHandler, {
       body: { password: 'bar', username: 'foo' },
       catchAllName,
       method,
@@ -74,7 +74,7 @@ describe('api/signup', () => {
   });
 
   test('responds with a JSON given a complete dataset', async () => {
-    const response = await testLambda(register, {
+    const response = await testLambda(registrationHandler, {
       body: { password: 'bar', username: 'foo' },
       catchAllName,
       method,

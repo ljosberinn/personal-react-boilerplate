@@ -1,6 +1,6 @@
 import { ComponentTheme, mode, orient } from '@chakra-ui/theme-tools';
 
-const Slider: ComponentTheme = {
+export const Slider: ComponentTheme = {
   baseStyle: props => ({
     FilledTrack: {
       bg: mode(`${props.colorScheme}.500`, `${props.colorScheme}.200`)(props),
@@ -111,5 +111,3 @@ export const SliderSizes = {
   md: 'md',
   sm: 'sm',
 };
-
-export default Slider;

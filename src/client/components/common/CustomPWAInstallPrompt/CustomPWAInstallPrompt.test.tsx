@@ -1,7 +1,8 @@
 import React from 'react';
 
 import { render, act, screen } from '../../../../../testUtils';
-import CustomPWAInstallPrompt from './CustomPWAInstallPrompt';
+
+import { CustomPWAInstallPrompt } from '.';
 
 describe('<CustomPWAInstallPrompt />', () => {
   it('renders without crashing', () => {

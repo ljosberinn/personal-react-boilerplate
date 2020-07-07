@@ -42,7 +42,7 @@ const sizes: ComponentTheme['sizes'] = {
   },
 };
 
-const Switch: ComponentTheme = {
+export const Switch: ComponentTheme = {
   baseStyle: props => ({
     Thumb: {
       bg: 'white',
@@ -79,5 +79,3 @@ export const SwitchSizes = {
   md: 'md',
   sm: 'sm',
 };
-
-export default Switch;
