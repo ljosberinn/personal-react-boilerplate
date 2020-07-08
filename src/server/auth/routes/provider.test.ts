@@ -288,8 +288,6 @@ describe('api/provider', () => {
           url: url.replace('provider', externalProvider),
         });
 
-        console.log({ response });
-
         expect(response.status).toBe(FOUND_MOVED_TEMPORARILY);
         expect(response.headers.has('Location')).toBeTruthy();
       });
