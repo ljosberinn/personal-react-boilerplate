@@ -8,7 +8,7 @@
     "start": "next start",
     "test": "jest --watch --coverage",
     "test:ci": "jest --ci --coverage",
-    "postinstall": "yarn-deduplicate -l && yarn test:ci && yarn lint",
+    "postinstall": "yarn-deduplicate -l",
     "lint": "eslint src && eslint pages && eslint chakra && tsc --noEmit",
     "lint:fix": "eslint src --fix && eslint pages --fix && eslint chakra --fix && prettier --write src && prettier --write pages && prettier --write chakra",
     "post-deps-update": "yarn && yarn lint && yarn test:ci"
