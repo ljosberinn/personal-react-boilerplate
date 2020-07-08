@@ -16,6 +16,7 @@ import {
   IS_PROD,
   ENABLED_LANGUAGES,
   IS_BROWSER,
+  IS_TEST,
 } from '../constants';
 import { namespaces } from '../server/i18n';
 
@@ -54,7 +55,7 @@ export const initI18Next = ({
   };
 
   // hide debug info in prod AND in tests
-  const debug = !IS_PROD && !i18nCache && process.env.NODE_ENV !== 'test';
+  const debug = !IS_PROD && !IS_TEST && !i18nCache;
 
   i18nInstance.init({
     cleanCode: true,

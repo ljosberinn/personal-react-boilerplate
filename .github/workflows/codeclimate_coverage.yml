@@ -28,6 +28,6 @@ jobs:
           NEXT_PUBLIC_ENABLED_PROVIDER: local,github,google,facebook,discord
           NEXT_PUBLIC_SESSION_LIFETIME: 28800
           SESSION_COOKIE_SECRET: this-is-a-secret-value-with-at-least-32-characters
-          NODE_ENV: ci
+          NODE_ENV: test
         with:
           coverageCommand: yarn test:ci
