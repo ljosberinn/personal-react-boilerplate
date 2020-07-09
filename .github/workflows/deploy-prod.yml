@@ -1,4 +1,4 @@
-name: Update Code Climate test coverage
+name: Deploy to production on Vercel
 
 on:
   push:
@@ -14,14 +14,26 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: '12.x'
-  run-tests-coverage:
-    name: Run tests coverage and send report to Code Climate
+  install-dependencies:
+    name: Install dependencies
     runs-on: ubuntu-latest
-    timeout-minutes: 3
+    timeout-minutes: 1
     steps:
       - uses: actions/checkout@v1
       - name: Installing dependencies
         run: yarn install
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    timeout-minutes: 1
+    steps:
+      - name: yarn-lint
+        run: yarn lint
+  run-tests-coverage:
+    name: Run tests coverage and send report to Code Climate
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
       - uses: paambaati/codeclimate-action@v2.6.0
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
