@@ -195,10 +195,20 @@ export const testLambda = async (
       .join(';');
   }
 
-  return await fetch(urlToFetch, {
+  const response = await fetch(urlToFetch, {
     body: body ? JSON.stringify(body) : undefined,
     headers,
     method,
     redirect,
+  });
+
+  return new Promise((resolve, reject) => {
+    server.close(error => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(response);
+      }
+    });
   });
 };
