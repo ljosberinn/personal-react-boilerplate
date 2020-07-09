@@ -7,6 +7,8 @@
     "kisstkondoros.vscode-gutter-preview",
     "github.vscode-pull-request-github",
     "ms-vscode.vscode-typescript-next",
-    "ryanluker.vscode-coverage-gutters"
+    "ryanluker.vscode-coverage-gutters",
+    "cschleiden.vscode-github-actions",
+    "me-dutour-mathieu.vscode-github-actions"
   ]
 }
