@@ -1,3 +1,4 @@
+import { NextComponentType, NextPageContext } from 'next';
 import { DefaultSeo } from 'next-seo';
 import NextApp, { AppContext } from 'next/app';
 import { NextRouter } from 'next/router';
@@ -31,7 +32,7 @@ export interface PageProps {
 export interface AppRenderProps {
   pageProps: PageProps;
   err?: Error;
-  Component?: Function;
+  Component?: NextComponentType<NextPageContext, AppRenderProps, PageProps>;
   router?: NextRouter;
 }
 
