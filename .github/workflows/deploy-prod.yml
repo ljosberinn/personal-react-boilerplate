@@ -3,7 +3,7 @@ name: Deploy to production on Vercel
 on:
   push:
     branches:
-      - 'master'
+      - "master"
 
 jobs:
   setup-environment:
@@ -14,14 +14,7 @@ jobs:
       - name: Installing node.js
         uses: actions/setup-node@v1
         with:
-          node-version: '12.x'
-  install-dependencies:
-    name: Install dependencies
-    runs-on: ubuntu-latest
-    timeout-minutes: 1
-    steps:
-      - uses: actions/checkout@v1
-      - run: yarn
+          node-version: "12.x"
   lint:
     name: ESLint
     runs-on: ubuntu-latest
@@ -29,7 +22,8 @@ jobs:
     timeout-minutes: 1
     steps:
       - uses: actions/checkout@v1
-      - run: yarn
+      - name: Installing dependencies
+        run: yarn
       - run: yarn lint
   tsc:
     name: TypeScript
@@ -37,7 +31,8 @@ jobs:
     needs: [install-dependencies]
     steps:
       - uses: actions/checkout@v1
-      - run: yarn
+      - name: Installing dependencies
+        run: yarn
       - run: yarn tsc
   tests-coverage:
     name: Test & Coverage Report
@@ -46,6 +41,8 @@ jobs:
     needs: [lint, tsc] # only run after lint and tsc completed successfully
     steps:
       - uses: actions/checkout@v1
+      - name: Installing dependencies
+        run: yarn
       - uses: paambaati/codeclimate-action@v2.6.0
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
