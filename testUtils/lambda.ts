@@ -4,7 +4,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import nextConnect, { NextConnect } from 'next-connect';
 import { apiResolver } from 'next/dist/next-server/server/api-utils';
 import { route } from 'next/dist/next-server/server/router';
-import fetch from 'node-fetch';
+import fetch, { Response } from 'node-fetch';
 import listen from 'test-listen';
 
 import { Middleware } from '../src/server/types';
@@ -129,7 +129,7 @@ export const testLambda = async (
     headers,
     redirect,
   }: UrlArguments
-) => {
+): Promise<Response> => {
   const server = createServer((req, res) =>
     apiResolver(req, res, undefined, withMiddleware(handler, middleware), {
       previewModeEncryptionKey: '',
