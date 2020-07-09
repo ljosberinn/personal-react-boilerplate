@@ -7,8 +7,8 @@ on:
 
 jobs:
   setup-environment:
-    name: Setup deployment environment (Ubuntu 18.04 - Node 12.x)
-    runs-on: ubuntu-18.04
+    name: Setup deployment environment
+    runs-on: ubuntu-latest
     steps:
       - name: Installing node.js
         uses: actions/setup-node@v1
@@ -20,20 +20,27 @@ jobs:
     timeout-minutes: 1
     steps:
       - uses: actions/checkout@v1
-      - name: Installing dependencies
-        run: yarn install
+      - run: yarn
   lint:
     name: Lint
     runs-on: ubuntu-latest
     timeout-minutes: 1
     steps:
       - uses: actions/checkout@v1
-      - name: yarn-lint
-        run: yarn lint
+      - run: yarn
+      - run: yarn lint
+  tsc:
+    name: TypeScript
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - run: yarn
+      - run: yarn tsc
   run-tests-coverage:
     name: Run tests coverage and send report to Code Climate
     runs-on: ubuntu-latest
     timeout-minutes: 2
+    needs: [lint, tsc] # only run after lint and tsc completed successfully
     steps:
       - uses: actions/checkout@v1
       - uses: paambaati/codeclimate-action@v2.6.0
