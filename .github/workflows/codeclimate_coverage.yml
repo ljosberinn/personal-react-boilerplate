@@ -17,6 +17,7 @@ jobs:
   run-tests-coverage:
     name: Run tests coverage and send report to Code Climate
     runs-on: ubuntu-latest
+    timeout-minutes: 3
     steps:
       - uses: actions/checkout@v1
       - name: Installing dependencies
