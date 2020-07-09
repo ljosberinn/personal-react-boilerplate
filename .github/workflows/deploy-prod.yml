@@ -18,7 +18,6 @@ jobs:
   lint:
     name: ESLint
     runs-on: ubuntu-latest
-    needs: [install-dependencies]
     timeout-minutes: 1
     steps:
       - uses: actions/checkout@v1
@@ -28,7 +27,6 @@ jobs:
   tsc:
     name: TypeScript
     runs-on: ubuntu-latest
-    needs: [install-dependencies]
     steps:
       - uses: actions/checkout@v1
       - name: Installing dependencies
