@@ -95,9 +95,8 @@ export const getOAuthData = async (
       prompt, // only used by google
       redirect_uri,
     }).filter(([_, value]) => !!value)
-  );
+  ) as Record<string, string>;
 
-  // @ts-ignore TODO: fix this; ts is silly about it being string | undefined
   const params = new URLSearchParams(tokenParams).toString();
 
   const response = await fetch(url, {
