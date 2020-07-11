@@ -40,6 +40,7 @@ export const makeMockIncomingRequest = (
     readable: true,
     readableEncoding: 'utf-8',
     readableEnded: false,
+    readableFlowing: null,
     readableHighWaterMark: 0,
     readableLength: 0,
     readableObjectMode: false,
