@@ -18,7 +18,7 @@ export const ExternalLink = forwardRef(
     const color = useColorModeValue('teal.700', 'teal.400');
 
     return (
-      <Link isExternal color={color} {...rest} ref={ref}>
+      <Link isExternal color={color} {...rest} ref={ref} whiteSpace="nowrap">
         {children} {withIcon && <ExternalLinkIcon ml={1} />}
       </Link>
     );
