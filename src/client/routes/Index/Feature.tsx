@@ -1,31 +1,33 @@
-import { Box, Heading, Text, Image, BoxProps } from '@chakra-ui/core';
+import { Box, Heading, Text, Image } from '@chakra-ui/core';
+import { title } from 'process';
 import React, { ReactNode } from 'react';
 
-// type WithIcon = { icon: () => JSX.Element; img: never };
-// type WithImage = { icon: never; img: string };
-export type FeatureProps = BoxProps & {
+import { ExternalLink } from '../../components/common/ExternalLink';
+
+export type FeatureProps = {
   title: string;
   children: ReactNode;
-  icon?: () => JSX.Element;
-  img?: string;
+  icon: string | (() => JSX.Element);
+  href: string;
 };
-export function Feature({
-  title,
-  icon: Icon,
-  img,
-  children,
-  ...props
-}: FeatureProps) {
-  return (
-    <Box {...props}>
-      {Icon ? (
-        <Icon />
-      ) : (
-        <Image src={img} height="3rem" width="3rem" alt={title} />
-      )}
 
+const getIcon = (icon: FeatureProps['icon']) => {
+  if (typeof icon === 'function') {
+    const Icon = icon;
+    return <Icon />;
+  }
+
+  return <Image src={icon} height="3rem" width="3rem" alt={title} />;
+};
+
+export function Feature({ title, href, children, icon }: FeatureProps) {
+  return (
+    <Box>
+      {getIcon(icon)}
       <Heading as="h2" size="md" fontWeight="semibold" mt="1em" mb="0.5em">
-        {title}
+        <ExternalLink omitIcon href={href}>
+          {title}
+        </ExternalLink>
       </Heading>
       <Text>{children}</Text>
     </Box>

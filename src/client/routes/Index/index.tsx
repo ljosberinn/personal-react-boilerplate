@@ -15,7 +15,7 @@ import { PWAIcon } from './icons/PWAIcon';
 import { SentryIcon } from './icons/SentryIcon';
 import { TypeScriptIcon } from './icons/TypeScriptIcon';
 
-export function IndexPage() {
+export function Index() {
   return (
     <Box maxWidth="72rem" ml="auto" mr="auto">
       <Grid
@@ -23,22 +23,30 @@ export function IndexPage() {
         gap={10}
         px={{ md: 12 }}
       >
-        <Feature icon={NextIcon} title="Next.js">
+        <Feature icon={NextIcon} title="Next.js" href="//nextjs.org">
           Built in Next.js, NAME can near seamlessly integrate into existing
           apps or serve as starting point for new projects.
         </Feature>
 
-        <Feature icon={TypeScriptIcon} title="TypeScript">
+        <Feature
+          icon={TypeScriptIcon}
+          title="TypeScript"
+          href="//typescriptlang.org"
+        >
           To ensure scalability, long-term robustness and decent autocompletion.
         </Feature>
 
-        <Feature icon={ChakraIcon} title="Chakra">
+        <Feature icon={ChakraIcon} title="Chakra" href="//chakra-ui.com/">
           Chakra provides simple, modular and accessible low-level building
           blocks. By default, it's visually similar to Tailwind and offers every
           customization possible.
         </Feature>
 
-        <Feature icon={I18NextIcon} title="react-i18next">
+        <Feature
+          icon={I18NextIcon}
+          title="react-i18next"
+          href="//react.i18next.com/"
+        >
           A Serverless- & SSR-compatible, JSON-based i18n solution is
           implemented via{' '}
           <ExternalLink href="https://react.i18next.com/">
@@ -47,7 +55,7 @@ export function IndexPage() {
           . Assets can be exchanged on the fly through an API route.
         </Feature>
 
-        <Feature icon={OAuth2Icon} title="OAuth2">
+        <Feature icon={OAuth2Icon} title="OAuth2" href="//oauth.net/2/">
           Support for{' '}
           <Tooltip label={ENABLED_PROVIDER.join(', ')}>
             4 external providers
@@ -56,7 +64,7 @@ export function IndexPage() {
           authentication, all based on httpOnly cookies.
         </Feature>
 
-        <Feature icon={SentryIcon} title="Sentry">
+        <Feature icon={SentryIcon} title="Sentry" href="//sentry.io">
           Miss no bugs with{' '}
           <ExternalLink href="http://sentry.io/">Sentry</ExternalLink>, neither
           on the frontend, nor in Next.js core functionality or API routes.
@@ -64,13 +72,17 @@ export function IndexPage() {
           dashboard.
         </Feature>
 
-        <Feature icon={JestIcon} title="Jest">
+        <Feature icon={JestIcon} title="Jest" href="//jestjs.io">
           All tests, integration or unit, run through Jest. To test API routes,
           a <Code>testLambda</Code> function is included. NAME comes with 90%
           code coverage out of the box.
         </Feature>
 
-        <Feature img="/testing-lib.png" title="@testing-library/react">
+        <Feature
+          icon="/testing-lib.png"
+          title="@testing-library/react"
+          href="//testing-library.com/docs/react-testing-library/intro"
+        >
           Following best practices and with help from{' '}
           <ExternalLink href="https://testing-playground.com">
             Testing Playground
@@ -82,7 +94,11 @@ export function IndexPage() {
           function with sensible defaults is included.
         </Feature>
 
-        <Feature icon={GithubActionsLogo} title="Github Actions">
+        <Feature
+          icon={GithubActionsLogo}
+          title="Github Actions"
+          href="//github.com/features/actions"
+        >
           Before deploying, Github Actions will ensure your linting setup,
           typecheck, execute tests as well as upload code coverage to{' '}
           <ExternalLink href="https://codeclimate.com/">
@@ -91,7 +107,11 @@ export function IndexPage() {
           .
         </Feature>
 
-        <Feature icon={PWAIcon} title="PWA">
+        <Feature
+          icon={PWAIcon}
+          title="PWA"
+          href="//web.dev/progressive-web-apps/"
+        >
           Thanks to{' '}
           <ExternalLink href="https://github.com/hanford/next-offline">
             next-offline
@@ -101,7 +121,7 @@ export function IndexPage() {
           opinionated here, no other PWA capabilities are included
         </Feature>
 
-        <Feature icon={ESLintIcon} title="ESLint">
+        <Feature icon={ESLintIcon} title="ESLint" href="//eslint.org">
           Built on top of industry standards & community best practices, NAME
           comes with{' '}
           <ExternalLink href="https://github.com/ljosberinn/eslint-config-galex">
