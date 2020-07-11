@@ -1,11 +1,6 @@
 import nextConnect from 'next-connect';
 
-import {
-  NOT_FOUND,
-  OK,
-  UNAUTHORIZED,
-  BAD_REQUEST,
-} from '../../../utils/statusCodes';
+import { OK, UNAUTHORIZED, BAD_REQUEST } from '../../../utils/statusCodes';
 import { RequestHandler } from '../../types';
 import { encryptSession, setSessionCookie } from '../cookie';
 
@@ -61,7 +56,7 @@ const useLogin: RequestHandler = async (
       const user = verify(body);
 
       if (!user) {
-        return res.status(NOT_FOUND).end();
+        return res.status(UNAUTHORIZED).end();
       }
 
       const token = await encryptSession(user);

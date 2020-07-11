@@ -93,12 +93,12 @@ describe('hooks/useAuth', () => {
     await waitFor(() => expect(result.current.user).toBe(null));
   });
 
-  test(`on signup, dispatches a ${endpoints.signup.method} request`, async () => {
+  test(`on register, dispatches a ${endpoints.register.method} request`, async () => {
     const fetchSpy = jest.spyOn(window, 'fetch');
 
     const user = { username: 'ljosberinn' };
     const userWithPassword = { ...user, password: 'next-with-batteries!' };
-    const { url, method } = endpoints.signup;
+    const { url, method } = endpoints.register;
 
     server.use(rest.post(url, (_req, res, ctx) => res(ctx.json(user))));
 
@@ -111,7 +111,7 @@ describe('hooks/useAuth', () => {
     let response;
 
     await act(async () => {
-      response = await result.current.signup(userWithPassword);
+      response = await result.current.register(userWithPassword);
     });
 
     expect(fetchSpy).toHaveBeenCalledWith(url, {
@@ -124,7 +124,7 @@ describe('hooks/useAuth', () => {
     await waitFor(() => expect(result.current.user).toMatchObject(user));
   });
 
-  test(`on signup, fails gracefully given invalid response data`, async () => {
+  test(`on register, fails gracefully given invalid response data`, async () => {
     const fetchSpy = jest.spyOn(window, 'fetch');
 
     // eslint-disable-next-line no-console
@@ -135,7 +135,7 @@ describe('hooks/useAuth', () => {
 
     const user = { username: 'ljosberinn' };
     const userWithPassword = { ...user, password: 'next-with-batteries!' };
-    const { url, method } = endpoints.signup;
+    const { url, method } = endpoints.register;
 
     server.use(
       rest.post(url, (_req, res, ctx) => res(ctx.body('invalid json' as any)))
@@ -150,7 +150,7 @@ describe('hooks/useAuth', () => {
     let response;
 
     await act(async () => {
-      response = await result.current.signup(userWithPassword);
+      response = await result.current.register(userWithPassword);
     });
 
     expect(response).toBe(INTERNAL_SERVER_ERROR);
@@ -166,13 +166,13 @@ describe('hooks/useAuth', () => {
     console.error = consoleError;
   });
 
-  test('on signup, fails gracefully when rejected', async () => {
+  test('on register, fails gracefully when rejected', async () => {
     const fetchSpy = jest.spyOn(window, 'fetch');
 
     const user = { username: 'ljosberinn' };
     const userWithPassword = { ...user, password: 'next-with-batteries!' };
 
-    const { url, method } = endpoints.signup;
+    const { url, method } = endpoints.register;
 
     server.use(
       rest.post(url, (_req, res, ctx) => res(ctx.status(UNPROCESSABLE_ENTITY)))
@@ -187,7 +187,7 @@ describe('hooks/useAuth', () => {
     let response;
 
     await act(async () => {
-      response = await result.current.signup(userWithPassword);
+      response = await result.current.register(userWithPassword);
     });
 
     expect(response).toBe(UNPROCESSABLE_ENTITY);

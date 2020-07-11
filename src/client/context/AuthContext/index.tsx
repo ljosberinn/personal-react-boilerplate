@@ -26,9 +26,9 @@ export const endpoints = {
   provider: {
     url: '/api/v1/auth/provider',
   },
-  signup: {
+  register: {
     method: 'POST',
-    url: '/api/v1/auth/signup',
+    url: '/api/v1/auth/register',
   },
 };
 
@@ -102,9 +102,9 @@ export function AuthContextProvider({
    * - the response status code when failing to register
    * - INTERNAL_SERVER_ERROR when crashing
    */
-  async function signup(options: LocalLoginOptions) {
+  async function register(options: LocalLoginOptions) {
     try {
-      const { url, method } = endpoints.signup;
+      const { url, method } = endpoints.register;
 
       const response = await fetch(url, {
         body: JSON.stringify(options),
@@ -130,7 +130,7 @@ export function AuthContextProvider({
     isAuthenticated: !!user,
     login,
     logout,
-    signup,
+    register,
     user,
   };
 

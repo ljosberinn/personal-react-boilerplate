@@ -10,7 +10,7 @@ const useRegistration: RequestHandler = (
 ) => {
   const [action] = authRouter;
 
-  if (action === 'signup') {
+  if (action === 'register') {
     if (!username || !password) {
       return res.status(BAD_REQUEST).end();
     }

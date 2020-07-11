@@ -98,7 +98,7 @@ export type LoginOptions = ExternalLoginOptions | LocalLoginOptions;
 
 export interface AuthContextDefinition {
   user: User | null;
-  signup: (options: LocalLoginOptions) => Promise<User | number>;
+  register: (options: LocalLoginOptions) => Promise<User | number>;
   login: (options: LoginOptions) => Promise<void | User | number>;
   logout: () => Promise<void>;
   isAuthenticated: boolean;
