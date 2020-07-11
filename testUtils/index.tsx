@@ -5,7 +5,7 @@ import { I18nextProvider, I18nContext } from 'react-i18next';
 
 import { theme } from '../chakra';
 import { AuthContextProvider } from '../src/client/context/AuthContext';
-import { User } from '../src/client/context/AuthContext/AuthContext';
+import { AuthContextDefinition } from '../src/client/context/AuthContext/AuthContext';
 import { initI18Next } from '../src/client/i18n';
 import { i18nCache } from '../src/server/i18n';
 
@@ -33,7 +33,7 @@ type TestOptions = {
   /**
    * optional session to initialize AuthContextProvider with
    */
-  session?: User | null;
+  session?: AuthContextDefinition['user'];
 };
 
 function ChildrenPassthrough({ children }: { children: JSX.Element }) {
