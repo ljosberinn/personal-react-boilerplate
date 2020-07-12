@@ -193,6 +193,7 @@ function Header() {
       position="fixed"
       width="full"
       bg={bg}
+      zIndex="1"
     >
       <Flex
         boxSize="100%"

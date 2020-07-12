@@ -1,4 +1,10 @@
-import { ChakraProvider, CSSReset } from '@chakra-ui/core';
+import {
+  CSSReset,
+  ThemeProvider,
+  ColorModeProvider,
+  PortalManager,
+  GlobalStyle,
+} from '@chakra-ui/core';
 import React, { ReactNode } from 'react';
 
 import { theme } from '../../chakra';
@@ -14,11 +20,14 @@ export function Chakra({ children }: ChakraProps) {
 
   return (
     <>
-      <ChakraProvider theme={theme}>
-        <CSSReset />
-        <MetaThemeColorSynchronizer />
-        {children}
-      </ChakraProvider>
+      <ThemeProvider theme={theme}>
+        <ColorModeProvider>
+          <GlobalStyle />
+          <CSSReset />
+          <MetaThemeColorSynchronizer />
+          <PortalManager zIndex={40}>{children}</PortalManager>
+        </ColorModeProvider>
+      </ThemeProvider>
       <style jsx global>
         {`
           body,
