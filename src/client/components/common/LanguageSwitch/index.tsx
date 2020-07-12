@@ -57,7 +57,7 @@ export function LanguageSwitch(props: LanguageSwitchProps) {
     <Box d="inline-block" {...props}>
       <Menu>
         <MenuButton as={Button} colorScheme="teal" width="100%">
-          <Box d="inline-block" as={MdTranslate} mr={2} />
+          <Box d="inline-block" as={MdTranslate} mr="2" />
           {t('language-toggle')}
         </MenuButton>
         <MenuList>

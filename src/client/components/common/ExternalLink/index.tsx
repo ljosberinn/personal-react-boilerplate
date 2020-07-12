@@ -19,7 +19,8 @@ export const ExternalLink = forwardRef(
 
     return (
       <Link isExternal color={color} {...rest} ref={ref} whiteSpace="nowrap">
-        {children} {!omitIcon && <ExternalLinkIcon ml={1} />}
+        {children}
+        {!omitIcon && <ExternalLinkIcon ml={1} />}
       </Link>
     );
   }
