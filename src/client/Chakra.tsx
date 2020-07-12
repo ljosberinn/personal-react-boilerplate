@@ -1,4 +1,4 @@
-import { ChakraProvider, CSSReset, Box } from '@chakra-ui/core';
+import { ChakraProvider, CSSReset } from '@chakra-ui/core';
 import React, { ReactNode } from 'react';
 
 import { theme } from '../../chakra';
@@ -17,15 +17,13 @@ export function Chakra({ children }: ChakraProps) {
       <ChakraProvider theme={theme}>
         <CSSReset />
         <MetaThemeColorSynchronizer />
-        <Box as="main" p={4}>
-          {children}
-        </Box>
+        {children}
       </ChakraProvider>
       <style jsx global>
         {`
           body,
           div {
-            transition: background-color 250ms ease-in-out;
+            transition: background-color 150ms ease-in-out;
           }
         `}
       </style>
