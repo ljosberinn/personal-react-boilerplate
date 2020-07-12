@@ -1,4 +1,4 @@
-import { Box, Heading, Text, Image } from '@chakra-ui/core';
+import { Box, Heading, Text, Image, useColorModeValue } from '@chakra-ui/core';
 import React, { ReactNode } from 'react';
 
 import { ExternalLink } from '../../components/common/ExternalLink';
@@ -20,6 +20,8 @@ const getIcon = (icon: FeatureProps['icon'], title: FeatureProps['title']) => {
 };
 
 export function Feature({ title, href, children, icon }: FeatureProps) {
+  const bg = useColorModeValue('gray.100', 'gray.900');
+
   const heading = (
     <Heading as="h2" size="md" fontWeight="semibold" mt="1em" mb="0.5em">
       {title}
@@ -27,7 +29,7 @@ export function Feature({ title, href, children, icon }: FeatureProps) {
   );
 
   return (
-    <Box>
+    <Box _hover={{ bg }} p="4" borderRadius="5px">
       {href ? (
         <ExternalLink omitIcon href={href}>
           {icon && getIcon(icon, title)}

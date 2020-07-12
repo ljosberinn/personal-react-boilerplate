@@ -12,9 +12,17 @@ import {
   Heading,
   Divider,
   Button,
+  useDisclosure,
+  Drawer,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerBody,
+  IconButton,
+  chakra,
 } from '@chakra-ui/core';
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa';
+import { MdDehaze } from 'react-icons/md';
 
 import { ENABLED_PROVIDER } from '../../../constants';
 import {
@@ -40,7 +48,7 @@ const gitUrl = '//github.com/ljosberinn/personal-react-boilerplate';
 type CustomExternalLinkProps = Pick<ExternalLinkProps, 'href' | 'children'>;
 
 function CustomExternalLink({ href, children }: CustomExternalLinkProps) {
-  const _hoverBg = useColorModeValue('gray.100', 'whiteAlpha.100');
+  const _hoverBg = useColorModeValue('gray.300', 'whiteAlpha.100');
 
   return (
     <ExternalLink
@@ -57,8 +65,125 @@ function CustomExternalLink({ href, children }: CustomExternalLinkProps) {
   );
 }
 
+const StyledLink = chakra(ExternalLink, {
+  baseStyle: {
+    _first: {
+      mt: 0,
+    },
+    _focus: {
+      boxShadow: 'outline',
+    },
+    borderRadius: 'sm',
+    display: 'block',
+    mt: 1,
+    outline: 'none',
+    px: '2',
+    py: '1',
+    transition: 'all 0.2s',
+  },
+});
+
+interface MobileNavLinKProps {
+  children: ReactNode;
+  href: string;
+}
+
+function MobileNavLink({ children, href }: MobileNavLinKProps) {
+  const hoverColor = useColorModeValue('gray.900', 'whiteAlpha.900');
+  const color = useColorModeValue('gray.700', 'whiteAlpha.900');
+
+  return (
+    <StyledLink
+      href={href}
+      mx={-2}
+      color={color}
+      _hover={{
+        color: hoverColor,
+        transform: 'translateX(2px)',
+      }}
+    >
+      <span>{children}</span>
+    </StyledLink>
+  );
+}
+
+function MobileNav() {
+  const { isOpen, onToggle, onClose } = useDisclosure();
+
+  return (
+    <>
+      <IconButton
+        display={{ md: 'none', sm: 'inline-flex' }}
+        aria-label="Open menu"
+        fontSize="20px"
+        variant="ghost"
+        icon={<MdDehaze />}
+        onClick={onToggle}
+      />
+      {isOpen && (
+        <Drawer size="xs" isOpen placement="left" onClose={onClose}>
+          <DrawerOverlay>
+            <DrawerContent>
+              <DrawerBody p={0}>
+                <Box
+                  position="relative"
+                  overflowY="auto"
+                  borderRightWidth="1px"
+                >
+                  <Box
+                    as="nav"
+                    height="100vh"
+                    aria-label="Main navigation"
+                    fontSize="sm"
+                    px="6"
+                    pt="10"
+                    pb="6"
+                  >
+                    <Box mb="10">
+                      <Heading
+                        size="xs"
+                        letterSpacing="wide"
+                        textTransform="uppercase"
+                        mb="4"
+                      >
+                        Getting Started
+                      </Heading>
+                      <MobileNavLink href="//ljosberinn.gitbook.io/next-karma/getting-started-1/setting-up-a-new-project">
+                        Setting up a new project
+                      </MobileNavLink>
+                    </Box>
+
+                    <Box mb="10">
+                      <Heading
+                        size="xs"
+                        letterSpacing="wide"
+                        textTransform="uppercase"
+                        mb="4"
+                      >
+                        Guides
+                      </Heading>
+
+                      <MobileNavLink href="//ljosberinn.gitbook.io/next-karma/guides/api-routes-with-next-connect">
+                        API Routes with next-connect
+                      </MobileNavLink>
+
+                      <MobileNavLink href="//ljosberinn.gitbook.io/next-karma/guides/api-routes-with-next-connect/using-custom-middlewares">
+                        Using custom middlewares
+                      </MobileNavLink>
+                    </Box>
+                  </Box>
+                </Box>
+              </DrawerBody>
+            </DrawerContent>
+          </DrawerOverlay>
+        </Drawer>
+      )}
+    </>
+  );
+}
+
 function Header() {
-  const bg = useColorModeValue('white', 'gray.800');
+  const bg = useColorModeValue('gray.100', 'gray.900');
 
   return (
     <Box
@@ -68,7 +193,6 @@ function Header() {
       position="fixed"
       width="full"
       bg={bg}
-      zIndex="1"
     >
       <Flex
         boxSize="100%"
@@ -77,13 +201,17 @@ function Header() {
         maxWidth="72rem"
         ml="auto"
         mr="auto"
+        p="3"
       >
         <Flex align="center">
-          <KarmaIcon /> <Text fontWeight="500">next-karma</Text>
+          <KarmaIcon />{' '}
+          <Text fontWeight="500" pl="2">
+            next-karma
+          </Text>
           <HStack
             as="nav"
             spacing="4"
-            ml="24px"
+            ml="12"
             display={{ base: 'none', md: 'flex' }}
           >
             <CustomExternalLink href="//ljosberinn.gitbook.io/next-karma">
@@ -96,21 +224,27 @@ function Header() {
           </HStack>
         </Flex>
 
-        <Flex
-          width={['auto', 'auto', '100%']}
-          maxW="720px"
-          align="center"
-          color="gray.500"
-        >
+        <Flex width="auto" maxW="720px" align="center" color="gray.500">
           <Stack align="center" direction="row" spacing="3">
             <ExternalLink omitIcon href={gitUrl}>
               <Icon as={FaGithub} boxSize="6" />
             </ExternalLink>
             <ThemeSwitchAlt />
           </Stack>
+          <MobileNav />
         </Flex>
       </Flex>
     </Box>
+  );
+}
+
+function FadedText({ children }: { children: ReactNode }) {
+  const color = useColorModeValue('blackAlpha.700', 'whiteAlpha.700');
+
+  return (
+    <Text color={color} fontSize="xl" mt="6">
+      {children}
+    </Text>
   );
 }
 
@@ -123,14 +257,14 @@ function Hero() {
         next-karma
       </Heading>
 
-      <Text opacity={0.7} fontSize="xl" mt="6">
+      <FadedText>
         A slighly opinionated batteries-included Next.js template.
-      </Text>
+      </FadedText>
 
-      <Text opacity={0.7} fontSize="xl" mt="6">
+      <FadedText>
         Supports Authentication, Error Handling & Internationalization and more
         out of the box.
-      </Text>
+      </FadedText>
 
       <Box mt="6">
         <Button
@@ -157,12 +291,16 @@ function Hero() {
   );
 }
 
-const title = <Text as="b">next-karma</Text>;
+const title = (
+  <Text as="b" whiteSpace="nowrap">
+    next-karma
+  </Text>
+);
 
 function StackOverview() {
   return (
     <Grid
-      templateColumns={{ lg: 'repeat(3, 1fr)', md: 'repeat(1, 1fr)' }}
+      templateColumns={{ lg: 'repeat(2, 1fr)', md: 'repeat(1, 1fr)' }}
       gap={10}
       px={12}
       as="section"
@@ -177,7 +315,8 @@ function StackOverview() {
         title="TypeScript"
         href="//typescriptlang.org"
       >
-        To ensure scalability, long-term robustness and decent autocompletion.
+        To ensure scalability, long-term robustness and decent autocompletion,{' '}
+        {title} is 100% TypeScript.
       </Feature>
 
       <Feature icon={ChakraIcon} title="Chakra" href="//chakra-ui.com/">
@@ -348,7 +487,7 @@ export function Index() {
   return (
     <>
       <Header />
-      <Box as="main" maxWidth="72rem" ml="auto" mr="auto">
+      <Box as="main" maxWidth="86rem" ml="auto" mr="auto">
         <Hero />
         <Divider my={16} />
         <StackOverview />
