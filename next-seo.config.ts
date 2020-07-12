@@ -12,6 +12,15 @@ export const seo: DefaultSeoProps = {
   ],
   description,
   openGraph: {
+    description,
+    images: [
+      {
+        alt: title,
+        height: 600,
+        url: 'next-karma-h600.png',
+        width: 800,
+      },
+    ],
     title,
     type: 'website',
   },
