@@ -20,7 +20,7 @@ const getIcon = (icon: FeatureProps['icon'], title: FeatureProps['title']) => {
 };
 
 export function Feature({ title, href, children, icon }: FeatureProps) {
-  const bg = useColorModeValue('gray.100', 'gray.900');
+  const bg = useColorModeValue('gray.100', 'gray.700');
 
   const heading = (
     <Heading as="h2" size="md" fontWeight="semibold" mt="1em" mb="0.5em">

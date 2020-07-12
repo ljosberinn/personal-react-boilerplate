@@ -183,7 +183,7 @@ function MobileNav() {
 }
 
 function Header() {
-  const bg = useColorModeValue('gray.100', 'gray.900');
+  const bg = useColorModeValue('gray.100', 'gray.700');
 
   return (
     <Box
