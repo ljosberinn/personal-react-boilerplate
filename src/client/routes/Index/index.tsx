@@ -127,6 +127,11 @@ function Hero() {
         A slighly opinionated batteries-included Next.js template.
       </Text>
 
+      <Text opacity={0.7} fontSize="xl" mt="6">
+        Supports Authentication, Error Handling & Internationalization and more
+        out of the box.
+      </Text>
+
       <Box mt="6">
         <Button
           as={ExternalLink}
