@@ -4,6 +4,7 @@ import React from 'react';
 export function ESLintIcon() {
   return (
     <Icon viewBox="0 0 294.82 258.98" width="3rem" height="3rem">
+      <title>ESLint Logo</title>
       <path
         fill="#8080F2"
         d="M97.02 99.02l48.43-27.97c1.22-.7 2.7-.7 3.92 0l48.43 27.97a3.92 3.92 0 011.96 3.39v55.92c0 1.4-.74 2.7-1.96 3.4l-48.43 27.96c-1.21.7-2.7.7-3.92 0l-48.43-27.96c-1.21-.7-1.96-2-1.96-3.4v-55.92c0-1.4.75-2.7 1.96-3.4"

@@ -3,22 +3,17 @@ import React from 'react';
 
 export function GithubActionsLogo() {
   return (
-    <Icon viewBox="0 0 48 48" width="3rem" height="3rem">
+    <Icon viewBox="0 0 48 48" width="3rem" height="3rem" fill="none">
+      <title>GitHub Actions Logo</title>
       <path
         stroke="#2088FF"
-        strokeLinecap="round"
-        strokeLinejoin="round"
         strokeWidth="2"
         d="M10 1a9 9 0 110 18 9 9 0 010-18zM23 19a6 6 0 110 12 6 6 0 010-12zM23 35a6 6 0 110 12 6 6 0 010-12z"
-        clipRule="evenodd"
       />
       <path
         stroke="#79B8FF"
-        strokeLinecap="round"
-        strokeLinejoin="round"
         strokeWidth="2"
         d="M41 35a6 6 0 110 12 6 6 0 010-12z"
-        clipRule="evenodd"
       />
       <path
         stroke="#2088FF"
@@ -29,11 +24,8 @@ export function GithubActionsLogo() {
       />
       <path
         stroke="#2088FF"
-        strokeLinecap="round"
-        strokeLinejoin="round"
         strokeWidth="2"
         d="M41 19a6 6 0 110 12 6 6 0 010-12z"
-        clipRule="evenodd"
       />
       <path
         stroke="#2088FF"
@@ -46,18 +38,10 @@ export function GithubActionsLogo() {
         fill="#2088FF"
         d="M16.95 26a1 1 0 100-2v2zM8 19.04A6.96 6.96 0 0014.96 26v-2A4.96 4.96 0 0110 19.04H8zM14.96 26h1.99v-2h-1.99v2z"
       />
-      <path
-        stroke="#2088FF"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="2"
-        d="M29.05 25H35"
-      />
+      <path stroke="#2088FF" strokeWidth="2" d="M29.05 25H35" />
       <path
         fill="#79B8FF"
-        fillRule="evenodd"
         d="M21 40a1 1 0 110 2 1 1 0 010-2zM25 40a1 1 0 110 2 1 1 0 010-2z"
-        clipRule="evenodd"
       />
       <path
         stroke="#79B8FF"

@@ -4,6 +4,7 @@ import React from 'react';
 export function I18NextIcon() {
   return (
     <Icon viewBox="0 30 150 150" width="3rem" height="3rem">
+      <title>react-i18next Logo</title>
       <path
         fill="#009688"
         d="M88.82 51.58v25.97L118 152.49s8.9 18.3-16.57 22.76H43.31s-23.75-2.47-18.06-21.28l30.67-76.42V51.58h32.9z"

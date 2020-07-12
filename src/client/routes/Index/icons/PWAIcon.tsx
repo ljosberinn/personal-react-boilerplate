@@ -6,6 +6,7 @@ export function PWAIcon() {
 
   return (
     <Icon viewBox="0 0 1952 734.93" width="3rem" height="3rem">
+      <title>PWA Logo</title>
       <path
         fill={fill}
         d="M1436.62 603.3l56.39-142.6h162.82l-77.27-216.31L1675.2 0 1952 734.93h-204.13l-47.3-131.63h-263.95z"
