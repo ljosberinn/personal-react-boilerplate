@@ -10,17 +10,23 @@ const defaultProps: ExternalLinkProps = {
 };
 
 describe('<ExternalLink />', () => {
-  it('should render without crashing given default props', () => {
+  it('renders without crashing given default props', () => {
     render(<ExternalLink {...defaultProps} />);
   });
 
-  it('should optionally render an icon after its text', () => {
-    render(<ExternalLink {...defaultProps} withIcon />);
+  it('has a default icon after its text', () => {
+    render(<ExternalLink {...defaultProps} />);
 
     const link = screen.getByRole('link');
     const svg = screen.getByRole('presentation');
 
     expect(svg).toBeInTheDocument();
     expect(svg.parentElement).toBe(link);
+  });
+
+  it('optionally omits its default icon after its text', () => {
+    const { container } = render(<ExternalLink {...defaultProps} omitIcon />);
+
+    expect(container.querySelector('svg')).toBeNull();
   });
 });

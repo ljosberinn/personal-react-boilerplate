@@ -20,6 +20,7 @@ type Config = {
     profileDataUrl: string;
   };
 };
+
 export const config: Config = {
   discord: {
     authorizationUrl: 'https://discord.com/api/oauth2/authorize',

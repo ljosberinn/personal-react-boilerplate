@@ -6,20 +6,21 @@ export type ExternalLinkProps = LinkProps & {
   href: string;
   rel?: string;
   target?: string;
-  withIcon?: boolean;
+  omitIcon?: boolean;
   children: ReactNode;
 };
 
 export const ExternalLink = forwardRef(
   (
-    { children, withIcon = true, ...rest }: ExternalLinkProps,
+    { children, omitIcon = false, ...rest }: ExternalLinkProps,
     ref: Ref<HTMLAnchorElement>
   ) => {
     const color = useColorModeValue('teal.700', 'teal.400');
 
     return (
-      <Link isExternal color={color} {...rest} ref={ref}>
-        {children} {withIcon && <ExternalLinkIcon ml={1} />}
+      <Link isExternal color={color} {...rest} ref={ref} whiteSpace="nowrap">
+        {children}
+        {!omitIcon && <ExternalLinkIcon ml={1} />}
       </Link>
     );
   }

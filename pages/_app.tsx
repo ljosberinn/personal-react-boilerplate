@@ -5,7 +5,7 @@ import { NextRouter } from 'next/router';
 import React from 'react';
 import { I18nextProvider } from 'react-i18next';
 
-import SEO from '../next-seo.config';
+import { seo } from '../next-seo.config';
 import { Chakra } from '../src/client/Chakra';
 import { ServiceWorker } from '../src/client/components/common/ServiceWorker';
 import { AuthContextProvider } from '../src/client/context/AuthContext';
@@ -50,7 +50,7 @@ export default function App({ Component, pageProps, router }: AppRenderProps) {
 
   return (
     <>
-      <DefaultSeo {...SEO} />
+      <DefaultSeo {...seo} />
       <TopLevelErrorBoundary showDialog>
         <I18nextProvider i18n={i18nInstance}>
           <AuthContextProvider session={pageProps.session}>

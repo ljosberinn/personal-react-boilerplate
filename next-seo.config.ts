@@ -1,10 +1,10 @@
 import { DefaultSeoProps } from 'next-seo';
 
-const title = 'Batteries-included Next.js boilerplate';
+const title = 'next-karma | Next.js template';
 const description =
-  'Personal Next.js boilerplate of Gerrit Alex - includes support for TypeScript, testing, i18n, error handling and auth.';
+  'next-karma - a slightly opinonated batteries-included Next.js template | Authentication, Internationalization, Error Handling';
 
-const seo: DefaultSeoProps = {
+export const seo: DefaultSeoProps = {
   additionalMetaTags: [
     { content: 'global', name: 'distribution' },
     { content: '7 days', name: 'revisit-after' },
@@ -21,5 +21,3 @@ const seo: DefaultSeoProps = {
     handle: '@gerrit_alex',
   },
 };
-
-export default seo;

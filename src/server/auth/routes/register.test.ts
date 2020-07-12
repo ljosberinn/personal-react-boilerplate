@@ -7,12 +7,12 @@ import { NOT_FOUND, BAD_REQUEST, CREATED } from '../../../utils/statusCodes';
 import { expectJSONBodyMiddleware } from '../../middlewares';
 import { registrationHandler } from './register';
 
-const url = '/api/v1/auth/signup';
+const url = '/api/v1/auth/register';
 const catchAllName = 'authRouter';
 const method: RequestMethod = 'POST';
 const middleware = expectJSONBodyMiddleware;
 
-describe('api/signup', () => {
+describe('api/register', () => {
   test('should be a function', () => {
     expect(registrationHandler).toBeInstanceOf(Function);
   });

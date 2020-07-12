@@ -4,7 +4,12 @@ import {
   RequestMethods,
   RequestMethod,
 } from '../../../../testUtils/lambda';
-import { NOT_FOUND, BAD_REQUEST, OK } from '../../../utils/statusCodes';
+import {
+  NOT_FOUND,
+  BAD_REQUEST,
+  OK,
+  UNAUTHORIZED,
+} from '../../../utils/statusCodes';
 import { expectJSONBodyMiddleware } from '../../middlewares';
 import * as cookieHandling from '../cookie';
 import { loginHandler } from './login';
@@ -63,7 +68,7 @@ describe('api/login', () => {
     expect(response.status).toBe(BAD_REQUEST);
   });
 
-  test('responds with NOT_FOUND on a POST request with invalid body', async () => {
+  test('responds with UNAUTHORIZED on a POST request with invalid body', async () => {
     const response = await testLambda(loginHandler, {
       body: { foo: 'bar' },
       catchAllName,
@@ -72,10 +77,10 @@ describe('api/login', () => {
       url,
     });
 
-    expect(response.status).toBe(NOT_FOUND);
+    expect(response.status).toBe(UNAUTHORIZED);
   });
 
-  test('responds with NOT_FOUND on a POST request with unknown user', async () => {
+  test('responds with UNAUTHORIZED on a POST request with unknown user', async () => {
     const response = await testLambda(loginHandler, {
       body: { password: 'bar', username: 'foo' },
       catchAllName,
@@ -84,7 +89,7 @@ describe('api/login', () => {
       url,
     });
 
-    expect(response.status).toBe(NOT_FOUND);
+    expect(response.status).toBe(UNAUTHORIZED);
   });
 
   test('attempts to encrypt session on a POST request with valid body', async () => {

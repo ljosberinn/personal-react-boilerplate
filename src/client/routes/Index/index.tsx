@@ -1,301 +1,499 @@
 import {
-  Heading,
-  Stack,
   Box,
-  Divider,
+  Grid,
+  Tooltip,
   Code,
   Flex,
-  Text,
-  Badge,
-  Tooltip,
+  HStack,
+  Stack,
+  Icon,
   useColorModeValue,
+  Text,
+  Heading,
+  Divider,
+  Button,
+  useDisclosure,
+  Drawer,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerBody,
+  IconButton,
+  chakra,
 } from '@chakra-ui/core';
-import React, { Fragment } from 'react';
-import { FaTwitter, FaGithub, FaGlobe } from 'react-icons/fa';
+import React, { ReactNode } from 'react';
+import { FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa';
+import { MdDehaze } from 'react-icons/md';
 
 import { ENABLED_PROVIDER } from '../../../constants';
-import { ExternalLink } from '../../components/common/ExternalLink';
-import { LanguageSwitch } from '../../components/common/LanguageSwitch';
-import { ThemeSwitch } from '../../components/common/ThemeSwitch';
+import {
+  ExternalLink,
+  ExternalLinkProps,
+} from '../../components/common/ExternalLink';
 import { ThemeSwitchAlt } from '../../components/common/ThemeSwitchAlt';
-import { AuthDemo } from './AuthDemo';
-import { DemoComponent } from './DemoComponent';
 import { Feature } from './Feature';
-import { FeatureState } from './Feature/types';
+import { ChakraIcon } from './icons/ChakraIcon';
+import { ESLintIcon } from './icons/ESLintIcon';
+import { GithubActionsLogo } from './icons/GithubActionsIcon';
+import { I18NextIcon } from './icons/I18NextIcon';
+import { JestIcon } from './icons/JestIcon';
+import { KarmaIcon } from './icons/KarmaIcon';
+import { NextIcon } from './icons/NextIcon';
+import { OAuth2Icon } from './icons/OAuth2Icon';
+import { PWAIcon } from './icons/PWAIcon';
+import { SentryIcon } from './icons/SentryIcon';
+import { TypeScriptIcon } from './icons/TypeScriptIcon';
 
-export function Index() {
-  const boxBg = useColorModeValue('gray.100', 'gray.700');
+const gitUrl = '//github.com/ljosberinn/personal-react-boilerplate';
+
+type CustomExternalLinkProps = Pick<ExternalLinkProps, 'href' | 'children'>;
+
+function CustomExternalLink({ href, children }: CustomExternalLinkProps) {
+  const _hoverBg = useColorModeValue('gray.300', 'whiteAlpha.100');
 
   return (
-    <Box maxWidth="72rem" ml="auto" mr="auto">
-      <section>
-        <Heading as="h1" size="xl">
-          Batteries-included Next.js boilerplate
-        </Heading>
+    <ExternalLink
+      omitIcon
+      href={href}
+      transition="all 0.2s"
+      _hover={{ bg: _hoverBg }}
+      py="1"
+      px="3"
+      borderRadius="4px"
+    >
+      {children}
+    </ExternalLink>
+  );
+}
 
-        <Divider borderColor="red.200" />
+const StyledLink = chakra(ExternalLink, {
+  baseStyle: {
+    _first: {
+      mt: 0,
+    },
+    _focus: {
+      boxShadow: 'outline',
+    },
+    borderRadius: 'sm',
+    display: 'block',
+    mt: 1,
+    outline: 'none',
+    px: '2',
+    py: '1',
+    transition: 'all 0.2s',
+  },
+});
 
-        <Flex
-          mt={4}
-          mb={4}
-          justifyContent="space-between"
-          flexDirection={{
-            base: 'column',
-            lg: 'row',
-          }}
-        >
-          <ExternalLink href="//github.com/ljosberinn/personal-react-boilerplate">
-            <Box d="inline-block" as={FaGithub} /> Repository
-          </ExternalLink>
+interface MobileNavLinKProps {
+  children: ReactNode;
+  href: string;
+}
 
-          <Flex>
-            find me on...
-            <ExternalLink
-              ml={2}
-              withIcon={false}
-              href="//twitter.com/gerrit_alex"
-            >
-              <Box d="inline-block" as={FaTwitter} /> @gerrit_alex
-            </ExternalLink>
-            <Divider borderColor="green.200" variant="vertical" ml={2} mr={2} />
-            <ExternalLink withIcon={false} href="//github.com/ljosberinn">
-              <Box d="inline-block" as={FaGithub} /> ljosberinn
-            </ExternalLink>
-            <Divider borderColor="green.200" variant="vertical" ml={2} mr={2} />
-            <ExternalLink withIcon={false} href="//gerritalex.de">
-              <Box d="inline-block" as={FaGlobe} /> gerritalex.de
-            </ExternalLink>
-          </Flex>
+function MobileNavLink({ children, href }: MobileNavLinKProps) {
+  const hoverColor = useColorModeValue('gray.900', 'whiteAlpha.900');
+  const color = useColorModeValue('gray.700', 'whiteAlpha.900');
+
+  return (
+    <StyledLink
+      href={href}
+      mx={-2}
+      color={color}
+      _hover={{
+        color: hoverColor,
+        transform: 'translateX(2px)',
+      }}
+    >
+      <span>{children}</span>
+    </StyledLink>
+  );
+}
+
+function MobileNav() {
+  const { isOpen, onToggle, onClose } = useDisclosure();
+
+  return (
+    <>
+      <IconButton
+        display={{ md: 'none', sm: 'inline-flex' }}
+        aria-label="Open menu"
+        fontSize="20px"
+        variant="ghost"
+        icon={<MdDehaze />}
+        onClick={onToggle}
+      />
+      {isOpen && (
+        <Drawer size="xs" isOpen placement="left" onClose={onClose}>
+          <DrawerOverlay>
+            <DrawerContent>
+              <DrawerBody p={0}>
+                <Box
+                  position="relative"
+                  overflowY="auto"
+                  borderRightWidth="1px"
+                >
+                  <Box
+                    as="nav"
+                    height="100vh"
+                    aria-label="Main navigation"
+                    fontSize="sm"
+                    px="6"
+                    pt="10"
+                    pb="6"
+                  >
+                    <Box mb="10">
+                      <Heading
+                        size="xs"
+                        letterSpacing="wide"
+                        textTransform="uppercase"
+                        mb="4"
+                      >
+                        Getting Started
+                      </Heading>
+                      <MobileNavLink href="//ljosberinn.gitbook.io/next-karma/getting-started-1/setting-up-a-new-project">
+                        Setting up a new project
+                      </MobileNavLink>
+                    </Box>
+
+                    <Box mb="10">
+                      <Heading
+                        size="xs"
+                        letterSpacing="wide"
+                        textTransform="uppercase"
+                        mb="4"
+                      >
+                        Guides
+                      </Heading>
+
+                      <MobileNavLink href="//ljosberinn.gitbook.io/next-karma/guides/api-routes-with-next-connect">
+                        API Routes with next-connect
+                      </MobileNavLink>
+
+                      <MobileNavLink href="//ljosberinn.gitbook.io/next-karma/guides/api-routes-with-next-connect/using-custom-middlewares">
+                        Using custom middlewares
+                      </MobileNavLink>
+                    </Box>
+                  </Box>
+                </Box>
+              </DrawerBody>
+            </DrawerContent>
+          </DrawerOverlay>
+        </Drawer>
+      )}
+    </>
+  );
+}
+
+function Header() {
+  const bg = useColorModeValue('gray.100', 'gray.900');
+
+  return (
+    <Box
+      as="header"
+      borderBottomWidth="1px"
+      height="4rem"
+      position="fixed"
+      width="full"
+      bg={bg}
+    >
+      <Flex
+        boxSize="100%"
+        align="center"
+        justify="space-between"
+        maxWidth="72rem"
+        ml="auto"
+        mr="auto"
+        p="3"
+      >
+        <Flex align="center">
+          <KarmaIcon />{' '}
+          <Text fontWeight="500" pl="2">
+            next-karma
+          </Text>
+          <HStack
+            as="nav"
+            spacing="4"
+            ml="12"
+            display={{ base: 'none', md: 'flex' }}
+          >
+            <CustomExternalLink href="//ljosberinn.gitbook.io/next-karma">
+              Docs
+            </CustomExternalLink>
+
+            <CustomExternalLink href="//ljosberinn.gitbook.io/next-karma/guides/">
+              Guides
+            </CustomExternalLink>
+          </HStack>
         </Flex>
 
-        <Text>
-          Hi there! This is what I currently prefer working with for my own
-          projects. <br />
-          I'm not done yet integrating everything I require for my own needs
-          but... if this looks promising, keep coming back :)
-        </Text>
-      </section>
-
-      <Box as="section">
-        <Heading as="h2" size="lg" mt={4} mb={2}>
-          What's included?
-        </Heading>
-
-        <Box backgroundColor={boxBg} borderRadius={5} m={1} p={1}>
-          <Stack spacing={1} m={4}>
-            <Feature state={FeatureState.DONE}>
-              built with{' '}
-              <ExternalLink href="//nextjs.org/">Next.js</ExternalLink>, powered
-              by <ExternalLink href="//reactjs.org/">React</ExternalLink>
-            </Feature>
-
-            <Feature state={FeatureState.DONE}>
-              enhanced by{' '}
-              <ExternalLink href="//www.typescriptlang.org/">
-                TypeScript
-              </ExternalLink>
-            </Feature>
-
-            <Feature state={FeatureState.DONE}>hooks only</Feature>
-
-            <Feature state={FeatureState.DONE}>
-              near-perfect lighthouse audit (99/100/100/100)
-            </Feature>
-
-            <Feature state={FeatureState.DONE} id="theming">
-              UI via{' '}
-              <ExternalLink href="//chakra-ui.com/">
-                @chakra-ui/core
-              </ExternalLink>{' '}
-            </Feature>
-
-            <Feature state={FeatureState.DONE} id="internationalization">
-              i18n via{' '}
-              <ExternalLink href="//react.i18next.com/">
-                react-i18next
-              </ExternalLink>
-              , automatically detected by{' '}
-              <ExternalLink href="//github.com/UnlyEd/universal-language-detector">
-                universal-language-detector
-              </ExternalLink>
-            </Feature>
-
-            <Feature state={FeatureState.DONE}>
-              easier SEO via{' '}
-              <ExternalLink href="//github.com/garmeeh/next-seo">
-                next-seo
-              </ExternalLink>
-            </Feature>
-
-            <Feature state={FeatureState.DONE}>
-              testing via <ExternalLink href="//jestjs.io/">Jest</ExternalLink>{' '}
-              +{' '}
-              <ExternalLink href="//testing-library.com/docs/react-testing-library/intro">
-                @testing-library/react
-              </ExternalLink>
-            </Feature>
-
-            <Feature state={FeatureState.DONE}>
-              preconfigured linting via{' '}
-              <ExternalLink href="//eslint.org/">ESLint</ExternalLink>
-            </Feature>
-
-            <Feature state={FeatureState.DONE}>
-              code style via{' '}
-              <ExternalLink href="//prettier.io">Prettier</ExternalLink>
-            </Feature>
-
-            <Feature state={FeatureState.DONE}>
-              commit message rules via{' '}
-              <ExternalLink href="//github.com/conventional-changelog/commitlint">
-                commitlint
-              </ExternalLink>
-            </Feature>
-
-            <Feature state={FeatureState.DONE}>
-              enforced via{' '}
-              <ExternalLink href="//github.com/typicode/husky">
-                husky
-              </ExternalLink>{' '}
-              &{' '}
-              <ExternalLink href="//github.com/okonet/lint-staged">
-                lint-staged
-              </ExternalLink>
-            </Feature>
-
-            <Feature state={FeatureState.DONE} id="api">
-              easier API routes via{' '}
-              <ExternalLink href="//github.com/hoangvvo/next-connect#readme">
-                next-connect
-              </ExternalLink>
-            </Feature>
-
-            <Feature state={FeatureState.DONE}>
-              error tracking via{' '}
-              <ExternalLink href="//sentry.io">sentry</ExternalLink>
-            </Feature>
-
-            <Feature state={FeatureState.DONE}>
-              basic PWA capabilities (caching & notifying service worker &
-              custom install prompt) via{' '}
-              <ExternalLink href="//github.com/hanford/next-offline">
-                next-offline
-              </ExternalLink>
-            </Feature>
-
-            <Feature state={FeatureState.OPT}>
-              React footprint reduced via{' '}
-              <ExternalLink href="//preactjs.com">preact</ExternalLink>
-            </Feature>
+        <Flex width="auto" maxW="720px" align="center" color="gray.500">
+          <Stack align="center" direction="row" spacing="3">
+            <ExternalLink omitIcon href={gitUrl}>
+              <Icon as={FaGithub} boxSize="6" />
+            </ExternalLink>
+            <ThemeSwitchAlt />
           </Stack>
-        </Box>
-      </Box>
-
-      <Box as="section">
-        <Heading as="h2" size="lg" mt={4} mb={2}>
-          Demo
-        </Heading>
-
-        <Box backgroundColor={boxBg} borderRadius={5} m={1} p={1}>
-          <DemoComponent
-            title="Auth"
-            description="SSR-compatible, httpOnly cookie-based authentication - try refreshing after logging in!"
-            component={<AuthDemo />}
-            features={[
-              <Fragment key="1">implements OAuth2</Fragment>,
-              <Fragment key="2">
-                includes an <Code>{'<AuthContextProvider />'}</Code>, exposing a
-                hook (<Code>useAuth</Code>)
-              </Fragment>,
-              <Fragment key="3">
-                includes a <Code>protectedResourceMiddleware</Code> as easy
-                catch-all API route protection solution
-              </Fragment>,
-              <Fragment key="4">
-                ships with{' '}
-                <Tooltip
-                  label={ENABLED_PROVIDER.join(', ')}
-                  aria-label={ENABLED_PROVIDER.join(', ')}
-                >
-                  <Badge variant="outline">{ENABLED_PROVIDER.length}*</Badge>
-                </Tooltip>{' '}
-                provider options
-              </Fragment>,
-            ]}
-          />
-
-          <Divider
-            borderColor="teal.500"
-            maxWidth="90%"
-            ml="auto"
-            mr="auto"
-            mt={8}
-            mb={8}
-          />
-
-          <DemoComponent
-            title="Internationalization"
-            description="SSR-compatible, cookie-based i18n demo - try refreshing after switching the language!"
-            component={
-              <LanguageSwitch mb={2} width={{ base: '100%', lg: 'initial' }} />
-            }
-            features={[
-              <Fragment key="1">
-                a premade component using{' '}
-                <ExternalLink href="//github.com/umidbekkarimov/react-flag-kit">
-                  <Code>react-flag-kit</Code>
-                </ExternalLink>{' '}
-                is included
-              </Fragment>,
-              <Fragment key="2">
-                a single request will be made to the{' '}
-                <Code>/api/i18n/:language</Code> endpoint
-              </Fragment>,
-              "previously fetched bundles won't be refetched",
-              'serverless-compatible; all assets are automatically bundled at build time',
-            ]}
-            warning="only commonly used components will be translated; the boilerplate doesn't ship i18n for this throwaway index"
-          />
-
-          <Divider
-            borderColor="teal.500"
-            maxWidth="90%"
-            ml="auto"
-            mr="auto"
-            mt={8}
-            mb={8}
-          />
-
-          <DemoComponent
-            title="Theming"
-            description={
-              <>
-                <ExternalLink href="//chakra-ui.com/">
-                  @chakra-ui/core
-                </ExternalLink>{' '}
-                components are automatically dark-mode compatible
-              </>
-            }
-            component={
-              <Stack direction="row">
-                <ThemeSwitch mt={2} mb={2} />
-                <ThemeSwitchAlt ml={2} />
-              </Stack>
-            }
-            features={[
-              <Fragment key="1">
-                two premade components using{' '}
-                <ExternalLink href="//react-icons.netlify.com/">
-                  <Code>react-icons</Code>
-                </ExternalLink>{' '}
-                are included
-              </Fragment>,
-            ]}
-          />
-        </Box>
-      </Box>
-
-      <Box as="footer">MIT (c) @ljosberinn</Box>
+          <MobileNav />
+        </Flex>
+      </Flex>
     </Box>
+  );
+}
+
+function FadedText({ children }: { children: ReactNode }) {
+  const color = useColorModeValue('blackAlpha.700', 'whiteAlpha.700');
+
+  return (
+    <Text color={color} fontSize="xl" mt="6">
+      {children}
+    </Text>
+  );
+}
+
+function Hero() {
+  return (
+    <Box as="section" pt={40} pb={16} maxW="xl" mx="auto" textAlign="center">
+      <KarmaIcon size={16} />
+
+      <Heading as="h1" size="xl" fontWeight="500" mt="2">
+        next-karma
+      </Heading>
+
+      <FadedText>
+        A slighly opinionated batteries-included Next.js template.
+      </FadedText>
+
+      <FadedText>
+        Supports Authentication, Error Handling & Internationalization and more
+        out of the box.
+      </FadedText>
+
+      <Box mt="6">
+        <Button
+          as={ExternalLink}
+          omitIcon
+          href="//ljosberinn.gitbook.io/next-karma"
+          size="lg"
+          colorScheme="teal"
+        >
+          Get Started
+        </Button>
+        <Button
+          as={ExternalLink}
+          omitIcon
+          size="lg"
+          ml={4}
+          href={gitUrl}
+          leftIcon={<FaGithub size="1.5em" />}
+        >
+          GitHub
+        </Button>
+      </Box>
+    </Box>
+  );
+}
+
+const title = (
+  <Text as="b" whiteSpace="nowrap">
+    next-karma
+  </Text>
+);
+
+function StackOverview() {
+  return (
+    <Grid
+      templateColumns={{ lg: 'repeat(2, 1fr)', md: 'repeat(1, 1fr)' }}
+      gap={10}
+      px={12}
+      as="section"
+    >
+      <Feature icon={NextIcon} title="Next.js" href="//nextjs.org">
+        Built on top of Next.js, {title} can near seamlessly integrate into
+        existing apps or serve as starting point for new projects.
+      </Feature>
+
+      <Feature
+        icon={TypeScriptIcon}
+        title="TypeScript"
+        href="//typescriptlang.org"
+      >
+        To ensure scalability, long-term robustness and decent autocompletion,{' '}
+        {title} is 100% TypeScript.
+      </Feature>
+
+      <Feature icon={ChakraIcon} title="Chakra" href="//chakra-ui.com/">
+        Chakra provides composable and accessible low-level building blocks. By
+        default, it's visually similar to Tailwind and offers every
+        customization possible.
+      </Feature>
+
+      <Feature
+        icon={I18NextIcon}
+        title="react-i18next"
+        href="//react.i18next.com/"
+      >
+        A Serverless- & SSR-compatible, JSON-based i18n solution is implemented
+        via{' '}
+        <ExternalLink href="https://react.i18next.com/">
+          react-i18next
+        </ExternalLink>
+        . Assets can be exchanged on the fly through an API route.
+      </Feature>
+
+      <Feature icon={OAuth2Icon} title="OAuth2" href="//oauth.net/2/">
+        Support for{' '}
+        <Tooltip label={ENABLED_PROVIDER.join(', ')}>
+          4 external providers
+        </Tooltip>{' '}
+        is included out of the box as well as means to implement homegrown
+        authentication, all based on httpOnly cookies.
+      </Feature>
+
+      <Feature icon={SentryIcon} title="Sentry" href="//sentry.io">
+        Miss no bugs with{' '}
+        <ExternalLink href="http://sentry.io/">Sentry</ExternalLink>, neither on
+        the frontend, nor in Next.js core functionality or API routes. Every
+        deploy creates a new release, separately visible in Sentrys dashboard.
+      </Feature>
+
+      <Feature icon={JestIcon} title="Jest" href="//jestjs.io">
+        All tests, integration or unit, run through Jest. To test API routes, a{' '}
+        <Code>testLambda</Code> function is included. {title} comes with 90%
+        code coverage out of the box.
+      </Feature>
+
+      <Feature
+        icon="/testing-lib.png"
+        title="@testing-library/react"
+        href="//testing-library.com/docs/react-testing-library/intro"
+      >
+        Following best practices and with help from{' '}
+        <ExternalLink href="https://testing-playground.com">
+          Testing Playground
+        </ExternalLink>
+        , all example components are well tested. A{' '}
+        <ExternalLink href="https://testing-library.com/docs/native-testing-library/setup#custom-render">
+          custom render
+        </ExternalLink>{' '}
+        function with sensible defaults is included.
+      </Feature>
+
+      <Feature
+        icon={GithubActionsLogo}
+        title="Github Actions"
+        href="//github.com/features/actions"
+      >
+        Before deploying, Github Actions will ensure your linting setup,
+        typecheck, execute tests as well as upload code coverage to{' '}
+        <ExternalLink href="https://codeclimate.com/">CodeClimate</ExternalLink>
+        .
+      </Feature>
+
+      <Feature
+        icon={PWAIcon}
+        title="PWA"
+        href="//web.dev/progressive-web-apps/"
+      >
+        Thanks to{' '}
+        <ExternalLink href="https://github.com/hanford/next-offline">
+          next-offline
+        </ExternalLink>
+        , a ServiceWorker will be created on each deploy. An example component
+        notifying users on found updates is included. To prevent being too
+        opinionated here, no other PWA capabilities are included.
+      </Feature>
+
+      <Feature icon={ESLintIcon} title="ESLint" href="//eslint.org">
+        Built on top of industry standards & community best practices, {title}{' '}
+        comes with{' '}
+        <ExternalLink href="https://github.com/ljosberinn/eslint-config-galex">
+          my personal eslint config
+        </ExternalLink>
+        . You may of course swap at any time.
+      </Feature>
+
+      <Feature title="...and more!">
+        <ExternalLink
+          omitIcon
+          href="//docs.github.com/en/github/building-a-strong-community/configuring-issue-templates-for-your-repository"
+        >
+          GitHub Issue templates
+        </ExternalLink>
+        ,{' '}
+        <ExternalLink
+          omitIcon
+          href="//github.com/conventional-changelog/commitlint"
+        >
+          commitlint
+        </ExternalLink>
+        ,{' '}
+        <ExternalLink omitIcon href="//github.com/okonet/lint-staged">
+          lint-staged
+        </ExternalLink>
+        ,{' '}
+        <ExternalLink omitIcon href="//github.com/typicode/husky">
+          husky
+        </ExternalLink>
+        ,{' '}
+        <ExternalLink omitIcon href="//github.com/garmeeh/next-seo">
+          next-seo
+        </ExternalLink>
+        ,{' '}
+        <ExternalLink omitIcon href="//prettier.io">
+          prettier
+        </ExternalLink>
+        , ...
+      </Feature>
+    </Grid>
+  );
+}
+
+const links = [
+  {
+    href: 'https://github.com/ljosberinn',
+    icon: FaGithub,
+    text: 'ljosberinn',
+  },
+  {
+    href: 'https://twitter.com/gerrit_alex',
+    icon: FaTwitter,
+    text: '@gerrit_alex',
+  },
+  {
+    href: 'https://linkedin.com/in/gerrit-alex/',
+    icon: FaLinkedin,
+    text: 'Gerrit Alex',
+  },
+];
+
+function Footer() {
+  return (
+    <Box as="footer" mt={12} mb={20} textAlign="center">
+      <Text fontSize="sm">
+        <Box as="span" ml="3">
+          MIT by <ExternalLink href="//gerritalex.de">Gerrit Alex</ExternalLink>
+        </Box>
+      </Text>
+      <Stack mt={4} direction="row" spacing="12px" justify="center">
+        {links.map(({ href, icon, text }) => (
+          <ExternalLink omitIcon display="inline-block" href={href} key={href}>
+            <Icon as={icon} fontSize="xl" color="gray.400" /> {text}
+          </ExternalLink>
+        ))}
+      </Stack>
+    </Box>
+  );
+}
+
+export function Index() {
+  return (
+    <>
+      <Header />
+      <Box as="main" maxWidth="86rem" ml="auto" mr="auto">
+        <Hero />
+        <Divider my={16} />
+        <StackOverview />
+      </Box>
+      <Divider my={16} />
+      <Footer />
+    </>
   );
 }

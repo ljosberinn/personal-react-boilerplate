@@ -30,7 +30,7 @@ export function ThemeSwitch(props: ThemeSwitchProps) {
       <Box
         d="inline-block"
         as={FaSun}
-        height={6}
+        height="6"
         color={colorMap.sun[colorMode]}
         data-testid="theme-switch-sun"
         onClick={toggleColorMode}
@@ -42,13 +42,13 @@ export function ThemeSwitch(props: ThemeSwitchProps) {
         onChange={toggleColorMode}
         display="flex"
         alignItems="center"
-        marginLeft={2}
-        marginRight={2}
+        marginLeft="2"
+        marginRight="2"
       />
       <Box
         d="inline-block"
         as={FaMoon}
-        height={6}
+        height="6"
         color={colorMap.moon[colorMode]}
         data-testid="theme-switch-moon"
         onClick={toggleColorMode}
