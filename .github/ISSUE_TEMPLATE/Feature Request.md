@@ -1,6 +1,8 @@
 ---
 name: Feature request
-about: Create a feature request for NAME
+about: Create a feature request for next-karma
+title: 'Request to add [Something]'
+labels: 'enhancement'
 ---
 
 # Feature request

@@ -1,6 +1,8 @@
 ---
 name: Bug report
-about: Create a bug report for NAME
+about: Create a bug report for next-karma
+title: 'A concise description of the bug'
+labels: 'bug'
 ---
 
 # Bug report
