@@ -5379,10 +5379,10 @@ eslint-ast-utils@^1.1.0:
     lodash.get "^4.4.2"
     lodash.zip "^4.2.0"
 
-eslint-config-galex@^0.7.7:
-  version "0.7.7"
-  resolved "https://registry.yarnpkg.com/eslint-config-galex/-/eslint-config-galex-0.7.7.tgz#82b28571de1861809b18da38884cbf8d882f0b91"
-  integrity sha512-rAimLKC9f8AeDUwFYBFv57KoQ/OXZDERuvKHoMpLg69dAlgneSpwhWRqx2AbGO1HYWNBz7JAtade/V5lHvWmbg==
+eslint-config-galex@^0.7.9:
+  version "0.7.9"
+  resolved "https://registry.yarnpkg.com/eslint-config-galex/-/eslint-config-galex-0.7.9.tgz#4ba2fc8a62896f09eba9c845b86524976bc119df"
+  integrity sha512-pWDztVwg7a0VcFeWl3UwRzCCEiTdLRVw8sXvlcfvkdyFzMfh551PWC2QqId5P7+qXmdg6VQ0LjntHRuIBUBWrw==
   dependencies:
     "@typescript-eslint/eslint-plugin" "3.6.0"
     "@typescript-eslint/parser" "3.6.0"
@@ -5397,7 +5397,7 @@ eslint-config-galex@^0.7.7:
     eslint-plugin-prettier "^3.1.4"
     eslint-plugin-promise "^4.2.1"
     eslint-plugin-react "7.20.3"
-    eslint-plugin-react-hooks "4.0.6"
+    eslint-plugin-react-hooks "4.0.7"
     eslint-plugin-sort-keys-fix "^1.1.1"
     eslint-plugin-testing-library "^3.3.1"
     eslint-plugin-unicorn "^20.1.0"
@@ -5551,12 +5551,7 @@ eslint-plugin-promise@^4.2.1:
   resolved "https://registry.yarnpkg.com/eslint-plugin-promise/-/eslint-plugin-promise-4.2.1.tgz#845fd8b2260ad8f82564c1222fce44ad71d9418a"
   integrity sha512-VoM09vT7bfA7D+upt+FjeBO5eHIJQBUWki1aPvB+vbNiHS3+oGIJGIeyBtKQTME6UPXXy3vV07OL1tHd3ANuDw==
 
-eslint-plugin-react-hooks@4.0.6:
-  version "4.0.6"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-react-hooks/-/eslint-plugin-react-hooks-4.0.6.tgz#4027ae451b5cd219928edd0ff9eab54a8ea82901"
-  integrity sha512-RDrsUR/BjwCECcWS+5bc7mWiU/M1IOizKt40Zuei5mn0Eydubiooh87aSCiZ/BGMSUF7P8AqyMEqQL0RsAihmw==
-
-eslint-plugin-react-hooks@^4.0.4:
+eslint-plugin-react-hooks@4.0.7, eslint-plugin-react-hooks@^4.0.4:
   version "4.0.7"
   resolved "https://registry.yarnpkg.com/eslint-plugin-react-hooks/-/eslint-plugin-react-hooks-4.0.7.tgz#19f9e3d07dd3a0fb9e6f0f07153707feedea8108"
   integrity sha512-5PuW2OMHQyMLr/+MqTluYN3/NeJJ1RuvmEp5TR9Xl2gXKxvcusUZuMz8XBUtbELNaiRYWs693LQs0cljKuuHRQ==
