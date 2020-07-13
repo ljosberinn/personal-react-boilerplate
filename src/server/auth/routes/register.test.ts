@@ -1,15 +1,15 @@
+import { testLambda } from '../../../../testUtils/lambda';
 import {
-  testLambda,
   RequestMethods,
-  RequestMethod,
-} from '../../../../testUtils/lambda';
+  RequestInitMethod,
+} from '../../../utils/requestMethods';
 import { NOT_FOUND, BAD_REQUEST, CREATED } from '../../../utils/statusCodes';
 import { expectJSONBodyMiddleware } from '../../middlewares';
 import { registrationHandler } from './register';
 
 const url = '/api/v1/auth/register';
 const catchAllName = 'authRouter';
-const method: RequestMethod = 'POST';
+const method: RequestInitMethod = 'post';
 const middleware = expectJSONBodyMiddleware;
 
 describe('api/register', () => {

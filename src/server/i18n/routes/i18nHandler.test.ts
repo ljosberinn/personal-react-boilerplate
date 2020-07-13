@@ -1,11 +1,15 @@
 import { i18nCache } from '..';
-import { testLambda, RequestMethods } from '../../../../testUtils/lambda';
+import { testLambda } from '../../../../testUtils/lambda';
 import { ENABLED_LANGUAGES } from '../../../constants';
+import {
+  RequestMethods,
+  RequestInitMethod,
+} from '../../../utils/requestMethods';
 import { NOT_FOUND, BAD_REQUEST, OK } from '../../../utils/statusCodes';
 
 import { i18nHandler } from '.';
 
-const methods: Set<RequestInit['method']> = new Set(['GET', 'HEAD']);
+const methods = new Set<RequestInitMethod>(['get', 'head']);
 const url = '/api/v1/i18n';
 const catchAllName = 'language';
 

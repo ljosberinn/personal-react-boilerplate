@@ -1,20 +1,20 @@
 import nextConnect from 'next-connect';
 
-import { testLambda, RequestMethods } from '../../../testUtils/lambda';
+import { testLambda } from '../../../testUtils/lambda';
+import { RequestMethods } from '../../utils/requestMethods';
 import { OK, BAD_REQUEST } from '../../utils/statusCodes';
 import { RequestHandler } from '../types';
 import { expectJSONBodyMiddleware } from './expectJSONBody';
 
-const dummyHandler: RequestHandler = (req, res) => {
-  return res.json({ isObject: req.body instanceof Object });
-};
+const dummyHandler: RequestHandler = (req, res) =>
+  res.json({ isObject: req.body instanceof Object });
 
 describe('middleware/expectJSONBody', () => {
   test('should be a function', () => {
     expect(expectJSONBodyMiddleware).toBeInstanceOf(Function);
   });
 
-  RequestMethods.filter(method => !['GET', 'HEAD'].includes(method)).forEach(
+  RequestMethods.filter(method => !['get', 'head'].includes(method)).forEach(
     method => {
       test(`never intercepts lambda without a body present (method: ${method})`, async () => {
         const response = await testLambda(nextConnect().use(dummyHandler), {

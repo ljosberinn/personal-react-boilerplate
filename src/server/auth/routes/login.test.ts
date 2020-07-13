@@ -1,9 +1,9 @@
 import { waitFor } from '../../../../testUtils';
+import { testLambda } from '../../../../testUtils/lambda';
 import {
-  testLambda,
+  RequestInitMethod,
   RequestMethods,
-  RequestMethod,
-} from '../../../../testUtils/lambda';
+} from '../../../utils/requestMethods';
 import {
   NOT_FOUND,
   BAD_REQUEST,
@@ -26,7 +26,7 @@ afterEach(jest.clearAllMocks);
 const url = '/api/v1/auth/login';
 const catchAllName = 'authRouter';
 const middleware = expectJSONBodyMiddleware;
-const method: RequestMethod = 'POST';
+const method: RequestInitMethod = 'post';
 
 describe('api/login', () => {
   test('should be a function', () => {

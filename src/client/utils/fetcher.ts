@@ -1,34 +1,23 @@
 import { IncomingMessage } from 'http';
 import absoluteUrl from 'next-absolute-url';
 
-const methods = [
-  'get',
-  'head',
-  'post',
-  'put',
-  'delete',
-  'options',
-  'trace',
-  'patch',
-] as const;
+import { RequestInitMethod } from '../../utils/requestMethods';
 
-type RequestInitMethod = typeof methods[number];
-
-const sanitizePathname = (endpoint: string | string[]) => {
-  if (Array.isArray(endpoint)) {
-    return endpoint.join('/').replace('//', '/');
-  }
-
-  return endpoint.startsWith('/') ? endpoint.slice(1) : endpoint;
-};
-
+/**
+ * Utility function to make authenticated requests in getServerSideProps/getStaticProps
+ *
+ * @param method
+ */
 const makeAuthenticatedFetch = (method: RequestInitMethod) => <T>(
-  endpoint: string | string[],
+  endpoint: string,
   req: IncomingMessage,
   options: RequestInit = {}
 ): Promise<T> => {
   const { origin } = absoluteUrl(req);
-  const url = [origin, sanitizePathname(endpoint)].join('/');
+  const url = [
+    origin,
+    endpoint.startsWith('/') ? endpoint.slice(1) : endpoint,
+  ].join('/');
 
   return fetch(url, {
     ...options,
@@ -47,7 +36,13 @@ type AuthenticatedFetchMap = {
   [K in RequestInitMethod]: ReturnType<typeof makeAuthenticatedFetch>;
 };
 
-export const authenticatedFetch = methods.reduce(
-  (carry, method) => ({ ...carry, [method]: makeAuthenticatedFetch(method) }),
-  {}
-) as AuthenticatedFetchMap;
+export const authenticatedFetch: AuthenticatedFetchMap = {
+  delete: makeAuthenticatedFetch('delete'),
+  get: makeAuthenticatedFetch('get'),
+  head: makeAuthenticatedFetch('head'),
+  options: makeAuthenticatedFetch('options'),
+  patch: makeAuthenticatedFetch('patch'),
+  post: makeAuthenticatedFetch('post'),
+  put: makeAuthenticatedFetch('put'),
+  trace: makeAuthenticatedFetch('trace'),
+};

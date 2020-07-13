@@ -8,19 +8,7 @@ import fetch, { Response } from 'node-fetch';
 import listen from 'test-listen';
 
 import { Middleware } from '../src/server/types';
-
-export const RequestMethods = [
-  'PUT',
-  'PATCH',
-  'GET',
-  'DELETE',
-  'HEAD',
-  'POST',
-  'OPTIONS',
-  'TRACE',
-] as const;
-
-export type RequestMethod = typeof RequestMethods[number];
+import { RequestInitMethod } from '../src/utils/requestMethods';
 
 interface UrlArguments {
   /**
@@ -35,7 +23,7 @@ interface UrlArguments {
    * HTTP request method
    * @default GET
    */
-  method?: RequestMethod;
+  method?: RequestInitMethod;
   /**
    * any JSON payload
    */
@@ -122,7 +110,7 @@ export const testLambda = async (
   {
     url,
     searchParams,
-    method = 'GET',
+    method = 'get',
     body,
     catchAllName,
     middleware,

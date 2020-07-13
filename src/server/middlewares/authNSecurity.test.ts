@@ -3,8 +3,9 @@ import { IncomingMessage } from 'http';
 import nextConnect from 'next-connect';
 
 import { waitFor } from '../../../testUtils';
-import { testLambda, RequestMethods } from '../../../testUtils/lambda';
+import { testLambda } from '../../../testUtils/lambda';
 import { SESSION_COOKIE_NAME, SESSION_COOKIE_SECRET } from '../../constants';
+import { RequestMethods } from '../../utils/requestMethods';
 import { OK, UNAUTHORIZED } from '../../utils/statusCodes';
 import * as cookieUtils from '../auth/cookie';
 import { AuthenticatedRequest } from '../auth/types';
@@ -24,7 +25,7 @@ describe('middleware/authNSecurity', () => {
     expect(authNSecurityMiddleware).toBeInstanceOf(Function);
   });
 
-  RequestMethods.filter(method => method !== 'HEAD').forEach(method => {
+  RequestMethods.filter(method => method !== 'head').forEach(method => {
     test(`always intercepts lambda without SESSION_COOKIE present (method: ${method})`, async () => {
       const response = await testLambda(nextConnect().use(dummyHandler), {
         method,

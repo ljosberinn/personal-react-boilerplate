@@ -1,10 +1,10 @@
-import {
-  testLambda,
-  RequestMethods,
-  RequestMethod,
-} from '../../../../testUtils/lambda';
+import { testLambda } from '../../../../testUtils/lambda';
 import { ExternalProvider } from '../../../client/context/AuthContext/AuthContext';
 import { ENABLED_PROVIDER } from '../../../constants';
+import {
+  RequestInitMethod,
+  RequestMethods,
+} from '../../../utils/requestMethods';
 import {
   NOT_FOUND,
   FOUND_MOVED_TEMPORARILY,
@@ -16,7 +16,7 @@ import { externalProviderHandler } from './provider';
 
 const url = '/api/v1/auth/provider';
 const catchAllName = 'authRouter';
-const method: RequestMethod = 'GET';
+const method: RequestInitMethod = 'get';
 const redirect = 'manual';
 
 const code = 'code';

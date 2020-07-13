@@ -1,7 +1,8 @@
 import { IncomingMessage } from 'http';
 import nextConnect from 'next-connect';
 
-import { testLambda, RequestMethods } from '../../../testUtils/lambda';
+import { testLambda } from '../../../testUtils/lambda';
+import { RequestMethods } from '../../utils/requestMethods';
 import * as sentryUtils from '../../utils/sentry';
 import { OK } from '../../utils/statusCodes';
 import { RequestHandler } from '../types';

@@ -1,20 +1,16 @@
-import {
-  testLambda,
-  RequestMethods,
-  RequestMethod,
-} from '../../../../testUtils/lambda';
+import { testLambda } from '../../../../testUtils/lambda';
 import { SESSION_COOKIE_NAME } from '../../../constants';
+import {
+  RequestInitMethod,
+  RequestMethods,
+} from '../../../utils/requestMethods';
 import { NOT_FOUND, OK } from '../../../utils/statusCodes';
 import * as cookieHandling from '../cookie';
 import { logoutHandler } from './logout';
 
 const url = '/api/v1/auth/logout';
 const catchAllName = 'authRouter';
-const method: RequestMethod = 'DELETE';
-
-jest.mock('../cookie', () => ({
-  removeCookie: jest.fn(),
-}));
+const method: RequestInitMethod = 'delete';
 
 afterEach(jest.clearAllMocks);
 
@@ -52,14 +48,14 @@ describe('api/logout', () => {
     };
 
     test(`tries to unset the SESSION_COOKIE regardless of presence (present: ${bool})`, async () => {
+      const removeCookieSpy = jest.spyOn(cookieHandling, 'removeCookie');
+
       const response = await testLambda(logoutHandler, {
         catchAllName,
         headers: bool ? headers : undefined,
         method,
         url,
       });
-
-      const removeCookieSpy = jest.spyOn(cookieHandling, 'removeCookie');
 
       expect(removeCookieSpy).toHaveBeenCalledWith(
         SESSION_COOKIE_NAME,
