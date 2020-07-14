@@ -4,7 +4,7 @@ import { IncomingMessage } from 'http';
 import { NextApiRequest } from 'next';
 import { NextRouter } from 'next/router';
 
-import { User } from '../client/context/AuthContext/AuthContext';
+import { AppRenderProps } from '../../pages/_app';
 import { SENTRY_DSN, IS_PROD, IS_BROWSER } from '../constants';
 
 export { ErrorBoundary } from '@sentry/react';
@@ -52,10 +52,9 @@ export const attachLambdaContext = (req: NextApiRequest) => {
   });
 };
 
-interface InitialContextArgs {
+interface InitialContextArgs
+  extends Omit<AppRenderProps['pageProps'], 'i18nBundle'> {
   req?: IncomingMessage;
-  language: string;
-  session: User | null;
 }
 
 /**
@@ -65,6 +64,7 @@ export const attachInitialContext = ({
   req,
   language,
   session,
+  initialColorMode,
 }: InitialContextArgs) => {
   addBreadcrumb({
     level: Severity.Debug,
@@ -73,6 +73,7 @@ export const attachInitialContext = ({
 
   configureScope(scope => {
     scope.setExtra('language', language);
+    scope.setExtra('initialColorMode', initialColorMode);
 
     if (req) {
       scope.setContext('headers', req.headers);

@@ -13,9 +13,14 @@ import { SUPPORTED_LANGUAGES_MAP } from '../../constants';
 import * as cookieUtils from '../../server/auth/cookie';
 import { i18nCache } from '../../server/i18n';
 import * as sentryUtils from '../../utils/sentry';
+import * as useThemePersistenceUtils from '../hooks/useThemePersistence';
 import * as i18n from '../i18n';
 
-const server = setupServer();
+const server = setupServer(
+  rest.get('http://localhost:3000/api/v1/i18n/en', (_req, res, ctx) =>
+    res(ctx.json(i18nCache.en))
+  )
+);
 
 beforeAll(() => {
   // @ts-expect-error
@@ -100,46 +105,104 @@ const appContext: AppContext = {
 };
 
 describe('App.getInitialProps()', () => {
-  it('performs boot steps', async () => {
-    server.use(
-      rest.get('http://localhost:3000/api/v1/i18n/en', (_req, res, ctx) =>
-        res(ctx.json(i18nCache.de))
-      )
-    );
-
+  it('loads session on boot', async () => {
     const getSessionSpy = jest.spyOn(cookieUtils, 'getSession');
+
+    const { pageProps } = await getInitialProps(appContext);
+
+    expect(getSessionSpy).toHaveBeenCalledWith(appContext.ctx.req);
+
+    expect(pageProps).toMatchObject({
+      // in theory, we could check for i18nCache.en here but it's actually
+      // machine dependant, so in my case .de
+      i18nBundle: expect.any(Object),
+      initialColorMode: theme.config.initialColorMode,
+      language: defaultProps.pageProps.language,
+      session: null,
+    });
+  });
+
+  it('detects language on boot', async () => {
     const detectLanguageSpy = jest.spyOn(i18n, 'detectLanguage');
-    const getI18NSpy = jest.spyOn(i18n, 'getI18N');
-    const attachInitialContextSpy = jest.spyOn(
-      sentryUtils,
-      'attachInitialContext'
-    );
 
     const initialProps = await getInitialProps(appContext);
 
-    expect(getSessionSpy).toHaveBeenCalledWith(appContext.ctx.req);
     expect(detectLanguageSpy).toBeCalledWith(appContext.ctx);
+
+    expect(initialProps.pageProps).toMatchObject({
+      // in theory, we could check for i18nCache.en here but it's actually
+      // machine dependant, so in my case .de
+      i18nBundle: expect.any(Object),
+      initialColorMode: theme.config.initialColorMode,
+      language: defaultProps.pageProps.language,
+      session: null,
+    });
+  });
+
+  it('detects initialColorMode on boot', async () => {
+    const detectInitialColorModeSpy = jest.spyOn(
+      useThemePersistenceUtils,
+      'detectInitialColorMode'
+    );
+
+    const { pageProps } = await getInitialProps(appContext);
+
+    expect(detectInitialColorModeSpy).toHaveBeenCalledWith(appContext.ctx);
+
+    expect(pageProps).toMatchObject({
+      // in theory, we could check for i18nCache.en here but it's actually
+      // machine dependant, so in my case .de
+      i18nBundle: expect.any(Object),
+      initialColorMode: theme.config.initialColorMode,
+      language: defaultProps.pageProps.language,
+      session: null,
+    });
+  });
+
+  it('loads i18n on boot', async () => {
+    const getI18NSpy = jest.spyOn(i18n, 'getI18N');
+
+    const { pageProps } = await getInitialProps(appContext);
+
     expect(getI18NSpy).toHaveBeenCalledWith(
       SUPPORTED_LANGUAGES_MAP.en,
       appContext.ctx
     );
 
+    expect(pageProps).toMatchObject({
+      // in theory, we could check for i18nCache.en here but it's actually
+      // machine dependant, so in my case .de
+      i18nBundle: expect.any(Object),
+      initialColorMode: theme.config.initialColorMode,
+      language: defaultProps.pageProps.language,
+      session: null,
+    });
+  });
+
+  it('attaches initial context to Sentry on boot', async () => {
+    const attachInitialContextSpy = jest.spyOn(
+      sentryUtils,
+      'attachInitialContext'
+    );
+
+    const { pageProps } = await getInitialProps(appContext);
+
     expect(attachInitialContextSpy).toHaveBeenCalledWith(
       expect.objectContaining({
+        initialColorMode: theme.config.initialColorMode,
         language: SUPPORTED_LANGUAGES_MAP.en,
         req: appContext.ctx.req,
         session: null,
       })
     );
 
-    expect(initialProps).toMatchObject({
-      pageProps: {
-        // in theory, we could check for i18nCache.en here but it's actually
-        // machine dependant, so in my case .de
-        i18nBundle: expect.any(Object),
-        language: 'en',
-        session: null,
-      },
+    expect(pageProps).toMatchObject({
+      // in theory, we could check for i18nCache.en here but it's actually
+      // machine dependant, so in my case .de
+      i18nBundle: expect.any(Object),
+      initialColorMode: theme.config.initialColorMode,
+      language: defaultProps.pageProps.language,
+      session: null,
     });
   });
 });

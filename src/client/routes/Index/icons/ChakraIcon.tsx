@@ -23,7 +23,7 @@ export function ChakraIcon() {
           y2="257"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stopColor="#7BCBD4" />
+          <stop offset="0" stopColor="#7BCBD4" />
           <stop offset="1" stopColor="#29C6B7" />
         </linearGradient>
       </defs>

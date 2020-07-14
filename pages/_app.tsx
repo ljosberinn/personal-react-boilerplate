@@ -84,12 +84,18 @@ export async function getInitialProps(
 
   const appProps: AppRenderProps = await NextApp.getInitialProps(props);
 
-  attachInitialContext({ language, req: props.ctx.req, session });
+  attachInitialContext({
+    initialColorMode,
+    language,
+    req: props.ctx.req,
+    session,
+  });
 
   // return {
   //   ...appProps,
   //   pageProps: {
   //     i18nBundle,
+  //     initialColorMode,
   //     language,
   //     session,
   //   },

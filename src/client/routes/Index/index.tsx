@@ -473,7 +473,12 @@ function Footer() {
           MIT by <ExternalLink href="//gerritalex.de">Gerrit Alex</ExternalLink>
         </Box>
       </Text>
-      <Stack mt={4} direction="row" spacing="12px" justify="center">
+      <Stack
+        mt={4}
+        direction={['column', 'row']}
+        spacing="12px"
+        justify="center"
+      >
         {links.map(({ href, icon, text }) => (
           <ExternalLink omitIcon display="inline-block" href={href} key={href}>
             <Icon as={icon} fontSize="xl" color="gray.400" /> {text}

@@ -1,6 +1,6 @@
 import { ColorMode } from '@chakra-ui/core';
 import { Theme } from '@chakra-ui/theme';
-import { set } from 'js-cookie';
+import { CookieAttributes, set } from 'js-cookie';
 import { NextPageContext } from 'next';
 import nextCookies from 'next-cookies';
 import { useEffect } from 'react';
@@ -30,8 +30,12 @@ export const withPersistedTheme = (initialColorMode: ColorMode): Theme => ({
   },
 });
 
+const cookieOptions: CookieAttributes = {
+  sameSite: 'lax',
+};
+
 export function useThemePersistence(colorMode: ColorMode) {
   useEffect(() => {
-    set(THEME_COOKIE_NAME, colorMode);
+    set(THEME_COOKIE_NAME, colorMode, cookieOptions);
   }, [colorMode]);
 }
