@@ -2,7 +2,6 @@
 import * as Sentry from '@sentry/node';
 import universalLanguageDetect from '@unly/universal-language-detector';
 import { COOKIE_LOOKUP_KEY_LANG } from '@unly/universal-language-detector';
-import { IncomingMessage } from 'http';
 import i18n from 'i18next';
 import cookies from 'js-cookie';
 import { NextPageContext } from 'next';
@@ -36,7 +35,8 @@ export const RTL_LANGUAGES = new Set([
   'yi', // Yiddish
 ]);
 
-interface InitI18NextArgs extends PageProps {
+interface InitI18NextArgs
+  extends Omit<PageProps, 'initialColorMode' | 'session'> {
   /**
    * will be set in test environment
    */
@@ -158,7 +158,7 @@ const _memoizedI18nextResources: {
  */
 const memoizedCacheMaxAge = (IS_BROWSER || IS_PROD ? 60 * 60 : 60) * 1000;
 
-export const getI18N = async (lang: string, req?: IncomingMessage) => {
+export const getI18N = async (lang: string, ctx?: NextPageContext) => {
   const url = '/api/v1/i18n/' + lang;
 
   const memoizedI18nextResources = _memoizedI18nextResources[url];
@@ -174,7 +174,7 @@ export const getI18N = async (lang: string, req?: IncomingMessage) => {
   let namespaces: I18nextResourceLocale = {};
 
   try {
-    const { origin } = absoluteUrl(req);
+    const { origin } = absoluteUrl(ctx?.req);
 
     const response = await fetch(origin + url);
     try {

@@ -4,25 +4,25 @@ import {
   ColorModeProvider,
   PortalManager,
   GlobalStyle,
+  ColorMode,
 } from '@chakra-ui/core';
-import { InitializeColorMode } from '@chakra-ui/core';
 import React, { ReactNode } from 'react';
 
-import { theme } from '../../chakra';
 import { attachComponentBreadcrumb } from '../utils/sentry';
 import { MetaThemeColorSynchronizer } from './components/common/MetaThemeColorSynchronizer';
+import { withPersistedTheme } from './hooks/useThemePersistence';
 
 export interface ChakraProps {
   children: ReactNode;
+  initialColorMode: ColorMode;
 }
 
-export function Chakra({ children }: ChakraProps) {
+export function Chakra({ children, initialColorMode }: ChakraProps) {
   attachComponentBreadcrumb('chakra');
 
   return (
     <>
-      <InitializeColorMode />
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={withPersistedTheme(initialColorMode)}>
         <ColorModeProvider>
           <GlobalStyle />
           <CSSReset />

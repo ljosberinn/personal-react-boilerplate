@@ -1,3 +1,4 @@
+import { ColorMode } from '@chakra-ui/core';
 import { NextComponentType, NextPageContext } from 'next';
 import { DefaultSeo } from 'next-seo';
 import NextApp, { AppContext } from 'next/app';
@@ -10,6 +11,7 @@ import { Chakra } from '../src/client/Chakra';
 import { ServiceWorker } from '../src/client/components/common/ServiceWorker';
 import { AuthContextProvider } from '../src/client/context/AuthContext';
 import { User } from '../src/client/context/AuthContext/AuthContext';
+import { detectInitialColorMode } from '../src/client/hooks/useThemePersistence';
 import {
   I18nextResourceLocale,
   initI18Next,
@@ -27,6 +29,7 @@ export interface PageProps {
   language: string;
   i18nBundle: I18nextResourceLocale;
   session: User | null;
+  initialColorMode: ColorMode;
 }
 
 export interface AppRenderProps {
@@ -54,7 +57,7 @@ export default function App({ Component, pageProps, router }: AppRenderProps) {
       <TopLevelErrorBoundary showDialog>
         <I18nextProvider i18n={i18nInstance}>
           <AuthContextProvider session={pageProps.session}>
-            <Chakra>
+            <Chakra initialColorMode={pageProps.initialColorMode}>
               <ServiceWorker />
               {/* <CustomPWAInstallPrompt /> */}
               <Component {...pageProps} />
@@ -75,9 +78,9 @@ export async function getInitialProps(
   } = props;
 
   const session = await getSession(ctx.req);
-
   const language = detectLanguage(ctx);
-  const i18nBundle = await getI18N(language, ctx.req);
+  const initialColorMode = detectInitialColorMode(ctx);
+  const i18nBundle = await getI18N(language, ctx);
 
   const appProps: AppRenderProps = await NextApp.getInitialProps(props);
 
@@ -106,6 +109,7 @@ export async function getInitialProps(
     ...appProps,
     pageProps: {
       i18nBundle,
+      initialColorMode,
       language,
       session,
       ...componentPageProps,

@@ -6,6 +6,7 @@ import { Router } from 'next/router';
 import fetch from 'node-fetch';
 import React from 'react';
 
+import { theme } from '../../../chakra';
 import App, { AppRenderProps, getInitialProps } from '../../../pages/_app';
 import { makeMockIncomingRequest } from '../../../testUtils/api';
 import { SUPPORTED_LANGUAGES_MAP } from '../../constants';
@@ -34,6 +35,8 @@ const defaultProps: AppRenderProps = {
   Component: () => null,
   pageProps: {
     i18nBundle: { namespace: {} },
+    // @ts-expect-error
+    initialColorMode: theme.config.initialColorMode,
     language: 'en',
     session: null,
   },
@@ -118,7 +121,7 @@ describe('App.getInitialProps()', () => {
     expect(detectLanguageSpy).toBeCalledWith(appContext.ctx);
     expect(getI18NSpy).toHaveBeenCalledWith(
       SUPPORTED_LANGUAGES_MAP.en,
-      appContext.ctx.req
+      appContext.ctx
     );
 
     expect(attachInitialContextSpy).toHaveBeenCalledWith(

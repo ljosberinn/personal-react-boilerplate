@@ -17,7 +17,6 @@ const i18n = initI18Next({
   i18nBundle: i18nCache['en'],
   i18nCache,
   language: 'en',
-  session: null,
 });
 
 type TestOptions = {

@@ -9,11 +9,15 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaSun, FaMoon } from 'react-icons/fa';
 
+import { useThemePersistence } from '../../../hooks/useThemePersistence';
+
 export type ThemeSwitchAltProps = Omit<ButtonProps, 'children'>;
 
 export function ThemeSwitchAlt(props: ButtonProps) {
   const { t } = useTranslation('theme');
   const { colorMode, toggleColorMode } = useColorMode();
+  useThemePersistence(colorMode);
+
   const hoverBackgroundColor = useColorModeValue('gray.300', 'gray.600');
 
   const isLightTheme = colorMode === 'light';

@@ -20,7 +20,7 @@ export const encryptSession = (session: object) =>
  * extracts & decrypts the session cookie, if existing
  */
 export const getSession = (
-  req: SSRCompatibleRequest | undefined
+  req?: SSRCompatibleRequest
 ): null | Promise<User> => {
   if (!req) {
     return null;
