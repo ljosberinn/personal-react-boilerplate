@@ -18,7 +18,7 @@ jobs:
   lint:
     name: ESLint
     runs-on: ubuntu-latest
-    timeout-minutes: 1
+    timeout-minutes: 2
     steps:
       - uses: actions/checkout@v1
       - name: Installing dependencies
