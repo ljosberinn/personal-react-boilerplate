@@ -21,23 +21,13 @@ export function Chakra({ children, initialColorMode }: ChakraProps) {
   attachComponentBreadcrumb('chakra');
 
   return (
-    <>
-      <ThemeProvider theme={withPersistedTheme(initialColorMode)}>
-        <ColorModeProvider defaultValue={initialColorMode}>
-          <GlobalStyle />
-          <CSSReset />
-          <MetaThemeColorSynchronizer />
-          <PortalManager zIndex={40}>{children}</PortalManager>
-        </ColorModeProvider>
-      </ThemeProvider>
-      <style jsx global>
-        {`
-          body,
-          div {
-            transition: background-color 150ms ease-in-out;
-          }
-        `}
-      </style>
-    </>
+    <ThemeProvider theme={withPersistedTheme(initialColorMode)}>
+      <ColorModeProvider defaultValue={initialColorMode}>
+        <GlobalStyle />
+        <CSSReset />
+        <MetaThemeColorSynchronizer />
+        <PortalManager zIndex={40}>{children}</PortalManager>
+      </ColorModeProvider>
+    </ThemeProvider>
   );
 }
