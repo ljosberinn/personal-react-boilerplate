@@ -5,6 +5,7 @@ import {
   PortalManager,
   GlobalStyle,
 } from '@chakra-ui/core';
+import { InitializeColorMode } from '@chakra-ui/core';
 import React, { ReactNode } from 'react';
 
 import { theme } from '../../chakra';
@@ -20,6 +21,7 @@ export function Chakra({ children }: ChakraProps) {
 
   return (
     <>
+      <InitializeColorMode />
       <ThemeProvider theme={theme}>
         <ColorModeProvider>
           <GlobalStyle />

@@ -1,4 +1,3 @@
-import { InitializeColorMode } from '@chakra-ui/core';
 import * as Sentry from '@sentry/node';
 import NextDocument, {
   Html,
@@ -55,10 +54,9 @@ export default function CustomDocument({
           href="/favicon-16x16.png"
         />
         <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#d41143" />
-        <meta name="msapplication-TileColor" content="#ffffff" />
+        <meta name="msapplication-TileColor" content="#1A202C" />
       </Head>
       <body>
-        <InitializeColorMode />
         <Main />
         <NextScript />
       </body>
