@@ -23,7 +23,7 @@ export function Chakra({ children, initialColorMode }: ChakraProps) {
   return (
     <>
       <ThemeProvider theme={withPersistedTheme(initialColorMode)}>
-        <ColorModeProvider>
+        <ColorModeProvider defaultValue={initialColorMode}>
           <GlobalStyle />
           <CSSReset />
           <MetaThemeColorSynchronizer />
