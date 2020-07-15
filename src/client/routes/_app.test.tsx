@@ -40,7 +40,6 @@ const defaultProps: AppRenderProps = {
   Component: () => null,
   pageProps: {
     i18nBundle: { namespace: {} },
-    // @ts-expect-error
     initialColorMode: theme.config.initialColorMode,
     language: 'en',
     session: null,

@@ -1,84 +1,63 @@
-import { SystemProps } from '@chakra-ui/system';
-import { Props, mode, ComponentTheme, copy } from '@chakra-ui/theme-tools';
+import { BaseStyle, mode } from '@chakra-ui/theme-tools';
 
-import { Button } from './button';
+const register = {
+  parts: [
+    'menuList',
+    'menuItem',
+    'menuButton',
+    'groupTitle',
+    'menuDivider',
+    'icon',
+    'command',
+  ],
+} as const;
 
-const getMenuListStyle = (props: Props): SystemProps => {
+const baseStyle: BaseStyle<typeof register> = props => {
   return {
-    bg: mode(`#fff`, `gray.700`)(props),
-    border: '1px solid',
-    borderColor: 'inherit',
-    borderRadius: 'md',
-    boxShadow: mode(`sm`, `dark-lg`)(props),
-    color: 'inherit',
-    minWidth: '3xs',
-    outline: 0,
-    paddingY: '2',
-    zIndex: '1',
-  };
-};
+    command: {
+      opacity: 0.6,
+    },
 
-const getMenuItemStyle = (props: Props): SystemProps => ({
-  _active: {
-    bg: mode(`gray.200`, `whiteAlpha.200`)(props),
-  },
-  _disabled: {
-    cursor: 'not-allowed',
-    opacity: 0.4,
-  },
-  _expanded: {
-    bg: mode(`gray.100`, `whiteAlpha.100`)(props),
-  },
-  _focus: {
-    bg: mode(`gray.100`, `whiteAlpha.100`)(props),
-  },
-  outline: 0,
-  paddingX: '0.8rem',
-  paddingY: '0.4rem',
-  textDecoration: 'none',
-  transition: 'background 50ms ease-in 0s',
-  width: '100%',
-});
-
-export const Menu: ComponentTheme = {
-  baseStyle: props => ({
-    MenuButton: Button.baseStyle as SystemProps,
-    MenuGroupTitle: {
+    groupTitle: {
       fontSize: 'sm',
       fontWeight: 'semibold',
       marginX: 4,
       marginY: 2,
     },
-    MenuItem: getMenuItemStyle(props),
-    MenuList: getMenuListStyle(props),
-  }),
-  defaultProps: Button.defaultProps,
-  sizes: {
-    /**
-     * We're using `copy` function to copy all button sizes
-     * under the key `MenuButton`.
-     */
-    ...copy(Button.sizes, 'MenuButton'),
-  },
-  variants: {
-    /**
-     * We're using `copy` function to copy all button variants
-     * under the key `MenuButton`.
-     *
-     * You can ignore this copy and write your own variant styles
-     * for the different sub-components.
-     *
-     * @example
-     *
-     * variants: {
-     *   simple: {
-     *     MenuButton: {...}
-     *   },
-     *   extended: {
-     *      MenuButton: {...}
-     *   }
-     * }
-     */
-    ...copy(Button.variants, 'MenuButton'),
-  },
+
+    menuItem: {
+      _active: {
+        bg: mode(`gray.200`, `whiteAlpha.200`)(props),
+      },
+      _disabled: {
+        cursor: 'not-allowed',
+        opacity: 0.4,
+      },
+      _expanded: {
+        bg: mode(`gray.100`, `whiteAlpha.100`)(props),
+      },
+      _focus: {
+        bg: mode(`gray.100`, `whiteAlpha.100`)(props),
+      },
+      paddingX: '0.8rem',
+      paddingY: '0.4rem',
+      transition: 'background 50ms ease-in 0s',
+    },
+
+    menuList: {
+      bg: mode(`#fff`, `gray.700`)(props),
+      borderRadius: 'md',
+      borderWidth: '1px',
+      boxShadow: mode(`sm`, `dark-lg`)(props),
+      color: 'inherit',
+      minWidth: '3xs',
+      paddingY: '2',
+      zIndex: 1,
+    },
+  };
+};
+
+export const Menu = {
+  baseStyle,
+  register,
 };

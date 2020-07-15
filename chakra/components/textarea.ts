@@ -1,14 +1,24 @@
-import { Input, InputSizes, InputTheme, InputVariants } from './input';
+import { BaseStyle } from '@chakra-ui/theme-tools';
 
-export const Textarea: InputTheme = {
-  ...Input,
-  baseStyle: {
-    ...Input.baseStyle,
+import { Input } from './input';
+
+const register = {
+  parts: ['field'],
+  sizes: Input.register.sizes,
+  variants: Input.register.variants,
+} as const;
+
+const baseStyle: BaseStyle<typeof register> = {
+  field: {
+    ...Input.baseStyle.field,
     lineHeight: 'short',
     minHeight: '80px',
     paddingY: '8px',
   },
 };
 
-export const TextareaVariants = InputVariants;
-export const TextareaSizes = InputSizes;
+export const Textarea = {
+  ...Input,
+  baseStyle,
+  register,
+};

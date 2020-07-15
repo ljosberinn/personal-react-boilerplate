@@ -10,7 +10,6 @@ import * as sentryUtils from '../../utils/sentry';
 
 const pageProps: PageProps = {
   i18nBundle: i18nCache.en,
-  // @ts-expect-error
   initialColorMode: theme.config.initialColorMode,
   language: 'en',
   session: null,

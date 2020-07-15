@@ -5,22 +5,18 @@ import { render, screen } from '../../testUtils';
 import { Chakra, ChakraProps } from './Chakra';
 
 const defaultProps: ChakraProps = {
-  // @ts-expect-error
+  children: <>test</>,
   initialColorMode: theme.config.initialColorMode,
 };
 
 describe('<Chakra />', () => {
   it('should render without crashing', () => {
-    render(<Chakra {...defaultProps}>test</Chakra>);
+    render(<Chakra {...defaultProps} />);
   });
 
   it('should accept child components', () => {
-    render(
-      <Chakra {...defaultProps}>
-        <span>child</span>
-      </Chakra>
-    );
+    render(<Chakra {...defaultProps} />);
 
-    expect(screen.getByText('child')).toBeInTheDocument();
+    expect(screen.getByText('test')).toBeInTheDocument();
   });
 });

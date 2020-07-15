@@ -1,4 +1,70 @@
-import { ComponentTheme, mode } from '@chakra-ui/theme-tools';
+import {
+  BaseStyle,
+  DefaultProps,
+  mode,
+  Sizes,
+  TransitionStyle,
+} from '@chakra-ui/theme-tools';
+
+const register = {
+  parts: ['overlay', 'content', 'header', 'body', 'footer'],
+  sizes: [
+    'xs',
+    'sm',
+    'md',
+    'lg',
+    'xl',
+    '2xl',
+    '3xl',
+    '4xl',
+    '5xl',
+    '6xl',
+    'full',
+  ],
+} as const;
+
+const baseStyle: BaseStyle<typeof register> = props => {
+  const { isCentered, scrollBehavior } = props;
+
+  return {
+    body: {
+      flex: 1,
+      overflow: scrollBehavior === 'inside' ? 'auto' : undefined,
+      paddingX: 6,
+      paddingY: 2,
+    },
+
+    content: {
+      bg: mode('white', 'gray.700')(props),
+      borderRadius: 'md',
+      boxShadow: mode('lg', 'dark-lg')(props),
+      color: 'inherit',
+      marginY: '3.75rem',
+      maxHeight:
+        scrollBehavior === 'inside' ? 'calc(100vh - 7.5rem)' : undefined,
+    },
+
+    footer: {
+      paddingX: 6,
+      paddingY: 4,
+    },
+
+    header: {
+      fontSize: 'xl',
+      fontWeight: 'semibold',
+      paddingX: 6,
+      paddingY: 4,
+    },
+
+    overlay: {
+      alignItems: isCentered ? 'center' : 'flex-start',
+      bg: 'blackAlpha.600',
+      display: 'flex',
+      justifyContent: 'center',
+      overflow: scrollBehavior === 'inside' ? 'hidden' : 'auto',
+    },
+  };
+};
 
 /**
  * Since the `maxWidth` prop references theme.sizes internally,
@@ -6,76 +72,78 @@ import { ComponentTheme, mode } from '@chakra-ui/theme-tools';
  */
 function getSize(value: string) {
   return {
-    Content: {
-      maxWidth: value,
-    },
+    content: { maxWidth: value },
   };
 }
 
-export interface Props {
-  scrollBehavior?: 'inside' | 'outside';
-}
+const sizes: Sizes<typeof register> = {
+  '2xl': getSize('2xl'),
+  '3xl': getSize('3xl'),
+  '4xl': getSize('4xl'),
+  '5xl': getSize('5xl'),
+  '6xl': getSize('6xl'),
+  full: getSize('full'),
+  lg: getSize('lg'),
+  md: getSize('md'),
+  sm: getSize('sm'),
+  xl: getSize('xl'),
+  xs: getSize('xs'),
+};
 
-export const Modal: ComponentTheme<Props> = {
-  baseStyle: props => ({
-    Body: {
-      paddingX: 6,
-      paddingY: 2,
+const defaultProps: DefaultProps<typeof register> = {
+  size: 'md',
+};
+
+const transition: TransitionStyle<typeof register> = {
+  content: {
+    addAppearStyles: true,
+    enter: {
+      from: { opacity: 0.01, transform: 'scale(0.97)' },
+      to: { opacity: 1, transform: 'scale(1)' },
+      transition: {
+        duration: '150ms',
+        easing: 'cubic-bezier(0,0,.2,1)',
+        property: 'opacity, transform',
+      },
     },
-    Content: {
-      bg: mode('white', 'gray.700')(props),
-      borderRadius: 'md',
-      boxShadow: mode(
-        '0 7px 14px 0 rgba(0,0,0, 0.1), 0 3px 6px 0 rgba(0, 0, 0, .07)',
-        'dark-lg'
-      )(props),
-      color: 'inherit',
-      marginY: '3.75rem',
-      maxHeight:
-        props.scrollBehavior === 'inside' ? 'calc(100vh - 7.5rem)' : undefined,
+    exit: {
+      from: { opacity: 1, transform: 'scale(1)' },
+      to: { opacity: 0.01, transform: 'scale(0.97)' },
+      transition: {
+        duration: '100ms',
+        easing: 'cubic-bezier(.4,0,1,1)',
+        property: 'opacity, transform',
+      },
     },
-    Footer: {
-      paddingX: 6,
-      paddingY: 4,
-    },
-    Header: {
-      fontSize: 'xl',
-      fontWeight: 'semibold',
-      paddingX: 6,
-      paddingY: 4,
-    },
-    Overlay: {
-      bg: 'rgba(0,0,0,0.4)',
-    },
-  }),
-  defaultProps: {
-    size: 'md',
+    timeout: { enter: 150, exit: 100 },
   },
-  sizes: {
-    '2xl': getSize('2xl'),
-    '3xl': getSize('3xl'),
-    '4xl': getSize('4xl'),
-    '5xl': getSize('5xl'),
-    '6xl': getSize('6xl'),
-    full: getSize('full'),
-    lg: getSize('lg'),
-    md: getSize('md'),
-    sm: getSize('sm'),
-    xl: getSize('xl'),
-    xs: getSize('xs'),
+  overlay: {
+    enter: {
+      from: { opacity: 0.01 },
+      to: { opacity: 1 },
+      transition: {
+        duration: '150ms',
+        easing: 'cubic-bezier(0,0,.2,1)',
+        property: 'opacity',
+      },
+    },
+    exit: {
+      from: { opacity: 1 },
+      to: { opacity: 0.01 },
+      transition: {
+        duration: '100ms',
+        easing: 'cubic-bezier(.4,0,1,1)',
+        property: 'opacity',
+      },
+    },
+    timeout: { enter: 150, exit: 100 },
   },
 };
 
-export const ModalSizes = {
-  '2xl': '2xl',
-  '3xl': '3xl',
-  '4xl': '4xl',
-  '5xl': '5xl',
-  '6xl': '6xl',
-  full: 'full',
-  lg: 'lg',
-  md: 'md',
-  sm: 'sm',
-  xl: 'xl',
-  xs: 'xs',
+export const Modal = {
+  baseStyle,
+  defaultProps,
+  register,
+  sizes,
+  transition,
 };

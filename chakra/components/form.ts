@@ -1,23 +1,27 @@
-import { ComponentTheme, mode } from '@chakra-ui/theme-tools';
+import { BaseStyle, mode } from '@chakra-ui/theme-tools';
 
-export const Form: ComponentTheme = {
-  baseStyle: props => ({
-    ErrorIcon: {
+const register = {
+  parts: ['label', 'errorText', 'requiredIndicator', 'helperText', 'errorIcon'],
+} as const;
+
+const baseStyle: BaseStyle<typeof register> = props => {
+  return {
+    errorIcon: {
       color: mode('red.500', 'red.300')(props),
       marginRight: '0.5em',
     },
-    ErrorText: {
+    errorText: {
       color: mode('red.500', 'red.300')(props),
       fontSize: 'sm',
       marginTop: 2,
     },
-    HelperText: {
+    helperText: {
       color: mode('gray.500', 'whiteAlpha.600')(props),
       fontSize: 'sm',
       lineHeight: 'normal',
       marginTop: 2,
     },
-    Label: {
+    label: {
       _disabled: {
         opacity: 0.4,
       },
@@ -28,9 +32,14 @@ export const Form: ComponentTheme = {
       opacity: 1,
       transition: 'all 0.2s',
     },
-    RequiredIndicator: {
+    requiredIndicator: {
       color: mode('red.500', 'red.300')(props),
       marginLeft: 1,
     },
-  }),
+  };
+};
+
+export const Form = {
+  baseStyle,
+  register,
 };

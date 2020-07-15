@@ -1,9 +1,42 @@
-import { ComponentTheme, mode, getColor } from '@chakra-ui/theme-tools';
+import {
+  BaseStyle,
+  DefaultProps,
+  generateStripe,
+  getColor,
+  mode,
+  Sizes,
+} from '@chakra-ui/theme-tools';
 
-type ProgressTheme = ComponentTheme<{ isIndeterminate?: boolean }>;
+const register = {
+  parts: ['track', 'filledTrack', 'label'],
+  sizes: ['xs', 'sm', 'md', 'lg'],
+} as const;
 
-const getProgressBg: ProgressTheme['baseStyle'] = props => {
-  const { colorScheme: c, theme: t, isIndeterminate } = props;
+const baseStyle: BaseStyle<typeof register> = props => {
+  return {
+    filledTrack: {
+      transition: 'all 0.3s',
+      ...getFilledTrackStyle(props),
+    },
+    label: {
+      color: 'white',
+      fontSize: '0.25em',
+      fontWeight: 'bold',
+      lineHeight: '1',
+    },
+    track: {
+      bg: mode(`gray.100`, `whiteAlpha.300`)(props),
+    },
+  };
+};
+
+function getFilledTrackStyle(props: any) {
+  const { colorScheme: c, theme: t, isIndeterminate, hasStripe } = props;
+
+  const stripeStyle = mode(
+    generateStripe(),
+    generateStripe('1rem', 'rgba(0,0,0,0.1)')
+  )(props);
 
   const bg = mode(`${c}.500`, `${c}.200`)(props);
 
@@ -14,59 +47,37 @@ const getProgressBg: ProgressTheme['baseStyle'] = props => {
     transparent 100%
   )`;
 
+  const shouldAddStripe = !isIndeterminate && hasStripe;
+
   return {
+    ...(shouldAddStripe && stripeStyle),
     bg: isIndeterminate ? gradient : bg,
   };
-};
+}
 
-const sizes: ProgressTheme['sizes'] = {
+const sizes: Sizes<typeof register> = {
   lg: {
-    Track: {
-      height: '1rem',
-    },
+    track: { height: '1rem' },
   },
   md: {
-    Track: {
-      height: '0.75rem',
-    },
+    track: { height: '0.75rem' },
   },
   sm: {
-    Track: {
-      height: '0.5rem',
-    },
+    track: { height: '0.5rem' },
   },
   xs: {
-    Track: {
-      height: '0.25rem',
-    },
+    track: { height: '0.25rem' },
   },
 };
 
-export const Progress: ProgressTheme = {
-  baseStyle: props => ({
-    Indicator: {
-      height: '100%',
-      transition: 'all 0.3s',
-      ...getProgressBg(props),
-    },
-    Label: {
-      fontSize: '0.25em',
-      lineHeight: '1',
-    },
-    Track: {
-      bg: mode(`gray.100`, `whiteAlpha.300`)(props),
-    },
-  }),
-  defaultProps: {
-    colorScheme: 'blue',
-    size: 'md',
-  },
+const defaultProps: DefaultProps<typeof register> = {
+  colorScheme: 'blue',
+  size: 'md',
+};
+
+export const Progress = {
+  baseStyle,
+  defaultProps,
+  register,
   sizes,
-};
-
-export const ProgressSizes = {
-  lg: 'lg',
-  md: 'md',
-  sm: 'sm',
-  xs: 'xs',
 };

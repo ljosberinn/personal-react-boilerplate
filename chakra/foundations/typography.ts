@@ -11,6 +11,7 @@ export const typography = {
     xl: '1.25rem',
     xs: '0.75rem',
   },
+
   fontWeights: {
     black: 900,
     bold: 700,
@@ -22,11 +23,13 @@ export const typography = {
     semibold: 600,
     thin: 200,
   },
+
   fonts: {
     body: `-apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"`,
     heading: `-apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"`,
     mono: `SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace`,
   },
+
   letterSpacings: {
     normal: '0',
     tight: '-0.025em',
@@ -35,6 +38,7 @@ export const typography = {
     wider: '0.05em',
     widest: '0.1em',
   },
+
   lineHeights: {
     base: '1.5',
     none: '1',

@@ -2,17 +2,16 @@ import { Accordion } from './accordion';
 import { Alert } from './alert';
 import { Avatar } from './avatar';
 import { Badge } from './badge';
+import { Breadcrumb } from './breadcrumb';
 import { Button } from './button';
 import { Checkbox } from './checkbox';
 import { CloseButton } from './close-button';
 import { Code } from './code';
-import { Divider } from './divider';
+import { Drawer } from './drawer';
 import { Editable } from './editable';
 import { Form } from './form';
 import { Heading } from './heading';
-import { Icon } from './icon';
 import { Input } from './input';
-import { InputAddon } from './input-addon';
 import { Kbd } from './kbd';
 import { Link } from './link';
 import { Menu } from './menu';
@@ -24,6 +23,7 @@ import { Progress } from './progress';
 import { Radio } from './radio';
 import { Select } from './select';
 import { Skeleton } from './skeleton';
+import { SkipLink } from './skip-link';
 import { Slider } from './slider';
 import { Spinner } from './spinner';
 import { Stat } from './stat';
@@ -38,17 +38,16 @@ export const components = {
   Alert,
   Avatar,
   Badge,
+  Breadcrumb,
   Button,
   Checkbox,
   CloseButton,
   Code,
-  Divider,
+  Drawer,
   Editable,
   Form,
   Heading,
-  Icon,
   Input,
-  InputAddon,
   Kbd,
   Link,
   Menu,
@@ -60,6 +59,7 @@ export const components = {
   Radio,
   Select,
   Skeleton,
+  SkipLink,
   Slider,
   Spinner,
   Stat,

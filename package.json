@@ -15,9 +15,9 @@
     "postinstall": "yarn-deduplicate -l"
   },
   "dependencies": {
-    "@chakra-ui/core": "^1.0.0-next.4",
-    "@chakra-ui/icons": "^1.0.0-next.4",
-    "@chakra-ui/theme-tools": "^1.0.0-next.4",
+    "@chakra-ui/core": "^1.0.0-next.5",
+    "@chakra-ui/icons": "^1.0.0-next.5",
+    "@chakra-ui/theme-tools": "^1.0.0-next.5",
     "@hapi/iron": "^6.0.0",
     "@sentry/integrations": "^5.19.2",
     "@sentry/node": "^5.19.2",
@@ -70,9 +70,9 @@
     "prettier": "^2.0.5",
     "react-test-renderer": "^16.13.1",
     "test-listen": "^1.1.0",
-    "typescript": "^4.0.0-dev.20200714",
+    "typescript": "^4.0.0-dev.20200715",
     "whatwg-fetch": "^3.2.0",
-    "yarn-deduplicate": "^2.1.0"
+    "yarn-deduplicate": "^2.1.1"
   },
   "license": "MIT"
 }

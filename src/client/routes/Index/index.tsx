@@ -113,7 +113,7 @@ function MobileNav() {
   return (
     <>
       <IconButton
-        display={{ md: 'none', sm: 'inline-flex' }}
+        display={['inline-flex', 'none']}
         aria-label="Open menu"
         fontSize="20px"
         variant="ghost"
@@ -301,7 +301,7 @@ const title = (
 function StackOverview() {
   return (
     <Grid
-      templateColumns={{ lg: 'repeat(2, 1fr)', md: 'repeat(1, 1fr)' }}
+      templateColumns={['repeat(1, 1fr)', 'repeat(2, 1fr)']}
       gap={10}
       px={12}
       as="section"

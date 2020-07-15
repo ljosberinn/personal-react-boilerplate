@@ -4,12 +4,13 @@ import { colors } from './colors';
 import { radii } from './radius';
 import { shadows } from './shadows';
 import { sizes, baseSizes } from './sizes';
+import { transition } from './transition';
 import { typography } from './typography';
 import { zIndices } from './z-index';
 
 const space = baseSizes;
 
-export const foundations = {
+export const theme = {
   breakpoints,
   colors,
   radii,
@@ -19,6 +20,7 @@ export const foundations = {
   shadows,
   sizes,
   space,
+  transition,
 };
 
-export type Theme = typeof foundations;
+export type Theme = typeof theme;

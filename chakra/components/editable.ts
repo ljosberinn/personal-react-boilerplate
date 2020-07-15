@@ -1,34 +1,28 @@
-import { SystemProps } from '@chakra-ui/system';
-import { ComponentTheme } from '@chakra-ui/theme-tools';
+import { SystemStyleObject } from '@chakra-ui/system';
+import { BaseStyle } from '@chakra-ui/theme-tools';
 
-const base: SystemProps = {
-  bg: 'transparent',
+const register = {
+  parts: ['container', 'preview', 'input'],
+} as const;
+
+const previewStyle: SystemStyleObject = {
   borderRadius: 'md',
-  fontSize: 'inherit',
-  fontWeight: 'inherit',
-  marginX: '-3px',
-  paddingX: '3px',
-  textAlign: 'inherit',
+  paddingY: '3px',
   transition: 'all 0.2s',
 };
 
-export const Editable: ComponentTheme = {
-  baseStyle: {
-    Input: {
-      ...base,
-      _focus: {
-        boxShadow: 'outline',
-      },
-      _placeholder: {
-        opacity: 0.6,
-      },
-      outline: 0,
-      width: 'full',
-    },
-    Preview: {
-      ...base,
-      cursor: 'text',
-      display: 'inline-block',
-    },
+const baseStyle: BaseStyle<typeof register> = {
+  container: {},
+  input: {
+    ...previewStyle,
+    _focus: { boxShadow: 'outline' },
+    _placeholder: { opacity: 0.6 },
+    width: 'full',
   },
+  preview: previewStyle,
+};
+
+export const Editable = {
+  baseStyle,
+  register,
 };

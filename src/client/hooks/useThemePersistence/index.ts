@@ -1,11 +1,10 @@
 import { ColorMode } from '@chakra-ui/core';
-import { Theme } from '@chakra-ui/theme';
 import { CookieAttributes, set } from 'js-cookie';
 import { NextPageContext } from 'next';
 import nextCookies from 'next-cookies';
 import { useEffect } from 'react';
 
-import { theme } from '../../../../chakra';
+import { theme, Theme } from '../../../../chakra';
 
 export const THEME_COOKIE_NAME = 'chakra-ui-color-mode';
 
