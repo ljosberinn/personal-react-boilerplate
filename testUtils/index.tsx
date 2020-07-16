@@ -1,9 +1,9 @@
 import { ChakraProvider } from '@chakra-ui/core';
+import theme from '@chakra-ui/theme';
 import { render as rtlRender } from '@testing-library/react';
 import React, { cloneElement } from 'react';
 import { I18nextProvider, I18nContext } from 'react-i18next';
 
-import { theme } from '../chakra';
 import { AuthContextProvider } from '../src/client/context/AuthContext';
 import { AuthContextDefinition } from '../src/client/context/AuthContext/AuthContext';
 import { initI18Next } from '../src/client/i18n';

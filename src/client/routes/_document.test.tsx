@@ -1,8 +1,8 @@
+import theme from '@chakra-ui/theme';
 import NextDocument, { DocumentProps } from 'next/document';
 import { isValidElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 
-import { theme } from '../../../chakra';
 import { PageProps } from '../../../pages/_app';
 import Document from '../../../pages/_document';
 import { i18nCache } from '../../server/i18n';
@@ -10,6 +10,7 @@ import * as sentryUtils from '../../utils/sentry';
 
 const pageProps: PageProps = {
   i18nBundle: i18nCache.en,
+  // @ts-expect-error
   initialColorMode: theme.config.initialColorMode,
   language: 'en',
   session: null,
