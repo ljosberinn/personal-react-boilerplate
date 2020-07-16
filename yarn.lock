@@ -1637,22 +1637,13 @@
     "@chakra-ui/form-control" "^1.0.0-next.5"
     "@chakra-ui/utils" "^1.0.0-next.5"
 
-"@chakra-ui/theme-tools@^1.0.0-next.3":
-  version "1.0.0-next.3"
-  resolved "https://registry.yarnpkg.com/@chakra-ui/theme-tools/-/theme-tools-1.0.0-next.3.tgz#604b03a616d3703a94e2bbaf764547c9f69c5657"
-  integrity sha512-5W8MH1L+3Q4dcCb4urjtcCQXtUUxCPTwvbJmlw6OhypiUj+4AvgYBhCjSGPSvF/eK23CH2cBg8SddweE31VfHw==
+"@chakra-ui/theme-tools@^1.0.0-next.3", "@chakra-ui/theme-tools@^1.0.0-next.5", "@chakra-ui/theme-tools@^1.0.0-next.6":
+  version "1.0.0-next.6"
+  resolved "https://registry.yarnpkg.com/@chakra-ui/theme-tools/-/theme-tools-1.0.0-next.6.tgz#34006c3196796813a61e8ed3f46f5099384a5573"
+  integrity sha512-Azt/jds34OGBqU5AcUee3cW1ghjDgxf1B7ZnO06XPtKxfkPODtbIO/00EzdWwgUKnU4beTTyWCferXafTebcfQ==
   dependencies:
-    "@chakra-ui/utils" "^1.0.0-next.3"
-    "@types/tinycolor2" "1.4.2"
-    tinycolor2 "1.4.1"
-
-"@chakra-ui/theme-tools@^1.0.0-next.5":
-  version "1.0.0-next.5"
-  resolved "https://registry.yarnpkg.com/@chakra-ui/theme-tools/-/theme-tools-1.0.0-next.5.tgz#a0be14da546b108639582f476f4b0f9101289551"
-  integrity sha512-0WpA2WLS2mat5uWc/ZkWKfJvCDN/T2lcAod9B1YC9KtMNg+xc9q8g9ADu3h77Oisk0qPOYqDysq7tC6almkpjA==
-  dependencies:
-    "@chakra-ui/transition" "^1.0.0-next.5"
-    "@chakra-ui/utils" "^1.0.0-next.5"
+    "@chakra-ui/transition" "^1.0.0-next.6"
+    "@chakra-ui/utils" "^1.0.0-next.6"
     "@types/tinycolor2" "1.4.2"
     tinycolor2 "1.4.1"
 
@@ -1688,37 +1679,19 @@
     "@chakra-ui/utils" "^1.0.0-next.5"
     "@chakra-ui/visually-hidden" "^1.0.0-next.5"
 
-"@chakra-ui/transition@^1.0.0-next.0", "@chakra-ui/transition@^1.0.0-next.3":
-  version "1.0.0-next.3"
-  resolved "https://registry.yarnpkg.com/@chakra-ui/transition/-/transition-1.0.0-next.3.tgz#7420fd5890fa2f4ba790b7a8ff6a8c688cff800e"
-  integrity sha512-AUe/KhZRbmHzGYONYor9yUzgykuliIybzNUdbq3ebx5eQwoIU3tx6kYj+ApoIgSestRR64Vz09fwJWVn6BzcyA==
+"@chakra-ui/transition@^1.0.0-next.0", "@chakra-ui/transition@^1.0.0-next.3", "@chakra-ui/transition@^1.0.0-next.5", "@chakra-ui/transition@^1.0.0-next.6":
+  version "1.0.0-next.6"
+  resolved "https://registry.yarnpkg.com/@chakra-ui/transition/-/transition-1.0.0-next.6.tgz#803381a11d6d56f05a38c1e8702d6d5cd15cae26"
+  integrity sha512-rEpQ0e/jhy7/3gzSVTBqtVQA4NPfv1xjjsRCHoOolE4NnJLIB+BBgRNezmaeKsqXFsngrDK9PCAGDK9cnC4k+w==
   dependencies:
-    "@chakra-ui/utils" "^1.0.0-next.3"
+    "@chakra-ui/utils" "^1.0.0-next.6"
     "@types/react-transition-group" "4.4.0"
     react-transition-group "4.4.1"
 
-"@chakra-ui/transition@^1.0.0-next.5":
-  version "1.0.0-next.5"
-  resolved "https://registry.yarnpkg.com/@chakra-ui/transition/-/transition-1.0.0-next.5.tgz#20d3862aa504f2517ac18b2fcc805d28456a61b4"
-  integrity sha512-fopD2nY5FVu7btVvBMwikwpr3gmYkcD6B27tU1QhQcWtJG7Yrt4QbAJpaHVpI09JfgzheWdBP6UKMkfPSUK7XA==
-  dependencies:
-    "@chakra-ui/utils" "^1.0.0-next.5"
-    "@types/react-transition-group" "4.4.0"
-    react-transition-group "4.4.1"
-
-"@chakra-ui/utils@^1.0.0-next.0", "@chakra-ui/utils@^1.0.0-next.3":
-  version "1.0.0-next.3"
-  resolved "https://registry.yarnpkg.com/@chakra-ui/utils/-/utils-1.0.0-next.3.tgz#b1019152a3caa2811c63858ea8021b9b85bee096"
-  integrity sha512-bHCvHRIUKPL9WY0k+HcVrtfoHNucS7kP3xvEhzm8h1UNmWtCKMCp6vLHwn8QszJH/UG1Xi0xi550rOQW9gXSXA==
-  dependencies:
-    css-box-model "1.2.1"
-    deepmerge "4.2.2"
-    memoize-one "5.1.1"
-
-"@chakra-ui/utils@^1.0.0-next.5":
-  version "1.0.0-next.5"
-  resolved "https://registry.yarnpkg.com/@chakra-ui/utils/-/utils-1.0.0-next.5.tgz#63e7d021e6eba74b95186b8e2700100100fe1280"
-  integrity sha512-2IWTAPlLJI0irAljPdsGsXQLxjOXRMW99mQ/puAHSeYD7iOme2nQp2IcOhp+53WXyGWr5bNwkeRCBvMAC00c9Q==
+"@chakra-ui/utils@^1.0.0-next.0", "@chakra-ui/utils@^1.0.0-next.3", "@chakra-ui/utils@^1.0.0-next.5", "@chakra-ui/utils@^1.0.0-next.6":
+  version "1.0.0-next.6"
+  resolved "https://registry.yarnpkg.com/@chakra-ui/utils/-/utils-1.0.0-next.6.tgz#3c800b138397e3d7b89a6ce601527c5dfe331e80"
+  integrity sha512-4EDs0F/DkGLkBHPmQHy4ktdKlDRDvJCRrhURmcBiyMZojGwg9qkqVzr+iobAgI1CyCqKoptj+H/1cJFlh2DdnA==
   dependencies:
     css-box-model "1.2.1"
     lodash.merge "4.6.2"
@@ -4956,7 +4929,7 @@ deep-is@^0.1.3, deep-is@~0.1.3:
   resolved "https://registry.yarnpkg.com/deep-is/-/deep-is-0.1.3.tgz#b369d6fb5dbc13eecf524f91b070feedc357cf34"
   integrity sha1-s2nW+128E+7PUk+RsHD+7cNXzzQ=
 
-deepmerge@4.2.2, deepmerge@^4.2.2:
+deepmerge@^4.2.2:
   version "4.2.2"
   resolved "https://registry.yarnpkg.com/deepmerge/-/deepmerge-4.2.2.tgz#44d2ea3679b8f4d4ffba33f03d865fc1e7bf4955"
   integrity sha512-FJ3UgI4gIl+PHZm53knsuSFpE+nESMr7M4v9QcgB7S63Kj/6WqMiFQJpBBYz1Pt+66bZpP3Q7Lye0Oo9MPKEdg==
