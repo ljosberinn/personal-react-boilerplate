@@ -94,7 +94,7 @@ describe('api/login', () => {
 
   test('attempts to encrypt session on a POST request with valid body', async () => {
     await testLambda(loginHandler, {
-      body: { password: 'next-with-batteries!', username: 'ljosberinn' },
+      body: { password: 'next-karma!', username: 'ljosberinn' },
       catchAllName,
       method,
       middleware,
@@ -111,7 +111,7 @@ describe('api/login', () => {
 
   test('attempts to setSessionCookie on a POST request with valid body', async () => {
     const response = await testLambda(loginHandler, {
-      body: { password: 'next-with-batteries!', username: 'ljosberinn' },
+      body: { password: 'next-karma!', username: 'ljosberinn' },
       catchAllName,
       method,
       middleware,

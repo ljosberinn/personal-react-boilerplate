@@ -15,7 +15,7 @@ const localDB: LocalDBDataset[] = [
   {
     displayName: 'gerrit alex',
     id: '1',
-    password: 'next-with-batteries!',
+    password: 'next-karma!',
     username: 'ljosberinn',
   },
 ];

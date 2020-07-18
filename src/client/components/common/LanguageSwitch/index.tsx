@@ -83,7 +83,7 @@ export function LanguageSwitch(props: LanguageSwitchProps) {
               backgroundColor,
               boxShadow: 'unset',
             }}
-            href="//github.com/chevron-9/next-with-batteries-docs"
+            href="//github.com/chevron-9/next-karma-docs"
           >
             {t('help-cta')}
           </MenuItem>

@@ -97,7 +97,7 @@ describe('hooks/useAuth', () => {
     const fetchSpy = jest.spyOn(window, 'fetch');
 
     const user = { username: 'ljosberinn' };
-    const userWithPassword = { ...user, password: 'next-with-batteries!' };
+    const userWithPassword = { ...user, password: 'next-karma!' };
     const { url, method } = endpoints.register;
 
     server.use(rest.post(url, (_req, res, ctx) => res(ctx.json(user))));
@@ -134,7 +134,7 @@ describe('hooks/useAuth', () => {
     console.error = consoleErrorSpy;
 
     const user = { username: 'ljosberinn' };
-    const userWithPassword = { ...user, password: 'next-with-batteries!' };
+    const userWithPassword = { ...user, password: 'next-karma!' };
     const { url, method } = endpoints.register;
 
     server.use(
@@ -170,7 +170,7 @@ describe('hooks/useAuth', () => {
     const fetchSpy = jest.spyOn(window, 'fetch');
 
     const user = { username: 'ljosberinn' };
-    const userWithPassword = { ...user, password: 'next-with-batteries!' };
+    const userWithPassword = { ...user, password: 'next-karma!' };
 
     const { url, method } = endpoints.register;
 
@@ -254,7 +254,7 @@ describe('hooks/useAuth', () => {
     const fetchSpy = jest.spyOn(window, 'fetch');
 
     const user = { username: 'ljosberinn' };
-    const userWithPassword = { ...user, password: 'next-with-batteries!' };
+    const userWithPassword = { ...user, password: 'next-karma!' };
 
     const { url, method } = endpoints.login;
 
@@ -292,7 +292,7 @@ describe('hooks/useAuth', () => {
     console.error = consoleErrorSpy;
 
     const user = { username: 'ljosberinn' };
-    const userWithPassword = { ...user, password: 'next-with-batteries!' };
+    const userWithPassword = { ...user, password: 'next-karma!' };
 
     const { url, method } = endpoints.login;
 
@@ -329,7 +329,7 @@ describe('hooks/useAuth', () => {
     const fetchSpy = jest.spyOn(window, 'fetch');
 
     const user = { username: 'ljosberinn' };
-    const userWithPassword = { ...user, password: 'next-with-batteries!' };
+    const userWithPassword = { ...user, password: 'next-karma!' };
 
     const { url, method } = endpoints.login;
 
