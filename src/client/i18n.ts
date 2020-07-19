@@ -1,9 +1,10 @@
 // contains lots of inspiration from https://github.com/UnlyEd/next-right-now/blob/v1-ssr-mst-aptd-gcms-lcz-sty/src/utils/i18nextLocize.ts
 import * as Sentry from '@sentry/node';
-import universalLanguageDetect from '@unly/universal-language-detector';
-import { COOKIE_LOOKUP_KEY_LANG } from '@unly/universal-language-detector';
+import universalLanguageDetect, {
+  COOKIE_LOOKUP_KEY_LANG,
+} from '@unly/universal-language-detector';
 import i18n from 'i18next';
-import cookies from 'js-cookie';
+import { set } from 'js-cookie';
 import { NextPageContext } from 'next';
 import absoluteUrl from 'next-absolute-url';
 import nextCookies from 'next-cookies';
@@ -19,7 +20,9 @@ import {
 } from '../constants';
 import { namespaces } from '../server/i18n';
 
-// see https://meta.wikimedia.org/wiki/Template:List_of_language_names_ordered_by_code
+/**
+ * @see https://meta.wikimedia.org/wiki/Template:List_of_language_names_ordered_by_code
+ */
 export const RTL_LANGUAGES = new Set([
   'ar', // Arabic
   'arc', // Aramaic
@@ -35,31 +38,31 @@ export const RTL_LANGUAGES = new Set([
   'yi', // Yiddish
 ]);
 
-interface InitI18NextArgs
-  extends Omit<PageProps, 'initialColorMode' | 'session'> {
-  /**
-   * will be set in test environment
-   */
-  i18nCache?: I18nextResources;
-}
+type InitI18NextArgs = Pick<PageProps, 'language'> &
+  (
+    | {
+        i18nBundle: PageProps['i18nBundle'];
+      }
+    | {
+        i18nCache: I18nextResources;
+      }
+  );
 
-export const initI18Next = ({
-  language,
-  i18nBundle,
-  i18nCache,
-}: InitI18NextArgs) => {
-  const i18nInstance = i18n.use(initReactI18next);
+export const initI18Next = ({ language, ...rest }: InitI18NextArgs) => {
+  const instance = i18n.use(initReactI18next);
 
-  const resources = i18nCache || {
-    [language]: i18nBundle,
-  };
+  const resources =
+    'i18nCache' in rest
+      ? // tests have access to all localizations
+        rest.i18nCache
+      : // only the currently detected language will be available during a render
+        {
+          [language]: rest.i18nBundle,
+        };
 
-  // hide debug info in prod AND in tests
-  const debug = !IS_PROD && !IS_TEST && !i18nCache;
-
-  i18nInstance.init({
+  instance.init({
     cleanCode: true,
-    debug,
+    debug: !IS_PROD && !IS_TEST,
     // removes translation default key
     defaultNS: undefined,
     fallbackLng:
@@ -84,17 +87,41 @@ export const initI18Next = ({
   });
 
   if (IS_BROWSER) {
-    i18nInstance.on('languageChanged', lang => {
+    instance.on('languageChanged', lang => {
       const html = document.querySelector('html');
 
-      html?.setAttribute('lang', lang);
-      html?.setAttribute('dir', RTL_LANGUAGES.has(lang) ? 'rtl' : 'ltr');
+      if (html) {
+        html.setAttribute('lang', lang);
+        html.setAttribute('dir', RTL_LANGUAGES.has(lang) ? 'rtl' : 'ltr');
+      }
 
-      cookies.set(COOKIE_LOOKUP_KEY_LANG, lang);
+      set(COOKIE_LOOKUP_KEY_LANG, lang);
     });
   }
 
-  return i18nInstance;
+  return instance;
+};
+
+/**
+ * A generic function factory accepting the language to change to.
+ * Loads missing bundles on demand.
+ *
+ * @param slug
+ */
+export const makeHandleLanguageChangeHandler = (slug: string) => {
+  return async () => {
+    const hasBundle = !!i18n.getDataByLanguage(slug);
+
+    if (!hasBundle) {
+      const resources = await getI18N(slug);
+
+      Object.entries(resources).forEach(([namespace, bundle]) => {
+        i18n.addResourceBundle(slug, namespace, bundle);
+      });
+    }
+
+    await i18n.changeLanguage(slug);
+  };
 };
 
 export declare type I18nextNamespace = {
@@ -120,7 +147,7 @@ export declare type I18nextResourceLocale = {
  *
  * @example
  * {
- *   fr: {
+ *   en: {
  *     "login": {
  *       "label": "Log in",
  *       "user": "User Name"
@@ -133,7 +160,8 @@ export declare type I18nextResources = {
 };
 
 /**
- * Memoized i18next resources are timestamped, to allow for cache invalidation strategies
+ * Memoized i18next resources are timestamped to allow cache invalidation
+ * strategies
  * The timestamp's value is the time when the memoized cache was created
  */
 export declare type MemoizedI18nextResources = {
@@ -144,7 +172,8 @@ export declare type MemoizedI18nextResources = {
 /**
  * In-memory cache of the i18next resources
  *
- * Useful to avoid over-fetching the API, but rather rely on the memoized cache when available
+ * Useful to avoid over-fetching the API, but rather rely on the memoized cache
+ * when available
  *
  * @type {I18nextResources}
  * @private
@@ -158,10 +187,16 @@ const _memoizedI18nextResources: {
  */
 const memoizedCacheMaxAge = (IS_BROWSER || IS_PROD ? 60 * 60 : 60) * 1000;
 
-export const getI18N = async (lang: string, ctx?: NextPageContext) => {
-  const url = '/api/v1/i18n/' + lang;
+export const i18nEndpoint = '/api/v1/i18n/';
 
-  const memoizedI18nextResources = _memoizedI18nextResources[url];
+export const getI18N = async (lang: string, ctx?: NextPageContext) => {
+  if (!ENABLED_LANGUAGES.includes(lang)) {
+    return {};
+  }
+
+  const url = i18nEndpoint + lang;
+
+  const memoizedI18nextResources = !IS_TEST && _memoizedI18nextResources[url];
 
   if (memoizedI18nextResources) {
     const date = Date.now();
@@ -171,14 +206,14 @@ export const getI18N = async (lang: string, ctx?: NextPageContext) => {
     }
   }
 
-  let namespaces: I18nextResourceLocale = {};
+  let resources: I18nextResourceLocale = {};
 
   try {
     const { origin } = absoluteUrl(ctx?.req);
-
     const response = await fetch(origin + url);
+
     try {
-      namespaces = await response.json();
+      resources = await response.json();
     } catch (error) {
       Sentry.captureException(error);
       // eslint-disable-next-line no-console
@@ -191,11 +226,11 @@ export const getI18N = async (lang: string, ctx?: NextPageContext) => {
   }
 
   _memoizedI18nextResources[url] = {
-    resources: namespaces,
+    resources: resources,
     ts: Date.now(),
   };
 
-  return namespaces;
+  return resources;
 };
 
 /**

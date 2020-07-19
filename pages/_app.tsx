@@ -78,8 +78,8 @@ export async function getInitialProps(
   } = props;
 
   const session = await getSession(ctx.req);
-  const language = detectLanguage(ctx);
   const initialColorMode = detectInitialColorMode(ctx);
+  const language = detectLanguage(ctx);
   const i18nBundle = await getI18N(language, ctx);
 
   const appProps: AppRenderProps = await NextApp.getInitialProps(props);

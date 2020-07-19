@@ -4,6 +4,7 @@ import { setupServer } from 'msw/node';
 import React from 'react';
 
 import { waitFor } from '../../../../testUtils';
+import { mockConsoleMethods } from '../../../../testUtils/console';
 import { ENABLED_PROVIDER } from '../../../constants';
 import {
   OK,
@@ -127,11 +128,7 @@ describe('hooks/useAuth', () => {
   test(`on register, fails gracefully given invalid response data`, async () => {
     const fetchSpy = jest.spyOn(window, 'fetch');
 
-    // eslint-disable-next-line no-console
-    const consoleError = console.error;
-    const consoleErrorSpy = jest.fn().mockImplementation(() => {});
-    // eslint-disable-next-line no-console
-    console.error = consoleErrorSpy;
+    const restoreConsole = mockConsoleMethods('error');
 
     const user = { username: 'ljosberinn' };
     const userWithPassword = { ...user, password: 'next-karma!' };
@@ -160,10 +157,10 @@ describe('hooks/useAuth', () => {
       method,
     });
 
-    expect(consoleErrorSpy).toHaveBeenCalledTimes(1);
-
     // eslint-disable-next-line no-console
-    console.error = consoleError;
+    expect(console.error).toHaveBeenCalledTimes(1);
+
+    restoreConsole();
   });
 
   test('on register, fails gracefully when rejected', async () => {
@@ -285,11 +282,7 @@ describe('hooks/useAuth', () => {
   test(`on local login, fails gracefully given invalid response data`, async () => {
     const fetchSpy = jest.spyOn(window, 'fetch');
 
-    // eslint-disable-next-line no-console
-    const consoleError = console.error;
-    const consoleErrorSpy = jest.fn().mockImplementation(() => {});
-    // eslint-disable-next-line no-console
-    console.error = consoleErrorSpy;
+    const restoreConsole = mockConsoleMethods('error');
 
     const user = { username: 'ljosberinn' };
     const userWithPassword = { ...user, password: 'next-karma!' };
@@ -319,10 +312,10 @@ describe('hooks/useAuth', () => {
       method,
     });
 
-    expect(consoleErrorSpy).toHaveBeenCalledTimes(1);
-
     // eslint-disable-next-line no-console
-    console.error = consoleError;
+    expect(console.error).toHaveBeenCalledTimes(1);
+
+    restoreConsole();
   });
 
   test(`on local login, fails gracefully given invalid login data`, async () => {

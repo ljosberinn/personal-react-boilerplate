@@ -21,7 +21,7 @@ import {
   SUPPORTED_LANGUAGES_MAP,
   ENABLED_LANGUAGES,
 } from '../../../../constants';
-import { getI18N } from '../../../i18n';
+import { makeHandleLanguageChangeHandler } from '../../../i18n';
 import { ExternalLink } from '../ExternalLink';
 
 type FlapMap = { [key: string]: FlagIconCode };
@@ -36,22 +36,6 @@ type LanguageSwitchProps = BoxProps;
 export function LanguageSwitch(props: LanguageSwitchProps) {
   const { i18n, t } = useTranslation('i18n');
   const backgroundColor = useColorModeValue('gray.100', 'whiteAlpha.100');
-
-  function handleLanguageChange(slug: string) {
-    return async () => {
-      const hasBundle = !!i18n.getDataByLanguage(slug);
-
-      if (!hasBundle) {
-        const bundles = await getI18N(slug);
-
-        Object.entries(bundles).forEach(([ns, bundle]) => {
-          i18n.addResourceBundle(slug, ns, bundle);
-        });
-      }
-
-      await i18n.changeLanguage(slug);
-    };
-  }
 
   return (
     <Box d="inline-block" {...props}>
@@ -71,7 +55,6 @@ export function LanguageSwitch(props: LanguageSwitchProps) {
                 t={t}
                 slug={slug}
                 isCurrentLanguage={slug === i18n.language}
-                handleLanguageChange={handleLanguageChange}
                 key={slug}
               />
             ))}
@@ -96,23 +79,19 @@ export function LanguageSwitch(props: LanguageSwitchProps) {
 interface LanguageOptionProps {
   slug: string;
   isCurrentLanguage: boolean;
-  handleLanguageChange: (slug: string) => () => Promise<void>;
   t: TFunction;
 }
 
-function LanguageOption({
-  slug,
-  isCurrentLanguage,
-  handleLanguageChange,
-  t,
-}: LanguageOptionProps) {
+function LanguageOption({ slug, isCurrentLanguage, t }: LanguageOptionProps) {
   return (
     <MenuItemOption
       value={slug}
       isDisabled={isCurrentLanguage}
       // @ts-expect-error
       isChecked={isCurrentLanguage}
-      onClick={isCurrentLanguage ? undefined : handleLanguageChange(slug)}
+      onClick={
+        isCurrentLanguage ? undefined : makeHandleLanguageChangeHandler(slug)
+      }
     >
       <Box mr={2} display="inline-block">
         <FlagIcon aria-hidden="true" code={flagMap[slug]} />

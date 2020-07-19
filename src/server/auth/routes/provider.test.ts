@@ -1,3 +1,4 @@
+import { mockConsoleMethods } from '../../../../testUtils/console';
 import { testLambda } from '../../../../testUtils/lambda';
 import { ExternalProvider } from '../../../client/context/AuthContext/AuthContext';
 import { ENABLED_PROVIDER } from '../../../constants';
@@ -66,11 +67,7 @@ describe('api/provider', () => {
       });
 
       test(`errors given an error query (provider: ${externalProvider})`, async () => {
-        // eslint-disable-next-line no-console
-        const consoleError = console.error;
-        const consoleErrorSpy = jest
-          .spyOn(console, 'error')
-          .mockImplementationOnce(() => {});
+        const restoreConsole = mockConsoleMethods('error');
 
         const error = 'some-error';
 
@@ -84,12 +81,11 @@ describe('api/provider', () => {
           url: url.replace('provider', externalProvider),
         });
 
-        expect(consoleErrorSpy).toHaveBeenCalledWith(error);
-
+        // eslint-disable-next-line no-console
+        expect(console.error).toHaveBeenCalledWith(error);
         expect(response.status).toBe(INTERNAL_SERVER_ERROR);
 
-        // eslint-disable-next-line no-console
-        console.error = consoleError;
+        restoreConsole();
       });
 
       test(`errors given more than one query param, but no code (provider: ${externalProvider})`, async () => {
@@ -160,7 +156,7 @@ describe('api/provider', () => {
 
         jest
           .spyOn(oauthTools, 'getOAuthData')
-          .mockImplementationOnce(() => Promise.resolve(oauthResponse));
+          .mockResolvedValueOnce(oauthResponse);
 
         const getProfileDataSpy = jest.spyOn(oauthTools, 'getProfileData');
 
@@ -193,11 +189,11 @@ describe('api/provider', () => {
 
         jest
           .spyOn(oauthTools, 'getOAuthData')
-          .mockImplementationOnce(() => Promise.resolve(oauthResponse));
+          .mockResolvedValueOnce(oauthResponse);
 
         jest
           .spyOn(oauthTools, 'getProfileData')
-          .mockImplementationOnce(() => Promise.resolve(fakeProfile));
+          .mockResolvedValueOnce(fakeProfile);
 
         const encryptSessionSpy = jest.spyOn(cookieUtils, 'encryptSession');
 
@@ -227,15 +223,15 @@ describe('api/provider', () => {
 
         jest
           .spyOn(oauthTools, 'getOAuthData')
-          .mockImplementationOnce(() => Promise.resolve(oauthResponse));
+          .mockResolvedValueOnce(oauthResponse);
 
         jest
           .spyOn(oauthTools, 'getProfileData')
-          .mockImplementationOnce(() => Promise.resolve(fakeProfile));
+          .mockResolvedValueOnce(fakeProfile);
 
         jest
           .spyOn(cookieUtils, 'encryptSession')
-          .mockImplementationOnce(() => Promise.resolve(fakeCookie));
+          .mockResolvedValueOnce(fakeCookie);
 
         const setSessionCookieSpy = jest.spyOn(cookieUtils, 'setSessionCookie');
 
@@ -268,15 +264,15 @@ describe('api/provider', () => {
 
         jest
           .spyOn(oauthTools, 'getOAuthData')
-          .mockImplementationOnce(() => Promise.resolve(oauthResponse));
+          .mockResolvedValueOnce(oauthResponse);
 
         jest
           .spyOn(oauthTools, 'getProfileData')
-          .mockImplementationOnce(() => Promise.resolve(fakeProfile));
+          .mockResolvedValueOnce(fakeProfile);
 
         jest
           .spyOn(cookieUtils, 'encryptSession')
-          .mockImplementationOnce(() => Promise.resolve(fakeCookie));
+          .mockResolvedValueOnce(fakeCookie);
 
         jest.spyOn(cookieUtils, 'setSessionCookie');
 

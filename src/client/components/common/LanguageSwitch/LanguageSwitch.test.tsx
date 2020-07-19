@@ -1,12 +1,9 @@
-import { COOKIE_LOOKUP_KEY_LANG } from '@unly/universal-language-detector';
 import i18n from 'i18next';
-import cookies from 'js-cookie';
 import React from 'react';
 
 import { render, fireEvent, waitFor, screen } from '../../../../../testUtils';
 import { ENABLED_LANGUAGES } from '../../../../constants';
 import { i18nCache } from '../../../../server/i18n';
-import * as clientSideI18n from '../../../i18n';
 
 import { LanguageSwitch } from '.';
 
@@ -57,75 +54,6 @@ describe('<LanguageSwitch />', () => {
     expect(cta).toHaveAttribute('href');
   });
 
-  it('verifies bundle existence on i18n on languageChanged', async () => {
-    const mockHasResourceBundle = makeGetDataByLanguageSpy(true);
-
-    const { currentLanguage, randomOtherLanguage } = setup();
-
-    // e.g. i18n.en.i18n.de
-    const otherLanguageElement = screen.getByRole('menuitemradio', {
-      name: i18nCache[currentLanguage].i18n[randomOtherLanguage],
-    });
-
-    fireEvent.click(otherLanguageElement);
-
-    await waitFor(() =>
-      expect(mockHasResourceBundle).toHaveBeenLastCalledWith(
-        randomOtherLanguage
-      )
-    );
-  });
-
-  it('appends new bundles to i18n on languageChanged', async () => {
-    const mockHasResourceBundle = makeGetDataByLanguageSpy(false);
-    const mockAddResourceBundle = jest.spyOn(i18n, 'addResourceBundle');
-
-    const { currentLanguage, randomOtherLanguage } = setup();
-
-    const mockGetI18N = jest
-      .spyOn(clientSideI18n, 'getI18N')
-      .mockImplementationOnce(() => Promise.resolve({ i18n: {} }));
-
-    // e.g. i18n.en.i18n.de
-    const otherLanguageElement = screen.getByRole('menuitemradio', {
-      name: i18nCache[currentLanguage].i18n[randomOtherLanguage],
-    });
-
-    fireEvent.click(otherLanguageElement);
-
-    await waitFor(() =>
-      expect(mockHasResourceBundle).toHaveBeenLastCalledWith(
-        randomOtherLanguage
-      )
-    );
-    await waitFor(() => expect(mockGetI18N).toHaveBeenCalledTimes(1));
-
-    expect(mockGetI18N).toHaveBeenCalledWith(randomOtherLanguage);
-    expect(mockAddResourceBundle).toHaveBeenCalledTimes(1);
-  });
-
-  it('attempts to store language preference in cookie on languageChanged', async () => {
-    makeGetDataByLanguageSpy(true);
-
-    const mockSet = jest.spyOn(cookies, 'set');
-
-    const { currentLanguage, randomOtherLanguage } = setup();
-
-    // e.g. i18n.en.i18n.de
-    const otherLanguageElement = screen.getByRole('menuitemradio', {
-      name: i18nCache[currentLanguage].i18n[randomOtherLanguage],
-    });
-
-    fireEvent.click(otherLanguageElement);
-
-    await waitFor(() =>
-      expect(mockSet).toHaveBeenCalledWith(
-        COOKIE_LOOKUP_KEY_LANG,
-        randomOtherLanguage
-      )
-    );
-  });
-
   it('changes the language on click', async () => {
     makeGetDataByLanguageSpy(true);
 
@@ -166,39 +94,5 @@ describe('<LanguageSwitch />', () => {
         name: i18nCache[randomOtherLanguage].i18n[randomOtherLanguage],
       })
     ).toBeChecked();
-  });
-
-  it('changes the "lang" attribute on <html>', async () => {
-    const qsSpy = jest.spyOn(document, 'querySelector');
-    const setAttributeSpy = jest.spyOn(HTMLElement.prototype, 'setAttribute');
-
-    const { currentLanguage, randomOtherLanguage } = setup();
-
-    const otherLanguageElement = screen.getByRole('menuitemradio', {
-      name: i18nCache[currentLanguage].i18n[randomOtherLanguage],
-    });
-
-    fireEvent.click(otherLanguageElement);
-
-    await waitFor(() => expect(qsSpy).toHaveBeenLastCalledWith('html'));
-
-    expect(setAttributeSpy).toHaveBeenCalledWith('lang', randomOtherLanguage);
-  });
-
-  it('changes the "dir" attribute on <html>', async () => {
-    const qsSpy = jest.spyOn(document, 'querySelector');
-    const setAttributeSpy = jest.spyOn(HTMLElement.prototype, 'setAttribute');
-
-    const { currentLanguage, randomOtherLanguage } = setup();
-
-    const otherLanguageElement = screen.getByRole('menuitemradio', {
-      name: i18nCache[currentLanguage].i18n[randomOtherLanguage],
-    });
-
-    fireEvent.click(otherLanguageElement);
-
-    await waitFor(() => expect(qsSpy).toHaveBeenLastCalledWith('html'));
-
-    expect(setAttributeSpy).toHaveBeenCalledWith('dir', expect.any(String));
   });
 });
