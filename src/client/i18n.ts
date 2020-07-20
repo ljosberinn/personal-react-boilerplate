@@ -108,7 +108,7 @@ export const initI18Next = ({ language, ...rest }: InitI18NextArgs) => {
  *
  * @param slug
  */
-export const makeHandleLanguageChangeHandler = (slug: string) => {
+export const makeChangeLanguageHandler = (slug: string) => {
   return async () => {
     const hasBundle = !!i18n.getDataByLanguage(slug);
 

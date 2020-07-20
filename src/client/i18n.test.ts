@@ -11,7 +11,7 @@ import { ENABLED_LANGUAGES, SUPPORTED_LANGUAGES_MAP } from '../constants';
 import { i18nCache } from '../server/i18n';
 import {
   getI18N,
-  makeHandleLanguageChangeHandler,
+  makeChangeLanguageHandler,
   i18nEndpoint,
   initI18Next,
 } from './i18n';
@@ -55,7 +55,7 @@ describe('initI18Next', () => {
     });
   });
 
-  it('always attempts to the html.lang attribute onLanguageChanged', async () => {
+  it('always changes the html.lang attribute onLanguageChanged', async () => {
     const qsSpy = jest.spyOn(document, 'querySelector');
     const setAttributeSpy = jest.spyOn(HTMLElement.prototype, 'setAttribute');
 
@@ -235,12 +235,10 @@ describe('getI18N', () => {
   });
 });
 
-describe('makeHandleLanguageChangeHandler', () => {
+describe('makeChangeLanguageHandler', () => {
   ENABLED_LANGUAGES.forEach(language => {
     it(`always returns a function (language: ${language})`, () => {
-      expect(makeHandleLanguageChangeHandler(language)).toBeInstanceOf(
-        Function
-      );
+      expect(makeChangeLanguageHandler(language)).toBeInstanceOf(Function);
     });
 
     it('verifies bundle existence on i18n on language change', async () => {
@@ -251,14 +249,14 @@ describe('makeHandleLanguageChangeHandler', () => {
 
       const getDataByLanguageSpy = jest.spyOn(i18n, 'getDataByLanguage');
 
-      const [otherLanguage] = ENABLED_LANGUAGES.filter(lng => lng !== language);
+      const otherLanguage = ENABLED_LANGUAGES.find(lng => lng !== language)!;
 
       mockRoute({
         language: otherLanguage,
         response: i18nCache[otherLanguage],
       });
 
-      await makeHandleLanguageChangeHandler(otherLanguage)();
+      await makeChangeLanguageHandler(otherLanguage)();
 
       await waitFor(() =>
         expect(getDataByLanguageSpy).toHaveBeenLastCalledWith(otherLanguage)
@@ -273,7 +271,7 @@ describe('makeHandleLanguageChangeHandler', () => {
 
       const mockAddResourceBundle = jest.spyOn(i18n, 'addResourceBundle');
 
-      const [otherLanguage] = ENABLED_LANGUAGES.filter(lng => lng !== language);
+      const otherLanguage = ENABLED_LANGUAGES.find(lng => lng !== language)!;
 
       const response = i18nCache[otherLanguage];
 
@@ -282,7 +280,7 @@ describe('makeHandleLanguageChangeHandler', () => {
         response,
       });
 
-      await makeHandleLanguageChangeHandler(otherLanguage)();
+      await makeChangeLanguageHandler(otherLanguage)();
 
       await waitFor(() =>
         expect(mockAddResourceBundle).toHaveBeenCalledTimes(
@@ -297,10 +295,8 @@ describe('makeHandleLanguageChangeHandler', () => {
       it(`always attempts to store language preference in cookie (bundle already present: ${bool})`, async () => {
         const mockSet = jest.spyOn(cookies, 'set');
 
-        const [otherLanguage] = ENABLED_LANGUAGES.filter(
-          lng => lng !== language
-        );
-        await makeHandleLanguageChangeHandler(otherLanguage)();
+        const otherLanguage = ENABLED_LANGUAGES.find(lng => lng !== language)!;
+        await makeChangeLanguageHandler(otherLanguage)();
 
         await waitFor(() =>
           expect(mockSet).toHaveBeenCalledWith(

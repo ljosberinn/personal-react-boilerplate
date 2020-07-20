@@ -21,7 +21,7 @@ import {
   SUPPORTED_LANGUAGES_MAP,
   ENABLED_LANGUAGES,
 } from '../../../../constants';
-import { makeHandleLanguageChangeHandler } from '../../../i18n';
+import { makeChangeLanguageHandler } from '../../../i18n';
 import { ExternalLink } from '../ExternalLink';
 
 type FlapMap = { [key: string]: FlagIconCode };
@@ -89,9 +89,7 @@ function LanguageOption({ slug, isCurrentLanguage, t }: LanguageOptionProps) {
       isDisabled={isCurrentLanguage}
       // @ts-expect-error
       isChecked={isCurrentLanguage}
-      onClick={
-        isCurrentLanguage ? undefined : makeHandleLanguageChangeHandler(slug)
-      }
+      onClick={isCurrentLanguage ? undefined : makeChangeLanguageHandler(slug)}
     >
       <Box mr={2} display="inline-block">
         <FlagIcon aria-hidden="true" code={flagMap[slug]} />
