@@ -8,11 +8,11 @@ import { RequestInitMethod } from '../../utils/requestMethods';
  *
  * @param method
  */
-const makeAuthenticatedFetch = (method: RequestInitMethod) => <T>(
+const makeAuthenticatedFetch = (method: RequestInitMethod) => (
   endpoint: string,
   req: IncomingMessage,
   options: RequestInit = {}
-): Promise<T> => {
+) => {
   const { origin } = absoluteUrl(req);
   const url = [
     origin,
@@ -28,8 +28,7 @@ const makeAuthenticatedFetch = (method: RequestInitMethod) => <T>(
       cookie: req.headers.cookie || '',
     },
     method,
-    // eslint-disable-next-line promise/prefer-await-to-then
-  }).then(response => response.json());
+  });
 };
 
 type AuthenticatedFetchMap = {
