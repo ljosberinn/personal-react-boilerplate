@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
     "allowJs": true,
-    "alwaysStrict": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
@@ -17,8 +16,7 @@
     "skipLibCheck": true,
     "strict": true,
     "target": "es6",
-    "allowSyntheticDefaultImports": true,
-    "strictNullChecks": true
+    "allowSyntheticDefaultImports": true
   },
   "exclude": ["node_modules"],
   "include": ["**/*.ts", "**/*.tsx"]
