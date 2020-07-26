@@ -127,20 +127,20 @@ describe('getI18N', () => {
     });
   });
 
-  it('bails early given an unknown language', async () => {
+  it('responds with fallback language data given an unknown language', async () => {
     const unknownLanguage = 'foo';
 
     mockRoute({
-      language: unknownLanguage,
-      response: i18nCache[unknownLanguage],
+      language: SUPPORTED_LANGUAGES_MAP.en,
+      response: i18nCache[SUPPORTED_LANGUAGES_MAP.en],
     });
 
     const fetchSpy = jest.spyOn(window, 'fetch');
 
     await getI18N(unknownLanguage);
 
-    expect(fetchSpy).not.toHaveBeenCalledWith(
-      mswEndpoint + i18nEndpoint + unknownLanguage
+    expect(fetchSpy).toHaveBeenCalledWith(
+      mswEndpoint + i18nEndpoint + SUPPORTED_LANGUAGES_MAP.en
     );
   });
 

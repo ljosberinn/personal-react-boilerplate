@@ -191,7 +191,7 @@ export const i18nEndpoint = '/api/v1/i18n/';
 
 export const getI18N = async (lang: string, ctx?: NextPageContext) => {
   if (!ENABLED_LANGUAGES.includes(lang)) {
-    return {};
+    lang = SUPPORTED_LANGUAGES_MAP.en;
   }
 
   const url = i18nEndpoint + lang;
