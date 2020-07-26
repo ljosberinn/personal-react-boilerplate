@@ -4020,7 +4020,7 @@ chalk@4.0.0:
     ansi-styles "^4.1.0"
     supports-color "^7.1.0"
 
-chalk@4.1.0, chalk@^4.0.0:
+chalk@4.1.0, chalk@^4.0.0, chalk@^4.1.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/chalk/-/chalk-4.1.0.tgz#4e14870a618d9e2edd97dd8345fd9d9dc315646a"
   integrity sha512-qwx12AxXe2Q5xQ43Ac//I6v5aXTipYrSESdOgzrN+9XjgEpyjpKuvSGaN4qE93f7TQTlerQQ8S+EQ0EyDoVL1A==
@@ -5315,15 +5315,15 @@ eslint-ast-utils@^1.1.0:
     lodash.get "^4.4.2"
     lodash.zip "^4.2.0"
 
-eslint-config-galex@^0.8.4:
-  version "0.8.4"
-  resolved "https://registry.yarnpkg.com/eslint-config-galex/-/eslint-config-galex-0.8.4.tgz#91f13f2d5fa37b0cdc79ca3f1a54a24d1314344e"
-  integrity sha512-R021qfy9yQvsUXxx+wIFun/X7Vw7P6GSzsMrYtQbsZi+DB23cF+Ef4aHTNmA4iTFuOI24ci+2QZL7NGlrNR0WQ==
+eslint-config-galex@^0.8.5:
+  version "0.8.5"
+  resolved "https://registry.yarnpkg.com/eslint-config-galex/-/eslint-config-galex-0.8.5.tgz#e36879ffb98e481a2d633bdb9a8eebcf0f3b7ff4"
+  integrity sha512-PZihMpIJZrwDc5KuX5TqQXNJYvlMHMwFGVlJzKLCy0ioUqBc5VgPwCJUtqRQDek5tSUo2nvCHv8YfRe0W24wnA==
   dependencies:
     "@typescript-eslint/eslint-plugin" "3.7.0"
     "@typescript-eslint/parser" "3.7.0"
     babel-eslint "^10.1.0"
-    eslint-config-kentcdodds "^14.14.1"
+    eslint-config-kentcdodds "^14.14.2"
     eslint-config-prettier "^6.11.0"
     eslint-config-react-app "^5.2.1"
     eslint-plugin-flowtype "5.2.0"
@@ -5339,25 +5339,25 @@ eslint-config-galex@^0.8.4:
     eslint-plugin-unicorn "^21.0.0"
     read-pkg-up "^7.0.1"
 
-eslint-config-kentcdodds@^14.14.1:
-  version "14.14.1"
-  resolved "https://registry.yarnpkg.com/eslint-config-kentcdodds/-/eslint-config-kentcdodds-14.14.1.tgz#4f9d42d9d0a8770f70fd898c14afe5d7ce673637"
-  integrity sha512-2DE3cQvssImMnPFqdQdiQQ9nCAlQqbqWKuWzi5rPhf4YhJqjZWzkgIOr0GmGrGCYhG12n29STnRGf4XaXUOjFg==
+eslint-config-kentcdodds@^14.14.2:
+  version "14.14.2"
+  resolved "https://registry.yarnpkg.com/eslint-config-kentcdodds/-/eslint-config-kentcdodds-14.14.2.tgz#60cf3e4b87f3abf7a6ef16e594b6317ae3c6fd52"
+  integrity sha512-IaXj8o3IblHtzB7pSKNjt+cT9prnHmNv/1mBaAeZLuycn7yN4qkqC0OmPwonoDCeVnHRY45jWE++twWcruqVKA==
   dependencies:
     babel-eslint "^10.1.0"
     eslint-config-prettier "^6.11.0"
     eslint-import-resolver-webpack "^0.12.2"
-    eslint-plugin-babel "^5.3.0"
-    eslint-plugin-import "^2.21.2"
-    eslint-plugin-jest "^23.17.1"
+    eslint-plugin-babel "^5.3.1"
+    eslint-plugin-import "^2.22.0"
+    eslint-plugin-jest "^23.18.2"
     eslint-plugin-jest-dom "^2.1.0"
     eslint-plugin-jsx-a11y "^6.3.1"
-    eslint-plugin-react "^7.20.0"
-    eslint-plugin-react-hooks "^4.0.4"
-    eslint-plugin-testing-library "^3.3.1"
+    eslint-plugin-react "^7.20.3"
+    eslint-plugin-react-hooks "^4.0.8"
+    eslint-plugin-testing-library "^3.3.2"
     read-pkg-up "^7.0.1"
     semver "^7.3.2"
-    webpack "^4.43.0"
+    webpack "^4.44.0"
 
 eslint-config-prettier@^6.11.0:
   version "6.11.0"
@@ -5405,7 +5405,7 @@ eslint-module-utils@^2.6.0:
     debug "^2.6.9"
     pkg-dir "^2.0.0"
 
-eslint-plugin-babel@^5.3.0:
+eslint-plugin-babel@^5.3.1:
   version "5.3.1"
   resolved "https://registry.yarnpkg.com/eslint-plugin-babel/-/eslint-plugin-babel-5.3.1.tgz#75a2413ffbf17e7be57458301c60291f2cfbf560"
   integrity sha512-VsQEr6NH3dj664+EyxJwO4FCYm/00JhYb3Sk3ft8o+fpKuIfQ9TaW6uVUfvwMXHcf/lsnRIoyFPsLMyiWCSL/g==
@@ -5420,7 +5420,7 @@ eslint-plugin-flowtype@5.2.0:
     lodash "^4.17.15"
     string-natural-compare "^3.0.1"
 
-eslint-plugin-import@^2.21.2, eslint-plugin-import@^2.22.0:
+eslint-plugin-import@^2.22.0:
   version "2.22.0"
   resolved "https://registry.yarnpkg.com/eslint-plugin-import/-/eslint-plugin-import-2.22.0.tgz#92f7736fe1fde3e2de77623c838dd992ff5ffb7e"
   integrity sha512-66Fpf1Ln6aIS5Gr/55ts19eUuoDhAbZgnr6UxK5hbDx6l/QgQgx61AePq+BV4PP2uXQFClgMVzep5zZ94qqsxg==
@@ -5451,7 +5451,7 @@ eslint-plugin-jest-formatting@^2.0.0:
   resolved "https://registry.yarnpkg.com/eslint-plugin-jest-formatting/-/eslint-plugin-jest-formatting-2.0.0.tgz#6688feefb9c8c49ff847160e9284bc405d44f360"
   integrity sha512-DLL2vg+cXmtONUBiIVE4nk9YQXnpT2ljHfAvW1vRYOGFA9Jfo5kqG+1lzYxcnphdFyUFN0Tx+rGkmsAZy2paxA==
 
-eslint-plugin-jest@^23.17.1:
+eslint-plugin-jest@^23.18.2:
   version "23.18.2"
   resolved "https://registry.yarnpkg.com/eslint-plugin-jest/-/eslint-plugin-jest-23.18.2.tgz#9cebb2c93729ccabc1d01cf45c59e9ee6afec80d"
   integrity sha512-afVOE47F0PENnRlnePUHgrDbv1tsDlTAVrjL051oUETB2ImzBwa5GfmUAUhDjAEuxH+xkE6DsmEpZ8obXzUMqQ==
@@ -5487,12 +5487,12 @@ eslint-plugin-promise@^4.2.1:
   resolved "https://registry.yarnpkg.com/eslint-plugin-promise/-/eslint-plugin-promise-4.2.1.tgz#845fd8b2260ad8f82564c1222fce44ad71d9418a"
   integrity sha512-VoM09vT7bfA7D+upt+FjeBO5eHIJQBUWki1aPvB+vbNiHS3+oGIJGIeyBtKQTME6UPXXy3vV07OL1tHd3ANuDw==
 
-eslint-plugin-react-hooks@4.0.8, eslint-plugin-react-hooks@^4.0.4:
+eslint-plugin-react-hooks@4.0.8, eslint-plugin-react-hooks@^4.0.8:
   version "4.0.8"
   resolved "https://registry.yarnpkg.com/eslint-plugin-react-hooks/-/eslint-plugin-react-hooks-4.0.8.tgz#a9b1e3d57475ccd18276882eff3d6cba00da7a56"
   integrity sha512-6SSb5AiMCPd8FDJrzah+Z4F44P2CdOaK026cXFV+o/xSRzfOiV1FNFeLl2z6xm3yqWOQEZ5OfVgiec90qV2xrQ==
 
-eslint-plugin-react@7.20.3, eslint-plugin-react@^7.20.0:
+eslint-plugin-react@7.20.3, eslint-plugin-react@^7.20.3:
   version "7.20.3"
   resolved "https://registry.yarnpkg.com/eslint-plugin-react/-/eslint-plugin-react-7.20.3.tgz#0590525e7eb83890ce71f73c2cf836284ad8c2f1"
   integrity sha512-txbo090buDeyV0ugF3YMWrzLIUqpYTsWSDZV9xLSmExE1P/Kmgg9++PD931r+KEWS66O1c9R4srLVVHmeHpoAg==
@@ -5516,7 +5516,7 @@ eslint-plugin-sort-keys-fix@^1.1.1:
   dependencies:
     requireindex "~1.2.0"
 
-eslint-plugin-testing-library@^3.3.1, eslint-plugin-testing-library@^3.3.2:
+eslint-plugin-testing-library@^3.3.2:
   version "3.3.2"
   resolved "https://registry.yarnpkg.com/eslint-plugin-testing-library/-/eslint-plugin-testing-library-3.3.2.tgz#d14d0b73452cd2ba10a963f1f81094957e32b75a"
   integrity sha512-UUGKQktNbXiTSYADTYGTZiri4HH1oQKjRYOy4bBzd8v/UCR6cAT91U//STioSvofHDpXbhfi9wVjZR2sZzG87w==
@@ -7709,17 +7709,17 @@ lint-staged@^10.2.11:
     stringify-object "^3.3.0"
 
 listr2@^2.1.0:
-  version "2.3.3"
-  resolved "https://registry.yarnpkg.com/listr2/-/listr2-2.3.3.tgz#ee9f4d95dd325ad1ae89fe7327f2a4f4498224b5"
-  integrity sha512-vU2eiFEzUEaDjgwRJ/n8RB79K2cBcaTw1DigIGHnXGp/BEeQqxGwiM8R17Itit5l2ykrrST11kw2l9vSpCbqUQ==
+  version "2.3.5"
+  resolved "https://registry.yarnpkg.com/listr2/-/listr2-2.3.5.tgz#ba88ac8317a9839d517052c4cd98f38ec34c1906"
+  integrity sha512-mka3F7Xw/9YhzmO3tJ8fc5uQgvZyA2LShn9qa02k63APLTTmIDHItKNov7VMS01bg7jcx4Stzfvo1e0nolh/bw==
   dependencies:
-    chalk "^4.0.0"
+    chalk "^4.1.0"
     cli-truncate "^2.1.0"
     figures "^3.2.0"
     indent-string "^4.0.0"
     log-update "^4.0.0"
     p-map "^4.0.0"
-    rxjs "^6.5.5"
+    rxjs "^6.6.0"
     through "^2.3.8"
 
 load-json-file@^2.0.0:
@@ -10213,7 +10213,7 @@ run-queue@^1.0.0, run-queue@^1.0.3:
   dependencies:
     aproba "^1.1.1"
 
-rxjs@^6.5.5:
+rxjs@^6.6.0:
   version "6.6.0"
   resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-6.6.0.tgz#af2901eedf02e3a83ffa7f886240ff9018bbec84"
   integrity sha512-3HMA8z/Oz61DUHe+SdOiQyzIf4tOx5oQHmMir7IZEu6TMqCLHT4LRcmNaUS0NwOz8VLvmmBduMsoaUvMaIiqzg==
@@ -11827,7 +11827,7 @@ webpack@4.43.0:
     watchpack "^1.6.1"
     webpack-sources "^1.4.1"
 
-webpack@^4.43.0:
+webpack@^4.44.0:
   version "4.44.0"
   resolved "https://registry.yarnpkg.com/webpack/-/webpack-4.44.0.tgz#3b08f88a89470175f036f4a9496b8a0428668802"
   integrity sha512-wAuJxK123sqAw31SpkPiPW3iKHgFUiKvO7E7UZjtdExcsRe3fgav4mvoMM7vvpjLHVoJ6a0Mtp2fzkoA13e0Zw==
