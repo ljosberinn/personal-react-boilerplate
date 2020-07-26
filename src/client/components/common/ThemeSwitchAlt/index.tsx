@@ -1,45 +1,29 @@
-import {
-  useColorMode,
-  Box,
-  Button,
-  ButtonProps,
-  useColorModeValue,
-} from '@chakra-ui/core';
+import { useColorMode, IconButtonProps, IconButton } from '@chakra-ui/core';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaSun, FaMoon } from 'react-icons/fa';
 
 import { useThemePersistence } from '../../../hooks/useThemePersistence';
 
-export type ThemeSwitchAltProps = Omit<ButtonProps, 'children'>;
+export type ThemeSwitchAltProps = Omit<IconButtonProps, 'children'>;
 
-export function ThemeSwitchAlt(props: ButtonProps) {
+export function ThemeSwitchAlt(props: ThemeSwitchAltProps) {
   const { t } = useTranslation('theme');
   const { colorMode, toggleColorMode } = useColorMode();
   useThemePersistence(colorMode);
 
-  const hoverBackgroundColor = useColorModeValue('gray.300', 'gray.600');
-
-  const isLightTheme = colorMode === 'light';
+  const isDarkTheme = colorMode === 'dark';
 
   return (
-    <Button
-      type="button"
-      onClick={toggleColorMode}
-      variant={isLightTheme ? 'outline' : undefined}
-      role="checkbox"
-      aria-checked={!isLightTheme}
-      aria-label={t(isLightTheme ? 'set-dark-theme' : 'set-light-theme')}
-      border="none"
-      background="none"
-      _hover={{ backgroundColor: hoverBackgroundColor }}
+    <IconButton
       {...props}
-    >
-      <Box
-        as={isLightTheme ? FaSun : FaMoon}
-        aria-hidden="true"
-        color="yellow.500"
-      />
-    </Button>
+      onClick={toggleColorMode}
+      role="checkbox"
+      aria-checked={isDarkTheme}
+      icon={isDarkTheme ? <FaMoon /> : <FaSun />}
+      color="yellow.500"
+      background="none"
+      aria-label={t(isDarkTheme ? 'set-light-theme' : 'set-dark-theme')}
+    />
   );
 }
