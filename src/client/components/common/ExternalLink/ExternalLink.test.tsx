@@ -15,13 +15,13 @@ describe('<ExternalLink />', () => {
   });
 
   it('has a default icon after its text', () => {
-    render(<ExternalLink {...defaultProps} />);
+    const { container } = render(<ExternalLink {...defaultProps} />);
 
     const link = screen.getByRole('link');
-    const svg = screen.getByRole('presentation');
+    const svg = container.querySelector('svg');
 
-    expect(svg).toBeInTheDocument();
-    expect(svg.parentElement).toBe(link);
+    expect(svg).not.toBeNull();
+    expect(svg!.parentElement).toBe(link);
   });
 
   it('optionally omits its default icon after its text', () => {

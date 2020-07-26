@@ -42,26 +42,38 @@ describe('api/logout', () => {
     }
   );
 
-  [true, false].forEach(bool => {
-    const headers = {
-      [SESSION_COOKIE_NAME]: 'never-gonna-give-you-up',
-    };
+  test('unsets SESSION_COOKIE even if when absent', async () => {
+    const removeCookieSpy = jest.spyOn(cookieHandling, 'removeCookie');
 
-    test(`tries to unset the SESSION_COOKIE regardless of presence (present: ${bool})`, async () => {
-      const removeCookieSpy = jest.spyOn(cookieHandling, 'removeCookie');
-
-      const response = await testLambda(logoutHandler, {
-        catchAllName,
-        headers: bool ? headers : undefined,
-        method,
-        url,
-      });
-
-      expect(removeCookieSpy).toHaveBeenCalledWith(
-        SESSION_COOKIE_NAME,
-        expect.any(Object)
-      );
-      expect(response.status).toBe(OK);
+    const response = await testLambda(logoutHandler, {
+      catchAllName,
+      headers: {
+        [SESSION_COOKIE_NAME]: 'never-gonna-give-you-up',
+      },
+      method,
+      url,
     });
+
+    expect(removeCookieSpy).toHaveBeenCalledWith(
+      SESSION_COOKIE_NAME,
+      expect.any(Object)
+    );
+    expect(response.status).toBe(OK);
+  });
+
+  test('unsets SESSION_COOKIE when present', async () => {
+    const removeCookieSpy = jest.spyOn(cookieHandling, 'removeCookie');
+
+    const response = await testLambda(logoutHandler, {
+      catchAllName,
+      method,
+      url,
+    });
+
+    expect(removeCookieSpy).toHaveBeenCalledWith(
+      SESSION_COOKIE_NAME,
+      expect.any(Object)
+    );
+    expect(response.status).toBe(OK);
   });
 });

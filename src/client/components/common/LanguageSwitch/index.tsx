@@ -87,7 +87,6 @@ function LanguageOption({ slug, isCurrentLanguage, t }: LanguageOptionProps) {
     <MenuItemOption
       value={slug}
       isDisabled={isCurrentLanguage}
-      // @ts-expect-error
       isChecked={isCurrentLanguage}
       onClick={isCurrentLanguage ? undefined : makeChangeLanguageHandler(slug)}
     >
