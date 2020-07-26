@@ -1,6 +1,7 @@
 import { ChakraProvider } from '@chakra-ui/core';
 import theme from '@chakra-ui/theme';
 import { render as rtlRender, RenderResult } from '@testing-library/react';
+import { axe } from 'jest-axe';
 import React, { cloneElement, ReactElement } from 'react';
 import { I18nextProvider, useTranslation } from 'react-i18next';
 
@@ -157,5 +158,18 @@ function render(
   );
 }
 
+/**
+ * Wrapper for jest-axe
+ *
+ * @see https://github.com/nickcolley/jest-axe#testing-react-with-react-testing-library
+ */
+async function testA11Y(component: ReactElement, options?: TestOptions) {
+  const { container } = render(component, options);
+
+  const results = await axe(container);
+
+  expect(results).toHaveNoViolations();
+}
+
 export * from '@testing-library/react';
-export { render };
+export { render, testA11Y };

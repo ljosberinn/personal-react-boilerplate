@@ -11,11 +11,11 @@ const defaultProps: ChakraProps = {
 };
 
 describe('<Chakra />', () => {
-  it('should render without crashing', () => {
+  it('renders without crashing', () => {
     render(<Chakra {...defaultProps} />);
   });
 
-  it('should accept child components', () => {
+  it('accepts children', () => {
     render(<Chakra {...defaultProps} />);
 
     expect(screen.getByText('test')).toBeInTheDocument();

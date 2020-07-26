@@ -408,6 +408,10 @@ function StackOverview() {
         Following best practices and with help from{' '}
         <ExternalLink href="https://testing-playground.com">
           Testing Playground
+        </ExternalLink>{' '}
+        and{' '}
+        <ExternalLink href="https://github.com/nickcolley/jest-axe">
+          jest-axe
         </ExternalLink>
         , all example components are well tested. A{' '}
         <ExternalLink href="https://testing-library.com/docs/native-testing-library/setup#custom-render">

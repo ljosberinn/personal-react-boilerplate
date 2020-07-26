@@ -1,7 +1,13 @@
 import i18n from 'i18next';
 import React from 'react';
 
-import { render, fireEvent, waitFor, screen } from '../../../../../testUtils';
+import {
+  render,
+  fireEvent,
+  waitFor,
+  screen,
+  testA11Y,
+} from '../../../../../testUtils';
 import { ENABLED_LANGUAGES } from '../../../../constants';
 import { i18nCache } from '../../../../server/i18n';
 
@@ -39,8 +45,12 @@ const makeGetDataByLanguageSpy = (bool: boolean) =>
     .mockImplementation(() => (bool ? { translation: {} } : undefined));
 
 describe('<LanguageSwitch />', () => {
-  it('should render without crashing', () => {
+  it('renders without crashing', () => {
     render(<LanguageSwitch />);
+  });
+
+  it('passes a11y test', async () => {
+    await testA11Y(<LanguageSwitch />);
   });
 
   it('should include a request for translation help', () => {

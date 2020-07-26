@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { render, screen } from '../../../../../testUtils';
+import { render, screen, testA11Y } from '../../../../../testUtils';
 
 import { ExternalLink, ExternalLinkProps } from '.';
 
@@ -12,6 +12,10 @@ const defaultProps: ExternalLinkProps = {
 describe('<ExternalLink />', () => {
   it('renders without crashing given default props', () => {
     render(<ExternalLink {...defaultProps} />);
+  });
+
+  it('passes a11y test', async () => {
+    await testA11Y(<ExternalLink {...defaultProps} />);
   });
 
   it('has a default icon after its text', () => {

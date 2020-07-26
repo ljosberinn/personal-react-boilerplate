@@ -25,7 +25,7 @@ export const ExternalLink = forwardRef(
         {...rest}
         ref={ref}
         whiteSpace="nowrap"
-        _hover={{ textDecoration: omitTextDecoration ? 'none' : undefined }}
+        _hover={omitTextDecoration ? { textDecoration: 'none' } : undefined}
       >
         {children}
         {!omitIcon && <ExternalLinkIcon ml={1} />}

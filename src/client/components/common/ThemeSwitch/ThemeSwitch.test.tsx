@@ -1,12 +1,16 @@
 import React from 'react';
 
-import { render, fireEvent, screen } from '../../../../../testUtils';
+import { render, fireEvent, screen, testA11Y } from '../../../../../testUtils';
 
 import { ThemeSwitch } from '.';
 
 describe('<ThemeSwitch />', () => {
-  it('should render without crashing', () => {
+  it('renders without crashing', () => {
     render(<ThemeSwitch />);
+  });
+
+  it('passes a11y test', async () => {
+    await testA11Y(<ThemeSwitch />);
   });
 
   it('indicates the current theme visually', () => {
