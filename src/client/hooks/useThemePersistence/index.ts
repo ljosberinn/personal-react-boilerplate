@@ -1,4 +1,4 @@
-import { ColorMode } from '@chakra-ui/core';
+import { ColorModeOptions } from '@chakra-ui/core';
 import theme, { Theme } from '@chakra-ui/theme';
 import { CookieAttributes, set } from 'js-cookie';
 import { NextPageContext } from 'next';
@@ -6,6 +6,8 @@ import nextCookies from 'next-cookies';
 import { useEffect } from 'react';
 
 export const THEME_COOKIE_NAME = 'chakra-ui-color-mode';
+
+export type ColorMode = NonNullable<ColorModeOptions['initialColorMode']>;
 
 /**
  * Detects the current color mode based on previous preference.
