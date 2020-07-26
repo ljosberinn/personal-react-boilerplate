@@ -5,7 +5,10 @@ import { FaSun, FaMoon } from 'react-icons/fa';
 
 import { useThemePersistence } from '../../../hooks/useThemePersistence';
 
-export type ThemeSwitchAltProps = Omit<IconButtonProps, 'children'>;
+export type ThemeSwitchAltProps = Omit<
+  IconButtonProps,
+  'children' | 'aria-label'
+>;
 
 export function ThemeSwitchAlt(props: ThemeSwitchAltProps) {
   const { t } = useTranslation('theme');

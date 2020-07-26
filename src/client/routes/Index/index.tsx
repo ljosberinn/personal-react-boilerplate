@@ -20,6 +20,7 @@ import {
   IconButton,
   chakra,
   Image,
+  keyframes,
 } from '@chakra-ui/core';
 import React, { ReactNode } from 'react';
 import { FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa';
@@ -307,6 +308,11 @@ const title = (
 
 const iconSize = '3rem';
 
+const spin = keyframes`
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+`;
+
 function StackOverview() {
   return (
     <Grid
@@ -458,7 +464,20 @@ function StackOverview() {
         . You may of course swap at any time.
       </Feature>
 
-      <Feature icon={<FcSettings size={iconSize} />} title="...and more!">
+      <Feature
+        icon={
+          <Box
+            as={FcSettings}
+            size={iconSize}
+            css={{
+              '@media (prefers-reduced-motion: no-preference)': {
+                animation: `${spin} infinite 3s linear`,
+              },
+            }}
+          />
+        }
+        title="...and more!"
+      >
         <ExternalLink
           omitIcon
           href="//docs.github.com/en/github/building-a-strong-community/configuring-issue-templates-for-your-repository"
