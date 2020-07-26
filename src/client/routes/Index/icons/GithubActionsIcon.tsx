@@ -1,9 +1,9 @@
 import { Icon } from '@chakra-ui/core';
 import React from 'react';
 
-export function GithubActionsLogo() {
+export function GithubActionsLogo({ size }: { size: string }) {
   return (
-    <Icon viewBox="0 0 48 48" width="3rem" height="3rem" fill="none">
+    <Icon viewBox="0 0 48 48" width={size} height={size} fill="none">
       <title>GitHub Actions Logo</title>
       <path
         stroke="#2088FF"

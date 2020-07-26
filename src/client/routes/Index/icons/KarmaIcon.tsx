@@ -1,13 +1,9 @@
 import { Icon } from '@chakra-ui/core';
 import React from 'react';
 
-export interface KarmaIconProps {
-  size?: number | string;
-}
-
-export function KarmaIcon({ size = 3 }: KarmaIconProps) {
+export function KarmaIcon({ size }: { size: string }) {
   return (
-    <Icon viewBox="0 0 378 459" width={`${size}rem`} height={`${size}rem`}>
+    <Icon viewBox="0 0 378 459" width={size} height={size}>
       <title>next-karma Logo</title>
       <path
         fill="#d41143"

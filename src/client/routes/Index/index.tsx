@@ -19,9 +19,11 @@ import {
   DrawerBody,
   IconButton,
   chakra,
+  Image,
 } from '@chakra-ui/core';
 import React, { ReactNode } from 'react';
 import { FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa';
+import { FcSettings } from 'react-icons/fc';
 import { MdDehaze } from 'react-icons/md';
 
 import { ENABLED_PROVIDER } from '../../../constants';
@@ -208,7 +210,7 @@ function Header() {
         p="3"
       >
         <Flex align="center">
-          <KarmaIcon />{' '}
+          <KarmaIcon size="3rem" />{' '}
           <Text fontWeight="500" pl="2">
             next-karma
           </Text>
@@ -255,7 +257,7 @@ function FadedText({ children }: { children: ReactNode }) {
 function Hero() {
   return (
     <Box as="section" pt={40} pb={16} maxW="xl" mx="auto" textAlign="center">
-      <KarmaIcon size={16} />
+      <KarmaIcon size="16rem" />
 
       <Heading as="h1" size="xl" fontWeight="500" mt="2">
         next-karma
@@ -274,6 +276,7 @@ function Hero() {
         <Button
           as={ExternalLink}
           omitIcon
+          omitTextDecoration
           href="//ljosberinn.gitbook.io/next-karma"
           size="lg"
           colorScheme="teal"
@@ -283,6 +286,7 @@ function Hero() {
         <Button
           as={ExternalLink}
           omitIcon
+          omitTextDecoration
           size="lg"
           ml={4}
           href={gitUrl}
@@ -301,6 +305,8 @@ const title = (
   </Text>
 );
 
+const iconSize = '3rem';
+
 function StackOverview() {
   return (
     <Grid
@@ -312,13 +318,17 @@ function StackOverview() {
       px={12}
       as="section"
     >
-      <Feature icon={NextIcon} title="Next.js" href="//nextjs.org">
+      <Feature
+        icon={<NextIcon size={iconSize} />}
+        title="Next.js"
+        href="//nextjs.org"
+      >
         Built on top of Next.js, {title} can near seamlessly integrate into
         existing apps or serve as starting point for new projects.
       </Feature>
 
       <Feature
-        icon={TypeScriptIcon}
+        icon={<TypeScriptIcon size={iconSize} />}
         title="TypeScript"
         href="//typescriptlang.org"
       >
@@ -326,14 +336,18 @@ function StackOverview() {
         {title} is 100% TypeScript.
       </Feature>
 
-      <Feature icon={ChakraIcon} title="Chakra" href="//chakra-ui.com/">
+      <Feature
+        icon={<ChakraIcon size={iconSize} />}
+        title="Chakra"
+        href="//chakra-ui.com/"
+      >
         Chakra provides composable and accessible low-level building blocks. By
         default, it's visually similar to Tailwind and offers every
         customization possible.
       </Feature>
 
       <Feature
-        icon={I18NextIcon}
+        icon={<I18NextIcon size={iconSize} />}
         title="react-i18next"
         href="//react.i18next.com/"
       >
@@ -345,7 +359,11 @@ function StackOverview() {
         . Assets can be exchanged on the fly through an API route.
       </Feature>
 
-      <Feature icon={OAuth2Icon} title="OAuth2" href="//oauth.net/2/">
+      <Feature
+        icon={<OAuth2Icon size={iconSize} />}
+        title="OAuth2"
+        href="//oauth.net/2/"
+      >
         Support for{' '}
         <Tooltip label={ENABLED_PROVIDER.join(', ')}>
           4 external providers
@@ -354,21 +372,36 @@ function StackOverview() {
         authentication, all based on httpOnly cookies.
       </Feature>
 
-      <Feature icon={SentryIcon} title="Sentry" href="//sentry.io">
+      <Feature
+        icon={<SentryIcon size={iconSize} />}
+        title="Sentry"
+        href="//sentry.io"
+      >
         Miss no bugs with{' '}
         <ExternalLink href="http://sentry.io/">Sentry</ExternalLink>, neither on
         the frontend, nor in Next.js core functionality or API routes. Every
         deploy creates a new release, separately visible in Sentrys dashboard.
       </Feature>
 
-      <Feature icon={JestIcon} title="Jest" href="//jestjs.io">
+      <Feature
+        icon={<JestIcon size={iconSize} />}
+        title="Jest"
+        href="//jestjs.io"
+      >
         All tests, integration or unit, run through Jest. To test API routes, a{' '}
         <Code>testLambda</Code> function is included. {title} comes with 90%
         code coverage out of the box.
       </Feature>
 
       <Feature
-        icon="/testing-lib.png"
+        icon={
+          <Image
+            src="/testing-lib.png"
+            height={iconSize}
+            width={iconSize}
+            alt={`${title} Logo`}
+          />
+        }
         title="@testing-library/react"
         href="//testing-library.com/docs/react-testing-library/intro"
       >
@@ -384,7 +417,7 @@ function StackOverview() {
       </Feature>
 
       <Feature
-        icon={GithubActionsLogo}
+        icon={<GithubActionsLogo size={iconSize} />}
         title="Github Actions"
         href="//github.com/features/actions"
       >
@@ -395,7 +428,7 @@ function StackOverview() {
       </Feature>
 
       <Feature
-        icon={PWAIcon}
+        icon={<PWAIcon size={iconSize} />}
         title="PWA"
         href="//web.dev/progressive-web-apps/"
       >
@@ -408,7 +441,11 @@ function StackOverview() {
         opinionated here, no other PWA capabilities are included.
       </Feature>
 
-      <Feature icon={ESLintIcon} title="ESLint" href="//eslint.org">
+      <Feature
+        icon={<ESLintIcon size={iconSize} />}
+        title="ESLint"
+        href="//eslint.org"
+      >
         Built on top of industry standards & community best practices, {title}{' '}
         comes with{' '}
         <ExternalLink href="https://github.com/ljosberinn/eslint-config-galex">
@@ -417,7 +454,7 @@ function StackOverview() {
         . You may of course swap at any time.
       </Feature>
 
-      <Feature title="...and more!">
+      <Feature icon={<FcSettings size={iconSize} />} title="...and more!">
         <ExternalLink
           omitIcon
           href="//docs.github.com/en/github/building-a-strong-community/configuring-issue-templates-for-your-repository"

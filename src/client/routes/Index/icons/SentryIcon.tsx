@@ -1,11 +1,11 @@
 import { useColorModeValue, Icon } from '@chakra-ui/core';
 import React from 'react';
 
-export function SentryIcon() {
+export function SentryIcon({ size }: { size: string }) {
   const fill = useColorModeValue('rgb(54, 45, 89)', 'white');
 
   return (
-    <Icon viewBox="52.5 45 160 160" boxSize="1em" width="3rem" height="3rem">
+    <Icon viewBox="52.5 45 160 160" boxSize="1em" width={size} height={size}>
       <title>Sentry Logo</title>
       <path
         fill={fill}

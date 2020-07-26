@@ -1,9 +1,9 @@
 import { Icon } from '@chakra-ui/core';
 import React from 'react';
 
-export function I18NextIcon() {
+export function I18NextIcon({ size }: { size: string }) {
   return (
-    <Icon viewBox="0 30 150 150" width="3rem" height="3rem">
+    <Icon viewBox="0 30 150 150" width={size} height={size}>
       <title>react-i18next Logo</title>
       <path
         fill="#009688"

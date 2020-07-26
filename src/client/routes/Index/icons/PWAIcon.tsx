@@ -1,11 +1,11 @@
 import { useColorModeValue, Icon } from '@chakra-ui/core';
 import React from 'react';
 
-export function PWAIcon() {
+export function PWAIcon({ size }: { size: string }) {
   const fill = useColorModeValue('#3D3D3D', 'white');
 
   return (
-    <Icon viewBox="0 0 1952 734.93" width="3rem" height="3rem">
+    <Icon viewBox="0 0 1952 734.93" width={size} height={size}>
       <title>PWA Logo</title>
       <path
         fill={fill}

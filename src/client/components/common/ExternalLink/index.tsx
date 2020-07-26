@@ -7,18 +7,26 @@ export type ExternalLinkProps = LinkProps & {
   rel?: string;
   target?: string;
   omitIcon?: boolean;
+  omitTextDecoration?: boolean;
   children: ReactNode;
 };
 
 export const ExternalLink = forwardRef(
   (
-    { children, omitIcon = false, ...rest }: ExternalLinkProps,
+    { children, omitIcon, omitTextDecoration, ...rest }: ExternalLinkProps,
     ref: Ref<HTMLAnchorElement>
   ) => {
     const color = useColorModeValue('teal.700', 'teal.400');
 
     return (
-      <Link isExternal color={color} {...rest} ref={ref} whiteSpace="nowrap">
+      <Link
+        isExternal
+        color={color}
+        {...rest}
+        ref={ref}
+        whiteSpace="nowrap"
+        _hover={{ textDecoration: omitTextDecoration ? 'none' : undefined }}
+      >
         {children}
         {!omitIcon && <ExternalLinkIcon ml={1} />}
       </Link>

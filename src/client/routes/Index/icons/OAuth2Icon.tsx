@@ -1,9 +1,9 @@
 import { Icon } from '@chakra-ui/core';
 import React from 'react';
 
-export function OAuth2Icon() {
+export function OAuth2Icon({ size }: { size: string }) {
   return (
-    <Icon width="3rem" height="3rem" viewBox="20 30 550 630">
+    <Icon width={size} height={size} viewBox="20 30 550 630">
       <title>OAuth2 Logo</title>
       <path
         fill="#fff"

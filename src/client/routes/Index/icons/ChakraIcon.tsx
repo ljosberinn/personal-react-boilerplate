@@ -1,13 +1,13 @@
 import { chakra } from '@chakra-ui/core';
 import React from 'react';
 
-export function ChakraIcon() {
+export function ChakraIcon({ size }: { size: string }) {
   return (
     <chakra.svg
       width="auto"
       viewBox="0 0 998 257"
       xmlns="http://www.w3.org/2000/svg"
-      height="3rem"
+      height={size}
     >
       <title>Chakra Logo</title>
       <rect width="257" height="257" fill="url(#paint0_linear)" rx="128.5" />
