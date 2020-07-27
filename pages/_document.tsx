@@ -35,7 +35,6 @@ export default function CustomDocument({
   return (
     <Html lang={language} dir="auto">
       <Head>
-        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         <link rel="manifest" href="/manifest.json" />
         <link
           rel="apple-touch-icon"

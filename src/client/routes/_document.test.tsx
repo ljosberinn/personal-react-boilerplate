@@ -25,21 +25,25 @@ const defaultProps: DocumentProps = {
     query: {},
   },
   ampPath: '/',
-  bodyTags: [],
+  buildManifest: {
+    ampDevFiles: [],
+    ampFirstPages: [],
+    devFiles: [],
+    lowPriorityFiles: [],
+    pages: {
+      '/_app': [],
+    },
+    polyfillFiles: [],
+  },
   canonicalBase: '/',
   dangerousAsPath: '/',
-  devFiles: [],
   dynamicImports: [],
   files: [],
   headTags: [],
   html: '',
-  htmlProps: {},
   hybridAmp: false,
   inAmpMode: false,
   isDevelopment: false,
-  lowPriorityFiles: [],
-  polyfillFiles: [],
-  staticMarkup: false,
 };
 
 describe('<Document />', () => {

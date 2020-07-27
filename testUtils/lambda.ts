@@ -119,11 +119,18 @@ export const testLambda = async (
   }: UrlArguments
 ): Promise<Response> => {
   const server = createServer((req, res) =>
-    apiResolver(req, res, undefined, withMiddleware(handler, middleware), {
-      previewModeEncryptionKey: '',
-      previewModeId: '',
-      previewModeSigningKey: '',
-    })
+    apiResolver(
+      req,
+      res,
+      undefined,
+      withMiddleware(handler, middleware),
+      {
+        previewModeEncryptionKey: '',
+        previewModeId: '',
+        previewModeSigningKey: '',
+      },
+      true
+    )
   );
 
   const index = await listen(server);

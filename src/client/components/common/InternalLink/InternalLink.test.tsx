@@ -1,8 +1,17 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 
 import { render, testA11Y } from '../../../../../testUtils';
 
 import { InternalLink, InternalLinkProps } from '.';
+
+jest.mock('next/link', () => {
+  const nextLink = jest.requireActual('next/link');
+
+  return {
+    ...nextLink,
+    default: ({ children }: { children: ReactNode }) => children,
+  };
+});
 
 const defaultProps: InternalLinkProps = {
   children: 'Docs',
