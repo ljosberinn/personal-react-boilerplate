@@ -33,7 +33,9 @@ if (!IS_PROD) {
 init(sentryOptions);
 
 configureScope(scope => {
-  scope.setTag('nodejs', process.version);
+  if (!IS_BROWSER) {
+    scope.setTag('nodejs', process.version);
+  }
   scope.setTag('buildTime', process.env.BUILD_TIME!);
 });
 
