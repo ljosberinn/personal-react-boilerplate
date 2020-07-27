@@ -1,6 +1,10 @@
 import { ChakraProvider } from '@chakra-ui/core';
 import theme from '@chakra-ui/theme';
-import { render as rtlRender, RenderResult } from '@testing-library/react';
+import {
+  render as rtlRender,
+  RenderResult,
+  RenderOptions,
+} from '@testing-library/react';
 import { axe } from 'jest-axe';
 import React, { cloneElement, ReactElement } from 'react';
 import { I18nextProvider, useTranslation } from 'react-i18next';
@@ -15,9 +19,8 @@ import { i18nCache } from '../src/server/i18n';
 import 'whatwg-fetch';
 
 // as singleton, else you will see lots of `act` warnings in tests which are
-// technically unrelated to i18n
+// technically unrelated to the tested component
 const i18nInstance = initI18Next({
-  i18nBundle: i18nCache['en'],
   i18nCache,
   language: 'en',
 });
@@ -31,7 +34,7 @@ type I18NPropAlias = {
   t?: string;
 };
 
-export type TestOptions = {
+export interface TestOptions extends Omit<RenderOptions, 'wrapper'> {
   /**
    * allows using `t={jest.fn()} i18n={new MockI18n()} ready={true}` in tests for components
    * that receive `t`, `i18n` and|or `ready` via props
@@ -97,10 +100,9 @@ export type TestOptions = {
    * optional session to initialize AuthContextProvider with
    */
   session?: AuthContextDefinition['user'];
-};
+}
 
 // UI-less passthrough fallback to prevent using conditional logic in render
-// below
 function ChildrenPassthrough({ children }: Children) {
   return children;
 }
@@ -139,6 +141,7 @@ function render(
     i18n,
     wrapper: Wrapper = ChildrenPassthrough,
     session = null,
+    ...rest
   }: TestOptions = {}
 ): RenderResult {
   return rtlRender(
@@ -154,7 +157,8 @@ function render(
           </Wrapper>
         </AuthContextProvider>
       </I18nextProvider>
-    </ChakraProvider>
+    </ChakraProvider>,
+    rest
   );
 }
 

@@ -14,7 +14,7 @@ describe('<InternalLink />', () => {
     render(<InternalLink {...defaultProps} />);
   });
 
-  it('passes a11y test', async () => {
+  it('passes a11y test given default props', async () => {
     await testA11Y(<InternalLink {...defaultProps} />);
   });
 });

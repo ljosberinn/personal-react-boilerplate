@@ -20,9 +20,9 @@ export const ExternalLink = forwardRef(
 
     return (
       <Link
-        isExternal
-        color={color}
         {...rest}
+        color={color}
+        isExternal
         ref={ref}
         whiteSpace="nowrap"
         _hover={omitTextDecoration ? { textDecoration: 'none' } : undefined}
