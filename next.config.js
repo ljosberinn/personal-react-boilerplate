@@ -58,11 +58,6 @@ const defaultConfig = {
   webpack: (config, { isServer, buildId }) => {
     if (!isServer) {
       config.resolve.alias['@sentry/node'] = '@sentry/react';
-
-      // TODO drop @hapi/iron
-      config.resolve.alias['crypto'] = 'crypto-browserify';
-      config.resolve.alias['stream'] = 'stream-browserify';
-      config.resolve.alias['vm'] = 'vm-browserify';
     }
 
     if (
@@ -85,6 +80,9 @@ const defaultConfig = {
     return config;
   },
   reactStrictMode: true,
+  experimental: {
+    modern: true,
+  },
 };
 
 module.exports = withPlugins([

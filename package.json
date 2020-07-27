@@ -14,9 +14,6 @@
     "test:ci": "jest --ci --coverage",
     "postinstall": "yarn-deduplicate -l"
   },
-  "resolutions": {
-    "webpack": "^5.0.0-beta.22"
-  },
   "dependencies": {
     "@chakra-ui/core": "^1.0.0-rc.0",
     "@chakra-ui/icons": "^1.0.0-rc.0",
@@ -26,7 +23,6 @@
     "@sentry/node": "^5.20.1",
     "@sentry/react": "^5.20.1",
     "@unly/universal-language-detector": "^2.0.3",
-    "crypto-browserify": "^3.12.0",
     "i18next": "^19.6.3",
     "js-cookie": "^2.2.1",
     "next": "9.5.0",
@@ -38,9 +34,7 @@
     "react-dom": "^16.13.1",
     "react-flag-kit": "^0.3.1",
     "react-i18next": "^11.7.0",
-    "react-icons": "^3.10.0",
-    "stream-browserify": "^3.0.0",
-    "vm-browserify": "^1.1.2"
+    "react-icons": "^3.10.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^9.1.1",
