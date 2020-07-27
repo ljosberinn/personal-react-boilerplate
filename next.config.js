@@ -58,6 +58,7 @@ const defaultConfig = {
   webpack: (config, { isServer, buildId }) => {
     if (!isServer) {
       config.resolve.alias['@sentry/node'] = '@sentry/react';
+      config.resolve.alias['crypto'] = 'crypto-browserify';
     }
 
     if (
