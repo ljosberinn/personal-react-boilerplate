@@ -58,7 +58,10 @@ const defaultConfig = {
   webpack: (config, { isServer, buildId }) => {
     if (!isServer) {
       config.resolve.alias['@sentry/node'] = '@sentry/react';
+
+      // TODO drop @hapi/iron
       config.resolve.alias['crypto'] = 'crypto-browserify';
+      config.resolve.alias['stream'] = 'stream-browserify';
     }
 
     if (
