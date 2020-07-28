@@ -51,6 +51,14 @@ const offlineConfig = {
 };
 
 const defaultConfig = {
+  typescript: {
+    /**
+     * `yarn tsc` is run in CI already so we can safely assume no errors here
+     * reduces build time by ~55%
+     * @see https://nextjs.org/docs/api-reference/next.config.js/ignoring-typescript-errors
+     */
+    ignoreBuildErrors: true,
+  },
   env: {
     BUILD_TIME: date.toString(),
     BUILD_TIMESTAMP: +date,
