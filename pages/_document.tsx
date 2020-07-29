@@ -1,4 +1,4 @@
-import * as Sentry from '@sentry/node';
+import { captureException } from '@sentry/node';
 import NextDocument, {
   Html,
   Head,
@@ -8,7 +8,7 @@ import NextDocument, {
 } from 'next/document';
 import React from 'react';
 
-import { attachComponentBreadcrumb } from '../src/utils/sentry';
+import { attachComponentBreadcrumb } from '../src/utils/sentry/client';
 import { PageProps } from './_app';
 
 /**
@@ -19,9 +19,7 @@ import { PageProps } from './_app';
  * @see https://leerob.io/blog/configuring-sentry-for-nextjs-apps
  */
 ['unhandledRejection', 'uncaughtException'].forEach((event) => {
-  process.on(event, (e) => {
-    Sentry.captureException(e);
-  });
+  process.on(event, captureException);
 });
 
 // eslint-disable-next-line import/no-default-export

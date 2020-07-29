@@ -23,7 +23,7 @@ import {
   attachInitialContext,
   attachRoutingContext,
   ErrorBoundary as TopLevelErrorBoundary,
-} from '../src/utils/sentry';
+} from '../src/utils/sentry/client';
 
 export interface PageProps {
   language: string;

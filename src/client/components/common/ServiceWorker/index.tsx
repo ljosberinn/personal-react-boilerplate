@@ -5,7 +5,7 @@ import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { IS_PROD } from '../../../../constants';
-import { attachComponentBreadcrumb } from '../../../../utils/sentry';
+import { attachComponentBreadcrumb } from '../../../../utils/sentry/client';
 import { MFC } from '../../../types';
 
 const sw = '/service-worker.js';

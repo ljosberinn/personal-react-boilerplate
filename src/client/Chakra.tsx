@@ -7,7 +7,7 @@ import {
 } from '@chakra-ui/core';
 import React, { ReactNode } from 'react';
 
-import { attachComponentBreadcrumb } from '../utils/sentry';
+import { attachComponentBreadcrumb } from '../utils/sentry/client';
 import { MetaThemeColorSynchronizer } from './components/common/MetaThemeColorSynchronizer';
 import { withPersistedTheme, ColorMode } from './hooks/useThemePersistence';
 import { MFC } from './types';

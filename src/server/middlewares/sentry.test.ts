@@ -3,7 +3,7 @@ import nextConnect from 'next-connect';
 
 import { testLambda } from '../../../testUtils/lambda';
 import { RequestMethods } from '../../utils/requestMethods';
-import * as sentryUtils from '../../utils/sentry';
+import * as sentryUtils from '../../utils/sentry/server';
 import { OK } from '../../utils/statusCodes';
 import { RequestHandler } from '../types';
 import { sentryMiddleware } from './sentry';

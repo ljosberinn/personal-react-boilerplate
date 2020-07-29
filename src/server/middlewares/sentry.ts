@@ -1,4 +1,4 @@
-import { attachLambdaContext } from '../../utils/sentry';
+import { attachLambdaContext } from '../../utils/sentry/server';
 import { Middleware } from '../types';
 
 /**

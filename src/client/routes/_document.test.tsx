@@ -6,7 +6,7 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import { PageProps } from '../../../pages/_app';
 import Document from '../../../pages/_document';
 import { i18nCache } from '../../server/i18n';
-import * as sentryUtils from '../../utils/sentry';
+import * as sentryUtils from '../../utils/sentry/client';
 
 const pageProps: PageProps = {
   i18nBundle: i18nCache.en,

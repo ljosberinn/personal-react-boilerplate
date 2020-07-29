@@ -1,58 +1,19 @@
-import { Debug } from '@sentry/integrations';
-import * as Sentry from '@sentry/node';
+import { addBreadcrumb, BrowserOptions, Severity } from '@sentry/react';
+import { init, configureScope } from '@sentry/react';
 import { IncomingMessage } from 'http';
-import { NextApiRequest } from 'next';
 import { NextRouter } from 'next/router';
 
-import { AppRenderProps } from '../../pages/_app';
-import { SENTRY_DSN, IS_PROD, IS_BROWSER } from '../constants';
+import { AppRenderProps } from '../../../pages/_app';
+import { IS_BROWSER } from '../../constants';
+import { isomorphicSentryBoot, defaultOptions } from './shared';
 
 export { ErrorBoundary } from '@sentry/react';
 
-const { init, configureScope, addBreadcrumb, Severity } = Sentry;
-
-const sentryOptions: Sentry.NodeOptions = {
-  attachStacktrace: true,
-  dsn: SENTRY_DSN,
-  enabled: true,
-  maxBreadcrumbs: 50,
+const options: BrowserOptions = {
+  ...defaultOptions,
 };
 
-if (!IS_PROD) {
-  // don't actually send the errors to Sentry
-  sentryOptions.beforeSend = () => null;
-
-  sentryOptions.integrations = [
-    new Debug({
-      // set to true if you want to use `debugger;` instead
-      debugger: false,
-    }),
-  ];
-}
-
-init(sentryOptions);
-
-configureScope((scope) => {
-  if (!IS_BROWSER) {
-    scope.setTag('nodejs', process.version);
-  }
-  scope.setTag('buildTime', process.env.BUILD_TIME!);
-});
-
-/**
- * Attaches lambda request data to Sentry
- */
-export const attachLambdaContext = (req: NextApiRequest) => {
-  configureScope((scope) => {
-    scope.setTag('host', req.headers.host || '');
-    scope.setTag('url', req.url || '');
-    scope.setTag('method', req.method || '');
-    scope.setContext('query', req.query);
-    scope.setContext('cookies', req.cookies);
-    scope.setContext('body', req.body);
-    scope.setContext('headers', req.headers);
-  });
-};
+isomorphicSentryBoot({ configureScope, init, options });
 
 interface InitialContextArgs
   extends Omit<AppRenderProps['pageProps'], 'i18nBundle'> {
