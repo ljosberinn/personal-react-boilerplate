@@ -29,7 +29,7 @@ describe('<ThemeSwitch />', () => {
     expect(moon.classList.toString()).not.toBe(moonClassListBefore);
   });
 
-  ['sun', 'moon'].forEach(icon => {
+  ['sun', 'moon'].forEach((icon) => {
     it(`allows changing the theme by clicking an icon alternatively - icon ${icon}`, () => {
       render(<ThemeSwitch />);
 

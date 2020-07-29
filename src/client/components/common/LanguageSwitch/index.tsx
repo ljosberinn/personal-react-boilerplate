@@ -22,6 +22,7 @@ import {
   ENABLED_LANGUAGES,
 } from '../../../../constants';
 import { makeChangeLanguageHandler } from '../../../i18n';
+import { MFC } from '../../../types';
 import { ExternalLink } from '../ExternalLink';
 
 type FlapMap = { [key: string]: FlagIconCode };
@@ -33,7 +34,7 @@ const flagMap: FlapMap = {
 
 type LanguageSwitchProps = BoxProps;
 
-export function LanguageSwitch(props: LanguageSwitchProps) {
+export const LanguageSwitch: MFC<LanguageSwitchProps> = (props) => {
   const { i18n, t } = useTranslation('i18n');
   const backgroundColor = useColorModeValue('gray.100', 'whiteAlpha.100');
 
@@ -50,7 +51,7 @@ export function LanguageSwitch(props: LanguageSwitchProps) {
             value={i18n.language}
             type="radio"
           >
-            {ENABLED_LANGUAGES.map(slug => (
+            {ENABLED_LANGUAGES.map((slug) => (
               <LanguageOption
                 t={t}
                 slug={slug}
@@ -74,7 +75,7 @@ export function LanguageSwitch(props: LanguageSwitchProps) {
       </Menu>
     </Box>
   );
-}
+};
 
 interface LanguageOptionProps {
   slug: string;
@@ -82,7 +83,11 @@ interface LanguageOptionProps {
   t: TFunction;
 }
 
-function LanguageOption({ slug, isCurrentLanguage, t }: LanguageOptionProps) {
+const LanguageOption: MFC<LanguageOptionProps> = ({
+  slug,
+  isCurrentLanguage,
+  t,
+}) => {
   return (
     <MenuItemOption
       value={slug}
@@ -96,4 +101,4 @@ function LanguageOption({ slug, isCurrentLanguage, t }: LanguageOptionProps) {
       {t(slug)}
     </MenuItemOption>
   );
-}
+};

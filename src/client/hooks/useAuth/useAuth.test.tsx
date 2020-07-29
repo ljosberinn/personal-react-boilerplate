@@ -221,8 +221,8 @@ describe('hooks/useAuth', () => {
     expect(window.location.assign).not.toHaveBeenCalled();
   });
 
-  ENABLED_PROVIDER.filter(provider => provider !== 'local').forEach(
-    provider => {
+  ENABLED_PROVIDER.filter((provider) => provider !== 'local').forEach(
+    (provider) => {
       test(`on provider login, redirects to a provider when demanded (provider: ${provider})`, async () => {
         jest.spyOn(window.location, 'assign');
 

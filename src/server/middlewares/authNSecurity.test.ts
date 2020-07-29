@@ -25,7 +25,7 @@ describe('middleware/authNSecurity', () => {
     expect(authNSecurityMiddleware).toBeInstanceOf(Function);
   });
 
-  RequestMethods.filter(method => method !== 'head').forEach(method => {
+  RequestMethods.filter((method) => method !== 'head').forEach((method) => {
     test(`always intercepts lambda without SESSION_COOKIE present (method: ${method})`, async () => {
       const response = await testLambda(nextConnect().use(dummyHandler), {
         method,

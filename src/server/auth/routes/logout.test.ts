@@ -28,8 +28,8 @@ describe('api/logout', () => {
     expect(response.status).toBe(NOT_FOUND);
   });
 
-  RequestMethods.filter(requestMethod => requestMethod !== method).forEach(
-    method => {
+  RequestMethods.filter((requestMethod) => requestMethod !== method).forEach(
+    (method) => {
       test(`does nothing on method "${method}"`, async () => {
         const response = await testLambda(logoutHandler, {
           catchAllName,

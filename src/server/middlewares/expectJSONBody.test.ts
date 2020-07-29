@@ -14,8 +14,8 @@ describe('middleware/expectJSONBody', () => {
     expect(expectJSONBodyMiddleware).toBeInstanceOf(Function);
   });
 
-  RequestMethods.filter(method => !['get', 'head'].includes(method)).forEach(
-    method => {
+  RequestMethods.filter((method) => !['get', 'head'].includes(method)).forEach(
+    (method) => {
       test(`never intercepts lambda without a body present (method: ${method})`, async () => {
         const response = await testLambda(nextConnect().use(dummyHandler), {
           method,

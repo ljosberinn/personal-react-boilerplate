@@ -91,7 +91,7 @@ describe('initI18Next', () => {
 });
 
 describe('getI18N', () => {
-  ENABLED_LANGUAGES.forEach(language => {
+  ENABLED_LANGUAGES.forEach((language) => {
     it('loads a bundle given server-side arguments', async () => {
       mockRoute({
         language,
@@ -101,7 +101,7 @@ describe('getI18N', () => {
       const fetchSpy = jest.spyOn(window, 'fetch');
 
       await getI18N(language, {
-        AppTree: _ => null,
+        AppTree: (_) => null,
         pathname: '',
         query: {},
       });
@@ -236,7 +236,7 @@ describe('getI18N', () => {
 });
 
 describe('makeChangeLanguageHandler', () => {
-  ENABLED_LANGUAGES.forEach(language => {
+  ENABLED_LANGUAGES.forEach((language) => {
     it(`always returns a function (language: ${language})`, () => {
       expect(makeChangeLanguageHandler(language)).toBeInstanceOf(Function);
     });
@@ -249,7 +249,7 @@ describe('makeChangeLanguageHandler', () => {
 
       const getDataByLanguageSpy = jest.spyOn(i18n, 'getDataByLanguage');
 
-      const otherLanguage = ENABLED_LANGUAGES.find(lng => lng !== language)!;
+      const otherLanguage = ENABLED_LANGUAGES.find((lng) => lng !== language)!;
 
       mockRoute({
         language: otherLanguage,
@@ -271,7 +271,7 @@ describe('makeChangeLanguageHandler', () => {
 
       const mockAddResourceBundle = jest.spyOn(i18n, 'addResourceBundle');
 
-      const otherLanguage = ENABLED_LANGUAGES.find(lng => lng !== language)!;
+      const otherLanguage = ENABLED_LANGUAGES.find((lng) => lng !== language)!;
 
       const response = i18nCache[otherLanguage];
 
@@ -289,13 +289,15 @@ describe('makeChangeLanguageHandler', () => {
       );
     });
 
-    [true, false].forEach(bool => {
+    [true, false].forEach((bool) => {
       it(`always changes the language (bundle already present: ${bool})`, async () => {});
 
       it(`always attempts to store language preference in cookie (bundle already present: ${bool})`, async () => {
         const mockSet = jest.spyOn(cookies, 'set');
 
-        const otherLanguage = ENABLED_LANGUAGES.find(lng => lng !== language)!;
+        const otherLanguage = ENABLED_LANGUAGES.find(
+          (lng) => lng !== language
+        )!;
         await makeChangeLanguageHandler(otherLanguage)();
 
         await waitFor(() =>

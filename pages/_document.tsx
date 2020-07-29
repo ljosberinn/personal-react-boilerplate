@@ -18,8 +18,8 @@ import { PageProps } from './_app';
  * render "Internal Server Error" on the client.
  * @see https://leerob.io/blog/configuring-sentry-for-nextjs-apps
  */
-['unhandledRejection', 'uncaughtException'].forEach(event => {
-  process.on(event, e => {
+['unhandledRejection', 'uncaughtException'].forEach((event) => {
+  process.on(event, (e) => {
     Sentry.captureException(e);
   });
 });

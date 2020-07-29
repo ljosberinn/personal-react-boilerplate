@@ -32,7 +32,7 @@ if (!IS_PROD) {
 
 init(sentryOptions);
 
-configureScope(scope => {
+configureScope((scope) => {
   if (!IS_BROWSER) {
     scope.setTag('nodejs', process.version);
   }
@@ -43,7 +43,7 @@ configureScope(scope => {
  * Attaches lambda request data to Sentry
  */
 export const attachLambdaContext = (req: NextApiRequest) => {
-  configureScope(scope => {
+  configureScope((scope) => {
     scope.setTag('host', req.headers.host || '');
     scope.setTag('url', req.url || '');
     scope.setTag('method', req.method || '');
@@ -73,7 +73,7 @@ export const attachInitialContext = ({
     message: `Booting (${IS_BROWSER ? 'in browser' : 'on server'})`,
   });
 
-  configureScope(scope => {
+  configureScope((scope) => {
     scope.setExtra('language', language);
     scope.setExtra('initialColorMode', initialColorMode);
 
@@ -96,7 +96,7 @@ export const attachRoutingContext = (
   { route, pathname, query, asPath }: NextRouter,
   name: string = 'unknown'
 ) => {
-  configureScope(scope => {
+  configureScope((scope) => {
     scope.setContext('router', {
       asPath,
       pathname,

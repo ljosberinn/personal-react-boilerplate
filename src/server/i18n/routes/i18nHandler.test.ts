@@ -18,8 +18,8 @@ describe('api/i18n', () => {
     expect(i18nHandler).toBeInstanceOf(Function);
   });
 
-  RequestMethods.filter(requestMethod => !methods.has(requestMethod)).forEach(
-    method => {
+  RequestMethods.filter((requestMethod) => !methods.has(requestMethod)).forEach(
+    (method) => {
       test(`does nothing on method "${method}"`, async () => {
         const response = await testLambda(i18nHandler, {
           catchAllName,
@@ -59,7 +59,7 @@ describe('api/i18n', () => {
     expect(response.status).toBe(BAD_REQUEST);
   });
 
-  ENABLED_LANGUAGES.forEach(language => {
+  ENABLED_LANGUAGES.forEach((language) => {
     test(`responds with a JSON given an enabled language (lang: ${language})`, async () => {
       const response = await testLambda(i18nHandler, {
         catchAllName,

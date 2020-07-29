@@ -17,7 +17,7 @@ describe('middleware/sentryMiddleware', () => {
     expect(sentryMiddleware).toBeInstanceOf(Function);
   });
 
-  RequestMethods.forEach(method => {
+  RequestMethods.forEach((method) => {
     test(`never intercepts the underlying handler (method: ${method})`, async () => {
       const response = await testLambda(nextConnect().use(dummyHandler), {
         method,

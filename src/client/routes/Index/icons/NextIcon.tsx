@@ -1,7 +1,9 @@
 import { useColorModeValue, Icon } from '@chakra-ui/core';
 import React from 'react';
 
-export function NextIcon({ size }: { size: string }) {
+import { MFC } from '../../../types';
+
+export const NextIcon: MFC<{ size: string }> = ({ size }) => {
   const fill = useColorModeValue('black', 'white');
 
   return (
@@ -13,4 +15,4 @@ export function NextIcon({ size }: { size: string }) {
       />
     </Icon>
   );
-}
+};

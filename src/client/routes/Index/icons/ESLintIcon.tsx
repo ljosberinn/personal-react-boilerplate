@@ -1,7 +1,9 @@
 import { Icon } from '@chakra-ui/core';
 import React from 'react';
 
-export function ESLintIcon({ size }: { size: string }) {
+import { MFC } from '../../../types';
+
+export const ESLintIcon: MFC<{ size: string }> = ({ size }) => {
   return (
     <Icon viewBox="0 0 294.82 258.98" width={size} height={size}>
       <title>ESLint Logo</title>
@@ -15,4 +17,4 @@ export function ESLintIcon({ size }: { size: string }) {
       />
     </Icon>
   );
-}
+};

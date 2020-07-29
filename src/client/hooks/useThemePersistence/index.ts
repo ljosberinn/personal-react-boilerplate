@@ -34,8 +34,8 @@ const cookieOptions: CookieAttributes = {
   sameSite: 'lax',
 };
 
-export function useThemePersistence(colorMode: ColorMode) {
+export const useThemePersistence = (colorMode: ColorMode) => {
   useEffect(() => {
     set(THEME_COOKIE_NAME, colorMode, cookieOptions);
   }, [colorMode]);
-}
+};

@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 
 import { IS_PROD } from '../../../../constants';
 import { attachComponentBreadcrumb } from '../../../../utils/sentry';
+import { MFC } from '../../../types';
 
 const sw = '/service-worker.js';
 
@@ -16,7 +17,7 @@ interface RefreshToastProps {
 /**
  * Currently mimics toast({status: 'info'}) to allow a global onClick
  */
-function RefreshToast({ t }: RefreshToastProps) {
+const RefreshToast: MFC<RefreshToastProps> = ({ t }) => {
   return (
     <Flex
       backgroundColor="blue.500"
@@ -39,9 +40,9 @@ function RefreshToast({ t }: RefreshToastProps) {
       </Box>
     </Flex>
   );
-}
+};
 
-export function ServiceWorker() {
+export const ServiceWorker: MFC = () => {
   const { t } = useTranslation('serviceWorker');
   const toast = useToast();
 
@@ -52,7 +53,7 @@ export function ServiceWorker() {
       navigator.serviceWorker
         .register(sw)
         // eslint-disable-next-line promise/prefer-await-to-then
-        .then(registration => {
+        .then((registration) => {
           registration.addEventListener('updatefound', () => {
             const installingWorker = registration.installing;
 
@@ -75,7 +76,7 @@ export function ServiceWorker() {
             });
           });
         })
-        .catch(error => {
+        .catch((error) => {
           if (!IS_PROD && error instanceof TypeError) {
             // eslint-disable-next-line no-console
             console.info(
@@ -91,4 +92,4 @@ export function ServiceWorker() {
   }, [toast, t]);
 
   return null;
-}
+};

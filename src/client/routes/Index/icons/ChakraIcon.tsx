@@ -1,7 +1,9 @@
 import { chakra } from '@chakra-ui/core';
 import React from 'react';
 
-export function ChakraIcon({ size }: { size: string }) {
+import { MFC } from '../../../types';
+
+export const ChakraIcon: MFC<{ size: string }> = ({ size }) => {
   return (
     <chakra.svg
       width="auto"
@@ -29,4 +31,4 @@ export function ChakraIcon({ size }: { size: string }) {
       </defs>
     </chakra.svg>
   );
-}
+};

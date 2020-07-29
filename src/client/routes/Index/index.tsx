@@ -33,6 +33,7 @@ import {
   ExternalLinkProps,
 } from '../../components/common/ExternalLink';
 import { ThemeSwitchAlt } from '../../components/common/ThemeSwitchAlt';
+import { MFC } from '../../types';
 import { Feature } from './Feature';
 import { ChakraIcon } from './icons/ChakraIcon';
 import { ESLintIcon } from './icons/ESLintIcon';
@@ -531,7 +532,7 @@ const links = [
   },
 ];
 
-function Footer() {
+const Footer = () => {
   return (
     <Box as="footer" mt={12} mb={20} textAlign="center">
       <Text fontSize="sm">
@@ -553,9 +554,9 @@ function Footer() {
       </Stack>
     </Box>
   );
-}
+};
 
-export function Index() {
+export const Index: MFC = () => {
   return (
     <>
       <Header />
@@ -568,4 +569,4 @@ export function Index() {
       <Footer />
     </>
   );
-}
+};

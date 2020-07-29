@@ -27,8 +27,8 @@ describe('api/register', () => {
     expect(response.status).toBe(NOT_FOUND);
   });
 
-  RequestMethods.filter(requestMethod => requestMethod !== method).forEach(
-    method => {
+  RequestMethods.filter((requestMethod) => requestMethod !== method).forEach(
+    (method) => {
       test(`does nothing on method "${method}"`, async () => {
         const response = await testLambda(registrationHandler, {
           catchAllName,
@@ -45,7 +45,7 @@ describe('api/register', () => {
   ([{ username: 'foo' }, { password: 'foo' }] as Record<
     string,
     string
-  >[]).forEach(body => {
+  >[]).forEach((body) => {
     const affix = `(missing ${'password' in body ? 'username' : 'passsword'})`;
 
     test(`responds with BAD_REQUEST given an incomplete dataset ${affix}`, async () => {

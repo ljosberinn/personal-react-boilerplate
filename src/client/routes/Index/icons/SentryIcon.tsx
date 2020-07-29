@@ -1,7 +1,9 @@
 import { useColorModeValue, Icon } from '@chakra-ui/core';
 import React from 'react';
 
-export function SentryIcon({ size }: { size: string }) {
+import { MFC } from '../../../types';
+
+export const SentryIcon: MFC<{ size: string }> = ({ size }) => {
   const fill = useColorModeValue('rgb(54, 45, 89)', 'white');
 
   return (
@@ -13,4 +15,4 @@ export function SentryIcon({ size }: { size: string }) {
       />
     </Icon>
   );
-}
+};

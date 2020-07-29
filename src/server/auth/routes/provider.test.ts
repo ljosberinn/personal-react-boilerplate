@@ -35,8 +35,8 @@ describe('api/provider', () => {
     expect(externalProviderHandler).toBeInstanceOf(Function);
   });
 
-  RequestMethods.filter(requestMethod => requestMethod !== method).forEach(
-    method => {
+  RequestMethods.filter((requestMethod) => requestMethod !== method).forEach(
+    (method) => {
       test(`does nothing on method "${method}"`, async () => {
         const response = await testLambda(externalProviderHandler, {
           catchAllName,
@@ -49,8 +49,8 @@ describe('api/provider', () => {
     }
   );
 
-  ENABLED_PROVIDER.filter(provider => provider !== 'local').forEach(
-    externalProvider => {
+  ENABLED_PROVIDER.filter((provider) => provider !== 'local').forEach(
+    (externalProvider) => {
       test(`responds with a redirect given no additional params (provider: ${externalProvider})`, async () => {
         const response = await testLambda(externalProviderHandler, {
           catchAllName,

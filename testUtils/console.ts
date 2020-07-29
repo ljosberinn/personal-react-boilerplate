@@ -11,9 +11,9 @@ export type ConsoleMockWithDefault = {
  *
  * @param method
  */
-export function mockConsoleMethods(
+export const mockConsoleMethods = (
   args: ConsoleMockWithDefault['method'] | ConsoleMockWithDefault[]
-) {
+) => {
   const mocks = Array.isArray(args) ? args : [{ method: args }];
 
   // eslint-disable-next-line no-console
@@ -30,4 +30,4 @@ export function mockConsoleMethods(
       console[method] = source[index];
     });
   };
-}
+};

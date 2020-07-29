@@ -28,7 +28,7 @@ interface VerifyArg {
 const verify = ({ username, password }: VerifyArg) => {
   // custom logic for your db goes here!
   const user = localDB.find(
-    user => user.username === username && user.password === password
+    (user) => user.username === username && user.password === password
   );
 
   if (!user) {

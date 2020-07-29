@@ -26,11 +26,11 @@ const setup = () => {
   fireEvent.click(button);
 
   const currentLanguage = ENABLED_LANGUAGES.find(
-    slug => i18n.language === slug
+    (slug) => i18n.language === slug
   )!;
 
   const otherLanguages = ENABLED_LANGUAGES.filter(
-    slug => slug !== currentLanguage
+    (slug) => slug !== currentLanguage
   );
 
   const randomOtherLanguage =

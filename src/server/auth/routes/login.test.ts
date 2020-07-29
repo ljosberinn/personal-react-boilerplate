@@ -17,7 +17,7 @@ import { loginHandler } from './login';
 jest.mock('../cookie', () => ({
   encryptSession: jest
     .fn()
-    .mockImplementation(user => Promise.resolve(JSON.stringify(user))),
+    .mockImplementation((user) => Promise.resolve(JSON.stringify(user))),
   setSessionCookie: jest.fn().mockImplementation((_token, _res) => {}),
 }));
 
@@ -42,8 +42,8 @@ describe('api/login', () => {
     expect(response.status).toBe(NOT_FOUND);
   });
 
-  RequestMethods.filter(requestMethod => requestMethod !== method).forEach(
-    method => {
+  RequestMethods.filter((requestMethod) => requestMethod !== method).forEach(
+    (method) => {
       test(`does nothing on method "${method}"`, async () => {
         const response = await testLambda(loginHandler, {
           catchAllName,

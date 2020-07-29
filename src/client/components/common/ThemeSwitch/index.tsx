@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { FaSun, FaMoon } from 'react-icons/fa';
 
 import { useThemePersistence } from '../../../hooks/useThemePersistence';
+import { MFC } from '../../../types';
 
 const gray = 'gray.500';
 const yellow = 'yellow.500';
@@ -21,7 +22,7 @@ const colorMap = {
 
 export type ThemeSwitchProps = FlexProps;
 
-export function ThemeSwitch(props: ThemeSwitchProps) {
+export const ThemeSwitch: MFC<ThemeSwitchProps> = (props) => {
   const { colorMode, toggleColorMode } = useColorMode();
   const { t } = useTranslation('theme');
   useThemePersistence(colorMode);
@@ -59,4 +60,4 @@ export function ThemeSwitch(props: ThemeSwitchProps) {
       />
     </Flex>
   );
-}
+};

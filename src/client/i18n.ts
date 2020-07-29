@@ -87,7 +87,7 @@ export const initI18Next = ({ language, ...rest }: InitI18NextArgs) => {
   });
 
   if (IS_BROWSER) {
-    instance.on('languageChanged', lang => {
+    instance.on('languageChanged', (lang) => {
       const html = document.querySelector('html');
 
       if (html) {
@@ -245,7 +245,7 @@ export const detectLanguage = (ctx: NextPageContext) =>
   universalLanguageDetect({
     acceptLanguageHeader: ctx.req?.headers['accept-language'],
     errorHandler: (error, level, origin, context) => {
-      Sentry.withScope(scope => {
+      Sentry.withScope((scope) => {
         scope.setExtra('level', level);
         scope.setExtra('origin', origin);
 

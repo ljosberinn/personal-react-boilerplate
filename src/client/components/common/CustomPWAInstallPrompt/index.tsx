@@ -11,6 +11,8 @@ import {
 } from '@chakra-ui/core';
 import React, { useEffect, useRef } from 'react';
 
+import { MFC } from '../../../types';
+
 /**
  * The BeforeInstallPromptEvent is fired at the Window.onbeforeinstallprompt handler
  * before a user is prompted to "install" a web site to a home screen on mobile.
@@ -41,7 +43,7 @@ interface BeforeInstallPromptEvent extends Event {
   prompt(): Promise<void>;
 }
 
-export function CustomPWAInstallPrompt() {
+export const CustomPWAInstallPrompt: MFC = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const promptEvent = useRef<BeforeInstallPromptEvent>(null!);
 
@@ -109,4 +111,4 @@ export function CustomPWAInstallPrompt() {
       )}
     </Slide>
   );
-}
+};

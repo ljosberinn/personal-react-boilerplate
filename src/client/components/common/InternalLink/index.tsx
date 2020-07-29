@@ -4,12 +4,15 @@ import {
 } from '@chakra-ui/core';
 import { LinkProps as NextLinkProps } from 'next/dist/client/link';
 import NextLink from 'next/link';
-import React, { ReactNode } from 'react';
+import React from 'react';
+
+import { MFC, WithChildren } from '../../../types';
 
 export type InternalLinkProps = NextLinkProps &
-  Omit<ChakraLinkProps, 'as'> & { children: ReactNode };
+  Omit<ChakraLinkProps, 'as'> &
+  WithChildren;
 
-export function InternalLink({
+export const InternalLink: MFC<InternalLinkProps> = ({
   href,
   as,
   replace,
@@ -18,7 +21,7 @@ export function InternalLink({
   prefetch,
   children,
   ...rest
-}: InternalLinkProps) {
+}) => {
   return (
     <NextLink
       passHref
@@ -32,4 +35,4 @@ export function InternalLink({
       <ChakraLink {...rest}>{children}</ChakraLink>
     </NextLink>
   );
-}
+};

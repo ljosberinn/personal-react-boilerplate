@@ -1,7 +1,9 @@
 import { Icon } from '@chakra-ui/core';
 import React from 'react';
 
-export function GithubActionsLogo({ size }: { size: string }) {
+import { MFC } from '../../../types';
+
+export const GithubActionsLogo: MFC<{ size: string }> = ({ size }) => {
   return (
     <Icon viewBox="0 0 48 48" width={size} height={size} fill="none">
       <title>GitHub Actions Logo</title>
@@ -51,4 +53,4 @@ export function GithubActionsLogo({ size }: { size: string }) {
       />
     </Icon>
   );
-}
+};
