@@ -2,7 +2,10 @@ import { serialize } from 'cookie';
 import { createServer } from 'http';
 import { NextApiRequest, NextApiResponse } from 'next';
 import nextConnect, { NextConnect } from 'next-connect';
-import { apiResolver } from 'next/dist/next-server/server/api-utils';
+import {
+  apiResolver,
+  getQueryParser,
+} from 'next/dist/next-server/server/api-utils';
 import { route } from 'next/dist/next-server/server/router';
 import fetch, { Response } from 'node-fetch';
 import listen from 'test-listen';
@@ -96,7 +99,7 @@ const withMiddleware = (
 
   const connected = nextConnect();
 
-  middlewaresToApply.forEach(middleware => {
+  middlewaresToApply.forEach((middleware) => {
     connected.use(middleware);
   });
 
@@ -118,20 +121,19 @@ export const testLambda = async (
     redirect,
   }: UrlArguments
 ): Promise<Response> => {
-  const server = createServer((req, res) =>
-    apiResolver(
-      req,
-      res,
-      undefined,
-      withMiddleware(handler, middleware),
-      {
-        previewModeEncryptionKey: '',
-        previewModeId: '',
-        previewModeSigningKey: '',
-      },
-      true
-    )
-  );
+  const server = createServer((req, res) => {
+    const getQuery = getQueryParser(req);
+
+    const resolver = withMiddleware(handler, middleware);
+
+    const apiContext = {
+      previewModeEncryptionKey: '',
+      previewModeId: '',
+      previewModeSigningKey: '',
+    };
+
+    return apiResolver(req, res, getQuery(), resolver, apiContext, true);
+  });
 
   const index = await listen(server);
 
@@ -198,7 +200,7 @@ export const testLambda = async (
   });
 
   return new Promise((resolve, reject) => {
-    server.close(error => {
+    server.close((error) => {
       if (error) {
         reject(error);
       } else {

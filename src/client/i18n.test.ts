@@ -18,7 +18,7 @@ import {
 
 const server = setupServer();
 
-beforeAll(server.listen);
+beforeAll(() => server.listen());
 
 afterEach(() => server.resetHandlers());
 
