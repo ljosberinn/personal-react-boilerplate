@@ -64,7 +64,7 @@
     "jest": "^26.1.0",
     "jest-axe": "^3.5.0",
     "lint-staged": "^10.2.11",
-    "msw": "^0.19.5",
+    "msw": "^0.20.0",
     "next-compose-plugins": "^2.2.0",
     "next-offline": "^5.0.2",
     "node-fetch": "^2.6.0",
