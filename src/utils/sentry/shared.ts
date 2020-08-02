@@ -1,14 +1,6 @@
 import { Debug } from '@sentry/integrations';
-import {
-  init as nodeInit,
-  NodeOptions,
-  configureScope as nodeConfigureScope,
-} from '@sentry/node';
-import {
-  init as browserInit,
-  BrowserOptions,
-  configureScope as browserConfigureScope,
-} from '@sentry/react';
+import { init as nodeInit, NodeOptions, configureScope } from '@sentry/node';
+import { init as browserInit, BrowserOptions } from '@sentry/react';
 import { Options } from '@sentry/types';
 
 import { IS_BROWSER, IS_PROD, SENTRY_DSN } from '../../constants';
@@ -23,10 +15,10 @@ export const defaultOptions: Options = {
 type BootParameters = {
   init: typeof browserInit | typeof nodeInit;
   options: NodeOptions | BrowserOptions;
-  configureScope: typeof browserConfigureScope | typeof nodeConfigureScope;
+  configureScope: typeof configureScope;
 };
 
-export const isomorphicSentryBoot = ({
+export const isomorphicSentryInit = ({
   init,
   options,
   configureScope,

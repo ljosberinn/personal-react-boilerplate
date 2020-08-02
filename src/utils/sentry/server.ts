@@ -2,13 +2,13 @@ import { NodeOptions } from '@sentry/node';
 import { init, configureScope } from '@sentry/node';
 import { NextApiRequest } from 'next';
 
-import { isomorphicSentryBoot, defaultOptions } from './shared';
+import { isomorphicSentryInit, defaultOptions } from './shared';
 
 const options: NodeOptions = {
   ...defaultOptions,
 };
 
-isomorphicSentryBoot({ configureScope, init, options });
+isomorphicSentryInit({ configureScope, init, options });
 
 /**
  * Attaches lambda request data to Sentry

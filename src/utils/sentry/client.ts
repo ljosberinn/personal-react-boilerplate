@@ -5,7 +5,7 @@ import { NextRouter } from 'next/router';
 
 import { AppRenderProps } from '../../../pages/_app';
 import { IS_BROWSER } from '../../constants';
-import { isomorphicSentryBoot, defaultOptions } from './shared';
+import { isomorphicSentryInit, defaultOptions } from './shared';
 
 export { ErrorBoundary } from '@sentry/react';
 
@@ -13,7 +13,7 @@ const options: BrowserOptions = {
   ...defaultOptions,
 };
 
-isomorphicSentryBoot({ configureScope, init, options });
+isomorphicSentryInit({ configureScope, init, options });
 
 interface InitialContextArgs
   extends Omit<AppRenderProps['pageProps'], 'i18nBundle'> {
@@ -67,6 +67,7 @@ export const attachRoutingContext = (
   });
 
   // in prod, this will make components show up with their minified name!
+  // however, those names seem to match with the react devtools
   attachComponentBreadcrumb(name);
 };
 
