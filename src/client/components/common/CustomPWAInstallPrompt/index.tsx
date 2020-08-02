@@ -26,7 +26,7 @@ interface BeforeInstallPromptEvent extends Event {
    * for example, "web" or "play" which would allow the user to chose between a web version or
    * an Android version.
    */
-  readonly platforms: Array<string>;
+  readonly platforms: string[];
 
   /**
    * Returns a Promise that resolves to a DOMString containing either "accepted" or "dismissed".
@@ -40,7 +40,7 @@ interface BeforeInstallPromptEvent extends Event {
    * Allows a developer to show the install prompt at a time of their own choosing.
    * This method returns a Promise.
    */
-  prompt(): Promise<void>;
+  prompt: () => Promise<void>;
 }
 
 export const CustomPWAInstallPrompt: MFC = () => {
@@ -55,11 +55,11 @@ export const CustomPWAInstallPrompt: MFC = () => {
       onOpen();
     };
 
-    // @ts-expect-error
+    // @ts-expect-error event not available in all browsers
     window.addEventListener('beforeinstallprompt', onBeforeInstall);
 
     return () =>
-      // @ts-expect-error
+      // @ts-expect-error event not available in all browsers
       window.removeEventListener('beforeinstallprompt', onBeforeInstall);
   }, [onOpen]);
 

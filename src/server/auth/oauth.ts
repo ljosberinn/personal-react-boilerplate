@@ -134,7 +134,7 @@ export const getProfileData = async (
     method: 'GET',
   });
 
-  return await response.json();
+  return response.json();
 };
 
 interface OAuth2Response {

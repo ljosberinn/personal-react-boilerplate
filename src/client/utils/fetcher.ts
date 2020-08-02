@@ -25,7 +25,7 @@ const makeAuthenticatedFetch = (method: RequestInitMethod) => (
       Accept: 'application/json',
       'Content-type': 'application/json',
       ...options.headers,
-      cookie: req.headers.cookie || '',
+      cookie: req.headers.cookie ?? '',
     },
     method,
   });

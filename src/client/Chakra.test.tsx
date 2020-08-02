@@ -6,7 +6,7 @@ import { Chakra, ChakraProps } from './Chakra';
 
 const defaultProps: ChakraProps = {
   children: <>test</>,
-  initialColorMode: theme.config.initialColorMode || 'dark',
+  initialColorMode: theme.config.initialColorMode ?? 'dark',
 };
 
 describe('<Chakra />', () => {

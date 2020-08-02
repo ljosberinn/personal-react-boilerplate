@@ -15,8 +15,8 @@ export type ColorMode = NonNullable<ColorModeOptions['initialColorMode']>;
  * If theme.config.initialColorMode is missing, falls back to 'light'.
  */
 export const detectInitialColorMode = (ctx: NextPageContext): ColorMode =>
-  (nextCookies(ctx)[THEME_COOKIE_NAME] ||
-    theme.config?.initialColorMode ||
+  (nextCookies(ctx)[THEME_COOKIE_NAME] ??
+    theme.config.initialColorMode ??
     'light') as ColorMode;
 
 /**

@@ -55,7 +55,7 @@ export const attachInitialContext = ({
  */
 export const attachRoutingContext = (
   { route, pathname, query, asPath }: NextRouter,
-  name: string = 'unknown'
+  name = 'unknown'
 ) => {
   configureScope((scope) => {
     scope.setContext('router', {

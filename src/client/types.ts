@@ -13,10 +13,10 @@ import { ReactElement, ReactNode } from 'react';
  * @example
  * ```ts
  * // without children
- * const MyComponent: PFC<MyComponentProps> = (props) => {}
+ * const MyComponent: MFC<MyComponentProps> = (props) => {}
  *
  * // with children
- * const MyComponent: PFC<MyComponentProps & WithChildren> = (props) => {}
+ * const MyComponent: MFC<MyComponentProps & WithChildren> = (props) => {}
  *
  * // or
  *
@@ -26,7 +26,7 @@ import { ReactElement, ReactNode } from 'react';
  *
  * // or as type: type MyComponentProps = { value: string } & WithChildren
  *
- * const MyComponent: PFC<MyComponentProps> = (props) => {}
+ * const MyComponent: MFC<MyComponentProps> = (props) => {}
  * ```
  *
  * @see https://github.com/facebook/create-react-app/pull/8177
@@ -34,7 +34,8 @@ import { ReactElement, ReactNode } from 'react';
 export type MFC<T = {}> = ModernFunctionComponent<T>;
 
 interface ModernFunctionComponent<T = {}> {
-  (props: T, context?: any): ReactElement<any, any> | null;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  (props: T, context?: unknown): ReactElement<T, any> | null;
   displayName?: string;
 }
 

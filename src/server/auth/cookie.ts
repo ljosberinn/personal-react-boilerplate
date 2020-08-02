@@ -86,8 +86,7 @@ export const parseCookies = (req: SSRCompatibleRequest) => {
   }
 
   // For pages we do need to parse the cookies.
-  const cookie = req.headers?.cookie;
-  return parse(cookie || '');
+  return parse(req.headers.cookie ?? '');
 };
 
 export const getSessionCookie = (req: SSRCompatibleRequest) =>

@@ -55,11 +55,14 @@ export async function getInitialProps(ctx: NextPageContext) {
     return { statusCode: NOT_FOUND };
   }
 
-  const errorInitialProps = await NextErrorComponent.getInitialProps(ctx);
   // Workaround for https://github.com/vercel/next.js/issues/8592, mark when
   // getInitialProps has run
-  // @ts-expect-error
-  errorInitialProps.hasGetInitialPropsRun = true;
+  const iniitalProps = await NextErrorComponent.getInitialProps(ctx);
+
+  const errorInitialProps = {
+    ...iniitalProps,
+    hasGetInitialPropsRun: true,
+  };
 
   if (ctx.err) {
     Sentry.captureException(ctx.err);
@@ -71,7 +74,11 @@ export async function getInitialProps(ctx: NextPageContext) {
   // information about what the error might be. This is unexpected and may
   // indicate a bug introduced in Next.js, so record it in Sentry
   Sentry.captureException(
-    new Error(`_error.js getInitialProps missing data at path: ${ctx.asPath}`)
+    new Error(
+      `_error.js getInitialProps missing data at path: ${
+        ctx.asPath ?? 'unknown path'
+      }`
+    )
   );
 
   return errorInitialProps;

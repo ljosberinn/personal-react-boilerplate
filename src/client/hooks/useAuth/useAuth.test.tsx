@@ -23,7 +23,7 @@ const realLocation = window.location;
 
 beforeAll(() => {
   server.listen();
-  // @ts-expect-error
+  // @ts-expect-error jest does not support location to be spied on
   delete window.location;
   window.location = { ...realLocation, assign: jest.fn() };
 });
@@ -135,7 +135,7 @@ describe('hooks/useAuth', () => {
     const { url, method } = endpoints.register;
 
     server.use(
-      rest.post(url, (_req, res, ctx) => res(ctx.body('invalid json' as any)))
+      rest.post(url, (_req, res, ctx) => res(ctx.body('invalid json')))
     );
 
     const { result } = renderHook(useAuth, {
@@ -290,7 +290,7 @@ describe('hooks/useAuth', () => {
     const { url, method } = endpoints.login;
 
     server.use(
-      rest.post(url, (_req, res, ctx) => res(ctx.body('invalid json' as any)))
+      rest.post(url, (_req, res, ctx) => res(ctx.body('invalid json')))
     );
 
     const { result } = renderHook(useAuth, {

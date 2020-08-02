@@ -22,6 +22,7 @@ const useI18n: RequestHandler<{}, I18nextResourceLocale> = (
 
   const data = i18nCache[nextLanguage];
 
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   if (!data) {
     return res.status(BAD_REQUEST).end();
   }

@@ -15,9 +15,9 @@ isomorphicSentryBoot({ configureScope, init, options });
  */
 export const attachLambdaContext = (req: NextApiRequest) => {
   configureScope((scope) => {
-    scope.setTag('host', req.headers.host || '');
-    scope.setTag('url', req.url || '');
-    scope.setTag('method', req.method || '');
+    scope.setTag('host', req.headers.host ?? '');
+    scope.setTag('url', req.url ?? '');
+    scope.setTag('method', req.method ?? '');
     scope.setContext('query', req.query);
     scope.setContext('cookies', req.cookies);
     scope.setContext('body', req.body);

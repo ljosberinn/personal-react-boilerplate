@@ -10,7 +10,7 @@ import * as sentryUtils from '../../utils/sentry/client';
 
 const pageProps: PageProps = {
   i18nBundle: i18nCache.en,
-  // @ts-expect-error
+  // @ts-expect-error Chakra issue, fixed soon
   initialColorMode: theme.config.initialColorMode,
   language: 'en',
   session: null,
@@ -48,7 +48,8 @@ const defaultProps: DocumentProps = {
 
 describe('<Document />', () => {
   it('renders without crashing given default props', () => {
-    // @ts-expect-error
+    // @ts-expect-error next types are not entirely compatible with a Document
+    // function component
     const html = Document.renderDocument(Document, defaultProps);
 
     expect(isValidElement(html)).toBeTruthy();
@@ -69,7 +70,8 @@ describe('<Document />', () => {
     );
 
     renderToStaticMarkup(
-      // @ts-expect-error
+      // @ts-expect-error next types are not entirely compatible with a Document
+      // function component
       Document.renderDocument(Document, defaultProps)
     );
 
@@ -81,7 +83,8 @@ describe('<Document />', () => {
    */
   it('sets "language" attribute on html tag', () => {
     const text = renderToStaticMarkup(
-      // @ts-expect-error
+      // @ts-expect-error next types are not entirely compatible with a Document
+      // function component
       Document.renderDocument(Document, defaultProps)
     );
 
@@ -90,7 +93,8 @@ describe('<Document />', () => {
 
   it('sets "dir" attribute on html tag', () => {
     const text = renderToStaticMarkup(
-      // @ts-expect-error
+      // @ts-expect-error next types are not entirely compatible with a Document
+      // function component
       Document.renderDocument(Document, defaultProps)
     );
 
@@ -99,7 +103,8 @@ describe('<Document />', () => {
 
   it('links manifest.json', () => {
     const text = renderToStaticMarkup(
-      // @ts-expect-error
+      // @ts-expect-error next types are not entirely compatible with a Document
+      // function component
       Document.renderDocument(Document, defaultProps)
     );
 

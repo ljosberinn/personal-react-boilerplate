@@ -4,8 +4,8 @@ import { rest } from 'msw';
 import { setupServer } from 'msw/node';
 import { AppContext, AppInitialProps } from 'next/app';
 import { Router } from 'next/router';
-import fetch from 'node-fetch';
 import React from 'react';
+import 'whatwg-fetch';
 
 import App, { AppRenderProps, getInitialProps } from '../../../pages/_app';
 import { makeMockIncomingRequest } from '../../../testUtils/api';
@@ -23,16 +23,12 @@ const server = setupServer(
 );
 
 beforeAll(() => {
-  // @ts-expect-error
-  global.fetch = fetch;
   server.listen();
 });
 
 afterEach(() => server.resetHandlers());
 
 afterAll(() => {
-  // @ts-expect-error
-  global.fetch = undefined;
   server.close();
 });
 
@@ -40,7 +36,7 @@ const defaultProps: AppRenderProps = {
   Component: () => null,
   pageProps: {
     i18nBundle: { namespace: {} },
-    // @ts-expect-error
+    // @ts-expect-error Chakra issue, fixed soon
     initialColorMode: theme.config.initialColorMode,
     language: 'en',
     session: null,

@@ -303,7 +303,7 @@ function Hero() {
 
 const title = (
   <Text as="b" whiteSpace="nowrap">
-    next-karma
+    'next-karma'
   </Text>
 );
 
@@ -406,7 +406,7 @@ function StackOverview() {
             src="/testing-lib.png"
             height={iconSize}
             width={iconSize}
-            alt={`${title} Logo`}
+            alt="Testing Library Logo"
           />
         }
         title="@testing-library/react"

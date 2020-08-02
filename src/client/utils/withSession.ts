@@ -21,7 +21,7 @@ export interface WithSessionOptions {
  * monkey patch GetServerSideProps
  */
 type AuthenticatedGetServerSideProps<
-  P extends { [key: string]: any } = { [key: string]: any },
+  P extends { [key: string]: unknown } = { [key: string]: unknown },
   Q extends ParsedUrlQuery = ParsedUrlQuery
 > = (
   context: GetServerSidePropsContext<Q>,
@@ -42,12 +42,12 @@ export const withSession = (
   const session = await getSession(ctx.req);
 
   if (!session) {
-    ctx.res?.writeHead(status, headers).end();
+    ctx.res.writeHead(status, headers).end();
 
     return {
       props: {},
     };
   }
 
-  return await handler(ctx, session);
+  return handler(ctx, session);
 };

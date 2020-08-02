@@ -28,15 +28,19 @@ const mswEndpoint = 'http://localhost';
 
 interface MockRouteArgs {
   language: string;
-  response: any;
+  response?: Record<string, unknown>;
   stringify?: boolean;
 }
 
 const mockRoute = ({ language, response, stringify = true }: MockRouteArgs) => {
   server.use(
-    rest.get(i18nEndpoint + language, (_req, res, ctx) =>
-      res(stringify ? ctx.json(response) : ctx.body(response))
-    )
+    rest.get(i18nEndpoint + language, (_req, res, ctx) => {
+      if (!response) {
+        return res();
+      }
+
+      return res(stringify ? ctx.json(response) : ctx.body(response));
+    })
   );
 };
 
@@ -151,7 +155,6 @@ describe('getI18N', () => {
 
     mockRoute({
       language,
-      response: undefined,
     });
 
     const fetchSpy = jest.spyOn(window, 'fetch');
@@ -176,7 +179,6 @@ describe('getI18N', () => {
 
     mockRoute({
       language,
-      response: undefined,
     });
 
     const sentrySpy = jest.spyOn(Sentry, 'captureException');
@@ -195,7 +197,7 @@ describe('getI18N', () => {
 
     mockRoute({
       language,
-      response: 'invalid json',
+      response: { error: 'invalid json' },
       stringify: false,
     });
 
@@ -221,7 +223,7 @@ describe('getI18N', () => {
 
     mockRoute({
       language,
-      response: 'invalid json',
+      response: { error: 'invalid json' },
       stringify: false,
     });
 
