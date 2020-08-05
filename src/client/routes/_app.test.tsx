@@ -1,3 +1,4 @@
+/* eslint-disable jest/require-top-level-describe */
 import theme from '@chakra-ui/theme';
 import { render } from '@testing-library/react';
 import { rest } from 'msw';
@@ -17,6 +18,7 @@ import * as useThemePersistenceUtils from '../hooks/useThemePersistence';
 import * as i18n from '../i18n';
 
 const server = setupServer(
+  // TODO: hardcoded because not importable from i18n at this point
   rest.get('http://localhost:3000/api/v1/i18n/en', (_req, res, ctx) =>
     res(ctx.json(i18nCache.en))
   )

@@ -4,17 +4,15 @@ import { render, waitFor, screen, fireEvent } from '../../../../../testUtils';
 
 import { ServiceWorker } from '.';
 
-afterEach(() => {
-  Object.defineProperty(navigator, 'serviceWorker', {
-    configurable: true,
-    value: undefined,
-    writable: true,
+describe('<ServiceWorker />', () => {
+  afterEach(() => {
+    Object.defineProperty(navigator, 'serviceWorker', {
+      configurable: true,
+      value: undefined,
+      writable: true,
+    });
   });
 
-  jest.clearAllMocks();
-});
-
-describe('<ServiceWorker />', () => {
   it('renders without crashing', () => {
     render(<ServiceWorker />);
   });

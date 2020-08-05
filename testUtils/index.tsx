@@ -120,9 +120,9 @@ function I18nTestMiddleware({
   const { t, i18n, ready } = useTranslation(namespace);
 
   const props = {
-    [alias.i18n || 'i18n']: i18n,
-    [alias.ready || 'ready']: ready,
-    [alias.t || 't']: t,
+    [alias.i18n ?? 'i18n']: i18n,
+    [alias.ready ?? 'ready']: ready,
+    [alias.t ?? 't']: t,
   };
 
   return cloneElement(children, props);

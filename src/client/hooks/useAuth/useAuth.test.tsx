@@ -17,25 +17,25 @@ import { Provider } from '../../context/AuthContext/AuthContext';
 
 import { useAuth } from '.';
 
-const server = setupServer();
-
-const realLocation = window.location;
-
-beforeAll(() => {
-  server.listen();
-  // @ts-expect-error jest does not support location to be spied on
-  delete window.location;
-  window.location = { ...realLocation, assign: jest.fn() };
-});
-
-afterEach(() => server.resetHandlers());
-
-afterAll(() => {
-  server.close();
-  window.location = realLocation;
-});
-
 describe('hooks/useAuth', () => {
+  const server = setupServer();
+
+  const realLocation = window.location;
+
+  beforeAll(() => {
+    server.listen();
+    // @ts-expect-error jest does not support location to be spied on
+    delete window.location;
+    window.location = { ...realLocation, assign: jest.fn() };
+  });
+
+  afterEach(() => server.resetHandlers());
+
+  afterAll(() => {
+    server.close();
+    window.location = realLocation;
+  });
+
   test('executes without crashing', () => {
     renderHook(useAuth);
   });
@@ -49,7 +49,7 @@ describe('hooks/useAuth', () => {
       ),
     });
 
-    expect(current.user).toBe(null);
+    expect(current.user).toBeNull();
     expect(current.isAuthenticated).toBeFalsy();
   });
 
@@ -91,7 +91,7 @@ describe('hooks/useAuth', () => {
       method,
     });
 
-    await waitFor(() => expect(result.current.user).toBe(null));
+    await waitFor(() => expect(result.current.user).toBeNull());
   });
 
   test(`on register, dispatches a ${endpoints.register.method} request`, async () => {
@@ -189,7 +189,7 @@ describe('hooks/useAuth', () => {
 
     expect(response).toBe(UNPROCESSABLE_ENTITY);
 
-    expect(result.current.user).toBe(null);
+    expect(result.current.user).toBeNull();
 
     expect(fetchSpy).toHaveBeenCalledWith(url, {
       body: JSON.stringify(userWithPassword),

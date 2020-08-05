@@ -1,5 +1,5 @@
 // contains lots of inspiration from https://github.com/UnlyEd/next-right-now/blob/v1-ssr-mst-aptd-gcms-lcz-sty/src/utils/i18nextLocize.ts
-import * as Sentry from '@sentry/node';
+import { captureException, withScope } from '@sentry/node';
 import universalLanguageDetect, {
   COOKIE_LOOKUP_KEY_LANG,
 } from '@unly/universal-language-detector';
@@ -175,8 +175,6 @@ export declare type MemoizedI18nextResources = {
  * Useful to avoid over-fetching the API, but rather rely on the memoized cache
  * when available
  *
- * @type {I18nextResources}
- * @private
  */
 const _memoizedI18nextResources: {
   [endpoint: string]: MemoizedI18nextResources;
@@ -215,12 +213,12 @@ export const getI18N = async (lang: string, ctx?: NextPageContext) => {
     try {
       resources = await response.json();
     } catch (error) {
-      Sentry.captureException(error);
+      captureException(error);
       // eslint-disable-next-line no-console
       console.error(error.message, 'Failed to parse i18n JSON');
     }
   } catch (error) {
-    Sentry.captureException(error);
+    captureException(error);
     // eslint-disable-next-line no-console
     console.error(error.message, 'Failed to fetch i18n');
   }
@@ -245,7 +243,7 @@ export const detectLanguage = (ctx: NextPageContext) =>
   universalLanguageDetect({
     acceptLanguageHeader: ctx.req?.headers['accept-language'],
     errorHandler: (error, level, origin, context) => {
-      Sentry.withScope((scope) => {
+      withScope((scope) => {
         scope.setExtra('level', level);
         scope.setExtra('origin', origin);
 
@@ -253,7 +251,7 @@ export const detectLanguage = (ctx: NextPageContext) =>
           scope.setContext('context', context);
         }
 
-        Sentry.captureException(error);
+        captureException(error);
       });
     },
     fallbackLanguage: SUPPORTED_LANGUAGES_MAP.en,

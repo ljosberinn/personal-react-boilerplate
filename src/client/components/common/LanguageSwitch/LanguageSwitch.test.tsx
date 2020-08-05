@@ -8,14 +8,11 @@ import {
   screen,
   testA11Y,
 } from '../../../../../testUtils';
+import { mockConsoleMethods } from '../../../../../testUtils/console';
 import { ENABLED_LANGUAGES } from '../../../../constants';
 import { i18nCache } from '../../../../server/i18n';
 
 import { LanguageSwitch } from '.';
-
-beforeEach(() => {
-  jest.spyOn(console, 'error').mockImplementation(() => {});
-});
 
 const setup = () => {
   render(<LanguageSwitch />);
@@ -45,6 +42,16 @@ const makeGetDataByLanguageSpy = (bool: boolean) =>
     .mockImplementation(() => (bool ? { translation: {} } : undefined));
 
 describe('<LanguageSwitch />', () => {
+  let restoreConsole: ReturnType<typeof mockConsoleMethods>;
+
+  beforeEach(() => {
+    restoreConsole = mockConsoleMethods('error');
+  });
+
+  afterEach(() => {
+    restoreConsole();
+  });
+
   it('renders without crashing', () => {
     render(<LanguageSwitch />);
   });

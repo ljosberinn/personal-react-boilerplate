@@ -21,8 +21,6 @@ jest.mock('../cookie', () => ({
   setSessionCookie: jest.fn().mockImplementation((_token, _res) => {}),
 }));
 
-afterEach(jest.clearAllMocks);
-
 const url = '/api/v1/auth/login';
 const catchAllName = 'authRouter';
 const middleware = expectJSONBodyMiddleware;

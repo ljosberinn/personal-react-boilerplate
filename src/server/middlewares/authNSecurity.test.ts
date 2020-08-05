@@ -16,10 +16,6 @@ const dummyHandler: RequestHandler<AuthenticatedRequest> = (req, res) => {
   return res.status(OK).json(req[SESSION_COOKIE_NAME]);
 };
 
-beforeEach(() => {
-  document.cookie = '';
-});
-
 describe('middleware/authNSecurity', () => {
   test('should be a function', () => {
     expect(authNSecurityMiddleware).toBeInstanceOf(Function);

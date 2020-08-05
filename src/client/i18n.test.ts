@@ -1,6 +1,8 @@
+/* eslint-disable jest/require-top-level-describe */
 import * as Sentry from '@sentry/node';
 import { waitFor } from '@testing-library/react';
 import { COOKIE_LOOKUP_KEY_LANG } from '@unly/universal-language-detector';
+import i18next from 'i18next';
 import cookies from 'js-cookie';
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
@@ -22,44 +24,47 @@ beforeAll(() => server.listen());
 
 afterEach(() => server.resetHandlers());
 
-afterAll(server.close);
+afterAll(() => server.close());
 
 const mswEndpoint = 'http://localhost';
 
-interface MockRouteArgs {
+interface MockRouteParams {
   language: string;
-  response?: Record<string, unknown>;
-  stringify?: boolean;
+  response?: Record<string, unknown> | string;
 }
 
-const mockRoute = ({ language, response, stringify = true }: MockRouteArgs) => {
+const mockRoute = ({ language, response }: MockRouteParams) => {
   server.use(
     rest.get(i18nEndpoint + language, (_req, res, ctx) => {
       if (!response) {
         return res();
       }
 
-      return res(stringify ? ctx.json(response) : ctx.body(response));
+      if (typeof response === 'string') {
+        return res(ctx.body(response));
+      }
+
+      return res(ctx.json(response));
     })
   );
 };
 
 describe('initI18Next', () => {
-  it('creates an i18nInstance without crashing given prod arguments', () => {
+  test('creates an i18nInstance without crashing given prod arguments', () => {
     initI18Next({
       i18nBundle: i18nCache.en,
       language: SUPPORTED_LANGUAGES_MAP.en,
     });
   });
 
-  it('creates an i18nInstance without crashing given test arguments', () => {
+  test('creates an i18nInstance without crashing given test arguments', () => {
     initI18Next({
       i18nCache,
       language: SUPPORTED_LANGUAGES_MAP.en,
     });
   });
 
-  it('always changes the html.lang attribute onLanguageChanged', async () => {
+  test('always changes the html.lang attribute onLanguageChanged', async () => {
     const qsSpy = jest.spyOn(document, 'querySelector');
     const setAttributeSpy = jest.spyOn(HTMLElement.prototype, 'setAttribute');
 
@@ -76,7 +81,7 @@ describe('initI18Next', () => {
     expect(setAttributeSpy).toHaveBeenCalledWith('lang', otherLanguage);
   });
 
-  it('always changes the html.dir attribute onLanguageChanged', async () => {
+  test('always changes the html.dir attribute onLanguageChanged', async () => {
     const qsSpy = jest.spyOn(document, 'querySelector');
     const setAttributeSpy = jest.spyOn(HTMLElement.prototype, 'setAttribute');
 
@@ -85,9 +90,7 @@ describe('initI18Next', () => {
       language: SUPPORTED_LANGUAGES_MAP.en,
     });
 
-    const otherLanguage = 'de';
-
-    await i18n.changeLanguage(otherLanguage);
+    await i18n.changeLanguage('de');
     await waitFor(() => expect(qsSpy).toHaveBeenLastCalledWith('html'));
 
     expect(setAttributeSpy).toHaveBeenCalledWith('dir', expect.any(String));
@@ -96,7 +99,7 @@ describe('initI18Next', () => {
 
 describe('getI18N', () => {
   ENABLED_LANGUAGES.forEach((language) => {
-    it('loads a bundle given server-side arguments', async () => {
+    test(`loads a bundle given server-side arguments (language: ${language})`, async () => {
       mockRoute({
         language,
         response: i18nCache[language],
@@ -115,7 +118,7 @@ describe('getI18N', () => {
       );
     });
 
-    it('loads a bundle given client-side arguments', async () => {
+    test(`loads a bundle given client-side arguments (language: ${language})`, async () => {
       mockRoute({
         language,
         response: i18nCache[language],
@@ -131,7 +134,7 @@ describe('getI18N', () => {
     });
   });
 
-  it('responds with fallback language data given an unknown language', async () => {
+  test('responds with fallback language data given an unknown language', async () => {
     const unknownLanguage = 'foo';
 
     mockRoute({
@@ -148,7 +151,7 @@ describe('getI18N', () => {
     );
   });
 
-  it('fails gracefully given no response', async () => {
+  test('fails gracefully given no response', async () => {
     const restoreConsole = mockConsoleMethods('error');
 
     const [language] = ENABLED_LANGUAGES;
@@ -172,7 +175,7 @@ describe('getI18N', () => {
     restoreConsole();
   });
 
-  it('notifies sentry given no response', async () => {
+  test('notifies sentry given no response', async () => {
     const restoreConsole = mockConsoleMethods('error');
 
     const [language] = ENABLED_LANGUAGES;
@@ -190,15 +193,14 @@ describe('getI18N', () => {
     restoreConsole();
   });
 
-  it('fails gracefully given an invalid response', async () => {
+  test('fails gracefully given an invalid response', async () => {
     const restoreConsole = mockConsoleMethods('error');
 
     const [language] = ENABLED_LANGUAGES;
 
     mockRoute({
       language,
-      response: { error: 'invalid json' },
-      stringify: false,
+      response: 'invalid json',
     });
 
     const fetchSpy = jest.spyOn(window, 'fetch');
@@ -216,15 +218,14 @@ describe('getI18N', () => {
     restoreConsole();
   });
 
-  it('notifies sentry given an invalid response', async () => {
+  test('notifies sentry given an invalid response', async () => {
     const restoreConsole = mockConsoleMethods('error');
 
     const [language] = ENABLED_LANGUAGES;
 
     mockRoute({
       language,
-      response: { error: 'invalid json' },
-      stringify: false,
+      response: 'invalid json',
     });
 
     const sentrySpy = jest.spyOn(Sentry, 'captureException');
@@ -239,11 +240,11 @@ describe('getI18N', () => {
 
 describe('makeChangeLanguageHandler', () => {
   ENABLED_LANGUAGES.forEach((language) => {
-    it(`always returns a function (language: ${language})`, () => {
+    test(`always returns a function (language: ${language})`, () => {
       expect(makeChangeLanguageHandler(language)).toBeInstanceOf(Function);
     });
 
-    it('verifies bundle existence on i18n on language change', async () => {
+    test('verifies bundle existence on i18n on language change', async () => {
       const i18n = initI18Next({
         i18nBundle: i18nCache[language],
         language: SUPPORTED_LANGUAGES_MAP[language],
@@ -265,7 +266,7 @@ describe('makeChangeLanguageHandler', () => {
       );
     });
 
-    it('adds the resource bundle when loaded', async () => {
+    test('adds the resource bundle when loaded', async () => {
       const i18n = initI18Next({
         i18nBundle: i18nCache[language],
         language: SUPPORTED_LANGUAGES_MAP[language],
@@ -292,18 +293,36 @@ describe('makeChangeLanguageHandler', () => {
     });
 
     [true, false].forEach((bool) => {
-      it(`always changes the language (bundle already present: ${bool})`, async () => {});
+      test(`always changes the language (bundle already present: ${bool}, language: ${language})`, async () => {
+        const getDataByLanguageSpy = jest.spyOn(i18next, 'getDataByLanguage');
+        const addResourceBundleSpy = jest.spyOn(i18next, 'addResourceBundle');
+        const changeLanguageSpy = jest.spyOn(i18next, 'changeLanguage');
 
-      it(`always attempts to store language preference in cookie (bundle already present: ${bool})`, async () => {
-        const mockSet = jest.spyOn(cookies, 'set');
+        const fetchSpy = jest.spyOn(window, 'fetch');
 
         const otherLanguage = ENABLED_LANGUAGES.find(
           (lng) => lng !== language
         )!;
+
+        await makeChangeLanguageHandler(otherLanguage)();
+
+        expect(getDataByLanguageSpy).toHaveBeenCalledWith(otherLanguage);
+        expect(fetchSpy).not.toHaveBeenCalled();
+        expect(addResourceBundleSpy).not.toHaveBeenCalled();
+        expect(changeLanguageSpy).toHaveBeenCalledWith(otherLanguage);
+      });
+
+      test(`always attempts to store language preference in cookie (bundle already present: ${bool})`, async () => {
+        const setCookieSpy = jest.spyOn(cookies, 'set');
+
+        const otherLanguage = ENABLED_LANGUAGES.find(
+          (lng) => lng !== language
+        )!;
+
         await makeChangeLanguageHandler(otherLanguage)();
 
         await waitFor(() =>
-          expect(mockSet).toHaveBeenCalledWith(
+          expect(setCookieSpy).toHaveBeenCalledWith(
             COOKIE_LOOKUP_KEY_LANG,
             otherLanguage
           )
