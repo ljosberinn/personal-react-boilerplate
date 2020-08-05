@@ -12,8 +12,6 @@ const url = '/api/v1/auth/logout';
 const catchAllName = 'authRouter';
 const method: RequestInitMethod = 'delete';
 
-afterEach(jest.clearAllMocks);
-
 describe('api/logout', () => {
   test('should be a function', () => {
     expect(logoutHandler).toBeInstanceOf(Function);

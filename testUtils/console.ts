@@ -21,7 +21,7 @@ export const mockConsoleMethods = (
 
   mocks.forEach(({ method, mock }) => {
     // eslint-disable-next-line no-console
-    console[method] = mock || jest.fn().mockImplementation(() => {});
+    console[method] = mock ?? jest.fn().mockImplementation(() => {});
   });
 
   return () => {

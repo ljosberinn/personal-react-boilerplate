@@ -56,7 +56,7 @@ export const makeMockIncomingRequest = (
     unshift: jest.fn(),
     wrap: jest.fn(),
     [Symbol.asyncIterator]: () =>
-      (jest.fn() as unknown) as AsyncIterableIterator<any>,
+      (jest.fn() as unknown) as AsyncIterableIterator<unknown>,
     ...req,
   };
 };

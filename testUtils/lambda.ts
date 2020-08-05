@@ -132,7 +132,7 @@ export const testLambda = async (
       previewModeSigningKey: '',
     };
 
-    return apiResolver(req, res, getQuery(), resolver, apiContext, true);
+    apiResolver(req, res, getQuery(), resolver, apiContext, true);
   });
 
   const index = await listen(server);
