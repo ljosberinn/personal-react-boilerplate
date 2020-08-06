@@ -30,4 +30,8 @@ module.exports = {
   },
   modulePaths: ['<rootDir>'],
   coverageDirectory: 'coverage',
+  watchPlugins: [
+    'jest-watch-typeahead/filename',
+    'jest-watch-typeahead/testname',
+  ],
 };
