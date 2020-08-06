@@ -8,8 +8,9 @@ module.exports = {
     '!**/config/**',
     '!**/public/**',
     '!**/coverage/**',
-    '!**/.eslintrc.js',
-    '!**/chakra/**',
+    '!.eslintrc.js',
+    '!**/types.ts',
+    '!testUtils/**',
     // REMOVE THESE WHEN ACTUALLY DEVELOPING!
     '!**/src/client/routes/**',
     // you can keep this if you actually have no logic in there
