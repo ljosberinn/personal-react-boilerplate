@@ -25,8 +25,6 @@ const i18nInstance = initI18Next({
   language: 'en',
 });
 
-type Children = { children: ReactElement };
-
 type Namespace = Parameters<typeof useTranslation>[0];
 type I18NPropAlias = {
   i18n?: string;
@@ -101,6 +99,11 @@ export interface TestOptions extends Omit<RenderOptions, 'wrapper'> {
    */
   session?: AuthContextDefinition['user'];
 }
+
+/**
+ * local definition only as @testing-library/react has weird typings here
+ */
+type Children = { children: ReactElement };
 
 // UI-less passthrough fallback to prevent using conditional logic in render
 function ChildrenPassthrough({ children }: Children) {

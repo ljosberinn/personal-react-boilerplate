@@ -22,7 +22,7 @@ import {
   Image,
   keyframes,
 } from '@chakra-ui/core';
-import React, { ReactNode } from 'react';
+import React from 'react';
 import { FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa';
 import { FcSettings } from 'react-icons/fc';
 import { MdDehaze } from 'react-icons/md';
@@ -33,7 +33,7 @@ import {
   ExternalLinkProps,
 } from '../../components/common/ExternalLink';
 import { ThemeSwitchAlt } from '../../components/common/ThemeSwitchAlt';
-import { MFC } from '../../types';
+import { MFC, WithChildren } from '../../types';
 import { Feature } from './Feature';
 import { ChakraIcon } from './icons/ChakraIcon';
 import { ESLintIcon } from './icons/ESLintIcon';
@@ -87,8 +87,7 @@ const StyledLink = chakra(ExternalLink, {
   },
 });
 
-interface MobileNavLinKProps {
-  children: ReactNode;
+interface MobileNavLinKProps extends WithChildren {
   href: string;
 }
 
@@ -246,7 +245,7 @@ function Header() {
   );
 }
 
-function FadedText({ children }: { children: ReactNode }) {
+function FadedText({ children }: WithChildren) {
   const color = useColorModeValue('blackAlpha.700', 'whiteAlpha.700');
 
   return (

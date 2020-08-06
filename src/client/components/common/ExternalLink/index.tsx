@@ -1,15 +1,17 @@
 import { Link, LinkProps, useColorModeValue } from '@chakra-ui/core';
 import { ExternalLinkIcon } from '@chakra-ui/icons';
-import React, { ReactNode, forwardRef } from 'react';
+import React, { forwardRef } from 'react';
 
-export type ExternalLinkProps = LinkProps & {
-  href: string;
-  rel?: string;
-  target?: string;
-  omitIcon?: boolean;
-  omitTextDecoration?: boolean;
-  children: ReactNode;
-};
+import { WithChildren } from '../../../types';
+
+export type ExternalLinkProps = LinkProps &
+  WithChildren & {
+    href: string;
+    rel?: string;
+    target?: string;
+    omitIcon?: boolean;
+    omitTextDecoration?: boolean;
+  };
 
 export const ExternalLink = forwardRef<HTMLAnchorElement, ExternalLinkProps>(
   ({ children, omitIcon, omitTextDecoration, ...rest }, ref) => {

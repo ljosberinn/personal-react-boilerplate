@@ -1,8 +1,8 @@
-import React, { useState, ReactNode } from 'react';
+import React, { useState } from 'react';
 
 import { ENABLED_PROVIDER } from '../../../constants';
 import { INTERNAL_SERVER_ERROR } from '../../../utils/statusCodes';
-import { MFC } from '../../types';
+import { MFC, WithChildren } from '../../types';
 import {
   AuthContext,
   User,
@@ -10,9 +10,8 @@ import {
   LocalLoginOptions,
 } from './AuthContext';
 
-export interface AuthContextProviderProps {
+export interface AuthContextProviderProps extends WithChildren {
   session: User | null;
-  children: ReactNode;
 }
 
 export const endpoints = {

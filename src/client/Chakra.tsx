@@ -5,15 +5,14 @@ import {
   PortalManager,
   GlobalStyle,
 } from '@chakra-ui/core';
-import React, { ReactNode } from 'react';
+import React from 'react';
 
 import { attachComponentBreadcrumb } from '../utils/sentry/client';
 import { MetaThemeColorSynchronizer } from './components/common/MetaThemeColorSynchronizer';
 import { withPersistedTheme, ColorMode } from './hooks/useThemePersistence';
-import { MFC } from './types';
+import { MFC, WithChildren } from './types';
 
-export interface ChakraProps {
-  children: ReactNode;
+export interface ChakraProps extends WithChildren {
   initialColorMode: ColorMode;
 }
 

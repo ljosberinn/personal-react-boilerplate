@@ -1,6 +1,7 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 
 import { render, testA11Y } from '../../../../../testUtils';
+import { WithChildren } from '../../../types';
 
 import { InternalLink, InternalLinkProps } from '.';
 
@@ -9,7 +10,7 @@ jest.mock('next/link', () => {
 
   return {
     ...nextLink,
-    default: ({ children }: { children: ReactNode }) => children,
+    default: ({ children }: WithChildren) => children,
   };
 });
 

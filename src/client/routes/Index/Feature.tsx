@@ -2,14 +2,13 @@ import { Box, Heading, Text, useColorModeValue } from '@chakra-ui/core';
 import React, { ReactNode } from 'react';
 
 import { ExternalLink } from '../../components/common/ExternalLink';
-import { MFC } from '../../types';
+import { MFC, WithChildren } from '../../types';
 
-export type FeatureProps = {
+export interface FeatureProps extends WithChildren {
   title: string;
-  children: ReactNode;
   icon: ReactNode;
   href?: string;
-};
+}
 
 export const Feature: MFC<FeatureProps> = ({ title, href, children, icon }) => {
   const bg = useColorModeValue('gray.100', 'gray.700');
