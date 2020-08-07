@@ -58,7 +58,7 @@ const getUrl = (
   index: string,
   maybeUrl: string | URL = '/',
   maybeParams: UrlArguments['searchParams'] = {}
-) => {
+): string => {
   const url = maybeUrl instanceof URL ? maybeUrl : new URL(index + maybeUrl);
 
   if (url.search) {
@@ -88,7 +88,7 @@ const getUrl = (
 const withMiddleware = (
   handler: NextConnect<NextApiRequest, NextApiResponse>,
   middleware?: UrlArguments['middleware']
-) => {
+): NextConnect<NextApiRequest, NextApiResponse<unknown>> => {
   if (!middleware) {
     return handler;
   }

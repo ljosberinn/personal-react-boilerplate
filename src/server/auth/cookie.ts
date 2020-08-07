@@ -13,7 +13,7 @@ import {
 
 type SSRCompatibleRequest = NextApiRequest | IncomingMessage;
 
-export const encryptSession = (session: object) =>
+export const encryptSession = (session: Record<string, unknown>) =>
   seal(session, SESSION_COOKIE_SECRET, defaults);
 
 /**
@@ -21,14 +21,16 @@ export const encryptSession = (session: object) =>
  */
 export const getSession = (
   req?: SSRCompatibleRequest
-): null | Promise<User> => {
+): Promise<User | null> => {
   if (!req) {
-    return null;
+    return Promise.resolve(null);
   }
 
   const token = getSessionCookie(req);
 
-  return token ? unseal(token, SESSION_COOKIE_SECRET, defaults) : null;
+  return token
+    ? unseal(token, SESSION_COOKIE_SECRET, defaults)
+    : Promise.resolve(null);
 };
 
 interface NewCookieOptions {
@@ -43,13 +45,13 @@ interface NewCookieOptions {
 export const setCookie = (
   { name, value, options }: NewCookieOptions,
   res: NextApiResponse
-) => {
+): void => {
   const header = serialize(name, value, options);
 
   res.setHeader('Set-Cookie', header);
 };
 
-export const setSessionCookie = (token: string, res: NextApiResponse) => {
+export const setSessionCookie = (token: string, res: NextApiResponse): void => {
   const options: CookieSerializeOptions = {
     expires: new Date(Date.now() + SESSION_LIFETIME),
     httpOnly: true,
@@ -70,7 +72,7 @@ export const setSessionCookie = (token: string, res: NextApiResponse) => {
   );
 };
 
-export const removeCookie = (name: string, res: NextApiResponse) => {
+export const removeCookie = (name: string, res: NextApiResponse): void => {
   const value = serialize(name, '', {
     maxAge: -1,
     path: '/',
@@ -79,7 +81,9 @@ export const removeCookie = (name: string, res: NextApiResponse) => {
   res.setHeader('Set-Cookie', value);
 };
 
-export const parseCookies = (req: SSRCompatibleRequest) => {
+export const parseCookies = (
+  req: SSRCompatibleRequest
+): Record<string, string> => {
   // For API Routes we don't need to parse the cookies.
   if ('cookies' in req) {
     return req.cookies;

@@ -32,13 +32,13 @@ type AuthenticatedGetServerSideProps<
  * Protects a route using getServerSideProps by expection a session
  * Given no session, redirects to options.headers.Location, defaulting to /
  */
-export const withSession = (
+export const withSession = <T extends unknown>(
   handler: AuthenticatedGetServerSideProps,
   {
     headers = { Location: '/' },
     status = FOUND_MOVED_TEMPORARILY,
   }: WithSessionOptions = {}
-) => async (ctx: GetServerSidePropsContext) => {
+) => async (ctx: GetServerSidePropsContext): Promise<{ props: {} | T }> => {
   const session = await getSession(ctx.req);
 
   if (!session) {

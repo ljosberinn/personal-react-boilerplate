@@ -1,19 +1,14 @@
-import { NodeOptions } from '@sentry/node';
 import { init, configureScope } from '@sentry/node';
 import { NextApiRequest } from 'next';
 
-import { isomorphicSentryInit, defaultOptions } from './shared';
-
-const options: NodeOptions = {
-  ...defaultOptions,
-};
+import { isomorphicSentryInit, defaultOptions as options } from './shared';
 
 isomorphicSentryInit({ configureScope, init, options });
 
 /**
  * Attaches lambda request data to Sentry
  */
-export const attachLambdaContext = (req: NextApiRequest) => {
+export const attachLambdaContext = (req: NextApiRequest): void => {
   configureScope((scope) => {
     scope.setTag('host', req.headers.host ?? '');
     scope.setTag('url', req.url ?? '');

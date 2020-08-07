@@ -7,13 +7,15 @@ export type ConsoleMockWithDefault = {
 };
 
 /**
- *  Overwrites passed console methods with your or silent implementations
+ * Overwrites passed console methods with your or silent implementations
+ * Returns function to restore console
+ *
  *
  * @param method
  */
 export const mockConsoleMethods = (
   args: ConsoleMockWithDefault['method'] | ConsoleMockWithDefault[]
-) => {
+): (() => void) => {
   const mocks = Array.isArray(args) ? args : [{ method: args }];
 
   // eslint-disable-next-line no-console
@@ -24,7 +26,7 @@ export const mockConsoleMethods = (
     console[method] = mock ?? jest.fn().mockImplementation(() => {});
   });
 
-  return () => {
+  return function restoreConsole() {
     mocks.forEach(({ method }, index) => {
       // eslint-disable-next-line no-console
       console[method] = source[index];

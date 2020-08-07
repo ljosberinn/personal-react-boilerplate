@@ -3,7 +3,7 @@ import { captureException, withScope } from '@sentry/node';
 import universalLanguageDetect, {
   COOKIE_LOOKUP_KEY_LANG,
 } from '@unly/universal-language-detector';
-import i18n from 'i18next';
+import i18n, { i18n as I18NInstance } from 'i18next';
 import { set } from 'js-cookie';
 import { NextPageContext } from 'next';
 import absoluteUrl from 'next-absolute-url';
@@ -48,7 +48,10 @@ type InitI18NextArgs = Pick<PageProps, 'language'> &
       }
   );
 
-export const initI18Next = ({ language, ...rest }: InitI18NextArgs) => {
+export const initI18Next = ({
+  language,
+  ...rest
+}: InitI18NextArgs): I18NInstance => {
   const instance = i18n.use(initReactI18next);
 
   const resources =
@@ -108,7 +111,9 @@ export const initI18Next = ({ language, ...rest }: InitI18NextArgs) => {
  *
  * @param slug
  */
-export const makeChangeLanguageHandler = (slug: string) => {
+export const makeChangeLanguageHandler = (
+  slug: string
+): (() => Promise<void>) => {
   return async () => {
     const hasBundle = !!i18n.getDataByLanguage(slug);
 
@@ -187,7 +192,10 @@ const memoizedCacheMaxAge = (IS_BROWSER || IS_PROD ? 60 * 60 : 60) * 1000;
 
 export const i18nEndpoint = '/api/v1/i18n/';
 
-export const getI18N = async (lang: string, ctx?: NextPageContext) => {
+export const getI18N = async (
+  lang: string,
+  ctx?: NextPageContext
+): Promise<I18nextResourceLocale> => {
   if (!ENABLED_LANGUAGES.includes(lang)) {
     lang = SUPPORTED_LANGUAGES_MAP.en;
   }

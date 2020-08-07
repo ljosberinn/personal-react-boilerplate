@@ -60,7 +60,7 @@ export const getRedirectUrl = (
   url: string,
   redirect_uri: string,
   provider: ExternalProvider
-) => {
+): string => {
   const { scope, client_id } = config[provider];
 
   const params = new URLSearchParams({
@@ -116,7 +116,7 @@ export const getProfileData = async (
   url: string,
   provider: ExternalProvider,
   { access_token, token_type }: OAuth2Response
-): Promise<object> => {
+): Promise<Record<string, unknown>> => {
   const profileParams = new URLSearchParams({
     access_token,
   });

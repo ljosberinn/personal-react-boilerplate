@@ -12,7 +12,7 @@ const makeAuthenticatedFetch = (method: RequestInitMethod) => (
   endpoint: string,
   req: IncomingMessage,
   options: RequestInit = {}
-) => {
+): Promise<Response> => {
   const { origin } = absoluteUrl(req);
   const url = [
     origin,

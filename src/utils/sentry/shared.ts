@@ -22,7 +22,7 @@ export const isomorphicSentryInit = ({
   init,
   options,
   configureScope,
-}: BootParameters) => {
+}: BootParameters): void => {
   if (!IS_PROD) {
     options.beforeSend = () => null;
     options.integrations = [

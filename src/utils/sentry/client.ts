@@ -27,7 +27,7 @@ export const attachInitialContext = ({
   req,
   language,
   session,
-}: InitialContextArgs) => {
+}: InitialContextArgs): void => {
   addBreadcrumb({
     level: Severity.Debug,
     message: `Booting (${IS_BROWSER ? 'in browser' : 'on server'})`,
@@ -54,7 +54,7 @@ export const attachInitialContext = ({
 export const attachRoutingContext = (
   { route, pathname, query, asPath }: NextRouter,
   name = 'unknown'
-) => {
+): void => {
   configureScope((scope) => {
     scope.setContext('router', {
       asPath,
@@ -69,7 +69,7 @@ export const attachRoutingContext = (
   attachComponentBreadcrumb(name);
 };
 
-export const attachComponentBreadcrumb = (name: string) => {
+export const attachComponentBreadcrumb = (name: string): void => {
   addBreadcrumb({
     level: Severity.Debug,
     message: `Preparing "${name}" (${IS_BROWSER ? 'in browser' : 'on server'})`,
