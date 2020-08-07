@@ -1,4 +1,3 @@
-import { seal, unseal, defaults } from '@hapi/iron';
 import { serialize, parse, CookieSerializeOptions } from 'cookie';
 import { IncomingMessage } from 'http';
 import { NextApiRequest, NextApiResponse } from 'next';
@@ -6,31 +5,26 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { User } from '../../client/context/AuthContext/AuthContext';
 import {
   IS_PROD,
-  SESSION_COOKIE_SECRET,
   SESSION_LIFETIME,
   SESSION_COOKIE_NAME,
 } from '../../constants';
 
 type SSRCompatibleRequest = NextApiRequest | IncomingMessage;
 
-export const encryptSession = (session: Record<string, unknown>) =>
-  seal(session, SESSION_COOKIE_SECRET, defaults);
+export const encryptSession = (session: object): string =>
+  btoa(JSON.stringify(session));
 
 /**
  * extracts & decrypts the session cookie, if existing
  */
-export const getSession = (
-  req?: SSRCompatibleRequest
-): Promise<User | null> => {
+export const getSession = (req?: SSRCompatibleRequest): User | null => {
   if (!req) {
-    return Promise.resolve(null);
+    return null;
   }
 
   const token = getSessionCookie(req);
 
-  return token
-    ? unseal(token, SESSION_COOKIE_SECRET, defaults)
-    : Promise.resolve(null);
+  return token ? JSON.parse(atob(token)) : null;
 };
 
 interface NewCookieOptions {

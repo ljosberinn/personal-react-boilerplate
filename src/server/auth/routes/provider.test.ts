@@ -231,7 +231,7 @@ describe('api/provider', () => {
 
         jest
           .spyOn(cookieUtils, 'encryptSession')
-          .mockResolvedValueOnce(fakeCookie);
+          .mockReturnValueOnce(fakeCookie);
 
         const setSessionCookieSpy = jest.spyOn(cookieUtils, 'setSessionCookie');
 
@@ -272,7 +272,7 @@ describe('api/provider', () => {
 
         jest
           .spyOn(cookieUtils, 'encryptSession')
-          .mockResolvedValueOnce(fakeCookie);
+          .mockReturnValueOnce(fakeCookie);
 
         jest.spyOn(cookieUtils, 'setSessionCookie');
 

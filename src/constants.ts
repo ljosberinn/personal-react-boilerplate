@@ -25,7 +25,6 @@ export const SUPPORTED_LANGUAGES_MAP = ENABLED_LANGUAGES.reduce<{
 export const SENTRY_DSN = process.env.NEXT_PUBLIC_SENTRY_DSN!;
 
 /* auth */
-export const SESSION_COOKIE_SECRET = process.env.SESSION_COOKIE_SECRET!;
 // TS does not like this variable coming out of env
 export const SESSION_COOKIE_NAME = 'session';
 export const SESSION_LIFETIME =

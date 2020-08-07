@@ -3,11 +3,11 @@ import { captureException, withScope } from '@sentry/node';
 import universalLanguageDetect, {
   COOKIE_LOOKUP_KEY_LANG,
 } from '@unly/universal-language-detector';
+import { parse } from 'cookie';
 import i18n, { i18n as I18NInstance } from 'i18next';
 import { set } from 'js-cookie';
 import { NextPageContext } from 'next';
 import absoluteUrl from 'next-absolute-url';
-import nextCookies from 'next-cookies';
 import { initReactI18next } from 'react-i18next';
 
 import { PageProps } from '../../pages/_app';
@@ -247,8 +247,11 @@ export const getI18N = async (
  *
  * and picks the best match from existing languages.
  */
-export const detectLanguage = (ctx: NextPageContext) =>
-  universalLanguageDetect({
+export const detectLanguage = (ctx: NextPageContext) => {
+  const cookies = ctx.req?.headers.cookie;
+  const serverCookies = cookies ? parse(cookies) : undefined;
+
+  return universalLanguageDetect({
     acceptLanguageHeader: ctx.req?.headers['accept-language'],
     errorHandler: (error, level, origin, context) => {
       withScope((scope) => {
@@ -263,6 +266,7 @@ export const detectLanguage = (ctx: NextPageContext) =>
       });
     },
     fallbackLanguage: SUPPORTED_LANGUAGES_MAP.en,
-    serverCookies: nextCookies(ctx),
+    serverCookies,
     supportedLanguages: ENABLED_LANGUAGES,
   });
+};

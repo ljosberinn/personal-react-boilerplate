@@ -1,10 +1,9 @@
-import { seal, defaults } from '@hapi/iron';
 import { IncomingMessage } from 'http';
 import nextConnect from 'next-connect';
 
 import { waitFor } from '../../../testUtils';
 import { testLambda } from '../../../testUtils/lambda';
-import { SESSION_COOKIE_NAME, SESSION_COOKIE_SECRET } from '../../constants';
+import { SESSION_COOKIE_NAME } from '../../constants';
 import { RequestMethods } from '../../utils/requestMethods';
 import { OK, UNAUTHORIZED } from '../../utils/statusCodes';
 import * as cookieUtils from '../auth/cookie';
@@ -72,11 +71,7 @@ describe('middleware/authNSecurity', () => {
     test(`always patches req with the decrypted session with a SESSION_COOKIE present (method: ${method})`, async () => {
       const dataset = { hello: 'world' };
 
-      const validDummyCookie = await seal(
-        dataset,
-        SESSION_COOKIE_SECRET,
-        defaults
-      );
+      const validDummyCookie = cookieUtils.encryptSession(dataset);
 
       const response = await testLambda(nextConnect().use(dummyHandler), {
         headers: {

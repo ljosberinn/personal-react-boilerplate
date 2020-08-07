@@ -25,7 +25,7 @@ interface VerifyArg {
   password: string;
 }
 
-const verify = ({ username, password }: VerifyArg) => {
+const verify = ({ username, password }: VerifyArg): object | null => {
   // custom logic for your db goes here!
   const user = localDB.find(
     (user) => user.username === username && user.password === password
