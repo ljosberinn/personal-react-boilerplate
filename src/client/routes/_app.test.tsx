@@ -12,8 +12,9 @@ import { makeMockIncomingRequest } from '../../../testUtils/api';
 import { SUPPORTED_LANGUAGES_MAP } from '../../constants';
 import * as cookieUtils from '../../server/auth/cookie';
 import { i18nCache } from '../../server/i18n/cache';
+import * as i18nServer from '../../server/i18n/detectLanguage';
 import * as sentryUtils from '../../utils/sentry/client';
-import * as i18n from '../i18n';
+import * as i18nClient from '../i18n';
 
 const server = setupServer(
   // TODO: hardcoded because not importable from i18n at this point
@@ -57,7 +58,7 @@ describe('<App />', () => {
   });
 
   it('initializes i18n', () => {
-    const initI18NextSpy = jest.spyOn(i18n, 'initI18Next');
+    const initI18NextSpy = jest.spyOn(i18nClient, 'initI18Next');
 
     render(<App {...defaultProps} />);
 
@@ -118,7 +119,7 @@ describe('App.getInitialProps()', () => {
   });
 
   it('detects language on boot', async () => {
-    const detectLanguageSpy = jest.spyOn(i18n, 'detectLanguage');
+    const detectLanguageSpy = jest.spyOn(i18nServer, 'detectLanguage');
 
     const initialProps = await getInitialProps(appContext);
 
@@ -135,7 +136,7 @@ describe('App.getInitialProps()', () => {
   });
 
   it('loads i18n on boot', async () => {
-    const getI18NSpy = jest.spyOn(i18n, 'getI18N');
+    const getI18NSpy = jest.spyOn(i18nClient, 'getI18N');
 
     const { pageProps } = await getInitialProps(appContext);
 

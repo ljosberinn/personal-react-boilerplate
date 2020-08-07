@@ -1,9 +1,6 @@
 // contains lots of inspiration from https://github.com/UnlyEd/next-right-now/blob/v1-ssr-mst-aptd-gcms-lcz-sty/src/utils/i18nextLocize.ts
-import { captureException, withScope } from '@sentry/node';
-import universalLanguageDetect, {
-  COOKIE_LOOKUP_KEY_LANG,
-} from '@unly/universal-language-detector';
-import { parse } from 'cookie';
+import { captureException } from '@sentry/node';
+import { COOKIE_LOOKUP_KEY_LANG } from '@unly/universal-language-detector';
 import i18n, { i18n as I18NInstance } from 'i18next';
 import { set } from 'js-cookie';
 import { NextPageContext } from 'next';
@@ -238,36 +235,4 @@ export const getI18N = async (
   };
 
   return resources;
-};
-
-/**
- * Dynamically detects the users preferred language based on
- *
- * - request header
- * - cookies
- *
- * and picks the best match from existing languages.
- */
-export const detectLanguage = (ctx: NextPageContext) => {
-  const cookies = ctx.req?.headers.cookie;
-  const serverCookies = cookies ? parse(cookies) : undefined;
-
-  return universalLanguageDetect({
-    acceptLanguageHeader: ctx.req?.headers['accept-language'],
-    errorHandler: (error, level, origin, context) => {
-      withScope((scope) => {
-        scope.setExtra('level', level);
-        scope.setExtra('origin', origin);
-
-        if (context) {
-          scope.setContext('context', context);
-        }
-
-        captureException(error);
-      });
-    },
-    fallbackLanguage: SUPPORTED_LANGUAGES_MAP.en,
-    serverCookies,
-    supportedLanguages: ENABLED_LANGUAGES,
-  });
 };
