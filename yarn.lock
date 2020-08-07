@@ -1638,12 +1638,21 @@
     "@types/tinycolor2" "1.4.2"
     tinycolor2 "1.4.1"
 
-"@chakra-ui/theme@1.0.0-rc.0":
-  version "1.0.0-rc.0"
-  resolved "https://registry.yarnpkg.com/@chakra-ui/theme/-/theme-1.0.0-rc.0.tgz#f69b10d198299dacbb3277a0f516d080598576a1"
-  integrity sha512-Q0V3kDv79+WBaOT2usMZR++DYSNXjvSC2bhUdrSG/SpQnkrm9z1jw9WTyCFnuTL6efhhiAJ6zUTM7GV70Jyn7A==
+"@chakra-ui/theme-tools@1.0.0-rc.1":
+  version "1.0.0-rc.1"
+  resolved "https://registry.yarnpkg.com/@chakra-ui/theme-tools/-/theme-tools-1.0.0-rc.1.tgz#f37b5088016c54be7de3a6dfcfcd7af2246e1bee"
+  integrity sha512-H2UhtYKeRSpkDEljU+EBYqBl6vJj9Oc9PyyPiHnIsR0rjbnuclay9OmqrmCl2dFDRanszrFSMM31PabCzrkKnA==
   dependencies:
-    "@chakra-ui/theme-tools" "1.0.0-rc.0"
+    "@chakra-ui/utils" "1.0.0-rc.1"
+    "@types/tinycolor2" "1.4.2"
+    tinycolor2 "1.4.1"
+
+"@chakra-ui/theme@1.0.0-rc.1":
+  version "1.0.0-rc.1"
+  resolved "https://registry.yarnpkg.com/@chakra-ui/theme/-/theme-1.0.0-rc.1.tgz#34384184424e3f262faffdfe5751bd94b0aeff1d"
+  integrity sha512-L3ERQOdEIH8IOyMahRVb5Kt4sdBA++wUGh5wAz9e03Lj9QsVOkKvzTYkGcBcFGPJgvoL5hKy5j+wOMdEjfunNA==
+  dependencies:
+    "@chakra-ui/theme-tools" "1.0.0-rc.1"
 
 "@chakra-ui/toast@1.0.0-rc.0":
   version "1.0.0-rc.0"
@@ -1682,6 +1691,16 @@
   version "1.0.0-rc.0"
   resolved "https://registry.yarnpkg.com/@chakra-ui/utils/-/utils-1.0.0-rc.0.tgz#9a41d7cfcbbdb40621117e696f2ac1fd410fcd49"
   integrity sha512-YHYI8h4oKNpx8pA9yH5btIRX1A+VlaU73qtWLo+FJc2HAiXnnv2WK9xtLe/5FopgBSoChGXy5nApxJhi4QJjAQ==
+  dependencies:
+    "@types/lodash.merge" "4.6.6"
+    css-box-model "1.2.1"
+    lodash.merge "4.6.2"
+    memoize-one "5.1.1"
+
+"@chakra-ui/utils@1.0.0-rc.1":
+  version "1.0.0-rc.1"
+  resolved "https://registry.yarnpkg.com/@chakra-ui/utils/-/utils-1.0.0-rc.1.tgz#45b37e62573332e72000ab76acf3a533a9c095b9"
+  integrity sha512-0r834kfs9su9KzPzIjBF+4HwJ3cxdzJkU2SxXWjgmaQu7HqZM37FtVVpWsreRHlE+7z8MJ/3U2TGGqcTf1UOag==
   dependencies:
     "@types/lodash.merge" "4.6.6"
     css-box-model "1.2.1"
@@ -7498,7 +7517,7 @@ jest-validate@^26.2.0:
     leven "^3.1.0"
     pretty-format "^26.2.0"
 
-jest-watch-typeahead@^0.6.0:
+jest-watch-typeahead@0.6.0:
   version "0.6.0"
   resolved "https://registry.yarnpkg.com/jest-watch-typeahead/-/jest-watch-typeahead-0.6.0.tgz#cb4a2d14def3fb64950fec22edb912f93246b24f"
   integrity sha512-mY0u5D1U/mEzeO/tpcDWnWaakuQiBp8gZY1K0HxduMeKSYm4WvbBVfU15a/hWMMs4J9FrXaYjAWs5XGlOpx5IQ==
@@ -7541,7 +7560,7 @@ jest-worker@^26.2.1:
     merge-stream "^2.0.0"
     supports-color "^7.0.0"
 
-jest@^26.2.2:
+jest@26.2.2:
   version "26.2.2"
   resolved "https://registry.yarnpkg.com/jest/-/jest-26.2.2.tgz#a022303887b145147204c5f66e6a5c832333c7e7"
   integrity sha512-EkJNyHiAG1+A8pqSz7cXttoVa34hOEzN/MrnJhYnfp5VHxflVcf2pu3oJSrhiy6LfIutLdWo+n6q63tjcoIeig==
