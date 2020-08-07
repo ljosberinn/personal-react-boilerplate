@@ -2,9 +2,9 @@ import nextConnect from 'next-connect';
 
 import { I18nextResourceLocale } from '../../../../src/client/i18n';
 import { ENABLED_LANGUAGES } from '../../../../src/constants';
-import { i18nCache } from '../../../../src/server/i18n';
 import { BAD_REQUEST } from '../../../../src/utils/statusCodes';
 import { RequestHandler } from '../../types';
+import { i18nCache } from '../cache';
 
 const useI18n: RequestHandler<{}, I18nextResourceLocale> = (
   { query: { language } },

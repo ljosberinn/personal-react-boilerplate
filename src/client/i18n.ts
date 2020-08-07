@@ -18,7 +18,6 @@ import {
   IS_BROWSER,
   IS_TEST,
 } from '../constants';
-import { namespaces } from '../server/i18n';
 
 /**
  * @see https://meta.wikimedia.org/wiki/Template:List_of_language_names_ordered_by_code
@@ -47,6 +46,8 @@ type InitI18NextArgs = Pick<PageProps, 'language'> &
         i18nCache: I18nextResources;
       }
   );
+
+export const namespaces = ['i18n', 'auth', 'theme', 'serviceWorker'];
 
 export const initI18Next = ({
   language,

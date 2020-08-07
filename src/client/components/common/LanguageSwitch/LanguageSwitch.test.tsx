@@ -10,7 +10,7 @@ import {
 } from '../../../../../testUtils';
 import { mockConsoleMethods } from '../../../../../testUtils/console';
 import { ENABLED_LANGUAGES } from '../../../../constants';
-import { i18nCache } from '../../../../server/i18n';
+import { i18nCache } from '../../../../server/i18n/cache';
 
 import { LanguageSwitch } from '.';
 

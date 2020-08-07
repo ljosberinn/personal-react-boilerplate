@@ -10,7 +10,7 @@ import { setupServer } from 'msw/node';
 import 'whatwg-fetch';
 import { mockConsoleMethods } from '../../testUtils/console';
 import { ENABLED_LANGUAGES, SUPPORTED_LANGUAGES_MAP } from '../constants';
-import { i18nCache } from '../server/i18n';
+import { i18nCache } from '../server/i18n/cache';
 import {
   getI18N,
   makeChangeLanguageHandler,

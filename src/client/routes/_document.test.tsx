@@ -4,7 +4,7 @@ import { renderToStaticMarkup } from 'react-dom/server';
 
 import { PageProps } from '../../../pages/_app';
 import Document from '../../../pages/_document';
-import { i18nCache } from '../../server/i18n';
+import { i18nCache } from '../../server/i18n/cache';
 import * as sentryUtils from '../../utils/sentry/client';
 
 const pageProps: PageProps = {

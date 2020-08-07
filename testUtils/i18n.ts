@@ -10,7 +10,7 @@ class MockStore implements ResourceStore {
 export class MockI18n implements i18n {
   init = jest.fn();
   loadResources = jest.fn();
-  t = jest.fn(key => key);
+  t = jest.fn((key) => key);
   use = jest.fn();
   addResource = jest.fn();
   addResourceBundle = jest.fn();

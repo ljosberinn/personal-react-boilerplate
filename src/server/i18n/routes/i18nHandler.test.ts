@@ -1,4 +1,3 @@
-import { i18nCache } from '..';
 import { testLambda } from '../../../../testUtils/lambda';
 import { ENABLED_LANGUAGES } from '../../../constants';
 import {
@@ -6,6 +5,7 @@ import {
   RequestInitMethod,
 } from '../../../utils/requestMethods';
 import { NOT_FOUND, BAD_REQUEST, OK } from '../../../utils/statusCodes';
+import { i18nCache } from '../cache';
 
 import { i18nHandler } from '.';
 

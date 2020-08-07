@@ -12,7 +12,7 @@ import { I18nextProvider, useTranslation } from 'react-i18next';
 import { AuthContextProvider } from '../src/client/context/AuthContext';
 import { AuthContextDefinition } from '../src/client/context/AuthContext/AuthContext';
 import { initI18Next } from '../src/client/i18n';
-import { i18nCache } from '../src/server/i18n';
+import { i18nCache } from '../src/server/i18n/cache';
 
 // may not be in setupTests.js because lambda-Tests rely on node-fetch which
 // collides with whatwg-fetch
