@@ -1,4 +1,3 @@
-import theme from '@chakra-ui/theme';
 import NextDocument, { DocumentProps } from 'next/document';
 import { isValidElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
@@ -9,9 +8,8 @@ import { i18nCache } from '../../server/i18n';
 import * as sentryUtils from '../../utils/sentry/client';
 
 const pageProps: PageProps = {
+  cookies: '',
   i18nBundle: i18nCache.en,
-  // @ts-expect-error Chakra issue, fixed soon
-  initialColorMode: theme.config.initialColorMode,
   language: 'en',
   session: null,
 };

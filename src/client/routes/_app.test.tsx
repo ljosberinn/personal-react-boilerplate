@@ -1,5 +1,4 @@
 /* eslint-disable jest/require-top-level-describe */
-import theme from '@chakra-ui/theme';
 import { render } from '@testing-library/react';
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
@@ -14,7 +13,6 @@ import { SUPPORTED_LANGUAGES_MAP } from '../../constants';
 import * as cookieUtils from '../../server/auth/cookie';
 import { i18nCache } from '../../server/i18n';
 import * as sentryUtils from '../../utils/sentry/client';
-import * as useThemePersistenceUtils from '../hooks/useThemePersistence';
 import * as i18n from '../i18n';
 
 const server = setupServer(
@@ -37,9 +35,8 @@ afterAll(() => {
 const defaultProps: AppRenderProps = {
   Component: () => null,
   pageProps: {
+    cookies: '',
     i18nBundle: { namespace: {} },
-    // @ts-expect-error Chakra issue, fixed soon
-    initialColorMode: theme.config.initialColorMode,
     language: 'en',
     session: null,
   },
@@ -111,10 +108,10 @@ describe('App.getInitialProps()', () => {
     expect(getSessionSpy).toHaveBeenCalledWith(appContext.ctx.req);
 
     expect(pageProps).toMatchObject({
+      cookies: '',
       // in theory, we could check for i18nCache.en here but it's actually
       // machine dependant, so in my case .de
       i18nBundle: expect.any(Object),
-      initialColorMode: theme.config.initialColorMode,
       language: defaultProps.pageProps.language,
       session: null,
     });
@@ -128,30 +125,10 @@ describe('App.getInitialProps()', () => {
     expect(detectLanguageSpy).toBeCalledWith(appContext.ctx);
 
     expect(initialProps.pageProps).toMatchObject({
+      cookies: '',
       // in theory, we could check for i18nCache.en here but it's actually
       // machine dependant, so in my case .de
       i18nBundle: expect.any(Object),
-      initialColorMode: theme.config.initialColorMode,
-      language: defaultProps.pageProps.language,
-      session: null,
-    });
-  });
-
-  it('detects initialColorMode on boot', async () => {
-    const detectInitialColorModeSpy = jest.spyOn(
-      useThemePersistenceUtils,
-      'detectInitialColorMode'
-    );
-
-    const { pageProps } = await getInitialProps(appContext);
-
-    expect(detectInitialColorModeSpy).toHaveBeenCalledWith(appContext.ctx);
-
-    expect(pageProps).toMatchObject({
-      // in theory, we could check for i18nCache.en here but it's actually
-      // machine dependant, so in my case .de
-      i18nBundle: expect.any(Object),
-      initialColorMode: theme.config.initialColorMode,
       language: defaultProps.pageProps.language,
       session: null,
     });
@@ -168,10 +145,10 @@ describe('App.getInitialProps()', () => {
     );
 
     expect(pageProps).toMatchObject({
+      cookies: '',
       // in theory, we could check for i18nCache.en here but it's actually
       // machine dependant, so in my case .de
       i18nBundle: expect.any(Object),
-      initialColorMode: theme.config.initialColorMode,
       language: defaultProps.pageProps.language,
       session: null,
     });
@@ -187,7 +164,6 @@ describe('App.getInitialProps()', () => {
 
     expect(attachInitialContextSpy).toHaveBeenCalledWith(
       expect.objectContaining({
-        initialColorMode: theme.config.initialColorMode,
         language: SUPPORTED_LANGUAGES_MAP.en,
         req: appContext.ctx.req,
         session: null,
@@ -195,10 +171,10 @@ describe('App.getInitialProps()', () => {
     );
 
     expect(pageProps).toMatchObject({
+      cookies: '',
       // in theory, we could check for i18nCache.en here but it's actually
       // machine dependant, so in my case .de
       i18nBundle: expect.any(Object),
-      initialColorMode: theme.config.initialColorMode,
       language: defaultProps.pageProps.language,
       session: null,
     });

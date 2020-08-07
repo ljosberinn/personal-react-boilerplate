@@ -3,7 +3,6 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaSun, FaMoon } from 'react-icons/fa';
 
-import { useThemePersistence } from '../../../hooks/useThemePersistence';
 import { MFC } from '../../../types';
 
 export type ThemeSwitchAltProps = Omit<
@@ -14,7 +13,6 @@ export type ThemeSwitchAltProps = Omit<
 export const ThemeSwitchAlt: MFC<ThemeSwitchAltProps> = (props) => {
   const { t } = useTranslation('theme');
   const { colorMode, toggleColorMode } = useColorMode();
-  useThemePersistence(colorMode);
 
   const isDarkTheme = colorMode === 'dark';
 

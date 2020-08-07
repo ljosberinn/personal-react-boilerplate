@@ -3,7 +3,6 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaSun, FaMoon } from 'react-icons/fa';
 
-import { useThemePersistence } from '../../../hooks/useThemePersistence';
 import { MFC } from '../../../types';
 
 const gray = 'gray.500';
@@ -25,7 +24,6 @@ export type ThemeSwitchProps = FlexProps;
 export const ThemeSwitch: MFC<ThemeSwitchProps> = (props) => {
   const { colorMode, toggleColorMode } = useColorMode();
   const { t } = useTranslation('theme');
-  useThemePersistence(colorMode);
 
   const isLightTheme = colorMode === 'light';
 

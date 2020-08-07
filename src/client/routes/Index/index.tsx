@@ -51,7 +51,10 @@ const gitUrl = '//github.com/ljosberinn/personal-react-boilerplate';
 
 type CustomExternalLinkProps = Pick<ExternalLinkProps, 'href' | 'children'>;
 
-function CustomExternalLink({ href, children }: CustomExternalLinkProps) {
+const CustomExternalLink: MFC<CustomExternalLinkProps> = ({
+  href,
+  children,
+}) => {
   const _hoverBg = useColorModeValue('gray.300', 'whiteAlpha.100');
 
   return (
@@ -67,7 +70,7 @@ function CustomExternalLink({ href, children }: CustomExternalLinkProps) {
       {children}
     </ExternalLink>
   );
-}
+};
 
 const StyledLink = chakra(ExternalLink, {
   baseStyle: {
@@ -91,7 +94,7 @@ interface MobileNavLinKProps extends WithChildren {
   href: string;
 }
 
-function MobileNavLink({ children, href }: MobileNavLinKProps) {
+const MobileNavLink: MFC<MobileNavLinKProps> = ({ children, href }) => {
   const hoverColor = useColorModeValue('gray.900', 'whiteAlpha.900');
   const color = useColorModeValue('gray.700', 'whiteAlpha.900');
 
@@ -108,9 +111,9 @@ function MobileNavLink({ children, href }: MobileNavLinKProps) {
       <span>{children}</span>
     </StyledLink>
   );
-}
+};
 
-function MobileNav() {
+const MobileNav: MFC = () => {
   const { isOpen, onToggle, onClose } = useDisclosure();
 
   return (
@@ -186,9 +189,9 @@ function MobileNav() {
       )}
     </>
   );
-}
+};
 
-function Header() {
+const Header: MFC = () => {
   const bg = useColorModeValue('gray.100', 'gray.700');
 
   return (
@@ -243,9 +246,9 @@ function Header() {
       </Flex>
     </Box>
   );
-}
+};
 
-function FadedText({ children }: WithChildren) {
+const FadedText: MFC<WithChildren> = ({ children }) => {
   const color = useColorModeValue('blackAlpha.700', 'whiteAlpha.700');
 
   return (
@@ -253,9 +256,9 @@ function FadedText({ children }: WithChildren) {
       {children}
     </Text>
   );
-}
+};
 
-function Hero() {
+const Hero: MFC = () => {
   return (
     <Box as="section" pt={40} pb={16} maxW="xl" mx="auto" textAlign="center">
       <KarmaIcon size="16rem" />
@@ -298,7 +301,7 @@ function Hero() {
       </Box>
     </Box>
   );
-}
+};
 
 const title = (
   <Text as="b" whiteSpace="nowrap">
@@ -313,7 +316,7 @@ const spin = keyframes`
   to { transform: rotate(360deg); }
 `;
 
-function StackOverview() {
+const StackOverview: MFC = () => {
   return (
     <Grid
       templateColumns={{
@@ -511,7 +514,7 @@ function StackOverview() {
       </Feature>
     </Grid>
   );
-}
+};
 
 const links = [
   {
@@ -531,7 +534,7 @@ const links = [
   },
 ];
 
-const Footer = () => {
+const Footer: MFC = () => {
   return (
     <Box as="footer" mt={12} mb={20} textAlign="center">
       <Text fontSize="sm">

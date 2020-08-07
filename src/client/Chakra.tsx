@@ -1,32 +1,27 @@
-import {
-  CSSReset,
-  ThemeProvider,
-  ColorModeProvider,
-  PortalManager,
-  GlobalStyle,
-} from '@chakra-ui/core';
+import { ChakraProvider, cookieStorageManager } from '@chakra-ui/core';
+import theme from '@chakra-ui/theme';
 import React from 'react';
 
 import { attachComponentBreadcrumb } from '../utils/sentry/client';
 import { MetaThemeColorSynchronizer } from './components/common/MetaThemeColorSynchronizer';
-import { withPersistedTheme, ColorMode } from './hooks/useThemePersistence';
 import { MFC, WithChildren } from './types';
 
 export interface ChakraProps extends WithChildren {
-  initialColorMode: ColorMode;
+  cookies: string;
 }
 
-export const Chakra: MFC<ChakraProps> = ({ children, initialColorMode }) => {
+export const Chakra: MFC<ChakraProps> = ({ children, cookies }) => {
   attachComponentBreadcrumb('chakra');
 
   return (
-    <ThemeProvider theme={withPersistedTheme(initialColorMode)}>
-      <ColorModeProvider defaultValue={initialColorMode}>
-        <GlobalStyle />
-        <CSSReset />
-        <MetaThemeColorSynchronizer />
-        <PortalManager zIndex={40}>{children}</PortalManager>
-      </ColorModeProvider>
-    </ThemeProvider>
+    <ChakraProvider
+      theme={theme}
+      portalConfig={{ zIndex: 40 }}
+      resetCSS
+      storageManager={cookieStorageManager(cookies)}
+    >
+      <MetaThemeColorSynchronizer />
+      {children}
+    </ChakraProvider>
   );
 };

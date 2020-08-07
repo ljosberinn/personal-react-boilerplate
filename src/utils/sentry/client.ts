@@ -16,7 +16,7 @@ const options: BrowserOptions = {
 isomorphicSentryInit({ configureScope, init, options });
 
 interface InitialContextArgs
-  extends Omit<AppRenderProps['pageProps'], 'i18nBundle'> {
+  extends Omit<AppRenderProps['pageProps'], 'i18nBundle' | 'cookies'> {
   req?: IncomingMessage;
 }
 
@@ -27,7 +27,6 @@ export const attachInitialContext = ({
   req,
   language,
   session,
-  initialColorMode,
 }: InitialContextArgs) => {
   addBreadcrumb({
     level: Severity.Debug,
@@ -36,7 +35,6 @@ export const attachInitialContext = ({
 
   configureScope((scope) => {
     scope.setExtra('language', language);
-    scope.setExtra('initialColorMode', initialColorMode);
 
     if (req) {
       scope.setContext('headers', req.headers);
