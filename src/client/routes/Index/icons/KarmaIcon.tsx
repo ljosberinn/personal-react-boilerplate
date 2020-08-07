@@ -1,9 +1,7 @@
 import { Icon } from '@chakra-ui/core';
 import React from 'react';
 
-import { MFC } from '../../../types';
-
-export const KarmaIcon: MFC<{ size: string }> = ({ size }) => {
+export function KarmaIcon({ size }: { size: string }) {
   return (
     <Icon viewBox="0 0 378 459" width={size} height={size}>
       <title>next-karma Logo</title>
@@ -13,4 +11,4 @@ export const KarmaIcon: MFC<{ size: string }> = ({ size }) => {
       />
     </Icon>
   );
-};
+}

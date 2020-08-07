@@ -3,14 +3,12 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaSun, FaMoon } from 'react-icons/fa';
 
-import { MFC } from '../../../types';
-
 export type ThemeSwitchAltProps = Omit<
   IconButtonProps,
   'children' | 'aria-label'
 >;
 
-export const ThemeSwitchAlt: MFC<ThemeSwitchAltProps> = (props) => {
+export function ThemeSwitchAlt(props: ThemeSwitchAltProps) {
   const { t } = useTranslation('theme');
   const { colorMode, toggleColorMode } = useColorMode();
 
@@ -28,4 +26,4 @@ export const ThemeSwitchAlt: MFC<ThemeSwitchAltProps> = (props) => {
       aria-label={t(isDarkTheme ? 'set-light-theme' : 'set-dark-theme')}
     />
   );
-};
+}

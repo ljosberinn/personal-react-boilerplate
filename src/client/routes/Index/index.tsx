@@ -33,7 +33,7 @@ import {
   ExternalLinkProps,
 } from '../../components/common/ExternalLink';
 import { ThemeSwitchAlt } from '../../components/common/ThemeSwitchAlt';
-import { MFC, WithChildren } from '../../types';
+import { WithChildren } from '../../types';
 import { Feature } from './Feature';
 import { ChakraIcon } from './icons/ChakraIcon';
 import { ESLintIcon } from './icons/ESLintIcon';
@@ -51,10 +51,7 @@ const gitUrl = '//github.com/ljosberinn/personal-react-boilerplate';
 
 type CustomExternalLinkProps = Pick<ExternalLinkProps, 'href' | 'children'>;
 
-const CustomExternalLink: MFC<CustomExternalLinkProps> = ({
-  href,
-  children,
-}) => {
+function CustomExternalLink({ href, children }: CustomExternalLinkProps) {
   const _hoverBg = useColorModeValue('gray.300', 'whiteAlpha.100');
 
   return (
@@ -70,7 +67,7 @@ const CustomExternalLink: MFC<CustomExternalLinkProps> = ({
       {children}
     </ExternalLink>
   );
-};
+}
 
 const StyledLink = chakra(ExternalLink, {
   baseStyle: {
@@ -94,7 +91,7 @@ interface MobileNavLinKProps extends WithChildren {
   href: string;
 }
 
-const MobileNavLink: MFC<MobileNavLinKProps> = ({ children, href }) => {
+function MobileNavLink({ children, href }: MobileNavLinKProps) {
   const hoverColor = useColorModeValue('gray.900', 'whiteAlpha.900');
   const color = useColorModeValue('gray.700', 'whiteAlpha.900');
 
@@ -111,9 +108,9 @@ const MobileNavLink: MFC<MobileNavLinKProps> = ({ children, href }) => {
       <span>{children}</span>
     </StyledLink>
   );
-};
+}
 
-const MobileNav: MFC = () => {
+function MobileNav() {
   const { isOpen, onToggle, onClose } = useDisclosure();
 
   return (
@@ -189,9 +186,9 @@ const MobileNav: MFC = () => {
       )}
     </>
   );
-};
+}
 
-const Header: MFC = () => {
+function Header() {
   const bg = useColorModeValue('gray.100', 'gray.700');
 
   return (
@@ -246,9 +243,9 @@ const Header: MFC = () => {
       </Flex>
     </Box>
   );
-};
+}
 
-const FadedText: MFC<WithChildren> = ({ children }) => {
+function FadedText({ children }: WithChildren) {
   const color = useColorModeValue('blackAlpha.700', 'whiteAlpha.700');
 
   return (
@@ -256,9 +253,9 @@ const FadedText: MFC<WithChildren> = ({ children }) => {
       {children}
     </Text>
   );
-};
+}
 
-const Hero: MFC = () => {
+function Hero() {
   return (
     <Box as="section" pt={40} pb={16} maxW="xl" mx="auto" textAlign="center">
       <KarmaIcon size="16rem" />
@@ -272,7 +269,7 @@ const Hero: MFC = () => {
       </FadedText>
 
       <FadedText>
-        Supports Authentication, Error Handling & Internationalization and more
+        pports Authentication, Error Handling & Internationalization and more
         out of the box.
       </FadedText>
 
@@ -301,7 +298,7 @@ const Hero: MFC = () => {
       </Box>
     </Box>
   );
-};
+}
 
 const title = (
   <Text as="b" whiteSpace="nowrap">
@@ -316,7 +313,7 @@ const spin = keyframes`
   to { transform: rotate(360deg); }
 `;
 
-const StackOverview: MFC = () => {
+function StackOverview() {
   return (
     <Grid
       templateColumns={{
@@ -514,7 +511,7 @@ const StackOverview: MFC = () => {
       </Feature>
     </Grid>
   );
-};
+}
 
 const links = [
   {
@@ -534,7 +531,7 @@ const links = [
   },
 ];
 
-const Footer: MFC = () => {
+function Footer() {
   return (
     <Box as="footer" mt={12} mb={20} textAlign="center">
       <Text fontSize="sm">
@@ -556,9 +553,9 @@ const Footer: MFC = () => {
       </Stack>
     </Box>
   );
-};
+}
 
-export const Index: MFC = () => {
+export function Index() {
   return (
     <>
       <Header />
@@ -571,4 +568,4 @@ export const Index: MFC = () => {
       <Footer />
     </>
   );
-};
+}

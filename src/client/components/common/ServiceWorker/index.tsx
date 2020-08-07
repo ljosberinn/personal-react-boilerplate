@@ -6,7 +6,6 @@ import { useTranslation } from 'react-i18next';
 
 import { IS_PROD } from '../../../../constants';
 import { attachComponentBreadcrumb } from '../../../../utils/sentry/client';
-import { MFC } from '../../../types';
 
 const sw = '/service-worker.js';
 
@@ -17,7 +16,7 @@ interface RefreshToastProps {
 /**
  * Currently mimics toast({status: 'info'}) to allow a global onClick
  */
-const RefreshToast: MFC<RefreshToastProps> = ({ t }) => {
+function RefreshToast({ t }: RefreshToastProps) {
   return (
     <Flex
       backgroundColor="blue.500"
@@ -40,9 +39,9 @@ const RefreshToast: MFC<RefreshToastProps> = ({ t }) => {
       </Box>
     </Flex>
   );
-};
+}
 
-export const ServiceWorker: MFC = () => {
+export function ServiceWorker() {
   const { t } = useTranslation('serviceWorker');
   const toast = useToast();
 
@@ -92,4 +91,4 @@ export const ServiceWorker: MFC = () => {
   }, [toast, t]);
 
   return null;
-};
+}

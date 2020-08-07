@@ -3,8 +3,6 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaSun, FaMoon } from 'react-icons/fa';
 
-import { MFC } from '../../../types';
-
 const gray = 'gray.500';
 const yellow = 'yellow.500';
 
@@ -21,7 +19,7 @@ const colorMap = {
 
 export type ThemeSwitchProps = FlexProps;
 
-export const ThemeSwitch: MFC<ThemeSwitchProps> = (props) => {
+export function ThemeSwitch(props: ThemeSwitchProps) {
   const { colorMode, toggleColorMode } = useColorMode();
   const { t } = useTranslation('theme');
 
@@ -58,4 +56,4 @@ export const ThemeSwitch: MFC<ThemeSwitchProps> = (props) => {
       />
     </Flex>
   );
-};
+}

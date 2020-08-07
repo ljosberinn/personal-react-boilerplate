@@ -1,9 +1,7 @@
 import { Icon } from '@chakra-ui/core';
 import React from 'react';
 
-import { MFC } from '../../../types';
-
-export const I18NextIcon: MFC<{ size: string }> = ({ size }) => {
+export function I18NextIcon({ size }: { size: string }) {
   return (
     <Icon viewBox="0 30 150 150" width={size} height={size}>
       <title>react-i18next Logo</title>
@@ -34,4 +32,4 @@ export const I18NextIcon: MFC<{ size: string }> = ({ size }) => {
       />
     </Icon>
   );
-};
+}

@@ -4,13 +4,13 @@ import React from 'react';
 
 import { attachComponentBreadcrumb } from '../utils/sentry/client';
 import { MetaThemeColorSynchronizer } from './components/common/MetaThemeColorSynchronizer';
-import { MFC, WithChildren } from './types';
+import { WithChildren } from './types';
 
 export interface ChakraProps extends WithChildren {
   cookies: string;
 }
 
-export const Chakra: MFC<ChakraProps> = ({ children, cookies }) => {
+export function Chakra({ children, cookies }: ChakraProps) {
   attachComponentBreadcrumb('chakra');
 
   return (
@@ -24,4 +24,4 @@ export const Chakra: MFC<ChakraProps> = ({ children, cookies }) => {
       {children}
     </ChakraProvider>
   );
-};
+}

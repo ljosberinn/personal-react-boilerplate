@@ -2,7 +2,7 @@ import { Box, Heading, Text, useColorModeValue } from '@chakra-ui/core';
 import React, { ReactNode } from 'react';
 
 import { ExternalLink } from '../../components/common/ExternalLink';
-import { MFC, WithChildren } from '../../types';
+import { WithChildren } from '../../types';
 
 export interface FeatureProps extends WithChildren {
   title: string;
@@ -10,7 +10,7 @@ export interface FeatureProps extends WithChildren {
   href?: string;
 }
 
-export const Feature: MFC<FeatureProps> = ({ title, href, children, icon }) => {
+export function Feature({ title, href, children, icon }: FeatureProps) {
   const bg = useColorModeValue('gray.100', 'gray.700');
 
   const heading = (
@@ -35,4 +35,4 @@ export const Feature: MFC<FeatureProps> = ({ title, href, children, icon }) => {
       <Text>{children}</Text>
     </Box>
   );
-};
+}

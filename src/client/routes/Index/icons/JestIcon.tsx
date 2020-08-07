@@ -1,9 +1,7 @@
 import { Icon } from '@chakra-ui/core';
 import React from 'react';
 
-import { MFC } from '../../../types';
-
-export const JestIcon: MFC<{ size: string }> = ({ size }) => {
+export function JestIcon({ size }: { size: string }) {
   return (
     <Icon viewBox="0 0 256 283" boxSize="1em" width={size} height={size}>
       <title>Jest Logo</title>
@@ -17,4 +15,4 @@ export const JestIcon: MFC<{ size: string }> = ({ size }) => {
       />
     </Icon>
   );
-};
+}

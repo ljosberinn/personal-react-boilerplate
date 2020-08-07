@@ -1,9 +1,7 @@
 import { Icon } from '@chakra-ui/core';
 import React from 'react';
 
-import { MFC } from '../../../types';
-
-export const OAuth2Icon: MFC<{ size: string }> = ({ size }) => {
+export function OAuth2Icon({ size }: { size: string }) {
   return (
     <Icon width={size} height={size} viewBox="20 30 550 630">
       <title>OAuth2 Logo</title>
@@ -32,4 +30,4 @@ export const OAuth2Icon: MFC<{ size: string }> = ({ size }) => {
       />
     </Icon>
   );
-};
+}

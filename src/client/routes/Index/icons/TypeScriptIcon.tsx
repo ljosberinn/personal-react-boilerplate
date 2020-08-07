@@ -1,9 +1,7 @@
 import { Icon } from '@chakra-ui/core';
 import React from 'react';
 
-import { MFC } from '../../../types';
-
-export const TypeScriptIcon: MFC<{ size: string }> = ({ size }) => {
+export function TypeScriptIcon({ size }: { size: string }) {
   return (
     <Icon boxSize="1em" width={size} height={size} viewBox="0 0 64 64">
       <title>TypeScript Logo</title>
@@ -13,4 +11,4 @@ export const TypeScriptIcon: MFC<{ size: string }> = ({ size }) => {
       />
     </Icon>
   );
-};
+}

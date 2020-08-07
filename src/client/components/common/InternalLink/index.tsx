@@ -6,13 +6,13 @@ import { LinkProps as NextLinkProps } from 'next/dist/client/link';
 import NextLink from 'next/link';
 import React from 'react';
 
-import { MFC, WithChildren } from '../../../types';
+import { WithChildren } from '../../../types';
 
 export type InternalLinkProps = NextLinkProps &
   Omit<ChakraLinkProps, 'as'> &
   WithChildren;
 
-export const InternalLink: MFC<InternalLinkProps> = ({
+export function InternalLink({
   href,
   as,
   replace,
@@ -21,7 +21,7 @@ export const InternalLink: MFC<InternalLinkProps> = ({
   prefetch,
   children,
   ...rest
-}) => {
+}: InternalLinkProps) {
   return (
     <NextLink
       passHref
@@ -35,4 +35,4 @@ export const InternalLink: MFC<InternalLinkProps> = ({
       <ChakraLink {...rest}>{children}</ChakraLink>
     </NextLink>
   );
-};
+}

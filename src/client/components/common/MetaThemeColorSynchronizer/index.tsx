@@ -3,9 +3,7 @@ import theme from '@chakra-ui/theme';
 import Head from 'next/head';
 import React from 'react';
 
-import { MFC } from '../../../types';
-
-export const MetaThemeColorSynchronizer: MFC = () => {
+export function MetaThemeColorSynchronizer() {
   const isLightTheme = useColorMode().colorMode === 'light';
 
   return (
@@ -16,4 +14,4 @@ export const MetaThemeColorSynchronizer: MFC = () => {
       />
     </Head>
   );
-};
+}

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import { ENABLED_PROVIDER } from '../../../constants';
 import { INTERNAL_SERVER_ERROR } from '../../../utils/statusCodes';
-import { MFC, WithChildren } from '../../types';
+import { WithChildren } from '../../types';
 import {
   AuthContext,
   User,
@@ -32,10 +32,10 @@ export const endpoints = {
   },
 };
 
-export const AuthContextProvider: MFC<AuthContextProviderProps> = ({
+export function AuthContextProvider({
   children,
   session,
-}) => {
+}: AuthContextProviderProps) {
   const [user, setUser] = useState<User | null>(session);
 
   /**
@@ -135,4 +135,4 @@ export const AuthContextProvider: MFC<AuthContextProviderProps> = ({
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
-};
+}

@@ -1,9 +1,7 @@
 import { useColorModeValue, Icon } from '@chakra-ui/core';
 import React from 'react';
 
-import { MFC } from '../../../types';
-
-export const PWAIcon: MFC<{ size: string }> = ({ size }) => {
+export function PWAIcon({ size }: { size: string }) {
   const fill = useColorModeValue('#3D3D3D', 'white');
 
   return (
@@ -23,4 +21,4 @@ export const PWAIcon: MFC<{ size: string }> = ({ size }) => {
       />
     </Icon>
   );
-};
+}
