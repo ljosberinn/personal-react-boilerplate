@@ -8,7 +8,7 @@ import { I18nextProvider } from 'react-i18next';
 import { seo } from '../next-seo.config';
 import { Chakra } from '../src/client/Chakra';
 import { ServiceWorker } from '../src/client/components/common/ServiceWorker';
-import { AuthContextProvider } from '../src/client/context/AuthContext';
+// import { AuthContextProvider } from '../src/client/context/AuthContext';
 import { User } from '../src/client/context/AuthContext/AuthContext';
 import {
   I18nextResourceLocale,
@@ -16,7 +16,7 @@ import {
   getI18N,
   detectLanguage,
 } from '../src/client/i18n';
-import { getSession } from '../src/server/auth/cookie';
+// import { getSession } from '../src/server/auth/cookie';
 import {
   attachInitialContext,
   attachRoutingContext,
@@ -54,13 +54,13 @@ export default function App({ Component, pageProps, router }: AppRenderProps) {
       <DefaultSeo {...seo} />
       <TopLevelErrorBoundary showDialog>
         <I18nextProvider i18n={i18nInstance}>
-          <AuthContextProvider session={pageProps.session}>
-            <Chakra cookies={pageProps.cookies}>
-              <ServiceWorker />
-              {/* <CustomPWAInstallPrompt /> */}
-              <Component {...pageProps} />
-            </Chakra>
-          </AuthContextProvider>
+          {/* <AuthContextProvider session={pageProps.session}> */}
+          <Chakra cookies={pageProps.cookies}>
+            <ServiceWorker />
+            {/* <CustomPWAInstallPrompt /> */}
+            <Component {...pageProps} />
+          </Chakra>
+          {/* </AuthContextProvider> */}
         </I18nextProvider>
       </TopLevelErrorBoundary>
     </>
@@ -75,7 +75,7 @@ export async function getInitialProps(
     Component: { getInitialProps },
   } = props;
 
-  const session = await getSession(ctx.req);
+  const session = null; // await getSession(ctx.req);
   const language = detectLanguage(ctx);
   const i18nBundle = await getI18N(language, ctx);
   const cookies = ctx.req?.headers.cookie ?? '';
