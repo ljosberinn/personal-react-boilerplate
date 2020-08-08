@@ -56,7 +56,7 @@ const offlineConfig = {
  *
  * @see https://arunoda.me/blog/ssr-and-server-only-modules
  */
-const serverOnlyPackages = ['@unly/universal-language-detector'];
+const serverOnlyPackages = [];
 
 const defaultConfig = {
   typescript: {
@@ -79,7 +79,13 @@ const defaultConfig = {
         config.plugins.push(new IgnorePlugin(new RegExp(package)));
       });
 
-      if (SENTRY_DSN && SENTRY_ORG && SENTRY_PROJECT && SENTRY_AUTH_TOKEN) {
+      if (
+        SENTRY_DSN &&
+        SENTRY_ORG &&
+        SENTRY_PROJECT &&
+        SENTRY_AUTH_TOKEN &&
+        NODE_ENV === 'production'
+      ) {
         const finished = Date.now();
 
         config.plugins.push(

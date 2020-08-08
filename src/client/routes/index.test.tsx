@@ -1,7 +1,16 @@
 import React from 'react';
 
-import Index from '../../../pages';
+import Index, { IndexPageProps } from '../../../pages';
 import { render, act } from '../../../testUtils';
+
+const defaultProps: Omit<IndexPageProps, 'children'> = {
+  karma: {
+    cookies: '',
+    i18nBundle: {},
+    language: 'en',
+    session: null,
+  },
+};
 
 describe('<Index />', () => {
   /**
@@ -11,7 +20,7 @@ describe('<Index />', () => {
    */
   it('renders without crashing', async () => {
     await act(async () => {
-      await render(<Index />);
+      await render(<Index {...defaultProps}>hello world</Index>);
     });
   });
 });

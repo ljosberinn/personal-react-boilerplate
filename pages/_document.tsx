@@ -1,15 +1,8 @@
 import { captureException } from '@sentry/node';
-import NextDocument, {
-  Html,
-  Head,
-  Main,
-  NextScript,
-  DocumentProps,
-} from 'next/document';
+import NextDocument, { Html, Head, Main, NextScript } from 'next/document';
 import React from 'react';
 
 import { attachComponentBreadcrumb } from '../src/utils/sentry/client';
-import { PageProps } from './_app';
 
 /**
  * Send to Sentry all uncaught exceptions.
@@ -23,15 +16,11 @@ import { PageProps } from './_app';
 });
 
 // eslint-disable-next-line import/no-default-export
-export default function CustomDocument({
-  __NEXT_DATA__: { props },
-}: DocumentProps) {
-  const { language } = props.pageProps as PageProps;
-
+export default function CustomDocument() {
   attachComponentBreadcrumb('document');
 
   return (
-    <Html lang={language} dir="auto">
+    <Html dir="auto">
       <Head>
         <link rel="manifest" href="/manifest.json" />
         <link

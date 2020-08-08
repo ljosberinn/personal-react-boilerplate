@@ -1,4 +1,4 @@
-import { ChakraProvider } from '@chakra-ui/core';
+import { ChakraProvider, cookieStorageManager } from '@chakra-ui/core';
 import theme from '@chakra-ui/theme';
 import {
   render as rtlRender,
@@ -98,6 +98,10 @@ export interface TestOptions extends Omit<RenderOptions, 'wrapper'> {
    * optional session to initialize AuthContextProvider with
    */
   session?: AuthContextDefinition['user'];
+  /**
+   * cookies to initialize the test with
+   */
+  cookies?: string;
 }
 
 /**
@@ -144,11 +148,17 @@ function render(
     i18n,
     wrapper: Wrapper = ChildrenPassthrough,
     session = null,
+    cookies = '',
     ...rest
   }: TestOptions = {}
 ): RenderResult {
   return rtlRender(
-    <ChakraProvider theme={theme}>
+    <ChakraProvider
+      theme={theme}
+      resetCSS
+      portalConfig={{ zIndex: 40 }}
+      storageManager={cookieStorageManager(cookies)}
+    >
       <I18nextProvider i18n={i18nInstance}>
         <AuthContextProvider session={session}>
           <Wrapper>

@@ -2,12 +2,12 @@ import NextDocument, { DocumentProps } from 'next/document';
 import { isValidElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 
-import { PageProps } from '../../../pages/_app';
 import Document from '../../../pages/_document';
 import { i18nCache } from '../../server/i18n/cache';
 import * as sentryUtils from '../../utils/sentry/client';
+import { KarmaProps } from '../Karma';
 
-const pageProps: PageProps = {
+const pageProps: Omit<KarmaProps, 'children'> = {
   cookies: '',
   i18nBundle: i18nCache.en,
   language: 'en',
@@ -79,16 +79,6 @@ describe('<Document />', () => {
   /**
    * not the best tests below, but I didn't want to add dom-parser or cheerio
    */
-  it('sets "language" attribute on html tag', () => {
-    const text = renderToStaticMarkup(
-      // @ts-expect-error next types are not entirely compatible with a Document
-      // function component
-      Document.renderDocument(Document, defaultProps)
-    );
-
-    expect(text.includes(`lang="${pageProps.language}"`)).toBeTruthy();
-  });
-
   it('sets "dir" attribute on html tag', () => {
     const text = renderToStaticMarkup(
       // @ts-expect-error next types are not entirely compatible with a Document

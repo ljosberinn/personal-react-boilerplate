@@ -62,7 +62,7 @@ export const makeMockIncomingRequest = (
 };
 
 export const makeMockServerResponse = (
-  res: Partial<ServerResponse>
+  res?: Partial<ServerResponse>
 ): ServerResponse => {
   const socket = new Socket();
 

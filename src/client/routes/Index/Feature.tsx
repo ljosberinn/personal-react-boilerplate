@@ -1,8 +1,8 @@
 import { Box, Heading, Text, useColorModeValue } from '@chakra-ui/core';
 import React, { ReactNode } from 'react';
 
+import { WithChildren } from '../../Karma';
 import { ExternalLink } from '../../components/common/ExternalLink';
-import { WithChildren } from '../../types';
 
 export interface FeatureProps extends WithChildren {
   title: string;

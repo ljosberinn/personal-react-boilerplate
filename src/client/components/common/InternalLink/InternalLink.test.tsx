@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { render, testA11Y } from '../../../../../testUtils';
-import { WithChildren } from '../../../types';
+import { WithChildren } from '../../../Karma';
 
 import { InternalLink, InternalLinkProps } from '.';
 

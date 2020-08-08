@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import { ENABLED_PROVIDER } from '../../../constants';
 import { INTERNAL_SERVER_ERROR } from '../../../utils/statusCodes';
-import { WithChildren } from '../../types';
+import { WithChildren } from '../../Karma';
 import {
   AuthContext,
   User,

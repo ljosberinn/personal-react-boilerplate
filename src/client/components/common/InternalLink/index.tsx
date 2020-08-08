@@ -6,7 +6,7 @@ import { LinkProps as NextLinkProps } from 'next/dist/client/link';
 import NextLink from 'next/link';
 import React from 'react';
 
-import { WithChildren } from '../../../types';
+import { WithChildren } from '../../../Karma';
 
 export type InternalLinkProps = NextLinkProps &
   Omit<ChakraLinkProps, 'as'> &

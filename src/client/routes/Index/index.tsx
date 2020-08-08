@@ -28,12 +28,12 @@ import { FcSettings } from 'react-icons/fc';
 import { MdDehaze } from 'react-icons/md';
 
 import { ENABLED_PROVIDER } from '../../../constants';
+import { WithChildren } from '../../Karma';
 import {
   ExternalLink,
   ExternalLinkProps,
 } from '../../components/common/ExternalLink';
 import { ThemeSwitchAlt } from '../../components/common/ThemeSwitchAlt';
-import { WithChildren } from '../../types';
 import { Feature } from './Feature';
 import { ChakraIcon } from './icons/ChakraIcon';
 import { ESLintIcon } from './icons/ESLintIcon';

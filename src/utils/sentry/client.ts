@@ -3,7 +3,7 @@ import { init, configureScope } from '@sentry/react';
 import { IncomingMessage } from 'http';
 import { NextRouter } from 'next/router';
 
-import { AppRenderProps } from '../../../pages/_app';
+import { KarmaProps } from '../../client/Karma';
 import { IS_BROWSER } from '../../constants';
 import { isomorphicSentryInit, defaultOptions } from './shared';
 
@@ -16,7 +16,7 @@ const options: BrowserOptions = {
 isomorphicSentryInit({ configureScope, init, options });
 
 interface InitialContextArgs
-  extends Omit<AppRenderProps['pageProps'], 'i18nBundle' | 'cookies'> {
+  extends Omit<KarmaProps, 'i18nBundle' | 'cookies' | 'children'> {
   req?: IncomingMessage;
 }
 
@@ -30,7 +30,7 @@ export const attachInitialContext = ({
 }: InitialContextArgs): void => {
   addBreadcrumb({
     level: Severity.Debug,
-    message: `Booting (${IS_BROWSER ? 'in browser' : 'on server'})`,
+    message: `Booting Karma (${IS_BROWSER ? 'in browser' : 'on server'})`,
   });
 
   configureScope((scope) => {

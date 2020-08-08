@@ -2,7 +2,7 @@ import { Link, LinkProps, useColorModeValue } from '@chakra-ui/core';
 import { ExternalLinkIcon } from '@chakra-ui/icons';
 import React, { forwardRef } from 'react';
 
-import { WithChildren } from '../../../types';
+import { WithChildren } from '../../../Karma';
 
 export type ExternalLinkProps = LinkProps &
   WithChildren & {
