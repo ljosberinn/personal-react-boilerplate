@@ -50,7 +50,6 @@ const offlineConfig = {
     ],
   },
 };
-console.log(process.env);
 
 /**
  * a list of packages not to bundle with the frontend
@@ -93,6 +92,7 @@ const defaultConfig = {
             urlPrefix: '~/_next',
             release: buildId,
             setCommits: {
+              repo: 'ljosberinn/personal-react-boilerplate',
               auto: true,
             },
             deploy: {
