@@ -14,9 +14,9 @@ import {
   I18nextResourceLocale,
   initI18Next,
   getI18N,
+  detectLanguage,
 } from '../src/client/i18n';
 import { getSession } from '../src/server/auth/cookie';
-import { detectLanguage } from '../src/server/i18n/detectLanguage';
 import {
   attachInitialContext,
   attachRoutingContext,

@@ -16,6 +16,7 @@ import {
   makeChangeLanguageHandler,
   i18nEndpoint,
   initI18Next,
+  RTL_LANGUAGES,
 } from './i18n';
 
 const server = setupServer();
@@ -81,19 +82,23 @@ describe('initI18Next', () => {
     expect(setAttributeSpy).toHaveBeenCalledWith('lang', otherLanguage);
   });
 
-  test('always changes the html.dir attribute onLanguageChanged', async () => {
-    const qsSpy = jest.spyOn(document, 'querySelector');
-    const setAttributeSpy = jest.spyOn(HTMLElement.prototype, 'setAttribute');
+  ['en', [...RTL_LANGUAGES][0]].forEach((language) => {
+    const dir = language === 'en' ? 'ltr' : 'rtl';
 
-    const i18n = initI18Next({
-      i18nBundle: i18nCache.en,
-      language: SUPPORTED_LANGUAGES_MAP.en,
+    test(`always changes the html.dir attribute onLanguageChanged (language: ${language})`, async () => {
+      const qsSpy = jest.spyOn(document, 'querySelector');
+      const setAttributeSpy = jest.spyOn(HTMLElement.prototype, 'setAttribute');
+
+      const i18n = initI18Next({
+        i18nBundle: i18nCache[language],
+        language,
+      });
+
+      await i18n.changeLanguage(language);
+      await waitFor(() => expect(qsSpy).toHaveBeenLastCalledWith('html'));
+
+      expect(setAttributeSpy).toHaveBeenCalledWith('dir', dir);
     });
-
-    await i18n.changeLanguage('de');
-    await waitFor(() => expect(qsSpy).toHaveBeenLastCalledWith('html'));
-
-    expect(setAttributeSpy).toHaveBeenCalledWith('dir', expect.any(String));
   });
 });
 

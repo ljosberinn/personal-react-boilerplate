@@ -4,6 +4,7 @@ const withSourceMaps = require('@zeit/next-source-maps')();
 const SentryWebpackPlugin = require('@sentry/webpack-plugin');
 const withOffline = require('next-offline');
 const { withPlugins } = require('next-compose-plugins');
+const { IgnorePlugin } = require('webpack');
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 });
@@ -22,7 +23,7 @@ console.debug(`> Building on NODE_ENV="${NODE_ENV}"`);
 
 const offlineConfig = {
   target: 'serverless',
-  transformManifest: manifest => ['/'].concat(manifest), // add the homepage to the cache
+  transformManifest: (manifest) => ['/'].concat(manifest), // add the homepage to the cache
   // turn on the SW in dev mode so that we can actually test it
   generateInDevMode: false,
   dontAutoRegisterSw: true,
@@ -49,6 +50,14 @@ const offlineConfig = {
     ],
   },
 };
+console.log(process.env);
+
+/**
+ * a list of packages not to bundle with the frontend
+ *
+ * @see https://arunoda.me/blog/ssr-and-server-only-modules
+ */
+const serverOnlyPackages = ['@unly/universal-language-detector'];
 
 const defaultConfig = {
   typescript: {
@@ -66,23 +75,35 @@ const defaultConfig = {
   webpack: (config, { isServer, buildId }) => {
     if (!isServer) {
       config.resolve.alias['@sentry/node'] = '@sentry/react';
-    }
 
-    if (
-      SENTRY_DSN &&
-      SENTRY_ORG &&
-      SENTRY_PROJECT &&
-      SENTRY_AUTH_TOKEN &&
-      NODE_ENV === 'production'
-    ) {
-      config.plugins.push(
-        new SentryWebpackPlugin({
-          include: '.next',
-          ignore: ['node_modules'],
-          urlPrefix: '~/_next',
-          release: buildId,
-        })
-      );
+      serverOnlyPackages.forEach((package) => {
+        config.plugins.push(new IgnorePlugin(new RegExp(package)));
+      });
+
+      if (SENTRY_DSN && SENTRY_ORG && SENTRY_PROJECT && SENTRY_AUTH_TOKEN) {
+        const finished = Date.now();
+
+        config.plugins.push(
+          /**
+           * @see https://github.com/getsentry/sentry-webpack-plugin#options
+           */
+          new SentryWebpackPlugin({
+            include: '.next',
+            ignore: ['node_modules'],
+            urlPrefix: '~/_next',
+            release: buildId,
+            setCommits: {
+              auto: true,
+            },
+            deploy: {
+              env: NODE_ENV,
+              started: +date,
+              finished,
+              time: finished - date,
+            },
+          })
+        );
+      }
     }
 
     return config;

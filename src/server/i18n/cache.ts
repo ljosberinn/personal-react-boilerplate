@@ -1,9 +1,6 @@
-import {
-  I18nextResources,
-  namespaces,
-  I18nextResourceLocale,
-} from '../../client/i18n';
+import { I18nextResources, I18nextResourceLocale } from '../../client/i18n';
 import { ENABLED_LANGUAGES } from '../../constants';
+import { namespaces } from './namespaces';
 
 export const i18nCache = ENABLED_LANGUAGES.reduce<I18nextResources>(
   (carry, language) => {
