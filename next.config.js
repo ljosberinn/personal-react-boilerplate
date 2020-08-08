@@ -91,8 +91,8 @@ const defaultConfig = {
             ignore: ['node_modules'],
             urlPrefix: '~/_next',
             release: buildId,
+            debug: true,
             setCommits: {
-              repo: 'ljosberinn/personal-react-boilerplate',
               auto: true,
             },
             deploy: {
