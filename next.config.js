@@ -8,7 +8,6 @@ const { IgnorePlugin } = require('webpack');
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 });
-const { execSync } = require('child_process');
 
 const {
   NEXT_PUBLIC_SENTRY_DSN: SENTRY_DSN,
@@ -83,12 +82,6 @@ const defaultConfig = {
       if (SENTRY_DSN && SENTRY_ORG && SENTRY_PROJECT && SENTRY_AUTH_TOKEN) {
         const finished = Date.now();
 
-        const repo = new URL(
-          execSync('git config --get remote.origin.url').toString().trim()
-        ).pathname.slice(1);
-
-        const lastCommit = execSync('git rev-parse HEAD').toString().trim();
-
         config.plugins.push(
           /**
            * @see https://github.com/getsentry/sentry-webpack-plugin#options
@@ -98,10 +91,6 @@ const defaultConfig = {
             ignore: ['node_modules'],
             urlPrefix: '~/_next',
             release: buildId,
-            setCommits: {
-              repo,
-              commit: lastCommit,
-            },
             deploy: {
               env: NODE_ENV,
               started: +date,
