@@ -8,23 +8,23 @@ import {
   validateHtml,
 } from '../../../../../testUtils';
 
-import { ThemeSwitch } from '.';
+import { ColorModeSwitch } from '.';
 
-describe('<ThemeSwitch />', () => {
+describe('<ColorModeSwitch />', () => {
   it('renders without crashing', () => {
-    render(<ThemeSwitch />);
+    render(<ColorModeSwitch />);
   });
 
   it('passes a11y test', async () => {
-    await testA11Y(<ThemeSwitch />);
+    await testA11Y(<ColorModeSwitch />);
   });
 
   it('contains valid html', () => {
-    validateHtml(<ThemeSwitch />);
+    validateHtml(<ColorModeSwitch />);
   });
 
   it('indicates the current theme visually', () => {
-    render(<ThemeSwitch />);
+    render(<ColorModeSwitch />);
 
     const input = screen.getByRole('checkbox');
     const sun = screen.getByTestId('theme-switch-sun');
@@ -41,7 +41,7 @@ describe('<ThemeSwitch />', () => {
 
   ['sun', 'moon'].forEach((icon) => {
     it(`allows changing the theme by clicking an icon alternatively - icon ${icon}`, () => {
-      render(<ThemeSwitch />);
+      render(<ColorModeSwitch />);
 
       const sun = screen.getByTestId('theme-switch-sun');
       const moon = screen.getByTestId('theme-switch-moon');

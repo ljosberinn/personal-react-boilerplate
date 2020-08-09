@@ -29,11 +29,11 @@ import { MdDehaze } from 'react-icons/md';
 
 import { ENABLED_PROVIDER } from '../../../constants';
 import { WithChildren } from '../../Karma';
+import { ColorModeSwitchAlt } from '../../components/common/ColorModeSwitchAlt';
 import {
   ExternalLink,
   ExternalLinkProps,
 } from '../../components/common/ExternalLink';
-import { ThemeSwitchAlt } from '../../components/common/ThemeSwitchAlt';
 import { Feature } from './Feature';
 import { ChakraIcon } from './icons/ChakraIcon';
 import { ESLintIcon } from './icons/ESLintIcon';
@@ -236,7 +236,7 @@ function Header() {
             <ExternalLink omitIcon href={gitUrl}>
               <Icon as={FaGithub} boxSize="6" />
             </ExternalLink>
-            <ThemeSwitchAlt />
+            <ColorModeSwitchAlt />
           </Stack>
           <MobileNav />
         </Flex>

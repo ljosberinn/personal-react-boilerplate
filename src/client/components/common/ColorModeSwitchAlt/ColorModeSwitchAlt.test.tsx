@@ -9,19 +9,19 @@ import {
   validateHtml,
 } from '../../../../../testUtils';
 
-import { ThemeSwitchAlt } from '.';
+import { ColorModeSwitchAlt } from '.';
 
-describe('<ThemeSwitchAlt />', () => {
+describe('<ColorModeSwitchAlt />', () => {
   it('renders without crashing', () => {
-    render(<ThemeSwitchAlt />);
+    render(<ColorModeSwitchAlt />);
   });
 
   it('passes a11y test', async () => {
-    await testA11Y(<ThemeSwitchAlt />);
+    await testA11Y(<ColorModeSwitchAlt />);
   });
 
   it('contains valid html', () => {
-    validateHtml(<ThemeSwitchAlt />, {
+    validateHtml(<ColorModeSwitchAlt />, {
       htmlValidate: {
         rules: {
           'prefer-native-element': 'off',
@@ -37,7 +37,7 @@ describe('<ThemeSwitchAlt />', () => {
    * - continues to work given any prop on the `Box` component
    */
   it('indicates the current theme visually', () => {
-    render(<ThemeSwitchAlt />);
+    render(<ColorModeSwitchAlt />);
     const sun = render(<FaSun />);
     const moon = render(<FaMoon />);
 
