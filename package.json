@@ -15,9 +15,9 @@
     "postinstall": "yarn-deduplicate -l"
   },
   "dependencies": {
-    "@chakra-ui/core": "1.0.0-rc.1",
-    "@chakra-ui/icons": "1.0.0-rc.1",
-    "@chakra-ui/theme": "1.0.0-rc.1",
+    "@chakra-ui/core": "1.0.0-rc.2",
+    "@chakra-ui/icons": "1.0.0-rc.2",
+    "@chakra-ui/theme": "1.0.0-rc.2",
     "@sentry/integrations": "5.20.1",
     "@sentry/node": "5.20.1",
     "@sentry/react": "5.20.1",
@@ -69,7 +69,7 @@
     "prettier": "2.0.5",
     "react-test-renderer": "16.13.1",
     "test-listen": "1.1.0",
-    "typescript": "4.1.0-dev.20200808",
+    "typescript": "4.1.0-dev.20200809",
     "whatwg-fetch": "3.4.0",
     "yarn-deduplicate": "2.1.1"
   },

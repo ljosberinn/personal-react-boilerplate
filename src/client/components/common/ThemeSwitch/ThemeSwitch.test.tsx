@@ -20,14 +20,7 @@ describe('<ThemeSwitch />', () => {
   });
 
   it('contains valid html', () => {
-    validateHtml(<ThemeSwitch />, {
-      htmlValidate: {
-        rules: {
-          // TODO: remove with chakra rc.2
-          'element-permitted-content': 'off',
-        },
-      },
-    });
+    validateHtml(<ThemeSwitch />);
   });
 
   it('indicates the current theme visually', () => {

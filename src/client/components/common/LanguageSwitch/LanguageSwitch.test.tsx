@@ -80,14 +80,7 @@ describe('<LanguageSwitch />', () => {
   it('contains valid html when opened', () => {
     const { container } = setup();
 
-    validateHtml(container, {
-      htmlValidate: {
-        rules: {
-          // TODO: remove with rc.2
-          'element-required-attributes': 'off',
-        },
-      },
-    });
+    validateHtml(container);
   });
 
   it('includes a request for translation help', () => {

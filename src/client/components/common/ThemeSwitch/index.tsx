@@ -37,9 +37,8 @@ export function ThemeSwitch(props: ThemeSwitchProps) {
         onClick={toggleColorMode}
         aria-label={t(isLightTheme ? 'is-light-theme' : 'set-light-theme')}
       />
-      {/** TODO: <Flex as={Switch} & drop d="flex" in rc.2 */}
-      <Switch
-        d="flex"
+      <Flex
+        as={Switch}
         aria-label={t(isLightTheme ? 'set-dark-theme' : 'set-light-theme')}
         isChecked={!isLightTheme}
         onChange={toggleColorMode}
