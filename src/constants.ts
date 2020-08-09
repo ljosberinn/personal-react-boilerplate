@@ -22,7 +22,7 @@ export const ENABLED_LANGUAGES = process.env.NEXT_PUBLIC_ENABLED_LANGUAGES!.spli
 /**
  * MUST be included in `ENABLED_LANGUAGES`
  */
-export const FALLBACK_LANGUAGE = process.env.FALLBACK_LANGUAGE!;
+export const FALLBACK_LANGUAGE = process.env.NEXT_PUBLIC_FALLBACK_LANGUAGE!;
 
 /* sentry */
 export const SENTRY_DSN = process.env.NEXT_PUBLIC_SENTRY_DSN!;

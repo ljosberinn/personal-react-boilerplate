@@ -2,7 +2,6 @@
 import * as Sentry from '@sentry/node';
 import { waitFor } from '@testing-library/react';
 import i18next from 'i18next';
-import cookies from 'js-cookie';
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
 
@@ -335,19 +334,20 @@ describe('makeChangeLanguageHandler', () => {
       });
 
       test(`always attempts to store language preference in cookie (bundle already present: ${bool})`, async () => {
-        const setCookieSpy = jest.spyOn(cookies, 'set');
-
         const otherLanguage = ENABLED_LANGUAGES.find(
           (lng) => lng !== language
         )!;
 
+        expect(
+          document.cookie.includes(`${i18nCookieName}=${otherLanguage}`)
+        ).toBeFalsy();
+
         await makeChangeLanguageHandler(otherLanguage)();
 
         await waitFor(() =>
-          expect(setCookieSpy).toHaveBeenCalledWith(
-            i18nCookieName,
-            otherLanguage
-          )
+          expect(
+            document.cookie.includes(`${i18nCookieName}=${otherLanguage}`)
+          ).toBeTruthy()
         );
       });
     });

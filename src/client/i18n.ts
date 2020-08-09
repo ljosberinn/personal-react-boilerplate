@@ -2,7 +2,6 @@
 import { captureException } from '@sentry/node';
 import { IncomingMessage } from 'http';
 import i18n, { i18n as I18NInstance } from 'i18next';
-import { set } from 'js-cookie';
 import absoluteUrl from 'next-absolute-url';
 import { initReactI18next } from 'react-i18next';
 
@@ -92,7 +91,7 @@ export const initI18Next = ({
         html.setAttribute('lang', lang);
         html.setAttribute('dir', RTL_LANGUAGES.has(lang) ? 'rtl' : 'ltr');
 
-        set(i18nCookieName, lang);
+        document.cookie = `${i18nCookieName}=${lang}`;
       });
 
       // set initially aswell
