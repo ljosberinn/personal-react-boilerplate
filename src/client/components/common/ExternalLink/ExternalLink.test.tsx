@@ -1,6 +1,11 @@
 import React from 'react';
 
-import { render, screen, testA11Y } from '../../../../../testUtils';
+import {
+  render,
+  screen,
+  testA11Y,
+  validateHtml,
+} from '../../../../../testUtils';
 
 import { ExternalLink, ExternalLinkProps } from '.';
 
@@ -16,6 +21,10 @@ describe('<ExternalLink />', () => {
 
   it('passes a11y test given default props', async () => {
     await testA11Y(<ExternalLink {...defaultProps} />);
+  });
+
+  it('contains valid html', () => {
+    validateHtml(<ExternalLink {...defaultProps} />);
   });
 
   it('has a default icon after its text', () => {

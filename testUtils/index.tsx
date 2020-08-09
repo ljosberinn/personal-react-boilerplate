@@ -5,18 +5,23 @@ import {
   RenderResult,
   RenderOptions,
 } from '@testing-library/react';
+import { RunOptions } from 'axe-core';
+import { ConfigData } from 'html-validate/build/config';
 import { axe } from 'jest-axe';
-import React, { cloneElement, ReactElement } from 'react';
+import React, { cloneElement, isValidElement, ReactElement } from 'react';
 import { I18nextProvider, useTranslation } from 'react-i18next';
 
 import { AuthContextProvider } from '../src/client/context/AuthContext';
 import { AuthContextDefinition } from '../src/client/context/AuthContext/AuthContext';
 import { initI18Next } from '../src/client/i18n';
 import { i18nCache } from '../src/server/i18n/cache';
+import 'html-validate/jest';
 
 // may not be in setupTests.js because lambda-Tests rely on node-fetch which
 // collides with whatwg-fetch
 import 'whatwg-fetch';
+
+export * from '@testing-library/react';
 
 // as singleton, else you will see lots of `act` warnings in tests which are
 // technically unrelated to the tested component
@@ -25,12 +30,18 @@ const i18nInstance = initI18Next({
   language: 'en',
 });
 
+type UI = Parameters<typeof rtlRender>[0];
 type Namespace = Parameters<typeof useTranslation>[0];
 type I18NPropAlias = {
   i18n?: string;
   ready?: string;
   t?: string;
 };
+
+/**
+ * local definition only as @testing-library/react has weird typings here
+ */
+type Children = { children: ReactElement };
 
 export interface TestOptions extends Omit<RenderOptions, 'wrapper'> {
   /**
@@ -104,11 +115,6 @@ export interface TestOptions extends Omit<RenderOptions, 'wrapper'> {
   cookies?: string;
 }
 
-/**
- * local definition only as @testing-library/react has weird typings here
- */
-type Children = { children: ReactElement };
-
 // UI-less passthrough fallback to prevent using conditional logic in render
 function ChildrenPassthrough({ children }: Children) {
   return children;
@@ -142,8 +148,8 @@ function I18nTestMiddleware({
  * @param component the component under test
  * @param options test options
  */
-function render(
-  component: ReactElement,
+export function render(
+  ui: UI,
   {
     i18n,
     wrapper: Wrapper = ChildrenPassthrough,
@@ -153,40 +159,182 @@ function render(
   }: TestOptions = {}
 ): RenderResult {
   return rtlRender(
-    <ChakraProvider
-      theme={theme}
-      resetCSS
-      portalConfig={{ zIndex: 40 }}
-      storageManager={cookieStorageManager(cookies)}
-    >
-      <I18nextProvider i18n={i18nInstance}>
-        <AuthContextProvider session={session}>
+    <I18nextProvider i18n={i18nInstance}>
+      <AuthContextProvider session={session}>
+        <ChakraProvider
+          theme={theme}
+          resetCSS
+          portalConfig={{ zIndex: 40 }}
+          storageManager={cookieStorageManager(cookies)}
+        >
           <Wrapper>
             {i18n ? (
-              <I18nTestMiddleware {...i18n}>{component}</I18nTestMiddleware>
+              <I18nTestMiddleware {...i18n}>{ui}</I18nTestMiddleware>
             ) : (
-              component
+              ui
             )}
           </Wrapper>
-        </AuthContextProvider>
-      </I18nextProvider>
-    </ChakraProvider>,
+        </ChakraProvider>
+      </AuthContextProvider>
+    </I18nextProvider>,
     rest
   );
 }
 
 /**
+ * Validates against common a11y mistakes.
+ *
  * Wrapper for jest-axe
+ *
+ * @example
+ * ```jsx
+ * it('passes a11y test', async () => {
+ *  await testA11Y(<MyComponent />, options);
+ * });
+ *
+ * // sometimes we need to perform interactions first to render conditional UI
+ * it('passes a11y test when open', async () => {
+ *  const { container } = render(<MyComponent />, options);
+ *
+ *  fireEvent.click(screen.getByRole('button'));
+ *
+ *  await testA11Y(container, options);
+ * });
+ * ```
  *
  * @see https://github.com/nickcolley/jest-axe#testing-react-with-react-testing-library
  */
-async function testA11Y(component: ReactElement, options?: TestOptions) {
-  const { container } = render(component, options);
-
-  const results = await axe(container);
+export const testA11Y = async (
+  ui: UI | HTMLElement,
+  { a11y: axeOptions, ...options }: TestOptions & { a11y?: RunOptions } = {}
+) => {
+  const element = isValidElement(ui) ? render(ui, options).container : ui;
+  const results = await axe(element, axeOptions);
 
   expect(results).toHaveNoViolations();
-}
+};
 
-export * from '@testing-library/react';
-export { render, testA11Y };
+type HTMLValidationRules =
+  | 'wcag/h30'
+  | 'wcag/h32'
+  | 'wcga/h36'
+  | 'wcag/h37'
+  | 'wcag/h67'
+  | 'wcag/h71'
+  | 'attr-case'
+  | 'attr-quotes'
+  | 'attribute-allowed-values'
+  | 'attribute-boolean-style'
+  | 'attribute-empty-style'
+  | 'class-pattern'
+  | 'close-attr'
+  | 'close-order'
+  | 'deprecated'
+  | 'deprecated-rule'
+  | 'doctype-html'
+  | 'element-case'
+  | 'element-name'
+  | 'element-permitted-content'
+  | 'element-permitted-occurrences'
+  | 'element-permitted-order'
+  | 'element-required-attributes'
+  | 'element-required-content'
+  | 'empty-heading'
+  | 'empty-title'
+  | 'heading-level'
+  | 'id-pattern'
+  | 'input-missing-label'
+  | 'long-title'
+  | 'meta-refresh'
+  | 'missing-doctype'
+  | 'no-autoplay'
+  | 'no-conditional-comment'
+  | 'no-deprecated-attr'
+  | 'no-dup-attr'
+  | 'no-dup-class'
+  | 'no-dup-id'
+  | 'no-implicit-close'
+  | 'no-inline-style'
+  | 'no-missing-references'
+  | 'no-raw-characters'
+  | 'no-redundant-role'
+  | 'no-self-closing'
+  | 'no-style-tag'
+  | 'no-trailing-whitespace'
+  | 'no-unknown-element'
+  | 'prefer-button'
+  | 'prefer-native-element'
+  | 'prefer-tbody'
+  | 'prefer-sri'
+  | 'script-element'
+  | 'script-type'
+  | 'svg-focusable'
+  | 'unrecognized-char-ref'
+  | 'void'
+  | 'void-content'
+  | 'void-style';
+
+// copied from node_modules/html-validate/build/config/config.data.d.ts
+type RuleSeverity = 'off' | 'warn' | 'error' | number;
+
+type Rules = {
+  rules: {
+    [key in HTMLValidationRules]?: RuleSeverity | [RuleSeverity];
+  };
+};
+
+type HTMLValidateOptions = Omit<ConfigData, 'rules'> & Rules;
+
+/**
+ * emotion renders lots of inline styles which is technically disallowed
+ */
+const defaultConfig: HTMLValidateOptions = {
+  rules: {
+    'no-inline-style': 'off',
+  },
+};
+
+/**
+ * Tests against HTML validations.
+ *
+ * Wrapper for html-validate/jest
+ *
+ * @example
+ * ```jsx
+ * it('contains valid html', () => {
+ *   validateHtml(<MyComponent />, options);
+ * })
+ *
+ * // sometimes we need to perform interactions first to render conditional UI
+ * it('contains valid html when opened', () => {
+ *  const { container } = render(<MyComponent />, options);
+ *
+ *  fireEvent.click(screen.getByRole('button'));
+ *
+ *  validateHtml(container, options);
+ * })
+ * ```
+ *
+ * @see https://html-validate.org/frameworks/jest.html
+ */
+export const validateHtml = (
+  ui: HTMLElement | UI,
+  {
+    htmlValidate,
+    ...options
+  }: TestOptions & {
+    htmlValidate?: HTMLValidateOptions;
+  } = {}
+): void => {
+  const merged = {
+    ...htmlValidate,
+    rules: {
+      ...htmlValidate?.rules,
+      ...defaultConfig.rules,
+    },
+  } as ConfigData; // cast to be able to provide autocompletion for Rules
+
+  const element = isValidElement(ui) ? render(ui, options).container : ui;
+
+  expect(element).toHTMLValidate(merged);
+};

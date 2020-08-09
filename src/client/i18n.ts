@@ -1,12 +1,8 @@
 // contains lots of inspiration from https://github.com/UnlyEd/next-right-now/blob/v1-ssr-mst-aptd-gcms-lcz-sty/src/utils/i18nextLocize.ts
-import { withScope, captureException } from '@sentry/node';
-import universalLanguageDetect, {
-  COOKIE_LOOKUP_KEY_LANG,
-} from '@unly/universal-language-detector';
-import { parse } from 'cookie';
+import { captureException } from '@sentry/node';
+import { IncomingMessage } from 'http';
 import i18n, { i18n as I18NInstance } from 'i18next';
 import { set } from 'js-cookie';
-import { GetServerSidePropsContext } from 'next';
 import absoluteUrl from 'next-absolute-url';
 import { initReactI18next } from 'react-i18next';
 
@@ -19,6 +15,8 @@ import {
 } from '../constants';
 import { namespaces } from '../server/i18n/namespaces';
 import { KarmaProps } from './Karma';
+
+export const i18nCookieName = 'i18next';
 
 /**
  * @see https://meta.wikimedia.org/wiki/Template:List_of_language_names_ordered_by_code
@@ -98,7 +96,7 @@ export const initI18Next = ({
         html.setAttribute('dir', RTL_LANGUAGES.has(lang) ? 'rtl' : 'ltr');
       }
 
-      set(COOKIE_LOOKUP_KEY_LANG, lang);
+      set(i18nCookieName, lang);
     });
   }
 
@@ -194,7 +192,7 @@ export const i18nEndpoint = '/api/v1/i18n/';
 
 export const getI18N = async (
   lang: string,
-  ctx?: GetServerSidePropsContext
+  req?: IncomingMessage
 ): Promise<I18nextResourceLocale> => {
   if (!ENABLED_LANGUAGES.includes(lang)) {
     lang = SUPPORTED_LANGUAGES_MAP.en;
@@ -216,7 +214,7 @@ export const getI18N = async (
   let resources: I18nextResourceLocale = {};
 
   try {
-    const { origin } = absoluteUrl(ctx?.req);
+    const { origin } = absoluteUrl(req);
     const response = await fetch(origin + url);
 
     try {
@@ -238,37 +236,4 @@ export const getI18N = async (
   };
 
   return resources;
-};
-
-/**
- * Dynamically detects the users preferred language based on
- *
- * - request header
- * - cookies
- *
- * and picks the best match from existing languages.
- */
-export const detectLanguage = (ctx: GetServerSidePropsContext) => {
-  const cookies = ctx.req.headers.cookie;
-  const serverCookies = cookies ? parse(cookies) : undefined;
-
-  /* istanbul ignore next */
-  return universalLanguageDetect({
-    acceptLanguageHeader: ctx.req.headers['accept-language'],
-    errorHandler: (error, level, origin, context) => {
-      withScope((scope) => {
-        scope.setExtra('level', level);
-        scope.setExtra('origin', origin);
-
-        if (context) {
-          scope.setContext('context', context);
-        }
-
-        captureException(error);
-      });
-    },
-    fallbackLanguage: SUPPORTED_LANGUAGES_MAP.en,
-    serverCookies,
-    supportedLanguages: ENABLED_LANGUAGES,
-  });
 };

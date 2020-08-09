@@ -1,7 +1,7 @@
 import { Box, useToast, Flex } from '@chakra-ui/core';
 import { InfoIcon } from '@chakra-ui/icons';
 import { TFunction } from 'i18next';
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { IS_PROD } from '../../../../constants';
@@ -44,11 +44,15 @@ function RefreshToast({ t }: RefreshToastProps) {
 export function ServiceWorker() {
   const { t } = useTranslation('serviceWorker');
   const toast = useToast();
+  // required to not re-register when e.g. language is changed and thus `t`
+  const attemptedRegistration = useRef(false);
 
   attachComponentBreadcrumb('ServiceWorker');
 
   useEffect(() => {
-    if ('serviceWorker' in navigator) {
+    if ('serviceWorker' in navigator && !attemptedRegistration.current) {
+      attemptedRegistration.current = true;
+
       navigator.serviceWorker
         .register(sw)
         // eslint-disable-next-line promise/prefer-await-to-then
@@ -88,7 +92,7 @@ export function ServiceWorker() {
           console.error(error);
         });
     }
-  }, [toast, t]);
+  }, [toast, t, attemptedRegistration]);
 
   return null;
 }

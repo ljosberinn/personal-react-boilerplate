@@ -1,6 +1,12 @@
 import React from 'react';
 
-import { render, fireEvent, screen, testA11Y } from '../../../../../testUtils';
+import {
+  render,
+  fireEvent,
+  screen,
+  testA11Y,
+  validateHtml,
+} from '../../../../../testUtils';
 
 import { ThemeSwitch } from '.';
 
@@ -11,6 +17,17 @@ describe('<ThemeSwitch />', () => {
 
   it('passes a11y test', async () => {
     await testA11Y(<ThemeSwitch />);
+  });
+
+  it('contains valid html', () => {
+    validateHtml(<ThemeSwitch />, {
+      htmlValidate: {
+        rules: {
+          // TODO: remove with chakra rc.2
+          'element-permitted-content': 'off',
+        },
+      },
+    });
   });
 
   it('indicates the current theme visually', () => {

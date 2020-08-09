@@ -1,7 +1,13 @@
 import React from 'react';
 import { FaSun, FaMoon } from 'react-icons/fa';
 
-import { render, fireEvent, screen, testA11Y } from '../../../../../testUtils';
+import {
+  render,
+  fireEvent,
+  screen,
+  testA11Y,
+  validateHtml,
+} from '../../../../../testUtils';
 
 import { ThemeSwitchAlt } from '.';
 
@@ -12,6 +18,16 @@ describe('<ThemeSwitchAlt />', () => {
 
   it('passes a11y test', async () => {
     await testA11Y(<ThemeSwitchAlt />);
+  });
+
+  it('contains valid html', () => {
+    validateHtml(<ThemeSwitchAlt />, {
+      htmlValidate: {
+        rules: {
+          'prefer-native-element': 'off',
+        },
+      },
+    });
   });
 
   /**

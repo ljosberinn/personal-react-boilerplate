@@ -260,7 +260,7 @@ function Hero() {
     <Box as="section" pt={40} pb={16} maxW="xl" mx="auto" textAlign="center">
       <KarmaIcon size="16rem" />
 
-      <Heading as="h1" size="xl" fontWeight="500" mt="2">
+      <Heading as="h1" mt={4} mb={8}>
         next-karma
       </Heading>
 
@@ -269,7 +269,7 @@ function Hero() {
       </FadedText>
 
       <FadedText>
-        pports Authentication, Error Handling & Internationalization and more
+        supports Authentication, Error Handling & Internationalization and more
         out of the box.
       </FadedText>
 
@@ -302,7 +302,7 @@ function Hero() {
 
 const title = (
   <Text as="b" whiteSpace="nowrap">
-    'next-karma'
+    next-karma
   </Text>
 );
 
@@ -315,201 +315,209 @@ const spin = keyframes`
 
 function StackOverview() {
   return (
-    <Grid
-      templateColumns={{
-        lg: 'repeat(2, 1fr)',
-        sm: 'repeat(1, 1fr)',
-      }}
-      gap={10}
-      px={12}
-      as="section"
-    >
-      <Feature
-        icon={<NextIcon size={iconSize} />}
-        title="Next.js"
-        href="//nextjs.org"
-      >
-        Built on top of Next.js, {title} can near seamlessly integrate into
-        existing apps or serve as starting point for new projects.
-      </Feature>
+    <Box px={12} as="article">
+      <Heading as="h2" id="features" mb={12} textAlign="center">
+        Features
+      </Heading>
 
-      <Feature
-        icon={<TypeScriptIcon size={iconSize} />}
-        title="TypeScript"
-        href="//typescriptlang.org"
+      <Grid
+        templateColumns={{
+          lg: 'repeat(2, 1fr)',
+          sm: 'repeat(1, 1fr)',
+        }}
+        gap={10}
       >
-        To ensure scalability, long-term robustness and decent autocompletion,{' '}
-        {title} is 100% TypeScript.
-      </Feature>
-
-      <Feature
-        icon={<ChakraIcon size={iconSize} />}
-        title="Chakra"
-        href="//chakra-ui.com/"
-      >
-        Chakra provides composable and accessible low-level building blocks. By
-        default, it's visually similar to Tailwind and offers every
-        customization possible.
-      </Feature>
-
-      <Feature
-        icon={<I18NextIcon size={iconSize} />}
-        title="react-i18next"
-        href="//react.i18next.com/"
-      >
-        A Serverless- & SSR-compatible, JSON-based i18n solution is implemented
-        via{' '}
-        <ExternalLink href="https://react.i18next.com/">
-          react-i18next
-        </ExternalLink>
-        . Assets can be exchanged on the fly through an API route.
-      </Feature>
-
-      <Feature
-        icon={<OAuth2Icon size={iconSize} />}
-        title="OAuth2"
-        href="//oauth.net/2/"
-      >
-        Support for{' '}
-        <Tooltip label={ENABLED_PROVIDER.join(', ')}>
-          4 external providers
-        </Tooltip>{' '}
-        is included out of the box as well as means to implement homegrown
-        authentication, all based on httpOnly cookies.
-      </Feature>
-
-      <Feature
-        icon={<SentryIcon size={iconSize} />}
-        title="Sentry"
-        href="//sentry.io"
-      >
-        Miss no bugs with{' '}
-        <ExternalLink href="http://sentry.io/">Sentry</ExternalLink>, neither on
-        the frontend, nor in Next.js core functionality or API routes. Every
-        deploy creates a new release, separately visible in Sentrys dashboard.
-      </Feature>
-
-      <Feature
-        icon={<JestIcon size={iconSize} />}
-        title="Jest"
-        href="//jestjs.io"
-      >
-        All tests, integration or unit, run through Jest. To test API routes, a{' '}
-        <Code>testLambda</Code> function is included. {title} comes with 90%
-        code coverage out of the box.
-      </Feature>
-
-      <Feature
-        icon={
-          <Image
-            src="/testing-lib.png"
-            height={iconSize}
-            width={iconSize}
-            alt="Testing Library Logo"
-          />
-        }
-        title="@testing-library/react"
-        href="//testing-library.com/docs/react-testing-library/intro"
-      >
-        Following best practices and with help from{' '}
-        <ExternalLink href="https://testing-playground.com">
-          Testing Playground
-        </ExternalLink>{' '}
-        and{' '}
-        <ExternalLink href="https://github.com/nickcolley/jest-axe">
-          jest-axe
-        </ExternalLink>
-        , all example components are well tested. A{' '}
-        <ExternalLink href="https://testing-library.com/docs/native-testing-library/setup#custom-render">
-          custom render
-        </ExternalLink>{' '}
-        function with sensible defaults is included.
-      </Feature>
-
-      <Feature
-        icon={<GithubActionsLogo size={iconSize} />}
-        title="Github Actions"
-        href="//github.com/features/actions"
-      >
-        Before deploying, Github Actions will ensure your linting setup,
-        typecheck, execute tests as well as upload code coverage to{' '}
-        <ExternalLink href="https://codeclimate.com/">CodeClimate</ExternalLink>
-        .
-      </Feature>
-
-      <Feature
-        icon={<PWAIcon size={iconSize} />}
-        title="PWA"
-        href="//web.dev/progressive-web-apps/"
-      >
-        Thanks to{' '}
-        <ExternalLink href="https://github.com/hanford/next-offline">
-          next-offline
-        </ExternalLink>
-        , a ServiceWorker will be created on each deploy. An example component
-        notifying users on found updates is included. To prevent being too
-        opinionated here, no other PWA capabilities are included.
-      </Feature>
-
-      <Feature
-        icon={<ESLintIcon size={iconSize} />}
-        title="ESLint"
-        href="//eslint.org"
-      >
-        Built on top of industry standards & community best practices, {title}{' '}
-        comes with{' '}
-        <ExternalLink href="https://github.com/ljosberinn/eslint-config-galex">
-          my personal eslint config
-        </ExternalLink>
-        . You may of course swap at any time.
-      </Feature>
-
-      <Feature
-        icon={
-          <Box
-            as={FcSettings}
-            size={iconSize}
-            css={{
-              '@media (prefers-reduced-motion: no-preference)': {
-                animation: `${spin} infinite 3s linear`,
-              },
-            }}
-          />
-        }
-        title="...and more!"
-      >
-        <ExternalLink
-          omitIcon
-          href="//docs.github.com/en/github/building-a-strong-community/configuring-issue-templates-for-your-repository"
+        <Feature
+          icon={<NextIcon size={iconSize} />}
+          title="Next.js"
+          href="//nextjs.org"
         >
-          GitHub Issue templates
-        </ExternalLink>
-        ,{' '}
-        <ExternalLink
-          omitIcon
-          href="//github.com/conventional-changelog/commitlint"
+          Built on top of Next.js, {title} can near seamlessly integrate into
+          existing apps or serve as starting point for new projects.
+        </Feature>
+
+        <Feature
+          icon={<TypeScriptIcon size={iconSize} />}
+          title="TypeScript"
+          href="//typescriptlang.org"
         >
-          commitlint
-        </ExternalLink>
-        ,{' '}
-        <ExternalLink omitIcon href="//github.com/okonet/lint-staged">
-          lint-staged
-        </ExternalLink>
-        ,{' '}
-        <ExternalLink omitIcon href="//github.com/typicode/husky">
-          husky
-        </ExternalLink>
-        ,{' '}
-        <ExternalLink omitIcon href="//github.com/garmeeh/next-seo">
-          next-seo
-        </ExternalLink>
-        ,{' '}
-        <ExternalLink omitIcon href="//prettier.io">
-          prettier
-        </ExternalLink>
-        , ...
-      </Feature>
-    </Grid>
+          To ensure scalability, long-term robustness and decent autocompletion,{' '}
+          {title} is 100% TypeScript.
+        </Feature>
+
+        <Feature
+          icon={<ChakraIcon size={iconSize} />}
+          title="Chakra"
+          href="//chakra-ui.com/"
+        >
+          Chakra provides composable and accessible low-level building blocks.
+          By default, it's visually similar to Tailwind and offers every
+          customization possible.
+        </Feature>
+
+        <Feature
+          icon={<I18NextIcon size={iconSize} />}
+          title="react-i18next"
+          href="//react.i18next.com/"
+        >
+          A Serverless- & SSR-compatible, JSON-based i18n solution is
+          implemented via{' '}
+          <ExternalLink href="https://react.i18next.com/">
+            react-i18next
+          </ExternalLink>
+          . Assets can be exchanged on the fly through an API route.
+        </Feature>
+
+        <Feature
+          icon={<OAuth2Icon size={iconSize} />}
+          title="OAuth2"
+          href="//oauth.net/2/"
+        >
+          Support for{' '}
+          <Tooltip label={ENABLED_PROVIDER.join(', ')}>
+            4 external providers
+          </Tooltip>{' '}
+          is included out of the box as well as means to implement homegrown
+          authentication, all based on httpOnly cookies.
+        </Feature>
+
+        <Feature
+          icon={<SentryIcon size={iconSize} />}
+          title="Sentry"
+          href="//sentry.io"
+        >
+          Miss no bugs with{' '}
+          <ExternalLink href="http://sentry.io/">Sentry</ExternalLink>, neither
+          on the frontend, nor in Next.js core functionality or API routes.
+          Every deploy creates a new release, separately visible in Sentrys
+          dashboard.
+        </Feature>
+
+        <Feature
+          icon={<JestIcon size={iconSize} />}
+          title="Jest"
+          href="//jestjs.io"
+        >
+          All tests, integration or unit, run through Jest. To test API routes,
+          a <Code>testLambda</Code> function is included. {title} comes with 90%
+          code coverage out of the box.
+        </Feature>
+
+        <Feature
+          icon={
+            <Image
+              src="/testing-lib.png"
+              height={iconSize}
+              width={iconSize}
+              alt="Testing Library Logo"
+            />
+          }
+          title="@testing-library/react"
+          href="//testing-library.com/docs/react-testing-library/intro"
+        >
+          Following best practices and with help from{' '}
+          <ExternalLink href="https://testing-playground.com">
+            Testing Playground
+          </ExternalLink>{' '}
+          and{' '}
+          <ExternalLink href="https://github.com/nickcolley/jest-axe">
+            jest-axe
+          </ExternalLink>
+          , all example components are well tested. A{' '}
+          <ExternalLink href="https://testing-library.com/docs/native-testing-library/setup#custom-render">
+            custom render
+          </ExternalLink>{' '}
+          function with sensible defaults is included.
+        </Feature>
+
+        <Feature
+          icon={<GithubActionsLogo size={iconSize} />}
+          title="Github Actions"
+          href="//github.com/features/actions"
+        >
+          Before deploying, Github Actions will ensure your linting setup,
+          typecheck, execute tests as well as upload code coverage to{' '}
+          <ExternalLink href="https://codeclimate.com/">
+            CodeClimate
+          </ExternalLink>
+          .
+        </Feature>
+
+        <Feature
+          icon={<PWAIcon size={iconSize} />}
+          title="PWA"
+          href="//web.dev/progressive-web-apps/"
+        >
+          Thanks to{' '}
+          <ExternalLink href="https://github.com/hanford/next-offline">
+            next-offline
+          </ExternalLink>
+          , a ServiceWorker will be created on each deploy. An example component
+          notifying users on found updates is included. To prevent being too
+          opinionated here, no other PWA capabilities are included.
+        </Feature>
+
+        <Feature
+          icon={<ESLintIcon size={iconSize} />}
+          title="ESLint"
+          href="//eslint.org"
+        >
+          Built on top of industry standards & community best practices, {title}{' '}
+          comes with{' '}
+          <ExternalLink href="https://github.com/ljosberinn/eslint-config-galex">
+            my personal eslint config
+          </ExternalLink>
+          . You may of course swap at any time.
+        </Feature>
+
+        <Feature
+          icon={
+            <Box
+              as={FcSettings}
+              version={undefined}
+              size={iconSize}
+              css={{
+                '@media (prefers-reduced-motion: no-preference)': {
+                  animation: `${spin} infinite 3s linear`,
+                },
+              }}
+            />
+          }
+          title="...and more!"
+        >
+          <ExternalLink
+            omitIcon
+            href="//docs.github.com/en/github/building-a-strong-community/configuring-issue-templates-for-your-repository"
+          >
+            GitHub Issue templates
+          </ExternalLink>
+          ,{' '}
+          <ExternalLink
+            omitIcon
+            href="//github.com/conventional-changelog/commitlint"
+          >
+            commitlint
+          </ExternalLink>
+          ,{' '}
+          <ExternalLink omitIcon href="//github.com/okonet/lint-staged">
+            lint-staged
+          </ExternalLink>
+          ,{' '}
+          <ExternalLink omitIcon href="//github.com/typicode/husky">
+            husky
+          </ExternalLink>
+          ,{' '}
+          <ExternalLink omitIcon href="//github.com/garmeeh/next-seo">
+            next-seo
+          </ExternalLink>
+          ,{' '}
+          <ExternalLink omitIcon href="//prettier.io">
+            prettier
+          </ExternalLink>
+          , ...
+        </Feature>
+      </Grid>
+    </Box>
   );
 }
 
@@ -561,10 +569,10 @@ export function Index() {
       <Header />
       <Box as="main" maxWidth="86rem" ml="auto" mr="auto">
         <Hero />
-        <Divider my={16} />
+        <Divider my={16} role={undefined} aria-orientation={undefined} />
         <StackOverview />
       </Box>
-      <Divider my={16} />
+      <Divider my={16} role={undefined} aria-orientation={undefined} />
       <Footer />
     </>
   );

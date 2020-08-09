@@ -30,17 +30,19 @@ export function ThemeSwitch(props: ThemeSwitchProps) {
       <Box
         d="inline-block"
         as={FaSun}
+        focusable={false}
         height="6"
         color={colorMap.sun[colorMode]}
         data-testid="theme-switch-sun"
         onClick={toggleColorMode}
         aria-label={t(isLightTheme ? 'is-light-theme' : 'set-light-theme')}
       />
+      {/** TODO: <Flex as={Switch} & drop d="flex" in rc.2 */}
       <Switch
-        aria-label="toggle theme"
+        d="flex"
+        aria-label={t(isLightTheme ? 'set-dark-theme' : 'set-light-theme')}
         isChecked={!isLightTheme}
         onChange={toggleColorMode}
-        display="flex"
         alignItems="center"
         marginLeft="2"
         marginRight="2"
@@ -48,6 +50,7 @@ export function ThemeSwitch(props: ThemeSwitchProps) {
       <Box
         d="inline-block"
         as={FaMoon}
+        focusable={false}
         height="6"
         color={colorMap.moon[colorMode]}
         data-testid="theme-switch-moon"

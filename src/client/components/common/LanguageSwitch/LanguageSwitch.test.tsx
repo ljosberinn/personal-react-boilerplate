@@ -7,6 +7,7 @@ import {
   waitFor,
   screen,
   testA11Y,
+  validateHtml,
 } from '../../../../../testUtils';
 import { mockConsoleMethods } from '../../../../../testUtils/console';
 import { ENABLED_LANGUAGES } from '../../../../constants';
@@ -15,7 +16,7 @@ import { i18nCache } from '../../../../server/i18n/cache';
 import { LanguageSwitch } from '.';
 
 const setup = () => {
-  render(<LanguageSwitch />);
+  const { container } = render(<LanguageSwitch />);
 
   const button = screen.getByRole('button');
 
@@ -33,7 +34,7 @@ const setup = () => {
   const randomOtherLanguage =
     otherLanguages[Math.floor(Math.random() * otherLanguages.length)];
 
-  return { button, currentLanguage, randomOtherLanguage };
+  return { button, container, currentLanguage, randomOtherLanguage };
 };
 
 const makeGetDataByLanguageSpy = (bool: boolean) =>
@@ -56,11 +57,40 @@ describe('<LanguageSwitch />', () => {
     render(<LanguageSwitch />);
   });
 
-  it('passes a11y test', async () => {
+  it('passes a11y test when closed', async () => {
     await testA11Y(<LanguageSwitch />);
   });
 
-  it('should include a request for translation help', () => {
+  it('passes a11y test when opened', async () => {
+    const { container } = setup();
+
+    await testA11Y(container);
+  });
+
+  it('contains valid html', () => {
+    validateHtml(<LanguageSwitch />, {
+      htmlValidate: {
+        rules: {
+          'attribute-boolean-style': 'off',
+        },
+      },
+    });
+  });
+
+  it('contains valid html when opened', () => {
+    const { container } = setup();
+
+    validateHtml(container, {
+      htmlValidate: {
+        rules: {
+          // TODO: remove with rc.2
+          'element-required-attributes': 'off',
+        },
+      },
+    });
+  });
+
+  it('includes a request for translation help', () => {
     const { currentLanguage } = setup();
 
     const cta = screen.getByRole('menuitem', {

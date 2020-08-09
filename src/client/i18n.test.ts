@@ -1,17 +1,13 @@
 /* eslint-disable jest/require-top-level-describe */
 import * as Sentry from '@sentry/node';
 import { waitFor } from '@testing-library/react';
-import { COOKIE_LOOKUP_KEY_LANG } from '@unly/universal-language-detector';
 import i18next from 'i18next';
 import cookies from 'js-cookie';
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
 
 import 'whatwg-fetch';
-import {
-  makeMockIncomingRequest,
-  makeMockServerResponse,
-} from '../../testUtils/api';
+import { makeMockIncomingRequest } from '../../testUtils/api';
 import { mockConsoleMethods } from '../../testUtils/console';
 import { ENABLED_LANGUAGES, SUPPORTED_LANGUAGES_MAP } from '../constants';
 import { i18nCache } from '../server/i18n/cache';
@@ -21,6 +17,7 @@ import {
   i18nEndpoint,
   initI18Next,
   RTL_LANGUAGES,
+  i18nCookieName,
 } from './i18n';
 
 const server = setupServer();
@@ -117,15 +114,14 @@ describe('getI18N', () => {
 
       const fetchSpy = jest.spyOn(window, 'fetch');
 
-      await getI18N(language, {
-        query: {},
-        req: makeMockIncomingRequest({
+      await getI18N(
+        language,
+        makeMockIncomingRequest({
           headers: {
             host: mswEndpoint,
           },
-        }),
-        res: makeMockServerResponse(),
-      });
+        })
+      );
 
       expect(fetchSpy).toHaveBeenCalledWith(
         mswEndpoint + i18nEndpoint + language
@@ -337,7 +333,7 @@ describe('makeChangeLanguageHandler', () => {
 
         await waitFor(() =>
           expect(setCookieSpy).toHaveBeenCalledWith(
-            COOKIE_LOOKUP_KEY_LANG,
+            i18nCookieName,
             otherLanguage
           )
         );
