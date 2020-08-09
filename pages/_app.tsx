@@ -1,4 +1,5 @@
 import { NextComponentType, NextPageContext } from 'next';
+import Head from 'next/head';
 import { NextRouter } from 'next/router';
 import React from 'react';
 
@@ -25,8 +26,13 @@ export default function App({ Component, pageProps, router }: AppRenderProps) {
   }
 
   return (
-    <TopLevelErrorBoundary showDialog>
-      <Component {...pageProps} />
-    </TopLevelErrorBoundary>
+    <>
+      <Head>
+        <title>next-karma | Next.js template</title>
+      </Head>
+      <TopLevelErrorBoundary showDialog>
+        <Component {...pageProps} />
+      </TopLevelErrorBoundary>
+    </>
   );
 }

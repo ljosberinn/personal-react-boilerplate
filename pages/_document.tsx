@@ -62,7 +62,6 @@ export default function CustomDocument() {
         <meta content="global" name="distribution" />
         <meta content="7 days" name="revisit-after" />
         <meta content="Gerrit Alex" name="author" />
-        <title>{title}</title>
       </Head>
       <body>
         <Main />
