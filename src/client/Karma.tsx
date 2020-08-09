@@ -48,13 +48,13 @@ export function KarmaProvider({
   return (
     <I18nextProvider i18n={i18nInstance}>
       <AuthContextProvider session={session}>
-        <ServiceWorker />
         <ChakraProvider
           theme={theme}
           portalConfig={{ zIndex: 40 }}
           resetCSS
           storageManager={cookieStorageManager(cookies)}
         >
+          <ServiceWorker />
           <MetaThemeColorSynchronizer />
           <HtmlLangAttrSynchronizer />
           {/* <CustomPWAInstallPrompt /> */}
