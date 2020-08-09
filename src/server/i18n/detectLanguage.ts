@@ -2,7 +2,7 @@ import { parse } from 'cookie';
 import { IncomingMessage } from 'http';
 
 import { i18nCookieName } from '../../client/i18n';
-import { ENABLED_LANGUAGES, SUPPORTED_LANGUAGES_MAP } from '../../constants';
+import { ENABLED_LANGUAGES, FALLBACK_LANGUAGE } from '../../constants';
 
 // eslint-disable-next-line unicorn/no-unsafe-regex
 const regExp = /(?<language>[a-z]{2})(?:-[a-z]{2,4}){0,2}(?:;q=(?<quality>\d(?:\.\d+)?)?)?/gi;
@@ -55,7 +55,7 @@ export const detectLanguage = ({ headers }: IncomingMessage) => {
   const cookies = headers.cookie;
   const serverCookies = cookies ? parse(cookies) : {};
 
-  const fallbackLanguage = SUPPORTED_LANGUAGES_MAP.en;
+  const fallbackLanguage = FALLBACK_LANGUAGE;
   const languageByCookie = serverCookies[i18nCookieName];
 
   if (languageByCookie && ENABLED_LANGUAGES.includes(languageByCookie)) {

@@ -7,11 +7,11 @@ import absoluteUrl from 'next-absolute-url';
 import { initReactI18next } from 'react-i18next';
 
 import {
-  SUPPORTED_LANGUAGES_MAP,
   IS_PROD,
   ENABLED_LANGUAGES,
   IS_BROWSER,
   IS_TEST,
+  FALLBACK_LANGUAGE,
 } from '../constants';
 import { namespaces } from '../server/i18n/namespaces';
 import { KarmaProps } from './Karma';
@@ -66,10 +66,7 @@ export const initI18Next = ({
     debug: !IS_PROD && !IS_TEST,
     // removes translation default key
     defaultNS: undefined,
-    fallbackLng:
-      language === SUPPORTED_LANGUAGES_MAP.en
-        ? SUPPORTED_LANGUAGES_MAP.de
-        : SUPPORTED_LANGUAGES_MAP.en,
+    fallbackLng: FALLBACK_LANGUAGE,
     interpolation: {
       // not needed with react
       escapeValue: false,
@@ -198,7 +195,7 @@ export const getI18N = async (
   req?: IncomingMessage
 ): Promise<I18nextResourceLocale> => {
   if (!ENABLED_LANGUAGES.includes(lang)) {
-    lang = SUPPORTED_LANGUAGES_MAP.en;
+    lang = FALLBACK_LANGUAGE;
   }
 
   const url = i18nEndpoint + lang;

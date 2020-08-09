@@ -9,7 +9,7 @@ import { setupServer } from 'msw/node';
 import 'whatwg-fetch';
 import { makeMockIncomingRequest } from '../../testUtils/api';
 import { mockConsoleMethods } from '../../testUtils/console';
-import { ENABLED_LANGUAGES, SUPPORTED_LANGUAGES_MAP } from '../constants';
+import { ENABLED_LANGUAGES, FALLBACK_LANGUAGE } from '../constants';
 import { i18nCache } from '../server/i18n/cache';
 import {
   getI18N,
@@ -54,25 +54,25 @@ const mockRoute = ({ language, response }: MockRouteParams) => {
 describe('initI18Next', () => {
   test('creates an i18nInstance without crashing given prod arguments', () => {
     initI18Next({
-      i18nBundle: i18nCache.en,
-      language: SUPPORTED_LANGUAGES_MAP.en,
+      i18nBundle: i18nCache[FALLBACK_LANGUAGE],
+      language: FALLBACK_LANGUAGE,
     });
   });
 
   test('creates an i18nInstance without crashing given test arguments', () => {
     initI18Next({
       i18nCache,
-      language: SUPPORTED_LANGUAGES_MAP.en,
+      language: FALLBACK_LANGUAGE,
     });
   });
 
   test('initially sets html.lang attribute', () => {
     const setAttributeSpy = jest.spyOn(HTMLElement.prototype, 'setAttribute');
 
-    const language = SUPPORTED_LANGUAGES_MAP.en;
+    const language = FALLBACK_LANGUAGE;
 
     initI18Next({
-      i18nBundle: i18nCache.en,
+      i18nBundle: i18nCache[FALLBACK_LANGUAGE],
       language,
     });
 
@@ -84,8 +84,8 @@ describe('initI18Next', () => {
     const setAttributeSpy = jest.spyOn(HTMLElement.prototype, 'setAttribute');
 
     const i18n = initI18Next({
-      i18nBundle: i18nCache.en,
-      language: SUPPORTED_LANGUAGES_MAP.en,
+      i18nBundle: i18nCache[FALLBACK_LANGUAGE],
+      language: FALLBACK_LANGUAGE,
     });
 
     const otherLanguage = 'de';
@@ -160,8 +160,8 @@ describe('getI18N', () => {
     const unknownLanguage = 'foo';
 
     mockRoute({
-      language: SUPPORTED_LANGUAGES_MAP.en,
-      response: i18nCache[SUPPORTED_LANGUAGES_MAP.en],
+      language: FALLBACK_LANGUAGE,
+      response: i18nCache[FALLBACK_LANGUAGE],
     });
 
     const fetchSpy = jest.spyOn(window, 'fetch');
@@ -169,7 +169,7 @@ describe('getI18N', () => {
     await getI18N(unknownLanguage);
 
     expect(fetchSpy).toHaveBeenCalledWith(
-      mswEndpoint + i18nEndpoint + SUPPORTED_LANGUAGES_MAP.en
+      mswEndpoint + i18nEndpoint + FALLBACK_LANGUAGE
     );
   });
 
@@ -269,7 +269,7 @@ describe('makeChangeLanguageHandler', () => {
     test('verifies bundle existence on i18n on language change', async () => {
       const i18n = initI18Next({
         i18nBundle: i18nCache[language],
-        language: SUPPORTED_LANGUAGES_MAP[language],
+        language,
       });
 
       const getDataByLanguageSpy = jest.spyOn(i18n, 'getDataByLanguage');
@@ -291,7 +291,7 @@ describe('makeChangeLanguageHandler', () => {
     test('adds the resource bundle when loaded', async () => {
       const i18n = initI18Next({
         i18nBundle: i18nCache[language],
-        language: SUPPORTED_LANGUAGES_MAP[language],
+        language,
       });
 
       const mockAddResourceBundle = jest.spyOn(i18n, 'addResourceBundle');

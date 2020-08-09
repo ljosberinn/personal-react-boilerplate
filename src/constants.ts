@@ -5,21 +5,24 @@ export const IS_BROWSER = typeof window !== 'undefined';
 export const IS_PROD = process.env.NODE_ENV === 'production';
 export const IS_TEST = process.env.NODE_ENV === 'test';
 
+/**
+ * an array containing all enabled provider
+ */
 export const ENABLED_PROVIDER = process.env.NEXT_PUBLIC_ENABLED_PROVIDER!.split(
   ','
 ) as Provider[];
 
 /* i18n */
+/**
+ * an array containing all enabled languages
+ */
 export const ENABLED_LANGUAGES = process.env.NEXT_PUBLIC_ENABLED_LANGUAGES!.split(
   ','
 );
-
-export const SUPPORTED_LANGUAGES_MAP = ENABLED_LANGUAGES.reduce<{
-  [key: string]: string;
-}>((carry, lang) => {
-  carry[lang] = lang;
-  return carry;
-}, {});
+/**
+ * MUST be included in `ENABLED_LANGUAGES`
+ */
+export const FALLBACK_LANGUAGE = process.env.FALLBACK_LANGUAGE!;
 
 /* sentry */
 export const SENTRY_DSN = process.env.NEXT_PUBLIC_SENTRY_DSN!;
@@ -27,6 +30,9 @@ export const SENTRY_DSN = process.env.NEXT_PUBLIC_SENTRY_DSN!;
 /* auth */
 // TS does not like this variable coming out of env
 export const SESSION_COOKIE_NAME = 'session';
+/**
+ * a sessions lifetime, in milliseconds
+ */
 export const SESSION_LIFETIME =
   Number.parseInt(process.env.NEXT_PUBLIC_SESSION_LIFETIME!) * 1000;
 

@@ -2,6 +2,7 @@ import { serialize } from 'cookie';
 
 import { makeMockIncomingRequest } from '../../../testUtils/api';
 import { i18nCookieName } from '../../client/i18n';
+import { FALLBACK_LANGUAGE } from '../../constants';
 import {
   detectLanguage,
   findLanguageByAcceptLanguageHeader,
@@ -12,12 +13,7 @@ jest.mock('../../constants', () => {
 
   return {
     ...actual,
-    ENABLED_LANGUAGES: ['en', 'de', 'zh'],
-    SUPPORTED_LANGUAGES_MAP: {
-      de: 'de',
-      en: 'en',
-      zh: 'zh',
-    },
+    ENABLED_LANGUAGES: [actual.FALLBACK_LANGUAGE, 'de', 'zh'],
   };
 });
 
@@ -43,7 +39,7 @@ describe('detectLanguage', () => {
       },
     });
 
-    expect(detectLanguage(mockContext)).toBe('en');
+    expect(detectLanguage(mockContext)).toBe(FALLBACK_LANGUAGE);
   });
 
   test('given irrelevant cookies, uses accept-language header', () => {
@@ -67,13 +63,13 @@ describe('detectLanguage', () => {
       },
     });
 
-    expect(detectLanguage(mockContext)).toBe('en');
+    expect(detectLanguage(mockContext)).toBe(FALLBACK_LANGUAGE);
   });
 
   test('given irreelvant cookies and no header, uses fallback', () => {
     const mockContext = makeMockIncomingRequest();
 
-    expect(detectLanguage(mockContext)).toBe('en');
+    expect(detectLanguage(mockContext)).toBe(FALLBACK_LANGUAGE);
   });
 });
 

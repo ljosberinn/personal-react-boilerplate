@@ -18,18 +18,15 @@ import { FlagIcon, FlagIconCode } from 'react-flag-kit';
 import { useTranslation } from 'react-i18next';
 import { MdTranslate } from 'react-icons/md';
 
-import {
-  SUPPORTED_LANGUAGES_MAP,
-  ENABLED_LANGUAGES,
-} from '../../../../constants';
+import { ENABLED_LANGUAGES } from '../../../../constants';
 import { makeChangeLanguageHandler } from '../../../i18n';
 import { ExternalLink } from '../ExternalLink';
 
 type FlapMap = { [key: string]: FlagIconCode };
 
 const flagMap: FlapMap = {
-  [SUPPORTED_LANGUAGES_MAP.en]: 'GB',
-  [SUPPORTED_LANGUAGES_MAP.de]: 'DE',
+  de: 'DE',
+  en: 'GB',
 };
 
 type LanguageSwitchProps = BoxProps;
