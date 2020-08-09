@@ -6,10 +6,10 @@
     "build": "next build",
     "install:clean": "rm -rf node_modules && rm yarn.lock && yarn",
     "dev": "next",
-    "lint": "eslint src && eslint pages",
+    "lint:code": "eslint src && eslint pages",
     "lint:fix": "eslint src --fix && eslint pages --fix && prettier --write src && prettier --write pages",
+    "lint:types": "tsc --noEmit",
     "start": "next start",
-    "tsc": "tsc --noEmit",
     "test": "jest --watch",
     "test:ci": "jest --ci --coverage",
     "postinstall": "yarn-deduplicate -l"
