@@ -52,6 +52,31 @@ const offlineConfig = {
 };
 
 /**
+ * moves everything @chakra-ui related into the framework chunk instead of
+ * duplicating in routes
+ *
+ * @see https://github.com/vercel/next.js/blob/canary/examples/using-preact/next.config.js
+ */
+const bundleChakraOnce = ({ config, isServer }) => {
+  const splitChunks = config.optimization && config.optimization.splitChunks;
+
+  if (splitChunks) {
+    const cacheGroups = splitChunks.cacheGroups;
+    const test = /[\\/]node_modules[\\/](@chakra-ui)[\\/]/;
+    if (cacheGroups.framework) {
+      cacheGroups.preact = Object.assign({}, cacheGroups.framework, { test });
+      // if you want to merge the 2 small commons+framework chunks:
+      // cacheGroups.commons.name = 'framework';
+    }
+  }
+
+  if (isServer) {
+    // mark @chakra-ui stuff as external for server bundle to prevent duplicates
+    config.externals.push(/^(@chakra-ui)/);
+  }
+};
+
+/**
  * a list of packages not to bundle with the frontend
  *
  * @see https://arunoda.me/blog/ssr-and-server-only-modules
@@ -72,6 +97,8 @@ const defaultConfig = {
     BUILD_TIMESTAMP: +date,
   },
   webpack: (config, { isServer, buildId }) => {
+    bundleChakraOnce({ config, isServer });
+
     if (!isServer) {
       config.resolve.alias['@sentry/node'] = '@sentry/react';
 
