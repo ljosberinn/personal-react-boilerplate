@@ -1,9 +1,7 @@
 import { NextComponentType, NextPageContext } from 'next';
-import { DefaultSeo } from 'next-seo';
 import { NextRouter } from 'next/router';
 import React from 'react';
 
-import { seo } from '../next-seo.config';
 import {
   attachRoutingContext,
   ErrorBoundary as TopLevelErrorBoundary,
@@ -27,11 +25,8 @@ export default function App({ Component, pageProps, router }: AppRenderProps) {
   }
 
   return (
-    <>
-      <DefaultSeo {...seo} />
-      <TopLevelErrorBoundary showDialog>
-        <Component {...pageProps} />
-      </TopLevelErrorBoundary>
-    </>
+    <TopLevelErrorBoundary showDialog>
+      <Component {...pageProps} />
+    </TopLevelErrorBoundary>
   );
 }

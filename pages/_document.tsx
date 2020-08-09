@@ -15,6 +15,10 @@ import { attachComponentBreadcrumb } from '../src/utils/sentry/client';
   process.on(event, captureException);
 });
 
+const title = 'next-karma | Next.js template';
+const description =
+  'next-karma - a slightly opinonated batteries-included Next.js template | Authentication, Internationalization, Error Handling';
+
 // eslint-disable-next-line import/no-default-export
 export default function CustomDocument() {
   attachComponentBreadcrumb('document');
@@ -42,6 +46,22 @@ export default function CustomDocument() {
         />
         <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#d41143" />
         <meta name="msapplication-TileColor" content="#1A202C" />
+        <meta name="description" content={description} />
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:creator" content="@gerrit_alex" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta
+          property="og:image"
+          content="https://personal-react-boilerplate.now.sh/next-karma-h600.png"
+        />
+        <meta property="og:image:alt" content={title} />
+        <meta property="og:image:width" content="800" />
+        <meta property="og:image:width" content="600" />
+        <meta content="global" name="distribution" />
+        <meta content="7 days" name="revisit-after" />
+        <meta content="Gerrit Alex" name="author" />
       </Head>
       <body>
         <Main />

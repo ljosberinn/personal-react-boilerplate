@@ -507,10 +507,6 @@ function StackOverview() {
             husky
           </ExternalLink>
           ,{' '}
-          <ExternalLink omitIcon href="//github.com/garmeeh/next-seo">
-            next-seo
-          </ExternalLink>
-          ,{' '}
           <ExternalLink omitIcon href="//prettier.io">
             prettier
           </ExternalLink>
