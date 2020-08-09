@@ -88,16 +88,19 @@ export const initI18Next = ({
   });
 
   if (IS_BROWSER) {
-    instance.on('languageChanged', (lang) => {
-      const html = document.querySelector('html');
+    const html = document.querySelector('html');
 
-      if (html) {
+    if (html) {
+      instance.on('languageChanged', (lang) => {
         html.setAttribute('lang', lang);
         html.setAttribute('dir', RTL_LANGUAGES.has(lang) ? 'rtl' : 'ltr');
-      }
 
-      set(i18nCookieName, lang);
-    });
+        set(i18nCookieName, lang);
+      });
+
+      // set initially aswell
+      html.setAttribute('lang', language);
+    }
   }
 
   return instance;

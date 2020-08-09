@@ -17,11 +17,8 @@ const supportedLanguages = ENABLED_LANGUAGES.map(
  */
 export const findLanguageByAcceptLanguageHeader = (
   header: string
-): string | null => {
-  // eslint-disable-next-line unicorn/no-unsafe-regex
-  const matches = header.matchAll(regExp);
-
-  const sortedCodes = [...matches]
+): string | null =>
+  [...header.matchAll(regExp)]
     .map((match) => {
       // since capture groups are used above, we can safely ! here
       const { language, quality } = match.groups!;
@@ -30,19 +27,16 @@ export const findLanguageByAcceptLanguageHeader = (
         language,
         quality: quality ? Number.parseFloat(quality) : 1,
       };
-    }) // sort by quality desc
+    })
+    // sort by quality desc
     .sort((a, b) => b.quality - a.quality)
-    // throw away quality after sorting
-    .map(({ language }) => language);
-
-  return (
-    sortedCodes.find((language) =>
+    // throw away quality
+    .map(({ language }) => language)
+    .find((language) =>
       supportedLanguages.find(
         (supportedLanguage) => supportedLanguage === language
       )
-    ) ?? null
-  );
-};
+    ) ?? null;
 
 /**
  * Dynamically detects the users preferred language based on
@@ -52,8 +46,8 @@ export const findLanguageByAcceptLanguageHeader = (
  *
  * and picks the best match from existing languages.
  *
- * Modeled after UnlyEd/universal-language-detector which has tree-shaking
- * issues.
+ * Modeled after `UnlyEd/universal-language-detector` which has tree-shaking
+ * and dependency issues.
  *
  * @see https://github.com/UnlyEd/universal-language-detector
  */

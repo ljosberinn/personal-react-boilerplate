@@ -12,7 +12,6 @@ import {
   attachComponentBreadcrumb,
   attachInitialContext,
 } from '../utils/sentry/client';
-import { HtmlLangAttrSynchronizer } from './components/common/HtmlLangAttrSynchronizer';
 import { MetaThemeColorSynchronizer } from './components/common/MetaThemeColorSynchronizer';
 import { ServiceWorker } from './components/common/ServiceWorker';
 import { AuthContextProvider } from './context/AuthContext';
@@ -56,7 +55,6 @@ export function KarmaProvider({
         >
           <ServiceWorker />
           <MetaThemeColorSynchronizer />
-          <HtmlLangAttrSynchronizer />
           {/* <CustomPWAInstallPrompt /> */}
           {children}
         </ChakraProvider>
@@ -65,25 +63,26 @@ export function KarmaProvider({
   );
 }
 
-export type WithServerSideKarmaProps<T> = Promise<{
-  props: { karma: KarmaProps } & T;
+export type WithServerSideKarmaProps<Props> = Promise<{
+  props: { karma: KarmaProps } & Props;
 }>;
 
 export type GetServerSidePropsHandler<
-  T = {},
-  Q extends ParsedUrlQuery = ParsedUrlQuery
-> = (ctx: GetServerSidePropsContext<Q>) => Promise<{ props: T }> | { props: T };
+  Props = {},
+  Query extends ParsedUrlQuery = ParsedUrlQuery
+> = (
+  ctx: GetServerSidePropsContext<Query>
+) => Promise<{ props: Props }> | { props: Props };
 
-/**
- *
- */
-export function withServerSideProps<
-  T,
-  Q extends ParsedUrlQuery = ParsedUrlQuery
->(fn: GetServerSidePropsHandler<T, Q>) {
+export const withServerSideKarmaProps = <
+  Props,
+  Query extends ParsedUrlQuery = ParsedUrlQuery
+>(
+  fn: GetServerSidePropsHandler<Props, Query>
+) => {
   return async (
-    ctx: GetServerSidePropsContext<Q>
-  ): WithServerSideKarmaProps<T> => {
+    ctx: GetServerSidePropsContext<Query>
+  ): WithServerSideKarmaProps<Props> => {
     const { props } = await fn(ctx);
     const {
       props: { karma },
@@ -96,15 +95,15 @@ export function withServerSideProps<
       },
     };
   };
-}
+};
 
-type getServerSidePropsReturn = Promise<{
+type GetServerSidePropsReturn = Promise<{
   props: { karma: Omit<KarmaProps, 'children'> };
 }>;
 
-export async function getServerSideProps({
+export const getServerSideProps = async ({
   req,
-}: GetServerSidePropsContext): getServerSidePropsReturn {
+}: GetServerSidePropsContext): GetServerSidePropsReturn => {
   const session = getSession(req);
   const language = detectLanguage(req);
   const i18nBundle = await getI18N(language, req);
@@ -126,4 +125,4 @@ export async function getServerSideProps({
       },
     },
   };
-}
+};

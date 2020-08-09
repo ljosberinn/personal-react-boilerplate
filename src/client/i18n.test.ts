@@ -66,6 +66,19 @@ describe('initI18Next', () => {
     });
   });
 
+  test('initially sets html.lang attribute', () => {
+    const setAttributeSpy = jest.spyOn(HTMLElement.prototype, 'setAttribute');
+
+    const language = SUPPORTED_LANGUAGES_MAP.en;
+
+    initI18Next({
+      i18nBundle: i18nCache.en,
+      language,
+    });
+
+    expect(setAttributeSpy).toHaveBeenCalledWith('lang', language);
+  });
+
   test('always changes the html.lang attribute onLanguageChanged', async () => {
     const qsSpy = jest.spyOn(document, 'querySelector');
     const setAttributeSpy = jest.spyOn(HTMLElement.prototype, 'setAttribute');
@@ -105,8 +118,7 @@ describe('initI18Next', () => {
 
 describe('getI18N', () => {
   ENABLED_LANGUAGES.forEach((language) => {
-    // eslint-disable-next-line jest/no-disabled-tests
-    test.skip(`loads a bundle given server-side arguments (language: ${language})`, async () => {
+    test(`loads a bundle given server-side arguments (language: ${language})`, async () => {
       mockRoute({
         language,
         response: i18nCache[language],
@@ -118,7 +130,7 @@ describe('getI18N', () => {
         language,
         makeMockIncomingRequest({
           headers: {
-            host: mswEndpoint,
+            host: mswEndpoint.replace('http://', ''),
           },
         })
       );
