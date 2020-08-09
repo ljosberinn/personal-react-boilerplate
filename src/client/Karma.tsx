@@ -1,17 +1,21 @@
 import { ChakraProvider, cookieStorageManager } from '@chakra-ui/core';
 import theme from '@chakra-ui/theme';
+import { captureException } from '@sentry/node';
 import { GetServerSidePropsContext } from 'next';
 import { ParsedUrlQuery } from 'querystring';
 import React from 'react';
 import { ReactNode } from 'react';
 import { I18nextProvider } from 'react-i18next';
 
+import { FALLBACK_LANGUAGE } from '../constants';
 import { getSession } from '../server/auth/cookie';
+import { i18nCache } from '../server/i18n/cache';
 import { detectLanguage } from '../server/i18n/detectLanguage';
 import {
   attachComponentBreadcrumb,
   attachInitialContext,
 } from '../utils/sentry/client';
+import { attachLambdaContext } from '../utils/sentry/server';
 import { MetaThemeColorSynchronizer } from './components/common/MetaThemeColorSynchronizer';
 import { ServiceWorker } from './components/common/ServiceWorker';
 import { AuthContextProvider } from './context/AuthContext';
@@ -104,25 +108,43 @@ type GetServerSidePropsReturn = Promise<{
 export const getServerSideProps = async ({
   req,
 }: GetServerSidePropsContext): GetServerSidePropsReturn => {
-  const session = getSession(req);
-  const language = detectLanguage(req);
-  const i18nBundle = await getI18N(language, req);
   const cookies = req.headers.cookie ?? '';
 
-  attachInitialContext({
-    language,
-    req,
-    session,
-  });
+  attachLambdaContext(req);
 
-  return {
-    props: {
-      karma: {
-        cookies,
-        i18nBundle,
-        language,
-        session,
+  try {
+    const session = getSession(req);
+    const language = detectLanguage(req);
+    const i18nBundle = await getI18N(language, req);
+
+    attachInitialContext({
+      language,
+      req,
+      session,
+    });
+
+    return {
+      props: {
+        karma: {
+          cookies,
+          i18nBundle,
+          language,
+          session,
+        },
       },
-    },
-  };
+    };
+  } catch (error) {
+    captureException(error);
+
+    return {
+      props: {
+        karma: {
+          cookies,
+          i18nBundle: i18nCache[FALLBACK_LANGUAGE],
+          language: FALLBACK_LANGUAGE,
+          session: null,
+        },
+      },
+    };
+  }
 };

@@ -265,12 +265,12 @@ function Hero() {
       </Heading>
 
       <FadedText>
-        A slighly opinionated batteries-included Next.js template.
+        A slighly opinionated batteries-included Next.js template
       </FadedText>
 
       <FadedText>
-        supports Authentication, Error Handling & Internationalization and more
-        out of the box.
+        supporting Authentication, Error Handling & Internationalization and
+        more out of the box.
       </FadedText>
 
       <Box mt="6">

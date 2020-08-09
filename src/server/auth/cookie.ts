@@ -12,7 +12,7 @@ import {
 type SSRCompatibleRequest = NextApiRequest | IncomingMessage;
 
 export const encryptSession = (session: object): string =>
-  btoa(JSON.stringify(session));
+  JSON.stringify(session);
 
 /**
  * extracts & decrypts the session cookie, if existing
@@ -24,7 +24,7 @@ export const getSession = (req?: SSRCompatibleRequest): User | null => {
 
   const token = getSessionCookie(req);
 
-  return token ? JSON.parse(atob(token)) : null;
+  return token ? JSON.parse(token) : null;
 };
 
 interface NewCookieOptions {
