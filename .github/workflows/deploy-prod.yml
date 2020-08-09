@@ -3,7 +3,7 @@ name: Deploy to production on Vercel
 on:
   push:
     branches:
-      - "master"
+      - 'master'
 
 jobs:
   setup-environment:
@@ -14,7 +14,7 @@ jobs:
       - name: Installing node.js
         uses: actions/setup-node@v1
         with:
-          node-version: "12.x"
+          node-version: '12.x'
   lint:
     name: ESLint
     runs-on: ubuntu-latest
@@ -23,20 +23,20 @@ jobs:
       - uses: actions/checkout@v1
       - name: Installing dependencies
         run: yarn
-      - run: yarn lint
-  tsc:
+      - run: yarn lint:code
+  types:
     name: TypeScript
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
       - name: Installing dependencies
         run: yarn
-      - run: yarn tsc
+      - run: yarn lint:types
   tests-coverage:
     name: Test & Coverage Report
     runs-on: ubuntu-latest
     timeout-minutes: 2
-    needs: [lint, tsc] # only run after lint and tsc completed successfully
+    needs: [lint, types] # only run after lint and tsc completed successfully
     steps:
       - uses: actions/checkout@v1
       - name: Installing dependencies
