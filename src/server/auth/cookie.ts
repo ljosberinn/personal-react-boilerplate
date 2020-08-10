@@ -57,7 +57,7 @@ export const setSessionCookie = (token: string, res: NextApiResponse): void => {
   const options: CookieSerializeOptions = {
     expires: new Date(Date.now() + SESSION_LIFETIME),
     httpOnly: true,
-    maxAge: SESSION_LIFETIME,
+    maxAge: SESSION_LIFETIME / 1000,
     path: '/',
     // required for OAuth2 to work instantly in FF
     sameSite: 'lax',
