@@ -21,16 +21,13 @@ export function Feature({ title, href, children, icon }: FeatureProps) {
 
   return (
     <Box _hover={{ bg }} p="4" borderRadius="5px" as="section">
+      {icon}
       {href ? (
         <ExternalLink omitIcon href={href}>
-          {icon}
           {heading}
         </ExternalLink>
       ) : (
-        <>
-          {icon}
-          {heading}
-        </>
+        heading
       )}
       <Text>{children}</Text>
     </Box>

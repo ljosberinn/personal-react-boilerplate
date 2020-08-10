@@ -418,13 +418,17 @@ function StackOverview() {
           Following best practices and with help from{' '}
           <ExternalLink href="https://testing-playground.com">
             Testing Playground
-          </ExternalLink>{' '}
-          and{' '}
+          </ExternalLink>
+          ,{' '}
           <ExternalLink href="https://github.com/nickcolley/jest-axe">
             jest-axe
+          </ExternalLink>{' '}
+          and{' '}
+          <ExternalLink href="https://html-validate.org/frameworks/jest.html">
+            html-validate/jest
           </ExternalLink>
           , all example components are well tested. A{' '}
-          <ExternalLink href="https://testing-library.com/docs/native-testing-library/setup#custom-render">
+          <ExternalLink href="https://testing-library.com/docs/react-testing-library/setup#custom-render">
             custom render
           </ExternalLink>{' '}
           function with sensible defaults is included.

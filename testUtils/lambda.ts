@@ -24,6 +24,7 @@ interface UrlArguments {
   searchParams?: Record<string, string> | URLSearchParams;
   /**
    * HTTP request method
+   *
    * @default GET
    */
   method?: RequestInitMethod;

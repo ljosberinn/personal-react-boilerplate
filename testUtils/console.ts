@@ -8,10 +8,7 @@ export type ConsoleMockWithDefault = {
 
 /**
  * Overwrites passed console methods with your or silent implementations
- * Returns function to restore console
- *
- *
- * @param method
+ * Returns function to restore console.
  */
 export const mockConsoleMethods = (
   args: ConsoleMockWithDefault['method'] | ConsoleMockWithDefault[]

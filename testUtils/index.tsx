@@ -14,6 +14,7 @@ import { I18nextProvider, useTranslation } from 'react-i18next';
 import { AuthContextProvider } from '../src/client/context/AuthContext';
 import { AuthContextDefinition } from '../src/client/context/AuthContext/AuthContext';
 import { initI18Next } from '../src/client/i18n';
+import { FALLBACK_LANGUAGE } from '../src/constants';
 import { i18nCache } from '../src/server/i18n/cache';
 import 'html-validate/jest';
 
@@ -22,13 +23,6 @@ import 'html-validate/jest';
 import 'whatwg-fetch';
 
 export * from '@testing-library/react';
-
-// as singleton, else you will see lots of `act` warnings in tests which are
-// technically unrelated to the tested component
-const i18nInstance = initI18Next({
-  i18nCache,
-  language: 'en',
-});
 
 type UI = Parameters<typeof rtlRender>[0];
 type Namespace = Parameters<typeof useTranslation>[0];
@@ -49,7 +43,7 @@ export interface TestOptions extends Omit<RenderOptions, 'wrapper'> {
    * that receive `t`, `i18n` and|or `ready` via props
    *
    * @example
-   * ```js
+   * ```jsx
    * // using `t` prop as is
    * render(<MyComponent t={jest.fn()} />, {
    *  i18n: {
@@ -75,7 +69,6 @@ export interface TestOptions extends Omit<RenderOptions, 'wrapper'> {
    *  }
    * });
    * ```
-   *
    */
   i18n?: {
     namespace: Namespace;
@@ -101,7 +94,6 @@ export interface TestOptions extends Omit<RenderOptions, 'wrapper'> {
    *    <ContextA />
    *  )
    * });
-   *
    * ```
    */
   wrapper?: typeof ChildrenPassthrough;
@@ -140,6 +132,13 @@ function I18nTestMiddleware({
 
   return cloneElement(children, props);
 }
+
+// as singleton, else you will see lots of `act` warnings in tests which are
+// technically unrelated to the tested component
+const i18nInstance = initI18Next({
+  i18nCache,
+  language: FALLBACK_LANGUAGE,
+});
 
 /**
  * Custom render for @testing-library/react
@@ -181,6 +180,7 @@ export function render(
   );
 }
 
+type TestA11YOptions = TestOptions & { axeOptions?: RunOptions };
 /**
  * Validates against common a11y mistakes.
  *
@@ -206,7 +206,7 @@ export function render(
  */
 export const testA11Y = async (
   ui: UI | HTMLElement,
-  { a11y: axeOptions, ...options }: TestOptions & { a11y?: RunOptions } = {}
+  { axeOptions, ...options }: TestA11YOptions = {}
 ) => {
   const element = isValidElement(ui) ? render(ui, options).container : ui;
   const results = await axe(element, axeOptions);
@@ -294,8 +294,10 @@ const defaultConfig: HTMLValidateOptions = {
   },
 };
 
+type ValidateHtmlOptions = TestOptions & { htmlValidate?: HTMLValidateOptions };
+
 /**
- * Tests against HTML validations.
+ * Tests against invalid HTML.
  *
  * Wrapper for html-validate/jest
  *
@@ -318,13 +320,8 @@ const defaultConfig: HTMLValidateOptions = {
  * @see https://html-validate.org/frameworks/jest.html
  */
 export const validateHtml = (
-  ui: HTMLElement | UI,
-  {
-    htmlValidate,
-    ...options
-  }: TestOptions & {
-    htmlValidate?: HTMLValidateOptions;
-  } = {}
+  ui: UI | HTMLElement,
+  { htmlValidate, ...options }: ValidateHtmlOptions = {}
 ): void => {
   const merged = {
     ...htmlValidate,
