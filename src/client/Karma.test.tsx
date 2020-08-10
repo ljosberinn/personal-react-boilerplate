@@ -1,4 +1,3 @@
-import * as sentry from '@sentry/node';
 import { render } from '@testing-library/react';
 import { GetServerSidePropsContext } from 'next';
 import React from 'react';
@@ -7,7 +6,6 @@ import {
   makeMockIncomingRequest,
   makeMockServerResponse,
 } from '../../testUtils/api';
-import { FALLBACK_LANGUAGE } from '../constants';
 import * as cookieUtils from '../server/auth/cookie';
 import { i18nCache } from '../server/i18n/cache';
 import * as detectLanguageUtils from '../server/i18n/detectLanguage';
@@ -143,36 +141,6 @@ describe('getServerSideProps', () => {
     const { getI18NSpy } = await setup();
 
     expect(getI18NSpy).toHaveBeenCalledWith(mockLanguage, mockCtx.req);
-  });
-
-  test('fails gracefully given an error', async () => {
-    jest.spyOn(cookieUtils, 'getSession').mockImplementationOnce(() => {
-      throw new Error('karma');
-    });
-    jest.spyOn(i18n, 'getI18N').mockResolvedValueOnce(mockBundle);
-    jest
-      .spyOn(detectLanguageUtils, 'detectLanguage')
-      .mockImplementationOnce(() => mockLanguage);
-
-    jest.spyOn(sentryUtils, 'attachInitialContext');
-    const captureExceptionSpy = jest
-      .spyOn(sentry, 'captureException')
-      .mockImplementationOnce(() => '');
-
-    const result = await getServerSideProps(mockCtx);
-
-    expect(captureExceptionSpy).toHaveBeenCalledWith(expect.any(Error));
-
-    expect(result).toMatchObject({
-      props: {
-        karma: {
-          cookies: '',
-          i18nBundle: i18nCache[FALLBACK_LANGUAGE],
-          language: FALLBACK_LANGUAGE,
-          session: null,
-        },
-      },
-    });
   });
 
   test('matches expected shape', async () => {

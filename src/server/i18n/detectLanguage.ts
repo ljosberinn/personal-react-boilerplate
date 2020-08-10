@@ -52,10 +52,7 @@ export const findLanguageByAcceptLanguageHeader = (
  * @see https://github.com/UnlyEd/universal-language-detector
  */
 export const detectLanguage = ({ headers }: IncomingMessage) => {
-  const cookies = headers.cookie;
-  const serverCookies = cookies ? parse(cookies) : {};
-
-  const fallbackLanguage = FALLBACK_LANGUAGE;
+  const serverCookies = headers.cookie ? parse(headers.cookie) : {};
   const languageByCookie = serverCookies[i18nCookieName];
 
   if (languageByCookie && ENABLED_LANGUAGES.includes(languageByCookie)) {
@@ -74,9 +71,9 @@ export const detectLanguage = ({ headers }: IncomingMessage) => {
         return parsedLanguage;
       }
     } catch {
-      return fallbackLanguage;
+      return FALLBACK_LANGUAGE;
     }
   }
 
-  return fallbackLanguage;
+  return FALLBACK_LANGUAGE;
 };

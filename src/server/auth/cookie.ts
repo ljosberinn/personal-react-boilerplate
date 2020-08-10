@@ -24,7 +24,15 @@ export const getSession = (req?: SSRCompatibleRequest): User | null => {
 
   const token = getSessionCookie(req);
 
-  return token ? JSON.parse(token) : null;
+  if (token) {
+    try {
+      return JSON.parse(token);
+    } catch {
+      return null;
+    }
+  }
+
+  return null;
 };
 
 interface NewCookieOptions {
