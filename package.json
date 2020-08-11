@@ -71,5 +71,8 @@
     "whatwg-fetch": "3.4.0",
     "yarn-deduplicate": "2.1.1"
   },
+  "resolutions": {
+    "webpack": "^5.0.0-beta.22"
+  },
   "license": "MIT"
 }
