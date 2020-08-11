@@ -35,6 +35,7 @@ const defaultProps: DocumentProps = {
   },
   canonicalBase: '/',
   dangerousAsPath: '/',
+  devOnlyCacheBusterQueryString: '',
   dynamicImports: [],
   files: [],
   headTags: [],
