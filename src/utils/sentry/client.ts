@@ -7,7 +7,7 @@ import { KarmaProps } from '../../client/Karma';
 import { IS_BROWSER } from '../../constants';
 import { isomorphicSentryInit, defaultOptions } from './shared';
 
-export { ErrorBoundary } from '@sentry/react';
+export * from '@sentry/react';
 
 const options: BrowserOptions = {
   ...defaultOptions,

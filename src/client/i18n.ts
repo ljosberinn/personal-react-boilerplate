@@ -104,25 +104,24 @@ export const initI18Next = ({
 
 /**
  * A generic function factory accepting the language to change to.
- * Loads missing bundles on demand.
  *
- * @param slug
+ * Loads missing bundles on demand.
  */
 export const makeChangeLanguageHandler = (
-  slug: string
+  language: string
 ): (() => Promise<void>) => {
   return async () => {
-    const hasBundle = !!i18n.getDataByLanguage(slug);
+    const hasBundle = !!i18n.getDataByLanguage(language);
 
     if (!hasBundle) {
-      const resources = await getI18N(slug);
+      const resources = await getI18N(language);
 
       Object.entries(resources).forEach(([namespace, bundle]) => {
-        i18n.addResourceBundle(slug, namespace, bundle);
+        i18n.addResourceBundle(language, namespace, bundle);
       });
     }
 
-    await i18n.changeLanguage(slug);
+    await i18n.changeLanguage(language);
   };
 };
 
