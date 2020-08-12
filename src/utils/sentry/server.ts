@@ -4,6 +4,8 @@ import { NextApiRequest } from 'next';
 
 import { isomorphicSentryInit, defaultOptions as options } from './shared';
 
+export * from '@sentry/node';
+
 isomorphicSentryInit({ configureScope, init, options });
 
 /**

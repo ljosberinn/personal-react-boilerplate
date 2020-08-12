@@ -1,4 +1,7 @@
+import * as sentryNode from '@sentry/node';
+import * as sentryReact from '@sentry/react';
 import { render } from '@testing-library/react';
+import { serialize } from 'cookie';
 import { GetServerSidePropsContext } from 'next';
 import React from 'react';
 
@@ -6,6 +9,8 @@ import {
   makeMockIncomingRequest,
   makeMockServerResponse,
 } from '../../testUtils/api';
+import { createMockScope } from '../../testUtils/sentry';
+import { FALLBACK_LANGUAGE, SESSION_COOKIE_NAME } from '../constants';
 import * as cookieUtils from '../server/auth/cookie';
 import { i18nCache } from '../server/i18n/cache';
 import * as detectLanguageUtils from '../server/i18n/detectLanguage';
@@ -17,6 +22,7 @@ import {
   getServerSideProps,
   withServerSideKarmaProps,
 } from './Karma';
+import { User } from './context/AuthContext/AuthContext';
 import * as i18n from './i18n';
 
 const defaultProps: KarmaProps = {
@@ -50,9 +56,17 @@ describe('<KarmaProvider />', () => {
       'attachComponentBreadcrumb'
     );
 
+    const addBreadcrumbSpy = jest.spyOn(sentryReact, 'addBreadcrumb');
+
     render(<KarmaProvider {...defaultProps}>next-karma</KarmaProvider>);
 
     expect(attachComponentBreadcrumbSpy).toHaveBeenCalledWith('KarmaProvider');
+    expect(addBreadcrumbSpy).toHaveBeenCalledWith(
+      expect.objectContaining({
+        level: expect.any(String),
+        message: expect.any(String),
+      })
+    );
   });
 });
 
@@ -62,8 +76,7 @@ const mockCtx: GetServerSidePropsContext = {
   res: makeMockServerResponse(),
 };
 
-const mockLanguage = 'en';
-const mockBundle = i18nCache.en;
+const mockBundle = i18nCache[FALLBACK_LANGUAGE];
 
 const setupSpies = () => {
   const getSessionSpy = jest
@@ -74,7 +87,7 @@ const setupSpies = () => {
     .mockResolvedValueOnce(mockBundle);
   const detectLanguageSpy = jest
     .spyOn(detectLanguageUtils, 'detectLanguage')
-    .mockImplementationOnce(() => mockLanguage);
+    .mockImplementationOnce(() => FALLBACK_LANGUAGE);
 
   const attachInitialContextSpy = jest.spyOn(
     sentryUtils,
@@ -86,19 +99,33 @@ const setupSpies = () => {
     'attachLambdaContext'
   );
 
+  const setContextSpy = jest.fn();
+  const setExtraSpy = jest.fn();
+
+  const configureScopeSpy = jest
+    .spyOn(sentryReact, 'configureScope')
+    .mockImplementationOnce((callback) =>
+      callback(
+        createMockScope({ setContext: setContextSpy, setExtra: setExtraSpy })
+      )
+    );
+
   return {
     attachInitialContextSpy,
     attachLambdaContextSpy,
+    configureScopeSpy,
     detectLanguageSpy,
     getI18NSpy,
     getSessionSpy,
+    setContextSpy,
+    setExtraSpy,
   };
 };
 
-const setup = async () => {
+const setup = async (ctx = mockCtx) => {
   const spies = setupSpies();
 
-  const result = await getServerSideProps(mockCtx);
+  const result = await getServerSideProps(ctx);
 
   return {
     result,
@@ -108,21 +135,68 @@ const setup = async () => {
 
 describe('getServerSideProps', () => {
   test('attaches initial context', async () => {
-    const { attachInitialContextSpy } = await setup();
+    const mockSession: User = { id: '', name: '' };
+
+    const headers = {
+      cookie: serialize(SESSION_COOKIE_NAME, JSON.stringify(mockSession)),
+    };
+
+    const mockCtx: GetServerSidePropsContext = {
+      query: {},
+      req: makeMockIncomingRequest({ headers }),
+      res: makeMockServerResponse(),
+    };
+
+    jest.spyOn(cookieUtils, 'getSession').mockImplementationOnce((_) => {
+      return mockSession;
+    });
+
+    const {
+      attachInitialContextSpy,
+      setContextSpy,
+      setExtraSpy,
+      configureScopeSpy,
+    } = await setup(mockCtx);
 
     expect(attachInitialContextSpy).toHaveBeenCalledWith(
       expect.objectContaining({
-        language: mockLanguage,
+        language: FALLBACK_LANGUAGE,
         req: mockCtx.req,
-        session: null,
+        session: mockSession,
       })
     );
+
+    expect(configureScopeSpy).toHaveBeenCalledTimes(1);
+
+    expect(setExtraSpy).toHaveBeenCalledWith('language', FALLBACK_LANGUAGE);
+
+    expect(setContextSpy).toHaveBeenCalledWith('headers', headers);
+    expect(setContextSpy).toHaveBeenCalledWith('session', mockSession);
   });
 
   test('attaches lambda context', async () => {
+    const setContextSpy = jest.fn();
+    const setTagSpy = jest.fn();
+
+    const configureScopeSpy = jest
+      .spyOn(sentryNode, 'configureScope')
+      .mockImplementationOnce((callback) =>
+        callback(
+          createMockScope({ setContext: setContextSpy, setTag: setTagSpy })
+        )
+      );
+
     const { attachLambdaContextSpy } = await setup();
 
     expect(attachLambdaContextSpy).toHaveBeenCalledWith(mockCtx.req);
+
+    expect(configureScopeSpy).toHaveBeenCalledTimes(1);
+
+    expect(setContextSpy).toHaveBeenCalledWith('headers', expect.any(Object));
+
+    expect(setTagSpy).toHaveBeenCalledWith('host', expect.any(String));
+    expect(setTagSpy).toHaveBeenCalledWith('url', expect.any(String));
+    expect(setTagSpy).toHaveBeenCalledWith('method', expect.any(String));
   });
 
   test('loads session', async () => {
@@ -140,7 +214,7 @@ describe('getServerSideProps', () => {
   test('loads i18n bundle', async () => {
     const { getI18NSpy } = await setup();
 
-    expect(getI18NSpy).toHaveBeenCalledWith(mockLanguage, mockCtx.req);
+    expect(getI18NSpy).toHaveBeenCalledWith(FALLBACK_LANGUAGE, mockCtx.req);
   });
 
   test('matches expected shape', async () => {
@@ -151,7 +225,7 @@ describe('getServerSideProps', () => {
         karma: expect.objectContaining({
           cookies: '',
           i18nBundle: mockBundle,
-          language: mockLanguage,
+          language: FALLBACK_LANGUAGE,
           session: null,
         }),
       },
@@ -210,7 +284,7 @@ describe('withServerSideKarmaProps', () => {
         karma: {
           cookies: '',
           i18nBundle: mockBundle,
-          language: mockLanguage,
+          language: FALLBACK_LANGUAGE,
           session: null,
         },
         ...mockProps,
