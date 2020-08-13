@@ -1,7 +1,6 @@
 import { renderHook, act } from '@testing-library/react-hooks';
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
-import React from 'react';
 
 import { waitFor } from '../../../../testUtils';
 import { mockConsoleMethods } from '../../../../testUtils/console';

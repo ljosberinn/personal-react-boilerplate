@@ -1,5 +1,4 @@
 import { useColorModeValue, Icon } from '@chakra-ui/core';
-import React from 'react';
 
 export function NextIcon({ size }: { size: string }) {
   const fill = useColorModeValue('black', 'white');

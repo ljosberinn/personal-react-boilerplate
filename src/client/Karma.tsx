@@ -2,7 +2,6 @@ import { ChakraProvider, cookieStorageManager } from '@chakra-ui/core';
 import theme from '@chakra-ui/theme';
 import { GetServerSidePropsContext } from 'next';
 import { ParsedUrlQuery } from 'querystring';
-import React from 'react';
 import { ReactNode } from 'react';
 import { I18nextProvider } from 'react-i18next';
 

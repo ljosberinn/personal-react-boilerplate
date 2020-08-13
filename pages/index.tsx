@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { WithKarma, KarmaProvider } from '../src/client/Karma';
 import { Index } from '../src/client/routes/Index';
 

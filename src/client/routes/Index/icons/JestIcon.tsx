@@ -1,5 +1,4 @@
 import { Icon } from '@chakra-ui/core';
-import React from 'react';
 
 export function JestIcon({ size }: { size: string }) {
   return (

@@ -1,5 +1,4 @@
 import { useColorModeValue, Icon } from '@chakra-ui/core';
-import React from 'react';
 
 export function PWAIcon({ size }: { size: string }) {
   const fill = useColorModeValue('#3D3D3D', 'white');

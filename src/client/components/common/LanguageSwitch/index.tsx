@@ -13,7 +13,6 @@ import {
   MenuTransition,
 } from '@chakra-ui/core';
 import { TFunction } from 'i18next';
-import React from 'react';
 import { FlagIcon, FlagIconCode } from 'react-flag-kit';
 import { useTranslation } from 'react-i18next';
 import { MdTranslate } from 'react-icons/md';

@@ -4,7 +4,6 @@ import {
 } from '@chakra-ui/core';
 import { LinkProps as NextLinkProps } from 'next/dist/client/link';
 import NextLink from 'next/link';
-import React from 'react';
 
 import { WithChildren } from '../../../Karma';
 

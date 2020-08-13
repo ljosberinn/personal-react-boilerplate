@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { render, waitFor, screen, fireEvent } from '../../../../../testUtils';
 
 import { ServiceWorker } from '.';

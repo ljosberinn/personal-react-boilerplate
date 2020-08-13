@@ -1,7 +1,7 @@
 import { Box, useToast, Flex } from '@chakra-ui/core';
 import { InfoIcon } from '@chakra-ui/icons';
 import { TFunction } from 'i18next';
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { IS_PROD } from '../../../../constants';

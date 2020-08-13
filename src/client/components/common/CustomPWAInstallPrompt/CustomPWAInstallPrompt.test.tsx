@@ -1,14 +1,8 @@
-import React from 'react';
-
 import { render, act, screen } from '../../../../../testUtils';
 
 import { CustomPWAInstallPrompt } from '.';
 
 describe('<CustomPWAInstallPrompt />', () => {
-  it('renders without crashing', () => {
-    render(<CustomPWAInstallPrompt />);
-  });
-
   it('renders no UI by default', () => {
     render(<CustomPWAInstallPrompt />);
 

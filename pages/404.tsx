@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { NOT_FOUND } from '../src/utils/statusCodes';
 import CustomError from './_error';
 

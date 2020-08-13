@@ -1,11 +1,13 @@
 import { captureException } from '@sentry/node';
 import NextDocument, { Html, Head, Main, NextScript } from 'next/document';
-import React from 'react';
 
 import { attachComponentBreadcrumb } from '../src/utils/sentry/client';
 
 /**
  * Send to Sentry all uncaught exceptions.
+ *
+ * Safe to include - will not lead to the frontend bundle importing a polyfill
+ * for node.process!
  *
  * If such error happens in this file, it will completely crash the server and
  * render "Internal Server Error" on the client.

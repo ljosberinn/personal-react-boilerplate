@@ -1,5 +1,3 @@
-import React from 'react';
-
 import {
   render,
   fireEvent,
@@ -11,10 +9,6 @@ import {
 import { ColorModeSwitch } from '.';
 
 describe('<ColorModeSwitch />', () => {
-  it('renders without crashing', () => {
-    render(<ColorModeSwitch />);
-  });
-
   it('passes a11y test', async () => {
     await testA11Y(<ColorModeSwitch />);
   });

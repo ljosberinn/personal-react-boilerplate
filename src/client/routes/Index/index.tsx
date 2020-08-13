@@ -22,7 +22,6 @@ import {
   Image,
   keyframes,
 } from '@chakra-ui/core';
-import React from 'react';
 import { FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa';
 import { FcSettings } from 'react-icons/fc';
 import { MdDehaze } from 'react-icons/md';

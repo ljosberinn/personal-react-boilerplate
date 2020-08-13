@@ -9,7 +9,7 @@ import {
   ModalBody,
   useDisclosure,
 } from '@chakra-ui/core';
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 /**
  * The BeforeInstallPromptEvent is fired at the Window.onbeforeinstallprompt handler

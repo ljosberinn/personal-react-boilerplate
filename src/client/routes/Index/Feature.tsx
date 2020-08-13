@@ -1,5 +1,5 @@
 import { Box, Heading, Text, useColorModeValue } from '@chakra-ui/core';
-import React, { ReactNode } from 'react';
+import { ReactNode } from 'react';
 
 import { WithChildren } from '../../Karma';
 import { ExternalLink } from '../../components/common/ExternalLink';

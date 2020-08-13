@@ -8,7 +8,7 @@ import {
 import { RunOptions } from 'axe-core';
 import { ConfigData } from 'html-validate/build/config';
 import { axe } from 'jest-axe';
-import React, { cloneElement, isValidElement, ReactElement } from 'react';
+import { cloneElement, isValidElement, ReactElement } from 'react';
 import { I18nextProvider, useTranslation } from 'react-i18next';
 
 import { AuthContextProvider } from '../src/client/context/AuthContext';

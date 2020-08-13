@@ -1,5 +1,4 @@
 import { chakra } from '@chakra-ui/core';
-import React from 'react';
 
 export function ChakraIcon({ size }: { size: string }) {
   return (

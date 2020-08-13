@@ -1,4 +1,3 @@
-import React from 'react';
 import { FaSun, FaMoon } from 'react-icons/fa';
 
 import {
@@ -12,10 +11,6 @@ import {
 import { ColorModeSwitchAlt } from '.';
 
 describe('<ColorModeSwitchAlt />', () => {
-  it('renders without crashing', () => {
-    render(<ColorModeSwitchAlt />);
-  });
-
   it('passes a11y test', async () => {
     await testA11Y(<ColorModeSwitchAlt />);
   });

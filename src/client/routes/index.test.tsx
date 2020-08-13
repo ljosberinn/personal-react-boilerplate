@@ -1,5 +1,3 @@
-import React from 'react';
-
 import Index, { IndexPageProps } from '../../../pages';
 import { render, act } from '../../../testUtils';
 

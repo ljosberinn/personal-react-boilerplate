@@ -3,7 +3,6 @@ import * as sentryReact from '@sentry/react';
 import { render } from '@testing-library/react';
 import { serialize } from 'cookie';
 import { GetServerSidePropsContext } from 'next';
-import React from 'react';
 
 import {
   makeMockIncomingRequest,

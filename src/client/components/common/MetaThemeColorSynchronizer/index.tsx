@@ -1,7 +1,6 @@
 import { useColorMode } from '@chakra-ui/core';
 import theme from '@chakra-ui/theme';
 import Head from 'next/head';
-import React from 'react';
 
 export function MetaThemeColorSynchronizer() {
   const isLightTheme = useColorMode().colorMode === 'light';

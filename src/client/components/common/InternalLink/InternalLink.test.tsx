@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { render, testA11Y, validateHtml } from '../../../../../testUtils';
 import { WithChildren } from '../../../Karma';
 

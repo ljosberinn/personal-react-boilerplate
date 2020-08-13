@@ -2,7 +2,6 @@ import { NextComponentType, NextPageContext } from 'next';
 import { NextWebVitalsMetric } from 'next/app';
 import Head from 'next/head';
 import { NextRouter } from 'next/router';
-import React from 'react';
 
 import {
   attachRoutingContext,

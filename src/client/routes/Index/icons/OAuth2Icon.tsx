@@ -1,5 +1,4 @@
 import { Icon } from '@chakra-ui/core';
-import React from 'react';
 
 export function OAuth2Icon({ size }: { size: string }) {
   return (

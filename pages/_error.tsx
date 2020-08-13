@@ -1,7 +1,6 @@
 import { captureException } from '@sentry/node';
 import { NextPageContext } from 'next';
 import NextErrorComponent from 'next/error';
-import React from 'react';
 
 import { INTERNAL_SERVER_ERROR, NOT_FOUND } from '../src/utils/statusCodes';
 

@@ -1,7 +1,7 @@
 import * as sentryReact from '@sentry/react';
 import { render } from '@testing-library/react';
 import { Router } from 'next/router';
-import React from 'react';
+
 import 'whatwg-fetch';
 
 import App, { AppRenderProps, reportWebVitals } from '../../../pages/_app';
