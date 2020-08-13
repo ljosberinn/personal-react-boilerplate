@@ -13,10 +13,6 @@ const defaultProps: ExternalLinkProps = {
 };
 
 describe('<ExternalLink />', () => {
-  it('renders without crashing given default props', () => {
-    render(<ExternalLink {...defaultProps} />);
-  });
-
   it('passes a11y test given default props', async () => {
     await testA11Y(<ExternalLink {...defaultProps} />);
   });

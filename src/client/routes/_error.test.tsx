@@ -13,10 +13,6 @@ const defaultProps: ErrorProps = {
 };
 
 describe('<Error />', () => {
-  it('renders without crashing given default props', () => {
-    render(<ErrorPage {...defaultProps} />);
-  });
-
   it('reports to Sentry given an error', () => {
     const captureExceptionSpy = jest.spyOn(Sentry, 'captureException');
 

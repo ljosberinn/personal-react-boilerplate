@@ -1,4 +1,4 @@
-import { render, testA11Y, validateHtml } from '../../../../../testUtils';
+import { testA11Y, validateHtml } from '../../../../../testUtils';
 import { WithChildren } from '../../../Karma';
 
 import { InternalLink, InternalLinkProps } from '.';
@@ -18,10 +18,6 @@ const defaultProps: InternalLinkProps = {
 };
 
 describe('<InternalLink />', () => {
-  it('renders without crashing given default props', () => {
-    render(<InternalLink {...defaultProps} />);
-  });
-
   it('passes a11y test given default props', async () => {
     await testA11Y(<InternalLink {...defaultProps} />);
   });

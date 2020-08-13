@@ -32,10 +32,6 @@ const defaultProps: KarmaProps = {
 };
 
 describe('<KarmaProvider />', () => {
-  it('renders without crashing given default props', () => {
-    render(<KarmaProvider {...defaultProps}>next-karma</KarmaProvider>);
-  });
-
   test('initializes i18next', () => {
     const initI18NSpy = jest.spyOn(i18n, 'initI18Next');
 

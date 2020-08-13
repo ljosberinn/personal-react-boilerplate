@@ -11,10 +11,6 @@ describe('<ServiceWorker />', () => {
     });
   });
 
-  it('renders without crashing', () => {
-    render(<ServiceWorker />);
-  });
-
   it('does not crash if a registration fails', async () => {
     const consoleErrorSpy = jest
       .spyOn(console, 'error')

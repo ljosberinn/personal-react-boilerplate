@@ -52,10 +52,6 @@ describe('<LanguageSwitch />', () => {
     restoreConsole();
   });
 
-  it('renders without crashing', () => {
-    render(<LanguageSwitch />);
-  });
-
   it('passes a11y test when closed', async () => {
     await testA11Y(<LanguageSwitch />);
   });
