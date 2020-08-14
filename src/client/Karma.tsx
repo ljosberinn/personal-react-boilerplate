@@ -12,8 +12,8 @@ import {
   attachInitialContext,
 } from '../utils/sentry/client';
 import { attachLambdaContext } from '../utils/sentry/server';
-import { MetaThemeColorSynchronizer } from './components/common/MetaThemeColorSynchronizer';
-import { ServiceWorker } from './components/common/ServiceWorker';
+import { MetaThemeColorSynchronizer } from './components/MetaThemeColorSynchronizer';
+import { ServiceWorker } from './components/ServiceWorker';
 import { AuthContextProvider } from './context/AuthContext';
 import { User } from './context/AuthContext/AuthContext';
 import { I18nextResourceLocale, initI18Next, getI18N } from './i18n';

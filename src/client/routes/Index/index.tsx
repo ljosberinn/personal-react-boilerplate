@@ -28,11 +28,8 @@ import { MdDehaze } from 'react-icons/md';
 
 import { ENABLED_PROVIDER } from '../../../constants';
 import { WithChildren } from '../../Karma';
-import { ColorModeSwitchAlt } from '../../components/common/ColorModeSwitchAlt';
-import {
-  ExternalLink,
-  ExternalLinkProps,
-} from '../../components/common/ExternalLink';
+import { ColorModeSwitchAlt } from '../../components/ColorModeSwitchAlt';
+import { ExternalLink, ExternalLinkProps } from '../../components/ExternalLink';
 import { Feature } from './Feature';
 import { ChakraIcon } from './icons/ChakraIcon';
 import { ESLintIcon } from './icons/ESLintIcon';
