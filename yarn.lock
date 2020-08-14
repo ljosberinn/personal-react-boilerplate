@@ -2415,10 +2415,10 @@
     "@sentry/types" "5.21.1"
     tslib "^1.9.3"
 
-"@sentry/webpack-plugin@1.12.0":
-  version "1.12.0"
-  resolved "https://registry.yarnpkg.com/@sentry/webpack-plugin/-/webpack-plugin-1.12.0.tgz#3a8c6f86d545a24a9def5b274dc3898aa881e828"
-  integrity sha512-I3W+G2XAPi53sE4eXgxEeGJLc8kYF6+3c1YF79AS8qKc6K4xmbXUVBCZrfrKBQPAZx5mpD1vHIk4+Og/CKejZA==
+"@sentry/webpack-plugin@1.12.1":
+  version "1.12.1"
+  resolved "https://registry.yarnpkg.com/@sentry/webpack-plugin/-/webpack-plugin-1.12.1.tgz#4c70c76f3faffccff1601695be742af80aeabed9"
+  integrity sha512-8XiUNcr+HbF/Cz2lkI71+42fPNIc/ZJdU+jVWAaspP4ZwjkYSs54E3I2+7wPaqEetfObAunsQxVeFARnYms/aw==
   dependencies:
     "@sentry/cli" "^1.55.0"
 
@@ -11040,10 +11040,10 @@ typescript-service@^2.0.0:
   dependencies:
     tslib "^1.9.3"
 
-typescript@4.1.0-dev.20200812:
-  version "4.1.0-dev.20200812"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.1.0-dev.20200812.tgz#4515774f081cdd70af30f8cfa71c62ab0f66ccd5"
-  integrity sha512-hU2oOFHE91MQvtYjvgbKPTOL5fP3/pn3o15dDCvHJ6dxCb3yF1PtjOQSrWWNeSuR98RkSzBUwwCn5FlcYFVvOw==
+typescript@4.1.0-dev.20200813:
+  version "4.1.0-dev.20200813"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.1.0-dev.20200813.tgz#062d27e1a2653a34c899c1a17dbcae2ec8731b60"
+  integrity sha512-P4X3A2rhq4WivVwKSwKNPqDCX/KfsSKuOykbEaWXiGT1c0fj/c14WCu4IOZ8USUp3rMhWfWySOYYi3Yzws8gGg==
 
 unicode-canonical-property-names-ecmascript@^1.0.4:
   version "1.0.4"
