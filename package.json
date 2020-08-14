@@ -51,7 +51,7 @@
     "babel-jest": "26.3.0",
     "dotenv": "8.2.0",
     "eslint": "7.6.0",
-    "eslint-config-galex": "0.9.6",
+    "eslint-config-galex": "0.9.7",
     "eslint-plugin-tsc": "1.2.0",
     "html-validate": "^3.0.0",
     "husky": "4.2.5",
