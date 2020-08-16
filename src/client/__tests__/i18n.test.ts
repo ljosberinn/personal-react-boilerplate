@@ -1,5 +1,5 @@
 /* eslint-disable jest/require-top-level-describe */
-import * as Sentry from '@sentry/node';
+import * as Sentry from '@sentry/minimal';
 import { waitFor } from '@testing-library/react';
 import i18next from 'i18next';
 import { rest } from 'msw';
