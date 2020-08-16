@@ -8,7 +8,7 @@ import { RequestInitMethod } from '../../utils/requestMethods';
  *
  * @param method
  */
-const makeAuthenticatedFetch = (method: RequestInitMethod) => (
+const createAuthenticatedFetch = (method: RequestInitMethod) => (
   endpoint: string,
   req: IncomingMessage,
   options: RequestInit = {}
@@ -34,16 +34,16 @@ const makeAuthenticatedFetch = (method: RequestInitMethod) => (
 };
 
 type AuthenticatedFetchMap = {
-  [K in RequestInitMethod]: ReturnType<typeof makeAuthenticatedFetch>;
+  [K in RequestInitMethod]: ReturnType<typeof createAuthenticatedFetch>;
 };
 
 export const authenticatedFetch: AuthenticatedFetchMap = {
-  delete: makeAuthenticatedFetch('delete'),
-  get: makeAuthenticatedFetch('get'),
-  head: makeAuthenticatedFetch('head'),
-  options: makeAuthenticatedFetch('options'),
-  patch: makeAuthenticatedFetch('patch'),
-  post: makeAuthenticatedFetch('post'),
-  put: makeAuthenticatedFetch('put'),
-  trace: makeAuthenticatedFetch('trace'),
+  delete: createAuthenticatedFetch('delete'),
+  get: createAuthenticatedFetch('get'),
+  head: createAuthenticatedFetch('head'),
+  options: createAuthenticatedFetch('options'),
+  patch: createAuthenticatedFetch('patch'),
+  post: createAuthenticatedFetch('post'),
+  put: createAuthenticatedFetch('put'),
+  trace: createAuthenticatedFetch('trace'),
 };

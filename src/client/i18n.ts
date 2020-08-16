@@ -107,7 +107,7 @@ export const initI18Next = ({
  *
  * Loads missing bundles on demand.
  */
-export const makeChangeLanguageHandler = (
+export const createLanguageChangeHandler = (
   language: string
 ): (() => Promise<void>) => {
   return async () => {

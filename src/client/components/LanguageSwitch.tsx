@@ -18,7 +18,7 @@ import { useTranslation } from 'react-i18next';
 import { MdTranslate } from 'react-icons/md';
 
 import { ENABLED_LANGUAGES } from '../../constants';
-import { makeChangeLanguageHandler } from '../i18n';
+import { createLanguageChangeHandler } from '../i18n';
 import { ExternalLink } from './ExternalLink';
 
 type FlapMap = { [key: string]: FlagIconCode };
@@ -91,7 +91,9 @@ function LanguageOption({ slug, isCurrentLanguage, t }: LanguageOptionProps) {
       value={slug}
       isDisabled={isCurrentLanguage}
       isChecked={isCurrentLanguage}
-      onClick={isCurrentLanguage ? undefined : makeChangeLanguageHandler(slug)}
+      onClick={
+        isCurrentLanguage ? undefined : createLanguageChangeHandler(slug)
+      }
     >
       <Box as="span" mr={2} display="inline-block">
         <FlagIcon aria-hidden code={flagMap[slug]} />

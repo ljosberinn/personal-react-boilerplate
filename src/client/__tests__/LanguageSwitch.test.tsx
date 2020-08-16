@@ -35,7 +35,7 @@ const setup = () => {
   return { button, container, currentLanguage, randomOtherLanguage };
 };
 
-const makeGetDataByLanguageSpy = (bool: boolean) =>
+const createGetDataByLanguageSpy = (bool: boolean) =>
   jest
     .spyOn(i18n, 'getDataByLanguage')
     .mockImplementation(() => (bool ? { translation: {} } : undefined));
@@ -89,7 +89,7 @@ describe('<LanguageSwitch />', () => {
   });
 
   it('changes the language on click', async () => {
-    makeGetDataByLanguageSpy(true);
+    createGetDataByLanguageSpy(true);
 
     const { button, currentLanguage, randomOtherLanguage } = setup();
 

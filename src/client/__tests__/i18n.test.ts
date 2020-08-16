@@ -6,13 +6,13 @@ import { rest } from 'msw';
 import { setupServer } from 'msw/node';
 
 import 'whatwg-fetch';
-import { makeMockIncomingRequest } from '../../../testUtils/api';
+import { createIncomingRequestMock } from '../../../testUtils/api';
 import { mockConsoleMethods } from '../../../testUtils/console';
 import { ENABLED_LANGUAGES, FALLBACK_LANGUAGE } from '../../constants';
 import { i18nCache } from '../../server/i18n/cache';
 import {
   getI18N,
-  makeChangeLanguageHandler,
+  createLanguageChangeHandler,
   i18nEndpoint,
   initI18Next,
   RTL_LANGUAGES,
@@ -127,7 +127,7 @@ describe('getI18N', () => {
 
       await getI18N(
         language,
-        makeMockIncomingRequest({
+        createIncomingRequestMock({
           headers: {
             host: mswEndpoint.replace('http://', ''),
           },
@@ -259,10 +259,10 @@ describe('getI18N', () => {
   });
 });
 
-describe('makeChangeLanguageHandler', () => {
+describe('createLanguageChangeHandler', () => {
   ENABLED_LANGUAGES.forEach((language) => {
     test(`always returns a function (language: ${language})`, () => {
-      expect(makeChangeLanguageHandler(language)).toBeInstanceOf(Function);
+      expect(createLanguageChangeHandler(language)).toBeInstanceOf(Function);
     });
 
     test('verifies bundle existence on i18n on language change', async () => {
@@ -280,7 +280,7 @@ describe('makeChangeLanguageHandler', () => {
         response: i18nCache[otherLanguage],
       });
 
-      await makeChangeLanguageHandler(otherLanguage)();
+      await createLanguageChangeHandler(otherLanguage)();
 
       await waitFor(() =>
         expect(getDataByLanguageSpy).toHaveBeenLastCalledWith(otherLanguage)
@@ -304,7 +304,7 @@ describe('makeChangeLanguageHandler', () => {
         response,
       });
 
-      await makeChangeLanguageHandler(otherLanguage)();
+      await createLanguageChangeHandler(otherLanguage)();
 
       await waitFor(() =>
         expect(mockAddResourceBundle).toHaveBeenCalledTimes(
@@ -325,7 +325,7 @@ describe('makeChangeLanguageHandler', () => {
           (lng) => lng !== language
         )!;
 
-        await makeChangeLanguageHandler(otherLanguage)();
+        await createLanguageChangeHandler(otherLanguage)();
 
         expect(getDataByLanguageSpy).toHaveBeenCalledWith(otherLanguage);
         expect(fetchSpy).not.toHaveBeenCalled();
@@ -342,7 +342,7 @@ describe('makeChangeLanguageHandler', () => {
           document.cookie.includes(`${i18nCookieName}=${otherLanguage}`)
         ).toBeFalsy();
 
-        await makeChangeLanguageHandler(otherLanguage)();
+        await createLanguageChangeHandler(otherLanguage)();
 
         await waitFor(() =>
           expect(

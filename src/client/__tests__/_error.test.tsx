@@ -4,7 +4,7 @@ import { NextPageContext } from 'next';
 import NextErrorComponent from 'next/error';
 
 import ErrorPage, { ErrorProps, getInitialProps } from '../../../pages/_error';
-import { makeMockServerResponse } from '../../../testUtils/api';
+import { createServerResponseMock } from '../../../testUtils/api';
 import { NOT_FOUND, INTERNAL_SERVER_ERROR } from '../../utils/statusCodes';
 
 const defaultProps: ErrorProps = {
@@ -59,7 +59,7 @@ describe('Error.getInitialProps()', () => {
       AppTree: () => null,
       pathname: '/',
       query: {},
-      res: makeMockServerResponse({ statusCode: NOT_FOUND }),
+      res: createServerResponseMock({ statusCode: NOT_FOUND }),
     };
 
     const captureExceptionSpy = jest.spyOn(Sentry, 'captureException');
@@ -79,7 +79,7 @@ describe('Error.getInitialProps()', () => {
       err: new Error('test'),
       pathname: '/',
       query: {},
-      res: makeMockServerResponse({ statusCode: INTERNAL_SERVER_ERROR }),
+      res: createServerResponseMock({ statusCode: INTERNAL_SERVER_ERROR }),
     };
 
     const captureExceptionSpy = jest.spyOn(Sentry, 'captureException');

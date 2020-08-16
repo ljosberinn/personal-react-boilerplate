@@ -5,8 +5,8 @@ import { serialize } from 'cookie';
 import { GetServerSidePropsContext } from 'next';
 
 import {
-  makeMockIncomingRequest,
-  makeMockServerResponse,
+  createIncomingRequestMock,
+  createServerResponseMock,
 } from '../../../testUtils/api';
 import { createMockScope } from '../../../testUtils/sentry';
 import { FALLBACK_LANGUAGE, SESSION_COOKIE_NAME } from '../../constants';
@@ -67,8 +67,8 @@ describe('<KarmaProvider />', () => {
 
 const mockCtx: GetServerSidePropsContext = {
   query: {},
-  req: makeMockIncomingRequest(),
-  res: makeMockServerResponse(),
+  req: createIncomingRequestMock(),
+  res: createServerResponseMock(),
 };
 
 const mockBundle = i18nCache[FALLBACK_LANGUAGE];
@@ -138,8 +138,8 @@ describe('getServerSideProps', () => {
 
     const mockCtx: GetServerSidePropsContext = {
       query: {},
-      req: makeMockIncomingRequest({ headers }),
-      res: makeMockServerResponse(),
+      req: createIncomingRequestMock({ headers }),
+      res: createServerResponseMock(),
     };
 
     jest.spyOn(cookieUtils, 'getSession').mockImplementationOnce((_) => {

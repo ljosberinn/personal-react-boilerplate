@@ -1,6 +1,6 @@
 import nodeFetch from 'node-fetch';
 
-import { makeMockIncomingRequest } from '../../../testUtils/api';
+import { createIncomingRequestMock } from '../../../testUtils/api';
 import { RequestInitMethod, RequestMethods } from '../../utils/requestMethods';
 import { authenticatedFetch } from '../utils/fetcher';
 
@@ -52,7 +52,7 @@ describe('authenticatedFetch', () => {
     test(`supports all request methods (method: ${method})`, () => {
       const { fetchSpy, fn } = setup(method);
 
-      fn('', makeMockIncomingRequest());
+      fn('', createIncomingRequestMock());
 
       expect(fetchSpy).toHaveBeenCalledWith(
         expect.any(String),
@@ -68,7 +68,7 @@ describe('authenticatedFetch', () => {
       test(`normalizes given url regardless of trailing slash (slash: ${bool}, method: ${method})`, () => {
         const { fetchSpy, fn } = setup(method);
 
-        fn(endpoint, makeMockIncomingRequest());
+        fn(endpoint, createIncomingRequestMock());
 
         const expectedUrl = testUrl + endpoint;
 
@@ -79,7 +79,7 @@ describe('authenticatedFetch', () => {
     test(`always sets JSON headers (method: ${method})`, () => {
       const { fetchSpy, fn } = setup(method);
 
-      fn('', makeMockIncomingRequest());
+      fn('', createIncomingRequestMock());
 
       expect(fetchSpy).toHaveBeenCalledWith(
         expect.any(String),
@@ -100,7 +100,7 @@ describe('authenticatedFetch', () => {
         'Content-Type': 'text/html',
       };
 
-      fn('', makeMockIncomingRequest(), {
+      fn('', createIncomingRequestMock(), {
         headers,
       });
 
@@ -117,7 +117,7 @@ describe('authenticatedFetch', () => {
 
       const cookie = 'hello=world;';
 
-      fn('', makeMockIncomingRequest({ headers: { cookie } }));
+      fn('', createIncomingRequestMock({ headers: { cookie } }));
 
       expect(fetchSpy).toHaveBeenCalledWith(
         expect.any(String),

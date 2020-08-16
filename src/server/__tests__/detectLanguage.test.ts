@@ -1,6 +1,6 @@
 import { serialize } from 'cookie';
 
-import { makeMockIncomingRequest } from '../../../testUtils/api';
+import { createIncomingRequestMock } from '../../../testUtils/api';
 import { i18nCookieName } from '../../client/i18n';
 import { FALLBACK_LANGUAGE } from '../../constants';
 import {
@@ -21,7 +21,7 @@ describe('detectLanguage', () => {
   test('given relevant cookies, uses i18nCookieName to extract', () => {
     const expectedLanguage = 'de';
 
-    const mockContext = makeMockIncomingRequest({
+    const mockContext = createIncomingRequestMock({
       headers: {
         cookie: serialize(i18nCookieName, expectedLanguage),
       },
@@ -33,7 +33,7 @@ describe('detectLanguage', () => {
   test('given relevant cookies with unsupported language, uses fallback', () => {
     const expectedLanguage = 'fr';
 
-    const mockContext = makeMockIncomingRequest({
+    const mockContext = createIncomingRequestMock({
       headers: {
         cookie: serialize(i18nCookieName, expectedLanguage),
       },
@@ -45,7 +45,7 @@ describe('detectLanguage', () => {
   test('given irrelevant cookies, uses accept-language header', () => {
     const expectedLanguage = 'de';
 
-    const mockContext = makeMockIncomingRequest({
+    const mockContext = createIncomingRequestMock({
       headers: {
         'accept-language': expectedLanguage,
       },
@@ -57,7 +57,7 @@ describe('detectLanguage', () => {
   test('given irrelevant cookies and accept-language header, uses fallback', () => {
     const expectedLanguage = 'fr';
 
-    const mockContext = makeMockIncomingRequest({
+    const mockContext = createIncomingRequestMock({
       headers: {
         'accept-language': expectedLanguage,
       },
@@ -67,7 +67,7 @@ describe('detectLanguage', () => {
   });
 
   test('given irreelvant cookies and no header, uses fallback', () => {
-    const mockContext = makeMockIncomingRequest();
+    const mockContext = createIncomingRequestMock();
 
     expect(detectLanguage(mockContext)).toBe(FALLBACK_LANGUAGE);
   });

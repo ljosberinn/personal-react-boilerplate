@@ -3,8 +3,8 @@ import { GetServerSidePropsContext } from 'next';
 import { ParsedUrlQuery } from 'querystring';
 
 import {
-  makeMockIncomingRequest,
-  makeMockServerResponse,
+  createIncomingRequestMock,
+  createServerResponseMock,
 } from '../../../testUtils/api';
 import { SESSION_COOKIE_NAME } from '../../constants';
 import * as cookieUtils from '../../server/auth/cookie';
@@ -22,26 +22,26 @@ const mockGetServerSideProps = jest
     };
   });
 
-interface MakeMockContextArgs {
+interface createContextMockArgs {
   query?: ParsedUrlQuery;
   req?: Partial<IncomingMessage>;
   res?: Partial<ServerResponse>;
 }
 
-const makeMockContext = ({
+const createContextMock = ({
   query = {},
   req = {},
   res = {},
-}: MakeMockContextArgs = {}): GetServerSidePropsContext<ParsedUrlQuery> => ({
+}: createContextMockArgs = {}): GetServerSidePropsContext<ParsedUrlQuery> => ({
   query: { ...query },
-  req: makeMockIncomingRequest(req),
-  res: makeMockServerResponse(res),
+  req: createIncomingRequestMock(req),
+  res: createServerResponseMock(res),
 });
 
 describe('withSession()', () => {
   test('calls getSession when no session is present', async () => {
     const getSessionSpy = jest.spyOn(cookieUtils, 'getSession');
-    const mockContext = makeMockContext();
+    const mockContext = createContextMock();
 
     const augmentedHandler = withSession(mockGetServerSideProps);
     const response = await augmentedHandler(mockContext);
@@ -54,7 +54,7 @@ describe('withSession()', () => {
   });
 
   test('given no session, bails with a redirect header & status', async () => {
-    const mockContext = makeMockContext();
+    const mockContext = createContextMock();
 
     const augmentedHandler = withSession(mockGetServerSideProps);
     await augmentedHandler(mockContext);
@@ -66,7 +66,7 @@ describe('withSession()', () => {
   });
 
   test('given no session, bails with given header & status', async () => {
-    const mockContext = makeMockContext();
+    const mockContext = createContextMock();
 
     const augmentedHandler = withSession(mockGetServerSideProps, {
       headers: {},
@@ -81,7 +81,7 @@ describe('withSession()', () => {
     const getSessionSpy = jest.spyOn(cookieUtils, 'getSession');
     const fakeCookie = await cookieUtils.encryptSession({});
 
-    const mockContext = makeMockContext({
+    const mockContext = createContextMock({
       req: {
         headers: {
           cookie: [SESSION_COOKIE_NAME, fakeCookie].join('='),

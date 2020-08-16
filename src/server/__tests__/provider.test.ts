@@ -19,7 +19,7 @@ const redirect = 'manual';
 
 const code = 'code';
 
-const makeMockOauthResponse = () => ({
+const createOAuthResponseMock = () => ({
   access_token: 'access_token',
   expires_in: Date.now() + 1000,
   refresh_token: 'refresh_token',
@@ -149,7 +149,7 @@ describe('api/provider', () => {
 
         searchParams.append('code', code);
 
-        const oauthResponse = makeMockOauthResponse();
+        const oauthResponse = createOAuthResponseMock();
 
         jest
           .spyOn(oauthTools, 'getOAuthData')
@@ -178,7 +178,7 @@ describe('api/provider', () => {
 
         searchParams.append('code', code);
 
-        const oauthResponse = makeMockOauthResponse();
+        const oauthResponse = createOAuthResponseMock();
 
         const fakeProfile = {
           user: 'ljosberinn',
@@ -210,7 +210,7 @@ describe('api/provider', () => {
 
         searchParams.append('code', code);
 
-        const oauthResponse = makeMockOauthResponse();
+        const oauthResponse = createOAuthResponseMock();
 
         const fakeProfile = {
           user: 'ljosberinn',
@@ -251,7 +251,7 @@ describe('api/provider', () => {
 
         searchParams.append('code', code);
 
-        const oauthResponse = makeMockOauthResponse();
+        const oauthResponse = createOAuthResponseMock();
 
         const fakeProfile = {
           user: 'ljosberinn',

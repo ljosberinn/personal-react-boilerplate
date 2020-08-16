@@ -1,7 +1,7 @@
 import { IncomingMessage, ServerResponse } from 'http';
 import { Socket } from 'net';
 
-export const makeMockIncomingRequest = (
+export const createIncomingRequestMock = (
   req?: Partial<IncomingMessage>
 ): IncomingMessage => {
   const socket = new Socket();
@@ -61,7 +61,7 @@ export const makeMockIncomingRequest = (
   };
 };
 
-export const makeMockServerResponse = (
+export const createServerResponseMock = (
   res?: Partial<ServerResponse>
 ): ServerResponse => {
   const socket = new Socket();
