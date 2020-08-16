@@ -19,14 +19,16 @@ const makeAuthenticatedFetch = (method: RequestInitMethod) => (
     endpoint.startsWith('/') ? endpoint.slice(1) : endpoint,
   ].join('/');
 
+  const headers: RequestInit['headers'] = {
+    Accept: 'application/json',
+    'Content-Type': 'application/json',
+    ...(req.headers.cookie ? { cookie: req.headers.cookie } : {}),
+    ...options.headers,
+  };
+
   return fetch(url, {
     ...options,
-    headers: {
-      Accept: 'application/json',
-      'Content-type': 'application/json',
-      ...options.headers,
-      cookie: req.headers.cookie ?? '',
-    },
+    headers,
     method,
   });
 };
