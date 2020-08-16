@@ -57,27 +57,13 @@ export function ServiceWorker() {
         .register(sw)
         // eslint-disable-next-line promise/prefer-await-to-then
         .then((registration) => {
-          registration.addEventListener('updatefound', () => {
-            const installingWorker = registration.installing;
-
-            if (!installingWorker) {
-              return;
-            }
-
-            installingWorker.addEventListener('statechange', () => {
-              if (
-                installingWorker.state !== 'installed' ||
-                !navigator.serviceWorker.controller
-              ) {
-                return;
-              }
-
-              toast({
-                // eslint-disable-next-line react/display-name
-                render: () => <RefreshToast t={t} />,
-              });
-            });
+          const onUpdateFound = createOnUpdateFoundListener({
+            registration,
+            t,
+            toast,
           });
+
+          registration.addEventListener('updatefound', onUpdateFound);
         })
         .catch((error) => {
           if (!IS_PROD && error instanceof TypeError) {
@@ -96,3 +82,57 @@ export function ServiceWorker() {
 
   return null;
 }
+
+interface CreateOnStateChangeListenerParams {
+  toast: ReturnType<typeof useToast>;
+  t: TFunction;
+  installingWorker: ServiceWorker;
+}
+
+const createOnStateChangeListener = ({
+  toast,
+  t,
+  installingWorker,
+}: CreateOnStateChangeListenerParams) => {
+  return () => {
+    if (
+      installingWorker.state !== 'installed' ||
+      !navigator.serviceWorker.controller
+    ) {
+      return;
+    }
+
+    toast({
+      // eslint-disable-next-line react/display-name
+      render: () => <RefreshToast t={t} />,
+    });
+  };
+};
+
+interface CreateOnUpdateFoundListenerParams {
+  toast: ReturnType<typeof useToast>;
+  registration: ServiceWorkerRegistration;
+  t: TFunction;
+}
+
+const createOnUpdateFoundListener = ({
+  toast,
+  registration,
+  t,
+}: CreateOnUpdateFoundListenerParams) => {
+  return () => {
+    const installingWorker = registration.installing;
+
+    if (!installingWorker) {
+      return;
+    }
+
+    const onStateChange = createOnStateChangeListener({
+      installingWorker,
+      t,
+      toast,
+    });
+
+    installingWorker.addEventListener('statechange', onStateChange);
+  };
+};

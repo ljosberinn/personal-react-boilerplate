@@ -15,6 +15,8 @@ import { endpoints } from '../context/AuthContext';
 import { Provider } from '../context/AuthContext/AuthContext';
 import { useAuth } from '../hooks/useAuth';
 
+const password = 'next-karma!';
+
 describe('hooks/useAuth', () => {
   const server = setupServer();
 
@@ -32,10 +34,6 @@ describe('hooks/useAuth', () => {
   afterAll(() => {
     server.close();
     window.location = realLocation;
-  });
-
-  test('executes without crashing', () => {
-    renderHook(useAuth);
   });
 
   test('defaults to null given no user', () => {
@@ -96,7 +94,7 @@ describe('hooks/useAuth', () => {
     const fetchSpy = jest.spyOn(window, 'fetch');
 
     const user = { username: 'ljosberinn' };
-    const userWithPassword = { ...user, password: 'next-karma!' };
+    const userWithPassword = { ...user, password };
     const { url, method } = endpoints.register;
 
     server.use(rest.post(url, (_req, res, ctx) => res(ctx.json(user))));
@@ -129,7 +127,7 @@ describe('hooks/useAuth', () => {
     const restoreConsole = mockConsoleMethods('error');
 
     const user = { username: 'ljosberinn' };
-    const userWithPassword = { ...user, password: 'next-karma!' };
+    const userWithPassword = { ...user, password };
     const { url, method } = endpoints.register;
 
     server.use(
@@ -165,7 +163,7 @@ describe('hooks/useAuth', () => {
     const fetchSpy = jest.spyOn(window, 'fetch');
 
     const user = { username: 'ljosberinn' };
-    const userWithPassword = { ...user, password: 'next-karma!' };
+    const userWithPassword = { ...user, password };
 
     const { url, method } = endpoints.register;
 
@@ -249,7 +247,7 @@ describe('hooks/useAuth', () => {
     const fetchSpy = jest.spyOn(window, 'fetch');
 
     const user = { username: 'ljosberinn' };
-    const userWithPassword = { ...user, password: 'next-karma!' };
+    const userWithPassword = { ...user, password };
 
     const { url, method } = endpoints.login;
 
@@ -283,7 +281,7 @@ describe('hooks/useAuth', () => {
     const restoreConsole = mockConsoleMethods('error');
 
     const user = { username: 'ljosberinn' };
-    const userWithPassword = { ...user, password: 'next-karma!' };
+    const userWithPassword = { ...user, password };
 
     const { url, method } = endpoints.login;
 
@@ -320,7 +318,7 @@ describe('hooks/useAuth', () => {
     const fetchSpy = jest.spyOn(window, 'fetch');
 
     const user = { username: 'ljosberinn' };
-    const userWithPassword = { ...user, password: 'next-karma!' };
+    const userWithPassword = { ...user, password };
 
     const { url, method } = endpoints.login;
 

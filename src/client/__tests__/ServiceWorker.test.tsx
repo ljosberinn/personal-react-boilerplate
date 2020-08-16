@@ -89,13 +89,6 @@ describe('<ServiceWorker />', () => {
 
     await waitFor(() =>
       expect(addEventListenerSpy).toHaveBeenCalledWith(
-        'updatefound',
-        expect.any(Function)
-      )
-    );
-
-    await waitFor(() =>
-      expect(addEventListenerSpy).toHaveBeenCalledWith(
         'statechange',
         expect.any(Function)
       )
