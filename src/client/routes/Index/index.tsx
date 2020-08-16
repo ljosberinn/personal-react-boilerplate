@@ -245,7 +245,7 @@ function FadedText({ children }: WithChildren) {
   const color = useColorModeValue('blackAlpha.700', 'whiteAlpha.700');
 
   return (
-    <Text color={color} fontSize="xl" mt="6">
+    <Text color={color} fontSize="xl" mt="6" px={2}>
       {children}
     </Text>
   );
@@ -253,23 +253,22 @@ function FadedText({ children }: WithChildren) {
 
 function Hero() {
   return (
-    <Box as="section" pt={40} pb={16} maxW="xl" mx="auto" textAlign="center">
-      <KarmaIcon size="16rem" />
-
-      <Heading as="h1" mt={4} mb={8}>
+    <Box as="section" pt={40} pb={24} maxW="xl" mx="auto" textAlign="center">
+      <KarmaIcon size="24rem" />
+      <Heading as="h1" mt={8} mb={16}>
         next-karma
       </Heading>
+
+      <Text fontStyle="italic">_still wip_</Text>
 
       <FadedText>
         A slighly opinionated batteries-included Next.js template
       </FadedText>
-
       <FadedText>
         supporting Authentication, Error Handling & Internationalization and
         more out of the box.
       </FadedText>
-
-      <Box mt="6">
+      <Box mt={12}>
         <Button
           as={ExternalLink}
           omitIcon
@@ -311,8 +310,8 @@ const spin = keyframes`
 
 function StackOverview() {
   return (
-    <Box px={12} as="article">
-      <Heading as="h2" id="features" mb={12} textAlign="center">
+    <Box p={16} as="article">
+      <Heading as="h2" id="features" mb={16} textAlign="center">
         Features
       </Heading>
 
@@ -322,6 +321,9 @@ function StackOverview() {
           sm: 'repeat(1, 1fr)',
         }}
         gap={10}
+        maxWidth="86rem"
+        ml="auto"
+        mr="auto"
       >
         <Feature
           icon={<NextIcon size={iconSize} />}
@@ -565,10 +567,20 @@ export function Index() {
       <Header />
       <Box as="main" maxWidth="86rem" ml="auto" mr="auto">
         <Hero />
-        <Divider my={16} role={undefined} aria-orientation={undefined} />
-        <StackOverview />
       </Box>
-      <Divider my={16} role={undefined} aria-orientation={undefined} />
+      <Divider
+        role={undefined}
+        aria-orientation={undefined}
+        boxSizing="border-box"
+        border="1px solid #d41143"
+      />
+      <StackOverview />
+      <Divider
+        role={undefined}
+        aria-orientation={undefined}
+        boxSizing="border-box"
+        border="1px solid #d41143"
+      />
       <Footer />
     </>
   );
