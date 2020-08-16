@@ -1,6 +1,6 @@
 import {
   render,
-  fireEvent,
+  userEvent,
   screen,
   testA11Y,
   validateHtml,
@@ -26,7 +26,7 @@ describe('<ColorModeSwitch />', () => {
     const sunClassListBefore = sun.classList.toString();
     const moonClassListBefore = moon.classList.toString();
 
-    fireEvent.click(input);
+    userEvent.click(input);
 
     expect(sun.classList.toString()).not.toBe(sunClassListBefore);
     expect(moon.classList.toString()).not.toBe(moonClassListBefore);
@@ -42,7 +42,7 @@ describe('<ColorModeSwitch />', () => {
       const sunClassListBefore = sun.classList.toString();
       const moonClassListBefore = moon.classList.toString();
 
-      fireEvent.click(icon === 'sun' ? sun : moon);
+      userEvent.click(icon === 'sun' ? sun : moon);
 
       expect(sun.classList.toString()).not.toBe(sunClassListBefore);
       expect(moon.classList.toString()).not.toBe(moonClassListBefore);

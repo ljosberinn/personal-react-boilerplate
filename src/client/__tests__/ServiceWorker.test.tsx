@@ -1,4 +1,4 @@
-import { render, waitFor, screen, fireEvent } from '../../../testUtils';
+import { render, waitFor, screen, userEvent } from '../../../testUtils';
 import { ServiceWorker } from '../components/ServiceWorker';
 
 describe('<ServiceWorker />', () => {
@@ -159,7 +159,7 @@ describe('<ServiceWorker />', () => {
 
     const toast = await screen.findByRole('alert');
 
-    fireEvent.click(toast);
+    userEvent.click(toast);
 
     // window.location.reload can't be spied on
     expect(

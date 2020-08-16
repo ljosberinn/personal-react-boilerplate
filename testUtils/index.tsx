@@ -23,6 +23,7 @@ import 'html-validate/jest';
 import 'whatwg-fetch';
 
 export * from '@testing-library/react';
+export { default as userEvent } from '@testing-library/user-event';
 
 type UI = Parameters<typeof rtlRender>[0];
 type Namespace = Parameters<typeof useTranslation>[0];
@@ -196,7 +197,7 @@ type TestA11YOptions = TestOptions & { axeOptions?: RunOptions };
  * it('passes a11y test when open', async () => {
  *  const { container } = render(<MyComponent />, options);
  *
- *  fireEvent.click(screen.getByRole('button'));
+ *  userEvent.click(screen.getByRole('button'));
  *
  *  await testA11Y(container, options);
  * });
@@ -311,7 +312,7 @@ type ValidateHtmlOptions = TestOptions & { htmlValidate?: HTMLValidateOptions };
  * it('contains valid html when opened', () => {
  *  const { container } = render(<MyComponent />, options);
  *
- *  fireEvent.click(screen.getByRole('button'));
+ *  userEvent.click(screen.getByRole('button'));
  *
  *  validateHtml(container, options);
  * })

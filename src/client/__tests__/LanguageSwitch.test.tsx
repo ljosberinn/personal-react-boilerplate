@@ -2,7 +2,7 @@ import i18n from 'i18next';
 
 import {
   render,
-  fireEvent,
+  userEvent,
   waitFor,
   screen,
   testA11Y,
@@ -19,7 +19,7 @@ const setup = () => {
   const button = screen.getByRole('button');
 
   // actually open the menu as other elements are not rendered before
-  fireEvent.click(button);
+  userEvent.click(button);
 
   const currentLanguage = ENABLED_LANGUAGES.find(
     (slug) => i18n.language === slug
@@ -107,13 +107,13 @@ describe('<LanguageSwitch />', () => {
 
     expect(otherLanguageElement).not.toBeChecked();
 
-    fireEvent.click(otherLanguageElement);
+    userEvent.click(otherLanguageElement);
 
     // changing language is async
     await waitFor(() => expect(i18n.language).toBe(randomOtherLanguage));
 
     // reopen
-    fireEvent.click(button);
+    userEvent.click(button);
 
     expect(
       // i18n.de.i18n.en

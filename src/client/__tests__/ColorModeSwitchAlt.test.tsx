@@ -1,7 +1,7 @@
 import { FaSun, FaMoon } from 'react-icons/fa';
 
 import {
-  fireEvent,
+  userEvent,
   render,
   testA11Y,
   validateHtml,
@@ -43,7 +43,7 @@ describe('<ColorModeSwitchAlt />', () => {
     const isInitiallyLight =
       button.querySelector('path')!.outerHTML === sunPath;
 
-    fireEvent.click(button);
+    userEvent.click(button);
 
     const postClickPath = button.querySelector('path')!.outerHTML;
 
