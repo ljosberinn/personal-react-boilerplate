@@ -41,7 +41,9 @@ describe('<App />', () => {
     const setContextSpy = jest.fn();
     const configureScopeSpy = jest
       .spyOn(sentryReact, 'configureScope')
+      // eslint-disable-next-line promise/prefer-await-to-callbacks
       .mockImplementationOnce((callback) =>
+        // eslint-disable-next-line promise/prefer-await-to-callbacks
         callback(createMockScope({ setContext: setContextSpy }))
       );
 
@@ -78,7 +80,9 @@ describe('reportWebVitals', () => {
     const setContextSpy = jest.fn();
     const configureScopeSpy = jest
       .spyOn(sentryReact, 'configureScope')
+      // eslint-disable-next-line promise/prefer-await-to-callbacks
       .mockImplementationOnce((callback) =>
+        // eslint-disable-next-line promise/prefer-await-to-callbacks
         callback(createMockScope({ setContext: setContextSpy }))
       );
 

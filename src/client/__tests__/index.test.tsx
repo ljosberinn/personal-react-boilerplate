@@ -18,6 +18,7 @@ describe('<Index />', () => {
    */
   it('renders without crashing', async () => {
     await act(async () => {
+      // eslint-disable-next-line @typescript-eslint/await-thenable
       await render(<Index {...defaultProps}>hello world</Index>);
     });
   });

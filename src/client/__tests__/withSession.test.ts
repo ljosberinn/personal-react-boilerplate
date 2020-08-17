@@ -79,7 +79,7 @@ describe('withSession()', () => {
 
   test('calls getSession when a session is present', async () => {
     const getSessionSpy = jest.spyOn(cookieUtils, 'getSession');
-    const fakeCookie = await cookieUtils.encryptSession({});
+    const fakeCookie = cookieUtils.encryptSession({});
 
     const mockContext = createContextMock({
       req: {

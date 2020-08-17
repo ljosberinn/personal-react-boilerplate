@@ -56,7 +56,7 @@ const useExternalProvider: RequestHandler = async (req, res, next) => {
       oauthResponse
     );
 
-    const token = await encryptSession(profileJson);
+    const token = encryptSession(profileJson);
     setSessionCookie(token, res);
 
     res.status(FOUND_MOVED_TEMPORARILY).setHeader('Location', origin);

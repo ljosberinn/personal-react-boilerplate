@@ -40,7 +40,7 @@ const verify = ({ username, password }: VerifyArg): object | null => {
   return response;
 };
 
-const useLogin: RequestHandler = async (
+const useLogin: RequestHandler = (
   { query: { authRouter = [] }, body },
   res,
   next
@@ -59,7 +59,7 @@ const useLogin: RequestHandler = async (
         return res.status(UNAUTHORIZED).end();
       }
 
-      const token = await encryptSession(user);
+      const token = encryptSession(user);
 
       setSessionCookie(token, res);
 
