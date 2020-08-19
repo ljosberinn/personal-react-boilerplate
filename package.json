@@ -23,7 +23,7 @@
     "@sentry/react": "5.21.1",
     "@sentry/types": "5.21.1",
     "cookie": "0.4.1",
-    "i18next": "19.6.3",
+    "i18next": "19.7.0",
     "next": "9.5.2",
     "next-absolute-url": "1.2.2",
     "next-connect": "0.8.1",
@@ -31,8 +31,8 @@
     "react-dom": "17.0.0-rc.0",
     "react-flag-kit": "0.3.1",
     "react-i18next": "11.7.0",
-    "react-icons": "3.10.0",
-    "web-vitals": "^0.2.4"
+    "react-icons": "3.11.0",
+    "web-vitals": "0.2.4"
   },
   "devDependencies": {
     "@commitlint/cli": "9.1.2",
@@ -56,7 +56,7 @@
     "eslint": "7.7.0",
     "eslint-config-galex": "0.9.7",
     "eslint-plugin-tsc": "1.2.0",
-    "html-validate": "^3.0.0",
+    "html-validate": "3.0.0",
     "husky": "4.2.5",
     "identity-obj-proxy": "3.0.0",
     "jest": "26.4.0",
@@ -70,7 +70,7 @@
     "prettier": "2.0.5",
     "react-test-renderer": "17.0.0-rc.0",
     "test-listen": "1.1.0",
-    "typescript": "4.1.0-dev.20200818",
+    "typescript": "4.1.0-dev.20200819",
     "whatwg-fetch": "3.4.0",
     "yarn-deduplicate": "2.1.1"
   },
