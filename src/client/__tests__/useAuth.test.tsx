@@ -10,8 +10,7 @@ import {
   UNPROCESSABLE_ENTITY,
   INTERNAL_SERVER_ERROR,
 } from '../../utils/statusCodes';
-import { AuthContextProvider } from '../context/AuthContext';
-import { endpoints } from '../context/AuthContext';
+import { AuthContextProvider, endpoints } from '../context/AuthContext';
 import { Provider } from '../context/AuthContext/AuthContext';
 import { useAuth } from '../hooks/useAuth';
 

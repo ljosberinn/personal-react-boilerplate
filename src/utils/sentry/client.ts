@@ -1,5 +1,10 @@
-import { addBreadcrumb, BrowserOptions, Severity } from '@sentry/react';
-import { init, configureScope } from '@sentry/react';
+import {
+  addBreadcrumb,
+  BrowserOptions,
+  Severity,
+  init,
+  configureScope,
+} from '@sentry/react';
 import { IncomingMessage } from 'http';
 import { NextRouter } from 'next/router';
 

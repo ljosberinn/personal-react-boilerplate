@@ -1,7 +1,6 @@
 import {
   Box,
   Grid,
-  Tooltip,
   Code,
   Flex,
   HStack,
@@ -26,22 +25,23 @@ import { FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa';
 import { FcSettings } from 'react-icons/fc';
 import { MdDehaze } from 'react-icons/md';
 
-import { ENABLED_PROVIDER } from '../../../constants';
 import { WithChildren } from '../../Karma';
 import { ColorModeSwitchAlt } from '../../components/ColorModeSwitchAlt';
 import { ExternalLink, ExternalLinkProps } from '../../components/ExternalLink';
 import { Feature } from './Feature';
-import { ChakraIcon } from './icons/ChakraIcon';
-import { ESLintIcon } from './icons/ESLintIcon';
-import { GithubActionsLogo } from './icons/GithubActionsIcon';
-import { I18NextIcon } from './icons/I18NextIcon';
-import { JestIcon } from './icons/JestIcon';
-import { KarmaIcon } from './icons/KarmaIcon';
-import { NextIcon } from './icons/NextIcon';
-import { OAuth2Icon } from './icons/OAuth2Icon';
-import { PWAIcon } from './icons/PWAIcon';
-import { SentryIcon } from './icons/SentryIcon';
-import { TypeScriptIcon } from './icons/TypeScriptIcon';
+import {
+  ChakraIcon,
+  ESLintIcon,
+  GithubActionsLogo,
+  I18NextIcon,
+  JestIcon,
+  KarmaIcon,
+  NextIcon,
+  OAuth2Icon,
+  TypeScriptIcon,
+  PWAIcon,
+  SentryIcon,
+} from './icons';
 
 const gitUrl = '//github.com/ljosberinn/personal-react-boilerplate';
 
@@ -191,7 +191,7 @@ function Header() {
     <Box
       as="header"
       borderBottomWidth="1px"
-      height="4rem"
+      height="4em"
       position="fixed"
       width="full"
       bg={bg}
@@ -201,13 +201,13 @@ function Header() {
         boxSize="100%"
         align="center"
         justify="space-between"
-        maxWidth="72rem"
+        maxWidth="72em"
         ml="auto"
         mr="auto"
         p="3"
       >
         <Flex align="center">
-          <KarmaIcon size="3rem" />{' '}
+          <KarmaIcon size="3em" />{' '}
           <Text fontWeight="500" pl="2">
             next-karma
           </Text>
@@ -254,7 +254,7 @@ function FadedText({ children }: WithChildren) {
 function Hero() {
   return (
     <Box as="section" pt={40} pb={24} maxW="xl" mx="auto" textAlign="center">
-      <KarmaIcon size="24rem" />
+      <KarmaIcon height="24em" width="24em" />
       <Heading as="h1" mt={8} mb={16}>
         next-karma
       </Heading>
@@ -301,7 +301,7 @@ const title = (
   </Text>
 );
 
-const iconSize = '3rem';
+const iconSize = '3em';
 
 const spin = keyframes`
   from { transform: rotate(0deg); }
@@ -321,7 +321,7 @@ function StackOverview() {
           sm: 'repeat(1, 1fr)',
         }}
         gap={10}
-        maxWidth="86rem"
+        maxWidth="86em"
         ml="auto"
         mr="auto"
       >
@@ -335,7 +335,7 @@ function StackOverview() {
         </Feature>
 
         <Feature
-          icon={<TypeScriptIcon size={iconSize} />}
+          icon={<TypeScriptIcon height={iconSize} width={iconSize} />}
           title="TypeScript"
           href="//typescriptlang.org"
         >
@@ -344,7 +344,7 @@ function StackOverview() {
         </Feature>
 
         <Feature
-          icon={<ChakraIcon size={iconSize} />}
+          icon={<ChakraIcon height={iconSize} width="auto" />}
           title="Chakra"
           href="//chakra-ui.com/"
         >
@@ -354,7 +354,7 @@ function StackOverview() {
         </Feature>
 
         <Feature
-          icon={<I18NextIcon size={iconSize} />}
+          icon={<I18NextIcon height={iconSize} width={iconSize} />}
           title="react-i18next"
           href="//react.i18next.com/"
         >
@@ -367,16 +367,13 @@ function StackOverview() {
         </Feature>
 
         <Feature
-          icon={<OAuth2Icon size={iconSize} />}
+          icon={<OAuth2Icon height={iconSize} width={iconSize} />}
           title="OAuth2"
           href="//oauth.net/2/"
         >
-          Support for{' '}
-          <Tooltip label={ENABLED_PROVIDER.join(', ')}>
-            4 external providers
-          </Tooltip>{' '}
-          is included out of the box as well as means to implement homegrown
-          authentication, all based on httpOnly cookies.
+          Support for 4 external providers is included out of the box as well as
+          means to implement homegrown authentication, all based on httpOnly
+          cookies.
         </Feature>
 
         <Feature
@@ -392,7 +389,7 @@ function StackOverview() {
         </Feature>
 
         <Feature
-          icon={<JestIcon size={iconSize} />}
+          icon={<JestIcon height={iconSize} width={iconSize} />}
           title="Jest"
           href="//jestjs.io"
         >
@@ -408,6 +405,7 @@ function StackOverview() {
               height={iconSize}
               width={iconSize}
               alt="Testing Library Logo"
+              ignoreFallback
             />
           }
           title="@testing-library/react"
@@ -433,7 +431,9 @@ function StackOverview() {
         </Feature>
 
         <Feature
-          icon={<GithubActionsLogo size={iconSize} />}
+          icon={
+            <GithubActionsLogo width={iconSize} height={iconSize} fill="none" />
+          }
           title="Github Actions"
           href="//github.com/features/actions"
         >
@@ -460,7 +460,7 @@ function StackOverview() {
         </Feature>
 
         <Feature
-          icon={<ESLintIcon size={iconSize} />}
+          icon={<ESLintIcon height={iconSize} width={iconSize} />}
           title="ESLint"
           href="//eslint.org"
         >
@@ -477,7 +477,8 @@ function StackOverview() {
             <Box
               as={FcSettings}
               version={undefined}
-              size={iconSize}
+              height={iconSize}
+              width={iconSize}
               css={{
                 '@media (prefers-reduced-motion: no-preference)': {
                   animation: `${spin} infinite 3s linear`,
@@ -565,7 +566,7 @@ export function Index() {
   return (
     <>
       <Header />
-      <Box as="main" maxWidth="86rem" ml="auto" mr="auto">
+      <Box as="main" maxWidth="86em" ml="auto" mr="auto">
         <Hero />
       </Box>
       <Divider

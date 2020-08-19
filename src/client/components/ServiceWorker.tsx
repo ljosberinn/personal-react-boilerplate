@@ -13,6 +13,10 @@ interface RefreshToastProps {
   t: TFunction;
 }
 
+const handleClick = () => {
+  window.location.reload();
+};
+
 /**
  * Currently mimics toast({status: 'info'}) to allow a global onClick
  */
@@ -23,7 +27,7 @@ function RefreshToast({ t }: RefreshToastProps) {
       borderRadius="0.25rem"
       cursor="pointer"
       mb={4}
-      onClick={() => window.location.reload()}
+      onClick={handleClick}
       pb={3}
       pl={4}
       pr={8}

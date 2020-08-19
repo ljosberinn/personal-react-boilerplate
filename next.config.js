@@ -23,7 +23,8 @@ console.debug(`> Building on NODE_ENV="${NODE_ENV}"`);
 
 const offlineConfig = {
   target: 'serverless',
-  transformManifest: (manifest) => ['/'].concat(manifest), // add the homepage to the cache
+  // add the homepage to the cache
+  transformManifest: (manifest) => ['/'].concat(manifest),
   // turn on the SW in dev mode so that we can actually test it
   generateInDevMode: false,
   dontAutoRegisterSw: true,
@@ -80,11 +81,11 @@ const defaultConfig = {
       });
 
       if (
+        NODE_ENV === 'production' &&
         SENTRY_DSN &&
         SENTRY_ORG &&
         SENTRY_PROJECT &&
-        SENTRY_AUTH_TOKEN &&
-        NODE_ENV === 'production'
+        SENTRY_AUTH_TOKEN
       ) {
         const finished = Date.now();
 
@@ -116,7 +117,7 @@ const defaultConfig = {
   },
 };
 
-module.exports = withPlugins([
-  [withSourceMaps, withBundleAnalyzer(defaultConfig)],
-  [withOffline, offlineConfig],
-]);
+module.exports = withPlugins(
+  [withBundleAnalyzer, withSourceMaps, [withOffline, offlineConfig]],
+  defaultConfig
+);
