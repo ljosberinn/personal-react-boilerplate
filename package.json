@@ -23,7 +23,7 @@
     "@sentry/react": "5.21.1",
     "@sentry/types": "5.21.1",
     "cookie": "0.4.1",
-    "i18next": "19.6.3",
+    "i18next": "19.7.0",
     "next": "9.5.2",
     "next-absolute-url": "1.2.2",
     "next-connect": "0.8.1",
