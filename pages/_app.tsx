@@ -7,7 +7,7 @@ import {
   attachRoutingContext,
   ErrorBoundary as TopLevelErrorBoundary,
   configureScope,
-} from '../src/utils/sentry/client';
+} from '../karma/utils/sentry/client';
 
 export interface AppRenderProps {
   pageProps: object;
@@ -17,7 +17,11 @@ export interface AppRenderProps {
 }
 
 // eslint-disable-next-line import/no-default-export
-export default function App({ Component, pageProps, router }: AppRenderProps) {
+export default function App({
+  Component,
+  pageProps,
+  router,
+}: AppRenderProps): JSX.Element | null {
   if (!Component) {
     return null;
   }
@@ -41,7 +45,7 @@ export default function App({ Component, pageProps, router }: AppRenderProps) {
 /**
  * @see https://nextjs.org/docs/advanced-features/measuring-performance
  */
-export const reportWebVitals = (metric: NextWebVitalsMetric) => {
+export const reportWebVitals = (metric: NextWebVitalsMetric): void => {
   // possible alternative implementation with an endpoint
 
   // const endpoint = '/analytics';

@@ -2,7 +2,7 @@ import { captureException } from '@sentry/node';
 import { NextPageContext } from 'next';
 import NextErrorComponent from 'next/error';
 
-import { INTERNAL_SERVER_ERROR, NOT_FOUND } from '../src/utils/statusCodes';
+import { INTERNAL_SERVER_ERROR, NOT_FOUND } from '../karma/utils/statusCodes';
 
 export interface ErrorProps {
   statusCode: number | null | undefined;
@@ -15,7 +15,7 @@ export default function CustomError({
   statusCode,
   err,
   hasGetInitialPropsRun,
-}: ErrorProps) {
+}: ErrorProps): JSX.Element {
   // getInitialProps is not called in case of
   // https://github.com/vercel/next.js/issues/8592. As a workaround, we pass
   // err via _app.js so it can be captured

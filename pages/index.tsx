@@ -1,10 +1,10 @@
-import { WithKarma, KarmaProvider } from '../src/client/Karma';
-import { Index } from '../src/client/routes/Index';
+import { WithKarma, KarmaProvider } from '../karma/client/Karma';
+import { Index } from '../karma/client/routes/Index';
 
 export type IndexPageProps = WithKarma;
 
 // eslint-disable-next-line import/no-default-export
-export default function IndexPage({ karma }: IndexPageProps) {
+export default function IndexPage({ karma }: IndexPageProps): JSX.Element {
   return (
     <KarmaProvider {...karma}>
       <Index />
@@ -12,4 +12,4 @@ export default function IndexPage({ karma }: IndexPageProps) {
   );
 }
 
-export { getServerSideProps } from '../src/client/Karma';
+export { getServerSideProps } from '../karma/client/Karma';

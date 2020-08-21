@@ -1,12 +1,12 @@
 import nextConnect from 'next-connect';
 
-import { SESSION_COOKIE_NAME } from '../../../../src/constants';
-import { AuthenticatedRequest } from '../../../../src/server/auth/types';
+import { SESSION_COOKIE_NAME } from '../../../../karma/constants';
+import { AuthenticatedRequest } from '../../../../karma/server/auth/types';
 import {
-  authNSecurityMiddleware,
   sentryMiddleware,
-} from '../../../../src/server/middlewares';
-import { RequestHandler } from '../../../../src/server/types';
+  authNSecurityMiddleware,
+} from '../../../../karma/server/middlewares';
+import { RequestHandler } from '../../../../karma/server/types';
 
 const meHandler: RequestHandler<AuthenticatedRequest> = (req, res) => {
   return res.json(req[SESSION_COOKIE_NAME]);

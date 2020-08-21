@@ -82,7 +82,7 @@
     ],
     "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": "prettier --write",
     "*.{ts,tsx}": [
-      "eslint --fix --plugin tsc --rule 'tsc/config: [2, {configFile: \"./tsconfig.json\"}]"
+      "eslint --fix --plugin tsc --rule 'tsc/config: [2, {configFile: \"./tsconfig.json\"}]'"
     ]
   },
   "commitlint": {
@@ -92,7 +92,7 @@
   },
   "jest": {
     "collectCoverageFrom": [
-      "(pages|src)/**/*.{js,jsx,ts,tsx}"
+      "(karma|pages|src)/**/*.{js,jsx,ts,tsx}"
     ],
     "setupFilesAfterEnv": [
       "<rootDir>/scripts/jest/setupTests.js"

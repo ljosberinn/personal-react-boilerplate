@@ -1,7 +1,7 @@
 import { captureException } from '@sentry/node';
 import NextDocument, { Html, Head, Main, NextScript } from 'next/document';
 
-import { attachComponentBreadcrumb } from '../src/utils/sentry/client';
+import { attachComponentBreadcrumb } from '../karma/utils/sentry/client';
 
 /**
  * Send to Sentry all uncaught exceptions.
@@ -22,7 +22,7 @@ const description =
   'next-karma - a slightly opinonated batteries-included Next.js template | Authentication, Internationalization, Error Handling';
 
 // eslint-disable-next-line import/no-default-export
-export default function CustomDocument() {
+export default function CustomDocument(): JSX.Element {
   attachComponentBreadcrumb('document');
 
   return (

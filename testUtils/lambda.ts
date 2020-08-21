@@ -10,8 +10,8 @@ import { route } from 'next/dist/next-server/server/router';
 import fetch, { Response } from 'node-fetch';
 import listen from 'test-listen';
 
-import { Middleware } from '../src/server/types';
-import { RequestInitMethod } from '../src/utils/requestMethods';
+import { Middleware } from '../karma/server/types';
+import { RequestInitMethod } from '../karma/utils/requestMethods';
 
 interface UrlArguments {
   /**
@@ -39,6 +39,7 @@ interface UrlArguments {
   /**
    * next-connect compatible middleware(s)
    */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   middleware?: Middleware<any, any> | Middleware<any, any>[];
   /**
    * optional headers passed to the request
@@ -47,6 +48,7 @@ interface UrlArguments {
     | Record<string, string>
     | {
         cookie: Record<string, string> | string;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         [key: string]: any;
       };
   /**
