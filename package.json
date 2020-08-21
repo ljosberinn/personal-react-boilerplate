@@ -75,5 +75,19 @@
     "yarn-deduplicate": "2.1.1"
   },
   "license": "MIT",
-  "author": "Gerrit Alex"
+  "author": "Gerrit Alex",
+  "lint-staged": {
+    "*.{js,tsx,ts,tsx,css,scss}": [
+      "eslint --fix"
+    ],
+    "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": "prettier --write",
+    "*.{ts,tsx}": [
+      "eslint --fix --plugin tsc --rule 'tsc/config: [2, {configFile: \"./tsconfig.json\"}]"
+    ]
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  }
 }
