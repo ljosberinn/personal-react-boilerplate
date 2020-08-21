@@ -56,7 +56,7 @@
     "eslint": "7.7.0",
     "eslint-config-galex": "0.9.7",
     "eslint-plugin-tsc": "1.2.0",
-    "html-validate": "^3.0.0",
+    "html-validate": "^3.1.0",
     "husky": "4.2.5",
     "identity-obj-proxy": "3.0.0",
     "jest": "26.4.0",
