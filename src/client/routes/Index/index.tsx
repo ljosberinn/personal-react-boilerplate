@@ -25,7 +25,7 @@ import { FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa';
 import { FcSettings } from 'react-icons/fc';
 import { MdDehaze } from 'react-icons/md';
 
-import { WithChildren } from '../../Karma';
+import { WithChildren } from '../../../../karma/client/Karma';
 import { ColorModeSwitchAlt } from '../../components/ColorModeSwitchAlt';
 import { ExternalLink, ExternalLinkProps } from '../../components/ExternalLink';
 import { Feature } from './Feature';

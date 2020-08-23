@@ -7,7 +7,7 @@ import {
   SESSION_LIFETIME,
   IS_PROD,
   SESSION_COOKIE_NAME,
-} from '../../constants';
+} from '../../../src/constants';
 
 type SSRCompatibleRequest = NextApiRequest | IncomingMessage;
 

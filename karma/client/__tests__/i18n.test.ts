@@ -6,9 +6,9 @@ import { rest } from 'msw';
 import { setupServer } from 'msw/node';
 
 import 'whatwg-fetch';
+import { ENABLED_LANGUAGES, FALLBACK_LANGUAGE } from '../../../src/constants';
 import { createIncomingRequestMock } from '../../../testUtils/api';
 import { mockConsoleMethods } from '../../../testUtils/console';
-import { ENABLED_LANGUAGES, FALLBACK_LANGUAGE } from '../../constants';
 import { i18nCache } from '../../server/i18n/cache';
 import {
   getI18N,

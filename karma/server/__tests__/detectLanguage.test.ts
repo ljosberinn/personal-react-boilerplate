@@ -1,15 +1,15 @@
 import { serialize } from 'cookie';
 
 import { i18nCookieName } from '../../../karma/client/i18n';
+import { FALLBACK_LANGUAGE } from '../../../src/constants';
 import { createIncomingRequestMock } from '../../../testUtils/api';
-import { FALLBACK_LANGUAGE } from '../../constants';
 import {
   detectLanguage,
   findLanguageByAcceptLanguageHeader,
 } from '../i18n/detectLanguage';
 
-jest.mock('../../constants', () => {
-  const actual = jest.requireActual('../../constants');
+jest.mock('../../../src/constants', () => {
+  const actual = jest.requireActual('../../../src/constants');
 
   return {
     ...actual,

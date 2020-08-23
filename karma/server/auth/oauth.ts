@@ -8,7 +8,7 @@ import {
   GITHUB_CLIENT_SECRET,
   GOOGLE_CLIENT_ID,
   GOOGLE_CLIENT_SECRET,
-} from '../../constants';
+} from '../../../src/constants';
 
 type Config = {
   [key in ExternalProvider]: {

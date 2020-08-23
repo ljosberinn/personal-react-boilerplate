@@ -8,8 +8,8 @@ import {
 import { IncomingMessage } from 'http';
 import { NextRouter } from 'next/router';
 
+import { IS_BROWSER } from '../../../src/constants';
 import { KarmaProps } from '../../client/Karma';
-import { IS_BROWSER } from '../../constants';
 import { isomorphicSentryInit, defaultOptions } from './shared';
 
 export * from '@sentry/react';

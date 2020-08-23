@@ -2,11 +2,11 @@ import { IncomingMessage, ServerResponse } from 'http';
 import { GetServerSidePropsContext } from 'next';
 import { ParsedUrlQuery } from 'querystring';
 
+import { SESSION_COOKIE_NAME } from '../../../src/constants';
 import {
   createIncomingRequestMock,
   createServerResponseMock,
 } from '../../../testUtils/api';
-import { SESSION_COOKIE_NAME } from '../../constants';
 import * as cookieUtils from '../../server/auth/cookie';
 import { FOUND_MOVED_TEMPORARILY, UNAUTHORIZED } from '../../utils/statusCodes';
 import { User } from '../context/AuthContext/AuthContext';

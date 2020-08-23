@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { ENABLED_PROVIDER } from '../../../constants';
+import { ENABLED_PROVIDER } from '../../../../src/constants';
 import { INTERNAL_SERVER_ERROR } from '../../../utils/statusCodes';
 import { WithChildren } from '../../Karma';
 import {

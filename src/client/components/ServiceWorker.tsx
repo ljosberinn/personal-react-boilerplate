@@ -4,8 +4,8 @@ import { TFunction } from 'i18next';
 import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { attachComponentBreadcrumb } from '../../../karma/utils/sentry/client';
 import { IS_PROD } from '../../constants';
-import { attachComponentBreadcrumb } from '../../utils/sentry/client';
 
 const sw = '/service-worker.js';
 

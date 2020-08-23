@@ -24,7 +24,9 @@ function useThemeMeta() {
   };
 }
 
-export function ColorModeSwitchAlt(props: ColorModeSwitchAltProps): JSX.Element {
+export function ColorModeSwitchAlt(
+  props: ColorModeSwitchAltProps
+): JSX.Element {
   const { t } = useTranslation('theme');
 
   const { Icon, checked, labelKey, toggleColorMode } = useThemeMeta();

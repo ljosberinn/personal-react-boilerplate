@@ -11,7 +11,7 @@ import {
   IS_BROWSER,
   IS_TEST,
   FALLBACK_LANGUAGE,
-} from '../constants';
+} from '../../src/constants';
 import { namespaces } from '../server/i18n/namespaces';
 import { KarmaProps } from './Karma';
 

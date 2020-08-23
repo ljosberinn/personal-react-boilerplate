@@ -2,9 +2,9 @@ import { renderHook, act } from '@testing-library/react-hooks';
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
 
+import { ENABLED_PROVIDER } from '../../../src/constants';
 import { waitFor } from '../../../testUtils';
 import { mockConsoleMethods } from '../../../testUtils/console';
-import { ENABLED_PROVIDER } from '../../constants';
 import {
   OK,
   UNPROCESSABLE_ENTITY,

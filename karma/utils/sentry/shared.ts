@@ -3,7 +3,7 @@ import { init as nodeInit, NodeOptions, configureScope } from '@sentry/node';
 import { init as browserInit, BrowserOptions } from '@sentry/react';
 import { Options } from '@sentry/types';
 
-import { IS_BROWSER, IS_PROD, SENTRY_DSN } from '../../constants';
+import { IS_BROWSER, IS_PROD, SENTRY_DSN } from '../../../src/constants';
 
 export const defaultOptions: Options = {
   attachStacktrace: true,

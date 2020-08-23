@@ -1,4 +1,4 @@
-import { Provider } from './client/context/AuthContext/AuthContext';
+import { Provider } from '../karma/client/context/AuthContext/AuthContext';
 
 /* utils */
 export const IS_BROWSER = typeof window !== 'undefined';

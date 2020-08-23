@@ -1,7 +1,7 @@
 import nextConnect from 'next-connect';
 
 import { I18nextResourceLocale } from '../../../../karma/client/i18n';
-import { ENABLED_LANGUAGES } from '../../../constants';
+import { ENABLED_LANGUAGES } from '../../../../src/constants';
 import { BAD_REQUEST } from '../../../utils/statusCodes';
 import { RequestHandler } from '../../types';
 import { i18nCache } from '../cache';

@@ -1,4 +1,4 @@
-import { SESSION_COOKIE_NAME } from '../../constants';
+import { SESSION_COOKIE_NAME } from '../../../src/constants';
 import { UNAUTHORIZED } from '../../utils/statusCodes';
 import { getSession } from '../auth/cookie';
 import { AuthenticatedRequest } from '../auth/types';

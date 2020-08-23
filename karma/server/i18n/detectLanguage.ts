@@ -2,7 +2,7 @@ import { parse } from 'cookie';
 import { IncomingMessage } from 'http';
 
 import { i18nCookieName } from '../../../karma/client/i18n';
-import { ENABLED_LANGUAGES, FALLBACK_LANGUAGE } from '../../constants';
+import { ENABLED_LANGUAGES, FALLBACK_LANGUAGE } from '../../../src/constants';
 
 // eslint-disable-next-line unicorn/no-unsafe-regex
 const regExp = /(?<language>[a-z]{2})(?:-[a-z]{2,4}){0,2}(?:;q=(?<quality>\d(?:\.\d+)?)?)?/gi;

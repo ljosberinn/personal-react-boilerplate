@@ -1,5 +1,5 @@
 import { WithKarma, KarmaProvider } from '../karma/client/Karma';
-import { Index } from '../karma/client/routes/Index';
+import { Index } from '../src/client/routes/Index';
 
 export type IndexPageProps = WithKarma;
 
