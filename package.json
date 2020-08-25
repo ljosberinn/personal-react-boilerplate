@@ -20,7 +20,7 @@
     "@chakra-ui/theme": "1.0.0-rc.2",
     "@sentry/minimal": "5.21.3",
     "@sentry/node": "5.21.3",
-    "@sentry/react": "5.21.3",
+    "@sentry/react": "5.21.4",
     "@sentry/types": "5.21.3",
     "cookie": "0.4.1",
     "i18next": "19.7.0",
