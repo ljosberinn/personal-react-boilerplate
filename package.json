@@ -10,7 +10,8 @@
     "lint:fix": "eslint src --fix && eslint pages --fix && eslint karma --fix && prettier --write src && prettier --write pages && prettier --write karma",
     "lint:types": "tsc --noEmit",
     "start": "next start",
-    "test": "jest --watch",
+    "test": "jest",
+    "test:watch": "jest --watch",
     "test:ci": "jest --ci --coverage",
     "postinstall": "yarn-deduplicate -l"
   },

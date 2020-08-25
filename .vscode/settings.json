@@ -15,8 +15,8 @@
     "**/node_modules": true,
     "**/build": true,
     "**/.next": true,
-    "**/.now": true,
-    "**/yarn.lock": true
+    "**/yarn.lock": true,
+    "**/coverage": true
   },
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true

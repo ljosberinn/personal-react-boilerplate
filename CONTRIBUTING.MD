@@ -27,8 +27,8 @@ Branches created to address issues should be named in the following format:
 ## Getting Started
 
 ```sh
-git clone https://github.com/ljosberinn/personal-react-boilerplate
-cd personal-react-boilerplate
+git clone https://github.com/ljosberinn/next-karma
+cd next-karma
 yarn
 ```
 

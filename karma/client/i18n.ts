@@ -1,7 +1,7 @@
 // contains lots of inspiration from https://github.com/UnlyEd/next-right-now/blob/v1-ssr-mst-aptd-gcms-lcz-sty/src/utils/i18nextLocize.ts
 import { captureException } from '@sentry/node';
 import { IncomingMessage } from 'http';
-import i18n, { i18n as I18NInstance } from 'i18next';
+import i18next, { i18n as I18NInstance } from 'i18next';
 import absoluteUrl from 'next-absolute-url';
 import { initReactI18next } from 'react-i18next';
 
@@ -49,7 +49,7 @@ export const initI18Next = ({
   language,
   ...rest
 }: InitI18NextArgs): I18NInstance => {
-  const instance = i18n.use(initReactI18next);
+  const instance = i18next.use(initReactI18next);
 
   const resources =
     'i18nCache' in rest
@@ -111,17 +111,17 @@ export const createLanguageChangeHandler = (
   language: string
 ): (() => Promise<void>) => {
   return async () => {
-    const hasBundle = !!i18n.getDataByLanguage(language);
+    const hasBundle = !!i18next.getDataByLanguage(language);
 
     if (!hasBundle) {
       const resources = await getI18N(language);
 
       Object.entries(resources).forEach(([namespace, bundle]) => {
-        i18n.addResourceBundle(language, namespace, bundle);
+        i18next.addResourceBundle(language, namespace, bundle);
       });
     }
 
-    await i18n.changeLanguage(language);
+    await i18next.changeLanguage(language);
   };
 };
 
