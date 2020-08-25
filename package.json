@@ -62,7 +62,7 @@
     "jest": "26.4.2",
     "jest-axe": "3.5.0",
     "jest-watch-typeahead": "0.6.0",
-    "lint-staged": "10.2.12",
+    "lint-staged": "10.2.13",
     "msw": "0.20.5",
     "next-compose-plugins": "2.2.0",
     "next-offline": "5.0.2",
@@ -70,7 +70,7 @@
     "prettier": "2.1.0",
     "react-test-renderer": "17.0.0-rc.0",
     "test-listen": "1.1.0",
-    "typescript": "4.1.0-dev.20200825",
+    "typescript": "4.0.2",
     "whatwg-fetch": "3.4.0",
     "yarn-deduplicate": "2.1.1"
   },
