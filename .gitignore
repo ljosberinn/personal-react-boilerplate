@@ -34,3 +34,5 @@ yarn-error.log*
 
 .now
 .env
+
+.vercel

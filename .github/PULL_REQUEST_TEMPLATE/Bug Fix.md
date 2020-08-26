@@ -1,6 +1,7 @@
 ---
 name: "\U0001F41B Bug fix"
-about: Fix a bug in next-karma‚
+about: Fix a bug in next-karma
+labels: 'bug'
 ---
 
 <!--
