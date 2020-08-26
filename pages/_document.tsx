@@ -19,7 +19,7 @@ import { attachComponentBreadcrumb } from '../karma/utils/sentry/client';
 
 const title = 'next-karma | Next.js template';
 const description =
-  'next-karma - a slightly opinonated batteries-included Next.js template | Authentication, Internationalization, Error Handling';
+  'next-karma - an opinonated batteries-included Next.js template | Authentication, Internationalization, Error Handling';
 
 // eslint-disable-next-line import/no-default-export
 export default function CustomDocument(): JSX.Element {
