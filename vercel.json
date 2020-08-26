@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "private": true,
+  "public": false,
   "github": {
     "enabled": false
   },

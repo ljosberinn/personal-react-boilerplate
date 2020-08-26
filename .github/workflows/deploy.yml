@@ -59,9 +59,9 @@ jobs:
     if: github.ref != 'refs/heads/master'
     steps:
       - uses: actions/checkout@v2
-      - uses: ngduc/vercel-deploy-action@master
+      - uses: amondnet/vercel-action@v19
         with:
-          # see https://github.com/marketplace/actions/vercel-deploy-action
+          # see https://github.com/amondnet/vercel-action
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID}}
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID}}
@@ -79,9 +79,9 @@ jobs:
     if: github.ref == 'refs/heads/master'
     steps:
       - uses: actions/checkout@v2
-      - uses: ngduc/vercel-deploy-action@master
+      - uses: amondnet/vercel-action@v19
         with:
-          # see https://github.com/marketplace/actions/vercel-deploy-action
+          # see https://github.com/amondnet/vercel-action
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID}}
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID}}
