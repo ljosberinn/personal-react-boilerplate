@@ -73,6 +73,7 @@ jobs:
   deploy-prod:
     name: Deploy to Production
     runs-on: ubuntu-latest
+    # only deploy given successful tests
     needs: tests-coverage
     # on master exclusively
     if: github.ref == 'refs/heads/master'
@@ -87,5 +88,5 @@ jobs:
           # SET THIS 👇 OR YOU WILL DEPLOY TO YOUR PERSONAL VERCEL NAMESPACE
           # scope: ${{ secrets.VERCEL_TEAM_ID }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          github-comments: true
-          vercel-args: "--prod"
+          github-comment: true
+          vercel-args: '--prod'
