@@ -1,0 +1,91 @@
+name: Deploy to production on Vercel
+
+on: [push]
+
+jobs:
+  setup-environment:
+    name: Setup environment
+    runs-on: ubuntu-latest
+    timeout-minutes: 1
+    steps:
+      - name: Installing node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.6.0
+
+  lint:
+    name: ESLint
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - uses: actions/checkout@v1
+      - name: Installing dependencies
+        run: yarn
+      - run: yarn lint:code
+
+  types:
+    name: TypeScript
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Installing dependencies
+        run: yarn
+      - run: yarn lint:types
+
+  tests-coverage:
+    name: Test & Coverage Report
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    needs: [lint, types] # only run after lint and tsc completed successfully
+    steps:
+      - uses: actions/checkout@v1
+      - name: Installing dependencies
+        run: yarn
+      - uses: paambaati/codeclimate-action@v2.6.0
+        env:
+          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+          NEXT_PUBLIC_ENABLED_LANGUAGES: en,de
+          NEXT_PUBLIC_FALLBACK_LANGUAGE: en
+          NEXT_PUBLIC_ENABLED_PROVIDER: local,github,google,facebook,discord
+          NEXT_PUBLIC_SESSION_LIFETIME: 28800
+          NODE_ENV: test
+        with:
+          coverageCommand: yarn test:ci
+
+  deploy-staging:
+    name: Deploy to Staging
+    runs-on: ubuntu-latest
+    # on every branch that isnt master
+    if: github.ref != 'refs/heads/master'
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ngduc/vercel-deploy-action@master
+        with:
+          # see https://github.com/marketplace/actions/vercel-deploy-action
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID}}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID}}
+          # SET THIS 👇 OR YOU WILL DEPLOY TO YOUR PERSONAL VERCEL NAMESPACE
+          # scope: ${{ secrets.VERCEL_TEAM_ID }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-comments: true
+
+  deploy-prod:
+    name: Deploy to Production
+    runs-on: ubuntu-latest
+    needs: tests-coverage
+    # on master exclusively
+    if: github.ref == 'refs/heads/master'
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ngduc/vercel-deploy-action@master
+        with:
+          # see https://github.com/marketplace/actions/vercel-deploy-action
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID}}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID}}
+          # SET THIS 👇 OR YOU WILL DEPLOY TO YOUR PERSONAL VERCEL NAMESPACE
+          # scope: ${{ secrets.VERCEL_TEAM_ID }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-comments: true
+          vercel-args: "--prod"
