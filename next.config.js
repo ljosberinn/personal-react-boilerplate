@@ -1,7 +1,6 @@
 // Use the hidden-source-map option when you don't want the source maps to be
 // publicly available on the servers, only to the error reporting
 const withSourceMaps = require('@zeit/next-source-maps')();
-const SentryWebpackPlugin = require('@sentry/webpack-plugin');
 const withOffline = require('next-offline');
 const { withPlugins } = require('next-compose-plugins');
 const { IgnorePlugin } = require('webpack');
@@ -79,34 +78,6 @@ const defaultConfig = {
       serverOnlyPackages.forEach((package) => {
         config.plugins.push(new IgnorePlugin(new RegExp(package)));
       });
-
-      if (
-        NODE_ENV === 'production' &&
-        SENTRY_DSN &&
-        SENTRY_ORG &&
-        SENTRY_PROJECT &&
-        SENTRY_AUTH_TOKEN
-      ) {
-        const finished = Date.now();
-
-        config.plugins.push(
-          /**
-           * @see https://github.com/getsentry/sentry-webpack-plugin#options
-           */
-          new SentryWebpackPlugin({
-            include: '.next',
-            ignore: ['node_modules'],
-            urlPrefix: '~/_next',
-            release: buildId,
-            deploy: {
-              env: NODE_ENV,
-              started: +date,
-              finished,
-              time: finished - date,
-            },
-          })
-        );
-      }
     }
 
     return config;

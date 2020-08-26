@@ -363,9 +363,7 @@ function StackOverview() {
         >
           A Serverless- & SSR-compatible, JSON-based i18n solution is
           implemented via{' '}
-          <ExternalLink href="https://react.i18next.com/">
-            react-i18next
-          </ExternalLink>
+          <ExternalLink href="//react.i18next.com/">react-i18next</ExternalLink>
           . Assets can be exchanged on the fly through an API route.
         </Feature>
 
@@ -415,19 +413,19 @@ function StackOverview() {
           href="//testing-library.com/docs/react-testing-library/intro"
         >
           Following best practices and with help from{' '}
-          <ExternalLink href="https://testing-playground.com">
+          <ExternalLink href="//testing-playground.com">
             Testing Playground
           </ExternalLink>
           ,{' '}
-          <ExternalLink href="https://github.com/nickcolley/jest-axe">
+          <ExternalLink href="//github.com/nickcolley/jest-axe">
             jest-axe
           </ExternalLink>{' '}
           and{' '}
-          <ExternalLink href="https://html-validate.org/frameworks/jest.html">
+          <ExternalLink href="//html-validate.org/frameworks/jest.html">
             html-validate/jest
           </ExternalLink>
           , all example components are well tested. A{' '}
-          <ExternalLink href="https://testing-library.com/docs/react-testing-library/setup#custom-render">
+          <ExternalLink href="//testing-library.com/docs/react-testing-library/setup#custom-render">
             custom render
           </ExternalLink>{' '}
           function with sensible defaults is included.
@@ -440,12 +438,13 @@ function StackOverview() {
           title="Github Actions"
           href="//github.com/features/actions"
         >
-          Before deploying, Github Actions will ensure your linting setup,
-          typecheck, execute tests as well as upload code coverage to{' '}
-          <ExternalLink href="https://codeclimate.com/">
-            CodeClimate
-          </ExternalLink>
-          .
+          Before deploying,{' '}
+          <ExternalLink href="//github.com/features/actions">
+            Github Actions
+          </ExternalLink>{' '}
+          will ensure your linting setup, typecheck, execute tests as well as
+          upload code coverage to{' '}
+          <ExternalLink href="//codeclimate.com/">CodeClimate</ExternalLink>.
         </Feature>
 
         <Feature
@@ -454,7 +453,7 @@ function StackOverview() {
           href="//web.dev/progressive-web-apps/"
         >
           Thanks to{' '}
-          <ExternalLink href="https://github.com/hanford/next-offline">
+          <ExternalLink href="//github.com/hanford/next-offline">
             next-offline
           </ExternalLink>
           , a ServiceWorker will be created on each deploy. An example component
@@ -469,7 +468,7 @@ function StackOverview() {
         >
           Built on top of industry standards & community best practices, {title}{' '}
           comes with{' '}
-          <ExternalLink href="https://github.com/ljosberinn/eslint-config-galex">
+          <ExternalLink href="//github.com/ljosberinn/eslint-config-galex">
             my personal eslint config
           </ExternalLink>
           . You may of course swap at any time.
@@ -525,17 +524,17 @@ function StackOverview() {
 
 const links = [
   {
-    href: 'https://github.com/ljosberinn',
+    href: '//github.com/ljosberinn',
     icon: FaGithub,
     text: 'ljosberinn',
   },
   {
-    href: 'https://twitter.com/gerrit_alex',
+    href: '//twitter.com/gerrit_alex',
     icon: FaTwitter,
     text: '@gerrit_alex',
   },
   {
-    href: 'https://linkedin.com/in/gerrit-alex/',
+    href: '//linkedin.com/in/gerrit-alex/',
     icon: FaLinkedin,
     text: 'Gerrit Alex',
   },
