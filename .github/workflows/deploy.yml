@@ -92,17 +92,19 @@ jobs:
           vercel-args: '--prod'
 
   # https://github.com/getsentry/action-release
-  sentry-release:
-    name: Create Sentry Release
-    runs-on: ubuntu-latest
-    needs: deploy-prod
-    env:
-      SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-      SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
-      SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
-      SENTRY_LOG_LEVEL: debug
-    steps:
-      - uses: getsentry/action-release@v1.0.1
-        with:
-          environment: production
-          sourcemaps: './_next'
+  # blocked by https://github.com/getsentry/sentry-cli/issues/810
+
+  # sentry-release:
+  #   name: Create Sentry Release
+  #   runs-on: ubuntu-latest
+  #   needs: deploy-prod
+  #   env:
+  #     SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+  #     SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
+  #     SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
+  #     SENTRY_LOG_LEVEL: debug
+  #   steps:
+  #     - uses: getsentry/action-release@v1.0.1
+  #       with:
+  #         environment: production
+  #         sourcemaps: './_next'
