@@ -222,6 +222,7 @@ type HTMLValidationRules =
   | 'wcag/h37'
   | 'wcag/h67'
   | 'wcag/h71'
+  | 'allowed-links'
   | 'attr-case'
   | 'attr-quotes'
   | 'attribute-allowed-values'
