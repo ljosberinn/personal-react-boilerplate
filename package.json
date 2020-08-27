@@ -39,7 +39,6 @@
     "@commitlint/config-conventional": "9.1.2",
     "@next/bundle-analyzer": "9.5.2",
     "@sentry/types": "5.22.0",
-    "@sentry/webpack-plugin": "1.12.1",
     "@testing-library/jest-dom": "5.11.4",
     "@testing-library/react": "10.4.9",
     "@testing-library/react-hooks": "3.4.1",
