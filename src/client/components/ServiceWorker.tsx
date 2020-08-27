@@ -33,6 +33,7 @@ function RefreshToast({ t }: RefreshToastProps) {
       pr={8}
       pt={3}
       role="alert"
+      color="white"
     >
       <InfoIcon height="1.25rem" mr="0.75rem" width="1.25rem" />
       <Box textAlign="left">
