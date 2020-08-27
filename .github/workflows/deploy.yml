@@ -68,7 +68,7 @@ jobs:
           # SET THIS 👇 OR YOU WILL DEPLOY TO YOUR PERSONAL VERCEL NAMESPACE
           # scope: ${{ secrets.VERCEL_TEAM_ID }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          github-comments: true
+          github-comment: true
 
   # https://github.com/amondnet/vercel-action
   deploy-prod:
@@ -89,11 +89,9 @@ jobs:
           # scope: ${{ secrets.VERCEL_TEAM_ID }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
           github-comment: true
-          vercel-args: '--prod'
-
+          vercel-args: "--prod"
   # https://github.com/getsentry/action-release
   # blocked by https://github.com/getsentry/sentry-cli/issues/810
-
   # sentry-release:
   #   name: Create Sentry Release
   #   runs-on: ubuntu-latest
