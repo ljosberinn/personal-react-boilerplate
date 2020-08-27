@@ -99,15 +99,16 @@ const defaultConfig = {
           include: '.next',
           ignore: ['node_modules'],
           urlPrefix: '~/_next',
-          release: buildId,
-          setCommits: {
-            repo: SENTRY_PROJECT,
-            commit: VERCEL_GITHUB_COMMIT_SHA,
-          },
-          deploy: {
-            env: NODE_ENV,
-            started: +date,
-          },
+          release: VERCEL_GITHUB_COMMIT_SHA,
+          // setCommits: {
+          //   repo: SENTRY_PROJECT,
+          //   commit: VERCEL_GITHUB_COMMIT_SHA,
+          // },
+          debug: true,
+          // deploy: {
+          //   env: NODE_ENV,
+          //   started: +date,
+          // },
         })
       );
     }
