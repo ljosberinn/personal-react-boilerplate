@@ -10,7 +10,7 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 });
 
 const {
-  NEXT_PUBLIC_SENTRY_DSN: SENTRY_DSN,
+  NEXT_PUBLIC_SENTRY_DSN,
   SENTRY_ORG,
   SENTRY_PROJECT,
   SENTRY_AUTH_TOKEN,
@@ -84,7 +84,7 @@ const defaultConfig = {
 
     if (
       NODE_ENV === 'production' &&
-      SENTRY_DSN &&
+      NEXT_PUBLIC_SENTRY_DSN &&
       SENTRY_ORG &&
       SENTRY_PROJECT &&
       SENTRY_AUTH_TOKEN &&
@@ -92,6 +92,7 @@ const defaultConfig = {
     ) {
       config.plugins.push(
         /**
+         * @see https://docs.sentry.io/product/integrations/vercel/
          * @see https://github.com/getsentry/sentry-webpack-plugin#options
          */
         new SentryWebpackPlugin({
@@ -100,10 +101,9 @@ const defaultConfig = {
           urlPrefix: '~/_next',
           release: buildId,
           setCommits: {
-            repo: 'personal-react-boilerplate',
+            repo: SENTRY_PROJECT,
             commit: VERCEL_GITHUB_COMMIT_SHA,
           },
-          debug: true,
           deploy: {
             env: NODE_ENV,
             started: +date,
