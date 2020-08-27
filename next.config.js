@@ -100,10 +100,6 @@ const defaultConfig = {
           ignore: ['node_modules'],
           urlPrefix: '~/_next',
           release: VERCEL_GITHUB_COMMIT_SHA,
-          deploy: {
-            env: NODE_ENV,
-            started: +date,
-          },
         })
       );
     }
