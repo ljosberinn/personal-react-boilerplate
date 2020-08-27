@@ -1,4 +1,4 @@
-import * as Sentry from '@sentry/minimal';
+import * as Sentry from '@sentry/node';
 import { render } from '@testing-library/react';
 import { NextPageContext } from 'next';
 import NextErrorComponent from 'next/error';

@@ -1,4 +1,4 @@
-import * as sentryNode from '@sentry/minimal';
+import * as sentryNode from '@sentry/node';
 import * as sentryReact from '@sentry/react';
 import { render } from '@testing-library/react';
 import { serialize } from 'cookie';
