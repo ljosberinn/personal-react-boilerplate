@@ -264,9 +264,7 @@ function Hero() {
 
       <Text fontStyle="italic">_still wip_</Text>
 
-      <FadedText>
-        A slighly opinionated batteries-included Next.js template
-      </FadedText>
+      <FadedText>An opinionated batteries-included Next.js template</FadedText>
       <FadedText>
         supporting Authentication, Error Handling & Internationalization and
         more out of the box.
