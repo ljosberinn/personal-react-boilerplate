@@ -41,7 +41,7 @@ const createGetDataByLanguageSpy = (bool: boolean) =>
     .mockImplementation(() => (bool ? { translation: {} } : undefined));
 
 describe('<LanguageSwitch />', () => {
-  let restoreConsole: ReturnType<typeof mockConsoleMethods>;
+  let restoreConsole: ReturnType<typeof mockConsoleMethods>['restoreConsole'];
 
   beforeEach(() => {
     restoreConsole = mockConsoleMethods('error').restoreConsole;
