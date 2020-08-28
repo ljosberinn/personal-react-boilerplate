@@ -40,7 +40,7 @@ jobs:
         run: yarn
       - run: yarn lint:types
 
-  tests-coverage:
+  test-coverage:
     name: Test & Coverage Report
     runs-on: ubuntu-latest
     timeout-minutes: 2
@@ -50,6 +50,9 @@ jobs:
       - uses: actions/checkout@master
       - name: Installing dependencies
         run: yarn
+        # on master exclusively
+        if: github.ref == 'refs/heads/master'
+      - name: Test & Upload coverage
       - uses: paambaati/codeclimate-action@v2.6.0
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
@@ -59,7 +62,11 @@ jobs:
           NEXT_PUBLIC_SESSION_LIFETIME: 28800
           NODE_ENV: test
         with:
-          coverageCommand: yarn test:coverage
+          coverageCommand: yarn test:coverage --ci
+        # on every branch that isnt master
+        if: github.ref != 'refs/heads/master'
+      - name: Running tests
+        run: yarn test --ci
 
   deploy-staging:
     name: Deploy to Staging
@@ -82,7 +89,7 @@ jobs:
     name: Deploy to Production
     runs-on: ubuntu-latest
     # only deploy given successful tests
-    needs: tests-coverage
+    needs: test-coverage
     # on master exclusively
     if: github.ref == 'refs/heads/master'
     steps:
@@ -96,16 +103,16 @@ jobs:
           # scope: ${{ secrets.VERCEL_TEAM_ID }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
           github-comment: true
-          vercel-args: "--prod"
+          vercel-args: '--prod'
 
   # Run Lighthouse reports
   # based on https://github.com/UnlyEd/next-right-now/blob/v2-mst-aptd-gcms-lcz-sty/.github/workflows/deploy-zeit-production.yml#L95
   run-lighthouse-tests:
     name: Run LightHouse
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     needs: deploy-prod
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@master
       - name: Resolving deployment url from Vercel
         # The following workflow is:
         #  - getting the most recent production deployment data
@@ -114,7 +121,7 @@ jobs:
         # We need to set env the url for next step
         run: |
           apt update -y >/dev/null && apt install -y jq >/dev/null
-          VERCEL_DEPLOYMENT=`curl -H 'Accept: application/json' -H 'Content-Type: application/json' -H 'Authorization: Bearer ${{ secrets.VERCEL_TOKEN }}' https://api.zeit.co/v5/now/deployments?limit=1&meta-githubCommitRef=refs/heads/master | jq '.deployments [0].url' | tr -d \"`
+          VERCEL_DEPLOYMENT=`curl -H 'Accept: application/json' -H 'Content-Type: application/json' -H 'Authorization: Bearer ${{ secrets.VERCEL_TOKEN }}' "https://api.zeit.co/v5/now/deployments?limit=1&meta-githubCommitRef=refs/heads/master" | jq '.deployments [0].url' | tr -d \"`
           echo "::set-env name=VERCEL_DEPLOYMENT_URL::https://$VERCEL_DEPLOYMENT"
         env:
           # Passing github's secret to the worker
@@ -124,7 +131,7 @@ jobs:
         run: mkdir /tmp/lighthouse-artifacts
 
       - name: Run Lighthouse
-        uses: foo-software/lighthouse-check-action@v2.0.5
+        uses: foo-software/lighthouse-check-action@master
         id: lighthouseCheck
         with:
           # See https://github.com/marketplace/actions/lighthouse-check#inputs for all options
@@ -146,8 +153,8 @@ jobs:
         uses: foo-software/lighthouse-check-status-action@master
         with:
           lighthouseCheckResults: ${{ steps.lighthouseCheck.outputs.lighthouseCheckResults }}
-          minAccessibilityScore: "80"
-          minBestPracticesScore: "90"
-          minPerformanceScore: "90"
-          minProgressiveWebAppScore: "50"
-          minSeoScore: "80"
+          minAccessibilityScore: '80'
+          minBestPracticesScore: '90'
+          minPerformanceScore: '90'
+          minProgressiveWebAppScore: '50'
+          minSeoScore: '80'
