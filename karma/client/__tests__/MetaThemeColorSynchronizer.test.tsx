@@ -3,7 +3,9 @@ import { MetaThemeColorSynchronizer } from '../components/MetaThemeColorSynchron
 
 /**
  * currently only a smoketest
- * next/head or rather generally all <head> elements are invisible for RTL
+ * next/head is currently not testable
+ *
+ * @see https://github.com/vercel/next.js/issues/15170
  */
 describe('<MetaThemeColorSynchronizer />', () => {
   it('renders without crashing', () => {

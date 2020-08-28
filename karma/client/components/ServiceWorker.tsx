@@ -5,7 +5,7 @@ import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { attachComponentBreadcrumb } from '../../../karma/utils/sentry/client';
-import { IS_PROD } from '../../constants';
+import { IS_PROD } from '../../../src/constants';
 
 const sw = '/service-worker.js';
 
@@ -98,20 +98,18 @@ const createOnStateChangeListener = ({
   toast,
   t,
   installingWorker,
-}: CreateOnStateChangeListenerParams) => {
-  return () => {
-    if (
-      installingWorker.state !== 'installed' ||
-      !navigator.serviceWorker.controller
-    ) {
-      return;
-    }
+}: CreateOnStateChangeListenerParams) => () => {
+  if (
+    installingWorker.state !== 'installed' ||
+    !navigator.serviceWorker.controller
+  ) {
+    return;
+  }
 
-    toast({
-      // eslint-disable-next-line react/display-name
-      render: () => <RefreshToast t={t} />,
-    });
-  };
+  toast({
+    // eslint-disable-next-line react/display-name
+    render: () => <RefreshToast t={t} />,
+  });
 };
 
 interface CreateOnUpdateFoundListenerParams {
@@ -124,20 +122,18 @@ const createOnUpdateFoundListener = ({
   toast,
   registration,
   t,
-}: CreateOnUpdateFoundListenerParams) => {
-  return () => {
-    const installingWorker = registration.installing;
+}: CreateOnUpdateFoundListenerParams) => () => {
+  const installingWorker = registration.installing;
 
-    if (!installingWorker) {
-      return;
-    }
+  if (!installingWorker) {
+    return;
+  }
 
-    const onStateChange = createOnStateChangeListener({
-      installingWorker,
-      t,
-      toast,
-    });
+  const onStateChange = createOnStateChangeListener({
+    installingWorker,
+    t,
+    toast,
+  });
 
-    installingWorker.addEventListener('statechange', onStateChange);
-  };
+  installingWorker.addEventListener('statechange', onStateChange);
 };
