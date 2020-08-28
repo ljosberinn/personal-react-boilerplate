@@ -73,7 +73,7 @@ const defaultConfig = {
     BUILD_TIME: date.toString(),
     BUILD_TIMESTAMP: +date,
   },
-  webpack: (config, { isServer, buildId }) => {
+  webpack: (config, { isServer }) => {
     if (!isServer) {
       config.resolve.alias['@sentry/node'] = '@sentry/react';
 

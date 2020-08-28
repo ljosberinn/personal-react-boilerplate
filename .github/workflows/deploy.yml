@@ -2,6 +2,12 @@ name: Deploy to Vercel
 
 on: [push]
 
+# used actions
+# https://github.com/actions/setup-node - sets up node env
+# https://github.com/actions/checkout - checks out repo
+# https://github.com/paambaati/codeclimate-action - sends test coverage to CC
+# https://github.com/amondnet/vercel-action - initiates deploy to vercel
+
 jobs:
   setup-environment:
     name: Setup environment
@@ -18,7 +24,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 2
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - name: Installing dependencies
         run: yarn
       - run: yarn lint:code
@@ -27,7 +33,7 @@ jobs:
     name: TypeScript
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - name: Installing dependencies
         run: yarn
       - run: yarn lint:types
@@ -36,12 +42,13 @@ jobs:
     name: Test & Coverage Report
     runs-on: ubuntu-latest
     timeout-minutes: 2
-    needs: [lint, types] # only run after lint and tsc completed successfully
+    # only run after lint and tsc completed successfully
+    needs: [lint, types]
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - name: Installing dependencies
         run: yarn
-      - uses: paambaati/codeclimate-action@v2.6.0
+      - uses: paambaati/codeclimate-action@v2
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
           NEXT_PUBLIC_ENABLED_LANGUAGES: en,de
@@ -52,7 +59,6 @@ jobs:
         with:
           coverageCommand: yarn test:coverage
 
-  # https://github.com/amondnet/vercel-action
   deploy-staging:
     name: Deploy to Staging
     runs-on: ubuntu-latest
@@ -70,7 +76,6 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           github-comment: true
 
-  # https://github.com/amondnet/vercel-action
   deploy-prod:
     name: Deploy to Production
     runs-on: ubuntu-latest
@@ -89,4 +94,4 @@ jobs:
           # scope: ${{ secrets.VERCEL_TEAM_ID }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
           github-comment: true
-          vercel-args: '--prod'
+          vercel-args: "--prod"
