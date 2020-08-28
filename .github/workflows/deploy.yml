@@ -7,7 +7,7 @@ on: [push]
 # https://github.com/actions/checkout - checks out repo
 # https://github.com/paambaati/codeclimate-action - sends test coverage to CC
 # https://github.com/amondnet/vercel-action - initiates deploy to vercel
-# https://github.com/marketplace/actions/lighthouse-check - lighthouse post-deploy
+# https://github.com/foo-software/lighthouse-check-action - lighthouse post-deploy
 # https://github.com/foo-software/lighthouse-check-status-action - lighthouse check
 
 jobs:
@@ -108,13 +108,13 @@ jobs:
       - uses: actions/checkout@master
       - name: Resolving deployment url from Vercel
         # The following workflow is:
-        #  - getting all deployments data (by using the scope in `vercel.json`)
-        #  - then we get the last url (in Node.js it corresponds as `response.deployments[0].url`
+        #  - getting the most recent production deployment data
+        #  - then extract the url (in Node.js it corresponds as `response.deployments[0].url`)
         #  - and then we remove the `"` character to pre-format url
         # We need to set env the url for next step
         run: |
           apt update -y >/dev/null && apt install -y jq >/dev/null
-          VERCEL_DEPLOYMENT=`curl -H 'Accept: application/json' -H 'Content-Type: application/json' -H 'Authorization: Bearer ${{ secrets.VERCEL_TOKEN }}' https://api.zeit.co/v5/now/deployments?limit=1&projectId=$(cat vercel.json | jq -r '.projectId') | jq '.deployments [0].url' | tr -d \"`
+          VERCEL_DEPLOYMENT=`curl -H 'Accept: application/json' -H 'Content-Type: application/json' -H 'Authorization: Bearer ${{ secrets.VERCEL_TOKEN }}' https://api.zeit.co/v5/now/deployments?limit=1&meta-githubCommitRef=refs/heads/master | jq '.deployments [0].url' | tr -d \"`
           echo "::set-env name=VERCEL_DEPLOYMENT_URL::https://$VERCEL_DEPLOYMENT"
         env:
           # Passing github's secret to the worker
