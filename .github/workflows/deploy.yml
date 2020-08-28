@@ -53,7 +53,7 @@ jobs:
       - name: Installing dependencies
         run: yarn
       - name: Test & Upload coverage
-      - uses: paambaati/codeclimate-action@v2.6.0
+        uses: paambaati/codeclimate-action@v2.6.0
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
           NEXT_PUBLIC_ENABLED_LANGUAGES: en,de
@@ -63,6 +63,7 @@ jobs:
           NODE_ENV: test
         with:
           coverageCommand: yarn test:coverage --ci
+
   test:
     name: Test
     runs-on: ubuntu-latest
