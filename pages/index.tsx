@@ -1,4 +1,9 @@
-import { WithKarma, KarmaProvider } from '../karma/client/Karma';
+import {
+  WithKarma,
+  KarmaProvider,
+  createGetServerSideProps,
+} from '../karma/client/Karma';
+import { Namespace } from '../karma/server/i18n/cache';
 import { Index } from '../src/client/routes/Index';
 
 export type IndexPageProps = WithKarma;
@@ -12,4 +17,6 @@ export default function IndexPage({ karma }: IndexPageProps): JSX.Element {
   );
 }
 
-export { getServerSideProps } from '../karma/client/Karma';
+const i18nNamespaces: Namespace[] = ['serviceWorker', 'theme'];
+
+export const getServerSideProps = createGetServerSideProps({ i18nNamespaces });

@@ -4,12 +4,33 @@ import { I18nextResourceLocale } from '../../../../karma/client/i18n';
 import { ENABLED_LANGUAGES } from '../../../../src/constants';
 import { BAD_REQUEST } from '../../../utils/statusCodes';
 import { RequestHandler } from '../../types';
-import { i18nCache } from '../cache';
+import { i18nCache, Namespace } from '../cache';
 
-const useI18n: RequestHandler<{}, I18nextResourceLocale> = (
-  { query: { language } },
-  res
-) => {
+/**
+ * Extracts the desired translation based on the next language and potentially
+ * given namespaces.
+ */
+const getTranslation = (language: string, namespaces?: Namespace[]) => {
+  if (namespaces && namespaces.length > 0) {
+    return namespaces.reduce<I18nextResourceLocale>((carry, namespace) => {
+      // code-wise, it cant ever be invalid unless you ignore TS
+      // but the actual request is userland territory so anything could happen
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+      if (i18nCache[language]?.[namespace]) {
+        carry[namespace] = i18nCache[language][namespace];
+      }
+
+      return carry;
+    }, {});
+  }
+
+  return i18nCache[language];
+};
+
+const useI18n: RequestHandler<
+  { query: { namespaces: Namespace[] } },
+  string
+> = ({ query: { language, namespaces } }, res) => {
   const [nextLanguage] = language;
 
   if (
@@ -20,14 +41,11 @@ const useI18n: RequestHandler<{}, I18nextResourceLocale> = (
     return res.status(BAD_REQUEST).end();
   }
 
-  const data = i18nCache[nextLanguage];
+  const json = JSON.stringify(getTranslation(nextLanguage, namespaces));
 
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-  if (!data) {
+  if (!json || json.length === 2) {
     return res.status(BAD_REQUEST).end();
   }
-
-  const json = JSON.stringify(data);
 
   res.setHeader('Content-Length', json.length);
   res.setHeader('Content-Type', 'application/json');

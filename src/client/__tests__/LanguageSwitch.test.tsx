@@ -44,7 +44,7 @@ describe('<LanguageSwitch />', () => {
   let restoreConsole: ReturnType<typeof mockConsoleMethods>;
 
   beforeEach(() => {
-    restoreConsole = mockConsoleMethods('error');
+    restoreConsole = mockConsoleMethods('error').restoreConsole;
   });
 
   afterEach(() => {

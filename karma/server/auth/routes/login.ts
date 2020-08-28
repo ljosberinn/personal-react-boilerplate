@@ -25,7 +25,10 @@ interface VerifyArg {
   password: string;
 }
 
-const verify = ({ username, password }: VerifyArg): object | null => {
+const verify = ({
+  username,
+  password,
+}: VerifyArg): Partial<LocalDBDataset> | null => {
   // custom logic for your db goes here!
   const user = localDB.find(
     (user) => user.username === username && user.password === password
@@ -40,7 +43,7 @@ const verify = ({ username, password }: VerifyArg): object | null => {
   return response;
 };
 
-const useLogin: RequestHandler = (
+const useLogin: RequestHandler<{}, Partial<LocalDBDataset>> = (
   { query: { authRouter = [] }, body },
   res,
   next

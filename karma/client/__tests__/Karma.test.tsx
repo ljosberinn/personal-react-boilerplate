@@ -11,7 +11,7 @@ import {
 } from '../../../testUtils/api';
 import { createMockScope } from '../../../testUtils/sentry';
 import * as cookieUtils from '../../server/auth/cookie';
-import { i18nCache } from '../../server/i18n/cache';
+import { i18nCache, Namespace } from '../../server/i18n/cache';
 import * as detectLanguageUtils from '../../server/i18n/detectLanguage';
 import * as sentryUtils from '../../utils/sentry/client';
 import * as sentryUtilsServer from '../../utils/sentry/server';
@@ -20,18 +20,20 @@ import {
   KarmaProps,
   getServerSideProps,
   withServerSideKarmaProps,
+  createGetServerSideProps,
 } from '../Karma';
 import { User } from '../context/AuthContext/AuthContext';
 import * as i18n from '../i18n';
-
-const defaultProps: KarmaProps = {
-  cookies: '',
-  i18nBundle: i18nCache.de,
-  language: 'en',
-  session: null,
-};
+import { I18nextResourceLocale } from '../i18n';
 
 describe('<KarmaProvider />', () => {
+  const defaultProps: KarmaProps = {
+    cookies: '',
+    i18nBundle: i18nCache.de,
+    language: 'en',
+    session: null,
+  };
+
   test('initializes i18next', () => {
     const initI18NSpy = jest.spyOn(i18n, 'initI18Next');
 
@@ -76,13 +78,31 @@ const mockBundle = i18nCache[FALLBACK_LANGUAGE];
 const setupSpies = () => {
   const getSessionSpy = jest
     .spyOn(cookieUtils, 'getSession')
-    .mockImplementationOnce(() => null);
-  const getI18NSpy = jest
-    .spyOn(i18n, 'getI18N')
-    .mockResolvedValueOnce(mockBundle);
+    .mockReturnValueOnce(null);
+
+  const getI18nSpy = jest
+    .spyOn(i18n, 'getI18n')
+    .mockImplementationOnce((_, { namespaces } = {}) =>
+      Promise.resolve(
+        (() => {
+          if (Array.isArray(namespaces) && namespaces.length > 0) {
+            return namespaces.reduce<I18nextResourceLocale>(
+              (carry, namespace) => {
+                carry[namespace] = mockBundle[namespace];
+                return carry;
+              },
+              {}
+            );
+          }
+
+          return mockBundle;
+        })()
+      )
+    );
+
   const detectLanguageSpy = jest
     .spyOn(detectLanguageUtils, 'detectLanguage')
-    .mockImplementationOnce(() => FALLBACK_LANGUAGE);
+    .mockReturnValueOnce(FALLBACK_LANGUAGE);
 
   const attachInitialContextSpy = jest.spyOn(
     sentryUtils,
@@ -112,7 +132,7 @@ const setupSpies = () => {
     attachLambdaContextSpy,
     configureScopeSpy,
     detectLanguageSpy,
-    getI18NSpy,
+    getI18nSpy,
     getSessionSpy,
     setContextSpy,
     setExtraSpy,
@@ -144,9 +164,7 @@ describe('getServerSideProps', () => {
       res: createServerResponseMock(),
     };
 
-    jest.spyOn(cookieUtils, 'getSession').mockImplementationOnce((_) => {
-      return mockSession;
-    });
+    jest.spyOn(cookieUtils, 'getSession').mockReturnValueOnce(mockSession);
 
     const {
       attachInitialContextSpy,
@@ -211,9 +229,14 @@ describe('getServerSideProps', () => {
   });
 
   test('loads i18n bundle', async () => {
-    const { getI18NSpy } = await setup();
+    const { getI18nSpy } = await setup();
 
-    expect(getI18NSpy).toHaveBeenCalledWith(FALLBACK_LANGUAGE, mockCtx.req);
+    expect(getI18nSpy).toHaveBeenCalledWith(
+      FALLBACK_LANGUAGE,
+      expect.objectContaining({
+        req: mockCtx.req,
+      })
+    );
   });
 
   test('matches expected shape', async () => {
@@ -229,6 +252,54 @@ describe('getServerSideProps', () => {
         }),
       },
     });
+  });
+});
+
+describe('createGetServerSideProps', () => {
+  const i18nNamespaces: Namespace[] = ['serviceWorker'];
+
+  test('returns a function', () => {
+    expect(createGetServerSideProps({ i18nNamespaces: [] })).toBeInstanceOf(
+      Function
+    );
+  });
+
+  test('forwards i18nNamespaces onto getI18n', async () => {
+    const { getI18nSpy } = setupSpies();
+
+    await createGetServerSideProps({ i18nNamespaces: [] })(mockCtx);
+
+    expect(getI18nSpy).toHaveBeenCalledWith(
+      FALLBACK_LANGUAGE,
+      expect.objectContaining({
+        namespaces: [],
+        req: mockCtx.req,
+      })
+    );
+  });
+
+  test('given empty i18nNamespaces, loads all namespaces', async () => {
+    setupSpies();
+
+    const result = await createGetServerSideProps({ i18nNamespaces: [] })(
+      mockCtx
+    );
+
+    expect(result.props.karma.i18nBundle).toMatchObject(
+      i18nCache[FALLBACK_LANGUAGE]
+    );
+  });
+
+  test('given a single i18nNamespace, loads only that one', async () => {
+    setupSpies();
+
+    const result = await createGetServerSideProps({ i18nNamespaces })(mockCtx);
+
+    expect(result.props.karma.i18nBundle).toMatchObject(
+      expect.objectContaining({
+        [i18nNamespaces[0]]: expect.any(Object),
+      })
+    );
   });
 });
 

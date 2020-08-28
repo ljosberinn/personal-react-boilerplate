@@ -1,4 +1,5 @@
 import { render, waitFor, screen, userEvent } from '../../../testUtils';
+import { mockConsoleMethods } from '../../../testUtils/console';
 import { ServiceWorker } from '../components/ServiceWorker';
 
 describe('<ServiceWorker />', () => {
@@ -11,15 +12,11 @@ describe('<ServiceWorker />', () => {
   });
 
   it('does not crash if a registration fails', async () => {
-    const consoleErrorSpy = jest
-      .spyOn(console, 'error')
-      .mockImplementationOnce(() => {});
+    const { restoreConsole } = mockConsoleMethods('error');
 
     const errorMessage = 'rejected';
 
-    const registerSpy = jest
-      .fn()
-      .mockImplementationOnce(() => Promise.reject(errorMessage));
+    const registerSpy = jest.fn().mockRejectedValueOnce(errorMessage);
 
     Object.defineProperty(navigator, 'serviceWorker', {
       configurable: true,
@@ -35,7 +32,10 @@ describe('<ServiceWorker />', () => {
       expect(registerSpy).toHaveBeenCalledWith(expect.any(String))
     );
 
-    expect(consoleErrorSpy).toHaveBeenCalledWith(errorMessage);
+    // eslint-disable-next-line no-console
+    expect(console.error).toHaveBeenCalledWith(errorMessage);
+
+    restoreConsole();
   });
 
   it('listens to a ServiceWorkerRegistration onupdatefound', async () => {
@@ -123,9 +123,7 @@ describe('<ServiceWorker />', () => {
   });
 
   it('reloads the page on toast click', async () => {
-    const consoleErrorSpy = jest
-      .spyOn(console, 'error')
-      .mockImplementationOnce(() => {});
+    const { restoreConsole } = mockConsoleMethods('error');
 
     const addEventListenerSpy = jest
       .fn()
@@ -156,9 +154,13 @@ describe('<ServiceWorker />', () => {
 
     // window.location.reload can't be spied on
     expect(
-      consoleErrorSpy.mock.calls[0][0].startsWith(
+      // @ts-expect-error its mocked
+      // eslint-disable-next-line no-console
+      console.error.mock.calls[0][0].startsWith(
         'Error: Not implemented: navigation (except hash changes)'
       )
     ).toBeTruthy();
+
+    restoreConsole();
   });
 });

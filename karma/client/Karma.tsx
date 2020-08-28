@@ -5,18 +5,19 @@ import { ParsedUrlQuery } from 'querystring';
 import { ReactNode } from 'react';
 import { I18nextProvider } from 'react-i18next';
 
-import { MetaThemeColorSynchronizer } from '../../src/client/components/MetaThemeColorSynchronizer';
-import { ServiceWorker } from '../../src/client/components/ServiceWorker';
 import { getSession } from '../server/auth/cookie';
+import { Namespace } from '../server/i18n/cache';
 import { detectLanguage } from '../server/i18n/detectLanguage';
 import {
   attachComponentBreadcrumb,
   attachInitialContext,
 } from '../utils/sentry/client';
 import { attachLambdaContext } from '../utils/sentry/server';
+import { MetaThemeColorSynchronizer } from './components/MetaThemeColorSynchronizer';
+import { ServiceWorker } from './components/ServiceWorker';
 import { AuthContextProvider } from './context/AuthContext';
 import { User } from './context/AuthContext/AuthContext';
-import { I18nextResourceLocale, initI18Next, getI18N } from './i18n';
+import { I18nextResourceLocale, initI18Next, getI18n } from './i18n';
 
 export interface KarmaProps {
   language: string;
@@ -101,13 +102,26 @@ type GetServerSidePropsReturn = Promise<{
   props: { karma: Omit<KarmaProps, 'children'> };
 }>;
 
-export const getServerSideProps = async ({
-  req,
-}: GetServerSidePropsContext): GetServerSidePropsReturn => {
+export interface CreateGetServerSidePropsOptions {
+  i18nNamespaces: Namespace[];
+}
+
+export const createGetServerSideProps = ({
+  i18nNamespaces,
+}: CreateGetServerSidePropsOptions) => (context: GetServerSidePropsContext) =>
+  getServerSideProps(context, { i18nNamespaces });
+
+export const getServerSideProps = async (
+  { req }: GetServerSidePropsContext,
+  params?: CreateGetServerSidePropsOptions
+): GetServerSidePropsReturn => {
   const cookies = req.headers.cookie ?? '';
   const session = getSession(req);
   const language = detectLanguage(req);
-  const i18nBundle = await getI18N(language, req);
+  const i18nBundle = await getI18n(language, {
+    namespaces: params?.i18nNamespaces,
+    req,
+  });
 
   attachLambdaContext(req);
 

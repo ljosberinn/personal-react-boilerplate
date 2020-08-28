@@ -3,7 +3,10 @@ import {
   I18nextResourceLocale,
 } from '../../../karma/client/i18n';
 import { ENABLED_LANGUAGES } from '../../../src/constants';
-import { namespaces } from './namespaces';
+
+export const namespaces = ['i18n', 'auth', 'theme', 'serviceWorker'] as const;
+
+export type Namespace = typeof namespaces[number];
 
 export const i18nCache = ENABLED_LANGUAGES.reduce<I18nextResources>(
   (carry, language) => {

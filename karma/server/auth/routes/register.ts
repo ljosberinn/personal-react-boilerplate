@@ -3,7 +3,7 @@ import nextConnect from 'next-connect';
 import { BAD_REQUEST, CREATED } from '../../../utils/statusCodes';
 import { RequestHandler } from '../../types';
 
-const useRegistration: RequestHandler = (
+const useRegistration: RequestHandler<{}, { username: string }> = (
   { body: { username, password }, query: { authRouter } },
   res,
   next

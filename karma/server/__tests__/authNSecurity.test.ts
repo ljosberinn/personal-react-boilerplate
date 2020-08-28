@@ -4,6 +4,7 @@ import nextConnect from 'next-connect';
 import { SESSION_COOKIE_NAME } from '../../../src/constants';
 import { waitFor } from '../../../testUtils';
 import { testLambda } from '../../../testUtils/lambda';
+import { User } from '../../client/context/AuthContext/AuthContext';
 import { RequestMethods } from '../../utils/requestMethods';
 import { OK, UNAUTHORIZED } from '../../utils/statusCodes';
 import * as cookieUtils from '../auth/cookie';
@@ -11,7 +12,7 @@ import { AuthenticatedRequest } from '../auth/types';
 import { authNSecurityMiddleware } from '../middlewares/authNSecurity';
 import { RequestHandler } from '../types';
 
-const dummyHandler: RequestHandler<AuthenticatedRequest> = (req, res) => {
+const dummyHandler: RequestHandler<AuthenticatedRequest, User> = (req, res) => {
   return res.status(OK).json(req[SESSION_COOKIE_NAME]);
 };
 

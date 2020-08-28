@@ -64,7 +64,7 @@ describe('api/provider', () => {
       });
 
       test(`errors given an error query (provider: ${externalProvider})`, async () => {
-        const restoreConsole = mockConsoleMethods('error');
+        const { restoreConsole } = mockConsoleMethods('error');
 
         const error = 'some-error';
 

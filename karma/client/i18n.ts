@@ -1,7 +1,7 @@
 // contains lots of inspiration from https://github.com/UnlyEd/next-right-now/blob/v1-ssr-mst-aptd-gcms-lcz-sty/src/utils/i18nextLocize.ts
 import { captureException } from '@sentry/node';
 import { IncomingMessage } from 'http';
-import i18next, { i18n as I18NInstance } from 'i18next';
+import i18next, { i18n as I18nInstance } from 'i18next';
 import absoluteUrl from 'next-absolute-url';
 import { initReactI18next } from 'react-i18next';
 
@@ -12,28 +12,10 @@ import {
   IS_TEST,
   FALLBACK_LANGUAGE,
 } from '../../src/constants';
-import { namespaces } from '../server/i18n/namespaces';
+import { Namespace } from '../server/i18n/cache';
 import { KarmaProps } from './Karma';
 
 export const i18nCookieName = 'i18next';
-
-/**
- * @see https://meta.wikimedia.org/wiki/Template:List_of_language_names_ordered_by_code
- */
-export const RTL_LANGUAGES = new Set([
-  'ar', // Arabic
-  'arc', // Aramaic
-  'dv', // Divehi
-  'fa', // Persian
-  'ha', // Hakka Chinese
-  'he', // Hebrew
-  'khw', // Khowar
-  'ks', // Kashmiri
-  'ku', // Kurdish
-  'ps', // Pashto
-  'ur', // Urdu
-  'yi', // Yiddish
-]);
 
 type InitI18NextArgs = Pick<KarmaProps, 'language'> &
   (
@@ -48,7 +30,7 @@ type InitI18NextArgs = Pick<KarmaProps, 'language'> &
 export const initI18Next = ({
   language,
   ...rest
-}: InitI18NextArgs): I18NInstance => {
+}: InitI18NextArgs): I18nInstance => {
   const instance = i18next.use(initReactI18next);
 
   const resources =
@@ -74,7 +56,6 @@ export const initI18Next = ({
     // remove if you want to use localization (en-US, en-GB)
     load: 'languageOnly',
     lowerCaseLng: true,
-    ns: namespaces,
     react: {
       // not compatible with SSR
       useSuspense: false,
@@ -89,7 +70,7 @@ export const initI18Next = ({
     if (html) {
       instance.on('languageChanged', (lang) => {
         html.setAttribute('lang', lang);
-        html.setAttribute('dir', RTL_LANGUAGES.has(lang) ? 'rtl' : 'ltr');
+        html.setAttribute('dir', instance.dir(lang));
 
         document.cookie = `${i18nCookieName}=${lang}`;
       });
@@ -114,7 +95,8 @@ export const createLanguageChangeHandler = (
     const hasBundle = !!i18next.getDataByLanguage(language);
 
     if (!hasBundle) {
-      const resources = await getI18N(language);
+      const namespaces = i18next.reportNamespaces.getUsedNamespaces() as Namespace[];
+      const resources = await getI18n(language, { namespaces });
 
       Object.entries(resources).forEach(([namespace, bundle]) => {
         i18next.addResourceBundle(language, namespace, bundle);
@@ -188,9 +170,14 @@ const memoizedCacheMaxAge = (IS_BROWSER || IS_PROD ? 60 * 60 : 60) * 1000;
 
 export const i18nEndpoint = '/api/v1/i18n/';
 
-export const getI18N = async (
+interface GetI18nOptions {
+  req?: IncomingMessage;
+  namespaces?: Namespace[];
+}
+
+export const getI18n = async (
   lang: string,
-  req?: IncomingMessage
+  { req, namespaces }: GetI18nOptions = {}
 ): Promise<I18nextResourceLocale> => {
   if (!ENABLED_LANGUAGES.includes(lang)) {
     lang = FALLBACK_LANGUAGE;
@@ -212,7 +199,8 @@ export const getI18N = async (
 
   try {
     const { origin } = absoluteUrl(req);
-    const response = await fetch(origin + url);
+    const searchParams = computeSearchParams(namespaces);
+    const response = await fetch(origin + url + searchParams);
 
     try {
       resources = await response.json();
@@ -233,4 +221,21 @@ export const getI18N = async (
   };
 
   return resources;
+};
+
+/**
+ * Creates search params given namespaces
+ */
+const computeSearchParams = (namespaces?: Namespace[]) => {
+  if (!namespaces) {
+    return '';
+  }
+
+  const params = new URLSearchParams();
+
+  namespaces.forEach((ns) => {
+    params.append('namespaces', ns);
+  });
+
+  return `?${params.toString()}`;
 };

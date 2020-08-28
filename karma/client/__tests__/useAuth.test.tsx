@@ -123,7 +123,7 @@ describe('hooks/useAuth', () => {
   test(`on register, fails gracefully given invalid response data`, async () => {
     const fetchSpy = jest.spyOn(window, 'fetch');
 
-    const restoreConsole = mockConsoleMethods('error');
+    const { restoreConsole } = mockConsoleMethods('error');
 
     const user = { username: 'ljosberinn' };
     const userWithPassword = { ...user, password };
@@ -277,7 +277,7 @@ describe('hooks/useAuth', () => {
   test(`on local login, fails gracefully given invalid response data`, async () => {
     const fetchSpy = jest.spyOn(window, 'fetch');
 
-    const restoreConsole = mockConsoleMethods('error');
+    const { restoreConsole } = mockConsoleMethods('error');
 
     const user = { username: 'ljosberinn' };
     const userWithPassword = { ...user, password };

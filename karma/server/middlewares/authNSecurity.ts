@@ -15,11 +15,10 @@ const error = 'You must be authorized to access this resource.';
  * Patches `req`, adding property `SESSION_COOKIE_NAME` with the decrypted
  * cookie.
  */
-export const authNSecurityMiddleware: Middleware<AuthenticatedRequest> = (
-  req,
-  res,
-  next
-) => {
+export const authNSecurityMiddleware: Middleware<
+  AuthenticatedRequest,
+  { error: string }
+> = (req, res, next) => {
   try {
     // verify & decrypt the cookie
     const session = getSession(req);

@@ -9,13 +9,12 @@ import 'whatwg-fetch';
 import { ENABLED_LANGUAGES, FALLBACK_LANGUAGE } from '../../../src/constants';
 import { createIncomingRequestMock } from '../../../testUtils/api';
 import { mockConsoleMethods } from '../../../testUtils/console';
-import { i18nCache } from '../../server/i18n/cache';
+import { i18nCache, namespaces } from '../../server/i18n/cache';
 import {
-  getI18N,
+  getI18n,
   createLanguageChangeHandler,
   i18nEndpoint,
   initI18Next,
-  RTL_LANGUAGES,
   i18nCookieName,
 } from '../i18n';
 
@@ -82,32 +81,32 @@ describe('initI18Next', () => {
     const qsSpy = jest.spyOn(document, 'querySelector');
     const setAttributeSpy = jest.spyOn(HTMLElement.prototype, 'setAttribute');
 
-    const i18n = initI18Next({
+    const instance = initI18Next({
       i18nBundle: i18nCache[FALLBACK_LANGUAGE],
       language: FALLBACK_LANGUAGE,
     });
 
     const otherLanguage = 'de';
 
-    await i18n.changeLanguage(otherLanguage);
+    await instance.changeLanguage(otherLanguage);
     await waitFor(() => expect(qsSpy).toHaveBeenLastCalledWith('html'));
 
     expect(setAttributeSpy).toHaveBeenCalledWith('lang', otherLanguage);
   });
 
-  ['en', [...RTL_LANGUAGES][0]].forEach((language) => {
+  ['en', 'ar'].forEach((language) => {
     const dir = language === 'en' ? 'ltr' : 'rtl';
 
     test(`always changes the html.dir attribute onLanguageChanged (language: ${language})`, async () => {
       const qsSpy = jest.spyOn(document, 'querySelector');
       const setAttributeSpy = jest.spyOn(HTMLElement.prototype, 'setAttribute');
 
-      const i18n = initI18Next({
+      const instance = initI18Next({
         i18nBundle: i18nCache[language],
         language,
       });
 
-      await i18n.changeLanguage(language);
+      await instance.changeLanguage(language);
       await waitFor(() => expect(qsSpy).toHaveBeenLastCalledWith('html'));
 
       expect(setAttributeSpy).toHaveBeenCalledWith('dir', dir);
@@ -115,7 +114,7 @@ describe('initI18Next', () => {
   });
 });
 
-describe('getI18N', () => {
+describe('getI18n', () => {
   ENABLED_LANGUAGES.forEach((language) => {
     test(`loads a bundle given server-side arguments (language: ${language})`, async () => {
       mockRoute({
@@ -125,14 +124,13 @@ describe('getI18N', () => {
 
       const fetchSpy = jest.spyOn(window, 'fetch');
 
-      await getI18N(
-        language,
-        createIncomingRequestMock({
+      await getI18n(language, {
+        req: createIncomingRequestMock({
           headers: {
             host: mswEndpoint.replace('http://', ''),
           },
-        })
-      );
+        }),
+      });
 
       expect(fetchSpy).toHaveBeenCalledWith(
         mswEndpoint + i18nEndpoint + language
@@ -147,7 +145,7 @@ describe('getI18N', () => {
 
       const fetchSpy = jest.spyOn(window, 'fetch');
 
-      await getI18N(language);
+      await getI18n(language);
 
       expect(fetchSpy).toHaveBeenCalledWith(
         mswEndpoint + i18nEndpoint + language
@@ -165,7 +163,7 @@ describe('getI18N', () => {
 
     const fetchSpy = jest.spyOn(window, 'fetch');
 
-    await getI18N(unknownLanguage);
+    await getI18n(unknownLanguage);
 
     expect(fetchSpy).toHaveBeenCalledWith(
       mswEndpoint + i18nEndpoint + FALLBACK_LANGUAGE
@@ -173,7 +171,7 @@ describe('getI18N', () => {
   });
 
   test('fails gracefully given no response', async () => {
-    const restoreConsole = mockConsoleMethods('error');
+    const { restoreConsole } = mockConsoleMethods('error');
 
     const [language] = ENABLED_LANGUAGES;
 
@@ -183,7 +181,7 @@ describe('getI18N', () => {
 
     const fetchSpy = jest.spyOn(window, 'fetch');
 
-    const response = await getI18N(language);
+    const response = await getI18n(language);
 
     expect(fetchSpy).toHaveBeenCalledWith(
       mswEndpoint + i18nEndpoint + language
@@ -197,7 +195,7 @@ describe('getI18N', () => {
   });
 
   test('notifies sentry given no response', async () => {
-    const restoreConsole = mockConsoleMethods('error');
+    const { restoreConsole } = mockConsoleMethods('error');
 
     const [language] = ENABLED_LANGUAGES;
 
@@ -207,7 +205,7 @@ describe('getI18N', () => {
 
     const sentrySpy = jest.spyOn(Sentry, 'captureException');
 
-    await getI18N(language);
+    await getI18n(language);
 
     expect(sentrySpy).toHaveBeenCalledWith(expect.any(Error));
 
@@ -215,7 +213,7 @@ describe('getI18N', () => {
   });
 
   test('fails gracefully given an invalid response', async () => {
-    const restoreConsole = mockConsoleMethods('error');
+    const { restoreConsole } = mockConsoleMethods('error');
 
     const [language] = ENABLED_LANGUAGES;
 
@@ -226,7 +224,7 @@ describe('getI18N', () => {
 
     const fetchSpy = jest.spyOn(window, 'fetch');
 
-    const response = await getI18N(language);
+    const response = await getI18n(language);
 
     expect(fetchSpy).toHaveBeenCalledWith(
       mswEndpoint + i18nEndpoint + language
@@ -240,7 +238,7 @@ describe('getI18N', () => {
   });
 
   test('notifies sentry given an invalid response', async () => {
-    const restoreConsole = mockConsoleMethods('error');
+    const { restoreConsole } = mockConsoleMethods('error');
 
     const [language] = ENABLED_LANGUAGES;
 
@@ -251,7 +249,7 @@ describe('getI18N', () => {
 
     const sentrySpy = jest.spyOn(Sentry, 'captureException');
 
-    await getI18N(language);
+    await getI18n(language);
 
     expect(sentrySpy).toHaveBeenCalledWith(expect.any(Error));
 
@@ -260,18 +258,43 @@ describe('getI18N', () => {
 });
 
 describe('createLanguageChangeHandler', () => {
+  beforeEach(() => {
+    /**
+     * required as `reportNamespaces` is actually only defined after executing
+     * `useTranslation` at least once
+     * @see https://github.com/i18next/react-i18next/blob/dbd54d544ccca654f64a49bc8390d3bf87f02d84/src/useTranslation.js#L10
+     * @see https://github.com/i18next/react-i18next/issues/1166
+     */
+    Object.defineProperty(i18next, 'reportNamespaces', {
+      configurable: true,
+      value: {
+        addUsedNamespaces: jest.fn(),
+        getUsedNamespaces: jest.fn().mockReturnValue(namespaces),
+      },
+      writable: true,
+    });
+  });
+
+  afterAll(() => {
+    Object.defineProperty(i18next, 'reportNamespaces', {
+      configurable: true,
+      value: undefined,
+      writable: true,
+    });
+  });
+
   ENABLED_LANGUAGES.forEach((language) => {
     test(`always returns a function (language: ${language})`, () => {
       expect(createLanguageChangeHandler(language)).toBeInstanceOf(Function);
     });
 
     test('verifies bundle existence on i18n on language change', async () => {
-      const i18n = initI18Next({
+      const instance = initI18Next({
         i18nBundle: i18nCache[language],
         language,
       });
 
-      const getDataByLanguageSpy = jest.spyOn(i18n, 'getDataByLanguage');
+      const getDataByLanguageSpy = jest.spyOn(instance, 'getDataByLanguage');
 
       const otherLanguage = ENABLED_LANGUAGES.find((lng) => lng !== language)!;
 
@@ -288,12 +311,12 @@ describe('createLanguageChangeHandler', () => {
     });
 
     test('adds the resource bundle when loaded', async () => {
-      const i18n = initI18Next({
+      const instance = initI18Next({
         i18nBundle: i18nCache[language],
         language,
       });
 
-      const mockAddResourceBundle = jest.spyOn(i18n, 'addResourceBundle');
+      const mockAddResourceBundle = jest.spyOn(instance, 'addResourceBundle');
 
       const otherLanguage = ENABLED_LANGUAGES.find((lng) => lng !== language)!;
 
