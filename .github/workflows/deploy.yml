@@ -48,7 +48,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Installing dependencies
         run: yarn
-      - uses: paambaati/codeclimate-action@v2
+      - uses: paambaati/codeclimate-action@v2.6.0
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
           NEXT_PUBLIC_ENABLED_LANGUAGES: en,de
