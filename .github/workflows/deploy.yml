@@ -102,10 +102,10 @@ jobs:
   # based on https://github.com/UnlyEd/next-right-now/blob/v2-mst-aptd-gcms-lcz-sty/.github/workflows/deploy-zeit-production.yml#L95
   run-lighthouse-tests:
     name: Run LightHouse
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
     needs: deploy-prod
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v1
       - name: Resolving deployment url from Vercel
         # The following workflow is:
         #  - getting the most recent production deployment data
@@ -124,7 +124,7 @@ jobs:
         run: mkdir /tmp/lighthouse-artifacts
 
       - name: Run Lighthouse
-        uses: foo-software/lighthouse-check-action@master
+        uses: foo-software/lighthouse-check-action@v2.0.5
         id: lighthouseCheck
         with:
           # See https://github.com/marketplace/actions/lighthouse-check#inputs for all options
