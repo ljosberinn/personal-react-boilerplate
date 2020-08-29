@@ -23,12 +23,12 @@ import {
 } from '@chakra-ui/core';
 import { FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa';
 import { FcSettings } from 'react-icons/fc';
-import { MdDehaze, MdShare } from 'react-icons/md';
+import { MdDehaze } from 'react-icons/md';
 
 import { WithChildren } from '../../../../karma/client/Karma';
-import { IS_BROWSER } from '../../../constants';
 import { ColorModeSwitchAlt } from '../../components/ColorModeSwitchAlt';
 import { ExternalLink, ExternalLinkProps } from '../../components/ExternalLink';
+import { WebShareButton } from '../../components/WebShareButton';
 import { Feature } from './Feature';
 import {
   ChakraIcon,
@@ -232,7 +232,7 @@ function Header() {
         </Flex>
 
         <Flex width="auto" maxW="720px" align="center" color="gray.500">
-          <Stack align="center" direction="row" spacing="3">
+          <Stack align="center" direction="row" spacing="2">
             <ColorModeSwitchAlt />
             <ExternalLink
               omitIcon
@@ -246,35 +246,15 @@ function Header() {
             >
               <Icon as={FaGithub} boxSize="5" />
             </ExternalLink>
-            <ShareSite />
+            <WebShareButton
+              aria-label="Share this site"
+              title="next-karma - opinionated batteries-included Next.js template"
+            />
+            <MobileNav />
           </Stack>
-          <MobileNav />
         </Flex>
       </Flex>
     </Box>
-  );
-}
-
-function ShareSite() {
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-  if (!IS_BROWSER || !navigator.share) {
-    return null;
-  }
-
-  function handleShare() {
-    navigator.share({
-      title: 'next-karma - opinionated batteries-included Next.js template',
-      url: window.location.origin,
-    });
-  }
-
-  return (
-    <IconButton
-      onClick={handleShare}
-      aria-label="Share this site"
-      background="none"
-      icon={<Icon as={MdShare} boxSize="5" />}
-    />
   );
 }
 
