@@ -232,7 +232,7 @@ function Header() {
 
         <Flex width="auto" maxW="720px" align="center" color="gray.500">
           <Stack align="center" direction="row" spacing="3">
-            <ExternalLink omitIcon href={gitUrl}>
+            <ExternalLink omitIcon href={gitUrl} aria-label="Repository URL">
               <Icon as={FaGithub} boxSize="6" />
             </ExternalLink>
             <ColorModeSwitchAlt />
