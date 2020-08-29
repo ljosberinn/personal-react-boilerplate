@@ -13,7 +13,7 @@ import { expectJSONBodyMiddleware } from '../middlewares';
 
 jest.mock('../auth/cookie', () => ({
   encryptSession: jest.fn().mockImplementation((user) => JSON.stringify(user)),
-  setSessionCookie: jest.fn().mockImplementation((_token, _res) => {}),
+  setSessionCookie: jest.fn(),
 }));
 
 const url = '/api/v1/auth/login';

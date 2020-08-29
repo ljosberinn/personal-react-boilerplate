@@ -26,7 +26,7 @@ export function InternalLink({
   scroll,
   linkAs,
   ...rest
-}: InternalLinkProps) {
+}: InternalLinkProps): JSX.Element {
   const linkProps: NextLinkProps = {
     as: linkAs,
     href,

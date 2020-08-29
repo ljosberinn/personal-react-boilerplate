@@ -1,20 +1,17 @@
-.commitlintrc
+.codeclimate.json
 .env
-.eslintrc
+.env.example
+.eslintrc.js
 .gitignore
-.huskyrc
-.lintstagedrc
-.mergify.yml
 .prettierrc
-.nowignore
 .eslintignore
 .prettierignore
+.github/
 
-CONTRIBUTING.md
 README.MD
 LICENSE
 
 .vscode/
 .next/
-.now/
+.vercelignore/
 node_modules/

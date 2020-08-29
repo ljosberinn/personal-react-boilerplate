@@ -28,7 +28,7 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - name: Installing dependencies
-        run: yarn
+        run: yarn --frozen-lockfile
       - run: yarn lint:code
 
   types:
@@ -37,7 +37,7 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - name: Installing dependencies
-        run: yarn
+        run: yarn --frozen-lockfile
       - run: yarn lint:types
 
   test-coverage:
@@ -51,7 +51,7 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - name: Installing dependencies
-        run: yarn
+        run: yarn --frozen-lockfile
       - name: Test & Upload coverage
         uses: paambaati/codeclimate-action@v2.6.0
         env:
@@ -75,7 +75,7 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - name: Installing dependencies
-        run: yarn
+        run: yarn --frozen-lockfile
       - name: Running tests
         env:
           NEXT_PUBLIC_ENABLED_LANGUAGES: en,de

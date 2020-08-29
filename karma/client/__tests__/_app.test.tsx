@@ -22,8 +22,8 @@ const defaultProps: AppRenderProps = {
     initialProps: {},
     isFallback: false,
     pageLoader: undefined,
-    subscription: async () => {},
-    wrapApp: () => {},
+    subscription: jest.fn(),
+    wrapApp: jest.fn(),
   }),
 };
 

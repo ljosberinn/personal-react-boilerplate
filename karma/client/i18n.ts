@@ -42,27 +42,30 @@ export const initI18Next = ({
           [language]: rest.i18nBundle,
         };
 
-  instance.init({
-    cleanCode: true,
-    debug: !IS_PROD && !IS_TEST,
-    // removes translation default key
-    defaultNS: undefined,
-    fallbackLng: FALLBACK_LANGUAGE,
-    interpolation: {
-      // not needed with react
-      escapeValue: false,
-    },
-    lng: language,
-    // remove if you want to use localization (en-US, en-GB)
-    load: 'languageOnly',
-    lowerCaseLng: true,
-    react: {
-      // not compatible with SSR
-      useSuspense: false,
-    },
-    resources,
-    supportedLngs: ENABLED_LANGUAGES,
-  });
+  instance
+    .init({
+      cleanCode: true,
+      debug: !IS_PROD && !IS_TEST,
+      // removes translation default key
+      defaultNS: undefined,
+      fallbackLng: FALLBACK_LANGUAGE,
+      interpolation: {
+        // not needed with react
+        escapeValue: false,
+      },
+      lng: language,
+      // remove if you want to use localization (en-US, en-GB)
+      load: 'languageOnly',
+      lowerCaseLng: true,
+      react: {
+        // not compatible with SSR
+        useSuspense: false,
+      },
+      resources,
+      supportedLngs: ENABLED_LANGUAGES,
+    })
+    // eslint-disable-next-line no-console
+    .catch(console.error);
 
   if (IS_BROWSER) {
     const html = document.querySelector('html');

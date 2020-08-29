@@ -49,7 +49,9 @@ export function AuthContextProvider({
    * - the response status code when failing to authenticate
    * - INTERNAL_SERVER_ERROR when crashing
    */
-  async function login(options: LoginOptions) {
+  async function login(
+    options: LoginOptions
+  ): Promise<User | number | undefined> {
     if ('provider' in options) {
       if (ENABLED_PROVIDER.includes(options.provider)) {
         window.location.assign(
@@ -102,7 +104,7 @@ export function AuthContextProvider({
    * - the response status code when failing to register
    * - INTERNAL_SERVER_ERROR when crashing
    */
-  async function register(options: LocalLoginOptions) {
+  async function register(options: LocalLoginOptions): Promise<User | number> {
     try {
       const { url, method } = endpoints.register;
 

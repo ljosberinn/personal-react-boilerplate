@@ -4,14 +4,14 @@ import {
   Middleware as NextConnectMiddleware,
 } from 'next-connect';
 
-export type Middleware<T = {}, ReturnType = void> = NextConnectMiddleware<
+export type Middleware<T = {}, ReturnType = undefined> = NextConnectMiddleware<
   NextApiRequest & T,
   NextApiResponse<ReturnType>
 >;
 
 export type RequestHandler<
   T = {},
-  ReturnType = void
+  ReturnType = undefined
 > = NextConnectRequestHandler<
   // allows overwriting e.g. query
   NextApiRequest & T,

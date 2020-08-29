@@ -52,10 +52,9 @@ export function ServiceWorker(): null {
   // required to not re-register when e.g. language is changed and thus `t`
   const attemptedRegistration = useRef(false);
 
-  attachComponentBreadcrumb('ServiceWorker');
-
   useEffect(() => {
     if ('serviceWorker' in navigator && !attemptedRegistration.current) {
+      attachComponentBreadcrumb('ServiceWorker');
       attemptedRegistration.current = true;
 
       navigator.serviceWorker
