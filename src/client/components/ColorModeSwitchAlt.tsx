@@ -1,4 +1,9 @@
-import { useColorMode, IconButtonProps, IconButton } from '@chakra-ui/core';
+import {
+  useColorMode,
+  IconButtonProps,
+  IconButton,
+  Icon,
+} from '@chakra-ui/core';
 import { useTranslation } from 'react-i18next';
 import { FaSun, FaMoon } from 'react-icons/fa';
 
@@ -12,13 +17,13 @@ function useThemeMeta() {
 
   const isLightMode = colorMode === 'light';
 
-  const Icon = isLightMode ? FaMoon : FaSun;
+  const icon = isLightMode ? FaMoon : FaSun;
   const checked = !isLightMode;
   const labelKey = isLightMode ? 'set-dark-theme' : 'set-light-theme';
 
   return {
-    Icon,
     checked,
+    icon: <Icon as={icon} boxSize="5" />,
     labelKey,
     toggleColorMode,
   };
@@ -29,7 +34,7 @@ export function ColorModeSwitchAlt(
 ): JSX.Element {
   const { t } = useTranslation('theme');
 
-  const { Icon, checked, labelKey, toggleColorMode } = useThemeMeta();
+  const { icon, checked, labelKey, toggleColorMode } = useThemeMeta();
 
   return (
     <IconButton
@@ -37,7 +42,7 @@ export function ColorModeSwitchAlt(
       onClick={toggleColorMode}
       role="checkbox"
       aria-checked={checked}
-      icon={<Icon />}
+      icon={icon}
       color="yellow.500"
       background="none"
       aria-label={t(labelKey)}
