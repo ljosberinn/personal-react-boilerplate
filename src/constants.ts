@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Provider } from '../karma/client/context/AuthContext/AuthContext';
 
 /* utils */
@@ -47,3 +48,7 @@ export const FACEBOOK_CLIENT_SECRET = process.env.FACEBOOK_CLIENT_SECRET!;
 
 export const DISCORD_CLIENT_ID = process.env.DISCORD_CLIENT_ID!;
 export const DISCORD_CLIENT_SECRET = process.env.DISCORD_CLIENT_SECRET!;
+
+/* meta */
+export const BUILD_TIME = new Date().toString();
+export const BUILD_TIMESTAMP = Date.now();

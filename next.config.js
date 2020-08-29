@@ -4,7 +4,6 @@ const withSourceMaps = require('@zeit/next-source-maps')();
 const SentryWebpackPlugin = require('@sentry/webpack-plugin');
 const withOffline = require('next-offline');
 const { withPlugins } = require('next-compose-plugins');
-const { IgnorePlugin } = require('webpack');
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 });
@@ -17,8 +16,6 @@ const {
   NODE_ENV,
   VERCEL_GITHUB_COMMIT_SHA,
 } = process.env;
-
-const date = new Date();
 
 console.debug(`> Building on NODE_ENV="${NODE_ENV}"`);
 
@@ -69,21 +66,20 @@ const defaultConfig = {
      */
     ignoreBuildErrors: true,
   },
-  env: {
-    BUILD_TIME: date.toString(),
-    BUILD_TIMESTAMP: +date,
-  },
-  webpack: (config, { isServer }) => {
+  webpack: (config, { isServer, dev, webpack }) => {
+    // Perform customizations to webpack config
+    config.plugins.push(new webpack.IgnorePlugin(/\/__tests__\//));
+
     if (!isServer) {
       config.resolve.alias['@sentry/node'] = '@sentry/react';
 
       serverOnlyPackages.forEach((package) => {
-        config.plugins.push(new IgnorePlugin(new RegExp(package)));
+        config.plugins.push(new webpack.IgnorePlugin(new RegExp(package)));
       });
     }
 
     if (
-      NODE_ENV === 'production' &&
+      !dev &&
       NEXT_PUBLIC_SENTRY_DSN &&
       SENTRY_ORG &&
       SENTRY_PROJECT &&
