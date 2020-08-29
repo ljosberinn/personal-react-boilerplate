@@ -22,6 +22,9 @@ export interface WebShareButtonProps
   text?: string;
 }
 
+/**
+ * @see https://web.dev/web-share/
+ */
 export function WebShareButton({
   title,
   url,
