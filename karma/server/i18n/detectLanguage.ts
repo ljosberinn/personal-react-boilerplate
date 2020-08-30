@@ -12,6 +12,7 @@ const supportedLanguages = ENABLED_LANGUAGES.map(
   (locale) => locale.split('-')[0]
 );
 
+// eslint-disable-next-line inclusive-language/use-inclusive-words
 /**
  * @see https://github.com/opentable/accept-language-parser/blob/master/index.js
  */
@@ -21,6 +22,7 @@ export const findLanguageByAcceptLanguageHeader = (
   [...header.matchAll(regExp)]
     .map((match) => {
       // since capture groups are used above, we can safely ! here
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       const { language, quality } = match.groups!;
 
       return {

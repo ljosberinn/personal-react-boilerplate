@@ -3,7 +3,12 @@ import { init as nodeInit, NodeOptions, configureScope } from '@sentry/node';
 import { init as browserInit, BrowserOptions } from '@sentry/react';
 import { Options } from '@sentry/types';
 
-import { IS_BROWSER, IS_PROD, SENTRY_DSN } from '../../../src/constants';
+import {
+  BUILD_TIME,
+  IS_BROWSER,
+  IS_PROD,
+  SENTRY_DSN,
+} from '../../../src/constants';
 
 export const defaultOptions: Options = {
   attachStacktrace: true,
@@ -36,10 +41,10 @@ export const isomorphicSentryInit = ({
   init(options);
 
   configureScope((scope) => {
+    scope.setTag('buildTime', BUILD_TIME);
+
     if (!IS_BROWSER) {
       scope.setTag('nodejs', process.version);
     }
-
-    scope.setTag('buildTime', process.env.BUILD_TIME!);
   });
 };

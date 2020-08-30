@@ -79,7 +79,8 @@ export const withServerSideKarmaProps = <
   Props,
   Query extends ParsedUrlQuery = ParsedUrlQuery
 >(
-  fn: GetServerSidePropsHandler<Props, Query>
+  fn: GetServerSidePropsHandler<Props, Query>,
+  options?: CreateGetServerSidePropsOptions
 ) => {
   return async (
     ctx: GetServerSidePropsContext<Query>
@@ -87,7 +88,7 @@ export const withServerSideKarmaProps = <
     const { props } = await fn(ctx);
     const {
       props: { karma },
-    } = await getServerSideProps(ctx);
+    } = await getServerSideProps(ctx, options);
 
     return {
       props: {
@@ -106,20 +107,20 @@ export interface CreateGetServerSidePropsOptions {
   i18nNamespaces: Namespace[];
 }
 
-export const createGetServerSideProps = ({
-  i18nNamespaces,
-}: CreateGetServerSidePropsOptions) => (context: GetServerSidePropsContext) =>
-  getServerSideProps(context, { i18nNamespaces });
+export const createGetServerSideProps = (
+  options: CreateGetServerSidePropsOptions
+) => (context: GetServerSidePropsContext): GetServerSidePropsReturn =>
+  getServerSideProps(context, options);
 
 export const getServerSideProps = async (
   { req }: GetServerSidePropsContext,
-  params?: CreateGetServerSidePropsOptions
+  options?: CreateGetServerSidePropsOptions
 ): GetServerSidePropsReturn => {
   const cookies = req.headers.cookie ?? '';
   const session = getSession(req);
   const language = detectLanguage(req);
   const i18nBundle = await getI18n(language, {
-    namespaces: params?.i18nNamespaces,
+    namespaces: options?.i18nNamespaces,
     req,
   });
 

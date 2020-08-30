@@ -22,7 +22,7 @@ const mockGetServerSideProps = jest
     };
   });
 
-interface createContextMockArgs {
+interface CreateContextMockParam {
   query?: ParsedUrlQuery;
   req?: Partial<IncomingMessage>;
   res?: Partial<ServerResponse>;
@@ -32,7 +32,7 @@ const createContextMock = ({
   query = {},
   req = {},
   res = {},
-}: createContextMockArgs = {}): GetServerSidePropsContext<ParsedUrlQuery> => ({
+}: CreateContextMockParam = {}): GetServerSidePropsContext => ({
   query: { ...query },
   req: createIncomingRequestMock(req),
   res: createServerResponseMock(res),

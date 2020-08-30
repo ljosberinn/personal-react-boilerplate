@@ -43,7 +43,7 @@ interface BeforeInstallPromptEvent extends Event {
 
 export function CustomPWAInstallPrompt(): null | JSX.Element {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const promptEvent = useRef<BeforeInstallPromptEvent>(null!);
+  const promptEvent = useRef<BeforeInstallPromptEvent | null>(null);
 
   useEffect(() => {
     const onBeforeInstall = (event: BeforeInstallPromptEvent) => {
@@ -62,13 +62,15 @@ export function CustomPWAInstallPrompt(): null | JSX.Element {
   }, [onOpen]);
 
   /* async */ function install() {
-    // eslint-disable-next-line no-console
-    promptEvent.current.prompt().catch(console.error);
+    if (promptEvent.current) {
+      // eslint-disable-next-line no-console
+      promptEvent.current.prompt().catch(console.error);
 
-    // const { outcome, platform } = await promptEvent.current.userChoice;
-    // console.log({ outcome, platform });
+      // const { outcome, platform } = await promptEvent.current.userChoice;
+      // console.log({ outcome, platform });
 
-    onClose();
+      onClose();
+    }
   }
 
   if (!isOpen) {
