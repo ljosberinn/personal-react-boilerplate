@@ -62,13 +62,7 @@ describe('<LanguageSwitch />', () => {
   });
 
   it('contains valid html', () => {
-    validateHtml(<LanguageSwitch />, {
-      htmlValidate: {
-        rules: {
-          'attribute-boolean-style': 'off',
-        },
-      },
-    });
+    validateHtml(<LanguageSwitch />);
   });
 
   it('contains valid html when opened', () => {

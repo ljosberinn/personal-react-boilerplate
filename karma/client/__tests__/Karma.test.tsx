@@ -244,7 +244,6 @@ describe('getServerSideProps', () => {
     expect(result).toMatchObject({
       props: {
         karma: expect.objectContaining({
-          cookies: '',
           i18nBundle: mockBundle,
           language: FALLBACK_LANGUAGE,
           session: null,
@@ -351,7 +350,6 @@ describe('withServerSideKarmaProps', () => {
     expect(result).toMatchObject({
       props: expect.objectContaining({
         karma: {
-          cookies: '',
           i18nBundle: mockBundle,
           language: FALLBACK_LANGUAGE,
           session: null,

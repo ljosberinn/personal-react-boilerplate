@@ -277,11 +277,11 @@ type Rules = {
 
 type HTMLValidateOptions = Omit<ConfigData, 'rules'> & Rules;
 
-/**
- * emotion renders lots of inline styles which is technically disallowed
- */
 const defaultConfig: HTMLValidateOptions = {
   rules: {
+    // some chakra atributes render as such
+    'attribute-boolean-style': 'off',
+    // emotion renders lots of inline styles
     'no-inline-style': 'off',
   },
 };
