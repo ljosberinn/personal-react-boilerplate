@@ -2,6 +2,7 @@ import { IconButton, Icon, IconButtonProps } from '@chakra-ui/core';
 import React from 'react';
 import { MdShare } from 'react-icons/md';
 
+import { captureException } from '../../../karma/utils/sentry/client';
 import { IS_BROWSER } from '../../constants';
 
 export interface WebShareButtonProps
@@ -47,6 +48,12 @@ export function WebShareButton({
         url: url ?? window.location.origin,
       });
     } catch (error) {
+      // canceling a share throws, like AbortController, an AbortError
+      // we most likely don't care about that
+      if (error.name !== 'AbortError') {
+        captureException(error);
+      }
+
       // eslint-disable-next-line no-console
       console.error(error);
     }
