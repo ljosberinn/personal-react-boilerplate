@@ -1,4 +1,4 @@
-import { ChakraProvider, cookieStorageManager } from '@chakra-ui/core';
+import { ChakraProvider } from '@chakra-ui/core';
 import theme from '@chakra-ui/theme';
 import { GetServerSidePropsContext } from 'next';
 import { ParsedUrlQuery } from 'querystring';
@@ -23,7 +23,6 @@ export interface KarmaProps {
   language: string;
   i18nBundle: I18nextResourceLocale;
   session: User | null;
-  cookies: string;
 }
 
 export interface WithChildren {
@@ -38,7 +37,6 @@ export function KarmaProvider({
   session,
   i18nBundle,
   language,
-  cookies,
   children,
 }: KarmaProps & WithChildren): JSX.Element {
   const i18nInstance = initI18Next({ i18nBundle, language });
@@ -48,12 +46,7 @@ export function KarmaProvider({
   return (
     <I18nextProvider i18n={i18nInstance}>
       <AuthContextProvider session={session}>
-        <ChakraProvider
-          theme={theme}
-          portalConfig={{ zIndex: 40 }}
-          resetCSS
-          storageManager={cookieStorageManager(cookies)}
-        >
+        <ChakraProvider theme={theme} portalZIndex={40} resetCSS>
           <ServiceWorker />
           <MetaThemeColorSynchronizer />
           {/* <CustomPWAInstallPrompt /> */}
@@ -116,7 +109,6 @@ export const getServerSideProps = async (
   { req }: GetServerSidePropsContext,
   options?: CreateGetServerSidePropsOptions
 ): GetServerSidePropsReturn => {
-  const cookies = req.headers.cookie ?? '';
   const session = getSession(req);
   const language = detectLanguage(req);
   const i18nBundle = await getI18n(language, {
@@ -135,7 +127,6 @@ export const getServerSideProps = async (
   return {
     props: {
       karma: {
-        cookies,
         i18nBundle,
         language,
         session,

@@ -28,7 +28,6 @@ import { I18nextResourceLocale } from '../i18n';
 
 describe('<KarmaProvider />', () => {
   const defaultProps: KarmaProps = {
-    cookies: '',
     i18nBundle: i18nCache.de,
     language: 'en',
     session: null,

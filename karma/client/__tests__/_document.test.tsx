@@ -8,7 +8,6 @@ import * as sentryUtils from '../../utils/sentry/client';
 import { KarmaProps } from '../Karma';
 
 const pageProps: Omit<KarmaProps, 'children'> = {
-  cookies: '',
   i18nBundle: i18nCache.en,
   language: 'en',
   session: null,

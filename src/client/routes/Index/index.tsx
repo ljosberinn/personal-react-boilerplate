@@ -211,7 +211,7 @@ function Header() {
         p="3"
       >
         <Flex align="center">
-          <KarmaIcon size="3em" />{' '}
+          <KarmaIcon boxSize="3em" />{' '}
           <Text fontWeight="500" pl="2">
             next-karma
           </Text>

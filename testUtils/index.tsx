@@ -1,4 +1,4 @@
-import { ChakraProvider, cookieStorageManager } from '@chakra-ui/core';
+import { ChakraProvider } from '@chakra-ui/core';
 import theme from '@chakra-ui/theme';
 import {
   render as rtlRender,
@@ -102,10 +102,6 @@ export interface TestOptions extends Omit<RenderOptions, 'wrapper'> {
    * optional session to initialize AuthContextProvider with
    */
   session?: AuthContextDefinition['user'];
-  /**
-   * cookies to initialize the test with
-   */
-  cookies?: string;
 }
 
 // UI-less passthrough fallback to prevent using conditional logic in render
@@ -154,19 +150,13 @@ export function render(
     i18n,
     wrapper: Wrapper = ChildrenPassthrough,
     session = null,
-    cookies = '',
     ...rest
   }: TestOptions = {}
 ): RenderResult {
   return rtlRender(
     <I18nextProvider i18n={i18nInstance}>
       <AuthContextProvider session={session}>
-        <ChakraProvider
-          theme={theme}
-          resetCSS
-          portalConfig={{ zIndex: 40 }}
-          storageManager={cookieStorageManager(cookies)}
-        >
+        <ChakraProvider theme={theme} resetCSS portalZIndex={40}>
           <Wrapper>
             {i18n ? (
               <I18nTestMiddleware {...i18n}>{ui}</I18nTestMiddleware>
@@ -208,7 +198,7 @@ type TestA11YOptions = TestOptions & { axeOptions?: RunOptions };
 export const testA11Y = async (
   ui: UI | HTMLElement,
   { axeOptions, ...options }: TestA11YOptions = {}
-) => {
+): Promise<void> => {
   const element = isValidElement(ui) ? render(ui, options).container : ui;
   const results = await axe(element, axeOptions);
 

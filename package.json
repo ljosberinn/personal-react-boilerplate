@@ -16,9 +16,9 @@
     "postinstall": "yarn-deduplicate -l"
   },
   "dependencies": {
-    "@chakra-ui/core": "1.0.0-rc.2",
-    "@chakra-ui/icons": "1.0.0-rc.2",
-    "@chakra-ui/theme": "1.0.0-rc.2",
+    "@chakra-ui/core": "1.0.0-rc.3",
+    "@chakra-ui/icons": "1.0.0-rc.3",
+    "@chakra-ui/theme": "1.0.0-rc.3",
     "@sentry/minimal": "5.22.3",
     "@sentry/node": "5.22.3",
     "@sentry/react": "5.22.3",

@@ -87,7 +87,7 @@ function LanguageOption({ slug, isCurrentLanguage, t }: LanguageOptionProps) {
   return (
     <MenuItemOption
       value={slug}
-      isDisabled={isCurrentLanguage}
+      disabled={isCurrentLanguage}
       isChecked={isCurrentLanguage}
       onClick={
         isCurrentLanguage ? undefined : createLanguageChangeHandler(slug)

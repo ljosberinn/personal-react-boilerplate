@@ -1,7 +1,6 @@
 import { createIcon, Icon, useColorModeValue } from '@chakra-ui/core';
 
 export const ChakraIcon = createIcon({
-  // @ts-expect-error requires rc.3
   defaultProps: {
     width: 'auto',
   },
@@ -48,7 +47,6 @@ export const ESLintIcon = createIcon({
 });
 
 export const GithubActionsLogo = createIcon({
-  // @ts-expect-error requires rc.3
   defaultProps: { fill: 'none' },
   path: (
     <>
@@ -138,7 +136,6 @@ export const I18NextIcon = createIcon({
 });
 
 export const JestIcon = createIcon({
-  // @ts-expect-error requires rc.3
   defaultProps: {
     boxSize: '1em',
   },
@@ -258,7 +255,6 @@ export function SentryIcon({ size }: IconProps): JSX.Element {
 }
 
 export const TypeScriptIcon = createIcon({
-  // @ts-expect-error requires rc.3
   defaultProps: {
     boxSize: '1em',
   },

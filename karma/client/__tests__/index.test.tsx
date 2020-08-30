@@ -3,7 +3,6 @@ import { render, act } from '../../../testUtils';
 
 const defaultProps: Omit<IndexPageProps, 'children'> = {
   karma: {
-    cookies: '',
     i18nBundle: {},
     language: 'en',
     session: null,

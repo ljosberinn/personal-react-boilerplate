@@ -1,3 +1,4 @@
+import { ColorModeScript } from '@chakra-ui/core';
 import { captureException } from '@sentry/node';
 import NextDocument, { Html, Head, Main, NextScript } from 'next/document';
 
@@ -66,6 +67,7 @@ export default function CustomDocument(): JSX.Element {
         <meta content="Gerrit Alex" name="author" />
       </Head>
       <body>
+        <ColorModeScript />
         <Main />
         <NextScript />
       </body>
