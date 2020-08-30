@@ -12,7 +12,6 @@ const supportedLanguages = ENABLED_LANGUAGES.map(
   (locale) => locale.split('-')[0]
 );
 
-// eslint-disable-next-line inclusive-language/use-inclusive-words
 /**
  * @see https://github.com/opentable/accept-language-parser/blob/master/index.js
  */
