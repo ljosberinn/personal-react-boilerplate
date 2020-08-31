@@ -3,6 +3,7 @@ import React from 'react';
 import { MdShare } from 'react-icons/md';
 
 import { captureException } from '../../../karma/utils/sentry/client';
+import { IS_BROWSER } from '../../constants';
 
 export interface WebShareButtonProps
   extends Omit<IconButtonProps, 'icon' | 'background' | 'onClick'> {
@@ -31,14 +32,6 @@ export function WebShareButton({
   text,
   ...rest
 }: WebShareButtonProps): JSX.Element | null {
-  if (
-    typeof navigator === 'undefined' ||
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    !navigator.share
-  ) {
-    return null;
-  }
-
   async function handleShare() {
     try {
       await navigator.share({
@@ -58,12 +51,18 @@ export function WebShareButton({
     }
   }
 
+  const hidden =
+    !IS_BROWSER ||
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    !navigator.share;
+
   return (
     <IconButton
       {...rest}
       onClick={handleShare}
       background="none"
       icon={<Icon as={MdShare} boxSize="5" />}
+      hidden={hidden}
     />
   );
 }
