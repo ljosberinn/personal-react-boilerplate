@@ -1,5 +1,5 @@
 import { IconButton, Icon, IconButtonProps } from '@chakra-ui/core';
-import React from 'react';
+import React, { Fragment } from 'react';
 import { MdShare } from 'react-icons/md';
 
 import { captureException } from '../../../karma/utils/sentry/client';
@@ -26,7 +26,7 @@ export interface WebShareButtonProps
 const canShare =
   !IS_BROWSER ||
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-  !navigator.share;
+  !!navigator.share;
 
 /**
  * @see https://web.dev/web-share/
@@ -56,12 +56,9 @@ export function WebShareButton({
     }
   }
 
-  const display = {
-    xs: canShare ? 'initial' : 'none',
-    sm: canShare ? 'initial' : 'none',
-    md: 'none',
-    lg: 'none',
-  };
+  if (!canShare) {
+    return <Fragment key="web-share-button" />;
+  }
 
   return (
     <IconButton
@@ -69,7 +66,7 @@ export function WebShareButton({
       onClick={handleShare}
       background="none"
       icon={<Icon as={MdShare} boxSize="5" />}
-      display={display}
+      key="web-share-button"
     />
   );
 }
