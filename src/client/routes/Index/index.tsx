@@ -249,6 +249,7 @@ function Header() {
             <WebShareButton
               aria-label="Share this site"
               title="next-karma - opinionated batteries-included Next.js template"
+              key="web-share-button"
             />
             <MobileNav />
           </Stack>
