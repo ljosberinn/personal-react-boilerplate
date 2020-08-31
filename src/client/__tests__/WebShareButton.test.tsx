@@ -1,4 +1,10 @@
-import { render, screen, userEvent } from '../../../testUtils';
+import {
+  render,
+  screen,
+  userEvent,
+  testA11Y,
+  validateHtml,
+} from '../../../testUtils';
 import {
   WebShareButton,
   WebShareButtonProps,
@@ -8,13 +14,13 @@ const defaultProps: WebShareButtonProps = {
   'aria-label': 'test-label',
 };
 
-describe('<WebShareButton /> without support', () => {
-  it('renders nothing', () => {
-    render(<WebShareButton {...defaultProps} />);
+// describe('<WebShareButton /> without support', () => {
+//   it('renders nothing', () => {
+//     render(<WebShareButton {...defaultProps} />);
 
-    expect(screen.queryByRole('button')).not.toBeInTheDocument();
-  });
-});
+//     expect(screen.queryByRole('button')).not.toBeInTheDocument();
+//   });
+// });
 
 describe('<WebShareButton />', () => {
   beforeEach(() => {
@@ -31,6 +37,14 @@ describe('<WebShareButton />', () => {
       value: undefined,
       writable: true,
     });
+  });
+
+  it('passes a11y test', async () => {
+    await testA11Y(<WebShareButton {...defaultProps} />);
+  });
+
+  it('contains valid html', () => {
+    validateHtml(<WebShareButton {...defaultProps} />);
   });
 
   it('renders an icon as only child', () => {

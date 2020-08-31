@@ -1,5 +1,5 @@
 import { IconButton, Icon, IconButtonProps } from '@chakra-ui/core';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { MdShare } from 'react-icons/md';
 
 import { captureException } from '../../../karma/utils/sentry/client';
