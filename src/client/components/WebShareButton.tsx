@@ -23,10 +23,7 @@ export interface WebShareButtonProps
   text?: string;
 }
 
-const canShare =
-  !IS_BROWSER ||
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-  !!navigator.share;
+const key = 'web-share-button';
 
 /**
  * @see https://web.dev/web-share/
@@ -37,6 +34,13 @@ export function WebShareButton({
   text,
   ...rest
 }: WebShareButtonProps): JSX.Element | null {
+  const canShare = IS_BROWSER && !!navigator.share;
+
+  if (!canShare) {
+    console.log(IS_BROWSER, !!navigator.share, IS_BROWSER && !!navigator.share);
+    return <Fragment key={key} />;
+  }
+
   async function handleShare() {
     try {
       await navigator.share({
@@ -56,17 +60,13 @@ export function WebShareButton({
     }
   }
 
-  if (!canShare) {
-    return <Fragment key="web-share-button" />;
-  }
-
   return (
     <IconButton
       {...rest}
       onClick={handleShare}
       background="none"
       icon={<Icon as={MdShare} boxSize="5" />}
-      key="web-share-button"
+      key={key}
     />
   );
 }
