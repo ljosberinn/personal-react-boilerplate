@@ -4,7 +4,6 @@ import {
   Code,
   Flex,
   HStack,
-  Stack,
   Icon,
   useColorModeValue,
   Text,
@@ -232,27 +231,25 @@ function Header() {
         </Flex>
 
         <Flex width="auto" maxW="720px" align="center" color="gray.500">
-          <Stack align="center" direction="row" spacing="2">
-            <ColorModeSwitchAlt />
-            <ExternalLink
-              omitIcon
-              href={gitUrl}
-              aria-label="Repository URL"
-              d="flex"
-              boxSize="10"
-              justifyContent="center"
-              alignItems="center"
-              _hover={{ color: 'teal.600' }}
-            >
-              <Icon as={FaGithub} boxSize="5" />
-            </ExternalLink>
-            <WebShareButton
-              aria-label="Share this site"
-              title="next-karma - opinionated batteries-included Next.js template"
-              key="web-share-button"
-            />
-            <MobileNav />
-          </Stack>
+          <ColorModeSwitchAlt />
+          <ExternalLink
+            omitIcon
+            href={gitUrl}
+            aria-label="Repository URL"
+            d="flex"
+            boxSize="10"
+            justifyContent="center"
+            alignItems="center"
+            _hover={{ color: 'teal.600' }}
+          >
+            <Icon as={FaGithub} boxSize="5" />
+          </ExternalLink>
+          <WebShareButton
+            aria-label="Share this site"
+            title="next-karma - opinionated batteries-included Next.js template"
+            key="web-share-button"
+          />
+          <MobileNav />
         </Flex>
       </Flex>
     </Box>
@@ -561,7 +558,7 @@ function Footer() {
           MIT by <ExternalLink href="//gerritalex.de">Gerrit Alex</ExternalLink>
         </Box>
       </Text>
-      <Stack
+      <HStack
         mt={4}
         direction={['column', 'row']}
         spacing="12px"
@@ -572,7 +569,7 @@ function Footer() {
             <Icon as={icon} fontSize="xl" color="gray.400" /> {text}
           </ExternalLink>
         ))}
-      </Stack>
+      </HStack>
     </Box>
   );
 }
