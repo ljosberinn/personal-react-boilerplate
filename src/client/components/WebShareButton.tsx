@@ -23,7 +23,7 @@ export interface WebShareButtonProps
   text?: string;
 }
 
-const evaluateVisibility = () =>
+const canShare =
   !IS_BROWSER ||
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   !navigator.share;
@@ -37,12 +37,6 @@ export function WebShareButton({
   text,
   ...rest
 }: WebShareButtonProps): JSX.Element | null {
-  const [hidden, setHidden] = useState(evaluateVisibility);
-
-  useEffect(() => {
-    setHidden(evaluateVisibility);
-  }, []);
-
   async function handleShare() {
     try {
       await navigator.share({
@@ -62,13 +56,20 @@ export function WebShareButton({
     }
   }
 
+  const display = {
+    xs: canShare ? 'initial' : 'none',
+    sm: canShare ? 'initial' : 'none',
+    md: 'none',
+    lg: 'none',
+  };
+
   return (
     <IconButton
       {...rest}
       onClick={handleShare}
       background="none"
       icon={<Icon as={MdShare} boxSize="5" />}
-      hidden={hidden}
+      display={display}
     />
   );
 }
