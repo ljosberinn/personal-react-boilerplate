@@ -27,7 +27,7 @@ import { MdDehaze } from 'react-icons/md';
 import { WithChildren } from '../../../../karma/client/Karma';
 import { ColorModeSwitchAlt } from '../../components/ColorModeSwitchAlt';
 import { ExternalLink, ExternalLinkProps } from '../../components/ExternalLink';
-import { WebShareButton } from '../../components/WebShareButton';
+import { canShare, WebShareButton } from '../../components/WebShareButton';
 import { Feature } from './Feature';
 import {
   ChakraIcon,
@@ -244,11 +244,12 @@ function Header() {
           >
             <Icon as={FaGithub} boxSize="5" />
           </ExternalLink>
-          <WebShareButton
-            aria-label="Share this site"
-            title="next-karma - opinionated batteries-included Next.js template"
-            key="web-share-button"
-          />
+          {canShare && (
+            <WebShareButton
+              aria-label="Share this site"
+              title="next-karma - opinionated batteries-included Next.js template"
+            />
+          )}
           <MobileNav />
         </Flex>
       </Flex>
