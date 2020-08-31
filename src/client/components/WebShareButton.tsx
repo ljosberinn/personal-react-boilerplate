@@ -33,7 +33,7 @@ export function WebShareButton({
   ...rest
 }: WebShareButtonProps): JSX.Element | null {
   if (
-    !IS_BROWSER ||
+    typeof navigator === 'undefined' ||
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     !navigator.share
   ) {
