@@ -44,6 +44,7 @@ describe('<LanguageSwitch />', () => {
   let restoreConsole: ReturnType<typeof mockConsoleMethods>['restoreConsole'];
 
   beforeEach(() => {
+    // eslint-disable-next-line prefer-destructuring
     restoreConsole = mockConsoleMethods('error').restoreConsole;
   });
 

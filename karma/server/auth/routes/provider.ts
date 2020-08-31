@@ -18,7 +18,7 @@ const useExternalProvider: RequestHandler = async (req, res, next) => {
     const { authorizationUrl, tokenUrl, profileDataUrl } = config[provider];
 
     const { origin } = absoluteUrl(req);
-    const redirect_uri = origin + '/api/v1/auth/' + provider;
+    const redirect_uri = `${origin}/api/v1/auth/${provider}`;
 
     // prepare redirect to provider - no get params given
     if (Object.keys(req.query).length === 1) {

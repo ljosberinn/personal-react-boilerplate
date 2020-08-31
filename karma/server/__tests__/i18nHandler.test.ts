@@ -40,7 +40,7 @@ describe('api/i18n', () => {
   test('responds with BAD_REQUEST given no valid language', async () => {
     const response = await testLambda(i18nHandler, {
       catchAllName,
-      url: url + '/asdf',
+      url: `${url}/asdf`,
     });
 
     expect(response.status).toBe(BAD_REQUEST);
@@ -49,7 +49,7 @@ describe('api/i18n', () => {
   test('responds with BAD_REQUEST given no enabled language', async () => {
     const response = await testLambda(i18nHandler, {
       catchAllName,
-      url: url + '/fr',
+      url: `${url}/fr`,
     });
 
     expect(response.status).toBe(BAD_REQUEST);

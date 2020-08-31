@@ -25,7 +25,7 @@ const setup = (method: RequestInitMethod) => {
     statusText: 'OK',
     text: jest.fn(),
     then: jest.fn(),
-    trailer: new Promise((resolve) => resolve(new Headers())),
+    trailer: Promise.resolve(new Headers()),
     type: 'basic',
     url: '',
   });

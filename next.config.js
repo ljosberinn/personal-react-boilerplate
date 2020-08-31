@@ -60,8 +60,8 @@ const serverOnlyPackages = [];
 const defaultConfig = {
   typescript: {
     /**
-     * `yarn tsc` is run in CI already so we can safely assume no errors here
-     * reduces build time by ~55%
+     * `yarn lint:types` is run in CI already so we can safely assume no errors
+     *  here, conveniently reducing build time by ~55%
      * @see https://nextjs.org/docs/api-reference/next.config.js/ignoring-typescript-errors
      */
     ignoreBuildErrors: true,

@@ -162,9 +162,7 @@ export declare type MemoizedI18nextResources = {
  * when available
  *
  */
-const _memoizedI18nextResources: {
-  [endpoint: string]: MemoizedI18nextResources;
-} = {};
+const _memoizedI18nextResources = new Map<string, MemoizedI18nextResources>();
 
 /**
  * Milliseconds to cache i18n client side for
@@ -188,14 +186,15 @@ export const getI18n = async (
 
   const url = i18nEndpoint + lang;
 
-  const memoizedI18nextResources = !IS_TEST && _memoizedI18nextResources[url];
+  const memoizedI18nextResources =
+    !IS_TEST && _memoizedI18nextResources.get(url);
+  const ts = Date.now();
 
-  if (memoizedI18nextResources) {
-    const date = Date.now();
-
-    if (date - memoizedI18nextResources.ts < memoizedCacheMaxAge) {
-      return memoizedI18nextResources.resources;
-    }
+  if (
+    memoizedI18nextResources &&
+    ts - memoizedI18nextResources.ts < memoizedCacheMaxAge
+  ) {
+    return memoizedI18nextResources.resources;
   }
 
   let resources: I18nextResourceLocale = {};
@@ -218,10 +217,7 @@ export const getI18n = async (
     console.error(error.message, 'Failed to fetch i18n');
   }
 
-  _memoizedI18nextResources[url] = {
-    resources: resources,
-    ts: Date.now(),
-  };
+  _memoizedI18nextResources.set(url, { resources, ts });
 
   return resources;
 };
