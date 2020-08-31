@@ -3,7 +3,6 @@ import React from 'react';
 import { MdShare } from 'react-icons/md';
 
 import { captureException } from '../../../karma/utils/sentry/client';
-import { IS_BROWSER } from '../../constants';
 
 export interface WebShareButtonProps
   extends Omit<IconButtonProps, 'icon' | 'background' | 'onClick'> {
