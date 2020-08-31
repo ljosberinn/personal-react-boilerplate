@@ -1,5 +1,5 @@
 import { IconButton, Icon, IconButtonProps } from '@chakra-ui/core';
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { MdShare } from 'react-icons/md';
 
 import { captureException } from '../../../karma/utils/sentry/client';
@@ -33,12 +33,6 @@ export function WebShareButton({
   text,
   ...rest
 }: WebShareButtonProps): JSX.Element | null {
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    setVisible(true);
-  }, []);
-
   async function handleShare() {
     try {
       await navigator.share({
@@ -60,7 +54,7 @@ export function WebShareButton({
 
   return (
     <>
-      {visible && IS_BROWSER && navigator.share && (
+      {IS_BROWSER && navigator.share && (
         <IconButton
           {...rest}
           onClick={handleShare}
