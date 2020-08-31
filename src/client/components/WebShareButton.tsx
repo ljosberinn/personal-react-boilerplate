@@ -1,5 +1,5 @@
 import { IconButton, Icon, IconButtonProps } from '@chakra-ui/core';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { MdShare } from 'react-icons/md';
 
 import { captureException } from '../../../karma/utils/sentry/client';
@@ -23,6 +23,11 @@ export interface WebShareButtonProps
   text?: string;
 }
 
+const evaluateVisibility = () =>
+  !IS_BROWSER ||
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+  !navigator.share;
+
 /**
  * @see https://web.dev/web-share/
  */
@@ -32,6 +37,12 @@ export function WebShareButton({
   text,
   ...rest
 }: WebShareButtonProps): JSX.Element | null {
+  const [hidden, setHidden] = useState(evaluateVisibility);
+
+  useEffect(() => {
+    setHidden(evaluateVisibility);
+  }, []);
+
   async function handleShare() {
     try {
       await navigator.share({
@@ -50,11 +61,6 @@ export function WebShareButton({
       console.error(error);
     }
   }
-
-  const hidden =
-    !IS_BROWSER ||
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    !navigator.share;
 
   return (
     <IconButton
