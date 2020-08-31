@@ -37,7 +37,6 @@ export function WebShareButton({
   const canShare = IS_BROWSER && !!navigator.share;
 
   if (!canShare) {
-    console.log(IS_BROWSER, !!navigator.share, IS_BROWSER && !!navigator.share);
     return <Fragment key={key} />;
   }
 
