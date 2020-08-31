@@ -14,13 +14,13 @@ const defaultProps: WebShareButtonProps = {
   'aria-label': 'test-label',
 };
 
-// describe('<WebShareButton /> without support', () => {
-//   it('renders nothing', () => {
-//     render(<WebShareButton {...defaultProps} />);
+describe('<WebShareButton /> without support', () => {
+  it('renders nothing', () => {
+    render(<WebShareButton {...defaultProps} />);
 
-//     expect(screen.queryByRole('button')).not.toBeInTheDocument();
-//   });
-// });
+    expect(screen.queryByRole('button')).not.toBeInTheDocument();
+  });
+});
 
 describe('<WebShareButton />', () => {
   beforeEach(() => {
