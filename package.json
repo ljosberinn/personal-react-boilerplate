@@ -24,7 +24,7 @@
     "@sentry/react": "5.22.3",
     "cookie": "0.4.1",
     "i18next": "19.7.0",
-    "next": "9.5.2",
+    "next": "9.5.3",
     "next-absolute-url": "1.2.2",
     "next-connect": "0.8.1",
     "react": "17.0.0-rc.1",
@@ -37,7 +37,7 @@
   "devDependencies": {
     "@commitlint/cli": "9.1.2",
     "@commitlint/config-conventional": "9.1.2",
-    "@next/bundle-analyzer": "9.5.2",
+    "@next/bundle-analyzer": "9.5.3",
     "@sentry/types": "5.22.3",
     "@sentry/webpack-plugin": "1.12.1",
     "@testing-library/jest-dom": "5.11.4",
