@@ -1,11 +1,12 @@
-import NextDocument, { DocumentProps } from 'next/document';
+import type { DocumentProps } from 'next/document';
+import NextDocument from 'next/document';
 import { isValidElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 
 import Document from '../../../pages/_document';
 import { i18nCache } from '../../server/i18n/cache';
 import * as sentryUtils from '../../utils/sentry/client';
-import { KarmaProps } from '../Karma';
+import type { KarmaProps } from '../Karma';
 
 const pageProps: Omit<KarmaProps, 'children'> = {
   i18nBundle: i18nCache.en,
@@ -35,8 +36,13 @@ const defaultProps: DocumentProps = {
   canonicalBase: '/',
   dangerousAsPath: '/',
   devOnlyCacheBusterQueryString: '',
+  docComponentsRendered: {
+    Head: false,
+    Html: false,
+    Main: false,
+    NextScript: false,
+  },
   dynamicImports: [],
-  files: [],
   headTags: [],
   html: '',
   hybridAmp: false,

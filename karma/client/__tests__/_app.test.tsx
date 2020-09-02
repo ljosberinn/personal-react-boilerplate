@@ -4,7 +4,8 @@ import { Router } from 'next/router';
 
 import 'whatwg-fetch';
 
-import App, { AppRenderProps, reportWebVitals } from '../../../pages/_app';
+import type { AppRenderProps } from '../../../pages/_app';
+import App, { reportWebVitals } from '../../../pages/_app';
 import { createMockScope } from '../../../testUtils/sentry';
 import * as sentryUtils from '../../utils/sentry/client';
 
@@ -20,6 +21,7 @@ const defaultProps: AppRenderProps = {
     App: () => null,
     Component: () => null,
     initialProps: {},
+    initialStyleSheets: [],
     isFallback: false,
     pageLoader: undefined,
     subscription: jest.fn(),
