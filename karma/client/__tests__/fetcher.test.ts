@@ -2,7 +2,8 @@
 import nodeFetch from 'node-fetch';
 
 import { createIncomingRequestMock } from '../../../testUtils/api';
-import { RequestInitMethod, RequestMethods } from '../../utils/requestMethods';
+import type { RequestInitMethod } from '../../utils/requestMethods';
+import { RequestMethods } from '../../utils/requestMethods';
 import { authenticatedFetch } from '../utils/fetcher';
 
 const testUrl = 'http://localhost:3000';

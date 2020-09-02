@@ -1,6 +1,7 @@
-import { WithChildren } from '../../../karma/client/Karma';
+import type { WithChildren } from '../../../karma/client/Karma';
 import { testA11Y, validateHtml } from '../../../testUtils';
-import { InternalLink, InternalLinkProps } from '../components/InternalLink';
+import type { InternalLinkProps } from '../components/InternalLink';
+import { InternalLink } from '../components/InternalLink';
 
 jest.mock('next/link', () => {
   const nextLink = jest.requireActual('next/link');

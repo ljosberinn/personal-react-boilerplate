@@ -24,9 +24,10 @@ import { FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa';
 import { FcSettings } from 'react-icons/fc';
 import { MdDehaze } from 'react-icons/md';
 
-import { WithChildren } from '../../../../karma/client/Karma';
+import type { WithChildren } from '../../../../karma/client/Karma';
 import { ColorModeSwitchAlt } from '../../components/ColorModeSwitchAlt';
-import { ExternalLink, ExternalLinkProps } from '../../components/ExternalLink';
+import type { ExternalLinkProps } from '../../components/ExternalLink';
+import { ExternalLink } from '../../components/ExternalLink';
 import { WebShareButton } from '../../components/WebShareButton';
 import { Feature } from './Feature';
 import {

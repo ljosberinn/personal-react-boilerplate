@@ -1,10 +1,10 @@
-import { OutgoingHttpHeaders } from 'http';
-import { GetServerSidePropsContext } from 'next';
-import { ParsedUrlQuery } from 'querystring';
+import type { OutgoingHttpHeaders } from 'http';
+import type { GetServerSidePropsContext } from 'next';
+import type { ParsedUrlQuery } from 'querystring';
 
 import { getSession } from '../../server/auth/cookie';
 import { FOUND_MOVED_TEMPORARILY } from '../../utils/statusCodes';
-import { User } from '../context/AuthContext/AuthContext';
+import type { User } from '../context/AuthContext/AuthContext';
 
 export interface WithSessionOptions {
   /**

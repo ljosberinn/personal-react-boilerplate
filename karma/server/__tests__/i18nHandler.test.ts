@@ -1,6 +1,7 @@
 import { ENABLED_LANGUAGES } from '../../../src/constants';
 import { testLambda } from '../../../testUtils/lambda';
-import { RequestMethods, RequestInitMethod } from '../../utils/requestMethods';
+import type { RequestInitMethod } from '../../utils/requestMethods';
+import { RequestMethods } from '../../utils/requestMethods';
 import { NOT_FOUND, BAD_REQUEST, OK } from '../../utils/statusCodes';
 import { i18nCache } from '../i18n/cache';
 import { i18nHandler } from '../i18n/routes';

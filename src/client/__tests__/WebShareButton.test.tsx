@@ -5,10 +5,8 @@ import {
   testA11Y,
   validateHtml,
 } from '../../../testUtils';
-import {
-  WebShareButton,
-  WebShareButtonProps,
-} from '../components/WebShareButton';
+import type { WebShareButtonProps } from '../components/WebShareButton';
+import { WebShareButton } from '../components/WebShareButton';
 
 const defaultProps: WebShareButtonProps = {
   'aria-label': 'test-label',

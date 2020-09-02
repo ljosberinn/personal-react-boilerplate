@@ -2,13 +2,9 @@ import { useState } from 'react';
 
 import { ENABLED_PROVIDER } from '../../../../src/constants';
 import { INTERNAL_SERVER_ERROR } from '../../../utils/statusCodes';
-import { WithChildren } from '../../Karma';
-import {
-  AuthContext,
-  User,
-  LoginOptions,
-  LocalLoginOptions,
-} from './AuthContext';
+import type { WithChildren } from '../../Karma';
+import type { User, LoginOptions, LocalLoginOptions } from './AuthContext';
+import { AuthContext } from './AuthContext';
 
 export interface AuthContextProviderProps extends WithChildren {
   session: User | null;
@@ -49,9 +45,7 @@ export function AuthContextProvider({
    * - the response status code when failing to authenticate
    * - INTERNAL_SERVER_ERROR when crashing
    */
-  async function login(
-    options: LoginOptions
-  ): Promise<User | number | undefined> {
+  async function login(options: LoginOptions): Promise<User | number | null> {
     if ('provider' in options) {
       if (ENABLED_PROVIDER.includes(options.provider)) {
         window.location.assign(
@@ -59,7 +53,7 @@ export function AuthContextProvider({
         );
       }
 
-      return;
+      return null;
     }
 
     try {
@@ -74,6 +68,7 @@ export function AuthContextProvider({
         const json = await response.json();
 
         setUser(json);
+
         return json;
       }
 
@@ -81,6 +76,7 @@ export function AuthContextProvider({
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error(error);
+
       return INTERNAL_SERVER_ERROR;
     }
   }
@@ -115,8 +111,8 @@ export function AuthContextProvider({
 
       if (response.ok) {
         const json = await response.json();
-
         setUser(json);
+
         return json;
       }
 
@@ -124,6 +120,7 @@ export function AuthContextProvider({
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error(error);
+
       return INTERNAL_SERVER_ERROR;
     }
   }

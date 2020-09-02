@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { Provider } from '../karma/client/context/AuthContext/AuthContext';
+import type { Provider } from '../karma/client/context/AuthContext/AuthContext';
 
 /* utils */
 export const IS_BROWSER = typeof window !== 'undefined';

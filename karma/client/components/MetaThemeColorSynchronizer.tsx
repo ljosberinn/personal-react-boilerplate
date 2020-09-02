@@ -1,5 +1,4 @@
-import { useColorModeValue } from '@chakra-ui/core';
-import theme from '@chakra-ui/theme';
+import { useColorModeValue, theme } from '@chakra-ui/core';
 import Head from 'next/head';
 
 export function MetaThemeColorSynchronizer(): JSX.Element {

@@ -1,5 +1,6 @@
 import { render, screen, testA11Y, validateHtml } from '../../../testUtils';
-import { ExternalLink, ExternalLinkProps } from '../components/ExternalLink';
+import type { ExternalLinkProps } from '../components/ExternalLink';
+import { ExternalLink } from '../components/ExternalLink';
 
 const defaultProps: ExternalLinkProps = {
   children: 'test',

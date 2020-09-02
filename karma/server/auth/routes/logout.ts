@@ -2,7 +2,7 @@ import nextConnect from 'next-connect';
 
 import { SESSION_COOKIE_NAME } from '../../../../src/constants';
 import { OK } from '../../../utils/statusCodes';
-import { RequestHandler } from '../../types';
+import type { RequestHandler } from '../../types';
 import { removeCookie } from '../cookie';
 
 const useLogout: RequestHandler = ({ query: { authRouter } }, res, next) => {

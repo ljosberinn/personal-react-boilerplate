@@ -1,6 +1,7 @@
 import { waitFor } from '../../../testUtils';
 import { testLambda } from '../../../testUtils/lambda';
-import { RequestInitMethod, RequestMethods } from '../../utils/requestMethods';
+import type { RequestInitMethod } from '../../utils/requestMethods';
+import { RequestMethods } from '../../utils/requestMethods';
 import {
   NOT_FOUND,
   BAD_REQUEST,

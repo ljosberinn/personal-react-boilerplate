@@ -1,8 +1,9 @@
-import { ExternalProvider } from '../../../karma/client/context/AuthContext/AuthContext';
+import type { ExternalProvider } from '../../../karma/client/context/AuthContext/AuthContext';
 import { ENABLED_PROVIDER } from '../../../src/constants';
 import { mockConsoleMethods } from '../../../testUtils/console';
 import { testLambda } from '../../../testUtils/lambda';
-import { RequestInitMethod, RequestMethods } from '../../utils/requestMethods';
+import type { RequestInitMethod } from '../../utils/requestMethods';
+import { RequestMethods } from '../../utils/requestMethods';
 import {
   NOT_FOUND,
   FOUND_MOVED_TEMPORARILY,

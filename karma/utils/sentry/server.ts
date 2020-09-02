@@ -1,6 +1,6 @@
 import { init, configureScope } from '@sentry/node';
-import { IncomingMessage } from 'http';
-import { NextApiRequest } from 'next';
+import type { IncomingMessage } from 'http';
+import type { NextApiRequest } from 'next';
 
 import { isomorphicSentryInit, defaultOptions as options } from './shared';
 

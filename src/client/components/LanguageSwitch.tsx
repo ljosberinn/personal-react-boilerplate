@@ -1,3 +1,4 @@
+import type { BoxProps } from '@chakra-ui/core';
 import {
   Box,
   Menu,
@@ -8,12 +9,12 @@ import {
   MenuItemOption,
   MenuDivider,
   Button,
-  BoxProps,
   useColorModeValue,
   MenuTransition,
 } from '@chakra-ui/core';
-import { TFunction } from 'i18next';
-import { FlagIcon, FlagIconCode } from 'react-flag-kit';
+import type { TFunction } from 'i18next';
+import type { FlagIconCode } from 'react-flag-kit';
+import { FlagIcon } from 'react-flag-kit';
 import { useTranslation } from 'react-i18next';
 import { MdTranslate } from 'react-icons/md';
 

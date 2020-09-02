@@ -11,7 +11,7 @@ import {
   INTERNAL_SERVER_ERROR,
 } from '../../utils/statusCodes';
 import { AuthContextProvider, endpoints } from '../context/AuthContext';
-import { Provider } from '../context/AuthContext/AuthContext';
+import type { Provider } from '../context/AuthContext/AuthContext';
 import { useAuth } from '../hooks/useAuth';
 
 const password = 'next-karma!';
@@ -211,7 +211,7 @@ describe('hooks/useAuth', () => {
       });
     });
 
-    expect(response).toBeUndefined();
+    expect(response).toBeNull();
 
     expect(window.location.assign).not.toHaveBeenCalled();
   });
@@ -233,7 +233,7 @@ describe('hooks/useAuth', () => {
           response = await result.current.login({ provider });
         });
 
-        expect(response).toBeUndefined();
+        expect(response).toBeNull();
 
         expect(window.location.assign).toHaveBeenCalledWith(
           endpoints.provider.url.replace('provider', provider)

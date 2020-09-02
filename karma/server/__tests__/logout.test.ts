@@ -1,6 +1,7 @@
 import { SESSION_COOKIE_NAME } from '../../../src/constants';
 import { testLambda } from '../../../testUtils/lambda';
-import { RequestInitMethod, RequestMethods } from '../../utils/requestMethods';
+import type { RequestInitMethod } from '../../utils/requestMethods';
+import { RequestMethods } from '../../utils/requestMethods';
 import { NOT_FOUND, OK } from '../../utils/statusCodes';
 import * as cookieHandling from '../auth/cookie';
 import { logoutHandler } from '../auth/routes/logout';

@@ -1,7 +1,7 @@
-import { IncomingMessage } from 'http';
+import type { IncomingMessage } from 'http';
 import absoluteUrl from 'next-absolute-url';
 
-import { RequestInitMethod } from '../../utils/requestMethods';
+import type { RequestInitMethod } from '../../utils/requestMethods';
 
 /**
  * Utility function to make authenticated requests in getServerSideProps/getStaticProps

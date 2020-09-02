@@ -1,8 +1,9 @@
-import { serialize, parse, CookieSerializeOptions } from 'cookie';
-import { IncomingMessage } from 'http';
-import { NextApiRequest, NextApiResponse } from 'next';
+import type { CookieSerializeOptions } from 'cookie';
+import { serialize, parse } from 'cookie';
+import type { IncomingMessage } from 'http';
+import type { NextApiRequest, NextApiResponse } from 'next';
 
-import { User } from '../../../karma/client/context/AuthContext/AuthContext';
+import type { User } from '../../../karma/client/context/AuthContext/AuthContext';
 import {
   SESSION_LIFETIME,
   IS_PROD,

@@ -1,8 +1,8 @@
 import { SESSION_COOKIE_NAME } from '../../../src/constants';
 import { UNAUTHORIZED } from '../../utils/statusCodes';
 import { getSession } from '../auth/cookie';
-import { AuthenticatedRequest } from '../auth/types';
-import { Middleware } from '../types';
+import type { AuthenticatedRequest } from '../auth/types';
+import type { Middleware } from '../types';
 
 const error = 'You must be authorized to access this resource.';
 

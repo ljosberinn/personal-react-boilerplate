@@ -2,7 +2,7 @@ import * as sentryNode from '@sentry/node';
 import * as sentryReact from '@sentry/react';
 import { render } from '@testing-library/react';
 import { serialize } from 'cookie';
-import { GetServerSidePropsContext } from 'next';
+import type { GetServerSidePropsContext } from 'next';
 
 import { FALLBACK_LANGUAGE, SESSION_COOKIE_NAME } from '../../../src/constants';
 import {
@@ -11,20 +11,21 @@ import {
 } from '../../../testUtils/api';
 import { createMockScope } from '../../../testUtils/sentry';
 import * as cookieUtils from '../../server/auth/cookie';
-import { i18nCache, Namespace } from '../../server/i18n/cache';
+import type { Namespace } from '../../server/i18n/cache';
+import { i18nCache } from '../../server/i18n/cache';
 import * as detectLanguageUtils from '../../server/i18n/detectLanguage';
 import * as sentryUtils from '../../utils/sentry/client';
 import * as sentryUtilsServer from '../../utils/sentry/server';
+import type { KarmaProps } from '../Karma';
 import {
   KarmaProvider,
-  KarmaProps,
   getServerSideProps,
   withServerSideKarmaProps,
   createGetServerSideProps,
 } from '../Karma';
-import { User } from '../context/AuthContext/AuthContext';
+import type { User } from '../context/AuthContext/AuthContext';
 import * as i18n from '../i18n';
-import { I18nextResourceLocale } from '../i18n';
+import type { I18nextResourceLocale } from '../i18n';
 
 describe('<KarmaProvider />', () => {
   const defaultProps: KarmaProps = {
@@ -88,6 +89,7 @@ const setupSpies = () => {
             return namespaces.reduce<I18nextResourceLocale>(
               (carry, namespace) => {
                 carry[namespace] = mockBundle[namespace];
+
                 return carry;
               },
               {}

@@ -1,4 +1,5 @@
-import { IconButton, Icon, IconButtonProps } from '@chakra-ui/core';
+import type { IconButtonProps } from '@chakra-ui/core';
+import { IconButton, Icon } from '@chakra-ui/core';
 import React, { useState, useEffect } from 'react';
 import { MdShare } from 'react-icons/md';
 
@@ -59,18 +60,17 @@ export function WebShareButton({
     }
   }
 
-  const canShare = IS_BROWSER && navigator.share;
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+  if (!visible || !IS_BROWSER || !navigator.share) {
+    return null;
+  }
 
   return (
-    <>
-      {visible && canShare && (
-        <IconButton
-          {...rest}
-          onClick={handleShare}
-          background="none"
-          icon={<Icon as={MdShare} boxSize="5" />}
-        />
-      )}
-    </>
+    <IconButton
+      {...rest}
+      onClick={handleShare}
+      background="none"
+      icon={<Icon as={MdShare} boxSize="5" />}
+    />
   );
 }

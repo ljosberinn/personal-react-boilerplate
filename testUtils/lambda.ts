@@ -47,9 +47,9 @@ interface UrlArguments {
   headers?:
     | Record<string, string>
     | {
-        cookie: Record<string, string> | string;
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         [key: string]: any;
+        cookie: Record<string, string> | string;
       };
   /**
    * whether the request should follow a redirect
@@ -135,7 +135,10 @@ export const testLambda = async (
       previewModeSigningKey: '',
     };
 
-    apiResolver(req, res, getQuery(), resolver, apiContext, true);
+    apiResolver(req, res, getQuery(), resolver, apiContext, true).catch(
+      // eslint-disable-next-line no-console
+      console.error
+    );
   });
 
   const index = await listen(server);
@@ -180,7 +183,7 @@ export const testLambda = async (
         .filter(Boolean)
         .join('&');
 
-      const pathname = path.join('/') + '/';
+      const pathname = `${path.join('/')}/`;
       const affix = [pathname, query].join('?');
 
       return [index, affix].join('/');

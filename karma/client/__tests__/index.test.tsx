@@ -1,4 +1,5 @@
-import Index, { IndexPageProps } from '../../../pages';
+import type { IndexPageProps } from '../../../pages';
+import Index from '../../../pages';
 import { render, act } from '../../../testUtils';
 
 const defaultProps: Omit<IndexPageProps, 'children'> = {

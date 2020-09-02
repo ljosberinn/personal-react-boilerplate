@@ -1,9 +1,10 @@
 import * as Sentry from '@sentry/node';
 import { render } from '@testing-library/react';
-import { NextPageContext } from 'next';
+import type { NextPageContext } from 'next';
 import NextErrorComponent from 'next/error';
 
-import ErrorPage, { ErrorProps, getInitialProps } from '../../../pages/_error';
+import type { ErrorProps } from '../../../pages/_error';
+import ErrorPage, { getInitialProps } from '../../../pages/_error';
 import { createServerResponseMock } from '../../../testUtils/api';
 import { NOT_FOUND, INTERNAL_SERVER_ERROR } from '../../utils/statusCodes';
 

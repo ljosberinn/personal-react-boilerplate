@@ -1,9 +1,6 @@
-import {
-  WithKarma,
-  KarmaProvider,
-  createGetServerSideProps,
-} from '../karma/client/Karma';
-import { Namespace } from '../karma/server/i18n/cache';
+import type { WithKarma } from '../karma/client/Karma';
+import { KarmaProvider, createGetServerSideProps } from '../karma/client/Karma';
+import type { Namespace } from '../karma/server/i18n/cache';
 import { Index } from '../src/client/routes/Index';
 
 export type IndexPageProps = WithKarma;

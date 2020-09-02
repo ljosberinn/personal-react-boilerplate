@@ -1,12 +1,11 @@
-import { ChakraProvider } from '@chakra-ui/core';
-import theme from '@chakra-ui/theme';
-import { GetServerSidePropsContext } from 'next';
-import { ParsedUrlQuery } from 'querystring';
-import { ReactNode } from 'react';
+import { ChakraProvider, theme } from '@chakra-ui/core';
+import type { GetServerSidePropsContext } from 'next';
+import type { ParsedUrlQuery } from 'querystring';
+import type { ReactNode } from 'react';
 import { I18nextProvider } from 'react-i18next';
 
 import { getSession } from '../server/auth/cookie';
-import { Namespace } from '../server/i18n/cache';
+import type { Namespace } from '../server/i18n/cache';
 import { detectLanguage } from '../server/i18n/detectLanguage';
 import {
   attachComponentBreadcrumb,
@@ -16,8 +15,9 @@ import { attachLambdaContext } from '../utils/sentry/server';
 import { MetaThemeColorSynchronizer } from './components/MetaThemeColorSynchronizer';
 import { ServiceWorker } from './components/ServiceWorker';
 import { AuthContextProvider } from './context/AuthContext';
-import { User } from './context/AuthContext/AuthContext';
-import { I18nextResourceLocale, initI18Next, getI18n } from './i18n';
+import type { User } from './context/AuthContext/AuthContext';
+import type { I18nextResourceLocale } from './i18n';
+import { initI18Next, getI18n } from './i18n';
 
 export interface KarmaProps {
   language: string;

@@ -1,7 +1,7 @@
 import nextConnect from 'next-connect';
 
 import { OK, UNAUTHORIZED, BAD_REQUEST } from '../../../utils/statusCodes';
-import { RequestHandler } from '../../types';
+import type { RequestHandler } from '../../types';
 import { encryptSession, setSessionCookie } from '../cookie';
 
 interface LocalDBDataset {
@@ -70,6 +70,7 @@ const useLogin: RequestHandler<{}, Partial<LocalDBDataset>> = (
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error(error);
+
       return res.status(UNAUTHORIZED).end();
     }
   }

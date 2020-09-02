@@ -1,5 +1,5 @@
 import { BAD_REQUEST } from '../../utils/statusCodes';
-import { Middleware } from '../types';
+import type { Middleware } from '../types';
 
 /**
  * Middleware accepting exclusively valid JSON as req.body, if existing
@@ -14,9 +14,10 @@ export const expectJSONBodyMiddleware: Middleware = (req, res, next) => {
       }
 
       req.body = body;
-    } catch (error) {
+    } catch (error: unknown) {
       // eslint-disable-next-line no-console
       console.error(error);
+
       return res.status(BAD_REQUEST).end();
     }
   }

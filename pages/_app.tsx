@@ -1,7 +1,7 @@
-import { NextComponentType, NextPageContext } from 'next';
-import { NextWebVitalsMetric } from 'next/app';
+import type { NextComponentType, NextPageContext } from 'next';
+import type { NextWebVitalsMetric } from 'next/app';
 import Head from 'next/head';
-import { NextRouter } from 'next/router';
+import type { NextRouter } from 'next/router';
 
 import {
   attachRoutingContext,

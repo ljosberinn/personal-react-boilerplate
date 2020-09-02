@@ -1,6 +1,6 @@
 import { Box, useToast, Flex } from '@chakra-ui/core';
 import { InfoIcon } from '@chakra-ui/icons';
-import { TFunction } from 'i18next';
+import type { TFunction } from 'i18next';
 import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -75,6 +75,7 @@ export function ServiceWorker(): null {
             console.info(
               'ServiceWorker is currently deactivated.\nIf this is unintentional, please change `next.config.js.offlineConfig.generateInDevMode` to `true`.'
             );
+
             return;
           }
 

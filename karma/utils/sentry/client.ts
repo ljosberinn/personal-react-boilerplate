@@ -1,15 +1,10 @@
-import {
-  addBreadcrumb,
-  BrowserOptions,
-  Severity,
-  init,
-  configureScope,
-} from '@sentry/react';
-import { IncomingMessage } from 'http';
-import { NextRouter } from 'next/router';
+import type { BrowserOptions } from '@sentry/react';
+import { addBreadcrumb, Severity, init, configureScope } from '@sentry/react';
+import type { IncomingMessage } from 'http';
+import type { NextRouter } from 'next/router';
 
 import { IS_BROWSER } from '../../../src/constants';
-import { KarmaProps } from '../../client/Karma';
+import type { KarmaProps } from '../../client/Karma';
 import { isomorphicSentryInit, defaultOptions } from './shared';
 
 export * from '@sentry/react';

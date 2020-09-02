@@ -1,4 +1,4 @@
-import { ExternalProvider } from '../../../karma/client/context/AuthContext/AuthContext';
+import type { ExternalProvider } from '../../../karma/client/context/AuthContext/AuthContext';
 import {
   DISCORD_CLIENT_ID,
   DISCORD_CLIENT_SECRET,

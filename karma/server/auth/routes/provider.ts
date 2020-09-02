@@ -1,13 +1,13 @@
 import absoluteUrl from 'next-absolute-url';
 import nextConnect from 'next-connect';
 
-import { ExternalProvider } from '../../../../karma/client/context/AuthContext/AuthContext';
+import type { ExternalProvider } from '../../../../karma/client/context/AuthContext/AuthContext';
 import { ENABLED_PROVIDER } from '../../../../src/constants';
 import {
   FOUND_MOVED_TEMPORARILY,
   INTERNAL_SERVER_ERROR,
 } from '../../../utils/statusCodes';
-import { RequestHandler } from '../../types';
+import type { RequestHandler } from '../../types';
 import { encryptSession, setSessionCookie } from '../cookie';
 import { config, getRedirectUrl, getOAuthData, getProfileData } from '../oauth';
 

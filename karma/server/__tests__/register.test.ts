@@ -1,5 +1,6 @@
 import { testLambda } from '../../../testUtils/lambda';
-import { RequestMethods, RequestInitMethod } from '../../utils/requestMethods';
+import type { RequestInitMethod } from '../../utils/requestMethods';
+import { RequestMethods } from '../../utils/requestMethods';
 import { NOT_FOUND, BAD_REQUEST, CREATED } from '../../utils/statusCodes';
 import { registrationHandler } from '../auth/routes/register';
 import { expectJSONBodyMiddleware } from '../middlewares';

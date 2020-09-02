@@ -1,7 +1,11 @@
 // import { Debug } from '@sentry/integrations';
-import { init as nodeInit, NodeOptions, configureScope } from '@sentry/node';
-import { init as browserInit, BrowserOptions } from '@sentry/react';
-import { Options } from '@sentry/types';
+import type {
+  init as nodeInit,
+  NodeOptions,
+  configureScope,
+} from '@sentry/node';
+import type { init as browserInit, BrowserOptions } from '@sentry/react';
+import type { Options } from '@sentry/types';
 
 import {
   BUILD_TIME,

@@ -1,9 +1,6 @@
-import {
-  KarmaProvider,
-  WithKarma,
-  createGetServerSideProps,
-} from '../karma/client/Karma';
-import { Namespace } from '../karma/server/i18n/cache';
+import type { WithKarma } from '../karma/client/Karma';
+import { KarmaProvider, createGetServerSideProps } from '../karma/client/Karma';
+import type { Namespace } from '../karma/server/i18n/cache';
 
 // eslint-disable-next-line import/no-default-export
 export default function Components({ karma }: WithKarma): JSX.Element {

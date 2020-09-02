@@ -1,7 +1,8 @@
 // contains lots of inspiration from https://github.com/UnlyEd/next-right-now/blob/v1-ssr-mst-aptd-gcms-lcz-sty/src/utils/i18nextLocize.ts
 import { captureException } from '@sentry/node';
-import { IncomingMessage } from 'http';
-import i18next, { i18n as I18nInstance } from 'i18next';
+import type { IncomingMessage } from 'http';
+import type { i18n as I18nInstance } from 'i18next';
+import i18next from 'i18next';
 import absoluteUrl from 'next-absolute-url';
 import { initReactI18next } from 'react-i18next';
 
@@ -12,8 +13,8 @@ import {
   IS_TEST,
   FALLBACK_LANGUAGE,
 } from '../../src/constants';
-import { Namespace } from '../server/i18n/cache';
-import { KarmaProps } from './Karma';
+import type { Namespace } from '../server/i18n/cache';
+import type { KarmaProps } from './Karma';
 
 export const i18nCookieName = 'i18next';
 
@@ -180,11 +181,9 @@ export const getI18n = async (
   lang: string,
   { req, namespaces }: GetI18nOptions = {}
 ): Promise<I18nextResourceLocale> => {
-  if (!ENABLED_LANGUAGES.includes(lang)) {
-    lang = FALLBACK_LANGUAGE;
-  }
+  const language = ENABLED_LANGUAGES.includes(lang) ? lang : FALLBACK_LANGUAGE;
 
-  const url = i18nEndpoint + lang;
+  const url = i18nEndpoint + language;
 
   const memoizedI18nextResources =
     !IS_TEST && _memoizedI18nextResources.get(url);

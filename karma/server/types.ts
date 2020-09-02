@@ -1,5 +1,5 @@
-import { NextApiResponse, NextApiRequest } from 'next';
-import {
+import type { NextApiResponse, NextApiRequest } from 'next';
+import type {
   RequestHandler as NextConnectRequestHandler,
   Middleware as NextConnectMiddleware,
 } from 'next-connect';
