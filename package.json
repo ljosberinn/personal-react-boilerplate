@@ -60,7 +60,7 @@
     "husky": "4.2.5",
     "identity-obj-proxy": "3.0.0",
     "jest": "26.4.2",
-    "jest-axe": "3.5.0",
+    "jest-axe": "4.0.0",
     "jest-watch-typeahead": "0.6.0",
     "lint-staged": "10.2.13",
     "msw": "0.20.5",
