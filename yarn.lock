@@ -2066,6 +2066,11 @@
   dependencies:
     webpack-bundle-analyzer "3.6.1"
 
+"@next/eslint-plugin-next@^9.5.3":
+  version "9.5.3"
+  resolved "https://registry.yarnpkg.com/@next/eslint-plugin-next/-/eslint-plugin-next-9.5.3.tgz#45b9c8aabe05d31d555d20f2aafe13c27aefd2fb"
+  integrity sha512-Q9AGbE4gEP8yKXv10Weopg7tmN5rsEYWG8+n2chBk0F7dM3Vwxn+5G/7BG8+KSK8QOPXwFSnJo6iDUJKC21tAw==
+
 "@next/react-dev-overlay@9.5.3":
   version "9.5.3"
   resolved "https://registry.yarnpkg.com/@next/react-dev-overlay/-/react-dev-overlay-9.5.3.tgz#3275301f08045ecc709e3273031973a1f5e81427"
@@ -5129,11 +5134,12 @@ eslint-ast-utils@^1.1.0:
     lodash.get "^4.4.2"
     lodash.zip "^4.2.0"
 
-eslint-config-galex@1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/eslint-config-galex/-/eslint-config-galex-1.1.1.tgz#ff74b2c60930ecaa2ad254ece1aebbd59b0d59c8"
-  integrity sha512-zbMJF+z2Bg+u6ayIlzhNUXYZZqnWX4hPjZvjpa7581chs0RswgbupVZ3CbmOdZ0p5NKkJZgI/ftCFSRurRCI2g==
+eslint-config-galex@2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/eslint-config-galex/-/eslint-config-galex-2.0.3.tgz#61bb3a5929a6cdc1e6d338ee963ccd5ddd1b5b45"
+  integrity sha512-lChb0Ardb8Km0PS/GyHIteEjQBQjq8rOwT2RYRvUFFrLC3G/s3ocAM061+EjxBq2grE3Anl1BJVaa5IjXPTqVA==
   dependencies:
+    "@next/eslint-plugin-next" "^9.5.3"
     "@typescript-eslint/eslint-plugin" "4.0.1"
     "@typescript-eslint/parser" "4.0.1"
     babel-eslint "10.1.0"
