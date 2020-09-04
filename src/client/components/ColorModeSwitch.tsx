@@ -1,5 +1,11 @@
-import type { FlexProps } from '@chakra-ui/core';
-import { Switch, useColorMode, Flex, Box } from '@chakra-ui/core';
+import type { FlexProps, IconProps } from '@chakra-ui/core';
+import {
+  Switch,
+  useColorMode,
+  Flex,
+  forwardRef,
+  Icon as ChakraIcon,
+} from '@chakra-ui/core';
 import { useTranslation } from 'react-i18next';
 import { FaSun, FaMoon } from 'react-icons/fa';
 
@@ -12,10 +18,10 @@ function useThemeMeta() {
   const isLightTheme = colorMode === 'light';
   const isChecked = !isLightTheme;
 
+  const switchLabel = isLightTheme ? 'set-dark-theme' : 'set-light-theme';
+
   const sunColor = isLightTheme ? yellow : gray;
   const sunLabel = isLightTheme ? 'is-light-theme' : 'set-light-theme';
-
-  const switchLabel = isLightTheme ? 'set-dark-theme' : 'set-light-theme';
 
   const moonColor = isLightTheme ? gray : yellow;
   const moonLabel = isLightTheme ? 'set-dark-theme' : 'is-dark-theme';
@@ -31,9 +37,9 @@ function useThemeMeta() {
   };
 }
 
-export type ColorModeSwitchAltProps = FlexProps;
+export type ColorModeSwitchProps = FlexProps;
 
-export function ColorModeSwitch(props: ColorModeSwitchAltProps): JSX.Element {
+export function ColorModeSwitch(props: ColorModeSwitchProps): JSX.Element {
   const { t } = useTranslation('theme');
 
   const {
@@ -48,11 +54,8 @@ export function ColorModeSwitch(props: ColorModeSwitchAltProps): JSX.Element {
 
   return (
     <Flex cursor="pointer" d="inline-flex" {...props}>
-      <Box
-        d="inline-block"
+      <Icon
         as={FaSun}
-        focusable={false}
-        height="6"
         color={sunColor}
         data-testid="theme-switch-sun"
         onClick={toggleColorMode}
@@ -67,11 +70,8 @@ export function ColorModeSwitch(props: ColorModeSwitchAltProps): JSX.Element {
         marginLeft="2"
         marginRight="2"
       />
-      <Box
-        d="inline-block"
+      <Icon
         as={FaMoon}
-        focusable={false}
-        height="6"
         color={moonColor}
         data-testid="theme-switch-moon"
         onClick={toggleColorMode}
@@ -80,3 +80,7 @@ export function ColorModeSwitch(props: ColorModeSwitchAltProps): JSX.Element {
     </Flex>
   );
 }
+
+const Icon = forwardRef<IconProps, 'svg'>((props, ref) => (
+  <ChakraIcon height="6" focusable={false} ref={ref} {...props} />
+));

@@ -75,23 +75,25 @@ function Header() {
         </Flex>
 
         <Flex width="auto" maxW="720px" align="center" color="gray.500">
-          <ColorModeSwitchAlt />
-          <ExternalLink
-            omitIcon
-            href={gitUrl}
-            aria-label="Repository URL"
-            d="flex"
-            boxSize="10"
-            justifyContent="center"
-            alignItems="center"
-            _hover={{ color: 'teal.600' }}
-          >
-            <Icon as={FaGithub} boxSize="5" />
-          </ExternalLink>
-          <WebShareButton
-            aria-label="Share this site"
-            title="next-karma - opinionated batteries-included Next.js template"
-          />
+          <HStack spacing={2}>
+            <ColorModeSwitchAlt />
+            <ExternalLink
+              omitIcon
+              href={gitUrl}
+              aria-label="Repository URL"
+              d="flex"
+              boxSize="10"
+              justifyContent="center"
+              alignItems="center"
+              _hover={{ color: 'teal.600' }}
+            >
+              <Icon as={FaGithub} boxSize="5" />
+            </ExternalLink>
+            <WebShareButton
+              aria-label="Share this site"
+              title="next-karma - opinionated batteries-included Next.js template"
+            />
+          </HStack>
         </Flex>
       </Flex>
     </Box>

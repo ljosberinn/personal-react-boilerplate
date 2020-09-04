@@ -42,7 +42,6 @@ export function LanguageSwitch(props: LanguageSwitchProps): JSX.Element {
         as={Button}
         type="button"
         colorScheme="teal"
-        width="100%"
         leftIcon={<Icon d="inline-block" as={MdTranslate} />}
       >
         {t('language-toggle')}
