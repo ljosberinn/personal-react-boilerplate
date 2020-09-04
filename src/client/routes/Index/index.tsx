@@ -10,23 +10,14 @@ import {
   Heading,
   Divider,
   Button,
-  useDisclosure,
-  Drawer,
-  DrawerOverlay,
-  DrawerContent,
-  DrawerBody,
-  IconButton,
-  chakra,
   Image,
   keyframes,
 } from '@chakra-ui/core';
 import { FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa';
 import { FcSettings } from 'react-icons/fc';
-import { MdDehaze } from 'react-icons/md';
 
 import type { WithChildren } from '../../../../karma/client/Karma';
 import { ColorModeSwitchAlt } from '../../components/ColorModeSwitchAlt';
-import type { ExternalLinkProps } from '../../components/ExternalLink';
 import { ExternalLink } from '../../components/ExternalLink';
 import { WebShareButton } from '../../components/WebShareButton';
 import { Feature } from './Feature';
@@ -45,148 +36,6 @@ import {
 } from './icons';
 
 const gitUrl = '//github.com/ljosberinn/personal-react-boilerplate';
-
-type CustomExternalLinkProps = Pick<ExternalLinkProps, 'href' | 'children'>;
-
-function CustomExternalLink({
-  href,
-  children,
-}: CustomExternalLinkProps): JSX.Element {
-  const _hoverBg = useColorModeValue('gray.300', 'whiteAlpha.100');
-
-  return (
-    <ExternalLink
-      omitIcon
-      href={href}
-      transition="all 0.2s"
-      _hover={{ bg: _hoverBg }}
-      py="1"
-      px="3"
-      borderRadius="4px"
-    >
-      {children}
-    </ExternalLink>
-  );
-}
-
-const StyledLink = chakra(ExternalLink, {
-  baseStyle: {
-    _first: {
-      mt: 0,
-    },
-    _focus: {
-      boxShadow: 'outline',
-    },
-    borderRadius: 'sm',
-    display: 'block',
-    mt: 1,
-    outline: 'none',
-    px: '2',
-    py: '1',
-    transition: 'all 0.2s',
-  },
-});
-
-interface MobileNavLinKProps extends WithChildren {
-  href: string;
-}
-
-function MobileNavLink({ children, href }: MobileNavLinKProps) {
-  const hoverColor = useColorModeValue('gray.900', 'whiteAlpha.900');
-  const color = useColorModeValue('gray.700', 'whiteAlpha.900');
-
-  return (
-    <StyledLink
-      href={href}
-      mx={-2}
-      color={color}
-      _hover={{
-        color: hoverColor,
-        transform: 'translateX(2px)',
-      }}
-    >
-      <span>{children}</span>
-    </StyledLink>
-  );
-}
-
-function MobileNav() {
-  const { isOpen, onToggle, onClose } = useDisclosure();
-
-  return (
-    <>
-      <IconButton
-        display={{
-          md: 'none',
-          sm: 'inline-flex',
-        }}
-        aria-label="Open menu"
-        fontSize="20px"
-        variant="ghost"
-        icon={<MdDehaze />}
-        onClick={onToggle}
-      />
-      {isOpen && (
-        <Drawer size="xs" isOpen placement="left" onClose={onClose}>
-          <DrawerOverlay>
-            <DrawerContent>
-              <DrawerBody p={0}>
-                <Box
-                  position="relative"
-                  overflowY="auto"
-                  borderRightWidth="1px"
-                >
-                  <Box
-                    as="nav"
-                    height="100vh"
-                    aria-label="Main navigation"
-                    fontSize="sm"
-                    px="6"
-                    pt="10"
-                    pb="6"
-                  >
-                    <Box mb="10">
-                      <Heading
-                        size="xs"
-                        letterSpacing="wide"
-                        textTransform="uppercase"
-                        mb="4"
-                      >
-                        Getting Started
-                      </Heading>
-                      <MobileNavLink href="//ljosberinn.gitbook.io/next-karma/getting-started-1/setting-up-a-new-project">
-                        Setting up a new project
-                      </MobileNavLink>
-                    </Box>
-
-                    <Box mb="10">
-                      <Heading
-                        size="xs"
-                        letterSpacing="wide"
-                        textTransform="uppercase"
-                        mb="4"
-                      >
-                        Guides
-                      </Heading>
-
-                      <MobileNavLink href="//ljosberinn.gitbook.io/next-karma/guides/api-routes-with-next-connect">
-                        API Routes with next-connect
-                      </MobileNavLink>
-
-                      <MobileNavLink href="//ljosberinn.gitbook.io/next-karma/guides/api-routes-with-next-connect/using-custom-middlewares">
-                        Using custom middlewares
-                      </MobileNavLink>
-                    </Box>
-                  </Box>
-                </Box>
-              </DrawerBody>
-            </DrawerContent>
-          </DrawerOverlay>
-        </Drawer>
-      )}
-    </>
-  );
-}
 
 function Header() {
   const bg = useColorModeValue('gray.100', 'gray.700');
@@ -221,13 +70,7 @@ function Header() {
             ml="12"
             display={{ base: 'none', md: 'flex' }}
           >
-            <CustomExternalLink href="//ljosberinn.gitbook.io/next-karma">
-              Docs
-            </CustomExternalLink>
-
-            <CustomExternalLink href="//ljosberinn.gitbook.io/next-karma/guides/">
-              Guides
-            </CustomExternalLink>
+            Docs (coming soon)
           </HStack>
         </Flex>
 
@@ -249,7 +92,6 @@ function Header() {
             aria-label="Share this site"
             title="next-karma - opinionated batteries-included Next.js template"
           />
-          <MobileNav />
         </Flex>
       </Flex>
     </Box>
@@ -274,7 +116,7 @@ function Hero() {
         next-karma
       </Heading>
 
-      <Text fontStyle="italic">_still wip_</Text>
+      <Text fontStyle="italic">_still wip_ & docs coming soon</Text>
 
       <FadedText>An opinionated batteries-included Next.js template</FadedText>
       <FadedText>
