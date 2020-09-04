@@ -55,7 +55,6 @@
     "dotenv": "8.2.0",
     "eslint": "7.8.1",
     "eslint-config-galex": "2.1.0",
-    "eslint-plugin-tsc": "1.2.0",
     "html-validate": "3.2.0",
     "husky": "4.2.5",
     "identity-obj-proxy": "3.0.0",
@@ -84,10 +83,7 @@
     "*.{js,tsx,ts,tsx,css,scss}": [
       "eslint --fix"
     ],
-    "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": "prettier --write",
-    "*.{ts,tsx}": [
-      "eslint --fix --plugin tsc --rule 'tsc/config: [2, {configFile: \"./tsconfig.json\"}]'"
-    ]
+    "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": "prettier --write"
   },
   "commitlint": {
     "extends": [
