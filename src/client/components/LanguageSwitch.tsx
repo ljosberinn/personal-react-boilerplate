@@ -1,4 +1,4 @@
-import type { BoxProps } from '@chakra-ui/core';
+import type { MenuProps } from '@chakra-ui/core';
 import {
   Box,
   Menu,
@@ -11,6 +11,7 @@ import {
   Button,
   useColorModeValue,
   MenuTransition,
+  Icon,
 } from '@chakra-ui/core';
 import type { TFunction } from 'i18next';
 import type { FlagIconCode } from 'react-flag-kit';
@@ -29,51 +30,54 @@ const flagMap: FlapMap = {
   en: 'GB',
 };
 
-type LanguageSwitchProps = BoxProps;
+type LanguageSwitchProps = Omit<MenuProps, 'children' | 'isLazy'>;
 
 export function LanguageSwitch(props: LanguageSwitchProps): JSX.Element {
   const { i18n, t } = useTranslation('i18n');
   const backgroundColor = useColorModeValue('gray.100', 'whiteAlpha.100');
 
   return (
-    <Box d="inline-block" {...props}>
-      <Menu isLazy>
-        <MenuButton as={Button} type="button" colorScheme="teal" width="100%">
-          <Box d="inline-block" as={MdTranslate} focusable={false} mr="2" />
-          {t('language-toggle')}
-        </MenuButton>
-        <MenuTransition>
-          {(styles) => (
-            <MenuList sx={styles}>
-              <MenuOptionGroup
-                title={t('available-languages')}
-                defaultValue={i18n.language}
-                type="radio"
-              >
-                {ENABLED_LANGUAGES.map((slug) => (
-                  <LanguageOption
-                    t={t}
-                    slug={slug}
-                    isCurrentLanguage={slug === i18n.language}
-                    key={slug}
-                  />
-                ))}
-              </MenuOptionGroup>
-              <MenuDivider />
-              <MenuItem
-                as={ExternalLink}
-                _focus={{
-                  backgroundColor,
-                  boxShadow: 'unset',
-                }}
-                href="//github.com/ljosberinn/next-karma-docs"
-              >
-                {t('help-cta')}
-              </MenuItem>
-            </MenuList>
-          )}
-        </MenuTransition>
-      </Menu>
+    <Box as={Menu} d="inline-block" {...props} isLazy>
+      <MenuButton
+        as={Button}
+        type="button"
+        colorScheme="teal"
+        width="100%"
+        leftIcon={<Icon d="inline-block" as={MdTranslate} />}
+      >
+        {t('language-toggle')}
+      </MenuButton>
+      <MenuTransition>
+        {(styles) => (
+          <MenuList sx={styles}>
+            <MenuOptionGroup
+              title={t('available-languages')}
+              defaultValue={i18n.language}
+              type="radio"
+            >
+              {ENABLED_LANGUAGES.map((slug) => (
+                <LanguageOption
+                  t={t}
+                  slug={slug}
+                  isCurrentLanguage={slug === i18n.language}
+                  key={slug}
+                />
+              ))}
+            </MenuOptionGroup>
+            <MenuDivider />
+            <MenuItem
+              as={ExternalLink}
+              _focus={{
+                backgroundColor,
+                boxShadow: 'unset',
+              }}
+              href="//github.com/ljosberinn/next-karma-docs"
+            >
+              {t('help-cta')}
+            </MenuItem>
+          </MenuList>
+        )}
+      </MenuTransition>
     </Box>
   );
 }
@@ -94,9 +98,13 @@ function LanguageOption({ slug, isCurrentLanguage, t }: LanguageOptionProps) {
         isCurrentLanguage ? undefined : createLanguageChangeHandler(slug)
       }
     >
-      <Box as="span" mr={2} display="inline-block">
-        <FlagIcon aria-hidden code={flagMap[slug]} />
-      </Box>
+      <Icon
+        as={FlagIcon}
+        aria-hidden
+        code={flagMap[slug]}
+        mr={2}
+        display="inline-block"
+      />
       {t(slug)}
     </MenuItemOption>
   );
