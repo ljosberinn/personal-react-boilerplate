@@ -65,7 +65,7 @@
     "msw": "0.20.5",
     "next-compose-plugins": "2.2.0",
     "next-offline": "5.0.2",
-    "node-fetch": "2.6.0",
+    "node-fetch": "2.6.1",
     "prettier": "2.1.1",
     "react-test-renderer": "17.0.0-rc.1",
     "test-listen": "1.1.0",
