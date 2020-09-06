@@ -30,6 +30,7 @@ const defaultProps: DocumentProps = {
     lowPriorityFiles: [],
     pages: {
       '/_app': [],
+      '/': [],
     },
     polyfillFiles: [],
   },

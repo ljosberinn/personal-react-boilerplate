@@ -2,6 +2,7 @@ import type { LinkProps as ChakraLinkProps } from '@chakra-ui/core';
 import { Link as ChakraLink } from '@chakra-ui/core';
 import type { LinkProps as NextLinkProps } from 'next/dist/client/link';
 import NextLink from 'next/link';
+import { useRouter } from 'next/router';
 
 import type { WithChildren } from '../../../karma/client/Karma';
 
@@ -22,6 +23,7 @@ export function InternalLink({
   prefetch,
   replace,
   scroll,
+
   linkAs,
   ...rest
 }: InternalLinkProps): JSX.Element {
@@ -34,9 +36,14 @@ export function InternalLink({
     shallow,
   };
 
+  const { pathname } = useRouter();
+  const isActive = pathname === href;
+
   return (
     <NextLink {...linkProps} passHref>
-      <ChakraLink {...rest}>{children}</ChakraLink>
+      <ChakraLink {...rest} aria-current={isActive ? 'page' : undefined}>
+        {children}
+      </ChakraLink>
     </NextLink>
   );
 }

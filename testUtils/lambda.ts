@@ -1,17 +1,19 @@
 import { serialize } from 'cookie';
 import { createServer } from 'http';
-import { NextApiRequest, NextApiResponse } from 'next';
-import nextConnect, { NextConnect } from 'next-connect';
+import type { NextApiRequest, NextApiResponse } from 'next';
+import type { NextConnect } from 'next-connect';
+import nextConnect from 'next-connect';
 import {
   apiResolver,
   getQueryParser,
 } from 'next/dist/next-server/server/api-utils';
 import { route } from 'next/dist/next-server/server/router';
-import fetch, { Response } from 'node-fetch';
+import type { Response } from 'node-fetch';
+import fetch from 'node-fetch';
 import listen from 'test-listen';
 
-import { Middleware } from '../karma/server/types';
-import { RequestInitMethod } from '../karma/utils/requestMethods';
+import type { Middleware } from '../karma/server/types';
+import type { RequestInitMethod } from '../karma/utils/requestMethods';
 
 interface UrlArguments {
   /**

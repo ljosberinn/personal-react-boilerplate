@@ -23,14 +23,14 @@ import { createLanguageChangeHandler } from '../../../karma/client/i18n';
 import { ENABLED_LANGUAGES } from '../../constants';
 import { ExternalLink } from './ExternalLink';
 
-type FlapMap = { [key: string]: FlagIconCode };
+type FlapMap = Record<string, FlagIconCode>;
 
 const flagMap: FlapMap = {
   de: 'DE',
   en: 'GB',
 };
 
-type LanguageSwitchProps = Omit<MenuProps, 'children' | 'isLazy'>;
+export type LanguageSwitchProps = Omit<MenuProps, 'children' | 'isLazy'>;
 
 export function LanguageSwitch(props: LanguageSwitchProps): JSX.Element {
   const { i18n, t } = useTranslation('i18n');

@@ -1,18 +1,15 @@
 import { ChakraProvider } from '@chakra-ui/core';
-import theme from '@chakra-ui/theme';
-import {
-  render as rtlRender,
-  RenderResult,
-  RenderOptions,
-} from '@testing-library/react';
-import { RunOptions } from 'axe-core';
-import { ConfigData } from 'html-validate/build/config';
+import type { RenderResult, RenderOptions } from '@testing-library/react';
+import { render as rtlRender } from '@testing-library/react';
+import type { RunOptions } from 'axe-core';
+import type { ConfigData } from 'html-validate/build/config';
 import { axe } from 'jest-axe';
-import { cloneElement, isValidElement, ReactElement } from 'react';
+import type { ReactElement } from 'react';
+import { cloneElement, isValidElement } from 'react';
 import { I18nextProvider, useTranslation } from 'react-i18next';
 
 import { AuthContextProvider } from '../karma/client/context/AuthContext';
-import { AuthContextDefinition } from '../karma/client/context/AuthContext/AuthContext';
+import type { AuthContextDefinition } from '../karma/client/context/AuthContext/AuthContext';
 import { initI18Next } from '../karma/client/i18n';
 import { i18nCache } from '../karma/server/i18n/cache';
 import { FALLBACK_LANGUAGE } from '../src/constants';
@@ -156,7 +153,7 @@ export function render(
   return rtlRender(
     <I18nextProvider i18n={i18nInstance}>
       <AuthContextProvider session={session}>
-        <ChakraProvider theme={theme} resetCSS portalZIndex={40}>
+        <ChakraProvider resetCSS portalZIndex={40}>
           <Wrapper>
             {i18n ? (
               <I18nTestMiddleware {...i18n}>{ui}</I18nTestMiddleware>
@@ -315,13 +312,14 @@ export const validateHtml = (
   ui: UI | HTMLElement,
   { htmlValidate, ...options }: ValidateHtmlOptions = {}
 ): void => {
-  const merged = {
+  const merged: ConfigData = {
     ...htmlValidate,
+    // @ts-expect-error required to be able to provide autocompletion
     rules: {
       ...htmlValidate?.rules,
       ...defaultConfig.rules,
     },
-  } as ConfigData; // cast to be able to provide autocompletion for Rules
+  };
 
   const element = isValidElement(ui) ? render(ui, options).container : ui;
 

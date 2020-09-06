@@ -2572,7 +2572,7 @@
     "@types/node" "*"
     form-data "^3.0.0"
 
-"@types/node@*", "@types/node@14.6.4", "@types/node@^14.0.14":
+"@types/node@*", "@types/node@14.6.4":
   version "14.6.4"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-14.6.4.tgz#a145cc0bb14ef9c4777361b7bbafa5cf8e3acb5a"
   integrity sha512-Wk7nG1JSaMfMpoMJDKUsWYugliB2Vy55pdjLpmLixeyMi7HizW2I/9QoxsPCkXl3dO+ZOVqPumKaDUv5zJu2uQ==
@@ -5134,10 +5134,10 @@ eslint-ast-utils@^1.1.0:
     lodash.get "^4.4.2"
     lodash.zip "^4.2.0"
 
-eslint-config-galex@2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/eslint-config-galex/-/eslint-config-galex-2.1.0.tgz#8acb4cc5fbe5aafa09fb5ea88952a602123e7bdf"
-  integrity sha512-BkrcUZP7w+jY3mkeI51okJzuVkDRPbcA6Xcas4JYrIm829PaaLOhWapYYrk8ruAwDnCRUbSVpy935mhqkNU1Lg==
+eslint-config-galex@2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/eslint-config-galex/-/eslint-config-galex-2.1.2.tgz#0d15fc8d517e33fedf833098f6bc65d2867bd2fe"
+  integrity sha512-rDImm1gBn6Poowo66n/5x++7gUUyvG9VwGfo8jpuc5Bx45gHFfhCKBifNXvsOUIZdo3/sQG1y3T+TRyhJuVSNA==
   dependencies:
     "@next/eslint-plugin-next" "^9.5.3"
     "@typescript-eslint/eslint-plugin" "4.0.1"
@@ -8118,12 +8118,11 @@ next-compose-plugins@2.2.0:
   resolved "https://registry.yarnpkg.com/next-compose-plugins/-/next-compose-plugins-2.2.0.tgz#95cd8eb40ab0652070d76572fb648354191628b0"
   integrity sha512-ChUlpT9tWfJ7YxqGw/WQ2T1gf8EeX93n1XqeQw0lkvGa7seszahvF4eOZUJoq7Hetsbzg4UHVnPoCXfXTyQR3g==
 
-next-connect@0.8.1:
-  version "0.8.1"
-  resolved "https://registry.yarnpkg.com/next-connect/-/next-connect-0.8.1.tgz#def20d9045fb8043855a92a3bae40d88ef3f9d3b"
-  integrity sha512-V5O45OV6+neCb/iXfPUpfcFirSJ4czr02+Xay7TyW/8Ybq9KzDLPWpU36lkvPbwNhpdxRXAi/j907c8MIURMww==
+next-connect@0.9.0:
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/next-connect/-/next-connect-0.9.0.tgz#d110cf177decebbfb3b36eff5deb1496de40bf29"
+  integrity sha512-fuWVJNTCYXG0wbzHFuf1vYUr8BFUAa5+jbaOzTQpN9lyIeZbww7EM/bZeOUlgd8C/A78SKa+f/GEwPK063zhsQ==
   dependencies:
-    "@types/node" "^14.0.14"
     trouter "^3.1.0"
 
 next-offline@5.0.2:

@@ -21,7 +21,7 @@ export interface WithSessionOptions {
  * monkey patch GetServerSideProps
  */
 type AuthenticatedGetServerSideProps<
-  P extends { [key: string]: unknown } = { [key: string]: unknown },
+  P extends Record<string, unknown> = Record<string, unknown>,
   Q extends ParsedUrlQuery = ParsedUrlQuery
 > = (
   context: GetServerSidePropsContext<Q>,
