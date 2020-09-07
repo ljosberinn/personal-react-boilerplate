@@ -14,6 +14,7 @@ import {
   FALLBACK_LANGUAGE,
 } from '../../src/constants';
 import type { Namespace } from '../server/i18n/cache';
+import { namespaces as allNamespaces } from '../server/i18n/cache';
 import type { KarmaProps } from './Karma';
 
 export const i18nCookieName = 'i18next';
@@ -185,8 +186,9 @@ export const getI18n = async (
 
   const url = i18nEndpoint + language;
 
-  const memoizedI18nextResources =
-    !IS_TEST && _memoizedI18nextResources.get(url);
+  const memoizedI18nextResources = IS_TEST
+    ? undefined
+    : _memoizedI18nextResources.get(url);
   const ts = Date.now();
 
   if (
@@ -196,44 +198,49 @@ export const getI18n = async (
     return memoizedI18nextResources.resources;
   }
 
-  let resources: I18nextResourceLocale = {};
+  // const resources: I18nextResourceLocale = {};
 
-  try {
-    const { origin } = absoluteUrl(req);
-    const searchParams = computeSearchParams(namespaces);
-    const response = await fetch(origin + url + searchParams);
+  const { origin } = absoluteUrl(req);
+  const namespacesToLoad = namespaces ?? [...new Set(allNamespaces)];
 
-    try {
-      resources = await response.json();
-    } catch (error) {
-      captureException(error);
-      // eslint-disable-next-line no-console
-      console.error(error.message, 'Failed to parse i18n JSON');
-    }
-  } catch (error) {
-    captureException(error);
-    // eslint-disable-next-line no-console
-    console.error(error.message, 'Failed to fetch i18n');
-  }
+  const data = await Promise.all<I18nextNamespace | null>(
+    namespacesToLoad.map(async (namespace: Namespace) => {
+      const url = `${origin}/static/locales/${lang}/${namespace}.json`;
+
+      try {
+        const response = await fetch(url);
+
+        try {
+          return await response.json();
+        } catch (error) {
+          captureException(error);
+          // eslint-disable-next-line no-console
+          console.error('Failed to parse JSON', error.message);
+        }
+      } catch (error) {
+        captureException(error);
+        // eslint-disable-next-line no-console
+        console.error('Failed to fetch', error.message);
+      }
+
+      return null;
+    })
+  );
+
+  const resources = data.reduce<I18nextResourceLocale>(
+    (carry, dataset, index) => {
+      if (!dataset) {
+        return carry;
+      }
+
+      const namespace = namespacesToLoad[index];
+      carry[namespace] = dataset;
+      return carry;
+    },
+    {}
+  );
 
   _memoizedI18nextResources.set(url, { resources, ts });
 
   return resources;
-};
-
-/**
- * Creates search params given namespaces
- */
-const computeSearchParams = (namespaces?: Namespace[]) => {
-  if (!namespaces) {
-    return '';
-  }
-
-  const params = new URLSearchParams();
-
-  namespaces.forEach((ns) => {
-    params.append('namespaces', ns);
-  });
-
-  return `?${params.toString()}`;
 };

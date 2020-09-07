@@ -19,6 +19,7 @@ import { FcSettings } from 'react-icons/fc';
 import type { WithChildren } from '../../../../karma/client/Karma';
 import { ColorModeSwitchAlt } from '../../components/ColorModeSwitchAlt';
 import { ExternalLink } from '../../components/ExternalLink';
+import { LanguageSwitch } from '../../components/LanguageSwitch';
 import { WebShareButton } from '../../components/WebShareButton';
 import { Feature } from './Feature';
 import {
@@ -424,6 +425,7 @@ export function Index(): JSX.Element {
       <Header />
       <Box as="main" maxWidth="86em" ml="auto" mr="auto">
         <Hero />
+        <LanguageSwitch />
       </Box>
       <Divider
         role={undefined}

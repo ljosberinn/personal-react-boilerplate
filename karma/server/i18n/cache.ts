@@ -1,26 +1,28 @@
-import type {
-  I18nextResources,
-  I18nextResourceLocale,
-} from '../../../karma/client/i18n';
-import { ENABLED_LANGUAGES } from '../../../src/constants';
+import type { I18nextResources } from '../../../karma/client/i18n';
+import de_auth from '../../../public/static/locales/de/auth.json';
+import de_i18n from '../../../public/static/locales/de/i18n.json';
+import de_serviceWorker from '../../../public/static/locales/de/serviceWorker.json';
+import de_theme from '../../../public/static/locales/de/theme.json';
+import en_auth from '../../../public/static/locales/en/auth.json';
+import en_i18n from '../../../public/static/locales/en/i18n.json';
+import en_serviceWorker from '../../../public/static/locales/en/serviceWorker.json';
+import en_theme from '../../../public/static/locales/en/theme.json';
 
 export const namespaces = ['i18n', 'auth', 'theme', 'serviceWorker'] as const;
 
 export type Namespace = typeof namespaces[number];
 
-export const i18nCache = ENABLED_LANGUAGES.reduce<I18nextResources>(
-  (carry, language) => {
-    carry[language] = namespaces.reduce<I18nextResourceLocale>(
-      (carry, namespace) => {
-        // eslint-disable-next-line @typescript-eslint/no-require-imports, import/no-dynamic-require
-        carry[namespace] = require(`./locales/${language}/${namespace}.json`);
-
-        return carry;
-      },
-      {}
-    );
-
-    return carry;
+export const i18nCache: I18nextResources = {
+  de: {
+    auth: de_auth,
+    i18n: de_i18n,
+    serviceWorker: de_serviceWorker,
+    theme: de_theme,
   },
-  {}
-);
+  en: {
+    auth: en_auth,
+    i18n: en_i18n,
+    serviceWorker: en_serviceWorker,
+    theme: en_theme,
+  },
+};
