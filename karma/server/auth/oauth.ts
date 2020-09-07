@@ -109,7 +109,7 @@ export const getOAuthData = async (
     method: 'POST',
   });
 
-  return await response.json();
+  return response.json();
 };
 
 export const getProfileData = async (

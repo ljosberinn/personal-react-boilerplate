@@ -1,5 +1,4 @@
 // contains lots of inspiration from https://github.com/UnlyEd/next-right-now/blob/v1-ssr-mst-aptd-gcms-lcz-sty/src/utils/i18nextLocize.ts
-import { captureException } from '@sentry/node';
 import type { IncomingMessage } from 'http';
 import type { i18n as I18nInstance } from 'i18next';
 import i18next from 'i18next';
@@ -198,43 +197,28 @@ export const getI18n = async (
     return memoizedI18nextResources.resources;
   }
 
-  // const resources: I18nextResourceLocale = {};
-
   const { origin } = absoluteUrl(req);
-  const namespacesToLoad = namespaces ?? [...new Set(allNamespaces)];
+  const namespacesToLoad: Namespace[] = namespaces ?? [
+    ...new Set(allNamespaces),
+  ];
 
-  const data = await Promise.all<I18nextNamespace | null>(
-    namespacesToLoad.map(async (namespace: Namespace) => {
+  const data = await Promise.allSettled<Promise<I18nextNamespace>>(
+    namespacesToLoad.map(async (namespace) => {
       const url = `${origin}/static/locales/${lang}/${namespace}.json`;
 
-      try {
-        const response = await fetch(url);
-
-        try {
-          return await response.json();
-        } catch (error) {
-          captureException(error);
-          // eslint-disable-next-line no-console
-          console.error('Failed to parse JSON', error.message);
-        }
-      } catch (error) {
-        captureException(error);
-        // eslint-disable-next-line no-console
-        console.error('Failed to fetch', error.message);
-      }
-
-      return null;
+      const response = await fetch(url);
+      return response.json();
     })
   );
 
   const resources = data.reduce<I18nextResourceLocale>(
     (carry, dataset, index) => {
-      if (!dataset) {
+      if (dataset.status === 'rejected') {
         return carry;
       }
 
       const namespace = namespacesToLoad[index];
-      carry[namespace] = dataset;
+      carry[namespace] = dataset.value;
       return carry;
     },
     {}

@@ -14,6 +14,6 @@ export default function IndexPage({ karma }: IndexPageProps): JSX.Element {
   );
 }
 
-const i18nNamespaces: Namespace[] = ['serviceWorker', 'theme', 'i18n'];
+const i18nNamespaces: Namespace[] = ['serviceWorker', 'theme'];
 
 export const getServerSideProps = createGetServerSideProps({ i18nNamespaces });
