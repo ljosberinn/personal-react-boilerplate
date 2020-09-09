@@ -59,7 +59,18 @@ describe('<LanguageSwitch />', () => {
   it('passes a11y test when opened', async () => {
     const { container } = setup();
 
-    await testA11Y(container);
+    await testA11Y(container, {
+      /**
+       * @see https://github.com/dequelabs/axe-core/issues/2513
+       */
+      axeOptions: {
+        rules: {
+          'aria-required-parent': {
+            enabled: false,
+          },
+        },
+      },
+    });
   });
 
   it('contains valid html', () => {
