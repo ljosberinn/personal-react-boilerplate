@@ -5134,10 +5134,10 @@ eslint-ast-utils@^1.1.0:
     lodash.get "^4.4.2"
     lodash.zip "^4.2.0"
 
-eslint-config-galex@2.2.3:
-  version "2.2.3"
-  resolved "https://registry.yarnpkg.com/eslint-config-galex/-/eslint-config-galex-2.2.3.tgz#f8dd1416e7d3a17ea719ace421c76b8c0173d06f"
-  integrity sha512-IwYervOim7j7D+fOiU4IFJvF5gd9o8BxyyomuwcFR96iS1HMsURCPrPfdg1tTNhzq1Mh5xS0bjZrWXcdG7Nv6w==
+eslint-config-galex@2.2.7:
+  version "2.2.7"
+  resolved "https://registry.yarnpkg.com/eslint-config-galex/-/eslint-config-galex-2.2.7.tgz#53ad06744be554573af964be3731bb5934d89e4c"
+  integrity sha512-P7XYaooMoLm2ou7dowQnSlr1/co2ib9UJDf90SjovAzDFrcAtQZDRmzXECLsajRwmakI2TZeGwukKyZb6NmToQ==
   dependencies:
     "@next/eslint-plugin-next" "^9.5.3"
     "@typescript-eslint/eslint-plugin" "4.1.0"
@@ -5148,13 +5148,13 @@ eslint-config-galex@2.2.3:
     eslint-plugin-import "2.22.0"
     eslint-plugin-inclusive-language "1.2.1"
     eslint-plugin-jest "24.0.0"
-    eslint-plugin-jest-dom "3.2.2"
+    eslint-plugin-jest-dom "3.2.3"
     eslint-plugin-jest-formatting "2.0.0"
     eslint-plugin-jsx-a11y "6.3.1"
     eslint-plugin-prettier "3.1.4"
     eslint-plugin-promise "4.2.1"
     eslint-plugin-react "7.20.6"
-    eslint-plugin-react-hooks "4.1.0"
+    eslint-plugin-react-hooks "4.1.1"
     eslint-plugin-sonarjs "0.5.0"
     eslint-plugin-sort-keys-fix "1.1.1"
     eslint-plugin-testing-library "3.8.0"
@@ -5209,10 +5209,10 @@ eslint-plugin-inclusive-language@1.2.1:
   resolved "https://registry.yarnpkg.com/eslint-plugin-inclusive-language/-/eslint-plugin-inclusive-language-1.2.1.tgz#57229372d21779ec11803b7353ac969a29583910"
   integrity sha512-WFXME2g/rEm/ex9HCfptZXJVm6/IrBks4+0rZft24zve4RH196PPuCFvd36aidc2IaHrvVAZHeyahODc7ueoNw==
 
-eslint-plugin-jest-dom@3.2.2:
-  version "3.2.2"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-jest-dom/-/eslint-plugin-jest-dom-3.2.2.tgz#d343b820093e382002177445e53a9a3868c0980e"
-  integrity sha512-e92SJEC/KPbQyMd9on0CbwDQxCHjiBVVe8dwzDqp0tjvVQWB9FXGTq9EZcFhJdsLPuXdZOWkU9DIcDT5DUTCXw==
+eslint-plugin-jest-dom@3.2.3:
+  version "3.2.3"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-jest-dom/-/eslint-plugin-jest-dom-3.2.3.tgz#2ee4ef409484b9d175f169e5fc12caf8be854b4e"
+  integrity sha512-3eEne+h1JsTV4ExZ022xJALKKgWwjYTakRzXZ575CzB6kOZ3No5cvW9XVdF0CfgHt+4ZaMq2AFgm2BiA3sHmRg==
   dependencies:
     "@babel/runtime" "^7.9.6"
     requireindex "^1.2.0"
@@ -5258,10 +5258,10 @@ eslint-plugin-promise@4.2.1:
   resolved "https://registry.yarnpkg.com/eslint-plugin-promise/-/eslint-plugin-promise-4.2.1.tgz#845fd8b2260ad8f82564c1222fce44ad71d9418a"
   integrity sha512-VoM09vT7bfA7D+upt+FjeBO5eHIJQBUWki1aPvB+vbNiHS3+oGIJGIeyBtKQTME6UPXXy3vV07OL1tHd3ANuDw==
 
-eslint-plugin-react-hooks@4.1.0:
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-react-hooks/-/eslint-plugin-react-hooks-4.1.0.tgz#6323fbd5e650e84b2987ba76370523a60f4e7925"
-  integrity sha512-36zilUcDwDReiORXmcmTc6rRumu9JIM3WjSvV0nclHoUQ0CNrX866EwONvLR/UqaeqFutbAnVu8PEmctdo2SRQ==
+eslint-plugin-react-hooks@4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-react-hooks/-/eslint-plugin-react-hooks-4.1.1.tgz#b37e1ff622b7800cd673901de32db1103d48411d"
+  integrity sha512-vFJNwsf4MLYS0lHYfz9LqxQ+GccYsGGeKPHDxgkIaKbAhNuTLnST+q44pt81MzJZyFU5K4XLF6WiCGv3Yb6tCg==
 
 eslint-plugin-react@7.20.6:
   version "7.20.6"
