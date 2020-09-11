@@ -5143,10 +5143,10 @@ eslint-ast-utils@^1.1.0:
     lodash.get "^4.4.2"
     lodash.zip "^4.2.0"
 
-eslint-config-galex@2.2.7:
-  version "2.2.7"
-  resolved "https://registry.yarnpkg.com/eslint-config-galex/-/eslint-config-galex-2.2.7.tgz#53ad06744be554573af964be3731bb5934d89e4c"
-  integrity sha512-P7XYaooMoLm2ou7dowQnSlr1/co2ib9UJDf90SjovAzDFrcAtQZDRmzXECLsajRwmakI2TZeGwukKyZb6NmToQ==
+eslint-config-galex@2.2.8:
+  version "2.2.8"
+  resolved "https://registry.yarnpkg.com/eslint-config-galex/-/eslint-config-galex-2.2.8.tgz#5c361b6808197ce74179144e53fac8d35ce47e19"
+  integrity sha512-TRvfeXjw+VS+SZ6ZgD4OFUo4gsayWi4C2eIdHv8QsfNRgAu+hPPSE+PACWHJJWbKFA6msh7KHyPfJowZU/4Fww==
   dependencies:
     "@next/eslint-plugin-next" "^9.5.3"
     "@typescript-eslint/eslint-plugin" "4.1.0"
@@ -5163,7 +5163,7 @@ eslint-config-galex@2.2.7:
     eslint-plugin-prettier "3.1.4"
     eslint-plugin-promise "4.2.1"
     eslint-plugin-react "7.20.6"
-    eslint-plugin-react-hooks "4.1.1"
+    eslint-plugin-react-hooks "4.1.2"
     eslint-plugin-sonarjs "0.5.0"
     eslint-plugin-sort-keys-fix "1.1.1"
     eslint-plugin-testing-library "3.8.0"
@@ -5267,10 +5267,10 @@ eslint-plugin-promise@4.2.1:
   resolved "https://registry.yarnpkg.com/eslint-plugin-promise/-/eslint-plugin-promise-4.2.1.tgz#845fd8b2260ad8f82564c1222fce44ad71d9418a"
   integrity sha512-VoM09vT7bfA7D+upt+FjeBO5eHIJQBUWki1aPvB+vbNiHS3+oGIJGIeyBtKQTME6UPXXy3vV07OL1tHd3ANuDw==
 
-eslint-plugin-react-hooks@4.1.1:
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-react-hooks/-/eslint-plugin-react-hooks-4.1.1.tgz#b37e1ff622b7800cd673901de32db1103d48411d"
-  integrity sha512-vFJNwsf4MLYS0lHYfz9LqxQ+GccYsGGeKPHDxgkIaKbAhNuTLnST+q44pt81MzJZyFU5K4XLF6WiCGv3Yb6tCg==
+eslint-plugin-react-hooks@4.1.2:
+  version "4.1.2"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-react-hooks/-/eslint-plugin-react-hooks-4.1.2.tgz#2eb53731d11c95826ef7a7272303eabb5c9a271e"
+  integrity sha512-ykUeqkGyUGgwTtk78C0o8UG2fzwmgJ0qxBGPp2WqRKsTwcLuVf01kTDRAtOsd4u6whX2XOC8749n2vPydP82fg==
 
 eslint-plugin-react@7.20.6:
   version "7.20.6"
