@@ -8,10 +8,6 @@ import en_i18n from '../../../public/static/locales/en/i18n.json';
 import en_serviceWorker from '../../../public/static/locales/en/serviceWorker.json';
 import en_theme from '../../../public/static/locales/en/theme.json';
 
-export const namespaces = ['i18n', 'auth', 'theme', 'serviceWorker'] as const;
-
-export type Namespace = typeof namespaces[number];
-
 export const i18nCache: I18nextResources = {
   de: {
     auth: de_auth,

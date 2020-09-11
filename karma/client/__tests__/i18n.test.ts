@@ -7,10 +7,14 @@ import i18next from 'i18next';
 import { setupServer } from 'msw/node';
 
 import 'whatwg-fetch';
-import { ENABLED_LANGUAGES, FALLBACK_LANGUAGE } from '../../../src/constants';
+import {
+  ENABLED_LANGUAGES,
+  FALLBACK_LANGUAGE,
+  namespaces,
+} from '../../../src/constants';
 // import { createIncomingRequestMock } from '../../../testUtils/api';
 // import { mockConsoleMethods } from '../../../testUtils/console';
-import { i18nCache, namespaces } from '../../server/i18n/cache';
+import { i18nCache } from '../../server/i18n/cache';
 import {
   // getI18n,
   createLanguageChangeHandler,

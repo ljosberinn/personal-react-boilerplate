@@ -11,9 +11,9 @@ import {
   IS_BROWSER,
   IS_TEST,
   FALLBACK_LANGUAGE,
+  Namespace,
 } from '../../src/constants';
-import type { Namespace } from '../server/i18n/cache';
-import { namespaces as allNamespaces } from '../server/i18n/cache';
+import { namespaces as allNamespaces } from '../../src/constants';
 import type { KarmaProps } from './Karma';
 
 export const i18nCookieName = 'i18next';

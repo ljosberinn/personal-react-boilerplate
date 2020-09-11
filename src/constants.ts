@@ -25,6 +25,10 @@ export const ENABLED_LANGUAGES = process.env.NEXT_PUBLIC_ENABLED_LANGUAGES!.spli
  */
 export const FALLBACK_LANGUAGE = process.env.NEXT_PUBLIC_FALLBACK_LANGUAGE!;
 
+export const namespaces = ['i18n', 'auth', 'theme', 'serviceWorker'] as const;
+
+export type Namespace = typeof namespaces[number];
+
 /* sentry */
 export const SENTRY_DSN = process.env.NEXT_PUBLIC_SENTRY_DSN!;
 

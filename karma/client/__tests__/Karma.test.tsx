@@ -4,14 +4,17 @@ import { render } from '@testing-library/react';
 import { serialize } from 'cookie';
 import type { GetServerSidePropsContext } from 'next';
 
-import { FALLBACK_LANGUAGE, SESSION_COOKIE_NAME } from '../../../src/constants';
+import {
+  FALLBACK_LANGUAGE,
+  Namespace,
+  SESSION_COOKIE_NAME,
+} from '../../../src/constants';
 import {
   createIncomingRequestMock,
   createServerResponseMock,
 } from '../../../testUtils/api';
 import { createMockScope } from '../../../testUtils/sentry';
 import * as cookieUtils from '../../server/auth/cookie';
-import type { Namespace } from '../../server/i18n/cache';
 import { i18nCache } from '../../server/i18n/cache';
 import * as detectLanguageUtils from '../../server/i18n/detectLanguage';
 import * as sentryUtils from '../../utils/sentry/client';

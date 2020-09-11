@@ -3,9 +3,9 @@ import type { GetServerSidePropsContext } from 'next';
 import type { ParsedUrlQuery } from 'querystring';
 import type { ReactNode } from 'react';
 import { I18nextProvider } from 'react-i18next';
+import { Namespace } from '../../src/constants';
 
 import { getSession } from '../server/auth/cookie';
-import type { Namespace } from '../server/i18n/cache';
 import { detectLanguage } from '../server/i18n/detectLanguage';
 import {
   attachComponentBreadcrumb,
