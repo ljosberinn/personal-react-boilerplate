@@ -105,10 +105,12 @@ const defaultConfig = {
   reactStrictMode: true,
   experimental: {
     modern: true,
+    scrollRestoration: true,
+    productionBrowserSourceMaps: true,
   },
 };
 
 module.exports = withPlugins(
-  [withBundleAnalyzer, withSourceMaps, [withOffline, offlineConfig]],
+  [withBundleAnalyzer, [withOffline, offlineConfig]],
   defaultConfig
 );
