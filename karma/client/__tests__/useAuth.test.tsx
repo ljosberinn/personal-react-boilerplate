@@ -68,10 +68,7 @@ describe('hooks/useAuth', () => {
 
     const fetchSpy = jest.spyOn(window, 'fetch');
 
-    server.use(
-      // @ts-expect-error see https://github.com/mswjs/msw/issues/377
-      rest.delete(url, (_, res, ctx) => res(ctx.status(OK)))
-    );
+    server.use(rest.delete(url, (_, res, ctx) => res(ctx.status(OK))));
 
     const user = { id: '1', name: 'ljosberinn' };
 
@@ -99,10 +96,7 @@ describe('hooks/useAuth', () => {
     const userWithPassword = { ...user, password };
     const { url, method } = endpoints.register;
 
-    server.use(
-      // @ts-expect-error see https://github.com/mswjs/msw/issues/377
-      rest.post(url, (_req, res, ctx) => res(ctx.json(user)))
-    );
+    server.use(rest.post(url, (_req, res, ctx) => res(ctx.json(user))));
 
     const { result } = renderHook(useAuth, {
       wrapper: ({ children }) => (
@@ -136,7 +130,6 @@ describe('hooks/useAuth', () => {
     const { url, method } = endpoints.register;
 
     server.use(
-      // @ts-expect-error see https://github.com/mswjs/msw/issues/377
       rest.post(url, (_req, res, ctx) => res(ctx.body('invalid json')))
     );
 
@@ -174,7 +167,6 @@ describe('hooks/useAuth', () => {
     const { url, method } = endpoints.register;
 
     server.use(
-      // @ts-expect-error see https://github.com/mswjs/msw/issues/377
       rest.post(url, (_req, res, ctx) => res(ctx.status(UNPROCESSABLE_ENTITY)))
     );
 
@@ -258,10 +250,7 @@ describe('hooks/useAuth', () => {
 
     const { url, method } = endpoints.login;
 
-    server.use(
-      // @ts-expect-error see https://github.com/mswjs/msw/issues/377
-      rest.post(url, (_req, res, ctx) => res(ctx.json(user)))
-    );
+    server.use(rest.post(url, (_req, res, ctx) => res(ctx.json(user))));
 
     const { result } = renderHook(useAuth, {
       wrapper: ({ children }) => (
@@ -296,7 +285,6 @@ describe('hooks/useAuth', () => {
     const { url, method } = endpoints.login;
 
     server.use(
-      // @ts-expect-error see https://github.com/mswjs/msw/issues/377
       rest.post(url, (_req, res, ctx) => res(ctx.body('invalid json')))
     );
 
@@ -334,7 +322,6 @@ describe('hooks/useAuth', () => {
     const { url, method } = endpoints.login;
 
     server.use(
-      // @ts-expect-error see https://github.com/mswjs/msw/issues/377
       rest.post(url, (_req, res, ctx) => res(ctx.status(UNPROCESSABLE_ENTITY)))
     );
 
