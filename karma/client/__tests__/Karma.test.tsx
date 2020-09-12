@@ -4,11 +4,8 @@ import { render } from '@testing-library/react';
 import { serialize } from 'cookie';
 import type { GetServerSidePropsContext } from 'next';
 
-import {
-  FALLBACK_LANGUAGE,
-  Namespace,
-  SESSION_COOKIE_NAME,
-} from '../../../src/constants';
+import type { Namespace } from '../../../src/constants';
+import { FALLBACK_LANGUAGE, SESSION_COOKIE_NAME } from '../../../src/constants';
 import {
   createIncomingRequestMock,
   createServerResponseMock,

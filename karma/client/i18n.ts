@@ -5,15 +5,15 @@ import i18next from 'i18next';
 import absoluteUrl from 'next-absolute-url';
 import { initReactI18next } from 'react-i18next';
 
+import type { Namespace } from '../../src/constants';
 import {
   IS_PROD,
   ENABLED_LANGUAGES,
   IS_BROWSER,
   IS_TEST,
   FALLBACK_LANGUAGE,
-  Namespace,
+  namespaces as allNamespaces,
 } from '../../src/constants';
-import { namespaces as allNamespaces } from '../../src/constants';
 import type { KarmaProps } from './Karma';
 
 export const i18nCookieName = 'i18next';
