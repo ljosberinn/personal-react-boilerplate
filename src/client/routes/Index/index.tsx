@@ -13,7 +13,7 @@ import {
   Image,
   keyframes,
 } from '@chakra-ui/core';
-import { FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa';
+import { FaGithub, FaLinkedin, FaTwitter, FaArrowRight } from 'react-icons/fa';
 import { FcSettings } from 'react-icons/fc';
 
 import type { WithChildren } from '../../../../karma/client/Karma';
@@ -116,23 +116,24 @@ function Hero() {
       <KarmaIcon height="24em" width="24em" />
       <Heading as="h1" mt={8} mb={16}>
         next-karma
+        <FadedText>
+          is an opinionated batteries-included Next.js template
+        </FadedText>
       </Heading>
 
       <Text fontStyle="italic">_still wip_ & docs coming soon</Text>
 
-      <FadedText>An opinionated batteries-included Next.js template</FadedText>
-      <FadedText>
-        supporting Authentication, Error Handling & Internationalization and
-        more out of the box.
-      </FadedText>
       <Box mt={12}>
         <Button
           as={ExternalLink}
           omitIcon
           omitTextDecoration
-          href="//ljosberinn.gitbook.io/next-karma"
+          href="/"
           size="lg"
           colorScheme="teal"
+          disabled
+          onClick={(event) => event.preventDefault()}
+          rightIcon={<Icon as={FaArrowRight} fontSize="0.8em" />}
         >
           Get Started
         </Button>
@@ -166,8 +167,10 @@ const spin = keyframes`
 `;
 
 function StackOverview() {
+  const bg = useColorModeValue('gray.50', 'gray.900');
+
   return (
-    <Box p={16} as="article">
+    <Box p={16} as="article" bg={bg}>
       <Heading as="h2" id="features" mb={16} textAlign="center">
         Features
       </Heading>
@@ -187,8 +190,9 @@ function StackOverview() {
           title="Next.js"
           href="//nextjs.org"
         >
-          Built on top of Next.js, {title} can near seamlessly integrate into
-          existing apps or serve as starting point for new projects.
+          Built on top of Next.js, {title} should ideally serve as starting
+          point for new projects, but of course may provide inspiration for
+          existing projects.
         </Feature>
 
         <Feature
@@ -206,35 +210,44 @@ function StackOverview() {
           href="//chakra-ui.com/"
         >
           Chakra provides composable and accessible low-level building blocks.
-          By default, it's visually similar to Tailwind and offers every
-          customization possible.
+          By default, it's visually to Tailwind and goes out of your way instead
+          of fighting it. {title} is maintained by a contributor to Chakra, so
+          it receives first class support.
         </Feature>
 
         <Feature
           icon={<I18NextIcon height={iconSize} width={iconSize} />}
           title="react-i18next"
           href="//react.i18next.com/"
+          learnMoreHref="/docs/i18n"
         >
           A Serverless- & SSR-compatible, JSON-based i18n solution is
           implemented via{' '}
           <ExternalLink href="//react.i18next.com/">react-i18next</ExternalLink>
-          . Assets can be exchanged on the fly through an API route.
+          . Similar to{' '}
+          <ExternalLink href="//github.com/isaachinman/next-i18next">
+            next-i18next
+          </ExternalLink>
+          , locales can be included/omitted on a per-page basis and exchanged on
+          the fly.
         </Feature>
 
         <Feature
           icon={<OAuth2Icon height={iconSize} width={iconSize} />}
           title="OAuth2"
           href="//oauth.net/2/"
+          learnMoreHref="/docs/auth"
         >
           Support for 4 external providers is included out of the box as well as
-          means to implement homegrown authentication, all based on httpOnly
-          cookies.
+          means to implement homegrown authentication, all based on a httpOnly
+          cookie.
         </Feature>
 
         <Feature
           icon={<SentryIcon size={iconSize} />}
           title="Sentry"
           href="//sentry.io"
+          learnMoreHref="/docs/sentry"
         >
           Miss no bugs with{' '}
           <ExternalLink href="http://sentry.io/">Sentry</ExternalLink>, neither
@@ -247,10 +260,11 @@ function StackOverview() {
           icon={<JestIcon height={iconSize} width={iconSize} />}
           title="Jest"
           href="//jestjs.io"
+          learnMoreHref="/docs/testing"
         >
           All tests, integration or unit, run through Jest. To test API routes,
-          a <Code>testLambda</Code> function is included. {title} comes with 90%
-          code coverage out of the box.
+          a <Code>testLambda</Code> function is included. {title} comes with
+          over 90% code coverage out of the box.
         </Feature>
 
         <Feature
@@ -265,6 +279,7 @@ function StackOverview() {
           }
           title="@testing-library/react"
           href="//testing-library.com/docs/react-testing-library/intro"
+          learnMoreHref="/docs/testing#testing-components"
         >
           Following best practices and with help from{' '}
           <ExternalLink href="//testing-playground.com">
@@ -282,7 +297,7 @@ function StackOverview() {
           <ExternalLink href="//testing-library.com/docs/react-testing-library/setup#custom-render">
             custom render
           </ExternalLink>{' '}
-          function with sensible defaults is included.
+          function with sensible & extensible defaults is included.
         </Feature>
 
         <Feature
@@ -291,6 +306,7 @@ function StackOverview() {
           }
           title="Github Actions"
           href="//github.com/features/actions"
+          learnMoreHref="/getting-started/#github-actions"
         >
           Before deploying,{' '}
           <ExternalLink href="//github.com/features/actions">
@@ -422,16 +438,18 @@ export function Index(): JSX.Element {
   return (
     <>
       <Header />
-      <Box as="main" maxWidth="86em" ml="auto" mr="auto">
+      <main>
         <Hero />
-      </Box>
-      <Divider
-        role={undefined}
-        aria-orientation={undefined}
-        boxSizing="border-box"
-        border="1px solid #d41143"
-      />
-      <StackOverview />
+
+        <Divider
+          role={undefined}
+          aria-orientation={undefined}
+          boxSizing="border-box"
+          border="1px solid #d41143"
+        />
+
+        <StackOverview />
+      </main>
       <Divider
         role={undefined}
         aria-orientation={undefined}
