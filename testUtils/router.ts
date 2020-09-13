@@ -1,9 +1,15 @@
 import * as nextRouter from 'next/router';
 
-export const createUseRouterMock = (
-  value: Partial<ReturnType<typeof nextRouter.useRouter>> = {}
-): jest.SpyInstance<nextRouter.NextRouter, []> => {
-  return jest.spyOn(nextRouter, 'useRouter').mockReturnValueOnce({
+interface Options {
+  once?: boolean;
+}
+
+export const createUseRouterMock = ({
+  once = true,
+  ...value
+}: Partial<ReturnType<typeof nextRouter.useRouter>> &
+  Options = {}): jest.SpyInstance<nextRouter.NextRouter, []> => {
+  const mock = {
     asPath: '',
     back: jest.fn(),
     basePath: '',
@@ -22,5 +28,11 @@ export const createUseRouterMock = (
     replace: jest.fn(),
     route: '',
     ...value,
-  });
+  };
+
+  if (once) {
+    return jest.spyOn(nextRouter, 'useRouter').mockReturnValueOnce(mock);
+  }
+
+  return jest.spyOn(nextRouter, 'useRouter').mockReturnValue(mock);
 };
