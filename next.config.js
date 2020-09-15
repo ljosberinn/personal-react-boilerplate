@@ -102,7 +102,7 @@ const defaultConfig = {
   reactStrictMode: true,
   experimental: {
     modern: true,
-    scrollRestoration: true,
+    // scrollRestoration: true,
     productionBrowserSourceMaps: true,
   },
 };
