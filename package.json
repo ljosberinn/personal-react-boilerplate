@@ -60,7 +60,7 @@
     "jest": "26.4.2",
     "jest-axe": "4.0.0",
     "jest-watch-typeahead": "0.6.1",
-    "lint-staged": "10.3.0",
+    "lint-staged": "10.4.0",
     "msw": "0.21.2",
     "next-compose-plugins": "2.2.0",
     "next-offline": "5.0.2",
