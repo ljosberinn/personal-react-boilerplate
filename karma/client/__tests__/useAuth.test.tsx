@@ -35,6 +35,14 @@ describe('hooks/useAuth', () => {
     window.location = realLocation;
   });
 
+  test('throws outside of context', () => {
+    const { result } = renderHook(useAuth);
+
+    expect(result.error.message).toBe(
+      'useAuth was called outside of an AuthContextProvider.'
+    );
+  });
+
   test('defaults to null given no user', () => {
     const {
       result: { current },

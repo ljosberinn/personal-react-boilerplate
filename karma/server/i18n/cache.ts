@@ -1,8 +1,10 @@
 import type { I18nextResources } from '../../../karma/client/i18n';
+// DE
 import de_auth from '../../../public/static/locales/de/auth.json';
 import de_i18n from '../../../public/static/locales/de/i18n.json';
 import de_serviceWorker from '../../../public/static/locales/de/serviceWorker.json';
 import de_theme from '../../../public/static/locales/de/theme.json';
+// EN
 import en_auth from '../../../public/static/locales/en/auth.json';
 import en_i18n from '../../../public/static/locales/en/i18n.json';
 import en_serviceWorker from '../../../public/static/locales/en/serviceWorker.json';

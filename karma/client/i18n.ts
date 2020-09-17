@@ -152,7 +152,7 @@ export declare type I18nextResources = {
  * The timestamp's value is the time when the memoized cache was created
  */
 export declare type MemoizedI18nextResources = {
-  resources: I18nextResourceLocale;
+  json: I18nextNamespace;
   ts: number; // Timestamp in milliseconds
 };
 
@@ -177,54 +177,65 @@ interface GetI18nOptions {
   namespaces?: Namespace[];
 }
 
+interface GetI18nPathArguments {
+  language: string;
+  namespace: string;
+}
+
+export const getI18nPathByLanguageAndNamespace = ({
+  language,
+  namespace,
+}: GetI18nPathArguments): string =>
+  `/static/locales/${language}/${namespace}.json`;
+
 export const getI18n = async (
   lang: string,
   { req, namespaces }: GetI18nOptions = {}
 ): Promise<I18nextResourceLocale> => {
   const language = ENABLED_LANGUAGES.includes(lang) ? lang : FALLBACK_LANGUAGE;
 
-  const url = i18nEndpoint + language;
-
-  const memoizedI18nextResources = IS_TEST
-    ? undefined
-    : _memoizedI18nextResources.get(url);
   const ts = Date.now();
 
-  if (
-    memoizedI18nextResources &&
-    ts - memoizedI18nextResources.ts < memoizedCacheMaxAge
-  ) {
-    return memoizedI18nextResources.resources;
-  }
-
   const { origin } = absoluteUrl(req);
+
   const namespacesToLoad: Namespace[] = namespaces ?? [
     ...new Set(allNamespaces),
   ];
 
   const data = await Promise.allSettled<Promise<I18nextNamespace>>(
     namespacesToLoad.map(async (namespace) => {
-      const url = `${origin}/static/locales/${lang}/${namespace}.json`;
+      const url =
+        origin + getI18nPathByLanguageAndNamespace({ language, namespace });
+
+      const memoizedResources = IS_TEST
+        ? null
+        : _memoizedI18nextResources.get(url);
+
+      /* istanbul ignore next */
+      if (
+        memoizedResources &&
+        ts - memoizedResources.ts < memoizedCacheMaxAge
+      ) {
+        return memoizedResources.json;
+      }
 
       const response = await fetch(url);
-      return response.json();
+      const json: I18nextNamespace = await response.json();
+
+      _memoizedI18nextResources.set(url, { json, ts });
+
+      return json;
     })
   );
 
-  const resources = data.reduce<I18nextResourceLocale>(
-    (carry, dataset, index) => {
-      if (dataset.status === 'rejected') {
-        return carry;
-      }
-
-      const namespace = namespacesToLoad[index];
-      carry[namespace] = dataset.value;
+  return data.reduce<I18nextResourceLocale>((carry, dataset, index) => {
+    /* istanbul ignore next */
+    if (dataset.status === 'rejected') {
       return carry;
-    },
-    {}
-  );
+    }
 
-  _memoizedI18nextResources.set(url, { resources, ts });
-
-  return resources;
+    const namespace = namespacesToLoad[index];
+    carry[namespace] = dataset.value;
+    return carry;
+  }, {});
 };

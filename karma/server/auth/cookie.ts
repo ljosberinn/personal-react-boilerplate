@@ -18,11 +18,7 @@ export const encryptSession = (session: object): string =>
 /**
  * extracts & decrypts the session cookie, if existing
  */
-export const getSession = (req?: SSRCompatibleRequest): User | null => {
-  if (!req) {
-    return null;
-  }
-
+export const getSession = (req: SSRCompatibleRequest): User | null => {
   const token = getSessionCookie(req);
 
   if (token) {
