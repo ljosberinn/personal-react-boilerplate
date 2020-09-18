@@ -5137,10 +5137,10 @@ eslint-ast-utils@^1.1.0:
     lodash.get "^4.4.2"
     lodash.zip "^4.2.0"
 
-eslint-config-galex@2.3.4:
-  version "2.3.4"
-  resolved "https://registry.yarnpkg.com/eslint-config-galex/-/eslint-config-galex-2.3.4.tgz#2d7de10e0f65d41d4222baa914df3c9c5fd0d94d"
-  integrity sha512-Se4SP8cp7HTTxC0tMM8WpgUJuviCBpcf+HFFNzKYM8+4/nFi02LCkrZhxfoayUdrAapBDaFeiRDVzZn075EPKw==
+eslint-config-galex@2.3.5:
+  version "2.3.5"
+  resolved "https://registry.yarnpkg.com/eslint-config-galex/-/eslint-config-galex-2.3.5.tgz#30d26af4f85096a441563def7135d975a2057eed"
+  integrity sha512-KN8l4eDR+sOp7TOGWVhuep3lIUbwGwTZKW50IGNKmyRW/iG7Sib/BlW54mHIrKdrdO8dMmIRvkF6pwaXZ1FM/w==
   dependencies:
     "@next/eslint-plugin-next" "^9.5.3"
     "@typescript-eslint/eslint-plugin" "4.1.1"
@@ -5163,7 +5163,7 @@ eslint-config-galex@2.3.4:
     eslint-plugin-testing-library "3.8.0"
     eslint-plugin-unicorn "21.0.0"
     read-pkg-up "7.0.1"
-    typescript "4.0.2"
+    typescript "4.0.3"
 
 eslint-config-prettier@6.11.0:
   version "6.11.0"
@@ -10840,10 +10840,10 @@ typedarray@^0.0.6:
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
-typescript@4.0.2:
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.0.2.tgz#7ea7c88777c723c681e33bf7988be5d008d05ac2"
-  integrity sha512-e4ERvRV2wb+rRZ/IQeb3jm2VxBsirQLpQhdxplZ2MEzGvDkkMmPglecnNDfSUBivMjP93vRbngYYDQqQ/78bcQ==
+typescript@4.0.3:
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.0.3.tgz#153bbd468ef07725c1df9c77e8b453f8d36abba5"
+  integrity sha512-tEu6DGxGgRJPb/mVPIZ48e69xCn2yRmCgYmDugAVwmJ6o+0u1RI18eO7E7WBTLYLaEVVOhwQmcdhQHweux/WPg==
 
 unicode-canonical-property-names-ecmascript@^1.0.4:
   version "1.0.4"

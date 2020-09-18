@@ -34,18 +34,16 @@ export const SESSION_COOKIE_NAME = 'session';
  * @default 8 hours
  */
 export const SESSION_LIFETIME =
-  Number.parseInt(process.env.NEXT_PUBLIC_SESSION_LIFETIME) * 1000;
+  Number.parseInt(process.env.NEXT_PUBLIC_SESSION_LIFETIME!) * 1000;
 
-export const {
-  DISCORD_CLIENT_SECRET,
-  DISCORD_CLIENT_ID,
-  FACEBOOK_CLIENT_ID,
-  FACEBOOK_CLIENT_SECRET,
-  GITHUB_CLIENT_ID,
-  GITHUB_CLIENT_SECRET,
-  GOOGLE_CLIENT_ID,
-  GOOGLE_CLIENT_SECRET,
-} = process.env;
+export const DISCORD_CLIENT_SECRET = process.env.DISCORD_CLIENT_SECRET!;
+export const DISCORD_CLIENT_ID = process.env.DISCORD_CLIENT_ID!;
+export const FACEBOOK_CLIENT_ID = process.env.FACEBOOK_CLIENT_ID!;
+export const FACEBOOK_CLIENT_SECRET = process.env.FACEBOOK_CLIENT_SECRET!;
+export const GITHUB_CLIENT_ID = process.env.GITHUB_CLIENT_ID!;
+export const GITHUB_CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET!;
+export const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID!;
+export const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET!;
 
 /**********************
  * i18n
@@ -79,7 +77,7 @@ export type Namespace = typeof namespaces[number];
 /**
  * Sentry API endpoint for this project
  */
-export const { NEXT_PUBLIC_SENTRY_DSN: SENTRY_DSN } = process.env;
+export const SENTRY_DSN = process.env.NEXT_PUBLIC_SENTRY_DSN;
 
 /**********************
  * meta
