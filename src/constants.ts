@@ -20,7 +20,7 @@ export const IS_TEST = process.env.NODE_ENV === 'test';
  * facebook,github,discord,google
  * ```
  */
-export const ENABLED_PROVIDER = process.env.NEXT_PUBLIC_ENABLED_PROVIDER.split(
+export const ENABLED_PROVIDER = process.env.NEXT_PUBLIC_ENABLED_PROVIDER!.split(
   ','
 ) as Provider[];
 
@@ -54,7 +54,7 @@ export const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET!;
  *
  * @default en,de
  */
-export const ENABLED_LANGUAGES = process.env.NEXT_PUBLIC_ENABLED_LANGUAGES.split(
+export const ENABLED_LANGUAGES = process.env.NEXT_PUBLIC_ENABLED_LANGUAGES!.split(
   ','
 );
 
@@ -66,7 +66,8 @@ export const ENABLED_LANGUAGES = process.env.NEXT_PUBLIC_ENABLED_LANGUAGES.split
  * MUST BE INCLUDED IN ENABLED_LANGUAGES
  *
  * @default en
- */ export const FALLBACK_LANGUAGE = process.env.NEXT_PUBLIC_FALLBACK_LANGUAGE;
+ */
+export const FALLBACK_LANGUAGE = process.env.NEXT_PUBLIC_FALLBACK_LANGUAGE!;
 
 export const namespaces = ['i18n', 'auth', 'theme', 'serviceWorker'] as const;
 export type Namespace = typeof namespaces[number];
@@ -77,7 +78,7 @@ export type Namespace = typeof namespaces[number];
 /**
  * Sentry API endpoint for this project
  */
-export const SENTRY_DSN = process.env.NEXT_PUBLIC_SENTRY_DSN;
+export const SENTRY_DSN = process.env.NEXT_PUBLIC_SENTRY_DSN!;
 
 /**********************
  * meta

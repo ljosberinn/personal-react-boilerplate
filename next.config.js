@@ -102,6 +102,7 @@ const defaultConfig = {
   reactStrictMode: true,
   experimental: {
     modern: true,
+    // bugged with Sentry, see https://github.com/vercel/next.js/issues/17073
     // scrollRestoration: true,
     productionBrowserSourceMaps: true,
   },
