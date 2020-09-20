@@ -61,14 +61,14 @@ export function ColorModeSwitch(props: ColorModeSwitchProps): JSX.Element {
         onClick={toggleColorMode}
         aria-label={t(sunLabel)}
       />
-      <Flex
-        as={Switch}
+      <Switch
         aria-label={t(switchLabel)}
         isChecked={isChecked}
         onChange={toggleColorMode}
-        alignItems="center"
         marginLeft="2"
         marginRight="2"
+        d="flex"
+        alignItems="center"
       />
       <Icon
         as={FaMoon}

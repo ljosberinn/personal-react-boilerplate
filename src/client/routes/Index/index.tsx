@@ -1,7 +1,6 @@
 import {
   Box,
   Grid,
-  Code,
   Flex,
   HStack,
   Icon,
@@ -12,12 +11,13 @@ import {
   Button,
   Image,
   keyframes,
+  Code,
 } from '@chakra-ui/core';
 import { FaGithub, FaLinkedin, FaTwitter, FaArrowRight } from 'react-icons/fa';
 import { FcSettings } from 'react-icons/fc';
 
 import type { WithChildren } from '../../../../karma/client/Karma';
-import { ColorModeSwitchAlt } from '../../components/ColorModeSwitchAlt';
+import { ColorModeSwitch } from '../../components/ColorModeSwitch';
 import { ExternalLink } from '../../components/ExternalLink';
 import { WebShareButton } from '../../components/WebShareButton';
 import { Feature } from './Feature';
@@ -35,7 +35,7 @@ import {
   SentryIcon,
 } from './icons';
 
-const gitUrl = '//github.com/ljosberinn/personal-react-boilerplate';
+const gitUrl = '//github.com/ljosberinn/next-karma';
 
 function Header() {
   const bg = useColorModeValue('gray.100', 'gray.700');
@@ -76,7 +76,7 @@ function Header() {
 
         <Flex width="auto" maxW="720px" align="center" color="gray.500">
           <HStack spacing={2}>
-            <ColorModeSwitchAlt />
+            <ColorModeSwitch />
             <ExternalLink
               omitIcon
               href={gitUrl}
@@ -112,16 +112,23 @@ function FadedText({ children }: WithChildren) {
 
 function Hero() {
   return (
-    <Box as="section" pt={40} pb={24} maxW="xl" mx="auto" textAlign="center">
+    <Box as="section" pt={40} pb={12} maxW="xl" mx="auto" textAlign="center">
       <KarmaIcon height="24em" width="24em" />
-      <Heading as="h1" mt={8} mb={16}>
+      <Heading as="h1" mt={8} mb={12}>
         next-karma
-        <FadedText>
-          is an opinionated batteries-included Next.js template
-        </FadedText>
+        <FadedText>the open framework on top of Next.js</FadedText>
       </Heading>
 
-      <Text fontStyle="italic">_still wip_ & docs coming soon</Text>
+      <Text mt={4}>
+        Stop worrying about nitty gritty low-level details in an ever-growing,
+        ever more complex ecosystem.
+      </Text>
+
+      <Text mt={4}>
+        Focus on what's important: creating awesome features for your users in a
+        fast and reliable way, yet retain all flexibility you might (n)ever
+        need.
+      </Text>
 
       <Box mt={12}>
         <Button
@@ -148,6 +155,10 @@ function Hero() {
         >
           GitHub
         </Button>
+
+        <Text fontStyle="italic" mt={12}>
+          _still wip_ & docs coming soon
+        </Text>
       </Box>
     </Box>
   );
@@ -171,8 +182,8 @@ function StackOverview() {
 
   return (
     <Box p={16} as="article" bg={bg}>
-      <Heading as="h2" id="features" mb={16} textAlign="center">
-        Features
+      <Heading as="h2" id="stack" mb={16} textAlign="center">
+        Stack
       </Heading>
 
       <Grid
@@ -209,10 +220,10 @@ function StackOverview() {
           title="Chakra"
           href="//chakra-ui.com/"
         >
-          Chakra provides composable and accessible low-level building blocks.
-          By default, it's visually to Tailwind and goes out of your way instead
-          of fighting it. {title} is maintained by a contributor to Chakra, so
-          it receives first class support.
+          Chakra provides composable and accessible UI building blocks. Instead
+          of having to eventually fight it as with other component libraries,
+          Chakra will go out of your way. {title} is maintained by a contributor
+          to Chakra, so it receives first class support.
         </Feature>
 
         <Feature
