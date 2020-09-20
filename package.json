@@ -53,7 +53,7 @@
     "babel-jest": "26.3.0",
     "dotenv": "8.2.0",
     "eslint": "7.9.0",
-    "eslint-config-galex": "2.3.5",
+    "eslint-config-galex": "2.4.2",
     "html-validate": "3.3.0",
     "husky": "4.3.0",
     "identity-obj-proxy": "3.0.0",
