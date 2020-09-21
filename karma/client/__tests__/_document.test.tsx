@@ -6,9 +6,9 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import Document from '../../../pages/_document';
 import { i18nCache } from '../../server/i18n/cache';
 import * as sentryUtils from '../../utils/sentry/client';
-import type { KarmaProps } from '../Karma';
+import type { KarmaSSRProps } from '../Karma';
 
-const pageProps: Omit<KarmaProps, 'children'> = {
+const pageProps: KarmaSSRProps = {
   i18nBundle: i18nCache.en,
   language: 'en',
   session: null,

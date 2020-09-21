@@ -4,7 +4,7 @@ import type { IncomingMessage } from 'http';
 import type { NextRouter } from 'next/router';
 
 import { IS_BROWSER } from '../../../src/constants';
-import type { KarmaProps } from '../../client/Karma';
+import type { KarmaSSRProps } from '../../client/Karma';
 import { isomorphicSentryInit, defaultOptions } from './shared';
 
 export * from '@sentry/react';
@@ -16,7 +16,7 @@ const options: BrowserOptions = {
 isomorphicSentryInit({ configureScope, init, options });
 
 interface InitialContextArgs
-  extends Omit<KarmaProps, 'i18nBundle' | 'cookies' | 'children'> {
+  extends Pick<KarmaSSRProps, 'session' | 'language'> {
   req?: IncomingMessage;
 }
 

@@ -16,11 +16,11 @@ import { i18nCache } from '../../server/i18n/cache';
 import * as detectLanguageUtils from '../../server/i18n/detectLanguage';
 import * as sentryUtils from '../../utils/sentry/client';
 import * as sentryUtilsServer from '../../utils/sentry/server';
-import type { KarmaProps } from '../Karma';
+import type { KarmaSSRProps } from '../Karma';
 import {
-  KarmaProvider,
+  KarmaSSR,
   getServerSideProps,
-  withServerSideKarmaProps,
+  withKarmaSSRProps,
   createGetServerSideProps,
 } from '../Karma';
 import type { User } from '../context/AuthContext/AuthContext';
@@ -28,7 +28,7 @@ import * as i18n from '../i18n';
 import type { I18nextResourceLocale } from '../i18n';
 
 describe('<KarmaProvider />', () => {
-  const defaultProps: KarmaProps = {
+  const defaultProps: KarmaSSRProps = {
     i18nBundle: i18nCache.de,
     language: 'en',
     session: null,
@@ -37,7 +37,7 @@ describe('<KarmaProvider />', () => {
   test('initializes i18next', () => {
     const initI18NSpy = jest.spyOn(i18n, 'initI18Next');
 
-    render(<KarmaProvider {...defaultProps}>next-karma</KarmaProvider>);
+    render(<KarmaSSR {...defaultProps}>next-karma</KarmaSSR>);
 
     expect(initI18NSpy).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -55,9 +55,9 @@ describe('<KarmaProvider />', () => {
 
     const addBreadcrumbSpy = jest.spyOn(sentryReact, 'addBreadcrumb');
 
-    render(<KarmaProvider {...defaultProps}>next-karma</KarmaProvider>);
+    render(<KarmaSSR {...defaultProps}>next-karma</KarmaSSR>);
 
-    expect(attachComponentBreadcrumbSpy).toHaveBeenCalledWith('KarmaProvider');
+    expect(attachComponentBreadcrumbSpy).toHaveBeenCalledWith('KarmaSSR');
     expect(addBreadcrumbSpy).toHaveBeenCalledWith(
       expect.objectContaining({
         level: expect.any(String),
@@ -86,7 +86,7 @@ const setupSpies = () => {
       Promise.resolve(
         (() => {
           if (Array.isArray(namespaces) && namespaces.length > 0) {
-            return namespaces.reduce<I18nextResourceLocale>(
+            return namespaces.reduce<Partial<I18nextResourceLocale>>(
               (carry, namespace) => {
                 carry[namespace] = mockBundle[namespace];
 
@@ -307,7 +307,7 @@ describe('withServerSideKarmaProps', () => {
   const mockProps = { foo: 1 };
 
   test('returns a function', () => {
-    const getServerSideProps = withServerSideKarmaProps(jest.fn());
+    const getServerSideProps = withKarmaSSRProps(jest.fn());
 
     expect(getServerSideProps).toBeInstanceOf(Function);
   });
@@ -316,7 +316,7 @@ describe('withServerSideKarmaProps', () => {
     setupSpies();
 
     const mockHandler = jest.fn().mockResolvedValueOnce({ props: mockProps });
-    const getServerSideProps = withServerSideKarmaProps(mockHandler);
+    const getServerSideProps = withKarmaSSRProps(mockHandler);
 
     await getServerSideProps(mockCtx);
 
@@ -329,7 +329,7 @@ describe('withServerSideKarmaProps', () => {
     const mockHandler = jest.fn().mockImplementationOnce(() => {
       throw new Error('error');
     });
-    const getServerSideProps = withServerSideKarmaProps(mockHandler);
+    const getServerSideProps = withKarmaSSRProps(mockHandler);
 
     const errorHandler = jest.fn();
 
@@ -346,7 +346,7 @@ describe('withServerSideKarmaProps', () => {
     setupSpies();
 
     const mockHandler = jest.fn().mockResolvedValueOnce({ props: mockProps });
-    const getServerSideProps = withServerSideKarmaProps(mockHandler);
+    const getServerSideProps = withKarmaSSRProps(mockHandler);
     const result = await getServerSideProps(mockCtx);
 
     expect(result).toMatchObject({

@@ -17,7 +17,7 @@ import { FaGithub, FaLinkedin, FaTwitter, FaArrowRight } from 'react-icons/fa';
 import { FcSettings } from 'react-icons/fc';
 
 import type { WithChildren } from '../../../../karma/client/Karma';
-import { ColorModeSwitch } from '../../components/ColorModeSwitch';
+import { ColorModeSwitchAlt } from '../../components/ColorModeSwitchAlt';
 import { ExternalLink } from '../../components/ExternalLink';
 import { WebShareButton } from '../../components/WebShareButton';
 import { Feature } from './Feature';
@@ -76,7 +76,7 @@ function Header() {
 
         <Flex width="auto" maxW="720px" align="center" color="gray.500">
           <HStack spacing={2}>
-            <ColorModeSwitch />
+            <ColorModeSwitchAlt />
             <ExternalLink
               omitIcon
               href={gitUrl}

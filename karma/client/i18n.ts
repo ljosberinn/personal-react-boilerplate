@@ -14,14 +14,15 @@ import {
   FALLBACK_LANGUAGE,
   namespaces as allNamespaces,
 } from '../../src/constants';
-import type { KarmaProps } from './Karma';
+import { i18nCache } from '../server/i18n/cache';
+import type { KarmaCoreProps } from './Karma';
 
 export const i18nCookieName = 'i18next';
 
-type InitI18NextArgs = Pick<KarmaProps, 'language'> &
+type InitI18NextArgs = Pick<KarmaCoreProps, 'language'> &
   (
     | {
-        i18nBundle: KarmaProps['i18nBundle'];
+        i18nBundle: KarmaCoreProps['i18nBundle'];
       }
     | {
         i18nCache: I18nextResources;
@@ -38,9 +39,9 @@ export const initI18Next = ({
     'i18nCache' in rest
       ? // tests have access to all localizations
         rest.i18nCache
-      : // only the currently detected language will be available during a render
-        {
-          [language]: rest.i18nBundle,
+      : {
+          // only the currently detected language will be available onload
+          [language]: rest.i18nBundle as I18nextResources,
         };
 
   instance
@@ -126,7 +127,7 @@ export declare type I18nextNamespace = {
  *
  */
 export declare type I18nextResourceLocale = {
-  [namespace: string]: I18nextNamespace;
+  [key in Namespace]: I18nextNamespace;
 };
 
 /**
@@ -166,7 +167,10 @@ export declare type MemoizedI18nextResources = {
 const _memoizedI18nextResources = new Map<string, MemoizedI18nextResources>();
 
 /**
- * Milliseconds to cache i18n client side for
+ * Milliseconds to cache i18n client side for.
+ *
+ * - 1 hour in prod
+ * - 60 seconds in dev
  */
 const memoizedCacheMaxAge = (IS_BROWSER || IS_PROD ? 60 * 60 : 60) * 1000;
 
@@ -188,19 +192,37 @@ export const getI18nPathByLanguageAndNamespace = ({
 }: GetI18nPathArguments): string =>
   `/static/locales/${language}/${namespace}.json`;
 
+const getSafeLanguageAndNamespace = ({
+  language,
+  namespaces,
+}: {
+  language: string;
+  namespaces?: Namespace[];
+}) => {
+  const safeLanguage = ENABLED_LANGUAGES.includes(language)
+    ? language
+    : FALLBACK_LANGUAGE;
+
+  const safeNamespaces = namespaces ?? [...new Set(allNamespaces)];
+
+  return {
+    language: safeLanguage,
+    namespacesToLoad: safeNamespaces,
+  };
+};
+
 export const getI18n = async (
   lang: string,
   { req, namespaces }: GetI18nOptions = {}
-): Promise<I18nextResourceLocale> => {
-  const language = ENABLED_LANGUAGES.includes(lang) ? lang : FALLBACK_LANGUAGE;
+): Promise<Partial<I18nextResourceLocale>> => {
+  const { language, namespacesToLoad } = getSafeLanguageAndNamespace({
+    language: lang,
+    namespaces,
+  });
 
   const ts = Date.now();
 
   const { origin } = absoluteUrl(req);
-
-  const namespacesToLoad: Namespace[] = namespaces ?? [
-    ...new Set(allNamespaces),
-  ];
 
   const data = await Promise.allSettled<Promise<I18nextNamespace>>(
     namespacesToLoad.map(async (namespace) => {
@@ -228,14 +250,48 @@ export const getI18n = async (
     })
   );
 
-  return data.reduce<I18nextResourceLocale>((carry, dataset, index) => {
-    /* istanbul ignore next */
-    if (dataset.status === 'rejected') {
+  return data.reduce<Partial<I18nextResourceLocale>>(
+    (carry, dataset, index) => {
+      /* istanbul ignore next */
+      if (dataset.status === 'rejected') {
+        return carry;
+      }
+
+      const namespace = namespacesToLoad[index];
+      carry[namespace] = dataset.value;
       return carry;
+    },
+    {}
+  );
+};
+
+/**
+ * retrieves reduced i18nBundle in `getStaticProps`
+ */
+export const getStaticI18n = async (
+  lang: string,
+  { namespaces }: Pick<GetI18nOptions, 'namespaces'> = {}
+): Promise<Partial<I18nextResourceLocale>> => {
+  const { language, namespacesToLoad } = getSafeLanguageAndNamespace({
+    language: lang,
+    namespaces,
+  });
+
+  /**
+   * required to satisfy TS below; hence inlined.
+   * A regular typeguard doesn't work here.
+   */
+  // eslint-disable-next-line unicorn/consistent-function-scoping
+  const isNamespace = (namespace: string): namespace is Namespace =>
+    allNamespaces.some((ns) => ns === namespace);
+
+  return Object.entries(i18nCache[language]).reduce<
+    Partial<I18nextResourceLocale>
+  >((carry, [namespace, bundle]) => {
+    if (isNamespace(namespace) && namespacesToLoad.includes(namespace)) {
+      carry[namespace] = bundle;
     }
 
-    const namespace = namespacesToLoad[index];
-    carry[namespace] = dataset.value;
     return carry;
   }, {});
 };
