@@ -282,16 +282,12 @@ export const getStaticI18n = async (
    * A regular typeguard doesn't work here.
    */
   // eslint-disable-next-line unicorn/consistent-function-scoping
-  const isNamespace = (namespace: string): namespace is Namespace =>
-    allNamespaces.some((ns) => ns === namespace);
 
-  return Object.entries(i18nCache[language]).reduce<
-    Partial<I18nextResourceLocale>
-  >((carry, [namespace, bundle]) => {
-    if (isNamespace(namespace) && namespacesToLoad.includes(namespace)) {
-      carry[namespace] = bundle;
-    }
+  return Object.entries(i18nCache[language])
+    .filter(([namespace]) => namespacesToLoad.includes(namespace as Namespace))
+    .reduce<Partial<I18nextResourceLocale>>((carry, [namespace, bundle]) => {
+      carry[namespace as Namespace] = bundle;
 
-    return carry;
-  }, {});
+      return carry;
+    }, {});
 };

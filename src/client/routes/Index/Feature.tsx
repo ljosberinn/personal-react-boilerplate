@@ -6,7 +6,7 @@ import {
   Icon,
   Flex,
 } from '@chakra-ui/core';
-import type { ReactNode } from 'react';
+import type { ReactNode, MouseEvent } from 'react';
 import { FaArrowRight } from 'react-icons/fa';
 
 import type { WithChildren } from '../../../../karma/client/Karma';
@@ -18,6 +18,10 @@ export interface FeatureProps extends WithChildren {
   icon: ReactNode;
   href?: string;
   learnMoreHref?: string;
+}
+
+function handleClick(event: MouseEvent) {
+  event.preventDefault();
 }
 
 export function Feature({
@@ -65,7 +69,7 @@ export function Feature({
                 transform: 'rotate(-45deg)',
               },
             }}
-            onClick={(event) => event.preventDefault()}
+            onClick={handleClick}
           >
             Learn more (soon!)
             <Icon

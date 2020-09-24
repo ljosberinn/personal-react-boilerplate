@@ -13,6 +13,7 @@ import {
   keyframes,
   Code,
 } from '@chakra-ui/core';
+import type { MouseEvent } from 'react';
 import { FaGithub, FaLinkedin, FaTwitter, FaArrowRight } from 'react-icons/fa';
 import { FcSettings } from 'react-icons/fc';
 
@@ -110,6 +111,10 @@ function FadedText({ children }: WithChildren) {
   );
 }
 
+function handleClick(event: MouseEvent) {
+  event.preventDefault();
+}
+
 function Hero() {
   return (
     <Box as="section" pt={40} pb={12} maxW="xl" mx="auto" textAlign="center">
@@ -139,7 +144,7 @@ function Hero() {
           size="lg"
           colorScheme="teal"
           disabled
-          onClick={(event) => event.preventDefault()}
+          onClick={handleClick}
           rightIcon={<Icon as={FaArrowRight} fontSize="0.8em" />}
         >
           Get Started
