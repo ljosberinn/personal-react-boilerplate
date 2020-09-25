@@ -1269,12 +1269,19 @@
   dependencies:
     "@chakra-ui/utils" "1.0.0-rc.3"
 
-"@chakra-ui/icons@1.0.0-rc.3":
-  version "1.0.0-rc.3"
-  resolved "https://registry.yarnpkg.com/@chakra-ui/icons/-/icons-1.0.0-rc.3.tgz#f297cf833e8a85da08c3e7aca9b6db4a867d4ef9"
-  integrity sha512-3odRMaexYgoMAAIIkyk/n4+fRSCczC69aZ6eeq/JoIwSpHAJQWTlqhOvHT5PBgWFI/50JbcgnninESyz7Hr9tQ==
+"@chakra-ui/icon@1.0.0-rc.4":
+  version "1.0.0-rc.4"
+  resolved "https://registry.yarnpkg.com/@chakra-ui/icon/-/icon-1.0.0-rc.4.tgz#3e8668a5bc7e98dd3ba006f8e95a774ef2a4a2d5"
+  integrity sha512-7vSHXMHP2ghCWrXhd/ygLIL/8P8ocF9WTGuxfyzWyddkOGogYx9/EHbj5tPlP9ICoRA79o3ip3ATjH1+N5x47A==
   dependencies:
-    "@chakra-ui/icon" "1.0.0-rc.3"
+    "@chakra-ui/utils" "1.0.0-rc.4"
+
+"@chakra-ui/icons@1.0.0-rc.4":
+  version "1.0.0-rc.4"
+  resolved "https://registry.yarnpkg.com/@chakra-ui/icons/-/icons-1.0.0-rc.4.tgz#f6e774bf54a7a5b803a29390ccaa164c9f72dce7"
+  integrity sha512-mQTW/B0TO772Kq+iLRrAWAgYJ0/seqljxjbEXw90/FV7HS8Amtiodc6Up4+Ff5WkEzNJHULWOFakaI13/RYiMw==
+  dependencies:
+    "@chakra-ui/icon" "1.0.0-rc.4"
     "@types/react" "16.9.44"
 
 "@chakra-ui/image@1.0.0-rc.3":
@@ -1560,6 +1567,20 @@
     css-box-model "1.2.1"
     lodash.merge "4.6.2"
     memoize-one "5.1.1"
+
+"@chakra-ui/utils@1.0.0-rc.4":
+  version "1.0.0-rc.4"
+  resolved "https://registry.yarnpkg.com/@chakra-ui/utils/-/utils-1.0.0-rc.4.tgz#370a17d4a2ceaae27ca3b32afe31987fa199583c"
+  integrity sha512-ZGfIw6rlfgZBsg0CeDUB/ECJxSMHj9634F0KMx6bNg65Rd35j6N/2Uo6Zb8fRLatNv508KWSWVyAxD0UVi0Nlw==
+  dependencies:
+    "@types/lodash.merge" "4.6.6"
+    "@types/lodash.mergewith" "4.6.6"
+    "@types/object-assign" "4.0.30"
+    css-box-model "1.2.1"
+    lodash.merge "4.6.2"
+    lodash.mergewith "4.6.2"
+    memoize-one "5.1.1"
+    object-assign "4.1.1"
 
 "@chakra-ui/visually-hidden@1.0.0-rc.3":
   version "1.0.0-rc.3"
@@ -2554,6 +2575,13 @@
   dependencies:
     "@types/lodash" "*"
 
+"@types/lodash.mergewith@4.6.6":
+  version "4.6.6"
+  resolved "https://registry.yarnpkg.com/@types/lodash.mergewith/-/lodash.mergewith-4.6.6.tgz#c4698f5b214a433ff35cb2c75ee6ec7f99d79f10"
+  integrity sha512-RY/8IaVENjG19rxTZu9Nukqh0W2UrYgmBj5sdns4hWRZaV8PqR7wIKHFKzvOTjo4zVRV7sVI+yFhAJql12Kfqg==
+  dependencies:
+    "@types/lodash" "*"
+
 "@types/lodash@*":
   version "4.14.161"
   resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.161.tgz#a21ca0777dabc6e4f44f3d07f37b765f54188b18"
@@ -2581,6 +2609,11 @@
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/@types/normalize-package-data/-/normalize-package-data-2.4.0.tgz#e486d0d97396d79beedd0a6e33f4534ff6b4973e"
   integrity sha512-f5j5b/Gf71L+dbqxIpQ4Z2WlmI/mPJ0fOkGGmFgtb6sAu97EPczzbS3/tJKxmcYDj55OX6ssqwDAWOHIYDRDGA==
+
+"@types/object-assign@4.0.30":
+  version "4.0.30"
+  resolved "https://registry.yarnpkg.com/@types/object-assign/-/object-assign-4.0.30.tgz#8949371d5a99f4381ee0f1df0a9b7a187e07e652"
+  integrity sha1-iUk3HVqZ9Dge4PHfCpt6GH4H5lI=
 
 "@types/parse-json@^4.0.0":
   version "4.0.0"
@@ -7708,6 +7741,11 @@ lodash.merge@4.6.2, lodash.merge@^4.6.2:
   resolved "https://registry.yarnpkg.com/lodash.merge/-/lodash.merge-4.6.2.tgz#558aa53b43b661e1925a0afdfa36a9a1085fe57a"
   integrity sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==
 
+lodash.mergewith@4.6.2:
+  version "4.6.2"
+  resolved "https://registry.yarnpkg.com/lodash.mergewith/-/lodash.mergewith-4.6.2.tgz#617121f89ac55f59047c7aec1ccd6654c6590f55"
+  integrity sha512-GK3g5RPZWTRSeLSpgP8Xhra+pnjBC56q9FZYe1d5RN3TJ35dbkGy3YqBSMbyCrlbi+CM9Z3Jk5yTL7RCsqboyQ==
+
 lodash.sortby@^4.7.0:
   version "4.7.0"
   resolved "https://registry.yarnpkg.com/lodash.sortby/-/lodash.sortby-4.7.0.tgz#edd14c824e2cc9c1e0b0a1b42bb5210516a42438"
@@ -8406,7 +8444,7 @@ oauth-sign@~0.9.0:
   resolved "https://registry.yarnpkg.com/oauth-sign/-/oauth-sign-0.9.0.tgz#47a7b016baa68b5fa0ecf3dee08a85c679ac6455"
   integrity sha512-fexhUFFPTGV8ybAtSIGbV6gOkSv8UtRbDBnAyLQw4QPKkgNlsH2ByPGtMUqdWkos6YCRmAqViwgZrJc/mRDzZQ==
 
-object-assign@^4.1.1:
+object-assign@4.1.1, object-assign@^4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/object-assign/-/object-assign-4.1.1.tgz#2109adc7965887cfc05cbbd442cac8bfbb360863"
   integrity sha1-IQmtx5ZYh8/AXLvUQsrIv7s2CGM=
