@@ -10,11 +10,24 @@ import {
   UNPROCESSABLE_ENTITY,
   INTERNAL_SERVER_ERROR,
 } from '../../utils/statusCodes';
+import type { AuthContextProviderProps } from '../context/AuthContext';
 import { AuthContextProvider, endpoints } from '../context/AuthContext';
 import type { Provider } from '../context/AuthContext/AuthContext';
 import { useAuth } from '../hooks/useAuth';
 
 const password = 'next-karma!';
+
+function Wrapper({
+  children,
+  mode = 'ssr',
+  session = null,
+}: Partial<AuthContextProviderProps>) {
+  return (
+    <AuthContextProvider mode={mode} session={session}>
+      {children}
+    </AuthContextProvider>
+  );
+}
 
 describe('hooks/useAuth', () => {
   const server = setupServer();
@@ -47,9 +60,7 @@ describe('hooks/useAuth', () => {
     const {
       result: { current },
     } = renderHook(useAuth, {
-      wrapper: ({ children }) => (
-        <AuthContextProvider session={null}>{children}</AuthContextProvider>
-      ),
+      wrapper: Wrapper,
     });
 
     expect(current.user).toBeNull();
@@ -62,9 +73,7 @@ describe('hooks/useAuth', () => {
     const {
       result: { current },
     } = renderHook(useAuth, {
-      wrapper: ({ children }) => (
-        <AuthContextProvider session={user}>{children}</AuthContextProvider>
-      ),
+      wrapper: ({ children }) => <Wrapper session={user}>{children}</Wrapper>,
     });
 
     expect(current.user).toBe(user);
@@ -81,9 +90,7 @@ describe('hooks/useAuth', () => {
     const user = { id: '1', name: 'ljosberinn' };
 
     const { result } = renderHook(useAuth, {
-      wrapper: ({ children }) => (
-        <AuthContextProvider session={user}>{children}</AuthContextProvider>
-      ),
+      wrapper: ({ children }) => <Wrapper session={user}>{children}</Wrapper>,
     });
 
     expect(result.current.user).toBe(user);
@@ -107,9 +114,7 @@ describe('hooks/useAuth', () => {
     server.use(rest.post(url, (_req, res, ctx) => res(ctx.json(user))));
 
     const { result } = renderHook(useAuth, {
-      wrapper: ({ children }) => (
-        <AuthContextProvider session={null}>{children}</AuthContextProvider>
-      ),
+      wrapper: Wrapper,
     });
 
     let response;
@@ -142,9 +147,7 @@ describe('hooks/useAuth', () => {
     );
 
     const { result } = renderHook(useAuth, {
-      wrapper: ({ children }) => (
-        <AuthContextProvider session={null}>{children}</AuthContextProvider>
-      ),
+      wrapper: Wrapper,
     });
 
     let response;
@@ -179,9 +182,7 @@ describe('hooks/useAuth', () => {
     );
 
     const { result } = renderHook(useAuth, {
-      wrapper: ({ children }) => (
-        <AuthContextProvider session={null}>{children}</AuthContextProvider>
-      ),
+      wrapper: Wrapper,
     });
 
     let response;
@@ -206,9 +207,7 @@ describe('hooks/useAuth', () => {
     const provider = 'reddit';
 
     const { result } = renderHook(useAuth, {
-      wrapper: ({ children }) => (
-        <AuthContextProvider session={null}>{children}</AuthContextProvider>
-      ),
+      wrapper: Wrapper,
     });
 
     let response;
@@ -230,9 +229,7 @@ describe('hooks/useAuth', () => {
         jest.spyOn(window.location, 'assign');
 
         const { result } = renderHook(useAuth, {
-          wrapper: ({ children }) => (
-            <AuthContextProvider session={null}>{children}</AuthContextProvider>
-          ),
+          wrapper: Wrapper,
         });
 
         let response;
@@ -261,9 +258,7 @@ describe('hooks/useAuth', () => {
     server.use(rest.post(url, (_req, res, ctx) => res(ctx.json(user))));
 
     const { result } = renderHook(useAuth, {
-      wrapper: ({ children }) => (
-        <AuthContextProvider session={null}>{children}</AuthContextProvider>
-      ),
+      wrapper: Wrapper,
     });
 
     let response;
@@ -297,9 +292,7 @@ describe('hooks/useAuth', () => {
     );
 
     const { result } = renderHook(useAuth, {
-      wrapper: ({ children }) => (
-        <AuthContextProvider session={null}>{children}</AuthContextProvider>
-      ),
+      wrapper: Wrapper,
     });
 
     let response;
@@ -335,7 +328,9 @@ describe('hooks/useAuth', () => {
 
     const { result } = renderHook(useAuth, {
       wrapper: ({ children }) => (
-        <AuthContextProvider session={null}>{children}</AuthContextProvider>
+        <AuthContextProvider mode="ssr" session={null}>
+          {children}
+        </AuthContextProvider>
       ),
     });
 
