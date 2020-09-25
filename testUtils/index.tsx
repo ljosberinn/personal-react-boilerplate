@@ -8,11 +8,11 @@ import type { ReactElement } from 'react';
 import { cloneElement, isValidElement } from 'react';
 import { I18nextProvider, useTranslation } from 'react-i18next';
 
-import { AuthContextProvider } from '../karma/client/context/AuthContext';
-import type { AuthContextDefinition } from '../karma/client/context/AuthContext/AuthContext';
-import { initI18Next } from '../karma/client/i18n';
-import { i18nCache } from '../karma/server/i18n/cache';
+import { AuthContextProvider } from '../src/client/context/AuthContext';
+import type { AuthContextDefinition } from '../src/client/context/AuthContext/AuthContext';
+import { initI18Next } from '../src/client/i18n';
 import { FALLBACK_LANGUAGE } from '../src/constants';
+import { i18nCache } from '../src/server/i18n/cache';
 import 'html-validate/jest';
 
 // may not be in setupTests.js because lambda-Tests rely on node-fetch which

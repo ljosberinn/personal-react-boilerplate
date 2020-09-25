@@ -1,4 +1,4 @@
-import type { ExternalProvider } from '../../../karma/client/context/AuthContext/AuthContext';
+import type { ExternalProvider } from '../../client/context/AuthContext/AuthContext';
 import {
   DISCORD_CLIENT_ID,
   DISCORD_CLIENT_SECRET,
@@ -8,7 +8,7 @@ import {
   GITHUB_CLIENT_SECRET,
   GOOGLE_CLIENT_ID,
   GOOGLE_CLIENT_SECRET,
-} from '../../../src/constants';
+} from '../../constants';
 
 type Config = {
   [key in ExternalProvider]: {

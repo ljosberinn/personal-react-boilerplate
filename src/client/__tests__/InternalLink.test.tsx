@@ -1,9 +1,9 @@
 import type { LinkProps } from 'next/link';
 import { cloneElement as mockCloneElement } from 'react';
 
-import type { WithChildren } from '../../../karma/client/Karma';
 import { screen, render, testA11Y, validateHtml } from '../../../testUtils';
 import { createUseRouterMock } from '../../../testUtils/router';
+import type { WithChildren } from '../Karma';
 import type { InternalLinkProps } from '../components/InternalLink';
 import { InternalLink } from '../components/InternalLink';
 

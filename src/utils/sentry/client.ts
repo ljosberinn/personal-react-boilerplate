@@ -3,8 +3,8 @@ import { addBreadcrumb, Severity, init, configureScope } from '@sentry/react';
 import type { IncomingMessage } from 'http';
 import type { NextRouter } from 'next/router';
 
-import { IS_BROWSER } from '../../../src/constants';
 import type { KarmaSSRProps } from '../../client/Karma';
+import { IS_BROWSER } from '../../constants';
 import { isomorphicSentryInit, defaultOptions } from './shared';
 
 export * from '@sentry/react';

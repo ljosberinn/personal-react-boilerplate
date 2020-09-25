@@ -1,10 +1,10 @@
 import { IncomingMessage } from 'http';
 import nextConnect from 'next-connect';
 
-import { SESSION_COOKIE_NAME } from '../../../src/constants';
 import { waitFor } from '../../../testUtils';
 import { testLambda } from '../../../testUtils/lambda';
 import type { User } from '../../client/context/AuthContext/AuthContext';
+import { SESSION_COOKIE_NAME } from '../../constants';
 import { RequestMethods } from '../../utils/requestMethods';
 import { OK, UNAUTHORIZED } from '../../utils/statusCodes';
 import * as cookieUtils from '../auth/cookie';

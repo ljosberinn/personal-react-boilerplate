@@ -12,8 +12,8 @@ import type { Response } from 'node-fetch';
 import fetch from 'node-fetch';
 import listen from 'test-listen';
 
-import type { Middleware } from '../karma/server/types';
-import type { RequestInitMethod } from '../karma/utils/requestMethods';
+import type { Middleware } from '../src/server/types';
+import type { RequestInitMethod } from '../src/utils/requestMethods';
 
 interface UrlArguments {
   /**

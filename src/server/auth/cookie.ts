@@ -3,12 +3,12 @@ import { serialize, parse } from 'cookie';
 import type { IncomingMessage } from 'http';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-import type { User } from '../../../karma/client/context/AuthContext/AuthContext';
+import type { User } from '../../client/context/AuthContext/AuthContext';
 import {
   SESSION_LIFETIME,
   IS_PROD,
   SESSION_COOKIE_NAME,
-} from '../../../src/constants';
+} from '../../constants';
 
 type SSRCompatibleRequest = NextApiRequest | IncomingMessage;
 

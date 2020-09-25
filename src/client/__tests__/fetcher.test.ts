@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
 import nodeFetch from 'node-fetch';
 
+import { authenticatedFetch } from '../../../src/client/utils/fetcher';
 import { createIncomingRequestMock } from '../../../testUtils/api';
 import type { RequestInitMethod } from '../../utils/requestMethods';
 import { RequestMethods } from '../../utils/requestMethods';
-import { authenticatedFetch } from '../utils/fetcher';
 
 const testUrl = 'http://localhost:3000';
 

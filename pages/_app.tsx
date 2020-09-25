@@ -7,7 +7,7 @@ import {
   attachRoutingContext,
   ErrorBoundary as TopLevelErrorBoundary,
   configureScope,
-} from '../karma/utils/sentry/client';
+} from '../src/utils/sentry/client';
 
 export interface AppRenderProps {
   pageProps: object;

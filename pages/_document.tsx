@@ -2,7 +2,7 @@ import { ColorModeScript } from '@chakra-ui/core';
 import { captureException } from '@sentry/node';
 import NextDocument, { Html, Head, Main, NextScript } from 'next/document';
 
-import { attachComponentBreadcrumb } from '../karma/utils/sentry/client';
+import { attachComponentBreadcrumb } from '../src/utils/sentry/client';
 
 /**
  * Send to Sentry all uncaught exceptions.
@@ -18,9 +18,9 @@ import { attachComponentBreadcrumb } from '../karma/utils/sentry/client';
   process.on(event, captureException);
 });
 
-const title = 'next-karma | Next.js template';
+const title = 'next-karma | the open framework';
 const description =
-  'next-karma - an opinonated batteries-included Next.js template | Authentication, Internationalization, Error Handling';
+  'next-karma - the open framework on top of Next.js | Authentication, Internationalization, Error Handling';
 
 // eslint-disable-next-line import/no-default-export
 export default function CustomDocument(): JSX.Element {

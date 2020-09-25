@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo, useCallback } from 'react';
 
-import { ENABLED_PROVIDER } from '../../../../src/constants';
+import { ENABLED_PROVIDER } from '../../../constants';
 import { INTERNAL_SERVER_ERROR } from '../../../utils/statusCodes';
 import type { Mode, WithChildren } from '../../Karma';
 import type { User, LoginOptions, LocalLoginOptions } from './AuthContext';

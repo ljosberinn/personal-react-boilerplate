@@ -1,6 +1,5 @@
 import i18n from 'i18next';
 
-import { i18nCache } from '../../../karma/server/i18n/cache';
 import {
   render,
   userEvent,
@@ -11,6 +10,7 @@ import {
 } from '../../../testUtils';
 import { mockConsoleMethods } from '../../../testUtils/console';
 import { ENABLED_LANGUAGES } from '../../constants';
+import { i18nCache } from '../../server/i18n/cache';
 import { LanguageSwitch } from '../components/LanguageSwitch';
 
 const setup = () => {

@@ -1,8 +1,8 @@
 import { serialize } from 'cookie';
 
-import { i18nCookieName } from '../../../karma/client/i18n';
-import { FALLBACK_LANGUAGE } from '../../../src/constants';
 import { createIncomingRequestMock } from '../../../testUtils/api';
+import { i18nCookieName } from '../../client/i18n';
+import { FALLBACK_LANGUAGE } from '../../constants';
 import {
   detectLanguage,
   findLanguageByAcceptLanguageHeader,

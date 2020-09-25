@@ -1,5 +1,5 @@
+import { MetaThemeColorSynchronizer } from '../../../src/client/components/MetaThemeColorSynchronizer';
 import { render } from '../../../testUtils';
-import { MetaThemeColorSynchronizer } from '../components/MetaThemeColorSynchronizer';
 
 /**
  * currently only a smoketest

@@ -1,4 +1,4 @@
-import { NOT_FOUND } from '../karma/utils/statusCodes';
+import { NOT_FOUND } from '../src/utils/statusCodes';
 import CustomError from './_error';
 
 // eslint-disable-next-line import/no-default-export

@@ -1,8 +1,8 @@
 import absoluteUrl from 'next-absolute-url';
 import nextConnect from 'next-connect';
 
-import type { ExternalProvider } from '../../../../karma/client/context/AuthContext/AuthContext';
-import { ENABLED_PROVIDER } from '../../../../src/constants';
+import type { ExternalProvider } from '../../../client/context/AuthContext/AuthContext';
+import { ENABLED_PROVIDER } from '../../../constants';
 import {
   FOUND_MOVED_TEMPORARILY,
   INTERNAL_SERVER_ERROR,

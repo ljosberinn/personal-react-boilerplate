@@ -19,8 +19,8 @@ import { FlagIcon } from 'react-flag-kit';
 import { useTranslation } from 'react-i18next';
 import { MdTranslate } from 'react-icons/md';
 
-import { createLanguageChangeHandler } from '../../../karma/client/i18n';
 import { ENABLED_LANGUAGES } from '../../constants';
+import { createLanguageChangeHandler } from '../i18n';
 import { ExternalLink } from './ExternalLink';
 
 type FlapMap = Record<string, FlagIconCode>;

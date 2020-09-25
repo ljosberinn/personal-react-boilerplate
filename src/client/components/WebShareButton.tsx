@@ -3,8 +3,8 @@ import { IconButton, Icon } from '@chakra-ui/core';
 import React, { useState, useEffect } from 'react';
 import { MdShare } from 'react-icons/md';
 
-import { captureException } from '../../../karma/utils/sentry/client';
 import { IS_BROWSER } from '../../constants';
+import { captureException } from '../../utils/sentry/client';
 
 export interface WebShareButtonProps
   extends Omit<IconButtonProps, 'icon' | 'background' | 'onClick'> {

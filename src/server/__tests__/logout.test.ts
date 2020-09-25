@@ -1,5 +1,5 @@
-import { SESSION_COOKIE_NAME } from '../../../src/constants';
 import { testLambda } from '../../../testUtils/lambda';
+import { SESSION_COOKIE_NAME } from '../../constants';
 import type { RequestInitMethod } from '../../utils/requestMethods';
 import { RequestMethods } from '../../utils/requestMethods';
 import { NOT_FOUND, OK } from '../../utils/statusCodes';

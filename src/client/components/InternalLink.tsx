@@ -4,7 +4,7 @@ import type { LinkProps as NextLinkProps } from 'next/dist/client/link';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 
-import type { WithChildren } from '../../../karma/client/Karma';
+import type { WithChildren } from '../Karma';
 
 export type InternalLinkProps =
   // enforce having children

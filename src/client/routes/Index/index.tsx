@@ -17,7 +17,7 @@ import type { MouseEvent } from 'react';
 import { FaGithub, FaLinkedin, FaTwitter, FaArrowRight } from 'react-icons/fa';
 import { FcSettings } from 'react-icons/fc';
 
-import type { WithChildren } from '../../../../karma/client/Karma';
+import type { WithChildren } from '../../Karma';
 import { ColorModeSwitchAlt } from '../../components/ColorModeSwitchAlt';
 import { ExternalLink } from '../../components/ExternalLink';
 import { WebShareButton } from '../../components/WebShareButton';

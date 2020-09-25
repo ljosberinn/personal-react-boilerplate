@@ -9,7 +9,7 @@ import {
 import type { ReactNode, MouseEvent } from 'react';
 import { FaArrowRight } from 'react-icons/fa';
 
-import type { WithChildren } from '../../../../karma/client/Karma';
+import type { WithChildren } from '../../Karma';
 import { ExternalLink } from '../../components/ExternalLink';
 import { InternalLink } from '../../components/InternalLink';
 

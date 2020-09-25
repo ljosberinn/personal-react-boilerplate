@@ -4,6 +4,7 @@ import { render } from '@testing-library/react';
 import { serialize } from 'cookie';
 import type { GetServerSidePropsContext } from 'next';
 
+import type { User } from '../../../src/client/context/AuthContext/AuthContext';
 import type { Namespace } from '../../../src/constants';
 import { FALLBACK_LANGUAGE, SESSION_COOKIE_NAME } from '../../../src/constants';
 import {
@@ -23,7 +24,6 @@ import {
   withKarmaSSRProps,
   createGetServerSideProps,
 } from '../Karma';
-import type { User } from '../context/AuthContext/AuthContext';
 import * as i18n from '../i18n';
 import type { I18nextResourceLocale } from '../i18n';
 

@@ -10,6 +10,9 @@ import type { ParsedUrlQuery } from 'querystring';
 import type { ReactNode } from 'react';
 import { I18nextProvider } from 'react-i18next';
 
+import { MetaThemeColorSynchronizer } from '../../src/client/components/MetaThemeColorSynchronizer';
+import { AuthContextProvider } from '../../src/client/context/AuthContext';
+import type { User } from '../../src/client/context/AuthContext/AuthContext';
 import type { Namespace } from '../../src/constants';
 import { FALLBACK_LANGUAGE } from '../../src/constants';
 import { getSession } from '../server/auth/cookie';
@@ -19,10 +22,7 @@ import {
   attachInitialContext,
 } from '../utils/sentry/client';
 import { attachLambdaContext } from '../utils/sentry/server';
-import { MetaThemeColorSynchronizer } from './components/MetaThemeColorSynchronizer';
 import { ServiceWorker } from './components/ServiceWorker';
-import { AuthContextProvider } from './context/AuthContext';
-import type { User } from './context/AuthContext/AuthContext';
 import type { I18nextResourceLocale } from './i18n';
 import { initI18Next, getI18n, getStaticI18n } from './i18n';
 

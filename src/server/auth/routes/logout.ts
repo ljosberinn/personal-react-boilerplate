@@ -1,6 +1,6 @@
 import nextConnect from 'next-connect';
 
-import { SESSION_COOKIE_NAME } from '../../../../src/constants';
+import { SESSION_COOKIE_NAME } from '../../../constants';
 import { OK } from '../../../utils/statusCodes';
 import type { RequestHandler } from '../../types';
 import { removeCookie } from '../cookie';
