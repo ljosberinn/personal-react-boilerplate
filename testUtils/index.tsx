@@ -152,7 +152,7 @@ export function render(
 ): RenderResult {
   return rtlRender(
     <I18nextProvider i18n={i18nInstance}>
-      <AuthContextProvider session={session}>
+      <AuthContextProvider mode="ssr" session={session}>
         <ChakraProvider resetCSS portalZIndex={40}>
           <Wrapper>
             {i18n ? (
