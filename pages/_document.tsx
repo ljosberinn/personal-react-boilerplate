@@ -67,8 +67,8 @@ export default function CustomDocument(): JSX.Element {
         <meta content="Gerrit Alex" name="author" />
       </Head>
       <body>
-        <ColorModeScript />
         <Main />
+        <ColorModeScript />
         <NextScript />
       </body>
     </Html>

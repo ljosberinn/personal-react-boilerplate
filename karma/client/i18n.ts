@@ -19,14 +19,12 @@ import type { KarmaCoreProps } from './Karma';
 
 export const i18nCookieName = 'i18next';
 
-type InitI18NextArgs = Pick<KarmaCoreProps, 'language'> &
+type InitI18NextArgs = Pick<KarmaCoreProps['i18n'], 'language'> &
   (
-    | {
-        i18nBundle: KarmaCoreProps['i18nBundle'];
-      }
-    | {
-        i18nCache: I18nextResources;
-      }
+    | // only the currently detected language will be available onload
+    Pick<KarmaCoreProps['i18n'], 'bundle'>
+    // tests have access to all localizations
+    | { i18nCache: I18nextResources }
   );
 
 export const initI18Next = ({
@@ -37,11 +35,9 @@ export const initI18Next = ({
 
   const resources =
     'i18nCache' in rest
-      ? // tests have access to all localizations
-        rest.i18nCache
+      ? rest.i18nCache
       : {
-          // only the currently detected language will be available onload
-          [language]: rest.i18nBundle as I18nextResources,
+          [language]: rest.bundle as I18nextResources,
         };
 
   instance

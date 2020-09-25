@@ -16,8 +16,8 @@
     "postinstall": "yarn-deduplicate -l"
   },
   "dependencies": {
-    "@chakra-ui/core": "1.0.0-rc.3",
-    "@chakra-ui/icons": "1.0.0-rc.3",
+    "@chakra-ui/core": "1.0.0-rc.4",
+    "@chakra-ui/icons": "1.0.0-rc.4",
     "@sentry/minimal": "5.24.2",
     "@sentry/node": "5.24.2",
     "@sentry/react": "5.24.2",
@@ -53,7 +53,7 @@
     "babel-jest": "26.3.0",
     "dotenv": "8.2.0",
     "eslint": "7.9.0",
-    "eslint-config-galex": "2.4.5",
+    "eslint-config-galex": "2.4.8",
     "html-validate": "3.3.0",
     "husky": "4.3.0",
     "identity-obj-proxy": "3.0.0",

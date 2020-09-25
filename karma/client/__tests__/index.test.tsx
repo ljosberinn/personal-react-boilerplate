@@ -5,8 +5,11 @@ import { createUseRouterMock } from '../../../testUtils/router';
 
 const defaultProps: IndexPageProps = {
   karma: {
-    i18nBundle: {},
-    language: 'en',
+    i18n: {
+      bundle: {},
+      language: 'en',
+    },
+    session: null,
   },
 };
 

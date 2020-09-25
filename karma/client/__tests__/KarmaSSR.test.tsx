@@ -27,10 +27,13 @@ import type { User } from '../context/AuthContext/AuthContext';
 import * as i18n from '../i18n';
 import type { I18nextResourceLocale } from '../i18n';
 
-describe('<KarmaProvider />', () => {
+describe('<KarmaSSR />', () => {
   const defaultProps: KarmaSSRProps = {
-    i18nBundle: i18nCache.de,
-    language: 'en',
+    cookies: '',
+    i18n: {
+      bundle: i18nCache.de,
+      language: 'en',
+    },
     session: null,
   };
 
@@ -40,10 +43,7 @@ describe('<KarmaProvider />', () => {
     render(<KarmaSSR {...defaultProps}>next-karma</KarmaSSR>);
 
     expect(initI18NSpy).toHaveBeenCalledWith(
-      expect.objectContaining({
-        i18nBundle: defaultProps.i18nBundle,
-        language: defaultProps.language,
-      })
+      expect.objectContaining(defaultProps.i18n)
     );
   });
 
@@ -246,8 +246,11 @@ describe('getServerSideProps', () => {
     expect(result).toMatchObject({
       props: {
         karma: expect.objectContaining({
-          i18nBundle: mockBundle,
-          language: FALLBACK_LANGUAGE,
+          cookies: '',
+          i18n: {
+            bundle: mockBundle,
+            language: FALLBACK_LANGUAGE,
+          },
           session: null,
         }),
       },
@@ -285,7 +288,7 @@ describe('createGetServerSideProps', () => {
       mockCtx
     );
 
-    expect(result.props.karma.i18nBundle).toMatchObject(
+    expect(result.props.karma.i18n.bundle).toMatchObject(
       i18nCache[FALLBACK_LANGUAGE]
     );
   });
@@ -295,7 +298,7 @@ describe('createGetServerSideProps', () => {
 
     const result = await createGetServerSideProps({ i18nNamespaces })(mockCtx);
 
-    expect(result.props.karma.i18nBundle).toMatchObject(
+    expect(result.props.karma.i18n.bundle).toMatchObject(
       expect.objectContaining({
         [i18nNamespaces[0]]: expect.any(Object),
       })
@@ -352,8 +355,11 @@ describe('withServerSideKarmaProps', () => {
     expect(result).toMatchObject({
       props: expect.objectContaining({
         karma: {
-          i18nBundle: mockBundle,
-          language: FALLBACK_LANGUAGE,
+          cookies: '',
+          i18n: {
+            bundle: mockBundle,
+            language: FALLBACK_LANGUAGE,
+          },
           session: null,
         },
         ...mockProps,

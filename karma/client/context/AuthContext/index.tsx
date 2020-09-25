@@ -1,13 +1,14 @@
-import { useState } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 
 import { ENABLED_PROVIDER } from '../../../../src/constants';
 import { INTERNAL_SERVER_ERROR } from '../../../utils/statusCodes';
-import type { WithChildren } from '../../Karma';
+import type { Mode, WithChildren } from '../../Karma';
 import type { User, LoginOptions, LocalLoginOptions } from './AuthContext';
 import { AuthContext } from './AuthContext';
 
 export interface AuthContextProviderProps extends WithChildren {
   session: User | null;
+  mode: Mode;
 }
 
 export const endpoints = {
@@ -30,6 +31,7 @@ export const endpoints = {
 
 export function AuthContextProvider({
   children,
+  mode,
   session,
 }: AuthContextProviderProps): JSX.Element {
   const [user, setUser] = useState<User | null>(session);
@@ -45,7 +47,9 @@ export function AuthContextProvider({
    * - the response status code when failing to authenticate
    * - INTERNAL_SERVER_ERROR when crashing
    */
-  async function login(options: LoginOptions): Promise<User | number | null> {
+  const login = useCallback(async (options: LoginOptions): Promise<
+    User | number | null
+  > => {
     if ('provider' in options) {
       if (ENABLED_PROVIDER.includes(options.provider)) {
         window.location.assign(
@@ -79,18 +83,19 @@ export function AuthContextProvider({
 
       return INTERNAL_SERVER_ERROR;
     }
-  }
+  }, []);
 
   /**
    * Dispatches a request to the logout endpoint which deletes the session cookie.
    * Resets User object afterwards.
    */
-  async function logout() {
+  const logout = useCallback(async () => {
     const { url, method } = endpoints.logout;
 
     await fetch(url, { method });
+
     setUser(null);
-  }
+  }, []);
 
   /**
    * Will attempt to register the user.
@@ -100,7 +105,9 @@ export function AuthContextProvider({
    * - the response status code when failing to register
    * - INTERNAL_SERVER_ERROR when crashing
    */
-  async function register(options: LocalLoginOptions): Promise<User | number> {
+  const register = useCallback(async (options: LocalLoginOptions): Promise<
+    User | number
+  > => {
     try {
       const { url, method } = endpoints.register;
 
@@ -123,15 +130,24 @@ export function AuthContextProvider({
 
       return INTERNAL_SERVER_ERROR;
     }
-  }
+  }, []);
 
-  const value = {
-    isAuthenticated: !!user,
-    login,
-    logout,
-    register,
-    user,
-  };
+  useEffect(() => {
+    if (mode === 'ssg') {
+      // TODO: automatic re-login attempt
+    }
+  }, [mode]);
+
+  const value = useMemo(
+    () => ({
+      isAuthenticated: !!user,
+      login,
+      logout,
+      register,
+      user,
+    }),
+    [login, logout, register, user]
+  );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

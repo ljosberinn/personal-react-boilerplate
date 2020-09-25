@@ -58,7 +58,7 @@ const mockRoute = ({ language, response }: MockRouteParams) => {
 describe('initI18Next', () => {
   test('creates an i18nInstance without crashing given prod arguments', () => {
     initI18Next({
-      i18nBundle: i18nCache[FALLBACK_LANGUAGE],
+      bundle: i18nCache[FALLBACK_LANGUAGE],
       language: FALLBACK_LANGUAGE,
     });
   });
@@ -76,7 +76,7 @@ describe('initI18Next', () => {
     const language = FALLBACK_LANGUAGE;
 
     initI18Next({
-      i18nBundle: i18nCache[FALLBACK_LANGUAGE],
+      bundle: i18nCache[FALLBACK_LANGUAGE],
       language,
     });
 
@@ -88,7 +88,7 @@ describe('initI18Next', () => {
     const setAttributeSpy = jest.spyOn(HTMLElement.prototype, 'setAttribute');
 
     const instance = initI18Next({
-      i18nBundle: i18nCache[FALLBACK_LANGUAGE],
+      bundle: i18nCache[FALLBACK_LANGUAGE],
       language: FALLBACK_LANGUAGE,
     });
 
@@ -108,7 +108,7 @@ describe('initI18Next', () => {
       const setAttributeSpy = jest.spyOn(HTMLElement.prototype, 'setAttribute');
 
       const instance = initI18Next({
-        i18nBundle: i18nCache[language],
+        bundle: i18nCache[language],
         language,
       });
 
@@ -218,7 +218,7 @@ describe('createLanguageChangeHandler', () => {
 
   test('verifies bundle existence on i18n on language change', async () => {
     const instance = initI18Next({
-      i18nBundle: i18nCache[FALLBACK_LANGUAGE],
+      bundle: i18nCache[FALLBACK_LANGUAGE],
       language: FALLBACK_LANGUAGE,
     });
 
@@ -242,7 +242,7 @@ describe('createLanguageChangeHandler', () => {
 
   test('adds the resource bundle when loaded', async () => {
     const instance = initI18Next({
-      i18nBundle: i18nCache[FALLBACK_LANGUAGE],
+      bundle: i18nCache[FALLBACK_LANGUAGE],
       language: FALLBACK_LANGUAGE,
     });
 

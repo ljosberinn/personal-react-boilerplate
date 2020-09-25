@@ -1,5 +1,6 @@
 /* eslint-disable spaced-comment */
-import { ChakraProvider, theme } from '@chakra-ui/core';
+import type { StorageManager } from '@chakra-ui/core';
+import { localStorageManager, ChakraProvider } from '@chakra-ui/core';
 import type {
   GetServerSidePropsContext,
   GetStaticPropsContext,
@@ -33,29 +34,52 @@ export interface WithChildren {
  * KarmaCore
  *********************/
 
+export type Mode = 'ssr' | 'ssg';
+
 export interface KarmaCoreProps {
-  language: string;
-  i18nBundle: I18nextResourceLocale | Partial<I18nextResourceLocale>;
+  i18n: {
+    /**
+     * The language to initialize i18n with
+     */
+    language: string;
+    /**
+     * The initial bundle to initialize i18n with
+     */
+    bundle: I18nextResourceLocale | Partial<I18nextResourceLocale>;
+  };
+
+  /**
+   * Optional Chakra StorageManager taking care of color mode persistence
+   *
+   * @default undefined
+   */
+  storageManager?: StorageManager;
+  session: User | null;
+  mode: Mode;
 }
 
 function KarmaCore({
-  i18nBundle,
-  language,
+  i18n,
+  storageManager,
+  session,
+  mode,
   children,
 }: KarmaCoreProps & WithChildren): JSX.Element {
-  const i18nInstance = initI18Next({ i18nBundle, language });
+  const i18nInstance = initI18Next(i18n);
 
   attachComponentBreadcrumb('KarmaCore');
 
   return (
-    <I18nextProvider i18n={i18nInstance}>
-      <ChakraProvider theme={theme} portalZIndex={40} resetCSS>
-        <ServiceWorker />
-        <MetaThemeColorSynchronizer />
-        {/* <CustomPWAInstallPrompt /> */}
-        {children}
-      </ChakraProvider>
-    </I18nextProvider>
+    <AuthContextProvider mode={mode} session={session}>
+      <I18nextProvider i18n={i18nInstance}>
+        <ChakraProvider portalZIndex={40} colorModeManager={storageManager}>
+          <ServiceWorker />
+          <MetaThemeColorSynchronizer />
+          {/* <CustomPWAInstallPrompt /> */}
+          {children}
+        </ChakraProvider>
+      </I18nextProvider>
+    </AuthContextProvider>
   );
 }
 
@@ -64,29 +88,43 @@ function KarmaCore({
  *********************/
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface KarmaSSGProps extends KarmaCoreProps {}
+export interface KarmaSSGProps extends Omit<KarmaCoreProps, 'mode'> {}
 
-export const KarmaSSG = KarmaCore;
+export function KarmaSSG({
+  children,
+  ...rest
+}: KarmaSSGProps & WithChildren): JSX.Element {
+  attachComponentBreadcrumb('KarmaSSG');
+
+  return (
+    <KarmaCore {...rest} mode="ssg">
+      {children}
+    </KarmaCore>
+  );
+}
 
 /**********************
  * KarmaSSR
  *********************/
 
-export interface KarmaSSRProps extends KarmaCoreProps {
-  session: User | null;
+export interface KarmaSSRProps extends Omit<KarmaCoreProps, 'mode'> {
+  cookies: string;
 }
 
 export function KarmaSSR({
-  session,
   children,
+  cookies,
   ...rest
 }: KarmaSSRProps & WithChildren): JSX.Element {
   attachComponentBreadcrumb('KarmaSSR');
 
+  // TODO: use cookieStorageManager with rc5
+  const storageManager = localStorageManager; //cookieStorageManager(cookies);
+
   return (
-    <AuthContextProvider session={session}>
-      <KarmaSSG {...rest}>{children}</KarmaSSG>
-    </AuthContextProvider>
+    <KarmaCore {...rest} storageManager={storageManager} mode="ssr">
+      {children}
+    </KarmaCore>
   );
 }
 
@@ -193,10 +231,11 @@ export const getServerSideProps = async (
 ): GetServerSidePropsReturn => {
   const session = getSession(req);
   const language = detectLanguage(req);
-  const i18nBundle = await getI18n(language, {
+  const bundle = await getI18n(language, {
     namespaces: options?.i18nNamespaces,
     req,
   });
+  const cookies = req?.headers.cookie ?? '';
 
   attachLambdaContext(req);
 
@@ -206,11 +245,16 @@ export const getServerSideProps = async (
     session,
   });
 
+  const i18n = {
+    bundle,
+    language,
+  };
+
   return {
     props: {
       karma: {
-        i18nBundle,
-        language,
+        cookies,
+        i18n,
         session,
       },
     },
@@ -264,15 +308,20 @@ export const getStaticProps = async (
 ): GetStaticPropsReturn => {
   const language = options?.language ?? FALLBACK_LANGUAGE;
 
-  const i18nBundle = await getStaticI18n(language, {
+  const bundle = await getStaticI18n(language, {
     namespaces: options?.i18nNamespaces,
   });
+
+  const i18n = {
+    bundle,
+    language,
+  };
 
   return {
     props: {
       karma: {
-        i18nBundle,
-        language,
+        i18n,
+        session: null,
       },
     },
     revalidate: options?.revalidate,
