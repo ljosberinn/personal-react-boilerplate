@@ -17,7 +17,7 @@ const dummyHandler: RequestHandler<AuthenticatedRequest, User> = (req, res) => {
 };
 
 describe('middleware/authNSecurity', () => {
-  test('should be a function', () => {
+  test('is a function', () => {
     expect(authNSecurityMiddleware).toBeInstanceOf(Function);
   });
 

@@ -59,31 +59,6 @@ interface UrlArguments {
   redirect?: RequestRedirect;
 }
 
-const getUrl = (
-  index: string,
-  maybeUrl: string | URL = '/',
-  maybeParams: UrlArguments['searchParams'] = {}
-): string => {
-  const url = maybeUrl instanceof URL ? maybeUrl : new URL(index + maybeUrl);
-
-  if (url.search) {
-    throw new Error(
-      'Use `searchParams` instead of appending `?foo=bar` to the url'
-    );
-  }
-
-  const params =
-    maybeParams instanceof URLSearchParams
-      ? maybeParams
-      : new URLSearchParams(maybeParams);
-
-  params.forEach((value, key) => {
-    url.searchParams.append(key, value);
-  });
-
-  return url.toString();
-};
-
 /**
  * Applies middlewares to tested lambdas
  *
@@ -113,6 +88,12 @@ const withMiddleware = (
   return connected;
 };
 
+const apiContext = {
+  previewModeEncryptionKey: '',
+  previewModeId: '',
+  previewModeSigningKey: '',
+};
+
 export const testLambda = async (
   handler: NextConnect<NextApiRequest, NextApiResponse>,
   {
@@ -128,14 +109,7 @@ export const testLambda = async (
 ): Promise<Response> => {
   const server = createServer((req, res) => {
     const getQuery = getQueryParser(req);
-
     const resolver = withMiddleware(handler, middleware);
-
-    const apiContext = {
-      previewModeEncryptionKey: '',
-      previewModeId: '',
-      previewModeSigningKey: '',
-    };
 
     apiResolver(req, res, getQuery(), resolver, apiContext, true).catch(
       // eslint-disable-next-line no-console
@@ -145,54 +119,7 @@ export const testLambda = async (
 
   const index = await listen(server);
 
-  const urlToFetch = (() => {
-    if (catchAllName) {
-      const matcher = route('/:path*');
-      const { path }: { path: string[] } = matcher(url);
-
-      /**
-       * Next doesnt allow nested catch all routes such as
-       * /api/[...foo]/bar/[...baz].js
-       * so we only have to care about
-       * /api/[...foo].js
-       */
-      const lastSegment = path.pop() as string;
-
-      // migrate all previous search params if existing
-      const params =
-        searchParams instanceof URLSearchParams
-          ? searchParams
-          : new URLSearchParams(searchParams);
-
-      /**
-       * workaround for catchall routes
-       * appending the same key twice automatically makes it an array which is
-       * required for the catchall logic in the handler to work as expected
-       *
-       * downside: the empty value will show up in the lambda as 2nd argument
-       * e.g. [...authRouter].ts will have
-       * req.query.authRouter === ['login', '']
-       *
-       * probably won't matter though as we only care about [0]
-       */
-      const query = [
-        params.toString(),
-        // order is important - key with value must come before key without value
-        `${catchAllName}=${lastSegment}`,
-        catchAllName,
-      ]
-        // filter in case params is empty
-        .filter(Boolean)
-        .join('&');
-
-      const pathname = `${path.join('/')}/`;
-      const affix = [pathname, query].join('?');
-
-      return [index, affix].join('/');
-    }
-
-    return url || searchParams ? getUrl(index, url, searchParams) : index;
-  })();
+  const urlToFetch = determineUrl(index, { catchAllName, searchParams, url });
 
   if (headers?.cookie) {
     headers.cookie = Object.entries(headers.cookie)
@@ -216,4 +143,94 @@ export const testLambda = async (
       }
     });
   });
+};
+
+type DetermineUrlParams = Pick<
+  UrlArguments,
+  'url' | 'catchAllName' | 'searchParams'
+>;
+
+/**
+ * retrieves the correct URL to fetch in a test environment
+ */
+const determineUrl = (
+  index: string,
+  { url, catchAllName, searchParams }: DetermineUrlParams
+) => {
+  if (catchAllName) {
+    // use nextjs internal route matching fn
+    const matcher = route('/:path*');
+    const { path }: { path: string[] } = matcher(url);
+
+    /**
+     * Next doesnt allow nested catch all routes such as
+     * /api/[...foo]/bar/[...baz].js
+     * so we only have to care about
+     * /api/[...foo].js
+     */
+    const lastSegment: string = path.pop()!;
+
+    // migrate all previous search params if existing
+    const params =
+      searchParams instanceof URLSearchParams
+        ? searchParams
+        : new URLSearchParams(searchParams);
+
+    /**
+     * workaround for catchall routes
+     * appending the same key twice automatically makes it an array which is
+     * required for the catchall logic in the handler to work as expected
+     *
+     * downside: the empty value will show up in the lambda as 2nd argument
+     * e.g. [...authRouter].ts will have
+     * req.query.authRouter === ['login', '']
+     *
+     * probably won't matter though as we only care about [0]
+     */
+    const query = [
+      params.toString(),
+      // order is important - key with value must come before key without value
+      `${catchAllName}=${lastSegment}`,
+      catchAllName,
+    ]
+      // filter in case params is empty
+      .filter(Boolean)
+      .join('&');
+
+    /**
+     * from `['api', 'v1', 'auth']` and `'me=me&me`'
+     * to `'/api/v1/auth?me=me&me'`
+     */
+    const currentRoute = `/${path.join('/')}?${query}`;
+
+    // attach to current server index
+    return index + currentRoute;
+  }
+
+  return url || searchParams ? getUrl(index, url, searchParams) : index;
+};
+
+const getUrl = (
+  index: string,
+  maybeUrl: string | URL = '/',
+  maybeParams: UrlArguments['searchParams'] = {}
+): string => {
+  const url = maybeUrl instanceof URL ? maybeUrl : new URL(index + maybeUrl);
+
+  if (url.search) {
+    throw new Error(
+      '[Karma/testLambda]: Use `searchParams` instead of appending `?foo=bar` to the url'
+    );
+  }
+
+  const params =
+    maybeParams instanceof URLSearchParams
+      ? maybeParams
+      : new URLSearchParams(maybeParams);
+
+  params.forEach((value, key) => {
+    url.searchParams.append(key, value);
+  });
+
+  return url.toString();
 };

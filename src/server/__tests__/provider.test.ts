@@ -29,7 +29,7 @@ const createOAuthResponseMock = () => ({
 });
 
 describe('api/provider', () => {
-  test('should be a function', () => {
+  test('is a function', () => {
     expect(externalProviderHandler).toBeInstanceOf(Function);
   });
 

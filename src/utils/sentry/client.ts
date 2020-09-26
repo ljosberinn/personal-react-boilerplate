@@ -16,7 +16,7 @@ const options: BrowserOptions = {
 isomorphicSentryInit({ configureScope, init, options });
 
 interface InitialContextArgs
-  extends Pick<KarmaSSRProps, 'session'>,
+  extends Pick<KarmaSSRProps['auth'], 'session'>,
     Pick<KarmaSSRProps['i18n'], 'language'> {
   req?: IncomingMessage;
 }

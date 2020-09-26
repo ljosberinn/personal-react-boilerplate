@@ -6,6 +6,7 @@ import React from 'react';
 import { ENABLED_PROVIDER } from '../../../src/constants';
 import { waitFor } from '../../../testUtils';
 import { mockConsoleMethods } from '../../../testUtils/console';
+import { MockRouterContext } from '../../../testUtils/router';
 import {
   OK,
   INTERNAL_SERVER_ERROR,
@@ -24,9 +25,11 @@ function Wrapper({
   session = null,
 }: Partial<AuthContextProviderProps>) {
   return (
-    <AuthContextProvider mode={mode} session={session}>
-      {children}
-    </AuthContextProvider>
+    <MockRouterContext>
+      <AuthContextProvider mode={mode} session={session}>
+        {children}
+      </AuthContextProvider>
+    </MockRouterContext>
   );
 }
 
@@ -329,9 +332,11 @@ describe('hooks/useAuth', () => {
 
     const { result } = renderHook(useAuth, {
       wrapper: ({ children }) => (
-        <AuthContextProvider mode="ssr" session={null}>
-          {children}
-        </AuthContextProvider>
+        <MockRouterContext>
+          <AuthContextProvider mode="ssr" session={null}>
+            {children}
+          </AuthContextProvider>
+        </MockRouterContext>
       ),
     });
 

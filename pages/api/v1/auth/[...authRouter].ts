@@ -2,6 +2,7 @@ import nextConnect from 'next-connect';
 
 import { loginHandler } from '../../../../src/server/auth/routes/login';
 import { logoutHandler } from '../../../../src/server/auth/routes/logout';
+import { meHandler } from '../../../../src/server/auth/routes/me';
 import { externalProviderHandler } from '../../../../src/server/auth/routes/provider';
 import { registrationHandler } from '../../../../src/server/auth/routes/register';
 import {
@@ -16,4 +17,5 @@ export default nextConnect()
   .use(externalProviderHandler)
   .use(registrationHandler)
   .use(loginHandler)
-  .use(logoutHandler);
+  .use(logoutHandler)
+  .use(meHandler);

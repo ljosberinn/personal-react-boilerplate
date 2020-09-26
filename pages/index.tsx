@@ -14,12 +14,16 @@ export default function IndexPage({ karma }: IndexPageProps): JSX.Element {
   );
 }
 
-const i18nNamespaces: Namespace[] = ['serviceWorker', 'theme'];
+const namespaces: Namespace[] = ['serviceWorker', 'theme'];
 
-export const getStaticProps = createGetStaticProps({ i18nNamespaces });
+const i18n = {
+  namespaces,
+};
 
-// import type { KarmaSSRProps, WithKarmaProps } from '../karma/client/Karma';
-// import { KarmaSSR, createGetServerSideProps } from '../karma/client/Karma';
+export const getStaticProps = createGetStaticProps({ i18n });
+
+// import type { WithKarmaProps, KarmaSSRProps } from '../src/client/Karma';
+// import { createGetServerSideProps, KarmaSSR } from '../src/client/Karma';
 // import { Index } from '../src/client/routes/Index';
 // import type { Namespace } from '../src/constants';
 
@@ -34,6 +38,10 @@ export const getStaticProps = createGetStaticProps({ i18nNamespaces });
 //   );
 // }
 
-// const i18nNamespaces: Namespace[] = ['serviceWorker', 'theme'];
+// const namespaces: Namespace[] = ['serviceWorker', 'theme'];
 
-// export const getServerSideProps = createGetServerSideProps({ i18nNamespaces });
+// const i18n = {
+//   namespaces,
+// };
+
+// export const getServerSideProps = createGetServerSideProps({ i18n });

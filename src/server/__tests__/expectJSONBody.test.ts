@@ -10,7 +10,7 @@ const dummyHandler: RequestHandler<{}, { isObject: boolean }> = (req, res) =>
   res.json({ isObject: req.body instanceof Object });
 
 describe('middleware/expectJSONBody', () => {
-  test('should be a function', () => {
+  test('is a function', () => {
     expect(expectJSONBodyMiddleware).toBeInstanceOf(Function);
   });
 

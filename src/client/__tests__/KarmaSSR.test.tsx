@@ -1,12 +1,12 @@
 import * as sentryNode from '@sentry/node';
 import * as sentryReact from '@sentry/react';
-import { render } from '@testing-library/react';
 import { serialize } from 'cookie';
 import type { GetServerSidePropsContext } from 'next';
 
 import type { User } from '../../../src/client/context/AuthContext/AuthContext';
 import type { Namespace } from '../../../src/constants';
 import { FALLBACK_LANGUAGE, SESSION_COOKIE_NAME } from '../../../src/constants';
+import { render } from '../../../testUtils';
 import {
   createIncomingRequestMock,
   createServerResponseMock,
@@ -29,18 +29,22 @@ import type { I18nextResourceLocale } from '../i18n';
 
 describe('<KarmaSSR />', () => {
   const defaultProps: KarmaSSRProps = {
+    auth: {
+      session: null,
+    },
     cookies: '',
     i18n: {
       bundle: i18nCache.de,
       language: 'en',
     },
-    session: null,
   };
 
   test('initializes i18next', () => {
     const initI18NSpy = jest.spyOn(i18n, 'initI18Next');
 
-    render(<KarmaSSR {...defaultProps}>next-karma</KarmaSSR>);
+    render(<KarmaSSR {...defaultProps}>next-karma</KarmaSSR>, {
+      omitKarmaProvider: true,
+    });
 
     expect(initI18NSpy).toHaveBeenCalledWith(
       expect.objectContaining(defaultProps.i18n)
@@ -55,7 +59,9 @@ describe('<KarmaSSR />', () => {
 
     const addBreadcrumbSpy = jest.spyOn(sentryReact, 'addBreadcrumb');
 
-    render(<KarmaSSR {...defaultProps}>next-karma</KarmaSSR>);
+    render(<KarmaSSR {...defaultProps}>next-karma</KarmaSSR>, {
+      omitKarmaProvider: true,
+    });
 
     expect(attachComponentBreadcrumbSpy).toHaveBeenCalledWith('KarmaSSR');
     expect(addBreadcrumbSpy).toHaveBeenCalledWith(
@@ -246,12 +252,15 @@ describe('getServerSideProps', () => {
     expect(result).toMatchObject({
       props: {
         karma: expect.objectContaining({
+          auth: {
+            session: null,
+            shouldAttemptReauthentication: false,
+          },
           cookies: '',
           i18n: {
             bundle: mockBundle,
             language: FALLBACK_LANGUAGE,
           },
-          session: null,
         }),
       },
     });
@@ -259,18 +268,26 @@ describe('getServerSideProps', () => {
 });
 
 describe('createGetServerSideProps', () => {
-  const i18nNamespaces: Namespace[] = ['serviceWorker'];
+  const namespaces: Namespace[] = ['serviceWorker'];
 
   test('returns a function', () => {
-    expect(createGetServerSideProps({ i18nNamespaces: [] })).toBeInstanceOf(
-      Function
-    );
+    expect(
+      createGetServerSideProps({
+        i18n: {
+          namespaces: [],
+        },
+      })
+    ).toBeInstanceOf(Function);
   });
 
   test('forwards i18nNamespaces onto getI18n', async () => {
     const { getI18nSpy } = setupSpies();
 
-    await createGetServerSideProps({ i18nNamespaces: [] })(mockCtx);
+    await createGetServerSideProps({
+      i18n: {
+        namespaces: [],
+      },
+    })(mockCtx);
 
     expect(getI18nSpy).toHaveBeenCalledWith(
       FALLBACK_LANGUAGE,
@@ -284,9 +301,11 @@ describe('createGetServerSideProps', () => {
   test('given empty i18nNamespaces, loads all namespaces', async () => {
     setupSpies();
 
-    const result = await createGetServerSideProps({ i18nNamespaces: [] })(
-      mockCtx
-    );
+    const result = await createGetServerSideProps({
+      i18n: {
+        namespaces: [],
+      },
+    })(mockCtx);
 
     expect(result.props.karma.i18n.bundle).toMatchObject(
       i18nCache[FALLBACK_LANGUAGE]
@@ -296,11 +315,13 @@ describe('createGetServerSideProps', () => {
   test('given a single i18nNamespace, loads only that one', async () => {
     setupSpies();
 
-    const result = await createGetServerSideProps({ i18nNamespaces })(mockCtx);
+    const result = await createGetServerSideProps({ i18n: { namespaces } })(
+      mockCtx
+    );
 
     expect(result.props.karma.i18n.bundle).toMatchObject(
       expect.objectContaining({
-        [i18nNamespaces[0]]: expect.any(Object),
+        [namespaces[0]]: expect.any(Object),
       })
     );
   });
@@ -355,12 +376,15 @@ describe('withServerSideKarmaProps', () => {
     expect(result).toMatchObject({
       props: expect.objectContaining({
         karma: {
+          auth: {
+            session: null,
+            shouldAttemptReauthentication: false,
+          },
           cookies: '',
           i18n: {
             bundle: mockBundle,
             language: FALLBACK_LANGUAGE,
           },
-          session: null,
         },
         ...mockProps,
       }),

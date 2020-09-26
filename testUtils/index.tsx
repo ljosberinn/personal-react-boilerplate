@@ -4,6 +4,7 @@ import { render as rtlRender } from '@testing-library/react';
 import type { RunOptions } from 'axe-core';
 import type { ConfigData } from 'html-validate/build/config';
 import { axe } from 'jest-axe';
+import type { NextRouter } from 'next/router';
 import type { ReactElement } from 'react';
 import { cloneElement, isValidElement } from 'react';
 import { I18nextProvider, useTranslation } from 'react-i18next';
@@ -14,10 +15,10 @@ import { initI18Next } from '../src/client/i18n';
 import { FALLBACK_LANGUAGE } from '../src/constants';
 import { i18nCache } from '../src/server/i18n/cache';
 import 'html-validate/jest';
-
 // may not be in setupTests.js because lambda-Tests rely on node-fetch which
 // collides with whatwg-fetch
 import 'whatwg-fetch';
+import { MockRouterContext } from './router';
 
 export * from '@testing-library/react';
 export { default as userEvent } from '@testing-library/user-event';
@@ -99,6 +100,17 @@ export interface TestOptions extends Omit<RenderOptions, 'wrapper'> {
    * optional session to initialize AuthContextProvider with
    */
   session?: AuthContextDefinition['user'];
+  /**
+   * optional router partial
+   */
+  router?: Partial<NextRouter>;
+  /**
+   * if `true`, wraps given ui only in `RouterContext` from next and
+   * the optionally given `wrapper`
+   *
+   * @default false
+   */
+  omitKarmaProvider?: boolean;
 }
 
 // UI-less passthrough fallback to prevent using conditional logic in render
@@ -147,23 +159,31 @@ export function render(
     i18n,
     wrapper: Wrapper = ChildrenPassthrough,
     session = null,
+    router,
+    omitKarmaProvider,
     ...rest
   }: TestOptions = {}
 ): RenderResult {
   return rtlRender(
-    <I18nextProvider i18n={i18nInstance}>
-      <AuthContextProvider mode="ssr" session={session}>
-        <ChakraProvider resetCSS portalZIndex={40}>
-          <Wrapper>
-            {i18n ? (
-              <I18nTestMiddleware {...i18n}>{ui}</I18nTestMiddleware>
-            ) : (
-              ui
-            )}
-          </Wrapper>
-        </ChakraProvider>
-      </AuthContextProvider>
-    </I18nextProvider>,
+    <MockRouterContext router={router}>
+      {omitKarmaProvider ? (
+        <Wrapper>{ui}</Wrapper>
+      ) : (
+        <I18nextProvider i18n={i18nInstance}>
+          <AuthContextProvider mode="ssr" session={session}>
+            <ChakraProvider portalZIndex={40}>
+              <Wrapper>
+                {i18n ? (
+                  <I18nTestMiddleware {...i18n}>{ui}</I18nTestMiddleware>
+                ) : (
+                  ui
+                )}
+              </Wrapper>
+            </ChakraProvider>
+          </AuthContextProvider>
+        </I18nextProvider>
+      )}
+    </MockRouterContext>,
     rest
   );
 }

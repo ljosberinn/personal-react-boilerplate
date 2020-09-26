@@ -23,7 +23,7 @@ const middleware = expectJSONBodyMiddleware;
 const method: RequestInitMethod = 'post';
 
 describe('api/login', () => {
-  test('should be a function', () => {
+  test('is a function', () => {
     expect(loginHandler).toBeInstanceOf(Function);
   });
 

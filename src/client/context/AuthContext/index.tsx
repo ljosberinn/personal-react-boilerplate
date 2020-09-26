@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import { useState, useEffect, useMemo, useCallback } from 'react';
 
 import { ENABLED_PROVIDER } from '../../../constants';
@@ -9,6 +10,8 @@ import { AuthContext } from './AuthContext';
 export interface AuthContextProviderProps extends WithChildren {
   session: User | null;
   mode: Mode;
+  shouldAttemptReauthentication?: boolean;
+  redirectToIfUnauthenticated?: string;
 }
 
 export const endpoints = {
@@ -19,6 +22,10 @@ export const endpoints = {
   logout: {
     method: 'DELETE',
     url: '/api/v1/auth/logout',
+  },
+  me: {
+    method: 'GET',
+    url: '/api/v1/auth/me',
   },
   provider: {
     url: '/api/v1/auth/provider',
@@ -32,9 +39,12 @@ export const endpoints = {
 export function AuthContextProvider({
   children,
   mode,
+  shouldAttemptReauthentication = false,
   session,
+  redirectToIfUnauthenticated,
 }: AuthContextProviderProps): JSX.Element {
   const [user, setUser] = useState<User | null>(session);
+  const { push } = useRouter();
 
   /**
    * Given { provider: ENABLED_PROVIDER[number] }, will redirect.
@@ -133,10 +143,41 @@ export function AuthContextProvider({
   }, []);
 
   useEffect(() => {
-    if (mode === 'ssg') {
-      // TODO: automatic re-login attempt
+    if (mode === 'ssg' && shouldAttemptReauthentication) {
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
+      (async function reauthenticate() {
+        async function redirectOnFailure() {
+          if (!redirectToIfUnauthenticated) {
+            return;
+          }
+
+          try {
+            await push(redirectToIfUnauthenticated);
+          } catch {
+            window.location.href = redirectToIfUnauthenticated;
+          }
+        }
+
+        try {
+          const { url, method } = endpoints.me;
+
+          const response = await fetch(url, { method });
+
+          if (response.ok) {
+            const json = await response.json();
+
+            setUser(json);
+          } else {
+            // eslint-disable-next-line @typescript-eslint/no-floating-promises
+            redirectOnFailure();
+          }
+        } catch {
+          // eslint-disable-next-line @typescript-eslint/no-floating-promises
+          redirectOnFailure();
+        }
+      })();
     }
-  }, [mode]);
+  }, [mode, shouldAttemptReauthentication, redirectToIfUnauthenticated, push]);
 
   const value = useMemo(
     () => ({

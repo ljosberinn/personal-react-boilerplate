@@ -11,7 +11,7 @@ const method: RequestInitMethod = 'post';
 const middleware = expectJSONBodyMiddleware;
 
 describe('api/register', () => {
-  test('should be a function', () => {
+  test('is a function', () => {
     expect(registrationHandler).toBeInstanceOf(Function);
   });
 

@@ -13,7 +13,7 @@ const dummyHandler: RequestHandler = (_req, res) => {
 };
 
 describe('middleware/sentryMiddleware', () => {
-  test('should be a function', () => {
+  test('is a function', () => {
     expect(sentryMiddleware).toBeInstanceOf(Function);
   });
 

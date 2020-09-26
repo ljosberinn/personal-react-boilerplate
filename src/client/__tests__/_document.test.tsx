@@ -9,12 +9,12 @@ import * as sentryUtils from '../../utils/sentry/client';
 import type { KarmaSSRProps } from '../Karma';
 
 const pageProps: KarmaSSRProps = {
+  auth: { session: null },
   cookies: '',
   i18n: {
     bundle: i18nCache.en,
     language: 'en',
   },
-  session: null,
 };
 
 const defaultProps: DocumentProps = {

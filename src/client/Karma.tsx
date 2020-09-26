@@ -1,6 +1,10 @@
 /* eslint-disable spaced-comment */
 import type { StorageManager } from '@chakra-ui/core';
-import { localStorageManager, ChakraProvider } from '@chakra-ui/core';
+import {
+  cookieStorageManager,
+  localStorageManager,
+  ChakraProvider,
+} from '@chakra-ui/core';
 import type {
   GetServerSidePropsContext,
   GetStaticPropsContext,
@@ -22,9 +26,11 @@ import {
   attachInitialContext,
 } from '../utils/sentry/client';
 import { attachLambdaContext } from '../utils/sentry/server';
+import { FOUND_MOVED_TEMPORARILY } from '../utils/statusCodes';
 import { ServiceWorker } from './components/ServiceWorker';
 import type { I18nextResourceLocale } from './i18n';
 import { initI18Next, getI18n, getStaticI18n } from './i18n';
+import { theme } from './theme';
 
 export interface WithChildren {
   children: ReactNode;
@@ -35,6 +41,11 @@ export interface WithChildren {
  *********************/
 
 export type Mode = 'ssr' | 'ssg';
+
+interface IsomorphicI18nRequirements {
+  language?: string;
+  namespaces: Namespace[];
+}
 
 export interface KarmaCoreProps {
   i18n: {
@@ -48,20 +59,38 @@ export interface KarmaCoreProps {
     bundle: I18nextResourceLocale | Partial<I18nextResourceLocale>;
   };
 
+  auth: {
+    /**
+     * The session to initialize a render with
+     */
+    session: User | null;
+    /**
+     * Whether to attempt to re-authenticate a user on a SSG'd page
+     *
+     * @default false
+     */
+    shouldAttemptReauthentication?: boolean;
+    /**
+     * Redirects to given URL if re-authentication failed
+     *
+     * @default undefined
+     */
+    redirectToIfUnauthenticated?: string;
+  };
+
   /**
    * Optional Chakra StorageManager taking care of color mode persistence
    *
    * @default undefined
    */
   storageManager?: StorageManager;
-  session: User | null;
   mode: Mode;
 }
 
 function KarmaCore({
   i18n,
   storageManager,
-  session,
+  auth,
   mode,
   children,
 }: KarmaCoreProps & WithChildren): JSX.Element {
@@ -70,9 +99,13 @@ function KarmaCore({
   attachComponentBreadcrumb('KarmaCore');
 
   return (
-    <AuthContextProvider mode={mode} session={session}>
+    <AuthContextProvider {...auth} mode={mode}>
       <I18nextProvider i18n={i18nInstance}>
-        <ChakraProvider portalZIndex={40} colorModeManager={storageManager}>
+        <ChakraProvider
+          portalZIndex={40}
+          colorModeManager={storageManager}
+          theme={theme}
+        >
           <ServiceWorker />
           <MetaThemeColorSynchronizer />
           {/* <CustomPWAInstallPrompt /> */}
@@ -119,7 +152,16 @@ export function KarmaSSR({
   attachComponentBreadcrumb('KarmaSSR');
 
   // TODO: use cookieStorageManager with rc5
-  const storageManager = localStorageManager; //cookieStorageManager(cookies);
+  const storageManager = (() => {
+    const manager = cookieStorageManager(cookies);
+
+    // check whether this is a recurring user with a cookie present
+    if (manager.get()) {
+      return manager;
+    }
+
+    return localStorageManager;
+  })();
 
   return (
     <KarmaCore {...rest} storageManager={storageManager} mode="ssr">
@@ -208,7 +250,8 @@ type GetServerSidePropsReturn = Promise<{
 }>;
 
 export interface CreateGetServerSidePropsOptions {
-  i18nNamespaces: Namespace[];
+  i18n: IsomorphicI18nRequirements;
+  auth?: Pick<KarmaCoreProps['auth'], 'redirectToIfUnauthenticated'>;
 }
 
 export const createGetServerSideProps = (
@@ -226,13 +269,22 @@ export const createGetServerSideProps = (
  * ```
  */
 export const getServerSideProps = async (
-  { req }: GetServerSidePropsContext,
+  { req, res }: GetServerSidePropsContext,
   options?: CreateGetServerSidePropsOptions
 ): GetServerSidePropsReturn => {
   const session = getSession(req);
+
+  if (!session && options?.auth?.redirectToIfUnauthenticated) {
+    res.writeHead(FOUND_MOVED_TEMPORARILY, {
+      Location: options.auth.redirectToIfUnauthenticated,
+    });
+
+    res.end();
+  }
+
   const language = detectLanguage(req);
   const bundle = await getI18n(language, {
-    namespaces: options?.i18nNamespaces,
+    namespaces: options?.i18n.namespaces,
     req,
   });
   const cookies = req?.headers.cookie ?? '';
@@ -245,17 +297,22 @@ export const getServerSideProps = async (
     session,
   });
 
-  const i18n = {
+  const i18n: KarmaSSRProps['i18n'] = {
     bundle,
     language,
+  };
+
+  const auth: KarmaSSRProps['auth'] = {
+    session,
+    shouldAttemptReauthentication: false,
   };
 
   return {
     props: {
       karma: {
+        auth,
         cookies,
         i18n,
-        session,
       },
     },
   };
@@ -273,8 +330,11 @@ export type GetStaticPropsReturn = Promise<{
 }>;
 
 export type CreateGetStaticPropsOptions = {
-  i18nNamespaces: Namespace[];
-  language?: string;
+  i18n: IsomorphicI18nRequirements;
+  auth?: Pick<
+    KarmaCoreProps['auth'],
+    'redirectToIfUnauthenticated' | 'shouldAttemptReauthentication'
+  >;
   revalidate?: Revalidate;
 };
 
@@ -282,9 +342,14 @@ export type CreateGetStaticPropsOptions = {
  * @example
  * ```js
  * export const getStaticProps = createGetStaticProps({
- *  i18nNamespaces: ['serviceWorker', 'theme'],
- *  language: 'jp',
- *  revalidate: 180
+ *   i18n: {
+ *     i18nNamespaces: ['serviceWorker', 'theme'],
+ *     language: 'jp',
+ *   },
+ *   auth: {
+ *     shouldAttemptReauthentication: true,
+ *   },
+ *   revalidate: 180
  * })
  * ```
  */
@@ -306,22 +371,32 @@ export const getStaticProps = async (
   ctx: GetStaticPropsContext,
   options?: CreateGetStaticPropsOptions
 ): GetStaticPropsReturn => {
-  const language = options?.language ?? FALLBACK_LANGUAGE;
-
+  const language = options?.i18n.language ?? FALLBACK_LANGUAGE;
   const bundle = await getStaticI18n(language, {
-    namespaces: options?.i18nNamespaces,
+    namespaces: options?.i18n.namespaces,
   });
 
-  const i18n = {
+  const i18n: KarmaSSGProps['i18n'] = {
     bundle,
     language,
+  };
+
+  const shouldAttemptReauthentication =
+    options?.auth?.shouldAttemptReauthentication ?? false;
+  const redirectToIfUnauthenticated =
+    options?.auth?.redirectToIfUnauthenticated;
+
+  const auth: KarmaSSGProps['auth'] = {
+    redirectToIfUnauthenticated,
+    session: null,
+    shouldAttemptReauthentication,
   };
 
   return {
     props: {
       karma: {
+        auth,
         i18n,
-        session: null,
       },
     },
     revalidate: options?.revalidate,
