@@ -52,7 +52,7 @@
     "@types/test-listen": "1.1.0",
     "babel-jest": "26.3.0",
     "dotenv": "8.2.0",
-    "eslint": "7.9.0",
+    "eslint": "7.10.0",
     "eslint-config-galex": "2.4.8",
     "html-validate": "3.3.0",
     "husky": "4.3.0",
