@@ -1,14 +1,19 @@
 import { ChakraProvider } from '@chakra-ui/core';
 import type { RenderResult, RenderOptions } from '@testing-library/react';
 import { render as rtlRender } from '@testing-library/react';
+import type {
+  RenderHookOptions,
+  RenderHookResult,
+} from '@testing-library/react-hooks';
+import { renderHook as rtlRenderHook } from '@testing-library/react-hooks';
 import type { RunOptions } from 'axe-core';
 import type { ConfigData } from 'html-validate/build/config';
 import { axe } from 'jest-axe';
 import type { NextRouter } from 'next/router';
-import type { ReactElement } from 'react';
 import { cloneElement, isValidElement } from 'react';
 import { I18nextProvider, useTranslation } from 'react-i18next';
 
+import type { WithChildren } from '../src/client/Karma';
 import { AuthContextProvider } from '../src/client/context/AuthContext';
 import type { AuthContextDefinition } from '../src/client/context/AuthContext/AuthContext';
 import { initI18Next } from '../src/client/i18n';
@@ -30,11 +35,6 @@ type I18NPropAlias = {
   ready?: string;
   t?: string;
 };
-
-/**
- * local definition only as @testing-library/react has weird typings here
- */
-type Children = { children: ReactElement };
 
 export interface TestOptions extends Omit<RenderOptions, 'wrapper'> {
   /**
@@ -114,11 +114,11 @@ export interface TestOptions extends Omit<RenderOptions, 'wrapper'> {
 }
 
 // UI-less passthrough fallback to prevent using conditional logic in render
-function ChildrenPassthrough({ children }: Children) {
-  return children;
+function ChildrenPassthrough({ children }: WithChildren) {
+  return isValidElement(children) ? children : null;
 }
 
-export interface I18nTestMiddlewareProps extends Children {
+export interface I18nTestMiddlewareProps extends WithChildren {
   namespace: Namespace;
   alias?: I18NPropAlias;
 }
@@ -136,7 +136,7 @@ function I18nTestMiddleware({
     [alias.t ?? 't']: t,
   };
 
-  return cloneElement(children, props);
+  return isValidElement(children) ? cloneElement(children, props) : null;
 }
 
 // as singleton, else you will see lots of `act` warnings in tests which are
@@ -145,6 +145,43 @@ const i18nInstance = initI18Next({
   i18nCache,
   language: FALLBACK_LANGUAGE,
 });
+
+type KarmaTestSetupProps = WithChildren &
+  Pick<
+    TestOptions,
+    'i18n' | 'router' | 'omitKarmaProvider' | 'wrapper' | 'session'
+  >;
+
+function KarmaTestSetup({
+  children,
+  router,
+  omitKarmaProvider,
+  session = null,
+  i18n,
+  wrapper: Wrapper = ChildrenPassthrough,
+}: KarmaTestSetupProps) {
+  return (
+    <MockRouterContext router={router}>
+      {omitKarmaProvider ? (
+        <Wrapper>{children}</Wrapper>
+      ) : (
+        <I18nextProvider i18n={i18nInstance}>
+          <AuthContextProvider mode="ssr" session={session}>
+            <ChakraProvider portalZIndex={40}>
+              <Wrapper>
+                {i18n ? (
+                  <I18nTestMiddleware {...i18n}>{children}</I18nTestMiddleware>
+                ) : (
+                  children
+                )}
+              </Wrapper>
+            </ChakraProvider>
+          </AuthContextProvider>
+        </I18nextProvider>
+      )}
+    </MockRouterContext>
+  );
+}
 
 /**
  * Custom render for @testing-library/react
@@ -157,35 +194,56 @@ export function render(
   ui: UI,
   {
     i18n,
-    wrapper: Wrapper = ChildrenPassthrough,
+    wrapper = ChildrenPassthrough,
     session = null,
     router,
     omitKarmaProvider,
     ...rest
   }: TestOptions = {}
 ): RenderResult {
-  return rtlRender(
-    <MockRouterContext router={router}>
-      {omitKarmaProvider ? (
-        <Wrapper>{ui}</Wrapper>
-      ) : (
-        <I18nextProvider i18n={i18nInstance}>
-          <AuthContextProvider mode="ssr" session={session}>
-            <ChakraProvider portalZIndex={40}>
-              <Wrapper>
-                {i18n ? (
-                  <I18nTestMiddleware {...i18n}>{ui}</I18nTestMiddleware>
-                ) : (
-                  ui
-                )}
-              </Wrapper>
-            </ChakraProvider>
-          </AuthContextProvider>
-        </I18nextProvider>
-      )}
-    </MockRouterContext>,
-    rest
-  );
+  const setupProps = {
+    i18n,
+    omitKarmaProvider,
+    router,
+    session,
+    wrapper,
+  };
+
+  return rtlRender(<KarmaTestSetup {...setupProps}>{ui}</KarmaTestSetup>, rest);
+}
+
+type HookTestOptions<P> = Omit<RenderHookOptions<P>, 'wrapper'> &
+  Pick<
+    TestOptions,
+    'i18n' | 'wrapper' | 'omitKarmaProvider' | 'router' | 'session'
+  >;
+
+export function renderHook<P, R>(
+  callback: (props: P) => R,
+  {
+    i18n,
+    wrapper,
+    session,
+    router,
+    omitKarmaProvider,
+    ...rest
+  }: HookTestOptions<P> = {}
+): RenderHookResult<P, R> {
+  const setupProps = {
+    i18n,
+    omitKarmaProvider,
+    router,
+    session,
+    wrapper,
+  };
+
+  return rtlRenderHook(callback, {
+    ...rest,
+    wrapper: ({ children }) =>
+      isValidElement(children) ? (
+        <KarmaTestSetup {...setupProps}>{children}</KarmaTestSetup>
+      ) : null,
+  });
 }
 
 type TestA11YOptions = TestOptions & { axeOptions?: RunOptions };

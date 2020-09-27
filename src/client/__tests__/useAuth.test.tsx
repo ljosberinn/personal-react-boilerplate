@@ -1,37 +1,19 @@
-import { renderHook, act } from '@testing-library/react-hooks';
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
-import React from 'react';
 
 import { ENABLED_PROVIDER } from '../../../src/constants';
-import { waitFor } from '../../../testUtils';
+import { act, renderHook, waitFor } from '../../../testUtils';
 import { mockConsoleMethods } from '../../../testUtils/console';
-import { MockRouterContext } from '../../../testUtils/router';
 import {
   OK,
   INTERNAL_SERVER_ERROR,
   UNPROCESSABLE_ENTITY,
 } from '../../utils/statusCodes';
-import { AuthContextProvider, endpoints } from '../context/AuthContext';
-import type { AuthContextProviderProps } from '../context/AuthContext';
+import { endpoints } from '../context/AuthContext';
 import type { Provider } from '../context/AuthContext/AuthContext';
 import { useAuth } from '../hooks/useAuth';
 
 const password = 'next-karma!';
-
-function Wrapper({
-  children,
-  mode = 'ssr',
-  session = null,
-}: Partial<AuthContextProviderProps>) {
-  return (
-    <MockRouterContext>
-      <AuthContextProvider mode={mode} session={session}>
-        {children}
-      </AuthContextProvider>
-    </MockRouterContext>
-  );
-}
 
 describe('hooks/useAuth', () => {
   const server = setupServer();
@@ -53,7 +35,9 @@ describe('hooks/useAuth', () => {
   });
 
   test('throws outside of context', () => {
-    const { result } = renderHook(useAuth);
+    const { result } = renderHook(useAuth, {
+      omitKarmaProvider: true,
+    });
 
     expect(result.error.message).toBe(
       'useAuth was called outside of an AuthContextProvider.'
@@ -63,9 +47,7 @@ describe('hooks/useAuth', () => {
   test('defaults to null given no user', () => {
     const {
       result: { current },
-    } = renderHook(useAuth, {
-      wrapper: Wrapper,
-    });
+    } = renderHook(useAuth);
 
     expect(current.user).toBeNull();
     expect(current.isAuthenticated).toBeFalsy();
@@ -77,7 +59,7 @@ describe('hooks/useAuth', () => {
     const {
       result: { current },
     } = renderHook(useAuth, {
-      wrapper: ({ children }) => <Wrapper session={user}>{children}</Wrapper>,
+      session: user,
     });
 
     expect(current.user).toBe(user);
@@ -94,7 +76,7 @@ describe('hooks/useAuth', () => {
     const user = { id: '1', name: 'ljosberinn' };
 
     const { result } = renderHook(useAuth, {
-      wrapper: ({ children }) => <Wrapper session={user}>{children}</Wrapper>,
+      session: user,
     });
 
     expect(result.current.user).toBe(user);
@@ -117,9 +99,7 @@ describe('hooks/useAuth', () => {
 
     server.use(rest.post(url, (_req, res, ctx) => res(ctx.json(user))));
 
-    const { result } = renderHook(useAuth, {
-      wrapper: Wrapper,
-    });
+    const { result } = renderHook(useAuth);
 
     let response;
 
@@ -150,9 +130,7 @@ describe('hooks/useAuth', () => {
       rest.post(url, (_req, res, ctx) => res(ctx.body('invalid json')))
     );
 
-    const { result } = renderHook(useAuth, {
-      wrapper: Wrapper,
-    });
+    const { result } = renderHook(useAuth);
 
     let response;
 
@@ -185,9 +163,7 @@ describe('hooks/useAuth', () => {
       rest.post(url, (_req, res, ctx) => res(ctx.status(UNPROCESSABLE_ENTITY)))
     );
 
-    const { result } = renderHook(useAuth, {
-      wrapper: Wrapper,
-    });
+    const { result } = renderHook(useAuth);
 
     let response;
 
@@ -210,9 +186,7 @@ describe('hooks/useAuth', () => {
 
     const provider = 'reddit';
 
-    const { result } = renderHook(useAuth, {
-      wrapper: Wrapper,
-    });
+    const { result } = renderHook(useAuth);
 
     let response;
 
@@ -232,9 +206,7 @@ describe('hooks/useAuth', () => {
       test(`on provider login, redirects to a provider when demanded (provider: ${provider})`, async () => {
         jest.spyOn(window.location, 'assign');
 
-        const { result } = renderHook(useAuth, {
-          wrapper: Wrapper,
-        });
+        const { result } = renderHook(useAuth);
 
         let response;
 
@@ -261,9 +233,7 @@ describe('hooks/useAuth', () => {
 
     server.use(rest.post(url, (_req, res, ctx) => res(ctx.json(user))));
 
-    const { result } = renderHook(useAuth, {
-      wrapper: Wrapper,
-    });
+    const { result } = renderHook(useAuth);
 
     let response;
 
@@ -295,9 +265,7 @@ describe('hooks/useAuth', () => {
       rest.post(url, (_req, res, ctx) => res(ctx.body('invalid json')))
     );
 
-    const { result } = renderHook(useAuth, {
-      wrapper: Wrapper,
-    });
+    const { result } = renderHook(useAuth);
 
     let response;
 
@@ -330,15 +298,7 @@ describe('hooks/useAuth', () => {
       rest.post(url, (_req, res, ctx) => res(ctx.status(UNPROCESSABLE_ENTITY)))
     );
 
-    const { result } = renderHook(useAuth, {
-      wrapper: ({ children }) => (
-        <MockRouterContext>
-          <AuthContextProvider mode="ssr" session={null}>
-            {children}
-          </AuthContextProvider>
-        </MockRouterContext>
-      ),
-    });
+    const { result } = renderHook(useAuth);
 
     let response;
 

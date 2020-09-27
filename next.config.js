@@ -47,6 +47,13 @@ const offlineConfig = {
   },
 };
 
+const hasSentry =
+  NEXT_PUBLIC_SENTRY_DSN &&
+  SENTRY_ORG &&
+  SENTRY_PROJECT &&
+  SENTRY_AUTH_TOKEN &&
+  VERCEL_GITHUB_COMMIT_SHA;
+
 /**
  * a list of packages not to bundle with the frontend
  *
@@ -57,7 +64,7 @@ const serverOnlyPackages = [];
 const defaultConfig = {
   typescript: {
     /**
-     * `yarn lint:types` is run in CI already so we can safely assume no errors
+     * `yarn lint:types` ran in CI already so we can safely assume no errors
      *  here, conveniently reducing build time by ~55%
      * @see https://nextjs.org/docs/api-reference/next.config.js/ignoring-typescript-errors
      */
@@ -75,14 +82,7 @@ const defaultConfig = {
       });
     }
 
-    if (
-      !dev &&
-      NEXT_PUBLIC_SENTRY_DSN &&
-      SENTRY_ORG &&
-      SENTRY_PROJECT &&
-      SENTRY_AUTH_TOKEN &&
-      VERCEL_GITHUB_COMMIT_SHA
-    ) {
+    if (!dev && hasSentry) {
       config.plugins.push(
         /**
          * @see https://docs.sentry.io/product/integrations/vercel/
