@@ -14,13 +14,11 @@ import { FOUND_MOVED_TEMPORARILY, UNAUTHORIZED } from '../../utils/statusCodes';
 
 const mockGetServerSideProps = jest
   .fn()
-  .mockImplementation((_ctx: GetServerSidePropsContext, session: User) => {
-    return {
-      props: {
-        session,
-      },
-    };
-  });
+  .mockImplementation((_ctx: GetServerSidePropsContext, session: User) => ({
+    props: {
+      session,
+    },
+  }));
 
 interface CreateContextMockParam {
   query?: ParsedUrlQuery;
@@ -36,6 +34,7 @@ const createContextMock = ({
   query: { ...query },
   req: createIncomingRequestMock(req),
   res: createServerResponseMock(res),
+  resolvedUrl: '',
 });
 
 describe('withSession()', () => {

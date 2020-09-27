@@ -23,7 +23,7 @@
     "@sentry/react": "5.24.2",
     "cookie": "0.4.1",
     "i18next": "19.7.0",
-    "next": "9.5.3",
+    "next": "9.5.4-canary.22",
     "next-absolute-url": "1.2.2",
     "next-connect": "0.9.0",
     "react": "17.0.0-rc.2",
@@ -52,7 +52,7 @@
     "@types/test-listen": "1.1.0",
     "babel-jest": "26.3.0",
     "dotenv": "8.2.0",
-    "eslint": "7.9.0",
+    "eslint": "7.10.0",
     "eslint-config-galex": "2.4.8",
     "html-validate": "3.3.0",
     "husky": "4.3.0",
@@ -91,7 +91,7 @@
   },
   "jest": {
     "collectCoverageFrom": [
-      "(karma|pages|src)/**/*.{js,jsx,ts,tsx}"
+      "(pages|src)/**/*.{js,jsx,ts,tsx}"
     ],
     "setupFilesAfterEnv": [
       "<rootDir>/scripts/jest/setupTests.js"

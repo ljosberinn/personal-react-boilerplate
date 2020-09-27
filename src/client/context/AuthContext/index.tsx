@@ -154,7 +154,7 @@ export function AuthContextProvider({
           try {
             await push(redirectToIfUnauthenticated);
           } catch {
-            window.location.href = redirectToIfUnauthenticated;
+            window.location.assign(redirectToIfUnauthenticated);
           }
         }
 
