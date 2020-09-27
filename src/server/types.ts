@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import type { NextApiResponse, NextApiRequest } from 'next';
 import type {
   RequestHandler as NextConnectRequestHandler,

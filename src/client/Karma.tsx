@@ -384,7 +384,7 @@ export const getStaticProps = async (
   const shouldAttemptReauthentication =
     options?.auth?.shouldAttemptReauthentication ?? false;
   const redirectToIfUnauthenticated =
-    options?.auth?.redirectToIfUnauthenticated;
+    options?.auth?.redirectToIfUnauthenticated ?? '';
 
   const auth: KarmaSSGProps['auth'] = {
     redirectToIfUnauthenticated,

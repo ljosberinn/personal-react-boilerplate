@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 export { theme } from '@chakra-ui/core';
 
 // your place to extend the default theme of chakra

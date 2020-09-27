@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import nextConnect from 'next-connect';
 
 import { loginHandler } from '../../../../src/server/auth/routes/login';
