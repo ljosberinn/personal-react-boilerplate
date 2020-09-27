@@ -1269,12 +1269,19 @@
   dependencies:
     "@chakra-ui/utils" "1.0.0-rc.4"
 
-"@chakra-ui/icons@1.0.0-rc.4":
-  version "1.0.0-rc.4"
-  resolved "https://registry.yarnpkg.com/@chakra-ui/icons/-/icons-1.0.0-rc.4.tgz#f6e774bf54a7a5b803a29390ccaa164c9f72dce7"
-  integrity sha512-mQTW/B0TO772Kq+iLRrAWAgYJ0/seqljxjbEXw90/FV7HS8Amtiodc6Up4+Ff5WkEzNJHULWOFakaI13/RYiMw==
+"@chakra-ui/icon@1.0.0-rc.5":
+  version "1.0.0-rc.5"
+  resolved "https://registry.yarnpkg.com/@chakra-ui/icon/-/icon-1.0.0-rc.5.tgz#2abbaad9b3abeb0a577458d132c2a6cb64b9c61b"
+  integrity sha512-auMyOQ/OD8FOxMAELgJItPWDNn4iJmQMhM1m2fR4HOj0l5N7+0q/qdZBLAOyS9pXYX/huaFPsdNGQPmaIhAEmg==
   dependencies:
-    "@chakra-ui/icon" "1.0.0-rc.4"
+    "@chakra-ui/utils" "1.0.0-rc.5"
+
+"@chakra-ui/icons@1.0.0-rc.5":
+  version "1.0.0-rc.5"
+  resolved "https://registry.yarnpkg.com/@chakra-ui/icons/-/icons-1.0.0-rc.5.tgz#3bd4cfdffae58bdea37a8082ef2f26b97e3b2c4e"
+  integrity sha512-kU239pj5gK/dv6EKj+UZdGj4O7cr9jsTS3h8YAL3D/cdrlkpdF8qlrEHmbr7tw30kvLdnnjCrEYpPNZapOX3tA==
+  dependencies:
+    "@chakra-ui/icon" "1.0.0-rc.5"
     "@types/react" "16.9.44"
 
 "@chakra-ui/image@1.0.0-rc.4":
@@ -1556,6 +1563,20 @@
   version "1.0.0-rc.4"
   resolved "https://registry.yarnpkg.com/@chakra-ui/utils/-/utils-1.0.0-rc.4.tgz#370a17d4a2ceaae27ca3b32afe31987fa199583c"
   integrity sha512-ZGfIw6rlfgZBsg0CeDUB/ECJxSMHj9634F0KMx6bNg65Rd35j6N/2Uo6Zb8fRLatNv508KWSWVyAxD0UVi0Nlw==
+  dependencies:
+    "@types/lodash.merge" "4.6.6"
+    "@types/lodash.mergewith" "4.6.6"
+    "@types/object-assign" "4.0.30"
+    css-box-model "1.2.1"
+    lodash.merge "4.6.2"
+    lodash.mergewith "4.6.2"
+    memoize-one "5.1.1"
+    object-assign "4.1.1"
+
+"@chakra-ui/utils@1.0.0-rc.5":
+  version "1.0.0-rc.5"
+  resolved "https://registry.yarnpkg.com/@chakra-ui/utils/-/utils-1.0.0-rc.5.tgz#7d0d1ae7670ab2dc77e44f9538c7fa881188fd9e"
+  integrity sha512-Z9AnkZts08/IHNofY1xrqFXmTXlS9V8zelBbm3ETAIdsOng+R7PC6JGudE6TMAC5FUs9kSHullQEKpMFHvoWxw==
   dependencies:
     "@types/lodash.merge" "4.6.6"
     "@types/lodash.mergewith" "4.6.6"
