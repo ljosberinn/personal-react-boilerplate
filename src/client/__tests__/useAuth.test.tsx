@@ -2,7 +2,7 @@ import { rest } from 'msw';
 import { setupServer } from 'msw/node';
 
 import { ENABLED_PROVIDER } from '../../../src/constants';
-import { act, renderHook, waitFor } from '../../../testUtils';
+import { hookAct, renderHook, waitFor } from '../../../testUtils';
 import { mockConsoleMethods } from '../../../testUtils/console';
 import {
   OK,
@@ -10,7 +10,7 @@ import {
   UNPROCESSABLE_ENTITY,
 } from '../../utils/statusCodes';
 import { endpoints } from '../context/AuthContext';
-import type { Provider } from '../context/AuthContext/AuthContext';
+import type { Provider, User } from '../context/AuthContext/AuthContext';
 import { useAuth } from '../hooks/useAuth';
 
 const password = 'next-karma!';
@@ -54,7 +54,7 @@ describe('hooks/useAuth', () => {
   });
 
   test('exposes user when passed', () => {
-    const user = { id: '1', name: 'ljosberinn' };
+    const user: User = { id: '1', name: 'ljosberinn' };
 
     const {
       result: { current },
@@ -73,7 +73,7 @@ describe('hooks/useAuth', () => {
 
     server.use(rest.delete(url, (_, res, ctx) => res(ctx.status(OK))));
 
-    const user = { id: '1', name: 'ljosberinn' };
+    const user: User = { id: '1', name: 'ljosberinn' };
 
     const { result } = renderHook(useAuth, {
       session: user,
@@ -81,7 +81,7 @@ describe('hooks/useAuth', () => {
 
     expect(result.current.user).toBe(user);
 
-    await act(result.current.logout);
+    await hookAct(result.current.logout);
 
     expect(fetchSpy).toHaveBeenCalledWith(url, {
       method,
@@ -90,227 +90,237 @@ describe('hooks/useAuth', () => {
     await waitFor(() => expect(result.current.user).toBeNull());
   });
 
-  test(`on register, dispatches a ${endpoints.register.method} request`, async () => {
-    const fetchSpy = jest.spyOn(window, 'fetch');
+  describe('register', () => {
+    test(`dispatches a ${endpoints.register.method} request`, async () => {
+      const fetchSpy = jest.spyOn(window, 'fetch');
 
-    const user = { username: 'ljosberinn' };
-    const userWithPassword = { ...user, password };
-    const { url, method } = endpoints.register;
+      const user = { username: 'ljosberinn' };
+      const userWithPassword = { ...user, password };
+      const { url, method } = endpoints.register;
 
-    server.use(rest.post(url, (_req, res, ctx) => res(ctx.json(user))));
+      server.use(rest.post(url, (_req, res, ctx) => res(ctx.json(user))));
 
-    const { result } = renderHook(useAuth);
+      const { result } = renderHook(useAuth);
 
-    let response;
+      let response;
 
-    await act(async () => {
-      response = await result.current.register(userWithPassword);
+      await hookAct(async () => {
+        response = await result.current.register(userWithPassword);
+      });
+
+      expect(fetchSpy).toHaveBeenCalledWith(url, {
+        body: JSON.stringify(userWithPassword),
+        method,
+      });
+
+      expect(response).toMatchObject(user);
+
+      await waitFor(() => expect(result.current.user).toMatchObject(user));
     });
 
-    expect(fetchSpy).toHaveBeenCalledWith(url, {
-      body: JSON.stringify(userWithPassword),
-      method,
+    test(`fails gracefully given invalid response data`, async () => {
+      const fetchSpy = jest.spyOn(window, 'fetch');
+
+      const { restoreConsole } = mockConsoleMethods('error');
+
+      const user = { username: 'ljosberinn' };
+      const userWithPassword = { ...user, password };
+      const { url, method } = endpoints.register;
+
+      server.use(
+        rest.post(url, (_req, res, ctx) => res(ctx.body('invalid json')))
+      );
+
+      const { result } = renderHook(useAuth);
+
+      let response;
+
+      await hookAct(async () => {
+        response = await result.current.register(userWithPassword);
+      });
+
+      expect(response).toBe(INTERNAL_SERVER_ERROR);
+
+      expect(fetchSpy).toHaveBeenCalledWith(url, {
+        body: JSON.stringify(userWithPassword),
+        method,
+      });
+
+      // eslint-disable-next-line no-console
+      expect(console.error).toHaveBeenCalledTimes(1);
+
+      restoreConsole();
     });
 
-    expect(response).toMatchObject(user);
+    test('fails gracefully when rejected', async () => {
+      const fetchSpy = jest.spyOn(window, 'fetch');
 
-    await waitFor(() => expect(result.current.user).toMatchObject(user));
-  });
+      const user = { username: 'ljosberinn' };
+      const userWithPassword = { ...user, password };
 
-  test(`on register, fails gracefully given invalid response data`, async () => {
-    const fetchSpy = jest.spyOn(window, 'fetch');
+      const { url, method } = endpoints.register;
 
-    const { restoreConsole } = mockConsoleMethods('error');
+      server.use(
+        rest.post(url, (_req, res, ctx) =>
+          res(ctx.status(UNPROCESSABLE_ENTITY))
+        )
+      );
 
-    const user = { username: 'ljosberinn' };
-    const userWithPassword = { ...user, password };
-    const { url, method } = endpoints.register;
+      const { result } = renderHook(useAuth);
 
-    server.use(
-      rest.post(url, (_req, res, ctx) => res(ctx.body('invalid json')))
-    );
+      let response;
 
-    const { result } = renderHook(useAuth);
+      await hookAct(async () => {
+        response = await result.current.register(userWithPassword);
+      });
 
-    let response;
+      expect(response).toBe(UNPROCESSABLE_ENTITY);
 
-    await act(async () => {
-      response = await result.current.register(userWithPassword);
-    });
+      expect(result.current.user).toBeNull();
 
-    expect(response).toBe(INTERNAL_SERVER_ERROR);
-
-    expect(fetchSpy).toHaveBeenCalledWith(url, {
-      body: JSON.stringify(userWithPassword),
-      method,
-    });
-
-    // eslint-disable-next-line no-console
-    expect(console.error).toHaveBeenCalledTimes(1);
-
-    restoreConsole();
-  });
-
-  test('on register, fails gracefully when rejected', async () => {
-    const fetchSpy = jest.spyOn(window, 'fetch');
-
-    const user = { username: 'ljosberinn' };
-    const userWithPassword = { ...user, password };
-
-    const { url, method } = endpoints.register;
-
-    server.use(
-      rest.post(url, (_req, res, ctx) => res(ctx.status(UNPROCESSABLE_ENTITY)))
-    );
-
-    const { result } = renderHook(useAuth);
-
-    let response;
-
-    await act(async () => {
-      response = await result.current.register(userWithPassword);
-    });
-
-    expect(response).toBe(UNPROCESSABLE_ENTITY);
-
-    expect(result.current.user).toBeNull();
-
-    expect(fetchSpy).toHaveBeenCalledWith(url, {
-      body: JSON.stringify(userWithPassword),
-      method,
-    });
-  });
-
-  test('on provider login, does nothing given an invalid provider', async () => {
-    jest.spyOn(window.location, 'assign');
-
-    const provider = 'reddit';
-
-    const { result } = renderHook(useAuth);
-
-    let response;
-
-    await act(async () => {
-      response = await result.current.login({
-        provider: (provider as unknown) as Provider,
+      expect(fetchSpy).toHaveBeenCalledWith(url, {
+        body: JSON.stringify(userWithPassword),
+        method,
       });
     });
-
-    expect(response).toBeNull();
-
-    expect(window.location.assign).not.toHaveBeenCalled();
   });
 
-  ENABLED_PROVIDER.filter((provider) => provider !== 'local').forEach(
-    (provider) => {
-      test(`on provider login, redirects to a provider when demanded (provider: ${provider})`, async () => {
-        jest.spyOn(window.location, 'assign');
+  describe('provider login', () => {
+    test('does nothing given an invalid provider', async () => {
+      jest.spyOn(window.location, 'assign');
 
-        const { result } = renderHook(useAuth);
+      const provider = 'reddit';
 
-        let response;
+      const { result } = renderHook(useAuth);
 
-        await act(async () => {
-          response = await result.current.login({ provider });
+      let response;
+
+      await hookAct(async () => {
+        response = await result.current.login({
+          provider: (provider as unknown) as Provider,
         });
-
-        expect(response).toBeNull();
-
-        expect(window.location.assign).toHaveBeenCalledWith(
-          endpoints.provider.url.replace('provider', provider)
-        );
       });
-    }
-  );
 
-  test(`on local login, dispatches a ${endpoints.login.method} request`, async () => {
-    const fetchSpy = jest.spyOn(window, 'fetch');
+      expect(response).toBeNull();
 
-    const user = { username: 'ljosberinn' };
-    const userWithPassword = { ...user, password };
-
-    const { url, method } = endpoints.login;
-
-    server.use(rest.post(url, (_req, res, ctx) => res(ctx.json(user))));
-
-    const { result } = renderHook(useAuth);
-
-    let response;
-
-    await act(async () => {
-      response = await result.current.login(userWithPassword);
+      expect(window.location.assign).not.toHaveBeenCalled();
     });
 
-    expect(response).toMatchObject(user);
+    ENABLED_PROVIDER.filter((provider) => provider !== 'local').forEach(
+      (provider) => {
+        test(`redirects to a provider when demanded (provider: ${provider})`, async () => {
+          jest.spyOn(window.location, 'assign');
 
-    expect(fetchSpy).toHaveBeenCalledWith(url, {
-      body: JSON.stringify(userWithPassword),
-      method,
-    });
+          const { result } = renderHook(useAuth);
 
-    await waitFor(() => expect(result.current.user).toMatchObject(user));
+          let response;
+
+          await hookAct(async () => {
+            response = await result.current.login({ provider });
+          });
+
+          expect(response).toBeNull();
+
+          expect(window.location.assign).toHaveBeenCalledWith(
+            endpoints.provider.url.replace('provider', provider)
+          );
+        });
+      }
+    );
   });
 
-  test(`on local login, fails gracefully given invalid response data`, async () => {
-    const fetchSpy = jest.spyOn(window, 'fetch');
+  describe('local login', () => {
+    test(`dispatches a ${endpoints.login.method} request`, async () => {
+      const fetchSpy = jest.spyOn(window, 'fetch');
 
-    const { restoreConsole } = mockConsoleMethods('error');
+      const user = { username: 'ljosberinn' };
+      const userWithPassword = { ...user, password };
 
-    const user = { username: 'ljosberinn' };
-    const userWithPassword = { ...user, password };
+      const { url, method } = endpoints.login;
 
-    const { url, method } = endpoints.login;
+      server.use(rest.post(url, (_req, res, ctx) => res(ctx.json(user))));
 
-    server.use(
-      rest.post(url, (_req, res, ctx) => res(ctx.body('invalid json')))
-    );
+      const { result } = renderHook(useAuth);
 
-    const { result } = renderHook(useAuth);
+      let response;
 
-    let response;
+      await hookAct(async () => {
+        response = await result.current.login(userWithPassword);
+      });
 
-    await act(async () => {
-      response = await result.current.login(userWithPassword);
+      expect(response).toMatchObject(user);
+
+      expect(fetchSpy).toHaveBeenCalledWith(url, {
+        body: JSON.stringify(userWithPassword),
+        method,
+      });
+
+      await waitFor(() => expect(result.current.user).toMatchObject(user));
     });
 
-    expect(response).toBe(INTERNAL_SERVER_ERROR);
+    test(`fails gracefully given invalid response data`, async () => {
+      const fetchSpy = jest.spyOn(window, 'fetch');
 
-    expect(fetchSpy).toHaveBeenCalledWith(url, {
-      body: JSON.stringify(userWithPassword),
-      method,
+      const { restoreConsole } = mockConsoleMethods('error');
+
+      const user = { username: 'ljosberinn' };
+      const userWithPassword = { ...user, password };
+
+      const { url, method } = endpoints.login;
+
+      server.use(
+        rest.post(url, (_req, res, ctx) => res(ctx.body('invalid json')))
+      );
+
+      const { result } = renderHook(useAuth);
+
+      let response;
+
+      await hookAct(async () => {
+        response = await result.current.login(userWithPassword);
+      });
+
+      expect(response).toBe(INTERNAL_SERVER_ERROR);
+
+      expect(fetchSpy).toHaveBeenCalledWith(url, {
+        body: JSON.stringify(userWithPassword),
+        method,
+      });
+
+      // eslint-disable-next-line no-console
+      expect(console.error).toHaveBeenCalledTimes(1);
+
+      restoreConsole();
     });
 
-    // eslint-disable-next-line no-console
-    expect(console.error).toHaveBeenCalledTimes(1);
+    test(`fails gracefully given invalid login data`, async () => {
+      const fetchSpy = jest.spyOn(window, 'fetch');
 
-    restoreConsole();
-  });
+      const user = { username: 'ljosberinn' };
+      const userWithPassword = { ...user, password };
 
-  test(`on local login, fails gracefully given invalid login data`, async () => {
-    const fetchSpy = jest.spyOn(window, 'fetch');
+      const { url, method } = endpoints.login;
 
-    const user = { username: 'ljosberinn' };
-    const userWithPassword = { ...user, password };
+      server.use(
+        rest.post(url, (_req, res, ctx) =>
+          res(ctx.status(UNPROCESSABLE_ENTITY))
+        )
+      );
 
-    const { url, method } = endpoints.login;
+      const { result } = renderHook(useAuth);
 
-    server.use(
-      rest.post(url, (_req, res, ctx) => res(ctx.status(UNPROCESSABLE_ENTITY)))
-    );
+      let response;
 
-    const { result } = renderHook(useAuth);
+      await hookAct(async () => {
+        response = await result.current.login(userWithPassword);
+      });
 
-    let response;
+      expect(response).toBe(UNPROCESSABLE_ENTITY);
 
-    await act(async () => {
-      response = await result.current.login(userWithPassword);
-    });
-
-    expect(response).toBe(UNPROCESSABLE_ENTITY);
-
-    expect(fetchSpy).toHaveBeenCalledWith(url, {
-      body: JSON.stringify(userWithPassword),
-      method,
+      expect(fetchSpy).toHaveBeenCalledWith(url, {
+        body: JSON.stringify(userWithPassword),
+        method,
+      });
     });
   });
 });

@@ -34,7 +34,7 @@ const createContextMock = ({
   query: { ...query },
   req: createIncomingRequestMock(req),
   res: createServerResponseMock(res),
-  resolvedUrl: '',
+  // resolvedUrl: '',
 });
 
 describe('withSession()', () => {

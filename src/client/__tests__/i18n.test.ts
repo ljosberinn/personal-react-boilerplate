@@ -1,4 +1,3 @@
-/* eslint-disable jest/no-commented-out-tests */
 /* eslint-disable jest/require-top-level-describe */
 import { waitFor } from '@testing-library/react';
 import i18next from 'i18next';

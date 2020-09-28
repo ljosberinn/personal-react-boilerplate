@@ -1,17 +1,15 @@
 /* eslint-disable spaced-comment */
 import type { StorageManager } from '@chakra-ui/core';
-import {
-  cookieStorageManager,
-  localStorageManager,
-  ChakraProvider,
-} from '@chakra-ui/core';
+import { cookieStorageManager, ChakraProvider } from '@chakra-ui/core';
 import type {
   GetServerSidePropsContext,
   GetStaticPropsContext,
   GetStaticPropsResult,
 } from 'next';
+import { useRouter } from 'next/router';
 import type { ParsedUrlQuery } from 'querystring';
 import type { ReactNode } from 'react';
+import { useEffect } from 'react';
 import { I18nextProvider } from 'react-i18next';
 
 import { MetaThemeColorSynchronizer } from '../../src/client/components/MetaThemeColorSynchronizer';
@@ -44,7 +42,7 @@ export type Mode = 'ssr' | 'ssg';
 
 interface IsomorphicI18nRequirements {
   language?: string;
-  namespaces: Namespace[];
+  namespaces?: Namespace[];
 }
 
 export interface KarmaCoreProps {
@@ -75,7 +73,7 @@ export interface KarmaCoreProps {
      *
      * @default undefined
      */
-    redirectToIfUnauthenticated?: string;
+    redirectDestinationIfUnauthenticated?: string;
   };
 
   /**
@@ -148,20 +146,39 @@ export function KarmaSSR({
   children,
   cookies,
   ...rest
-}: KarmaSSRProps & WithChildren): JSX.Element {
+}: KarmaSSRProps & WithChildren): JSX.Element | null {
   attachComponentBreadcrumb('KarmaSSR');
 
-  // TODO: use cookieStorageManager with rc5
-  const storageManager = (() => {
-    const manager = cookieStorageManager(cookies);
+  /**
+   * relatively ugly workaround for redirecting client side when navigation
+   * to a protected/redirecting site without session occurs
+   *
+   * @see https://github.com/vercel/next.js/discussions/11281#discussioncomment-2384
+   */
+  const { redirectDestinationIfUnauthenticated } = rest.auth;
+  const shouldRedirect =
+    !rest.auth.session && !!redirectDestinationIfUnauthenticated;
 
-    // check whether this is a recurring user with a cookie present
-    if (manager.get()) {
-      return manager;
+  const { replace } = useRouter();
+
+  useEffect(() => {
+    if (shouldRedirect && redirectDestinationIfUnauthenticated) {
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
+      (async () => {
+        try {
+          await replace(redirectDestinationIfUnauthenticated);
+        } catch {
+          window.location.assign(redirectDestinationIfUnauthenticated);
+        }
+      })();
     }
+  }, [shouldRedirect, redirectDestinationIfUnauthenticated, replace]);
 
-    return localStorageManager;
-  })();
+  if (shouldRedirect) {
+    return null;
+  }
+
+  const storageManager = cookieStorageManager(cookies);
 
   return (
     <KarmaCore {...rest} storageManager={storageManager} mode="ssr">
@@ -203,7 +220,7 @@ export type GetServerSidePropsHandler<
  * the type of the result of `withKarmaSSRProps`
  */
 export type WithKarmaSSRProps<Props = {}> = Promise<{
-  props: { karma: KarmaSSRProps } & Props;
+  props: { karma: KarmaSSRProps | {} } & Props;
 }>;
 
 /**
@@ -245,13 +262,20 @@ export const withKarmaSSRProps = <
   };
 };
 
+interface SSRRedirectPropSubset extends Pick<KarmaSSRProps, 'auth'> {
+  i18n: {
+    bundle: {};
+    language: '';
+  };
+}
+
 type GetServerSidePropsReturn = Promise<{
-  props: { karma: KarmaSSRProps };
+  props: { karma: KarmaSSRProps | SSRRedirectPropSubset };
 }>;
 
 export interface CreateGetServerSidePropsOptions {
   i18n: IsomorphicI18nRequirements;
-  auth?: Pick<KarmaCoreProps['auth'], 'redirectToIfUnauthenticated'>;
+  auth?: Pick<KarmaCoreProps['auth'], 'redirectDestinationIfUnauthenticated'>;
 }
 
 export const createGetServerSideProps = (
@@ -274,12 +298,32 @@ export const getServerSideProps = async (
 ): GetServerSidePropsReturn => {
   const session = getSession(req);
 
-  if (!session && options?.auth?.redirectToIfUnauthenticated) {
-    res.writeHead(FOUND_MOVED_TEMPORARILY, {
-      Location: options.auth.redirectToIfUnauthenticated,
-    });
+  if (!session && options?.auth?.redirectDestinationIfUnauthenticated) {
+    // client-side routing, see https://github.com/vercel/next.js/discussions/11281#discussioncomment-2384
+    if (!req.headers.referer) {
+      res.writeHead(FOUND_MOVED_TEMPORARILY, {
+        Location: options.auth.redirectDestinationIfUnauthenticated,
+      });
 
-    res.end();
+      res.end();
+    }
+
+    const { redirectDestinationIfUnauthenticated } = options.auth;
+
+    return {
+      props: {
+        karma: {
+          auth: {
+            redirectDestinationIfUnauthenticated,
+            session: null,
+          },
+          i18n: {
+            bundle: {},
+            language: '',
+          },
+        },
+      },
+    };
   }
 
   const language = detectLanguage(req);
@@ -304,7 +348,6 @@ export const getServerSideProps = async (
 
   const auth: KarmaSSRProps['auth'] = {
     session,
-    shouldAttemptReauthentication: false,
   };
 
   return {
@@ -330,10 +373,10 @@ export type GetStaticPropsReturn = Promise<{
 }>;
 
 export type CreateGetStaticPropsOptions = {
-  i18n: IsomorphicI18nRequirements;
+  i18n?: IsomorphicI18nRequirements;
   auth?: Pick<
     KarmaCoreProps['auth'],
-    'redirectToIfUnauthenticated' | 'shouldAttemptReauthentication'
+    'redirectDestinationIfUnauthenticated' | 'shouldAttemptReauthentication'
   >;
   revalidate?: Revalidate;
 };
@@ -371,9 +414,9 @@ export const getStaticProps = async (
   ctx: GetStaticPropsContext,
   options?: CreateGetStaticPropsOptions
 ): GetStaticPropsReturn => {
-  const language = options?.i18n.language ?? FALLBACK_LANGUAGE;
+  const language = options?.i18n?.language ?? FALLBACK_LANGUAGE;
   const bundle = await getStaticI18n(language, {
-    namespaces: options?.i18n.namespaces,
+    namespaces: options?.i18n?.namespaces,
   });
 
   const i18n: KarmaSSGProps['i18n'] = {
@@ -383,11 +426,11 @@ export const getStaticProps = async (
 
   const shouldAttemptReauthentication =
     options?.auth?.shouldAttemptReauthentication ?? false;
-  const redirectToIfUnauthenticated =
-    options?.auth?.redirectToIfUnauthenticated ?? '';
+  const redirectDestinationIfUnauthenticated =
+    options?.auth?.redirectDestinationIfUnauthenticated ?? '';
 
   const auth: KarmaSSGProps['auth'] = {
-    redirectToIfUnauthenticated,
+    redirectDestinationIfUnauthenticated,
     session: null,
     shouldAttemptReauthentication,
   };

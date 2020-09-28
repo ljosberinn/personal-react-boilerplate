@@ -31,18 +31,19 @@ export function Feature({
   icon,
   learnMoreHref,
 }: FeatureProps): JSX.Element {
-  const hoverBg = useColorModeValue('gray.100', 'gray.800');
   const bg = useColorModeValue('white', 'gray.700');
 
   return (
     <Flex
       bg={bg}
-      _hover={{ bg: hoverBg }}
+      transition="transform 0.1s ease 0s"
+      _hover={{ transform: 'translateY(-3px)' }}
       borderRadius="5px"
       as="section"
       rounded="12px"
       shadow="base"
       p={10}
+      boxShadow="rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px"
       flexDirection="column"
       justifyContent="space-between"
       pb={8}
@@ -74,8 +75,9 @@ export function Feature({
             Learn more (soon!)
             <Icon
               ml={2}
-              transition="transform 200ms ease-in-out"
+              transition="all 200ms ease-in-out"
               as={FaArrowRight}
+              className="fa-arrow-right"
             />
           </InternalLink>
         )}

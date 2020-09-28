@@ -33,11 +33,9 @@ describe('middleware/authNSecurity', () => {
 
       const json = await response.json();
 
-      expect(json).toMatchObject(
-        expect.objectContaining({
-          error: expect.any(String),
-        })
-      );
+      expect(json).toStrictEqual({
+        error: expect.any(String),
+      });
     });
 
     test(`always attempts to decrypt the session with a SESSION_COOKIE present (method: ${method})`, async () => {
@@ -62,11 +60,9 @@ describe('middleware/authNSecurity', () => {
 
       const json = await response.json();
 
-      expect(json).toMatchObject(
-        expect.objectContaining({
-          error: expect.any(String),
-        })
-      );
+      expect(json).toStrictEqual({
+        error: expect.any(String),
+      });
     });
 
     test(`always patches req with the decrypted session with a SESSION_COOKIE present (method: ${method})`, async () => {

@@ -16,11 +16,11 @@ export default function IndexPage({ karma }: IndexPageProps): JSX.Element {
 
 const namespaces: Namespace[] = ['serviceWorker', 'theme'];
 
-const i18n = {
-  namespaces,
-};
-
-export const getStaticProps = createGetStaticProps({ i18n });
+export const getStaticProps = createGetStaticProps({
+  i18n: {
+    namespaces,
+  },
+});
 
 // import type { WithKarmaProps, KarmaSSRProps } from '../src/client/Karma';
 // import { createGetServerSideProps, KarmaSSR } from '../src/client/Karma';
@@ -40,8 +40,8 @@ export const getStaticProps = createGetStaticProps({ i18n });
 
 // const namespaces: Namespace[] = ['serviceWorker', 'theme'];
 
-// const i18n = {
-//   namespaces,
-// };
-
-// export const getServerSideProps = createGetServerSideProps({ i18n });
+// export const getServerSideProps = createGetServerSideProps({
+//   i18n: {
+//     namespaces,
+//   },
+// });

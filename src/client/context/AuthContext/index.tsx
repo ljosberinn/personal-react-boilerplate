@@ -11,7 +11,7 @@ export interface AuthContextProviderProps extends WithChildren {
   session: User | null;
   mode: Mode;
   shouldAttemptReauthentication?: boolean;
-  redirectToIfUnauthenticated?: string;
+  redirectDestinationIfUnauthenticated?: string;
 }
 
 export const endpoints = {
@@ -41,7 +41,7 @@ export function AuthContextProvider({
   mode,
   shouldAttemptReauthentication = false,
   session,
-  redirectToIfUnauthenticated,
+  redirectDestinationIfUnauthenticated,
 }: AuthContextProviderProps): JSX.Element {
   const [user, setUser] = useState<User | null>(session);
   const { push } = useRouter();
@@ -147,14 +147,14 @@ export function AuthContextProvider({
       // eslint-disable-next-line @typescript-eslint/no-floating-promises
       (async function reauthenticate() {
         async function redirectOnFailure() {
-          if (!redirectToIfUnauthenticated) {
+          if (!redirectDestinationIfUnauthenticated) {
             return;
           }
 
           try {
-            await push(redirectToIfUnauthenticated);
+            await push(redirectDestinationIfUnauthenticated);
           } catch {
-            window.location.assign(redirectToIfUnauthenticated);
+            window.location.assign(redirectDestinationIfUnauthenticated);
           }
         }
 
@@ -177,7 +177,12 @@ export function AuthContextProvider({
         }
       })();
     }
-  }, [mode, shouldAttemptReauthentication, redirectToIfUnauthenticated, push]);
+  }, [
+    mode,
+    shouldAttemptReauthentication,
+    redirectDestinationIfUnauthenticated,
+    push,
+  ]);
 
   const value = useMemo(
     () => ({

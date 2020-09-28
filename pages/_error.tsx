@@ -86,7 +86,7 @@ export async function getInitialProps(
   // indicate a bug introduced in Next.js, so record it in Sentry
   captureException(
     new Error(
-      `_error.js getInitialProps missing data at path: ${
+      `_error.getInitialProps missing data at path: ${
         ctx.asPath ?? 'unknown path'
       }`
     )

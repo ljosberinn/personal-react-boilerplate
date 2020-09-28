@@ -26,6 +26,7 @@ import 'whatwg-fetch';
 import { MockRouterContext } from './router';
 
 export * from '@testing-library/react';
+export { act as hookAct } from '@testing-library/react-hooks';
 export { default as userEvent } from '@testing-library/user-event';
 
 type UI = Parameters<typeof rtlRender>[0];

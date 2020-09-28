@@ -6,17 +6,19 @@ import type { GetServerSidePropsContext } from 'next';
 import type { User } from '../../../src/client/context/AuthContext/AuthContext';
 import type { Namespace } from '../../../src/constants';
 import { FALLBACK_LANGUAGE, SESSION_COOKIE_NAME } from '../../../src/constants';
-import { render } from '../../../testUtils';
+import { render, waitFor, screen } from '../../../testUtils';
 import {
   createIncomingRequestMock,
   createServerResponseMock,
 } from '../../../testUtils/api';
+import { createUseRouterMock } from '../../../testUtils/router';
 import { createMockScope } from '../../../testUtils/sentry';
 import * as cookieUtils from '../../server/auth/cookie';
 import { i18nCache } from '../../server/i18n/cache';
 import * as detectLanguageUtils from '../../server/i18n/detectLanguage';
 import * as sentryUtils from '../../utils/sentry/client';
 import * as sentryUtilsServer from '../../utils/sentry/server';
+import { FOUND_MOVED_TEMPORARILY } from '../../utils/statusCodes';
 import type { KarmaSSRProps } from '../Karma';
 import {
   KarmaSSR,
@@ -39,7 +41,7 @@ describe('<KarmaSSR />', () => {
     },
   };
 
-  test('initializes i18next', () => {
+  test('Core initializes i18next', () => {
     const initI18NSpy = jest.spyOn(i18n, 'initI18Next');
 
     render(<KarmaSSR {...defaultProps}>next-karma</KarmaSSR>, {
@@ -71,13 +73,84 @@ describe('<KarmaSSR />', () => {
       })
     );
   });
+
+  describe('client side redirect given no session and redirectDestinationIfUnauthenticated', () => {
+    const realLocation = window.location;
+
+    beforeAll(() => {
+      // @ts-expect-error jest does not support location to be spied on
+      delete window.location;
+      window.location = { ...realLocation, assign: jest.fn() };
+    });
+
+    afterAll(() => {
+      window.location = realLocation;
+    });
+
+    test('redirects via useRouter.replace', async () => {
+      const mockReplace = jest.fn().mockResolvedValueOnce(true);
+      createUseRouterMock({ replace: mockReplace });
+
+      const redirectDestinationIfUnauthenticated = '/foo';
+
+      const props: KarmaSSRProps = {
+        auth: {
+          redirectDestinationIfUnauthenticated,
+          session: null,
+        },
+        cookies: '',
+        i18n: defaultProps.i18n,
+      };
+
+      render(<KarmaSSR {...props}>next-karma</KarmaSSR>, {
+        omitKarmaProvider: true,
+      });
+
+      expect(screen.queryByText('next-karma')).not.toBeInTheDocument();
+
+      await waitFor(() => expect(mockReplace).toHaveBeenCalledTimes(1));
+
+      expect(mockReplace).toHaveBeenCalledWith(
+        redirectDestinationIfUnauthenticated
+      );
+    });
+
+    test('redirects via window.location.assign if useRouter fails', async () => {
+      const mockReplace = jest.fn().mockImplementationOnce(() => {
+        throw new Error('error');
+      });
+      createUseRouterMock({ replace: mockReplace });
+
+      const redirectDestinationIfUnauthenticated = '/foo';
+
+      const props: KarmaSSRProps = {
+        auth: {
+          redirectDestinationIfUnauthenticated,
+          session: null,
+        },
+        cookies: '',
+        i18n: defaultProps.i18n,
+      };
+
+      render(<KarmaSSR {...props}>next-karma</KarmaSSR>, {
+        omitKarmaProvider: true,
+      });
+
+      await waitFor(() => expect(mockReplace).toHaveBeenCalledTimes(1));
+
+      expect(window.location.assign).toHaveBeenCalledTimes(1);
+      expect(window.location.assign).toHaveBeenCalledWith(
+        redirectDestinationIfUnauthenticated
+      );
+    });
+  });
 });
 
 const mockCtx: GetServerSidePropsContext = {
   query: {},
   req: createIncomingRequestMock(),
   res: createServerResponseMock(),
-  resolvedUrl: '',
+  // resolvedUrl: '',
 };
 
 const mockBundle = i18nCache[FALLBACK_LANGUAGE];
@@ -147,10 +220,13 @@ const setupSpies = () => {
   };
 };
 
-const setup = async (ctx = mockCtx) => {
+const setup = async (
+  ctx = mockCtx,
+  options?: Parameters<typeof getServerSideProps>[1]
+) => {
   const spies = setupSpies();
 
-  const result = await getServerSideProps(ctx);
+  const result = await getServerSideProps(ctx ?? mockCtx, options);
 
   return {
     result,
@@ -170,7 +246,7 @@ describe('getServerSideProps', () => {
       query: {},
       req: createIncomingRequestMock({ headers }),
       res: createServerResponseMock(),
-      resolvedUrl: '',
+      // resolvedUrl: '',
     };
 
     jest.spyOn(cookieUtils, 'getSession').mockReturnValueOnce(mockSession);
@@ -225,45 +301,120 @@ describe('getServerSideProps', () => {
     expect(setTagSpy).toHaveBeenCalledWith('method', expect.any(String));
   });
 
-  test('loads session', async () => {
-    const { getSessionSpy } = await setup();
+  describe('auth', () => {
+    test('loads session', async () => {
+      const { getSessionSpy } = await setup();
 
-    expect(getSessionSpy).toHaveBeenCalledWith(mockCtx.req);
+      expect(getSessionSpy).toHaveBeenCalledWith(mockCtx.req);
+    });
+
+    describe('given no session and options.auth.redirectDestinationIfUnauthenticated', () => {
+      test('redirects serverside', async () => {
+        const url = '/foo';
+
+        const { result } = await setup(mockCtx, {
+          auth: { redirectDestinationIfUnauthenticated: url },
+          i18n: {},
+        });
+
+        expect(mockCtx.res.writeHead).toHaveBeenCalledTimes(1);
+        expect(mockCtx.res.writeHead).toHaveBeenCalledWith(
+          FOUND_MOVED_TEMPORARILY,
+          expect.objectContaining({
+            Location: url,
+          })
+        );
+
+        expect(mockCtx.res.end).toHaveBeenCalledTimes(1);
+
+        expect(result).toStrictEqual({
+          props: {
+            karma: {
+              auth: {
+                redirectDestinationIfUnauthenticated: url,
+                session: null,
+              },
+              i18n: {
+                bundle: {},
+                language: '',
+              },
+            },
+          },
+        });
+      });
+
+      test('forwards url for client side redirect given a referrer', async () => {
+        const url = '/foo';
+
+        const mockReq = createIncomingRequestMock({
+          headers: {
+            referer: '/',
+          },
+        });
+
+        const { result } = await setup(
+          { ...mockCtx, req: mockReq },
+          {
+            auth: { redirectDestinationIfUnauthenticated: url },
+            i18n: {},
+          }
+        );
+
+        expect(mockCtx.res.writeHead).not.toHaveBeenCalledTimes(1);
+        expect(mockCtx.res.end).not.toHaveBeenCalledTimes(1);
+
+        expect(result).toStrictEqual({
+          props: {
+            karma: {
+              auth: {
+                redirectDestinationIfUnauthenticated: url,
+                session: null,
+              },
+              i18n: {
+                bundle: {},
+                language: '',
+              },
+            },
+          },
+        });
+      });
+    });
   });
 
-  test('detects language', async () => {
-    const { detectLanguageSpy } = await setup();
+  describe('i18n', () => {
+    test('detects language', async () => {
+      const { detectLanguageSpy } = await setup();
 
-    expect(detectLanguageSpy).toHaveBeenCalledWith(mockCtx.req);
-  });
+      expect(detectLanguageSpy).toHaveBeenCalledWith(mockCtx.req);
+    });
 
-  test('loads i18n bundle', async () => {
-    const { getI18nSpy } = await setup();
+    test('loads i18n bundle', async () => {
+      const { getI18nSpy } = await setup();
 
-    expect(getI18nSpy).toHaveBeenCalledWith(
-      FALLBACK_LANGUAGE,
-      expect.objectContaining({
-        req: mockCtx.req,
-      })
-    );
+      expect(getI18nSpy).toHaveBeenCalledWith(
+        FALLBACK_LANGUAGE,
+        expect.objectContaining({
+          req: mockCtx.req,
+        })
+      );
+    });
   });
 
   test('matches expected shape', async () => {
     const { result } = await setup();
 
-    expect(result).toMatchObject({
+    expect(result).toStrictEqual({
       props: {
-        karma: expect.objectContaining({
+        karma: {
           auth: {
             session: null,
-            shouldAttemptReauthentication: false,
           },
           cookies: '',
           i18n: {
             bundle: mockBundle,
             language: FALLBACK_LANGUAGE,
           },
-        }),
+        },
       },
     });
   });
@@ -282,50 +433,50 @@ describe('createGetServerSideProps', () => {
     ).toBeInstanceOf(Function);
   });
 
-  test('forwards i18nNamespaces onto getI18n', async () => {
-    const { getI18nSpy } = setupSpies();
+  describe('i18n', () => {
+    test('forwards namespaces onto getI18n', async () => {
+      const { getI18nSpy } = setupSpies();
 
-    await createGetServerSideProps({
-      i18n: {
-        namespaces: [],
-      },
-    })(mockCtx);
+      await createGetServerSideProps({
+        i18n: {
+          namespaces: [],
+        },
+      })(mockCtx);
 
-    expect(getI18nSpy).toHaveBeenCalledWith(
-      FALLBACK_LANGUAGE,
-      expect.objectContaining({
-        namespaces: [],
-        req: mockCtx.req,
-      })
-    );
-  });
+      expect(getI18nSpy).toHaveBeenCalledWith(
+        FALLBACK_LANGUAGE,
+        expect.objectContaining({
+          namespaces: [],
+          req: mockCtx.req,
+        })
+      );
+    });
 
-  test('given empty i18nNamespaces, loads all namespaces', async () => {
-    setupSpies();
+    test('given empty namespaces, loads all namespaces', async () => {
+      setupSpies();
 
-    const result = await createGetServerSideProps({
-      i18n: {
-        namespaces: [],
-      },
-    })(mockCtx);
+      const result = await createGetServerSideProps({
+        i18n: {
+          namespaces: [],
+        },
+      })(mockCtx);
 
-    expect(result.props.karma.i18n.bundle).toMatchObject(
-      i18nCache[FALLBACK_LANGUAGE]
-    );
-  });
+      expect(result.props.karma.i18n.bundle).toMatchObject(
+        i18nCache[FALLBACK_LANGUAGE]
+      );
+    });
 
-  test('given a single i18nNamespace, loads only that one', async () => {
-    setupSpies();
+    test('given a single namespace, loads only that one', async () => {
+      setupSpies();
 
-    const result = await createGetServerSideProps({ i18n: { namespaces } })(
-      mockCtx
-    );
+      const result = await createGetServerSideProps({ i18n: { namespaces } })(
+        mockCtx
+      );
 
-    expect(result.props.karma.i18n.bundle).toMatchObject(
-      expect.objectContaining({
+      expect(result.props.karma.i18n.bundle).toStrictEqual({
         [namespaces[0]]: expect.any(Object),
-      })
-    );
+      });
+    });
   });
 });
 
@@ -352,8 +503,9 @@ describe('withServerSideKarmaProps', () => {
   test('bubbles errors', async () => {
     setupSpies();
 
+    const mockError = new Error('error');
     const mockHandler = jest.fn().mockImplementationOnce(() => {
-      throw new Error('error');
+      throw mockError;
     });
     const getServerSideProps = withKarmaSSRProps(mockHandler);
 
@@ -366,6 +518,7 @@ describe('withServerSideKarmaProps', () => {
     }
 
     expect(errorHandler).toHaveBeenCalledTimes(1);
+    expect(errorHandler).toHaveBeenCalledWith(mockError);
   });
 
   test('merges karma getServerSideProps with handlers result', async () => {
@@ -375,12 +528,11 @@ describe('withServerSideKarmaProps', () => {
     const getServerSideProps = withKarmaSSRProps(mockHandler);
     const result = await getServerSideProps(mockCtx);
 
-    expect(result).toMatchObject({
-      props: expect.objectContaining({
+    expect(result).toStrictEqual({
+      props: {
         karma: {
           auth: {
             session: null,
-            shouldAttemptReauthentication: false,
           },
           cookies: '',
           i18n: {
@@ -389,7 +541,7 @@ describe('withServerSideKarmaProps', () => {
           },
         },
         ...mockProps,
-      }),
+      },
     });
   });
 });

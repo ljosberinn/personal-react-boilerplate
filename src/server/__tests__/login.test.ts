@@ -124,12 +124,10 @@ describe('api/login', () => {
 
     const json = await response.json();
 
-    expect(json).toMatchObject(
-      expect.objectContaining({
-        displayName: expect.any(String),
-        id: expect.any(String),
-        username: expect.any(String),
-      })
-    );
+    expect(json).toStrictEqual({
+      displayName: expect.any(String),
+      id: expect.any(String),
+      username: expect.any(String),
+    });
   });
 });
