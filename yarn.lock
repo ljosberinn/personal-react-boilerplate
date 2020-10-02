@@ -5180,10 +5180,10 @@ eslint-ast-utils@^1.1.0:
     lodash.get "^4.4.2"
     lodash.zip "^4.2.0"
 
-eslint-config-galex@2.4.11:
-  version "2.4.11"
-  resolved "https://registry.yarnpkg.com/eslint-config-galex/-/eslint-config-galex-2.4.11.tgz#6bf5c3164349287d127c4074f1ef3bf9d172b42e"
-  integrity sha512-2XfOC5PHEMmlU4UnlJ5z6nPczzVNFJmCJayXnZ5Pz8jPC9bhlf6GfO6TKqh41yf7weyIYTjoX6td/l+y8A8JIQ==
+eslint-config-galex@2.4.12:
+  version "2.4.12"
+  resolved "https://registry.yarnpkg.com/eslint-config-galex/-/eslint-config-galex-2.4.12.tgz#bc34b05581dba39e6207eb282d6708f938132ccd"
+  integrity sha512-tQobI+o56Ev5hsvOcaFz1g0c/SPzzff82Xr27cxmTVLyt5XwgjyYxIiyEemYkruLmZ3I7fEHNPknH189vHkstw==
   dependencies:
     "@next/eslint-plugin-next" "^9.5.3"
     "@typescript-eslint/eslint-plugin" "4.3.0"
@@ -5199,7 +5199,7 @@ eslint-config-galex@2.4.11:
     eslint-plugin-jsx-a11y "6.3.1"
     eslint-plugin-prettier "3.1.4"
     eslint-plugin-promise "4.2.1"
-    eslint-plugin-react "7.21.2"
+    eslint-plugin-react "7.21.3"
     eslint-plugin-react-hooks "4.1.2"
     eslint-plugin-sonarjs "0.5.0"
     eslint-plugin-sort-keys-fix "1.1.1"
@@ -5309,10 +5309,10 @@ eslint-plugin-react-hooks@4.1.2:
   resolved "https://registry.yarnpkg.com/eslint-plugin-react-hooks/-/eslint-plugin-react-hooks-4.1.2.tgz#2eb53731d11c95826ef7a7272303eabb5c9a271e"
   integrity sha512-ykUeqkGyUGgwTtk78C0o8UG2fzwmgJ0qxBGPp2WqRKsTwcLuVf01kTDRAtOsd4u6whX2XOC8749n2vPydP82fg==
 
-eslint-plugin-react@7.21.2:
-  version "7.21.2"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-react/-/eslint-plugin-react-7.21.2.tgz#3bd5d2c4c36d5a0428d0d6dda301ac9a84d681b2"
-  integrity sha512-j3XKvrK3rpBzveKFbgAeGsWb9uz6iUOrR0jixRfjwdFeGSRsXvVTFtHDQYCjsd1/6Z/xvb8Vy3LiI5Reo7fDrg==
+eslint-plugin-react@7.21.3:
+  version "7.21.3"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-react/-/eslint-plugin-react-7.21.3.tgz#71655d2af5155b19285ec929dd2cdc67a4470b52"
+  integrity sha512-OI4GwTCqyIb4ipaOEGLWdaOHCXZZydStAsBEPB2e1ZfNM37bojpgO1BoOQbFb0eLVz3QLDx7b+6kYcrxCuJfhw==
   dependencies:
     array-includes "^3.1.1"
     array.prototype.flatmap "^1.2.3"
