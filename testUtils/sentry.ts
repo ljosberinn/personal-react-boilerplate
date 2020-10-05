@@ -23,7 +23,7 @@ export const createMockScope = ({
   class MockScope extends Scope {
     _breadcrumbs = [];
 
-    _contexts = [];
+    _contexts = {};
 
     _eventProcessors = [];
 

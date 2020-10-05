@@ -1,6 +1,6 @@
 import { createContext } from 'react';
 
-interface GoogleProfile {
+type GoogleProfile = {
   sub: string;
   name: string;
   given_name: string;
@@ -9,9 +9,9 @@ interface GoogleProfile {
   email: string;
   email_verified: boolean;
   locale: string;
-}
+};
 
-interface GithubProfile {
+type GithubProfile = {
   login: string;
   id: number;
   node_id: string;
@@ -55,14 +55,14 @@ interface GithubProfile {
     name: 'free';
     private_repos: number;
   };
-}
+};
 
-interface FacebookProfile {
+type FacebookProfile = {
   id: string;
   name: string;
-}
+};
 
-interface DiscordProfile {
+type DiscordProfile = {
   avatar: string;
   discriminator: string;
   email: string;
@@ -73,7 +73,7 @@ interface DiscordProfile {
   public_flags: number;
   username: string;
   verified: boolean;
-}
+};
 
 export type User =
   | GithubProfile
