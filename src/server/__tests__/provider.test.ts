@@ -10,7 +10,7 @@ import {
   INTERNAL_SERVER_ERROR,
 } from '../../utils/statusCodes';
 import * as cookieUtils from '../auth/cookie';
-import * as oauthTools from '../auth/oauth';
+import * as oauthTools from '../auth/oauth2';
 import { externalProviderHandler } from '../auth/routes/provider';
 
 const url = '/api/v1/auth/provider';

@@ -149,30 +149,7 @@ export function KarmaSSR({
 }: KarmaSSRProps & WithChildren): JSX.Element | null {
   attachComponentBreadcrumb('KarmaSSR');
 
-  /**
-   * relatively ugly workaround for redirecting client side when navigation
-   * to a protected/redirecting site without session occurs
-   *
-   * @see https://github.com/vercel/next.js/discussions/11281#discussioncomment-2384
-   */
-  const { redirectDestinationIfUnauthenticated } = rest.auth;
-  const shouldRedirect =
-    !rest.auth.session && !!redirectDestinationIfUnauthenticated;
-
-  const { replace } = useRouter();
-
-  useEffect(() => {
-    if (shouldRedirect && redirectDestinationIfUnauthenticated) {
-      // eslint-disable-next-line @typescript-eslint/no-floating-promises
-      (async () => {
-        try {
-          await replace(redirectDestinationIfUnauthenticated);
-        } catch {
-          window.location.assign(redirectDestinationIfUnauthenticated);
-        }
-      })();
-    }
-  }, [shouldRedirect, redirectDestinationIfUnauthenticated, replace]);
+  const shouldRedirect = useDetermineShouldRedirect(rest.auth);
 
   if (shouldRedirect) {
     return null;
@@ -185,6 +162,45 @@ export function KarmaSSR({
       {children}
     </KarmaCore>
   );
+}
+
+type UsePseudoSSRRedirectArgs = KarmaSSRProps['auth'];
+
+/**
+ * relatively ugly workaround for redirecting client side when navigation
+ * to a protected/redirecting site without session occurs
+ *
+ * @see https://github.com/vercel/next.js/discussions/11281#discussioncomment-2384
+ */
+function useDetermineShouldRedirect({
+  redirectDestinationIfUnauthenticated,
+  session,
+}: UsePseudoSSRRedirectArgs): boolean {
+  const { replace } = useRouter();
+  /**
+   * redirect if:
+   *
+   * - no `session` present
+   * - `redirectDestinationIfUnauthenticated` is given
+   */
+  const shouldRedirect = !session && !!redirectDestinationIfUnauthenticated;
+
+  useEffect(() => {
+    if (!shouldRedirect || !redirectDestinationIfUnauthenticated) {
+      return;
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
+    (async () => {
+      try {
+        await replace(redirectDestinationIfUnauthenticated);
+      } catch {
+        window.location.assign(redirectDestinationIfUnauthenticated);
+      }
+    })();
+  }, [shouldRedirect, redirectDestinationIfUnauthenticated, replace]);
+
+  return shouldRedirect;
 }
 
 /**********************

@@ -9,7 +9,12 @@ import {
 } from '../../../utils/statusCodes';
 import type { RequestHandler } from '../../types';
 import { encryptSession, setSessionCookie } from '../cookie';
-import { config, getRedirectUrl, getOAuthData, getProfileData } from '../oauth';
+import {
+  config,
+  getRedirectUrl,
+  getOAuthData,
+  getProfileData,
+} from '../oauth2';
 
 const useExternalProvider: RequestHandler = async (req, res, next) => {
   const [provider] = req.query.authRouter as ExternalProvider[];

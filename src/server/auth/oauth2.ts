@@ -70,7 +70,7 @@ export const getRedirectUrl = (
     scope: scope.join(' '),
   }).toString();
 
-  return [url, params].join('?');
+  return `${url}?${params}`;
 };
 
 interface RequiredOAuthParams {
@@ -82,30 +82,32 @@ interface RequiredOAuthParams {
 
 export const getOAuthData = async (
   url: string,
-
   { code, prompt, redirect_uri, provider }: RequiredOAuthParams
 ): Promise<OAuth2Response> => {
   const { client_id, client_secret } = config[provider];
+
+  const grant_type = provider !== 'github' && 'authorization_code';
 
   const tokenParams = Object.fromEntries(
     Object.entries({
       client_id,
       client_secret,
       code,
-      grant_type: provider !== 'github' && 'authorization_code',
+      grant_type,
       prompt, // only used by google
       redirect_uri,
     }).filter(([_, value]) => !!value)
   ) as Record<string, string>;
 
   const params = new URLSearchParams(tokenParams).toString();
+  const headers = {
+    Accept: 'application/json', // required for github to return json
+    'Content-Type': 'application/x-www-form-urlencoded',
+  };
 
   const response = await fetch(url, {
     body: params,
-    headers: {
-      Accept: 'application/json', // required for github to return json
-      'Content-Type': 'application/x-www-form-urlencoded',
-    },
+    headers,
     method: 'POST',
   });
 
@@ -119,13 +121,12 @@ export const getProfileData = async (
 ): Promise<Record<string, unknown>> => {
   const profileParams = new URLSearchParams({
     access_token,
-  });
+  }).toString();
 
-  const profileUrl = [url, profileParams].join('?');
-  const authorization = [
-    provider === 'github' ? 'token' : token_type,
-    access_token,
-  ].join(' ');
+  const profileUrl = `${url}?${profileParams}`;
+  const authorization = `${
+    provider === 'github' ? 'token' : token_type
+  } ${access_token}`;
 
   const response = await fetch(profileUrl, {
     headers: {

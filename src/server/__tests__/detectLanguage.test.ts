@@ -78,17 +78,17 @@ describe('findLanguageByAcceptLanguageHeader', () => {
     ['en-GB;q=0.8', 'en'],
     ['en-GB', 'en'],
     ['en;q=0.8', 'en'],
-    ['az-AZ', null],
-    ['fr-CA,fr;q=0.8', null],
-    ['fr-CA,*;q=0.8', null],
-    ['fr-150', null],
+    ['az-AZ', FALLBACK_LANGUAGE],
+    ['fr-CA,fr;q=0.8', FALLBACK_LANGUAGE],
+    ['fr-CA,*;q=0.8', FALLBACK_LANGUAGE],
+    ['fr-150', FALLBACK_LANGUAGE],
     ['en-GB,en-US;q=0.9,fr-CA;q=0.7,en;q=0.83;', 'en'],
     ['fr-CA,fr;q=0.8,en-US;q=0.6,en;q=0.4,*;q=0.1', 'en'],
     ['fr-CA, fr;q=0.8,  en-US;q=0.6,en;q=0.4,    *;q=0.1', 'en'],
     ['fr-CA,fr;q=0.2,en-US;q=0.6,en;q=0.4,*;q=0.5', 'en'],
     ['zh-Hant-cn', 'zh'],
     ['zh-Hant-cn;q=1, zh-cn;q=0.6, zh;q=0.4', 'zh'],
-    ['foo', null],
+    ['foo', FALLBACK_LANGUAGE],
   ])('findLanguageByAcceptLanguageHeader("%s")', (header, expected) => {
     expect(findLanguageByAcceptLanguageHeader(header)).toBe(expected);
   });

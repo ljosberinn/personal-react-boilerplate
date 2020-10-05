@@ -83,7 +83,7 @@ describe('withSession()', () => {
     const mockContext = createContextMock({
       req: {
         headers: {
-          cookie: [SESSION_COOKIE_NAME, fakeCookie].join('='),
+          cookie: `${SESSION_COOKIE_NAME}=${fakeCookie}`,
         },
       },
     });

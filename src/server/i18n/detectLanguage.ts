@@ -7,18 +7,11 @@ import { i18nCookieName } from '../../client/i18n';
 // eslint-disable-next-line unicorn/no-unsafe-regex
 const regExp = /(?<language>[a-z]{2})(?:-[a-z]{2,4}){0,2}(?:;q=(?<quality>\d(?:\.\d+)?)?)?/giu;
 
-// in case ENABLED_LANGUAGES contains region indicators
-const supportedLanguages = ENABLED_LANGUAGES.map(
-  (locale) => locale.split('-')[0]
-);
-
 // eslint-disable-next-line inclusive-language/use-inclusive-words
 /**
  * @see https://github.com/opentable/accept-language-parser/blob/master/index.js
  */
-export const findLanguageByAcceptLanguageHeader = (
-  header: string
-): string | null =>
+export const findLanguageByAcceptLanguageHeader = (header: string): string =>
   [...header.matchAll(regExp)]
     .map((match) => {
       // since capture groups are used above, we can safely ! here
@@ -34,17 +27,15 @@ export const findLanguageByAcceptLanguageHeader = (
     .sort((a, b) => b.quality - a.quality)
     // throw away quality
     .map(({ language }) => language)
-    .find((language) =>
-      supportedLanguages.find(
-        (supportedLanguage) => supportedLanguage === language
-      )
-    ) ?? null;
+    // match against ENABLED_LANGUAGES, else fallback
+    .find((language) => ENABLED_LANGUAGES.includes(language)) ??
+  FALLBACK_LANGUAGE;
 
 /**
  * Dynamically detects the users preferred language based on
  *
- * - request header
  * - cookies
+ * - request header
  *
  * and picks the best match from existing languages.
  *
@@ -57,24 +48,16 @@ export const detectLanguage = ({ headers }: IncomingMessage): string => {
   const serverCookies = headers.cookie ? parse(headers.cookie) : {};
   const languageByCookie = serverCookies[i18nCookieName];
 
+  // previous visit, acknowledge
   if (languageByCookie && ENABLED_LANGUAGES.includes(languageByCookie)) {
     return languageByCookie;
   }
 
+  // if given, attempt to parse
   const acceptLanguageHeader = headers['accept-language'];
 
   if (acceptLanguageHeader) {
-    try {
-      const parsedLanguage = findLanguageByAcceptLanguageHeader(
-        acceptLanguageHeader
-      );
-
-      if (parsedLanguage && ENABLED_LANGUAGES.includes(parsedLanguage)) {
-        return parsedLanguage;
-      }
-    } catch {
-      return FALLBACK_LANGUAGE;
-    }
+    return findLanguageByAcceptLanguageHeader(acceptLanguageHeader);
   }
 
   return FALLBACK_LANGUAGE;

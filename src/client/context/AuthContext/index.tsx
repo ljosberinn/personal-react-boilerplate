@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router';
+import type { SetStateAction, Dispatch } from 'react';
 import { useState, useEffect, useMemo, useCallback } from 'react';
 
 import { ENABLED_PROVIDER } from '../../../constants';
@@ -44,7 +45,13 @@ export function AuthContextProvider({
   redirectDestinationIfUnauthenticated,
 }: AuthContextProviderProps): JSX.Element {
   const [user, setUser] = useState<User | null>(session);
-  const { push } = useRouter();
+
+  useSSGReauthentication({
+    mode,
+    redirectDestinationIfUnauthenticated,
+    setUser,
+    shouldAttemptReauthentication,
+  });
 
   /**
    * Given { provider: ENABLED_PROVIDER[number] }, will redirect.
@@ -142,48 +149,6 @@ export function AuthContextProvider({
     }
   }, []);
 
-  useEffect(() => {
-    if (mode === 'ssg' && shouldAttemptReauthentication) {
-      // eslint-disable-next-line @typescript-eslint/no-floating-promises
-      (async function reauthenticate() {
-        async function redirectOnFailure() {
-          if (!redirectDestinationIfUnauthenticated) {
-            return;
-          }
-
-          try {
-            await push(redirectDestinationIfUnauthenticated);
-          } catch {
-            window.location.assign(redirectDestinationIfUnauthenticated);
-          }
-        }
-
-        try {
-          const { url, method } = endpoints.me;
-
-          const response = await fetch(url, { method });
-
-          if (response.ok) {
-            const json = await response.json();
-
-            setUser(json);
-          } else {
-            // eslint-disable-next-line @typescript-eslint/no-floating-promises
-            redirectOnFailure();
-          }
-        } catch {
-          // eslint-disable-next-line @typescript-eslint/no-floating-promises
-          redirectOnFailure();
-        }
-      })();
-    }
-  }, [
-    mode,
-    shouldAttemptReauthentication,
-    redirectDestinationIfUnauthenticated,
-    push,
-  ]);
-
   const value = useMemo(
     () => ({
       isAuthenticated: !!user,
@@ -196,4 +161,70 @@ export function AuthContextProvider({
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+}
+
+interface UseSSGReauthenticationArgs
+  extends Pick<
+    AuthContextProviderProps,
+    | 'mode'
+    | 'redirectDestinationIfUnauthenticated'
+    | 'shouldAttemptReauthentication'
+  > {
+  setUser: Dispatch<SetStateAction<User | null>>;
+}
+
+function useSSGReauthentication({
+  mode,
+  shouldAttemptReauthentication,
+  redirectDestinationIfUnauthenticated,
+  setUser,
+}: UseSSGReauthenticationArgs) {
+  const { push } = useRouter();
+
+  useEffect(() => {
+    if (mode !== 'ssg' || !shouldAttemptReauthentication) {
+      return;
+    }
+
+    async function redirectOnFailure() {
+      if (!redirectDestinationIfUnauthenticated) {
+        return;
+      }
+
+      try {
+        await push(redirectDestinationIfUnauthenticated);
+      } catch {
+        window.location.assign(redirectDestinationIfUnauthenticated);
+      }
+    }
+
+    async function reauthenticate() {
+      try {
+        const { url, method } = endpoints.me;
+
+        const response = await fetch(url, { method });
+
+        if (response.ok) {
+          const json = await response.json();
+
+          setUser(json);
+        } else {
+          // eslint-disable-next-line @typescript-eslint/no-floating-promises
+          redirectOnFailure();
+        }
+      } catch {
+        // eslint-disable-next-line @typescript-eslint/no-floating-promises
+        redirectOnFailure();
+      }
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
+    reauthenticate();
+  }, [
+    mode,
+    shouldAttemptReauthentication,
+    redirectDestinationIfUnauthenticated,
+    push,
+    setUser,
+  ]);
 }
