@@ -5186,10 +5186,10 @@ eslint-ast-utils@^1.1.0:
     lodash.get "^4.4.2"
     lodash.zip "^4.2.0"
 
-eslint-config-galex@2.4.13:
-  version "2.4.13"
-  resolved "https://registry.yarnpkg.com/eslint-config-galex/-/eslint-config-galex-2.4.13.tgz#7520d55afcb42c5c86bc1fe28762071c3d7183e3"
-  integrity sha512-zDzo94NZCV5HgPP/ISbpPIMlTSY8F6afzPmwZ+7/5AVd4BIjlex1dcjfVv1p3R8UyECHOFdsAFV+BOugHoNnOg==
+eslint-config-galex@2.5.0:
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/eslint-config-galex/-/eslint-config-galex-2.5.0.tgz#0c33b9dfc3994e8b0e966b8ceadea6fb3e4c293a"
+  integrity sha512-mGoptHkXmoagTYeOQ1RIAmNU0VSG/BLvGFmj6YOakSq09vOKjtQ/7tsUwiIJoVmThf4BB1d0y7ytttKcbVqxhQ==
   dependencies:
     "@next/eslint-plugin-next" "^9.5.3"
     "@typescript-eslint/eslint-plugin" "4.4.0"
@@ -5199,7 +5199,7 @@ eslint-config-galex@2.4.13:
     eslint-config-prettier "6.12.0"
     eslint-plugin-import "2.22.1"
     eslint-plugin-inclusive-language "1.2.1"
-    eslint-plugin-jest "24.0.2"
+    eslint-plugin-jest "24.1.0"
     eslint-plugin-jest-dom "3.2.3"
     eslint-plugin-jest-formatting "2.0.0"
     eslint-plugin-jsx-a11y "6.3.1"
@@ -5274,10 +5274,10 @@ eslint-plugin-jest-formatting@2.0.0:
   resolved "https://registry.yarnpkg.com/eslint-plugin-jest-formatting/-/eslint-plugin-jest-formatting-2.0.0.tgz#6688feefb9c8c49ff847160e9284bc405d44f360"
   integrity sha512-DLL2vg+cXmtONUBiIVE4nk9YQXnpT2ljHfAvW1vRYOGFA9Jfo5kqG+1lzYxcnphdFyUFN0Tx+rGkmsAZy2paxA==
 
-eslint-plugin-jest@24.0.2:
-  version "24.0.2"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-jest/-/eslint-plugin-jest-24.0.2.tgz#4bf0fcdc86289d702a7dacb430b4363482af773b"
-  integrity sha512-DSBLNpkKDOpUJQkTGSs5sVJWsu0nDyQ2rYxkr0Eh7nrkc5bMUr/dlDbtTj3l8y6UaCVsem6rryF1OZrKnz1S5g==
+eslint-plugin-jest@24.1.0:
+  version "24.1.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-jest/-/eslint-plugin-jest-24.1.0.tgz#6708037d7602e5288ce877fd0103f329dc978361"
+  integrity sha512-827YJ+E8B9PvXu/0eiVSNFfxxndbKv+qE/3GSMhdorCaeaOehtqHGX2YDW9B85TEOre9n/zscledkFW/KbnyGg==
   dependencies:
     "@typescript-eslint/experimental-utils" "^4.0.1"
 
