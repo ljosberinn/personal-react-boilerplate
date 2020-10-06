@@ -28,11 +28,11 @@ afterEach(() => server.resetHandlers());
 
 afterAll(() => server.close());
 
-interface MockRouteParams {
+type MockRouteParams = {
   language: string;
   response?: Record<string, unknown> | string;
   namespaces?: Namespace[];
-}
+};
 
 const mockRoute = ({ language, response }: MockRouteParams) => {
   namespaces.forEach((namespace) => {

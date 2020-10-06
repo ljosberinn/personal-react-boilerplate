@@ -85,23 +85,23 @@ export type Provider = 'github' | 'google' | 'facebook' | 'discord' | 'local';
 
 export type ExternalProvider = Exclude<Provider, 'local'>;
 
-export interface ExternalLoginOptions {
+export type ExternalLoginOptions = {
   provider: Provider;
-}
+};
 
-export interface LocalLoginOptions {
+export type LocalLoginOptions = {
   username: string;
   password: string;
-}
+};
 
 export type LoginOptions = ExternalLoginOptions | LocalLoginOptions;
 
-export interface AuthContextDefinition {
+export type AuthContextDefinition = {
   user: User | null;
   register: (options: LocalLoginOptions) => Promise<User | number>;
   login: (options: LoginOptions) => Promise<User | number | null>;
   logout: () => Promise<void>;
   isAuthenticated: boolean;
-}
+};
 
 export const AuthContext = createContext<AuthContextDefinition | null>(null);

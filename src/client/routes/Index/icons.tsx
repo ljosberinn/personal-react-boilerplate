@@ -168,9 +168,9 @@ export const KarmaIcon = createIcon({
   viewBox: '0 0 378 459',
 });
 
-interface IconProps {
+type IconProps = {
   size: string;
-}
+};
 
 export function NextIcon({ size }: IconProps): JSX.Element {
   const fill = useColorModeValue('black', 'white');

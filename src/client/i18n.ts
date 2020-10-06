@@ -172,15 +172,15 @@ const memoizedCacheMaxAge = (IS_BROWSER || IS_PROD ? 60 * 60 : 60) * 1000;
 
 export const i18nEndpoint = '/api/v1/i18n/';
 
-interface GetI18nOptions {
+type GetI18nOptions = {
   req?: IncomingMessage;
   namespaces?: Namespace[];
-}
+};
 
-interface GetI18nPathArguments {
+type GetI18nPathArguments = {
   language: string;
   namespace: string;
-}
+};
 
 export const getI18nPathByLanguageAndNamespace = ({
   language,

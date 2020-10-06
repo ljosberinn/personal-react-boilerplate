@@ -6,7 +6,7 @@ import { getSession } from '../../server/auth/cookie';
 import { FOUND_MOVED_TEMPORARILY } from '../../utils/statusCodes';
 import type { User } from '../context/AuthContext/AuthContext';
 
-export interface WithSessionOptions {
+export type WithSessionOptions = {
   /**
    * Response Status Code, defaults to 302
    */
@@ -15,7 +15,7 @@ export interface WithSessionOptions {
    * Response Headers, defaults to a Redirect to /
    */
   headers?: OutgoingHttpHeaders;
-}
+};
 
 /**
  * monkey patch GetServerSideProps

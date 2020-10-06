@@ -8,12 +8,12 @@ import type { Mode, WithChildren } from '../../Karma';
 import type { User, LoginOptions, LocalLoginOptions } from './AuthContext';
 import { AuthContext } from './AuthContext';
 
-export interface AuthContextProviderProps extends WithChildren {
+export type AuthContextProviderProps = WithChildren<{
   session: User | null;
   mode: Mode;
   shouldAttemptReauthentication?: boolean;
   redirectDestinationIfUnauthenticated?: string;
-}
+}>;
 
 export const endpoints = {
   login: {
@@ -163,15 +163,14 @@ export function AuthContextProvider({
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
-interface UseSSGReauthenticationArgs
-  extends Pick<
-    AuthContextProviderProps,
-    | 'mode'
-    | 'redirectDestinationIfUnauthenticated'
-    | 'shouldAttemptReauthentication'
-  > {
+type UseSSGReauthenticationArgs = Pick<
+  AuthContextProviderProps,
+  | 'mode'
+  | 'redirectDestinationIfUnauthenticated'
+  | 'shouldAttemptReauthentication'
+> & {
   setUser: Dispatch<SetStateAction<User | null>>;
-}
+};
 
 function useSSGReauthentication({
   mode,

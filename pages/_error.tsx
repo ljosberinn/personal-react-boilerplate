@@ -4,11 +4,11 @@ import NextErrorComponent from 'next/error';
 
 import { INTERNAL_SERVER_ERROR, NOT_FOUND } from '../src/utils/statusCodes';
 
-export interface ErrorProps {
+export type ErrorProps = {
   statusCode: number | null | undefined;
   hasGetInitialPropsRun: boolean;
   err?: Error;
-}
+};
 
 // eslint-disable-next-line import/no-default-export
 export default function CustomError({

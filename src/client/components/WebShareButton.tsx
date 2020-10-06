@@ -6,8 +6,10 @@ import { MdShare } from 'react-icons/md';
 import { IS_BROWSER } from '../../constants';
 import { captureException } from '../../utils/sentry/client';
 
-export interface WebShareButtonProps
-  extends Omit<IconButtonProps, 'icon' | 'background' | 'onClick'> {
+export type WebShareButtonProps = Omit<
+  IconButtonProps,
+  'icon' | 'background' | 'onClick'
+> & {
   /**
    * Title of the shared dialogue.
    */
@@ -22,7 +24,8 @@ export interface WebShareButtonProps
    * Message body.
    */
   text?: string;
-}
+};
+
 export const canShare = IS_BROWSER && !!navigator.share;
 
 /**

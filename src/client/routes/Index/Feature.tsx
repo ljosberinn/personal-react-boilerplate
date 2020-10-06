@@ -13,12 +13,12 @@ import type { WithChildren } from '../../Karma';
 import { ExternalLink } from '../../components/ExternalLink';
 import { InternalLink } from '../../components/InternalLink';
 
-export interface FeatureProps extends WithChildren {
+export type FeatureProps = WithChildren<{
   title: string;
   icon: ReactNode;
   href?: string;
   learnMoreHref?: string;
-}
+}>;
 
 function handleClick(event: MouseEvent) {
   event.preventDefault();

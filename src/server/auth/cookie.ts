@@ -32,11 +32,11 @@ export const getSession = (req: SSRCompatibleRequest): User | null => {
   return null;
 };
 
-interface NewCookieOptions {
+type NewCookieOptions = {
   name: string;
   value: string;
   options?: CookieSerializeOptions;
-}
+};
 
 /**
  * Sets new cookies on the res object via `Set-Cookie`.

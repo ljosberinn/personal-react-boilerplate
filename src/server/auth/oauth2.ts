@@ -73,12 +73,12 @@ export const getRedirectUrl = (
   return `${url}?${params}`;
 };
 
-interface RequiredOAuthParams {
+type RequiredOAuthParams = {
   code: string;
   redirect_uri: string;
   provider: ExternalProvider;
   prompt?: string;
-}
+};
 
 export const getOAuthData = async (
   url: string,
@@ -114,6 +114,14 @@ export const getOAuthData = async (
   return response.json();
 };
 
+type OAuth2Response = {
+  access_token: string;
+  expires_in: number;
+  refresh_token: string;
+  scope: string;
+  token_type: string;
+};
+
 export const getProfileData = async (
   url: string,
   provider: ExternalProvider,
@@ -137,11 +145,3 @@ export const getProfileData = async (
 
   return response.json();
 };
-
-interface OAuth2Response {
-  access_token: string;
-  expires_in: number;
-  refresh_token: string;
-  scope: string;
-  token_type: string;
-}

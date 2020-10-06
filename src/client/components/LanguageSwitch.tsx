@@ -81,11 +81,11 @@ export function LanguageSwitch(props: LanguageSwitchProps): JSX.Element {
   );
 }
 
-interface LanguageOptionProps {
+type LanguageOptionProps = {
   slug: string;
   isCurrentLanguage: boolean;
   t: TFunction;
-}
+};
 
 function LanguageOption({ slug, isCurrentLanguage, t }: LanguageOptionProps) {
   return (

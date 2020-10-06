@@ -9,9 +9,9 @@ import { attachComponentBreadcrumb } from '../../utils/sentry/client';
 
 const sw = '/service-worker.js';
 
-interface RefreshToastProps {
+type RefreshToastProps = {
   t: TFunction;
-}
+};
 
 const handleClick = () => {
   window.location.reload();
@@ -88,11 +88,11 @@ export function ServiceWorker(): null {
   return null;
 }
 
-interface CreateOnStateChangeListenerParams {
+type CreateOnStateChangeListenerParams = {
   toast: ReturnType<typeof useToast>;
   t: TFunction;
   installingWorker: ServiceWorker;
-}
+};
 
 const createOnStateChangeListener = ({
   toast,
@@ -112,11 +112,11 @@ const createOnStateChangeListener = ({
   });
 };
 
-interface CreateOnUpdateFoundListenerParams {
+type CreateOnUpdateFoundListenerParams = {
   toast: ReturnType<typeof useToast>;
   registration: ServiceWorkerRegistration;
   t: TFunction;
-}
+};
 
 const createOnUpdateFoundListener = ({
   toast,

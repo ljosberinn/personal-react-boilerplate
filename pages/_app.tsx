@@ -9,12 +9,12 @@ import {
   configureScope,
 } from '../src/utils/sentry/client';
 
-export interface AppRenderProps {
+export type AppRenderProps = {
   pageProps: object;
   err?: Error;
-  Component?: NextComponentType<NextPageContext, AppRenderProps, object>;
+  Component?: NextComponentType<NextPageContext, object, object>;
   router?: NextRouter;
-}
+};
 
 // eslint-disable-next-line import/no-default-export
 export default function App({

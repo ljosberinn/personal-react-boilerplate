@@ -37,7 +37,7 @@ type I18NPropAlias = {
   t?: string;
 };
 
-export interface TestOptions extends Omit<RenderOptions, 'wrapper'> {
+export type TestOptions = Omit<RenderOptions, 'wrapper'> & {
   /**
    * allows using `t={jest.fn()} i18n={new MockI18n()} ready={true}` in tests for components
    * that receive `t`, `i18n` and|or `ready` via props
@@ -112,17 +112,17 @@ export interface TestOptions extends Omit<RenderOptions, 'wrapper'> {
    * @default false
    */
   omitKarmaProvider?: boolean;
-}
+};
 
 // UI-less passthrough fallback to prevent using conditional logic in render
 function ChildrenPassthrough({ children }: WithChildren) {
   return isValidElement(children) ? children : null;
 }
 
-export interface I18nTestMiddlewareProps extends WithChildren {
+export type I18nTestMiddlewareProps = WithChildren<{
   namespace: Namespace;
   alias?: I18NPropAlias;
-}
+}>;
 
 function I18nTestMiddleware({
   children,

@@ -15,7 +15,7 @@ import listen from 'test-listen';
 import type { Middleware } from '../src/server/types';
 import type { RequestInitMethod } from '../src/utils/requestMethods';
 
-interface UrlArguments {
+type UrlArguments = {
   /**
    * the endpoint to test
    */
@@ -57,7 +57,7 @@ interface UrlArguments {
    * whether the request should follow a redirect
    */
   redirect?: RequestRedirect;
-}
+};
 
 /**
  * Applies middlewares to tested lambdas

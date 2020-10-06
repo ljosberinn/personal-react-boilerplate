@@ -30,9 +30,9 @@ import type { I18nextResourceLocale } from './i18n';
 import { initI18Next, getI18n, getStaticI18n } from './i18n';
 import { theme } from './theme';
 
-export interface WithChildren {
+export type WithChildren<Props = {}> = Props & {
   children: ReactNode;
-}
+};
 
 /**********************
  * KarmaCore
@@ -40,12 +40,12 @@ export interface WithChildren {
 
 export type Mode = 'ssr' | 'ssg';
 
-interface IsomorphicI18nRequirements {
+type IsomorphicI18nRequirements = {
   language?: string;
   namespaces?: Namespace[];
-}
+};
 
-export interface KarmaCoreProps {
+export type KarmaCoreProps = {
   i18n: {
     /**
      * The language to initialize i18n with
@@ -83,7 +83,7 @@ export interface KarmaCoreProps {
    */
   storageManager?: StorageManager;
   mode: Mode;
-}
+};
 
 function KarmaCore({
   i18n,
@@ -118,8 +118,7 @@ function KarmaCore({
  * KarmaSSG
  *********************/
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface KarmaSSGProps extends Omit<KarmaCoreProps, 'mode'> {}
+export type KarmaSSGProps = Omit<KarmaCoreProps, 'mode'>;
 
 export function KarmaSSG({
   children,
@@ -138,9 +137,9 @@ export function KarmaSSG({
  * KarmaSSR
  *********************/
 
-export interface KarmaSSRProps extends Omit<KarmaCoreProps, 'mode'> {
+export type KarmaSSRProps = Omit<KarmaCoreProps, 'mode'> & {
   cookies: string;
-}
+};
 
 export function KarmaSSR({
   children,
@@ -278,21 +277,21 @@ export const withKarmaSSRProps = <
   };
 };
 
-interface SSRRedirectPropSubset extends Pick<KarmaSSRProps, 'auth'> {
+type SSRRedirectPropSubset = Pick<KarmaSSRProps, 'auth'> & {
   i18n: {
     bundle: {};
     language: '';
   };
-}
+};
 
 type GetServerSidePropsReturn = Promise<{
   props: { karma: KarmaSSRProps | SSRRedirectPropSubset };
 }>;
 
-export interface CreateGetServerSidePropsOptions {
+export type CreateGetServerSidePropsOptions = {
   i18n: IsomorphicI18nRequirements;
   auth?: Pick<KarmaCoreProps['auth'], 'redirectDestinationIfUnauthenticated'>;
-}
+};
 
 export const createGetServerSideProps = (
   options: CreateGetServerSidePropsOptions

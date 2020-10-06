@@ -4,12 +4,12 @@ import { OK, UNAUTHORIZED, BAD_REQUEST } from '../../../utils/statusCodes';
 import type { RequestHandler } from '../../types';
 import { encryptSession, setSessionCookie } from '../cookie';
 
-interface LocalDBDataset {
+type LocalDBDataset = {
   password: string;
   displayName: string;
   id: string;
   username: string;
-}
+};
 
 const localDB: LocalDBDataset[] = [
   {
@@ -20,10 +20,10 @@ const localDB: LocalDBDataset[] = [
   },
 ];
 
-interface VerifyArg {
+type VerifyArg = {
   username: string;
   password: string;
-}
+};
 
 const verify = ({
   username,

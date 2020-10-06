@@ -4,9 +4,9 @@ import * as nextRouter from 'next/router';
 
 import type { WithChildren } from '../src/client/Karma';
 
-interface MockRouterContextProps extends WithChildren {
+type MockRouterContextProps = WithChildren<{
   router?: Partial<NextRouter>;
-}
+}>;
 
 export function MockRouterContext({
   children,
@@ -40,9 +40,9 @@ export function MockRouterContext({
   );
 }
 
-interface Options {
+type Options = {
   once?: boolean;
-}
+};
 
 export const createUseRouterMock = ({
   once = true,

@@ -20,11 +20,11 @@ const mockGetServerSideProps = jest
     },
   }));
 
-interface CreateContextMockParam {
+type CreateContextMockParam = {
   query?: ParsedUrlQuery;
   req?: Partial<IncomingMessage>;
   res?: Partial<ServerResponse>;
-}
+};
 
 const createContextMock = ({
   query = {},

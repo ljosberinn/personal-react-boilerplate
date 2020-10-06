@@ -15,11 +15,10 @@ const options: BrowserOptions = {
 
 isomorphicSentryInit({ configureScope, init, options });
 
-interface InitialContextArgs
-  extends Pick<KarmaSSRProps['auth'], 'session'>,
-    Pick<KarmaSSRProps['i18n'], 'language'> {
-  req?: IncomingMessage;
-}
+type InitialContextArgs = Pick<KarmaSSRProps['auth'], 'session'> &
+  Pick<KarmaSSRProps['i18n'], 'language'> & {
+    req?: IncomingMessage;
+  };
 
 /**
  * Attaches app boot data to Sentry
