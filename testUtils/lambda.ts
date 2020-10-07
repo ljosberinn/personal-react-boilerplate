@@ -3,14 +3,13 @@ import { createServer } from 'http';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import type { NextConnect } from 'next-connect';
 import nextConnect from 'next-connect';
-import {
-  apiResolver,
-  getQueryParser,
-} from 'next/dist/next-server/server/api-utils';
+import type { NextApiRequestQuery } from 'next/dist/next-server/server/api-utils';
+import { apiResolver } from 'next/dist/next-server/server/api-utils';
 import { route } from 'next/dist/next-server/server/router';
 import type { Response } from 'node-fetch';
 import fetch from 'node-fetch';
 import listen from 'test-listen';
+import { URL } from 'url';
 
 import type { Middleware } from '../src/server/types';
 import type { RequestInitMethod } from '../src/utils/requestMethods';
@@ -108,13 +107,15 @@ export const testLambda = async (
   }: UrlArguments
 ): Promise<Response> => {
   const server = createServer((req, res) => {
-    const getQuery = getQueryParser(req);
-    const resolver = withMiddleware(handler, middleware);
+    if (req.url) {
+      const resolver = withMiddleware(handler, middleware);
+      const query = parseQuery(req.url);
 
-    apiResolver(req, res, getQuery(), resolver, apiContext, true).catch(
-      // eslint-disable-next-line no-console
-      console.error
-    );
+      apiResolver(req, res, query, resolver, apiContext, true).catch(
+        // eslint-disable-next-line no-console
+        console.error
+      );
+    }
   });
 
   const index = await listen(server);
@@ -233,4 +234,31 @@ const getUrl = (
   });
 
   return url.toString();
+};
+
+const parseQuery = (url: string) => {
+  const params = new URL(url, 'https://n').searchParams;
+
+  const query: NextApiRequestQuery = {};
+
+  for (const [key, value] of params) {
+    // param given multiple times
+    if (query[key]) {
+      const previousValue = query[key];
+
+      // param given at least 2x previously
+      if (Array.isArray(previousValue)) {
+        // merge
+        query[key] = [...previousValue, value];
+      } else {
+        // group
+        query[key] = [previousValue, value];
+      }
+    } else {
+      // initial define
+      query[key] = value;
+    }
+  }
+
+  return query;
 };

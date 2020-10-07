@@ -150,7 +150,7 @@ const mockCtx: GetServerSidePropsContext = {
   query: {},
   req: createIncomingRequestMock(),
   res: createServerResponseMock(),
-  // resolvedUrl: '',
+  resolvedUrl: '',
 };
 
 const mockBundle = i18nCache[FALLBACK_LANGUAGE];
@@ -246,7 +246,7 @@ describe('getServerSideProps', () => {
       query: {},
       req: createIncomingRequestMock({ headers }),
       res: createServerResponseMock(),
-      // resolvedUrl: '',
+      resolvedUrl: '',
     };
 
     jest.spyOn(cookieUtils, 'getSession').mockReturnValueOnce(mockSession);
