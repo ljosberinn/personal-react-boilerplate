@@ -3026,10 +3026,15 @@ acorn-jsx@^5.2.0:
   resolved "https://registry.yarnpkg.com/acorn-jsx/-/acorn-jsx-5.3.1.tgz#fc8661e11b7ac1539c47dbfea2e72b3af34d267b"
   integrity sha512-K0Ptm/47OKfQRpNQ2J/oIN/3QYiK6FwW+eJbILhsdxh2WTLdl+30o8aGdTbm5JbffpFFAg/g+zi1E+jvJha5ng==
 
-acorn-walk@^7.0.0, acorn-walk@^7.1.1:
+acorn-walk@^7.1.1:
   version "7.2.0"
   resolved "https://registry.yarnpkg.com/acorn-walk/-/acorn-walk-7.2.0.tgz#0de889a601203909b0fbe07b8938dc21d2e967bc"
   integrity sha512-OPdCF6GsMIP+Az+aWfAAOEt2/+iVDKE7oy6lJ098aoe59oAmK76qV6Gw60SbZ8jHuG2wH058GF4pLFbYamYrVA==
+
+acorn-walk@^8.0.0:
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/acorn-walk/-/acorn-walk-8.0.0.tgz#56ae4c0f434a45fff4a125e7ea95fa9c98f67a16"
+  integrity sha512-oZRad/3SMOI/pxbbmqyurIx7jHw1wZDcR9G44L8pUVFEomX/0dH89SrM1KaDXuv1NpzAXz6Op/Xu/Qd5XXzdEA==
 
 acorn@^6.4.1:
   version "6.4.2"
@@ -6334,14 +6339,14 @@ html-parse-stringify2@2.0.1:
   dependencies:
     void-elements "^2.0.1"
 
-html-validate@3.3.0:
-  version "3.3.0"
-  resolved "https://registry.yarnpkg.com/html-validate/-/html-validate-3.3.0.tgz#c3d7e2d0d7504001f3ef98bcf688e15924d88933"
-  integrity sha512-g5t+SdIMRzHLOdCfh15bQYqtExOMyHsjZKBHmC1A53+qUusQ7Fxs9SGL/Y2re3OBp9IZGeYYqaGzjLtFvFUcbA==
+html-validate@3.4.0:
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/html-validate/-/html-validate-3.4.0.tgz#679acd7ac3c3b66458ab30200c95db43f893e030"
+  integrity sha512-jLdbvi6Y5YcvcVGR5F1Lqwfg75W8eSgzwZxFVn9FqH2yZPkC+HayzvEMJoG2fST3AkONmX3FI1nlJ8GlyInd7g==
   dependencies:
     "@babel/code-frame" "^7.0.0"
     "@sidvind/better-ajv-errors" "^0.6.9"
-    acorn-walk "^7.0.0"
+    acorn-walk "^8.0.0"
     ajv "^6.10.0"
     chalk "^4.0.0"
     deepmerge "^4.0.0"
