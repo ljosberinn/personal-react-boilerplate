@@ -24,6 +24,19 @@ function handleClick(event: MouseEvent) {
   event.preventDefault();
 }
 
+const staticStyles = {
+  flex: {
+    _hover: { transform: 'translateY(-3px)' },
+  },
+  internalLink: {
+    sx: {
+      ':hover > svg': {
+        transform: 'rotate(-45deg)',
+      },
+    },
+  },
+};
+
 export function Feature({
   title,
   href,
@@ -37,7 +50,7 @@ export function Feature({
     <Flex
       bg={bg}
       transition="transform 0.1s ease 0s"
-      _hover={{ transform: 'translateY(-3px)' }}
+      _hover={staticStyles.flex._hover}
       borderRadius="5px"
       as="section"
       rounded="12px"
@@ -65,11 +78,7 @@ export function Feature({
         {learnMoreHref && (
           <InternalLink
             href={learnMoreHref}
-            sx={{
-              ':hover > svg': {
-                transform: 'rotate(-45deg)',
-              },
-            }}
+            sx={staticStyles.internalLink.sx}
             onClick={handleClick}
           >
             Learn more (soon!)

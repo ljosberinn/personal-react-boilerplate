@@ -1,47 +1,6 @@
-import type { WithKarmaProps, KarmaSSGProps } from '../src/client/Karma';
-import { KarmaSSG, createGetStaticProps } from '../src/client/Karma';
-import { Index } from '../src/client/routes/Index';
-import type { Namespace } from '../src/constants';
-
-export type IndexPageProps = WithKarmaProps<KarmaSSGProps>;
+export { getServerSideIndexRedirect as getServerSideProps } from '../src/client/Karma';
 
 // eslint-disable-next-line import/no-default-export
-export default function IndexPage({ karma }: IndexPageProps): JSX.Element {
-  return (
-    <KarmaSSG {...karma}>
-      <Index />
-    </KarmaSSG>
-  );
+export default function Index(): null {
+  return null;
 }
-
-const namespaces: Namespace[] = ['serviceWorker', 'theme'];
-
-export const getStaticProps = createGetStaticProps({
-  i18n: {
-    namespaces,
-  },
-});
-
-// import type { WithKarmaProps, KarmaSSRProps } from '../src/client/Karma';
-// import { createGetServerSideProps, KarmaSSR } from '../src/client/Karma';
-// import { Index } from '../src/client/routes/Index';
-// import type { Namespace } from '../src/constants';
-
-// export type IndexPageProps = WithKarmaProps<KarmaSSRProps>;
-
-// // eslint-disable-next-line import/no-default-export
-// export default function IndexPage({ karma }: IndexPageProps): JSX.Element {
-//   return (
-//     <KarmaSSR {...karma}>
-//       <Index />
-//     </KarmaSSR>
-//   );
-// }
-
-// const namespaces: Namespace[] = ['serviceWorker', 'theme'];
-
-// export const getServerSideProps = createGetServerSideProps({
-//   i18n: {
-//     namespaces,
-//   },
-// });

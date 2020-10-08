@@ -1,22 +1,15 @@
 /* eslint-disable jest/require-top-level-describe */
 import { waitFor } from '@testing-library/react';
-import i18next from 'i18next';
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
 
 import 'whatwg-fetch';
 import type { Namespace } from '../../../src/constants';
-import {
-  ENABLED_LANGUAGES,
-  FALLBACK_LANGUAGE,
-  namespaces,
-} from '../../../src/constants';
+import { FALLBACK_LANGUAGE, namespaces } from '../../../src/constants';
 import { i18nCache } from '../../server/i18n/cache';
 import {
   getI18n,
-  createLanguageChangeHandler,
   initI18Next,
-  i18nCookieName,
   getI18nPathByLanguageAndNamespace,
 } from '../i18n';
 
@@ -181,129 +174,6 @@ describe('getI18n', () => {
     expect(fetchSpy).not.toHaveBeenCalledWith(
       expect.stringContaining(unknownLanguage)
     );
-  });
-});
-
-describe('createLanguageChangeHandler', () => {
-  beforeEach(() => {
-    /**
-     * required as `reportNamespaces` is actually only defined after executing
-     * `useTranslation` at least once
-     * @see https://github.com/i18next/react-i18next/blob/dbd54d544ccca654f64a49bc8390d3bf87f02d84/src/useTranslation.js#L10
-     */
-    Object.defineProperty(i18next, 'reportNamespaces', {
-      configurable: true,
-      value: {
-        addUsedNamespaces: jest.fn(),
-        getUsedNamespaces: jest.fn().mockReturnValue(namespaces),
-      },
-      writable: true,
-    });
-  });
-
-  afterAll(() => {
-    Object.defineProperty(i18next, 'reportNamespaces', {
-      configurable: true,
-      value: undefined,
-      writable: true,
-    });
-  });
-
-  test(`returns a function`, () => {
-    expect(createLanguageChangeHandler(FALLBACK_LANGUAGE)).toBeInstanceOf(
-      Function
-    );
-  });
-
-  test('verifies bundle existence on i18n on language change', async () => {
-    const instance = initI18Next({
-      bundle: i18nCache[FALLBACK_LANGUAGE],
-      language: FALLBACK_LANGUAGE,
-    });
-
-    const getDataByLanguageSpy = jest.spyOn(instance, 'getDataByLanguage');
-
-    const otherLanguage = ENABLED_LANGUAGES.find(
-      (lng) => lng !== FALLBACK_LANGUAGE
-    )!;
-
-    mockRoute({
-      language: otherLanguage,
-      response: i18nCache[otherLanguage],
-    });
-
-    await createLanguageChangeHandler(otherLanguage)();
-
-    await waitFor(() =>
-      expect(getDataByLanguageSpy).toHaveBeenLastCalledWith(otherLanguage)
-    );
-  });
-
-  test('adds the resource bundle when loaded', async () => {
-    const instance = initI18Next({
-      bundle: i18nCache[FALLBACK_LANGUAGE],
-      language: FALLBACK_LANGUAGE,
-    });
-
-    const mockAddResourceBundle = jest.spyOn(instance, 'addResourceBundle');
-
-    const otherLanguage = ENABLED_LANGUAGES.find(
-      (lng) => lng !== FALLBACK_LANGUAGE
-    )!;
-
-    const response = i18nCache[otherLanguage];
-
-    mockRoute({
-      language: otherLanguage,
-      response,
-    });
-
-    await createLanguageChangeHandler(otherLanguage)();
-
-    await waitFor(() =>
-      expect(mockAddResourceBundle).toHaveBeenCalledTimes(
-        Object.entries(response).length
-      )
-    );
-  });
-
-  [true, false].forEach((bool) => {
-    test(`always changes the language (bundle already present: ${bool})`, async () => {
-      const getDataByLanguageSpy = jest.spyOn(i18next, 'getDataByLanguage');
-      const addResourceBundleSpy = jest.spyOn(i18next, 'addResourceBundle');
-      const changeLanguageSpy = jest.spyOn(i18next, 'changeLanguage');
-
-      const fetchSpy = jest.spyOn(window, 'fetch');
-
-      const otherLanguage = ENABLED_LANGUAGES.find(
-        (lng) => lng !== FALLBACK_LANGUAGE
-      )!;
-
-      await createLanguageChangeHandler(otherLanguage)();
-
-      expect(getDataByLanguageSpy).toHaveBeenCalledWith(otherLanguage);
-      expect(fetchSpy).not.toHaveBeenCalled();
-      expect(addResourceBundleSpy).not.toHaveBeenCalled();
-      expect(changeLanguageSpy).toHaveBeenCalledWith(otherLanguage);
-    });
-
-    test(`always attempts to store language preference in cookie (bundle already present: ${bool})`, async () => {
-      const otherLanguage = ENABLED_LANGUAGES.find(
-        (lng) => lng !== FALLBACK_LANGUAGE
-      )!;
-
-      expect(
-        document.cookie.includes(`${i18nCookieName}=${otherLanguage}`)
-      ).toBeFalsy();
-
-      await createLanguageChangeHandler(otherLanguage)();
-
-      await waitFor(() =>
-        expect(
-          document.cookie.includes(`${i18nCookieName}=${otherLanguage}`)
-        ).toBeTruthy()
-      );
-    });
   });
 });
 

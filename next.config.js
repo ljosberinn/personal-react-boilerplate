@@ -105,6 +105,11 @@ const defaultConfig = {
     // bugged with Sentry, see https://github.com/vercel/next.js/issues/17073
     // scrollRestoration: true,
     productionBrowserSourceMaps: true,
+    // i18n: {
+    //   localeDetection: true,
+    //   defaultLocale: 'de',
+    //   locales: ['de', 'en'],
+    // },
   },
 };
 

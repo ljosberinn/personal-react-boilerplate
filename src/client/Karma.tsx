@@ -1,8 +1,9 @@
 /* eslint-disable spaced-comment */
-import type { StorageManager } from '@chakra-ui/core';
+import type { ChakraProviderProps, StorageManager } from '@chakra-ui/core';
 import { cookieStorageManager, ChakraProvider } from '@chakra-ui/core';
 import type {
   GetServerSidePropsContext,
+  GetStaticPathsResult,
   GetStaticPropsContext,
   GetStaticPropsResult,
 } from 'next';
@@ -16,7 +17,11 @@ import { MetaThemeColorSynchronizer } from '../../src/client/components/MetaThem
 import { AuthContextProvider } from '../../src/client/context/AuthContext';
 import type { User } from '../../src/client/context/AuthContext/AuthContext';
 import type { Namespace } from '../../src/constants';
-import { FALLBACK_LANGUAGE } from '../../src/constants';
+import {
+  ENABLED_LANGUAGES,
+  FALLBACK_LANGUAGE,
+  DEFAULT_DYNAMIC_ROUTE_I18N_FOLDER_NAME,
+} from '../../src/constants';
 import { getSession } from '../server/auth/cookie';
 import { detectLanguage } from '../server/i18n/detectLanguage';
 import {
@@ -28,7 +33,6 @@ import { FOUND_MOVED_TEMPORARILY } from '../utils/statusCodes';
 import { ServiceWorker } from './components/ServiceWorker';
 import type { I18nextResourceLocale } from './i18n';
 import { initI18Next, getI18n, getStaticI18n } from './i18n';
-import { theme } from './theme';
 
 export type WithChildren<Props = {}> = Props & {
   children: ReactNode;
@@ -38,7 +42,7 @@ export type WithChildren<Props = {}> = Props & {
  * KarmaCore
  *********************/
 
-export type Mode = 'ssr' | 'ssg';
+export type KarmaMode = 'ssr' | 'ssg';
 
 type IsomorphicI18nRequirements = {
   language?: string;
@@ -46,6 +50,11 @@ type IsomorphicI18nRequirements = {
 };
 
 export type KarmaCoreProps = {
+  /**
+   * props forwarded onto `ChakraProvider`
+   */
+  chakra?: Omit<ChakraProviderProps, 'colorModeManager' | 'children'>;
+
   i18n: {
     /**
      * The language to initialize i18n with
@@ -82,7 +91,7 @@ export type KarmaCoreProps = {
    * @default undefined
    */
   storageManager?: StorageManager;
-  mode: Mode;
+  mode: KarmaMode;
 };
 
 function KarmaCore({
@@ -90,6 +99,7 @@ function KarmaCore({
   storageManager,
   auth,
   mode,
+  chakra,
   children,
 }: KarmaCoreProps & WithChildren): JSX.Element {
   const i18nInstance = initI18Next(i18n);
@@ -100,9 +110,11 @@ function KarmaCore({
     <AuthContextProvider {...auth} mode={mode}>
       <I18nextProvider i18n={i18nInstance}>
         <ChakraProvider
-          portalZIndex={40}
+          {...chakra}
           colorModeManager={storageManager}
-          theme={theme}
+          // the next line is only required if you plan on having multiple
+          // layers of Modals
+          // portalZIndex={40}
         >
           <ServiceWorker />
           <MetaThemeColorSynchronizer />
@@ -280,7 +292,7 @@ export const withKarmaSSRProps = <
 type SSRRedirectPropSubset = Pick<KarmaSSRProps, 'auth'> & {
   i18n: {
     bundle: {};
-    language: '';
+    language: string;
   };
 };
 
@@ -334,7 +346,7 @@ export const getServerSideProps = async (
           },
           i18n: {
             bundle: {},
-            language: '',
+            language: FALLBACK_LANGUAGE,
           },
         },
       },
@@ -376,6 +388,26 @@ export const getServerSideProps = async (
   };
 };
 
+/**
+ * Redirects from `/` to
+ */
+export const getServerSideIndexRedirect: GetServerSidePropsHandler = ({
+  req,
+  res,
+}: GetServerSidePropsContext) => {
+  const language = detectLanguage(req);
+
+  res.writeHead(FOUND_MOVED_TEMPORARILY, {
+    Location: `/${language}`,
+  });
+
+  res.end();
+
+  return {
+    props: {},
+  };
+};
+
 /**********************
  * getStaticProps + utils
  *********************/
@@ -388,7 +420,7 @@ export type GetStaticPropsReturn = Promise<{
 }>;
 
 export type CreateGetStaticPropsOptions = {
-  i18n?: IsomorphicI18nRequirements;
+  i18n?: IsomorphicI18nRequirements & { parameterName?: string };
   auth?: Pick<
     KarmaCoreProps['auth'],
     'redirectDestinationIfUnauthenticated' | 'shouldAttemptReauthentication'
@@ -415,6 +447,50 @@ export const createGetStaticProps = (options: CreateGetStaticPropsOptions) => (
   context: GetStaticPropsContext
 ): GetStaticPropsReturn => getStaticProps(context, options);
 
+const determinPreferredStaticLanguage = (
+  { params }: GetStaticPropsContext,
+  options?: CreateGetStaticPropsOptions
+): string => {
+  // prefer explicitly declared language
+  if (options?.i18n?.language) {
+    return options.i18n.language;
+  }
+
+  // parse static params if present
+  const i18nDynamicLanguageName =
+    options?.i18n?.parameterName ?? DEFAULT_DYNAMIC_ROUTE_I18N_FOLDER_NAME;
+  const languageViaParameter = params?.[i18nDynamicLanguageName];
+
+  if (languageViaParameter && !Array.isArray(languageViaParameter)) {
+    return languageViaParameter;
+  }
+
+  return FALLBACK_LANGUAGE;
+};
+
+/**
+ * creates a `getStaticPaths` handler to be used in `/pages/[language]/index`
+ * with the possibility to change the parameter name should you wish to rename
+ * `[language]` to something else
+ *
+ * @example
+ * ```js
+ * export const getStaticPaths = createStaticI18nPaths({ parameterName: 'lang' })
+ * ```
+ */
+export const createStaticI18nPaths = ({
+  parameterName = DEFAULT_DYNAMIC_ROUTE_I18N_FOLDER_NAME,
+} = {}) => {
+  return function getStaticPaths(): GetStaticPathsResult {
+    return {
+      fallback: false,
+      paths: ENABLED_LANGUAGES.map((language) => ({
+        params: { [parameterName]: language },
+      })),
+    };
+  };
+};
+
 /**
  * only use if you don't care about loading all i18n namespaces on this route
  *
@@ -425,11 +501,10 @@ export const createGetStaticProps = (options: CreateGetStaticPropsOptions) => (
  * ```
  */
 export const getStaticProps = async (
-  // @ts-expect-error ignore for now, here to preserve syntax and might be needed later
   ctx: GetStaticPropsContext,
   options?: CreateGetStaticPropsOptions
 ): GetStaticPropsReturn => {
-  const language = options?.i18n?.language ?? FALLBACK_LANGUAGE;
+  const language = determinPreferredStaticLanguage(ctx, options);
   const bundle = await getStaticI18n(language, {
     namespaces: options?.i18n?.namespaces,
   });

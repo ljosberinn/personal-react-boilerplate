@@ -72,6 +72,19 @@ export const FALLBACK_LANGUAGE = process.env.NEXT_PUBLIC_FALLBACK_LANGUAGE!;
 export const namespaces = ['i18n', 'auth', 'theme', 'serviceWorker'] as const;
 export type Namespace = typeof namespaces[number];
 
+/**
+ * the dynamic folder name in `/pages/` in which your app actually resides
+ *
+ * @example
+ * ```sh
+ * /pages/[locale]
+ * ```
+ *
+ * @default
+ * locale
+ */
+export const DEFAULT_DYNAMIC_ROUTE_I18N_FOLDER_NAME = 'locale';
+
 /**********************
  * sentry
  *********************/

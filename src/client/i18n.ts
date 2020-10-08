@@ -14,7 +14,6 @@ import {
   FALLBACK_LANGUAGE,
   namespaces as allNamespaces,
 } from '../../src/constants';
-import { i18nCache } from '../server/i18n/cache';
 import type { KarmaCoreProps } from './Karma';
 
 export const i18nCookieName = 'i18next';
@@ -84,33 +83,7 @@ export const initI18Next = ({
   return instance;
 };
 
-/**
- * A generic function factory accepting the language to change to.
- *
- * Loads missing bundles on demand.
- */
-export const createLanguageChangeHandler = (
-  language: string
-): (() => Promise<void>) => {
-  return async () => {
-    const hasBundle = !!i18next.getDataByLanguage(language);
-
-    if (!hasBundle) {
-      const namespaces = i18next.reportNamespaces.getUsedNamespaces() as Namespace[];
-      const resources = await getI18n(language, { namespaces });
-
-      Object.entries(resources).forEach(([namespace, bundle]) => {
-        i18next.addResourceBundle(language, namespace, bundle);
-      });
-    }
-
-    await i18next.changeLanguage(language);
-  };
-};
-
-export declare type I18nextNamespace = {
-  [key: string]: string;
-};
+export declare type I18nextNamespace = Record<string, string>;
 
 /**
  * @example
@@ -122,9 +95,7 @@ export declare type I18nextNamespace = {
  * }
  *
  */
-export declare type I18nextResourceLocale = {
-  [key in Namespace]: I18nextNamespace;
-};
+export declare type I18nextResourceLocale = Record<Namespace, I18nextNamespace>;
 
 /**
  * One or more i18next resources, indexed by lang
@@ -139,9 +110,7 @@ export declare type I18nextResourceLocale = {
  *   }
  * }
  */
-export declare type I18nextResources = {
-  [lang: string]: I18nextResourceLocale;
-};
+export declare type I18nextResources = Record<string, I18nextResourceLocale>;
 
 /**
  * Memoized i18next resources are timestamped to allow cache invalidation
@@ -262,7 +231,7 @@ export const getI18n = async (
 };
 
 /**
- * retrieves reduced i18nBundle in `getStaticProps`
+ * retrieves currently demanded i18nBundle in `getStaticProps`
  */
 export const getStaticI18n = async (
   lang: string,
@@ -273,11 +242,16 @@ export const getStaticI18n = async (
     namespaces,
   });
 
-  return Object.entries(i18nCache[language])
-    .filter(([namespace]) => namespacesToLoad.includes(namespace as Namespace))
-    .reduce<Partial<I18nextResourceLocale>>((carry, [namespace, bundle]) => {
-      carry[namespace as Namespace] = bundle;
+  const bundles = await Promise.all<[Namespace, I18nextNamespace]>(
+    namespacesToLoad.map(async (namespace) => {
+      // eslint-disable-next-line import/dynamic-import-chunkname
+      const json = await import(
+        `../../public/static/locales/${language}/${namespace}.json`
+      );
 
-      return carry;
-    }, {});
+      return [namespace, json.default];
+    })
+  );
+
+  return Object.fromEntries(bundles);
 };

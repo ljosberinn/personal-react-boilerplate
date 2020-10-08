@@ -336,7 +336,7 @@ describe('getServerSideProps', () => {
               },
               i18n: {
                 bundle: {},
-                language: '',
+                language: FALLBACK_LANGUAGE,
               },
             },
           },
@@ -372,7 +372,7 @@ describe('getServerSideProps', () => {
               },
               i18n: {
                 bundle: {},
-                language: '',
+                language: FALLBACK_LANGUAGE,
               },
             },
           },

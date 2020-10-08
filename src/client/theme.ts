@@ -5,4 +5,6 @@ export { theme } from '@chakra-ui/core';
 // learn more: https://next.chakra-ui.com/docs/theming/customize-theme
 // import { extendTheme } from '@chakra-ui/core';
 
-// export const theme = extendTheme();
+// export const theme = extendTheme({...});
+
+// then, pass it to any Karma variant: <KarmaSSG {...karma} chakra={{theme}}>

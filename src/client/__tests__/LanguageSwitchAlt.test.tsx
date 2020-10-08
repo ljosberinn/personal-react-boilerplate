@@ -10,11 +10,11 @@ import {
 import { mockConsoleMethods } from '../../../testUtils/console';
 import { ENABLED_LANGUAGES } from '../../constants';
 import { i18nCache } from '../../server/i18n/cache';
-import { LanguageSwitch } from '../components/LanguageSwitch';
+import { LanguageSwitchAlt } from '../components/LanguageSwitchAlt';
 import * as i18nRoutingHook from '../hooks/useI18nRouting';
 
 const setup = () => {
-  const { container } = render(<LanguageSwitch />);
+  const { container } = render(<LanguageSwitchAlt />);
 
   const button = screen.getByRole('button');
 
@@ -35,7 +35,7 @@ const setup = () => {
   return { button, container, currentLanguage, randomOtherLanguage };
 };
 
-describe('<LanguageSwitch />', () => {
+describe('<LanguageSwitchAlt />', () => {
   let restoreConsole: ReturnType<typeof mockConsoleMethods>['restoreConsole'];
 
   beforeAll(() => {
@@ -48,7 +48,7 @@ describe('<LanguageSwitch />', () => {
   });
 
   it('passes a11y test when closed', async () => {
-    await testA11Y(<LanguageSwitch />);
+    await testA11Y(<LanguageSwitchAlt />);
   });
 
   it('passes a11y test when opened', async () => {
@@ -69,7 +69,7 @@ describe('<LanguageSwitch />', () => {
   });
 
   it('contains valid html', () => {
-    validateHtml(<LanguageSwitch />);
+    validateHtml(<LanguageSwitchAlt />);
   });
 
   it('contains valid html when opened', () => {

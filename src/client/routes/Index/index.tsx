@@ -20,6 +20,7 @@ import { FcSettings } from 'react-icons/fc';
 import type { WithChildren } from '../../Karma';
 import { ColorModeSwitchAlt } from '../../components/ColorModeSwitchAlt';
 import { ExternalLink } from '../../components/ExternalLink';
+import { LanguageSwitchAlt } from '../../components/LanguageSwitchAlt';
 import { WebShareButton } from '../../components/WebShareButton';
 import { Feature } from './Feature';
 import {
@@ -77,6 +78,7 @@ function Header() {
 
         <Flex width="auto" maxW="720px" align="center" color="gray.500">
           <HStack spacing={2}>
+            <LanguageSwitchAlt />
             <ColorModeSwitchAlt />
             <ExternalLink
               omitIcon
