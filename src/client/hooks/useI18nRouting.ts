@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
 import { useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { DEFAULT_DYNAMIC_ROUTE_I18N_FOLDER_NAME } from '../../constants';
 
@@ -10,6 +11,7 @@ type UseI18nRoutingType = {
 
 export function useI18nRouting(): UseI18nRoutingType {
   const { push, route } = useRouter();
+  const { i18n } = useTranslation();
 
   const changeLocale = useCallback(
     async (locale: string) => {
@@ -18,15 +20,15 @@ export function useI18nRouting(): UseI18nRoutingType {
         locale
       );
 
+      await i18n.changeLanguage(locale);
+
       try {
         await push(targetRoute);
-      } catch (error) {
-        // eslint-disable-next-line no-console
-        console.error(error);
+      } catch {
         window.location.assign(targetRoute);
       }
     },
-    [push, route]
+    [push, route, i18n]
   );
 
   const createChangeLocaleHandler = useCallback(

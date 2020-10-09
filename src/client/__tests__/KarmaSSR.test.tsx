@@ -162,24 +162,22 @@ const setupSpies = () => {
 
   const getI18nSpy = jest
     .spyOn(i18n, 'getI18n')
-    .mockImplementationOnce((_, { namespaces } = {}) =>
-      Promise.resolve(
-        (() => {
-          if (Array.isArray(namespaces) && namespaces.length > 0) {
-            return namespaces.reduce<Partial<I18nextResourceLocale>>(
-              (carry, namespace) => {
-                carry[namespace] = mockBundle[namespace];
+    .mockImplementationOnce((_, { namespaces } = {}) => {
+      if (Array.isArray(namespaces) && namespaces.length > 0) {
+        return Promise.resolve(
+          namespaces.reduce<Partial<I18nextResourceLocale>>(
+            (carry, namespace) => {
+              carry[namespace] = mockBundle[namespace];
 
-                return carry;
-              },
-              {}
-            );
-          }
+              return carry;
+            },
+            {}
+          )
+        );
+      }
 
-          return mockBundle;
-        })()
-      )
-    );
+      return Promise.resolve(mockBundle);
+    });
 
   const detectLanguageSpy = jest
     .spyOn(detectLanguageUtils, 'detectLanguage')
@@ -391,12 +389,9 @@ describe('getServerSideProps', () => {
     test('loads i18n bundle', async () => {
       const { getI18nSpy } = await setup();
 
-      expect(getI18nSpy).toHaveBeenCalledWith(
-        FALLBACK_LANGUAGE,
-        expect.objectContaining({
-          req: mockCtx.req,
-        })
-      );
+      expect(getI18nSpy).toHaveBeenCalledWith(FALLBACK_LANGUAGE, {
+        namespaces: undefined,
+      });
     });
   });
 
@@ -447,7 +442,6 @@ describe('createGetServerSideProps', () => {
         FALLBACK_LANGUAGE,
         expect.objectContaining({
           namespaces: [],
-          req: mockCtx.req,
         })
       );
     });

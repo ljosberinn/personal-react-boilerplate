@@ -32,7 +32,7 @@ import { attachLambdaContext } from '../utils/sentry/server';
 import { FOUND_MOVED_TEMPORARILY } from '../utils/statusCodes';
 import { ServiceWorker } from './components/ServiceWorker';
 import type { I18nextResourceLocale } from './i18n';
-import { initI18Next, getI18n, getStaticI18n } from './i18n';
+import { initI18Next, getI18n } from './i18n';
 
 export type WithChildren<Props = {}> = Props & {
   children: ReactNode;
@@ -356,7 +356,6 @@ export const getServerSideProps = async (
   const language = detectLanguage(req);
   const bundle = await getI18n(language, {
     namespaces: options?.i18n.namespaces,
-    req,
   });
   const cookies = req?.headers.cookie ?? '';
 
@@ -505,7 +504,7 @@ export const getStaticProps = async (
   options?: CreateGetStaticPropsOptions
 ): GetStaticPropsReturn => {
   const language = determinPreferredStaticLanguage(ctx, options);
-  const bundle = await getStaticI18n(language, {
+  const bundle = await getI18n(language, {
     namespaces: options?.i18n?.namespaces,
   });
 

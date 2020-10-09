@@ -227,7 +227,7 @@ describe('createGetStaticProps', () => {
 
   describe('i18n', () => {
     test('forwards namespaces onto getI18n', async () => {
-      const getStaticI18nSpy = jest.spyOn(i18n, 'getStaticI18n');
+      const getI18nSpy = jest.spyOn(i18n, 'getI18n');
 
       await createGetStaticProps({
         i18n: {
@@ -235,7 +235,7 @@ describe('createGetStaticProps', () => {
         },
       })(mockCtx);
 
-      expect(getStaticI18nSpy).toHaveBeenCalledWith(
+      expect(getI18nSpy).toHaveBeenCalledWith(
         FALLBACK_LANGUAGE,
         expect.objectContaining({
           namespaces: [],
@@ -248,7 +248,7 @@ describe('createGetStaticProps', () => {
         (lng) => lng !== FALLBACK_LANGUAGE
       )!;
 
-      const getStaticI18nSpy = jest.spyOn(i18n, 'getStaticI18n');
+      const getI18nSpy = jest.spyOn(i18n, 'getI18n');
 
       await createGetStaticProps({
         i18n: {
@@ -256,7 +256,7 @@ describe('createGetStaticProps', () => {
         },
       })(mockCtx);
 
-      expect(getStaticI18nSpy).toHaveBeenCalledWith(language, {
+      expect(getI18nSpy).toHaveBeenCalledWith(language, {
         namespaces: undefined,
       });
     });
