@@ -62,7 +62,7 @@ function Header() {
         p="3"
       >
         <Flex align="center">
-          <KarmaIcon boxSize="3em" />{' '}
+          <KarmaIcon size="3em" />
           <Text fontWeight="500" pl="2">
             next-karma
           </Text>
@@ -120,7 +120,7 @@ function handleClick(event: MouseEvent) {
 function Hero() {
   return (
     <Box as="section" pt={40} pb={12} maxW="xl" mx="auto" textAlign="center">
-      <KarmaIcon height="24em" width="24em" />
+      <KarmaIcon size="24em" animated />
       <Heading as="h1" mt={8} mb={12}>
         next-karma
         <FadedText>the open framework on top of Next.js</FadedText>
