@@ -1,8 +1,8 @@
-import { Box, useToast, Flex } from '@chakra-ui/core';
-import { InfoIcon } from '@chakra-ui/icons';
+import { Box, useToast, Flex, Icon } from '@chakra-ui/core';
 import type { TFunction } from 'i18next';
 import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
+import { FaInfoCircle } from 'react-icons/fa';
 
 import { IS_PROD } from '../../../src/constants';
 import { attachComponentBreadcrumb } from '../../utils/sentry/client';
@@ -35,7 +35,7 @@ function RefreshToast({ t }: RefreshToastProps) {
       role="alert"
       color="white"
     >
-      <InfoIcon height="1.25rem" mr="0.75rem" width="1.25rem" />
+      <Icon as={FaInfoCircle} height={6} width={6} mr={3} />
       <Box textAlign="left">
         <Box as="p" fontWeight="bold">
           {t('newVersion')}

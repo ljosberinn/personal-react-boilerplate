@@ -1,7 +1,7 @@
 import type { LinkProps } from '@chakra-ui/core';
-import { Link, useColorModeValue } from '@chakra-ui/core';
-import { ExternalLinkIcon } from '@chakra-ui/icons';
+import { Link, useColorModeValue, Icon } from '@chakra-ui/core';
 import { forwardRef } from 'react';
+import { FaExternalLinkAlt } from 'react-icons/fa';
 
 import type { WithChildren } from '../Karma';
 
@@ -34,7 +34,7 @@ export const ExternalLink = forwardRef<HTMLAnchorElement, ExternalLinkProps>(
         _hover={_hover}
       >
         {children}
-        {!omitIcon && <ExternalLinkIcon ml={1} />}
+        {!omitIcon && <Icon as={FaExternalLinkAlt} ml={1} w={3} />}
       </Link>
     );
   }
