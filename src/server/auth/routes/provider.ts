@@ -1,4 +1,4 @@
-import absoluteUrl from 'next-absolute-url';
+import type { IncomingMessage } from 'http';
 import nextConnect from 'next-connect';
 
 import type { ExternalProvider } from '../../../client/context/AuthContext/AuthContext';
@@ -16,13 +16,36 @@ import {
   getProfileData,
 } from '../oauth2';
 
+// eslint-disable-next-line inclusive-language/use-inclusive-words
+/**
+ * @see https://github.com/jekrb/next-absolute-url/blob/master/index.ts
+ */
+const getOrigin = (req: IncomingMessage) => {
+  const host = (() => {
+    const xForwardedHost = req.headers['x-forwarded-host'];
+
+    if (xForwardedHost && !Array.isArray(xForwardedHost)) {
+      return xForwardedHost;
+    }
+
+    return req.headers.host ?? 'localhost:3000';
+  })();
+
+  const protocol =
+    req.headers['x-forwarded-proto'] ?? host.includes('localhost')
+      ? 'http:'
+      : 'https:';
+
+  return `${protocol}//${host}`;
+};
+
 const useExternalProvider: RequestHandler = async (req, res, next) => {
   const [provider] = req.query.authRouter as ExternalProvider[];
 
   if (ENABLED_PROVIDER.includes(provider)) {
     const { authorizationUrl, tokenUrl, profileDataUrl } = config[provider];
 
-    const { origin } = absoluteUrl(req);
+    const origin = getOrigin(req);
     const redirect_uri = `${origin}/api/v1/auth/${provider}`;
 
     // prepare redirect to provider - no get params given
