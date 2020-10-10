@@ -11,10 +11,10 @@ import {
   createIncomingRequestMock,
   createServerResponseMock,
 } from '../../../testUtils/api';
+import { i18nCache } from '../../../testUtils/i18n';
 import { createUseRouterMock } from '../../../testUtils/router';
 import { createMockScope } from '../../../testUtils/sentry';
 import * as cookieUtils from '../../server/auth/cookie';
-import { i18nCache } from '../../server/i18n/cache';
 import * as detectLanguageUtils from '../../server/i18n/detectLanguage';
 import * as sentryUtils from '../../utils/sentry/client';
 import * as sentryUtilsServer from '../../utils/sentry/server';

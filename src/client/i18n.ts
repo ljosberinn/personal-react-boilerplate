@@ -127,9 +127,7 @@ export const getI18n = async (
   const bundles = await Promise.all<[Namespace, I18nextNamespace]>(
     namespacesToLoad.map(async (namespace) => {
       // eslint-disable-next-line import/dynamic-import-chunkname
-      const json = await import(
-        `../../public/static/locales/${language}/${namespace}.json`
-      );
+      const json = await import(`../../locales/${language}/${namespace}.json`);
 
       return [namespace, json.default];
     })

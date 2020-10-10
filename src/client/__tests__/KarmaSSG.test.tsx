@@ -3,9 +3,9 @@ import type { GetStaticPropsContext } from 'next';
 import React from 'react';
 
 import { render } from '../../../testUtils';
+import { i18nCache } from '../../../testUtils/i18n';
 import type { Namespace } from '../../constants';
 import { ENABLED_LANGUAGES, FALLBACK_LANGUAGE } from '../../constants';
-import { i18nCache } from '../../server/i18n/cache';
 import * as sentryUtils from '../../utils/sentry/client';
 import type { KarmaSSGProps } from '../Karma';
 import {

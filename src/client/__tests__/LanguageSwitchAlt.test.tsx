@@ -8,8 +8,8 @@ import {
   validateHtml,
 } from '../../../testUtils';
 import { mockConsoleMethods } from '../../../testUtils/console';
+import { i18nCache } from '../../../testUtils/i18n';
 import { ENABLED_LANGUAGES } from '../../constants';
-import { i18nCache } from '../../server/i18n/cache';
 import { LanguageSwitchAlt } from '../components/LanguageSwitchAlt';
 import * as i18nRoutingHook from '../hooks/useI18nRouting';
 

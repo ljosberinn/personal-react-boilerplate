@@ -4,7 +4,7 @@ import { isValidElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 
 import Document from '../../../pages/_document';
-import { i18nCache } from '../../server/i18n/cache';
+import { i18nCache } from '../../../testUtils/i18n';
 import * as sentryUtils from '../../utils/sentry/client';
 import type { KarmaSSRProps } from '../Karma';
 

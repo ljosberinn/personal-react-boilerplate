@@ -3,7 +3,7 @@ import { waitFor } from '@testing-library/react';
 
 import 'whatwg-fetch';
 import { FALLBACK_LANGUAGE, namespaces } from '../../../src/constants';
-import { i18nCache } from '../../server/i18n/cache';
+import { i18nCache } from '../../../testUtils/i18n';
 import { getI18n, initI18Next } from '../i18n';
 
 describe('initI18Next', () => {
@@ -73,7 +73,7 @@ describe('initI18Next', () => {
 
 describe('getI18n', () => {
   test(`loads all namespaces given no specific namespace`, async () => {
-    const language = 'en';
+    const language = FALLBACK_LANGUAGE;
 
     const bundle = await getI18n(language, { namespaces: [...namespaces] });
 
@@ -101,6 +101,8 @@ describe('getI18n', () => {
       namespaces: [namespace],
     });
 
-    expect(bundle[namespace]).toBe(i18nCache[FALLBACK_LANGUAGE][namespace]);
+    expect(bundle[namespace]).toStrictEqual(
+      i18nCache[FALLBACK_LANGUAGE][namespace]
+    );
   });
 });

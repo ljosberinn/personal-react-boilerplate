@@ -18,11 +18,11 @@ import { AuthContextProvider } from '../src/client/context/AuthContext';
 import type { AuthContextDefinition } from '../src/client/context/AuthContext/AuthContext';
 import { initI18Next } from '../src/client/i18n';
 import { FALLBACK_LANGUAGE } from '../src/constants';
-import { i18nCache } from '../src/server/i18n/cache';
 import 'html-validate/jest';
 // may not be in setupTests.js because lambda-Tests rely on node-fetch which
 // collides with whatwg-fetch
 import 'whatwg-fetch';
+import { i18nCache } from './i18n';
 import { MockRouterContext } from './router';
 
 export * from '@testing-library/react';
