@@ -87,7 +87,7 @@ jobs:
         if: steps.cache-modules.outputs.cache-hit != 'true'
         run: yarn --frozen-lockfile
       - name: Test & Upload coverage
-        uses: paambaati/codeclimate-action@v2.6.0
+        uses: paambaati/codeclimate-action@v2.7.4
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
           NEXT_PUBLIC_ENABLED_LANGUAGES: en,de
@@ -184,7 +184,7 @@ jobs:
         run: |
           apt update -y >/dev/null && apt install -y jq >/dev/null
           VERCEL_DEPLOYMENT=`curl -H 'Accept: application/json' -H 'Content-Type: application/json' -H 'Authorization: Bearer ${{ secrets.VERCEL_TOKEN }}' "https://api.zeit.co/v5/now/deployments?limit=1&meta-githubCommitRef=refs/heads/master" | jq '.deployments [0].url' | tr -d \"`
-          echo "::set-env name=VERCEL_DEPLOYMENT_URL::https://$VERCEL_DEPLOYMENT"
+          echo "VERCEL_DEPLOYMENT_URL=https://$VERCEL_DEPLOYMENT" >> $GITHUB_ENV
         env:
           # Passing github's secret to the worker
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
