@@ -5201,10 +5201,10 @@ eslint-ast-utils@^1.1.0:
     lodash.get "^4.4.2"
     lodash.zip "^4.2.0"
 
-eslint-config-galex@2.5.1:
-  version "2.5.1"
-  resolved "https://registry.yarnpkg.com/eslint-config-galex/-/eslint-config-galex-2.5.1.tgz#02a4ad390ba5d119939eff2cf24f743bc5e535e6"
-  integrity sha512-DkNitH3Qpu4x2hB2mfBadm/ZYMrtM/42LHNTZ5qoWtEatca5bUUvgc4kNUbXxXXpLYYyagKIKJIwfYwlFHg3yQ==
+eslint-config-galex@2.5.2:
+  version "2.5.2"
+  resolved "https://registry.yarnpkg.com/eslint-config-galex/-/eslint-config-galex-2.5.2.tgz#438b01a80c7c8bb467239aeb0f485defbdf8cd0f"
+  integrity sha512-uvaFT+xiD6dFBGjluaCik1B6r5vIkVEoARGw20kMnDukT0IVQmE+HnD6PJx8wpNz9Oow5nsYfSVsCOKkL09iQw==
   dependencies:
     "@next/eslint-plugin-next" "^9.5.3"
     "@typescript-eslint/eslint-plugin" "4.4.0"
