@@ -12,8 +12,8 @@ import {
 export type AppRenderProps = {
   pageProps: object;
   err?: Error;
-  Component?: NextComponentType<NextPageContext, object, object>;
-  router?: NextRouter;
+  Component: NextComponentType<NextPageContext, object, object>;
+  router: NextRouter;
 };
 
 // eslint-disable-next-line import/no-default-export
@@ -22,13 +22,7 @@ export default function App({
   pageProps,
   router,
 }: AppRenderProps): JSX.Element | null {
-  if (!Component) {
-    return null;
-  }
-
-  if (router) {
-    attachRoutingContext(router, Component.name);
-  }
+  attachRoutingContext(router, Component.name);
 
   return (
     <>
