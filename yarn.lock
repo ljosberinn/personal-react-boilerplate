@@ -5201,10 +5201,10 @@ eslint-ast-utils@^1.1.0:
     lodash.get "^4.4.2"
     lodash.zip "^4.2.0"
 
-eslint-config-galex@2.5.3:
-  version "2.5.3"
-  resolved "https://registry.yarnpkg.com/eslint-config-galex/-/eslint-config-galex-2.5.3.tgz#8f7de8a6689125fac5948324be4434853bc97609"
-  integrity sha512-/ZhzSWIb3HagRdek2u5NDGuUDmlN7gMTzXADjvCY5xsuZr2q3kD+rW83TAYn/GfJHQ5iQ30XZzi+c1nezq81TQ==
+eslint-config-galex@2.5.4:
+  version "2.5.4"
+  resolved "https://registry.yarnpkg.com/eslint-config-galex/-/eslint-config-galex-2.5.4.tgz#9bac7c0617bf4f9c780786f6d90d554f6cd21a2e"
+  integrity sha512-aL9g57fGJn0S8FFIHE5p1qck/48lZaiyNIHAIQwPb+ha9GYFbOVx1NZXZE6zYIPeNO2mdjyb8dnAnz607xEOYQ==
   dependencies:
     "@next/eslint-plugin-next" "^9.5.3"
     "@typescript-eslint/eslint-plugin" "4.4.1"
@@ -5224,7 +5224,7 @@ eslint-config-galex@2.5.3:
     eslint-plugin-react-hooks "4.1.2"
     eslint-plugin-sonarjs "0.5.0"
     eslint-plugin-sort-keys-fix "1.1.1"
-    eslint-plugin-testing-library "3.9.0"
+    eslint-plugin-testing-library "3.9.1"
     eslint-plugin-unicorn "22.0.0"
     read-pkg-up "7.0.1"
     typescript "4.0.3"
@@ -5359,10 +5359,10 @@ eslint-plugin-sort-keys-fix@1.1.1:
   dependencies:
     requireindex "~1.2.0"
 
-eslint-plugin-testing-library@3.9.0:
-  version "3.9.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-testing-library/-/eslint-plugin-testing-library-3.9.0.tgz#96e8a88e0f8765d375166a724b88e3a44aa72eae"
-  integrity sha512-86GULfQGAyaygbkemFmDgcTW0TUYO7mwkZMZ7lcawOkDra+iYWUHFf2Fr/QMfeFQHuc7v++G35gToJ7Vaamgow==
+eslint-plugin-testing-library@3.9.1:
+  version "3.9.1"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-testing-library/-/eslint-plugin-testing-library-3.9.1.tgz#b59d4c8d5a22f88a32b36b56c1ec2ea14cb89459"
+  integrity sha512-E7AtT0A+BiRJUdJfK92fSXn3Bm0YDUwxnsyFHu1wfLzmq/h5GHP3zuiAY6J2gvsd3QYHpf8zCHeKenchrL6fmQ==
   dependencies:
     "@typescript-eslint/experimental-utils" "^3.10.1"
 
