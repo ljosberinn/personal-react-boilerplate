@@ -5,7 +5,11 @@ import type { GetServerSidePropsContext } from 'next';
 
 import type { User } from '../../../src/client/context/AuthContext/AuthContext';
 import type { Namespace } from '../../../src/constants';
-import { FALLBACK_LANGUAGE, SESSION_COOKIE_NAME } from '../../../src/constants';
+import {
+  FALLBACK_LANGUAGE,
+  SESSION_COOKIE_NAME,
+  ENABLED_LANGUAGES,
+} from '../../../src/constants';
 import { render, waitFor, screen } from '../../../testUtils';
 import {
   createIncomingRequestMock,
@@ -25,6 +29,7 @@ import {
   getServerSideProps,
   withKarmaSSRProps,
   createGetServerSideProps,
+  getServerSideIndexRedirect,
 } from '../Karma';
 import * as i18n from '../i18n';
 import type { I18nextResourceLocale } from '../i18n';
@@ -418,16 +423,6 @@ describe('getServerSideProps', () => {
 describe('createGetServerSideProps', () => {
   const namespaces: Namespace[] = ['serviceWorker'];
 
-  test('returns a function', () => {
-    expect(
-      createGetServerSideProps({
-        i18n: {
-          namespaces: [],
-        },
-      })
-    ).toBeInstanceOf(Function);
-  });
-
   describe('i18n', () => {
     test('forwards namespaces onto getI18n', async () => {
       const { getI18nSpy } = setupSpies();
@@ -476,12 +471,6 @@ describe('createGetServerSideProps', () => {
 
 describe('withServerSideKarmaProps', () => {
   const mockProps = { foo: 1 };
-
-  test('returns a function', () => {
-    const getServerSideProps = withKarmaSSRProps(jest.fn());
-
-    expect(getServerSideProps).toBeInstanceOf(Function);
-  });
 
   test('executes given handler, forwarding context', async () => {
     setupSpies();
@@ -537,5 +526,62 @@ describe('withServerSideKarmaProps', () => {
         ...mockProps,
       },
     });
+  });
+});
+
+describe('getServerSideIndexRedirect', () => {
+  const resolvedUrl = '';
+  const query = {};
+
+  test('matches snapshot', async () => {
+    const req = createIncomingRequestMock();
+    const res = createServerResponseMock();
+
+    const result = await getServerSideIndexRedirect({
+      query,
+      req,
+      res,
+      resolvedUrl,
+    });
+
+    expect(result).toMatchInlineSnapshot(`
+      Object {
+        "props": Object {},
+      }
+    `);
+  });
+
+  test('detects language', async () => {
+    const detectLanguageSpy = jest.spyOn(detectLanguageUtils, 'detectLanguage');
+
+    const req = createIncomingRequestMock();
+    const res = createServerResponseMock();
+
+    await getServerSideIndexRedirect({ query, req, res, resolvedUrl });
+
+    expect(detectLanguageSpy).toHaveBeenCalledTimes(1);
+    expect(detectLanguageSpy).toHaveBeenCalledWith(req);
+  });
+
+  test('will redirect to found language', async () => {
+    const [mockLanguage] = ENABLED_LANGUAGES;
+    jest
+      .spyOn(detectLanguageUtils, 'detectLanguage')
+      .mockReturnValueOnce(mockLanguage);
+
+    const writeHead = jest.fn();
+    const end = jest.fn();
+
+    const req = createIncomingRequestMock();
+    const res = createServerResponseMock({ end, writeHead });
+
+    await getServerSideIndexRedirect({ query, req, res, resolvedUrl });
+
+    expect(writeHead).toHaveBeenCalledTimes(1);
+    expect(writeHead).toHaveBeenCalledWith(FOUND_MOVED_TEMPORARILY, {
+      Location: expect.stringContaining(mockLanguage),
+    });
+
+    expect(end).toBeCalledTimes(1);
   });
 });

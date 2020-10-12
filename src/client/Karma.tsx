@@ -86,17 +86,22 @@ export type KarmaCoreProps = {
   };
 
   /**
-   * Optional Chakra StorageManager taking care of color mode persistence
+   * Chakras colorModeManager taking care of color mode persistence
+   * managed by Karma
    *
    * @default undefined
    */
-  storageManager?: StorageManager;
+  colorModeManager?: StorageManager;
+
+  /**
+   * internal indicator which mode we're rendering in
+   */
   mode: KarmaMode;
 };
 
 function KarmaCore({
   i18n,
-  storageManager,
+  colorModeManager,
   auth,
   mode,
   chakra,
@@ -109,13 +114,7 @@ function KarmaCore({
   return (
     <AuthContextProvider {...auth} mode={mode}>
       <I18nextProvider i18n={i18nInstance}>
-        <ChakraProvider
-          {...chakra}
-          colorModeManager={storageManager}
-          // the next line is only required if you plan on having multiple
-          // layers of Modals
-          // portalZIndex={40}
-        >
+        <ChakraProvider {...chakra} colorModeManager={colorModeManager}>
           <ServiceWorker />
           <MetaThemeColorSynchronizer />
           {/* <CustomPWAInstallPrompt /> */}
@@ -166,10 +165,10 @@ export function KarmaSSR({
     return null;
   }
 
-  const storageManager = cookieStorageManager(cookies);
+  const colorModeManager = cookieStorageManager(cookies);
 
   return (
-    <KarmaCore {...rest} storageManager={storageManager} mode="ssr">
+    <KarmaCore {...rest} colorModeManager={colorModeManager} mode="ssr">
       {children}
     </KarmaCore>
   );
@@ -460,6 +459,7 @@ const determinPreferredStaticLanguage = (
     options?.i18n?.parameterName ?? DEFAULT_DYNAMIC_ROUTE_I18N_FOLDER_NAME;
   const languageViaParameter = params?.[i18nDynamicLanguageName];
 
+  /* istanbul ignore next */
   if (languageViaParameter && !Array.isArray(languageViaParameter)) {
     return languageViaParameter;
   }
@@ -479,16 +479,12 @@ const determinPreferredStaticLanguage = (
  */
 export const createStaticI18nPaths = ({
   parameterName = DEFAULT_DYNAMIC_ROUTE_I18N_FOLDER_NAME,
-} = {}) => {
-  return function getStaticPaths(): GetStaticPathsResult {
-    return {
-      fallback: false,
-      paths: ENABLED_LANGUAGES.map((language) => ({
-        params: { [parameterName]: language },
-      })),
-    };
-  };
-};
+} = {}) => (): GetStaticPathsResult => ({
+  fallback: false,
+  paths: ENABLED_LANGUAGES.map((language) => ({
+    params: { [parameterName]: language },
+  })),
+});
 
 /**
  * only use if you don't care about loading all i18n namespaces on this route

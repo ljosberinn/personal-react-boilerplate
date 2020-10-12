@@ -210,7 +210,12 @@ export function render(
     wrapper,
   };
 
-  return rtlRender(<KarmaTestSetup {...setupProps}>{ui}</KarmaTestSetup>, rest);
+  return rtlRender(ui, {
+    ...rest,
+    wrapper: ({ children }) => (
+      <KarmaTestSetup {...setupProps}>{children}</KarmaTestSetup>
+    ),
+  });
 }
 
 type HookTestOptions<P> = Omit<RenderHookOptions<P>, 'wrapper'> &
@@ -240,10 +245,9 @@ export function renderHook<P, R>(
 
   return rtlRenderHook(callback, {
     ...rest,
-    wrapper: ({ children }) =>
-      isValidElement(children) ? (
-        <KarmaTestSetup {...setupProps}>{children}</KarmaTestSetup>
-      ) : null,
+    wrapper: ({ children }) => (
+      <KarmaTestSetup {...setupProps}>{children}</KarmaTestSetup>
+    ),
   });
 }
 

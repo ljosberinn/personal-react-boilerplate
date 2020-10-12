@@ -11,10 +11,6 @@ const method: RequestInitMethod = 'post';
 const middleware = expectJSONBodyMiddleware;
 
 describe('api/register', () => {
-  test('is a function', () => {
-    expect(registrationHandler).toBeInstanceOf(Function);
-  });
-
   test('does nothing given no matching path', async () => {
     const response = await testLambda(registrationHandler, {
       catchAllName,

@@ -13,10 +13,6 @@ const dummyHandler: RequestHandler = (_req, res) => {
 };
 
 describe('middleware/sentryMiddleware', () => {
-  test('is a function', () => {
-    expect(sentryMiddleware).toBeInstanceOf(Function);
-  });
-
   RequestMethods.forEach((method) => {
     test(`never intercepts the underlying handler (method: ${method})`, async () => {
       const response = await testLambda(nextConnect().use(dummyHandler), {

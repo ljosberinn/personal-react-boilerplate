@@ -29,10 +29,6 @@ const createOAuthResponseMock = () => ({
 });
 
 describe('api/provider', () => {
-  test('is a function', () => {
-    expect(externalProviderHandler).toBeInstanceOf(Function);
-  });
-
   RequestMethods.filter((requestMethod) => requestMethod !== method).forEach(
     (method) => {
       test(`does nothing on method "${method}"`, async () => {

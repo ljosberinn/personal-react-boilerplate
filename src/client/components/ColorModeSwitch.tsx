@@ -1,86 +1,45 @@
-import type { FlexProps, IconProps } from '@chakra-ui/core';
-import {
-  Switch,
-  useColorMode,
-  Flex,
-  forwardRef,
-  Icon as ChakraIcon,
-} from '@chakra-ui/core';
+import type { IconButtonProps } from '@chakra-ui/core';
+import { useColorMode, IconButton, Icon } from '@chakra-ui/core';
 import { useTranslation } from 'react-i18next';
 import { FaSun, FaMoon } from 'react-icons/fa';
 
-const gray = 'gray.500';
-const yellow = 'yellow.500';
+export type ColorModeSwitchProps = Omit<
+  IconButtonProps,
+  'children' | 'aria-label'
+>;
 
 function useThemeMeta() {
-  const { colorMode, toggleColorMode } = useColorMode();
+  const { toggleColorMode, colorMode } = useColorMode();
 
-  const isLightTheme = colorMode === 'light';
-  const isChecked = !isLightTheme;
+  const isLightMode = colorMode === 'light';
 
-  const switchLabel = isLightTheme ? 'set-dark-theme' : 'set-light-theme';
-
-  const sunColor = isLightTheme ? yellow : gray;
-  const sunLabel = isLightTheme ? 'is-light-theme' : 'set-light-theme';
-
-  const moonColor = isLightTheme ? gray : yellow;
-  const moonLabel = isLightTheme ? 'set-dark-theme' : 'is-dark-theme';
+  const icon = isLightMode ? FaMoon : FaSun;
+  const checked = !isLightMode;
+  const labelKey = isLightMode ? 'set-dark-theme' : 'set-light-theme';
 
   return {
-    isChecked,
-    moonColor,
-    moonLabel,
-    sunColor,
-    sunLabel,
-    switchLabel,
+    checked,
+    icon: <Icon as={icon} boxSize="5" />,
+    labelKey,
     toggleColorMode,
   };
 }
 
-export type ColorModeSwitchProps = FlexProps;
-
 export function ColorModeSwitch(props: ColorModeSwitchProps): JSX.Element {
   const { t } = useTranslation('theme');
 
-  const {
-    toggleColorMode,
-    isChecked,
-    sunColor,
-    sunLabel,
-    switchLabel,
-    moonColor,
-    moonLabel,
-  } = useThemeMeta();
+  const { icon, checked, labelKey, toggleColorMode } = useThemeMeta();
 
   return (
-    <Flex cursor="pointer" d="inline-flex" {...props}>
-      <Icon
-        as={FaSun}
-        color={sunColor}
-        data-testid="theme-switch-sun"
-        onClick={toggleColorMode}
-        aria-label={t(sunLabel)}
-      />
-      <Switch
-        aria-label={t(switchLabel)}
-        isChecked={isChecked}
-        onChange={toggleColorMode}
-        marginLeft="2"
-        marginRight="2"
-        d="flex"
-        alignItems="center"
-      />
-      <Icon
-        as={FaMoon}
-        color={moonColor}
-        data-testid="theme-switch-moon"
-        onClick={toggleColorMode}
-        aria-label={t(moonLabel)}
-      />
-    </Flex>
+    <IconButton
+      {...props}
+      onClick={toggleColorMode}
+      role="checkbox"
+      aria-checked={checked}
+      icon={icon}
+      color="yellow.500"
+      background="none"
+      aria-label={t(labelKey)}
+    />
   );
 }
-
-const Icon = forwardRef<IconProps, 'svg'>((props, ref) => (
-  <ChakraIcon height="6" focusable={false} ref={ref} {...props} />
-));

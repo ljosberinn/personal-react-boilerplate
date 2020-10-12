@@ -1,11 +1,5 @@
-import type {
-  ButtonProps,
-  MenuButtonProps,
-  MenuItemOptionProps,
-  MenuProps,
-} from '@chakra-ui/core';
+import type { MenuItemOptionProps, MenuProps } from '@chakra-ui/core';
 import {
-  Box,
   Menu,
   MenuButton,
   MenuList,
@@ -13,9 +7,9 @@ import {
   MenuOptionGroup,
   MenuItemOption,
   MenuDivider,
-  Button,
   useColorModeValue,
   MenuTransition,
+  IconButton,
   Icon,
 } from '@chakra-ui/core';
 import type { TFunction } from 'i18next';
@@ -35,30 +29,24 @@ const flagMap: FlapMap = {
   en: 'GB',
 };
 
-export type LanguageSwitchProps = Omit<MenuProps, 'children' | 'isLazy'> & {
-  menuButtonProps?: MenuButtonProps & ButtonProps;
-};
+export type LanguageSwitchAltProps = Omit<MenuProps, 'children' | 'isLazy'>;
 
-export function LanguageSwitch({
-  menuButtonProps,
-  ...rest
-}: LanguageSwitchProps): JSX.Element {
+export function LanguageSwitch(props: LanguageSwitchAltProps): JSX.Element {
   const { i18n, t } = useTranslation('i18n');
   const backgroundColor = useColorModeValue('gray.100', 'whiteAlpha.100');
+  const buttonColor = useColorModeValue('gray.900', 'gray.100');
 
   const { createChangeLocaleHandler } = useI18nRouting();
 
   return (
-    <Box as={Menu} d="inline-block" {...rest} isLazy>
+    <Menu {...props} isLazy>
       <MenuButton
-        colorScheme="teal"
-        {...menuButtonProps}
-        as={Button}
-        type="button"
-        leftIcon={<Icon d="inline-block" as={MdTranslate} />}
-      >
-        {t('language-toggle')}
-      </MenuButton>
+        as={IconButton}
+        icon={<Icon as={MdTranslate} d="inline-block" />}
+        aria-label={t('language-toggle')}
+        color={buttonColor}
+        background="none"
+      />
       <MenuTransition>
         {(styles) => (
           <MenuList sx={styles}>
@@ -93,6 +81,7 @@ export function LanguageSwitch({
                 backgroundColor,
                 boxShadow: 'unset',
               }}
+              omitTextDecoration
               href="//github.com/ljosberinn/next-karma-docs"
             >
               {t('help-cta')}
@@ -100,7 +89,7 @@ export function LanguageSwitch({
           </MenuList>
         )}
       </MenuTransition>
-    </Box>
+    </Menu>
   );
 }
 

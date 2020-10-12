@@ -23,7 +23,6 @@ export function InternalLink({
   prefetch,
   replace,
   scroll,
-
   linkAs,
   ...rest
 }: InternalLinkProps): JSX.Element {

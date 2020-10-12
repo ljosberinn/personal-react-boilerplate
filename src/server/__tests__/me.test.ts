@@ -11,10 +11,6 @@ const catchAllName = 'authRouter';
 const method: RequestInitMethod = 'get';
 
 describe('api/me', () => {
-  test('is a function', () => {
-    expect(meHandler).toBeInstanceOf(Function);
-  });
-
   RequestMethods.filter(
     (requestMethod) => !['head', method].includes(requestMethod)
   ).forEach((method) => {

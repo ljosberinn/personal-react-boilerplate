@@ -1,11 +1,9 @@
-import { FaSun, FaMoon } from 'react-icons/fa';
-
 import {
-  userEvent,
   render,
+  userEvent,
+  screen,
   testA11Y,
   validateHtml,
-  screen,
 } from '../../../testUtils';
 import { ColorModeSwitchAlt } from '../components/ColorModeSwitchAlt';
 
@@ -15,39 +13,39 @@ describe('<ColorModeSwitchAlt />', () => {
   });
 
   it('contains valid html', () => {
-    validateHtml(<ColorModeSwitchAlt />, {
-      htmlValidate: {
-        rules: {
-          'prefer-native-element': 'off',
-        },
-      },
-    });
+    validateHtml(<ColorModeSwitchAlt />);
   });
 
-  /**
-   * Weird test, I know.
-   *
-   * - continues to work when initial theme is changed outside of the test
-   * - continues to work given any prop on the `Box` component
-   */
   it('indicates the current theme visually', () => {
     render(<ColorModeSwitchAlt />);
-    const sun = render(<FaSun />);
-    const moon = render(<FaMoon />);
 
-    const sunPath = sun.container.querySelector('path')!.outerHTML;
-    const moonPath = moon.container.querySelector('path')!.outerHTML;
+    const input = screen.getByRole('checkbox');
+    const sun = screen.getByTestId('theme-switch-sun');
+    const moon = screen.getByTestId('theme-switch-moon');
 
-    const button = screen.getByRole('checkbox');
+    const sunClassListBefore = sun.classList.toString();
+    const moonClassListBefore = moon.classList.toString();
 
-    const isInitiallyLight =
-      button.querySelector('path')!.outerHTML === sunPath;
+    userEvent.click(input);
 
-    userEvent.click(button);
+    expect(sun.classList.toString()).not.toBe(sunClassListBefore);
+    expect(moon.classList.toString()).not.toBe(moonClassListBefore);
+  });
 
-    const postClickPath = button.querySelector('path')!.outerHTML;
+  ['sun', 'moon'].forEach((icon) => {
+    it(`allows changing the theme by clicking an icon alternatively - icon ${icon}`, () => {
+      render(<ColorModeSwitchAlt />);
 
-    expect(postClickPath).not.toBe(isInitiallyLight ? sunPath : moonPath);
-    expect(postClickPath).toStrictEqual(isInitiallyLight ? moonPath : sunPath);
+      const sun = screen.getByTestId('theme-switch-sun');
+      const moon = screen.getByTestId('theme-switch-moon');
+
+      const sunClassListBefore = sun.classList.toString();
+      const moonClassListBefore = moon.classList.toString();
+
+      userEvent.click(icon === 'sun' ? sun : moon);
+
+      expect(sun.classList.toString()).not.toBe(sunClassListBefore);
+      expect(moon.classList.toString()).not.toBe(moonClassListBefore);
+    });
   });
 });

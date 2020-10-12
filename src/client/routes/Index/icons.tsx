@@ -2,9 +2,10 @@ import {
   createIcon,
   Icon,
   keyframes,
-  useAnimationPreference,
   useColorModeValue,
 } from '@chakra-ui/core';
+
+import { useMotionAwareAnimation } from '../../hooks/useMotionAwareAnimation';
 
 export const ChakraIcon = createIcon({
   defaultProps: {
@@ -185,18 +186,16 @@ export function KarmaIcon({
   size,
   animated = false,
 }: KarmaIconProps): JSX.Element {
-  const prefersReducedMotion = useAnimationPreference();
+  const animation = useMotionAwareAnimation(
+    `${pulse} 10s infinite ease-in-out`
+  );
 
   return (
     <Icon
       viewBox="0 0 378 459"
       width={size}
       height={size}
-      animation={
-        animated && !prefersReducedMotion
-          ? `${pulse} 10s infinite ease-in-out`
-          : undefined
-      }
+      animation={animated ? animation : undefined}
     >
       <title>next-karma Logo</title>
       {animated && (

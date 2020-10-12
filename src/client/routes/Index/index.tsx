@@ -12,16 +12,18 @@ import {
   Image,
   keyframes,
   Code,
+  chakra,
 } from '@chakra-ui/core';
 import type { MouseEvent } from 'react';
 import { FaGithub, FaLinkedin, FaTwitter, FaArrowRight } from 'react-icons/fa';
 import { FcSettings } from 'react-icons/fc';
 
 import type { WithChildren } from '../../Karma';
-import { ColorModeSwitchAlt } from '../../components/ColorModeSwitchAlt';
+import { ColorModeSwitch } from '../../components/ColorModeSwitch';
 import { ExternalLink } from '../../components/ExternalLink';
-import { LanguageSwitchAlt } from '../../components/LanguageSwitchAlt';
+import { LanguageSwitch } from '../../components/LanguageSwitch';
 import { WebShareButton } from '../../components/WebShareButton';
+import { useMotionAwareAnimation } from '../../hooks/useMotionAwareAnimation';
 import { Feature } from './Feature';
 import {
   ChakraIcon,
@@ -43,8 +45,7 @@ function Header() {
   const bg = useColorModeValue('gray.100', 'gray.700');
 
   return (
-    <Box
-      as="header"
+    <chakra.header
       borderBottomWidth="1px"
       height="4em"
       position="fixed"
@@ -78,8 +79,8 @@ function Header() {
 
         <Flex width="auto" maxW="720px" align="center" color="gray.500">
           <HStack spacing={2}>
-            <LanguageSwitchAlt />
-            <ColorModeSwitchAlt />
+            <LanguageSwitch />
+            <ColorModeSwitch />
             <ExternalLink
               omitIcon
               href={gitUrl}
@@ -99,7 +100,7 @@ function Header() {
           </HStack>
         </Flex>
       </Flex>
-    </Box>
+    </chakra.header>
   );
 }
 
@@ -119,7 +120,7 @@ function handleClick(event: MouseEvent) {
 
 function Hero() {
   return (
-    <Box as="section" pt={40} pb={12} maxW="xl" mx="auto" textAlign="center">
+    <chakra.section pt={40} pb={12} maxW="xl" mx="auto" textAlign="center">
       <KarmaIcon size="24em" animated />
       <Heading as="h1" mt={8} mb={12}>
         next-karma
@@ -167,7 +168,7 @@ function Hero() {
           _still wip_ & docs coming soon
         </Text>
       </Box>
-    </Box>
+    </chakra.section>
   );
 }
 
@@ -185,10 +186,11 @@ const spin = keyframes`
 `;
 
 function StackOverview() {
+  const animation = useMotionAwareAnimation(`${spin} infinite 3s linear`);
   const bg = useColorModeValue('gray.50', 'gray.900');
 
   return (
-    <Box p={16} as="article" bg={bg}>
+    <chakra.article p={16} bg={bg}>
       <Heading as="h2" id="stack" mb={16} textAlign="center">
         Stack
       </Heading>
@@ -364,16 +366,12 @@ function StackOverview() {
 
         <Feature
           icon={
-            <Box
+            <Icon
               as={FcSettings}
               version={undefined}
               height={iconSize}
               width={iconSize}
-              css={{
-                '@media (prefers-reduced-motion: no-preference)': {
-                  animation: `${spin} infinite 3s linear`,
-                },
-              }}
+              animation={animation}
             />
           }
           title="...and more!"
@@ -406,7 +404,7 @@ function StackOverview() {
           , ...
         </Feature>
       </Grid>
-    </Box>
+    </chakra.article>
   );
 }
 
@@ -430,7 +428,7 @@ const links = [
 
 function Footer() {
   return (
-    <Box as="footer" mt={12} mb={20} textAlign="center">
+    <chakra.footer mt={12} mb={20} textAlign="center">
       <Text fontSize="sm">
         <Box as="span" ml="3">
           MIT by <ExternalLink href="//gerritalex.de">Gerrit Alex</ExternalLink>
@@ -448,7 +446,7 @@ function Footer() {
           </ExternalLink>
         ))}
       </HStack>
-    </Box>
+    </chakra.footer>
   );
 }
 

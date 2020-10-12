@@ -1,4 +1,4 @@
-import { Box, useToast, Flex, Icon } from '@chakra-ui/core';
+import { Box, useToast, Flex, Text, Icon } from '@chakra-ui/core';
 import type { TFunction } from 'i18next';
 import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -37,9 +37,7 @@ function RefreshToast({ t }: RefreshToastProps) {
     >
       <Icon as={FaInfoCircle} height={6} width={6} mr={3} />
       <Box textAlign="left">
-        <Box as="p" fontWeight="bold">
-          {t('newVersion')}
-        </Box>
+        <Text fontWeight="bold">{t('newVersion')}</Text>
         {t('clickToRefresh')}
       </Box>
     </Flex>

@@ -11,10 +11,6 @@ const catchAllName = 'authRouter';
 const method: RequestInitMethod = 'delete';
 
 describe('api/logout', () => {
-  test('is a function', () => {
-    expect(logoutHandler).toBeInstanceOf(Function);
-  });
-
   test('does nothing given no matching path', async () => {
     const response = await testLambda(logoutHandler, {
       catchAllName,

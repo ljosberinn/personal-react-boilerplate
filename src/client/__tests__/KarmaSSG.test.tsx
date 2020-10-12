@@ -5,7 +5,11 @@ import React from 'react';
 import { render } from '../../../testUtils';
 import { i18nCache } from '../../../testUtils/i18n';
 import type { Namespace } from '../../constants';
-import { ENABLED_LANGUAGES, FALLBACK_LANGUAGE } from '../../constants';
+import {
+  ENABLED_LANGUAGES,
+  FALLBACK_LANGUAGE,
+  DEFAULT_DYNAMIC_ROUTE_I18N_FOLDER_NAME,
+} from '../../constants';
 import * as sentryUtils from '../../utils/sentry/client';
 import type { KarmaSSGProps } from '../Karma';
 import {
@@ -13,6 +17,7 @@ import {
   getStaticProps,
   KarmaSSG,
   createGetStaticProps,
+  createStaticI18nPaths,
 } from '../Karma';
 import * as i18n from '../i18n';
 
@@ -221,10 +226,6 @@ describe('getStaticProps', () => {
 });
 
 describe('createGetStaticProps', () => {
-  test('returns a function', () => {
-    expect(createGetStaticProps({})).toBeInstanceOf(Function);
-  });
-
   describe('i18n', () => {
     test('forwards namespaces onto getI18n', async () => {
       const getI18nSpy = jest.spyOn(i18n, 'getI18n');
@@ -265,12 +266,6 @@ describe('createGetStaticProps', () => {
 
 describe('withKarmaSSGProps', () => {
   const mockProps = { foo: 1 };
-
-  test('returns a function', () => {
-    const getStaticProps = withKarmaSSGProps(jest.fn());
-
-    expect(getStaticProps).toBeInstanceOf(Function);
-  });
 
   test('executes given handler, forwarding context', async () => {
     const mockHandler = jest.fn().mockResolvedValueOnce({ props: mockProps });
@@ -321,6 +316,39 @@ describe('withKarmaSSGProps', () => {
         ...mockProps,
       },
       revalidate: undefined,
+    });
+  });
+});
+
+describe('createStaticI18nPaths', () => {
+  test('matches snapshot given no custom parameterName', () => {
+    const getStaticPaths = createStaticI18nPaths();
+
+    expect(getStaticPaths()).toStrictEqual({
+      fallback: false,
+      paths: expect.arrayContaining([
+        expect.objectContaining({
+          params: expect.objectContaining({
+            [DEFAULT_DYNAMIC_ROUTE_I18N_FOLDER_NAME]: expect.any(String),
+          }),
+        }),
+      ]),
+    });
+  });
+
+  test('matches snapshot given custom parameterName', () => {
+    const parameterName = 'karma';
+    const getStaticPaths = createStaticI18nPaths({ parameterName });
+
+    expect(getStaticPaths()).toStrictEqual({
+      fallback: false,
+      paths: expect.arrayContaining([
+        expect.objectContaining({
+          params: expect.objectContaining({
+            [parameterName]: expect.any(String),
+          }),
+        }),
+      ]),
     });
   });
 });
