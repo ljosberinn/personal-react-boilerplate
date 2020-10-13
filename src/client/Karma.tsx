@@ -6,10 +6,12 @@ import type {
   GetStaticPathsResult,
   GetStaticPropsContext,
   GetStaticPropsResult,
+  NextComponentType,
+  NextPageContext,
 } from 'next';
 import { useRouter } from 'next/router';
 import type { ParsedUrlQuery } from 'querystring';
-import type { ReactNode } from 'react';
+import type { ReactNode, ReactElement } from 'react';
 import { useEffect } from 'react';
 import { I18nextProvider } from 'react-i18next';
 
@@ -33,6 +35,21 @@ import { FOUND_MOVED_TEMPORARILY } from '../utils/statusCodes';
 import { ServiceWorker } from './components/ServiceWorker';
 import type { I18nextResourceLocale } from './i18n';
 import { initI18Next, getI18n } from './i18n';
+
+/**
+ * Patched `NextComponentType` to support `.withLayout function in `_app`
+ *
+ * @see https://adamwathan.me/2019/10/17/persistent-layout-patterns-in-nextjs/
+ */
+export type NextComponentWithLayout = NextComponentType<
+  NextPageContext,
+  object,
+  object
+> & {
+  withLayout?: WithLayoutHandler;
+};
+
+export type WithLayoutHandler = (page: ReactElement) => JSX.Element;
 
 export type WithChildren<Props = {}> = Props & {
   children: ReactNode;

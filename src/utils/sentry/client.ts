@@ -1,6 +1,7 @@
 import type { BrowserOptions } from '@sentry/react';
 import { addBreadcrumb, Severity, init, configureScope } from '@sentry/react';
 import type { IncomingMessage } from 'http';
+import type { NextComponentType } from 'next';
 import type { NextRouter } from 'next/router';
 
 import type { KarmaSSRProps } from '../../client/Karma';
@@ -53,7 +54,7 @@ export const attachInitialContext = ({
  */
 export const attachRoutingContext = (
   { route, pathname, query, asPath }: NextRouter,
-  name = 'unknown'
+  { displayName, name }: NextComponentType
 ): void => {
   configureScope((scope) => {
     scope.setContext('router', {
@@ -66,7 +67,7 @@ export const attachRoutingContext = (
 
   // in prod, this will make components show up with their minified name!
   // however, those names seem to match with the react devtools
-  attachComponentBreadcrumb(name);
+  attachComponentBreadcrumb(displayName ?? name ?? 'unknown');
 };
 
 export const attachComponentBreadcrumb = (name: string): void => {

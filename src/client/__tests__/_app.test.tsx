@@ -1,5 +1,5 @@
 import * as sentryReact from '@sentry/react';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { Router } from 'next/router';
 
 import 'whatwg-fetch';
@@ -8,6 +8,7 @@ import type { AppRenderProps } from '../../../pages/_app';
 import App, { reportWebVitals } from '../../../pages/_app';
 import { createMockScope } from '../../../testUtils/sentry';
 import * as sentryUtils from '../../utils/sentry/client';
+import type { WithLayoutHandler } from '../Karma';
 
 const defaultProps: AppRenderProps = {
   Component: () => null,
@@ -34,6 +35,31 @@ describe('<App />', () => {
     render(<App {...defaultProps} />);
   });
 
+  it('supports persistent layouts', () => {
+    const content = 'next-karma with persistent layouts';
+    const layoutTestId = 'layout';
+
+    function DummyComponent() {
+      return <h1>{content}</h1>;
+    }
+
+    const withLayout: WithLayoutHandler = (page) => (
+      <main data-testid={layoutTestId}>{page}</main>
+    );
+
+    DummyComponent.withLayout = withLayout;
+
+    render(<App {...defaultProps} Component={DummyComponent} />);
+
+    const contentElement = screen.getByText(content);
+    const layoutElement = screen.getByTestId(layoutTestId);
+
+    expect(contentElement).toBeInTheDocument();
+    expect(layoutElement).toBeInTheDocument();
+
+    expect(contentElement.parentElement).toBe(layoutElement);
+  });
+
   it('attaches routing breadcrumbs to Sentry', () => {
     const attachRoutingContextSpy = jest.spyOn(
       sentryUtils,
@@ -51,9 +77,10 @@ describe('<App />', () => {
 
     render(<App {...defaultProps} />);
 
+    expect(attachRoutingContextSpy).toHaveBeenCalledTimes(1);
     expect(attachRoutingContextSpy).toHaveBeenCalledWith(
       expect.any(Router),
-      expect.any(String)
+      defaultProps.Component
     );
 
     expect(configureScopeSpy).toHaveBeenCalledTimes(1);

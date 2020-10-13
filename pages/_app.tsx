@@ -1,8 +1,11 @@
-import type { NextComponentType, NextPageContext } from 'next';
 import type { NextWebVitalsMetric } from 'next/app';
 import Head from 'next/head';
 import type { NextRouter } from 'next/router';
 
+import type {
+  WithLayoutHandler,
+  NextComponentWithLayout,
+} from '../src/client/Karma';
 import {
   attachRoutingContext,
   ErrorBoundary as TopLevelErrorBoundary,
@@ -12,9 +15,11 @@ import {
 export type AppRenderProps = {
   pageProps: object;
   err?: Error;
-  Component: NextComponentType<NextPageContext, object, object>;
+  Component: NextComponentWithLayout;
   router: NextRouter;
 };
+
+const layoutPassthrough: WithLayoutHandler = (page) => page;
 
 // eslint-disable-next-line import/no-default-export
 export default function App({
@@ -22,7 +27,9 @@ export default function App({
   pageProps,
   router,
 }: AppRenderProps): JSX.Element | null {
-  attachRoutingContext(router, Component.name);
+  attachRoutingContext(router, Component);
+
+  const withLayout = Component.withLayout ?? layoutPassthrough;
 
   return (
     <>
@@ -30,7 +37,7 @@ export default function App({
         <title>next-karma | Next.js template</title>
       </Head>
       <TopLevelErrorBoundary showDialog>
-        <Component {...pageProps} />
+        {withLayout(<Component {...pageProps} />)}
       </TopLevelErrorBoundary>
     </>
   );
