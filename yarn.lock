@@ -6343,10 +6343,10 @@ html-parse-stringify2@2.0.1:
   dependencies:
     void-elements "^2.0.1"
 
-html-validate@3.4.0:
-  version "3.4.0"
-  resolved "https://registry.yarnpkg.com/html-validate/-/html-validate-3.4.0.tgz#679acd7ac3c3b66458ab30200c95db43f893e030"
-  integrity sha512-jLdbvi6Y5YcvcVGR5F1Lqwfg75W8eSgzwZxFVn9FqH2yZPkC+HayzvEMJoG2fST3AkONmX3FI1nlJ8GlyInd7g==
+html-validate@3.4.1:
+  version "3.4.1"
+  resolved "https://registry.yarnpkg.com/html-validate/-/html-validate-3.4.1.tgz#0d10f8e21e3bc083d922b4fcc9ff807e376c6d48"
+  integrity sha512-FR/IABoiDYWmSzbMHZmnIBjkIfCoxsYqr6w81JLmu4BJ10yYjMAZBGDb5DkOVv7H0WKUZB5o5iaGq1j2o1J1Hw==
   dependencies:
     "@babel/code-frame" "^7.0.0"
     "@sidvind/better-ajv-errors" "^0.6.9"
