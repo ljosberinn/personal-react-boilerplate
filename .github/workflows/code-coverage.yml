@@ -1,0 +1,46 @@
+name: Update CodeClimate test coverage
+
+on:
+  push:
+    branches:
+      - master
+
+# used actions
+# https://github.com/actions/setup-node - sets up node env
+# https://github.com/paambaati/codeclimate-action - sends test coverage to CC
+
+jobs:
+  setup-environment:
+    name: Setup environment
+    runs-on: ubuntu-latest
+    timeout-minutes: 1
+    steps:
+      - name: Installing node.js
+        uses: actions/setup-node@v1
+        with:
+          # Use the same node.js version as the one Vercel's uses (currently node12.x)
+          node-version: '12.x'
+
+  test:
+    name: Test & Coverage Report
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Get Yarn cache path
+        id: yarn-cache
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+      - uses: actions/checkout@master
+      - name: Load Yarn cache
+        uses: actions/cache@master
+        with:
+          path: ${{ steps.yarn-cache.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+      - name: Installing dependencies
+        if: steps.cache-modules.outputs.cache-hit != 'true'
+        run: yarn --frozen-lockfile
+      - name: Test & Upload coverage
+        uses: paambaati/codeclimate-action@v2.7.4
+        with:
+          run: yarn test --ci --coverage          
