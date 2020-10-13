@@ -1,15 +1,14 @@
-name: Deploy to Vercel
+name: Deploy to Vercel (Staging)
 
 on:
   push:
-    branches:
+    branches-ignore:
       - master
 
 # used actions
 # https://github.com/actions/setup-node - sets up node env
 # https://github.com/actions/cache - caches build deps
 # https://github.com/actions/checkout - checks out repo
-# https://github.com/paambaati/codeclimate-action - sends test coverage to CC
 # https://github.com/amondnet/vercel-action - initiates deploy to vercel
 # https://github.com/foo-software/lighthouse-check-action - lighthouse post-deploy
 # https://github.com/foo-software/lighthouse-check-status-action - lighthouse check
@@ -68,7 +67,7 @@ jobs:
       - run: yarn lint:types
 
   test:
-    name: Test & Coverage Report
+    name: Test
     runs-on: ubuntu-latest
     timeout-minutes: 2
     # only run after lint and tsc completed successfully
@@ -88,13 +87,11 @@ jobs:
       - name: Installing dependencies
         if: steps.cache-modules.outputs.cache-hit != 'true'
         run: yarn --frozen-lockfile
-      - name: Test & Upload coverage
-        uses: paambaati/codeclimate-action@v2.7.4
-        with:
-          run: yarn test --ci --coverage
+      - name: Running tests
+        run: yarn test --ci --coverage
 
   deploy:
-    name: Deploy to Production
+    name: Deploy to Staging
     runs-on: ubuntu-latest
     # only deploy given successful tests
     needs: test
@@ -109,14 +106,13 @@ jobs:
           # scope: ${{ secrets.VERCEL_TEAM_ID }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
           github-comment: true
-          vercel-args: "--prod"
 
   # Run Lighthouse reports
   # based on https://github.com/UnlyEd/next-right-now/blob/v2-mst-aptd-gcms-lcz-sty/.github/workflows/deploy-zeit-production.yml#L95
   run-lighthouse-tests:
     name: Run LightHouse
     runs-on: ubuntu-latest
-    needs: deploy-prod
+    needs: deploy
     steps:
       - uses: actions/checkout@master
       - name: Resolving deployment url from Vercel
