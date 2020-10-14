@@ -70,7 +70,7 @@ export const initI18Next = ({
         html.setAttribute('lang', lang);
         html.setAttribute('dir', instance.dir(lang));
 
-        document.cookie = `${i18nCookieName}=${lang}`;
+        document.cookie = `${i18nCookieName}=${lang}; max-age=31536000; path=/`;
       });
 
       // set initially aswell
