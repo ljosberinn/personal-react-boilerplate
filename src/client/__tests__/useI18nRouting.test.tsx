@@ -9,7 +9,7 @@ import {
 } from '../../constants';
 import { useI18nRouting } from '../hooks/useI18nRouting';
 
-const setup = ({ push = jest.fn(), locale = FALLBACK_LANGUAGE }) => {
+const setup = ({ replace = jest.fn(), locale = FALLBACK_LANGUAGE }) => {
   jest.spyOn(window.location, 'assign');
 
   const changeLocaleSpy = jest.spyOn(i18n, 'changeLanguage');
@@ -23,7 +23,7 @@ const setup = ({ push = jest.fn(), locale = FALLBACK_LANGUAGE }) => {
   const { result } = renderHook(useI18nRouting, {
     omitKarmaProvider: true,
     router: {
-      push,
+      replace,
       route: mockRoute,
     },
   });
@@ -32,7 +32,7 @@ const setup = ({ push = jest.fn(), locale = FALLBACK_LANGUAGE }) => {
     changeLocaleSpy,
     expectedRoute,
     mockRoute,
-    push,
+    replace,
     result,
   };
 };
@@ -55,13 +55,13 @@ describe('hooks/useI18nRouting', () => {
 
     const locale = 'foo';
 
-    const { push, result } = setup({ locale });
+    const { replace, result } = setup({ locale });
 
     await hookAct(async () => {
       await result.current.changeLocale(locale);
     });
 
-    expect(push).not.toHaveBeenCalled();
+    expect(replace).not.toHaveBeenCalled();
     expect(window.location.assign).not.toHaveBeenCalled();
 
     // eslint-disable-next-line no-console
@@ -73,28 +73,28 @@ describe('hooks/useI18nRouting', () => {
   ENABLED_LANGUAGES.forEach((locale) => {
     describe('changeLocale', () => {
       test(`replaces the current locale with the new (lang: "${locale}")`, async () => {
-        const { expectedRoute, push, result } = setup({ locale });
+        const { expectedRoute, replace, result } = setup({ locale });
 
         await hookAct(async () => {
           await result.current.changeLocale(locale);
         });
 
-        expect(push).toHaveBeenCalledTimes(1);
-        expect(push).toHaveBeenCalledWith(expectedRoute);
+        expect(replace).toHaveBeenCalledTimes(1);
+        expect(replace).toHaveBeenCalledWith(expectedRoute);
       });
 
-      test('uses window.location.assign in case useRouter().push fails', async () => {
-        const push = jest.fn().mockImplementationOnce(() => {
+      test('uses window.location.assign in case useRouter().replace fails', async () => {
+        const replace = jest.fn().mockImplementationOnce(() => {
           throw new Error('test error');
         });
 
-        const { expectedRoute, result } = setup({ locale, push });
+        const { expectedRoute, result } = setup({ locale, replace });
 
         await hookAct(async () => {
           await result.current.changeLocale(locale);
         });
 
-        expect(push).toHaveBeenCalledTimes(1);
+        expect(replace).toHaveBeenCalledTimes(1);
 
         expect(window.location.assign).toHaveBeenCalledTimes(1);
         expect(window.location.assign).toHaveBeenCalledWith(expectedRoute);
@@ -114,7 +114,7 @@ describe('hooks/useI18nRouting', () => {
 
     describe('createChangeLocaleHandler', () => {
       test('resulting function changes locale', async () => {
-        const { result, changeLocaleSpy, push, expectedRoute } = setup({
+        const { result, changeLocaleSpy, replace, expectedRoute } = setup({
           locale,
         });
 
@@ -127,8 +127,8 @@ describe('hooks/useI18nRouting', () => {
         expect(changeLocaleSpy).toHaveBeenCalledTimes(1);
         expect(changeLocaleSpy).toHaveBeenCalledWith(locale);
 
-        expect(push).toHaveBeenCalledTimes(1);
-        expect(push).toHaveBeenCalledWith(expectedRoute);
+        expect(replace).toHaveBeenCalledTimes(1);
+        expect(replace).toHaveBeenCalledWith(expectedRoute);
       });
     });
   });

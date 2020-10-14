@@ -14,7 +14,7 @@ type UseI18nRoutingType = {
 };
 
 export function useI18nRouting(): UseI18nRoutingType {
-  const { push, route } = useRouter();
+  const { replace, route } = useRouter();
   const { i18n } = useTranslation();
 
   const changeLocale = useCallback(
@@ -37,12 +37,12 @@ export function useI18nRouting(): UseI18nRoutingType {
       await i18n.changeLanguage(locale);
 
       try {
-        await push(targetRoute);
+        await replace(targetRoute);
       } catch {
         window.location.assign(targetRoute);
       }
     },
-    [push, route, i18n]
+    [replace, route, i18n]
   );
 
   const createChangeLocaleHandler = useCallback(
