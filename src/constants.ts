@@ -25,7 +25,7 @@ export const ENABLED_PROVIDER = process.env.NEXT_PUBLIC_ENABLED_PROVIDER!.split(
 ) as Provider[];
 
 // TS does not like this variable coming out of env
-export const SESSION_COOKIE_NAME = 'session';
+export const SESSION_COOKIE_NAME = 'session' as const;
 
 /**
  * session lifetime in milliseconds
@@ -83,7 +83,7 @@ export type Namespace = typeof namespaces[number];
  * @default
  * locale
  */
-export const DEFAULT_DYNAMIC_ROUTE_I18N_FOLDER_NAME = 'locale';
+export const DEFAULT_DYNAMIC_ROUTE_I18N_FOLDER_NAME = 'locale' as const;
 
 /**********************
  * sentry

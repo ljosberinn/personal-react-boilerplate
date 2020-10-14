@@ -1,22 +1,31 @@
-import type { WithKarmaProps, KarmaSSGProps } from '../../src/client/Karma';
+import Head from 'next/head';
+
+import type { WithLayoutHandler } from '../../src/client/Karma';
 import {
-  KarmaSSG,
   createGetStaticProps,
   createStaticI18nPaths,
 } from '../../src/client/Karma';
+import { CommonLayout } from '../../src/client/layouts/CommonLayout';
 import { Index } from '../../src/client/routes/Index';
 import type { Namespace } from '../../src/constants';
 
-export type IndexPageProps = WithKarmaProps<KarmaSSGProps>;
-
 // eslint-disable-next-line import/no-default-export
-export default function IndexPage({ karma }: IndexPageProps): JSX.Element {
+export default function IndexPage(): JSX.Element {
   return (
-    <KarmaSSG {...karma}>
+    <>
+      <Head>
+        <title>Karma | is to Next.js what React is to Javascript</title>
+      </Head>
       <Index />
-    </KarmaSSG>
+    </>
   );
 }
+
+const withLayout: WithLayoutHandler = (page) => (
+  <CommonLayout>{page}</CommonLayout>
+);
+
+IndexPage.withLayout = withLayout;
 
 const namespaces: Namespace[] = ['serviceWorker', 'theme', 'i18n'];
 
@@ -27,21 +36,22 @@ export const getStaticProps = createGetStaticProps({
   },
 });
 
-// import type { WithKarmaProps, KarmaSSRProps } from '../../src/client/Karma';
-// import { createGetServerSideProps, KarmaSSR } from '../../src/client/Karma';
+// import type { WithLayoutHandler } from '../../src/client/Karma';
+// import { createGetServerSideProps } from '../../src/client/Karma';
+// import { CommonLayout } from '../../src/client/layouts/CommonLayout';
 // import { Index } from '../../src/client/routes/Index';
 // import type { Namespace } from '../../src/constants';
 
-// export type IndexPageProps = WithKarmaProps<KarmaSSRProps>;
-
 // // eslint-disable-next-line import/no-default-export
-// export default function IndexPage({ karma }: IndexPageProps): JSX.Element {
-//   return (
-//     <KarmaSSR {...karma}>
-//       <Index />
-//     </KarmaSSR>
-//   );
+// export default function IndexPage(): JSX.Element {
+//   return <Index />;
 // }
+
+// const withLayout: WithLayoutHandler = (page) => (
+//   <CommonLayout>{page}</CommonLayout>
+// );
+
+// IndexPage.withLayout = withLayout;
 
 // const namespaces: Namespace[] = ['serviceWorker', 'theme', 'i18n'];
 

@@ -18,9 +18,9 @@ import { attachComponentBreadcrumb } from '../src/utils/sentry/client';
   process.on(event, captureException);
 });
 
-const title = 'next-karma | the open framework';
+const title = 'Karma | is to Next.js what React is to Javascript';
 const description =
-  'next-karma - the open framework on top of Next.js | Authentication, Internationalization, Error Handling';
+  'Karma provides sane, opinionated, yet flexible solutions for Next.js';
 
 // eslint-disable-next-line import/no-default-export
 export default function CustomDocument(): JSX.Element {

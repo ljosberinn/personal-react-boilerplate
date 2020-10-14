@@ -1,11 +1,13 @@
 import * as sentryReact from '@sentry/react';
 import { render, screen } from '@testing-library/react';
 import { Router } from 'next/router';
+import React from 'react';
 
 import 'whatwg-fetch';
 
 import type { AppRenderProps } from '../../../pages/_app';
 import App, { reportWebVitals } from '../../../pages/_app';
+import { MockRouterContext } from '../../../testUtils/router';
 import { createMockScope } from '../../../testUtils/sentry';
 import * as sentryUtils from '../../utils/sentry/client';
 import type { WithLayoutHandler } from '../Karma';
@@ -13,10 +15,16 @@ import type { WithLayoutHandler } from '../Karma';
 const defaultProps: AppRenderProps = {
   Component: () => null,
   pageProps: {
-    cookies: '',
-    i18nBundle: { namespace: {} },
-    language: 'en',
-    session: null,
+    karma: {
+      auth: {
+        session: null,
+      },
+      cookies: '',
+      i18n: {
+        bundle: {},
+        language: 'en',
+      },
+    },
   },
   router: new Router('/', {}, '', {
     App: () => null,
@@ -32,7 +40,11 @@ const defaultProps: AppRenderProps = {
 
 describe('<App />', () => {
   it('renders without crashing given default props', () => {
-    render(<App {...defaultProps} />);
+    render(<App {...defaultProps} />, {
+      wrapper: ({ children }) => (
+        <MockRouterContext>{children}</MockRouterContext>
+      ),
+    });
   });
 
   it('supports persistent layouts', () => {
@@ -49,7 +61,11 @@ describe('<App />', () => {
 
     DummyComponent.withLayout = withLayout;
 
-    render(<App {...defaultProps} Component={DummyComponent} />);
+    render(<App {...defaultProps} Component={DummyComponent} />, {
+      wrapper: ({ children }) => (
+        <MockRouterContext>{children}</MockRouterContext>
+      ),
+    });
 
     const contentElement = screen.getByText(content);
     const layoutElement = screen.getByTestId(layoutTestId);
@@ -75,7 +91,11 @@ describe('<App />', () => {
         callback(createMockScope({ setContext: setContextSpy }))
       );
 
-    render(<App {...defaultProps} />);
+    render(<App {...defaultProps} />, {
+      wrapper: ({ children }) => (
+        <MockRouterContext>{children}</MockRouterContext>
+      ),
+    });
 
     expect(attachRoutingContextSpy).toHaveBeenCalledTimes(1);
     expect(attachRoutingContextSpy).toHaveBeenCalledWith(

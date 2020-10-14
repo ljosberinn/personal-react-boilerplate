@@ -162,7 +162,7 @@ export const JestIcon = createIcon({
   viewBox: '0 0 256 283',
 });
 
-const karmaShades = {
+export const karmaShades = {
   darker: '#9f0c32',
   lighter: '#ef3b69',
   regular: '#d41143',

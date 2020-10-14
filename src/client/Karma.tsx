@@ -12,7 +12,7 @@ import type {
 import { useRouter } from 'next/router';
 import type { ParsedUrlQuery } from 'querystring';
 import type { ReactNode, ReactElement } from 'react';
-import { useEffect } from 'react';
+import { useEffect, isValidElement } from 'react';
 import { I18nextProvider } from 'react-i18next';
 
 import { MetaThemeColorSynchronizer } from '../../src/client/components/MetaThemeColorSynchronizer';
@@ -36,12 +36,20 @@ import { ServiceWorker } from './components/ServiceWorker';
 import type { I18nextResourceLocale } from './i18n';
 import { initI18Next, getI18n } from './i18n';
 
+export type WithChildren<Props = {}> = Props & {
+  children: ReactNode;
+};
+
+/**********************
+ * withLayout support
+ *********************/
+
 /**
  * Patched `NextComponentType` to support `.withLayout function in `_app`
  *
  * @see https://adamwathan.me/2019/10/17/persistent-layout-patterns-in-nextjs/
  */
-export type NextComponentWithLayout = NextComponentType<
+export type NextComponentWithKarma = NextComponentType<
   NextPageContext,
   object,
   object
@@ -51,8 +59,22 @@ export type NextComponentWithLayout = NextComponentType<
 
 export type WithLayoutHandler = (page: ReactElement) => JSX.Element;
 
-export type WithChildren<Props = {}> = Props & {
-  children: ReactNode;
+export const layoutPassthrough: WithLayoutHandler = (page) => page;
+
+export const getKarmaWrap = (karmaProps?: KarmaSSGProps | KarmaSSRProps) => {
+  return function IsomorphicKarma({
+    children,
+  }: WithChildren): JSX.Element | ReactElement | null {
+    if (karmaProps) {
+      if ('cookies' in karmaProps) {
+        return <KarmaSSR {...karmaProps}>{children}</KarmaSSR>;
+      }
+
+      return <KarmaSSG {...karmaProps}>{children}</KarmaSSG>;
+    }
+
+    return isValidElement(children) ? children : null;
+  };
 };
 
 /**********************
@@ -484,10 +506,14 @@ const determinPreferredStaticLanguage = (
   return FALLBACK_LANGUAGE;
 };
 
+type CreateStaticI18nPathsArgs = {
+  parameterName?: string;
+};
+
 /**
- * creates a `getStaticPaths` handler to be used in `/pages/[language]/index`
+ * creates a `getStaticPaths` handler to be used in `/pages/[locale]/index`
  * with the possibility to change the parameter name should you wish to rename
- * `[language]` to something else
+ * `[locale]` to something else
  *
  * @example
  * ```js
@@ -496,7 +522,7 @@ const determinPreferredStaticLanguage = (
  */
 export const createStaticI18nPaths = ({
   parameterName = DEFAULT_DYNAMIC_ROUTE_I18N_FOLDER_NAME,
-} = {}) => (): GetStaticPathsResult => ({
+}: CreateStaticI18nPathsArgs = {}) => (): GetStaticPathsResult => ({
   fallback: false,
   paths: ENABLED_LANGUAGES.map((language) => ({
     params: { [parameterName]: language },

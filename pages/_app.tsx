@@ -1,11 +1,12 @@
 import type { NextWebVitalsMetric } from 'next/app';
-import Head from 'next/head';
 import type { NextRouter } from 'next/router';
 
 import type {
-  WithLayoutHandler,
-  NextComponentWithLayout,
+  NextComponentWithKarma,
+  KarmaSSGProps,
+  KarmaSSRProps,
 } from '../src/client/Karma';
+import { getKarmaWrap, layoutPassthrough } from '../src/client/Karma';
 import {
   attachRoutingContext,
   ErrorBoundary as TopLevelErrorBoundary,
@@ -13,13 +14,11 @@ import {
 } from '../src/utils/sentry/client';
 
 export type AppRenderProps = {
-  pageProps: object;
+  pageProps: object & { karma?: KarmaSSGProps | KarmaSSRProps };
   err?: Error;
-  Component: NextComponentWithLayout;
+  Component: NextComponentWithKarma;
   router: NextRouter;
 };
-
-const layoutPassthrough: WithLayoutHandler = (page) => page;
 
 // eslint-disable-next-line import/no-default-export
 export default function App({
@@ -29,17 +28,15 @@ export default function App({
 }: AppRenderProps): JSX.Element | null {
   attachRoutingContext(router, Component);
 
-  const withLayout = Component.withLayout ?? layoutPassthrough;
+  const { withLayout = layoutPassthrough } = Component;
+  const { karma, ...rest } = pageProps;
+
+  const Karma = getKarmaWrap(karma);
 
   return (
-    <>
-      <Head>
-        <title>next-karma | Next.js template</title>
-      </Head>
-      <TopLevelErrorBoundary showDialog>
-        {withLayout(<Component {...pageProps} />)}
-      </TopLevelErrorBoundary>
-    </>
+    <TopLevelErrorBoundary showDialog>
+      <Karma {...karma}>{withLayout(<Component {...rest} />)}</Karma>
+    </TopLevelErrorBoundary>
   );
 }
 

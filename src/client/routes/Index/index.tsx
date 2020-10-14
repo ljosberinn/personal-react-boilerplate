@@ -2,7 +2,6 @@ import {
   Box,
   Grid,
   Flex,
-  HStack,
   Icon,
   useColorModeValue,
   Text,
@@ -13,17 +12,16 @@ import {
   keyframes,
   Code,
   chakra,
+  Container,
 } from '@chakra-ui/core';
-import type { MouseEvent } from 'react';
-import { FaGithub, FaLinkedin, FaTwitter, FaArrowRight } from 'react-icons/fa';
+import { FaGithub, FaArrowRight } from 'react-icons/fa';
 import { FcSettings } from 'react-icons/fc';
 
 import type { WithChildren } from '../../Karma';
-import { ColorModeSwitch } from '../../components/ColorModeSwitch';
 import { ExternalLink } from '../../components/ExternalLink';
-import { LanguageSwitch } from '../../components/LanguageSwitch';
-import { WebShareButton } from '../../components/WebShareButton';
+import { InternalLink } from '../../components/InternalLink';
 import { useMotionAwareAnimation } from '../../hooks/useMotionAwareAnimation';
+import { gitUrl } from '../../layouts/CommonLayout';
 import { Feature } from './Feature';
 import {
   ChakraIcon,
@@ -37,146 +35,104 @@ import {
   TypeScriptIcon,
   PWAIcon,
   SentryIcon,
+  karmaShades,
 } from './icons';
 
-const gitUrl = '//github.com/ljosberinn/next-karma';
-
-function Header() {
-  const bg = useColorModeValue('gray.100', 'gray.700');
-
-  return (
-    <chakra.header
-      borderBottomWidth="1px"
-      height="4em"
-      position="fixed"
-      width="full"
-      bg={bg}
-      zIndex="1"
-    >
-      <Flex
-        boxSize="100%"
-        align="center"
-        justify="space-between"
-        maxWidth="72em"
-        ml="auto"
-        mr="auto"
-        p="3"
-      >
-        <Flex align="center">
-          <KarmaIcon size="3em" />
-          <Text fontWeight="500" pl="2">
-            next-karma
-          </Text>
-          <HStack
-            as="nav"
-            spacing="4"
-            ml="12"
-            display={{ base: 'none', md: 'flex' }}
-          >
-            Docs (coming soon)
-          </HStack>
-        </Flex>
-
-        <Flex width="auto" maxW="720px" align="center" color="gray.500">
-          <HStack spacing={2}>
-            <LanguageSwitch />
-            <ColorModeSwitch />
-            <ExternalLink
-              omitIcon
-              href={gitUrl}
-              aria-label="Repository URL"
-              d="flex"
-              boxSize="10"
-              justifyContent="center"
-              alignItems="center"
-              _hover={{ color: 'teal.600' }}
-            >
-              <Icon as={FaGithub} boxSize="5" />
-            </ExternalLink>
-            <WebShareButton
-              aria-label="Share this site"
-              title="next-karma - opinionated batteries-included Next.js template"
-            />
-          </HStack>
-        </Flex>
-      </Flex>
-    </chakra.header>
-  );
-}
-
 function FadedText({ children }: WithChildren) {
-  const color = useColorModeValue('blackAlpha.700', 'whiteAlpha.700');
-
   return (
-    <Text color={color} fontSize="xl" mt="6" px={2}>
+    <Text as="span" color={karmaShades.regular} mt="6" mr={2}>
       {children}
     </Text>
   );
 }
 
-function handleClick(event: MouseEvent) {
-  event.preventDefault();
-}
-
 function Hero() {
+  const bg = useColorModeValue('cyan.50', 'gray.800');
+
   return (
-    <chakra.section pt={40} pb={12} maxW="xl" mx="auto" textAlign="center">
-      <KarmaIcon size="24em" animated />
-      <Heading as="h1" mt={8} mb={12}>
-        next-karma
-        <FadedText>the open framework on top of Next.js</FadedText>
-      </Heading>
+    <Box bg={bg} borderBottom="1px solid" borderColor="gray.700">
+      <Container
+        d="flex"
+        maxWidth={{ base: '100%', md: '85%' }}
+        pt={40}
+        pb={12}
+        mx="auto"
+        justifyContent="center"
+        alignContent="center"
+        flexDirection={{ base: 'column', lg: 'row' }}
+        textAlign={{ base: 'center', lg: 'initial' }}
+      >
+        <Flex justifyContent="center">
+          <KarmaIcon size="24em" animated />
+        </Flex>
+        <Box>
+          <Heading as="h1" size="xl">
+            React is{' '}
+            <Text as="span" fontStyle="italic" color="green.500">
+              "just javascript"
+            </Text>
+          </Heading>
+          <Heading as="h2" size="2xl" mt={4}>
+            <FadedText>Karma</FadedText>
+            is{' '}
+            <Text as="span" fontStyle="italic" color="green.500">
+              "just Next.js"
+            </Text>
+          </Heading>
 
-      <Text mt={4}>
-        Stop worrying about nitty gritty low-level details in an ever-growing,
-        ever more complex ecosystem.
-      </Text>
+          <Divider role={undefined} aria-orientation={undefined} mt={2} />
 
-      <Text mt={4}>
-        Focus on what's important: creating awesome features for your users in a
-        fast and reliable way, yet retain all flexibility you might (n)ever
-        need.
-      </Text>
+          <Box bg={bg} p={6} mt={6} mb={6} borderRadius={8}>
+            <Text as="span" fontSize="xl" lineHeight="tall">
+              Stop worrying about nitty gritty low-level details in an
+              ever-growing, ever more complex ecosystem. Focus on what's
+              important: creating awesome features for your users in a fast and
+              reliable way, yet retain all flexibility you might (n)ever need.
+            </Text>
 
-      <Box mt={12}>
-        <Button
-          as={ExternalLink}
-          omitIcon
-          omitTextDecoration
-          href="/"
-          size="lg"
-          colorScheme="teal"
-          disabled
-          onClick={handleClick}
-          rightIcon={<Icon as={FaArrowRight} fontSize="0.8em" />}
-        >
-          Get Started
-        </Button>
-        <Button
-          as={ExternalLink}
-          omitIcon
-          omitTextDecoration
-          size="lg"
-          ml={4}
-          href={gitUrl}
-          leftIcon={<FaGithub size="1.5em" />}
-        >
-          GitHub
-        </Button>
+            <Text fontStyle="italic" mt={6}>
+              _still wip_ & docs coming soon
+            </Text>
+          </Box>
 
-        <Text fontStyle="italic" mt={12}>
-          _still wip_ & docs coming soon
-        </Text>
-      </Box>
-    </chakra.section>
+          <Box mt={6}>
+            <Button
+              as={InternalLink}
+              omitTextDecoration
+              href="/docs"
+              size="lg"
+              colorScheme="teal"
+              rightIcon={<Icon as={FaArrowRight} fontSize="sm" />}
+            >
+              Get Started
+            </Button>
+            <Button
+              as={ExternalLink}
+              omitIcon
+              omitTextDecoration
+              size="lg"
+              ml={4}
+              href={gitUrl}
+              leftIcon={<Icon d="flex" as={FaGithub} size="2xl" />}
+            >
+              GitHub
+            </Button>
+          </Box>
+        </Box>
+      </Container>
+    </Box>
   );
 }
 
-const title = (
-  <Text as="b" whiteSpace="nowrap">
-    next-karma
-  </Text>
-);
+function Title() {
+  const color = useColorModeValue(karmaShades.regular, 'red.300');
+
+  return (
+    <Text as="b" whiteSpace="nowrap" color={color}>
+      Karma
+    </Text>
+  );
+}
 
 const iconSize = '3em';
 
@@ -187,10 +143,9 @@ const spin = keyframes`
 
 function StackOverview() {
   const animation = useMotionAwareAnimation(`${spin} infinite 3s linear`);
-  const bg = useColorModeValue('gray.50', 'gray.900');
 
   return (
-    <chakra.article p={16} bg={bg}>
+    <chakra.article p={16}>
       <Heading as="h2" id="stack" mb={16} textAlign="center">
         Stack
       </Heading>
@@ -210,9 +165,12 @@ function StackOverview() {
           title="Next.js"
           href="//nextjs.org"
         >
-          Built on top of Next.js, {title} should ideally serve as starting
+          Built on top of Next.js, <Title /> should ideally serve as starting
           point for new projects, but of course may provide inspiration for
-          existing projects.
+          existing projects. <Title /> is built entirely on top of{' '}
+          <Code>getStaticPaths</Code> / <Code>getStaticProps</Code> /
+          <Code>getServerSideProps</Code> and thus supports both{' '}
+          <Code>SSG</Code> & <Code>SSR</Code>!
         </Feature>
 
         <Feature
@@ -221,7 +179,7 @@ function StackOverview() {
           href="//typescriptlang.org"
         >
           To ensure scalability, long-term robustness and decent autocompletion,{' '}
-          {title} is 100% TypeScript.
+          <Title /> is 100% TypeScript.
         </Feature>
 
         <Feature
@@ -231,8 +189,8 @@ function StackOverview() {
         >
           Chakra provides composable and accessible UI building blocks. Instead
           of having to eventually fight it as with other component libraries,
-          Chakra will go out of your way. {title} is maintained by a contributor
-          to Chakra, so it receives first class support.
+          Chakra will go out of your way. <Title /> is maintained by a core
+          contributor to Chakra, so it receives first class support.
         </Feature>
 
         <Feature
@@ -245,8 +203,8 @@ function StackOverview() {
           implemented via{' '}
           <ExternalLink href="//react.i18next.com/">react-i18next</ExternalLink>
           . Similar to{' '}
-          <ExternalLink href="//github.com/isaachinman/next-i18next">
-            next-i18next
+          <ExternalLink href="//github.com/vinissimus/next-translate">
+            next-translate
           </ExternalLink>
           , locales can be included/omitted on a per-page basis and exchanged on
           the fly.
@@ -283,8 +241,8 @@ function StackOverview() {
           learnMoreHref="/docs/testing"
         >
           All tests, integration or unit, run through Jest. To test API routes,
-          a <Code>testLambda</Code> function is included. {title} comes with
-          over 90% code coverage out of the box.
+          a <Code>testLambda</Code> function is included. <Title /> comes with
+          over 95% code coverage out of the box.
         </Feature>
 
         <Feature
@@ -356,8 +314,8 @@ function StackOverview() {
           title="ESLint"
           href="//eslint.org"
         >
-          Built on top of industry standards & community best practices, {title}{' '}
-          comes with{' '}
+          Built on top of industry standards & community best practices,{' '}
+          <Title /> comes with{' '}
           <ExternalLink href="//github.com/ljosberinn/eslint-config-galex">
             my personal eslint config
           </ExternalLink>
@@ -408,71 +366,11 @@ function StackOverview() {
   );
 }
 
-const links = [
-  {
-    href: '//github.com/ljosberinn',
-    icon: FaGithub,
-    text: 'ljosberinn',
-  },
-  {
-    href: '//twitter.com/gerrit_alex',
-    icon: FaTwitter,
-    text: '@gerrit_alex',
-  },
-  {
-    href: '//linkedin.com/in/gerrit-alex/',
-    icon: FaLinkedin,
-    text: 'Gerrit Alex',
-  },
-];
-
-function Footer() {
-  return (
-    <chakra.footer mt={12} mb={20} textAlign="center">
-      <Text fontSize="sm">
-        <Box as="span" ml="3">
-          MIT by <ExternalLink href="//gerritalex.de">Gerrit Alex</ExternalLink>
-        </Box>
-      </Text>
-      <HStack
-        mt={4}
-        direction={['column', 'row']}
-        spacing="12px"
-        justify="center"
-      >
-        {links.map(({ href, icon, text }) => (
-          <ExternalLink omitIcon display="inline-block" href={href} key={href}>
-            <Icon as={icon} fontSize="xl" color="gray.400" /> {text}
-          </ExternalLink>
-        ))}
-      </HStack>
-    </chakra.footer>
-  );
-}
-
 export function Index(): JSX.Element {
   return (
-    <>
-      <Header />
-      <main>
-        <Hero />
-
-        <Divider
-          role={undefined}
-          aria-orientation={undefined}
-          boxSizing="border-box"
-          border="1px solid #d41143"
-        />
-
-        <StackOverview />
-      </main>
-      <Divider
-        role={undefined}
-        aria-orientation={undefined}
-        boxSizing="border-box"
-        border="1px solid #d41143"
-      />
-      <Footer />
-    </>
+    <main>
+      <Hero />
+      <StackOverview />
+    </main>
   );
 }
