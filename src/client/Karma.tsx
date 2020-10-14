@@ -61,7 +61,9 @@ export type WithLayoutHandler = (page: ReactElement) => JSX.Element;
 
 export const layoutPassthrough: WithLayoutHandler = (page) => page;
 
-export const getKarmaWrap = (karmaProps?: KarmaSSGProps | KarmaSSRProps) => {
+export const getKarmaProvider = (
+  karmaProps?: KarmaSSGProps | KarmaSSRProps
+) => {
   return function IsomorphicKarma({
     children,
   }: WithChildren): JSX.Element | ReactElement | null {

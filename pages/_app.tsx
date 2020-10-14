@@ -6,7 +6,7 @@ import type {
   KarmaSSGProps,
   KarmaSSRProps,
 } from '../src/client/Karma';
-import { getKarmaWrap, layoutPassthrough } from '../src/client/Karma';
+import { getKarmaProvider, layoutPassthrough } from '../src/client/Karma';
 import {
   attachRoutingContext,
   ErrorBoundary as TopLevelErrorBoundary,
@@ -31,11 +31,13 @@ export default function App({
   const { withLayout = layoutPassthrough } = Component;
   const { karma, ...rest } = pageProps;
 
-  const Karma = getKarmaWrap(karma);
+  const IsomorphicKarma = getKarmaProvider(karma);
 
   return (
     <TopLevelErrorBoundary showDialog>
-      <Karma {...karma}>{withLayout(<Component {...rest} />)}</Karma>
+      <IsomorphicKarma {...karma}>
+        {withLayout(<Component {...rest} />)}
+      </IsomorphicKarma>
     </TopLevelErrorBoundary>
   );
 }
