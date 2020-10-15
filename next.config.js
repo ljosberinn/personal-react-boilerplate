@@ -54,13 +54,6 @@ const hasSentry =
   SENTRY_AUTH_TOKEN &&
   VERCEL_GITHUB_COMMIT_SHA;
 
-/**
- * a list of packages not to bundle with the frontend
- *
- * @see https://arunoda.me/blog/ssr-and-server-only-modules
- */
-const serverOnlyPackages = [];
-
 const defaultConfig = {
   typescript: {
     /**
@@ -76,26 +69,53 @@ const defaultConfig = {
 
     if (!isServer) {
       config.resolve.alias['@sentry/node'] = '@sentry/react';
-
-      serverOnlyPackages.forEach((package) => {
-        config.plugins.push(new webpack.IgnorePlugin(new RegExp(package)));
-      });
     }
 
-    if (!dev && hasSentry) {
-      config.plugins.push(
-        /**
-         * @see https://docs.sentry.io/product/integrations/vercel/
-         * @see https://github.com/getsentry/sentry-webpack-plugin#options
-         */
-        new SentryWebpackPlugin({
-          include: '.next',
-          ignore: ['node_modules'],
-          urlPrefix: '~/_next',
-          release: VERCEL_GITHUB_COMMIT_SHA,
-        })
-      );
+    if (!dev) {
+      if (hasSentry) {
+        config.plugins.push(
+          /**
+           * @see https://docs.sentry.io/product/integrations/vercel/
+           * @see https://github.com/getsentry/sentry-webpack-plugin#options
+           */
+          new SentryWebpackPlugin({
+            include: '.next',
+            ignore: ['node_modules'],
+            urlPrefix: '~/_next',
+            release: VERCEL_GITHUB_COMMIT_SHA,
+          })
+        );
+      }
+
+      const splitChunks =
+        config.optimization && config.optimization.splitChunks;
+      if (splitChunks) {
+        const cacheGroups = splitChunks.cacheGroups;
+        const test = /[\\/]node_modules[\\/](preact|preact-render-to-string|preact-context-provider)[\\/]/;
+        if (cacheGroups.framework) {
+          cacheGroups.preact = Object.assign({}, cacheGroups.framework, {
+            test,
+          });
+          cacheGroups.commons.name = 'framework';
+        } else {
+          cacheGroups.preact = {
+            name: 'commons',
+            chunks: 'all',
+            test,
+          };
+        }
+      }
+
+      // Install webpack aliases:
+      const aliases = config.resolve.alias || (config.resolve.alias = {});
+      aliases.react = aliases['react-dom'] = 'preact/compat';
+      // aliases["react-ssr-prepass"] = "preact-ssr-prepass";
     }
+
+    // config.resolve.alias['@emotion/react'] = path.resolve(
+    //   __dirname,
+    //   './node_modules/@emotion/react'
+    // );
 
     return config;
   },
