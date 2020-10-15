@@ -3,6 +3,7 @@ import { Link as ChakraLink } from '@chakra-ui/core';
 import type { LinkProps as NextLinkProps } from 'next/dist/client/link';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
+import { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { DEFAULT_DYNAMIC_ROUTE_I18N_FOLDER_NAME } from '../../constants';
@@ -24,6 +25,12 @@ export type InternalLinkProps =
       linkAs?: NextLinkProps['as'];
     };
 
+/**
+ * helper function to safely localize `NextLink.as` prop which can be
+ * - undefined
+ * - a string
+ * - an `Url` object containing the new path in `as.pathname`
+ */
 const localizeAs = (as: NextLinkProps['as']): NextLinkProps['as'] => {
   if (!as) {
     return as;
@@ -43,6 +50,12 @@ const localizeAs = (as: NextLinkProps['as']): NextLinkProps['as'] => {
   };
 };
 
+/**
+ * helper function to safely localize `NextLink.href` prop which can be
+ * - undefined
+ * - a string
+ * - an `Url` object containing the new path in `href.pathname`
+ */
 const localizeHref = (
   href: NextLinkProps['href'],
   language: string
@@ -75,47 +88,54 @@ function useLinkAria(href: NextLinkProps['href']): 'page' | undefined {
   return pathname === href.pathname ? 'page' : undefined;
 }
 
-export function InternalLink({
-  href,
-  shallow,
-  children,
-  prefetch,
-  replace,
-  scroll,
-  linkAs,
-  omitTextDecoration,
-  localized = true,
-  ...rest
-}: InternalLinkProps): JSX.Element {
-  const {
-    i18n: { language },
-  } = useTranslation();
-
-  const ariaCurrent = useLinkAria(href);
-
-  const chakraLinkProps: ChakraLinkProps = {
-    ...rest,
-    _hover: {
-      textDecoration: omitTextDecoration ? 'none' : 'initial',
+export const InternalLink = forwardRef<HTMLAnchorElement, InternalLinkProps>(
+  (
+    {
+      href,
+      shallow,
+      children,
+      prefetch,
+      replace,
+      scroll,
+      linkAs,
+      omitTextDecoration,
+      localized = true,
+      ...rest
     },
-    'aria-current': ariaCurrent,
-  };
+    ref
+  ): JSX.Element => {
+    const {
+      i18n: { language },
+    } = useTranslation();
 
-  const localizedAs = localized ? localizeAs(linkAs) : linkAs;
-  const localizedHref = localized ? localizeHref(href, language) : href;
+    const ariaCurrent = useLinkAria(href);
 
-  const linkProps: NextLinkProps = {
-    as: localizedAs,
-    href: localizedHref,
-    prefetch,
-    replace,
-    scroll,
-    shallow,
-  };
+    const chakraLinkProps: ChakraLinkProps = {
+      ...rest,
+      _hover: {
+        textDecoration: omitTextDecoration ? 'none' : 'initial',
+      },
+      'aria-current': ariaCurrent,
+    };
 
-  return (
-    <NextLink {...linkProps} passHref>
-      <ChakraLink {...chakraLinkProps}>{children}</ChakraLink>
-    </NextLink>
-  );
-}
+    const localizedAs = localized ? localizeAs(linkAs) : linkAs;
+    const localizedHref = localized ? localizeHref(href, language) : href;
+
+    const linkProps: NextLinkProps = {
+      as: localizedAs,
+      href: localizedHref,
+      prefetch,
+      replace,
+      scroll,
+      shallow,
+    };
+
+    return (
+      <NextLink {...linkProps} passHref>
+        <ChakraLink {...chakraLinkProps} ref={ref}>
+          {children}
+        </ChakraLink>
+      </NextLink>
+    );
+  }
+);
