@@ -16,8 +16,8 @@ const error = 'You must be authorized to access this resource.';
  * cookie.
  */
 export const authNSecurityMiddleware: Middleware<
-  AuthenticatedRequest,
-  { error: string }
+  { error: string },
+  AuthenticatedRequest
 > = (req, res, next) => {
   try {
     // verify & decrypt the cookie

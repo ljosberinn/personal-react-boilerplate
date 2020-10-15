@@ -12,7 +12,7 @@ import type { AuthenticatedRequest } from '../auth/types';
 import { authNSecurityMiddleware } from '../middlewares/authNSecurity';
 import type { RequestHandler } from '../types';
 
-const dummyHandler: RequestHandler<AuthenticatedRequest, User> = (req, res) => {
+const dummyHandler: RequestHandler<User, AuthenticatedRequest> = (req, res) => {
   return res.status(OK).json(req[SESSION_COOKIE_NAME]);
 };
 
