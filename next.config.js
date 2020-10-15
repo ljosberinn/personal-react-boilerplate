@@ -1,21 +1,14 @@
-const SentryWebpackPlugin = require('@sentry/webpack-plugin');
 const withOffline = require('next-offline');
 const { withPlugins } = require('next-compose-plugins');
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 });
 
-const {
-  NEXT_PUBLIC_SENTRY_DSN,
-  SENTRY_ORG,
-  SENTRY_PROJECT,
-  SENTRY_AUTH_TOKEN,
-  NODE_ENV,
-  VERCEL_GITHUB_COMMIT_SHA,
-} = process.env;
+console.debug(`> Building on NODE_ENV="${process.env.NODE_ENV}"`);
 
-console.debug(`> Building on NODE_ENV="${NODE_ENV}"`);
-
+/**
+ * @see https://github.com/hanford/next-offline#customizing-service-worker
+ */
 const offlineConfig = {
   target: 'serverless',
   // add the homepage to the cache
@@ -47,12 +40,74 @@ const offlineConfig = {
   },
 };
 
-const hasSentry =
-  NEXT_PUBLIC_SENTRY_DSN &&
-  SENTRY_ORG &&
-  SENTRY_PROJECT &&
-  SENTRY_AUTH_TOKEN &&
-  VERCEL_GITHUB_COMMIT_SHA;
+const withSentry = (config, options) => {
+  if (!options.isServer) {
+    config.resolve.alias['@sentry/node'] = '@sentry/react';
+  }
+
+  /**
+   * enable this if you do _NOT_ use the Vercel Sentry integration
+   * but still want to fully use Sentry
+   *
+   * @see @see https://docs.sentry.io/product/integrations/vercel/
+   */
+
+  // const hasSentry =
+  //   process.env.NEXT_PUBLIC_SENTRY_DSN &&
+  //   process.env.SENTRY_ORG &&
+  //   process.env.SENTRY_PROJECT &&
+  //   process.env.SENTRY_AUTH_TOKEN &&
+  //   process.env.VERCEL_GITHUB_COMMIT_SHA;
+  //
+  // if (hasSentry) {
+  //   const SentryWebpackPlugin = require('@sentry/webpack-plugin');
+  //
+  //   config.plugins.push(
+  //     /**
+  //      * @see https://github.com/getsentry/sentry-webpack-plugin#options
+  //      */
+  //     new SentryWebpackPlugin({
+  //       include: '.next',
+  //       ignore: ['node_modules'],
+  //       urlPrefix: '~/_next',
+  //       release: process.env.VERCEL_GITHUB_COMMIT_SHA,
+  //     })
+  //   );
+  // }
+};
+
+/**
+ * replaces React with Preact in prod
+ * this reduces the bundle size by approx. 32 kB
+ */
+const withPreact = (config, options) => {
+  if (!options.dev) {
+    const splitChunks = config.optimization && config.optimization.splitChunks;
+
+    if (splitChunks) {
+      const cacheGroups = splitChunks.cacheGroups;
+      const test = /[\\/]node_modules[\\/](preact|preact-render-to-string|preact-context-provider)[\\/]/;
+      if (cacheGroups.framework) {
+        cacheGroups.preact = {
+          ...cacheGroups.framework,
+          test,
+        };
+
+        cacheGroups.commons.name = 'framework';
+      } else {
+        cacheGroups.preact = {
+          name: 'commons',
+          chunks: 'all',
+          test,
+        };
+      }
+    }
+
+    const aliases = config.resolve.alias || (config.resolve.alias = {});
+    aliases.react = aliases['react-dom'] = 'preact/compat';
+    aliases['react-ssr-prepass'] = 'preact-ssr-prepass';
+  }
+};
 
 const defaultConfig = {
   typescript: {
@@ -63,59 +118,13 @@ const defaultConfig = {
      */
     ignoreBuildErrors: true,
   },
-  webpack: (config, { isServer, dev, webpack }) => {
-    // Perform customizations to webpack config
-    config.plugins.push(new webpack.IgnorePlugin(/\/__tests__\//));
+  webpack: (config, options) => {
+    // disables transpiling all `__tests__` files, speeding up build process
+    // in case of a barebones karma install, this reduces build time by ~ 25%
+    config.plugins.push(new options.webpack.IgnorePlugin(/\/__tests__\//));
 
-    if (!isServer) {
-      config.resolve.alias['@sentry/node'] = '@sentry/react';
-    }
-
-    if (!dev) {
-      if (hasSentry) {
-        config.plugins.push(
-          /**
-           * @see https://docs.sentry.io/product/integrations/vercel/
-           * @see https://github.com/getsentry/sentry-webpack-plugin#options
-           */
-          new SentryWebpackPlugin({
-            include: '.next',
-            ignore: ['node_modules'],
-            urlPrefix: '~/_next',
-            release: VERCEL_GITHUB_COMMIT_SHA,
-          })
-        );
-      }
-
-      const splitChunks =
-        config.optimization && config.optimization.splitChunks;
-      if (splitChunks) {
-        const cacheGroups = splitChunks.cacheGroups;
-        const test = /[\\/]node_modules[\\/](preact|preact-render-to-string|preact-context-provider)[\\/]/;
-        if (cacheGroups.framework) {
-          cacheGroups.preact = Object.assign({}, cacheGroups.framework, {
-            test,
-          });
-          cacheGroups.commons.name = 'framework';
-        } else {
-          cacheGroups.preact = {
-            name: 'commons',
-            chunks: 'all',
-            test,
-          };
-        }
-      }
-
-      // Install webpack aliases:
-      const aliases = config.resolve.alias || (config.resolve.alias = {});
-      aliases.react = aliases['react-dom'] = 'preact/compat';
-      // aliases["react-ssr-prepass"] = "preact-ssr-prepass";
-    }
-
-    // config.resolve.alias['@emotion/react'] = path.resolve(
-    //   __dirname,
-    //   './node_modules/@emotion/react'
-    // );
+    withSentry(config, options);
+    withPreact(config, options);
 
     return config;
   },
