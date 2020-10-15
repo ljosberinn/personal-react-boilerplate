@@ -10,6 +10,7 @@ export type ColorModeSwitchProps = Omit<
 
 function useThemeMeta() {
   const { toggleColorMode, colorMode } = useColorMode();
+  const { t } = useTranslation('theme');
 
   const isLightMode = colorMode === 'light';
 
@@ -21,14 +22,13 @@ function useThemeMeta() {
     checked,
     icon: <Icon as={icon} boxSize="5" />,
     labelKey,
+    t,
     toggleColorMode,
   };
 }
 
 export function ColorModeSwitch(props: ColorModeSwitchProps): JSX.Element {
-  const { t } = useTranslation('theme');
-
-  const { icon, checked, labelKey, toggleColorMode } = useThemeMeta();
+  const { icon, checked, labelKey, toggleColorMode, t } = useThemeMeta();
 
   return (
     <IconButton

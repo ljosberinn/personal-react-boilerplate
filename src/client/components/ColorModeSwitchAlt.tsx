@@ -13,6 +13,7 @@ const gray = 'gray.500';
 const yellow = 'yellow.500';
 
 function useThemeMeta() {
+  const { t } = useTranslation('theme');
   const { colorMode, toggleColorMode } = useColorMode();
 
   const isLightTheme = colorMode === 'light';
@@ -33,6 +34,7 @@ function useThemeMeta() {
     sunColor,
     sunLabel,
     switchLabel,
+    t,
     toggleColorMode,
   };
 }
@@ -42,8 +44,6 @@ export type ColorModeSwitchAltProps = FlexProps;
 export function ColorModeSwitchAlt(
   props: ColorModeSwitchAltProps
 ): JSX.Element {
-  const { t } = useTranslation('theme');
-
   const {
     toggleColorMode,
     isChecked,
@@ -52,6 +52,7 @@ export function ColorModeSwitchAlt(
     switchLabel,
     moonColor,
     moonLabel,
+    t,
   } = useThemeMeta();
 
   return (
