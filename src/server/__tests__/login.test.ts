@@ -12,10 +12,17 @@ import * as cookieHandling from '../auth/cookie';
 import { loginHandler } from '../auth/routes/login';
 import { expectJSONBodyMiddleware } from '../middlewares';
 
-jest.mock('../auth/cookie', () => ({
-  encryptSession: jest.fn().mockImplementation((user) => JSON.stringify(user)),
-  setSessionCookie: jest.fn(),
-}));
+const setup = () => {
+  const encryptSessionSpy = jest
+    .spyOn(cookieHandling, 'encryptSession')
+    .mockImplementationOnce((user) => JSON.stringify(user));
+  const setSessionCookieSpy = jest.spyOn(cookieHandling, 'setSessionCookie');
+
+  return {
+    encryptSessionSpy,
+    setSessionCookieSpy,
+  };
+};
 
 const url = '/api/v1/auth/login';
 const catchAllName = 'authRouter';
@@ -83,6 +90,8 @@ describe('api/login', () => {
   });
 
   test('attempts to encrypt session on a POST request with valid body', async () => {
+    const { encryptSessionSpy } = setup();
+
     await testLambda(loginHandler, {
       body: { password: 'next-karma!', username: 'ljosberinn' },
       catchAllName,
@@ -90,16 +99,17 @@ describe('api/login', () => {
       middleware,
       url,
     });
-    const encryptSession = jest.spyOn(cookieHandling, 'encryptSession');
 
-    expect(encryptSession).toHaveBeenCalledWith(expect.any(Object));
+    expect(encryptSessionSpy).toHaveBeenCalledWith(expect.any(Object));
 
     await waitFor(() => {
-      expect(encryptSession).toHaveBeenCalledWith(expect.any(Object));
+      expect(encryptSessionSpy).toHaveBeenCalledWith(expect.any(Object));
     });
   });
 
   test('attempts to setSessionCookie on a POST request with valid body', async () => {
+    const { setSessionCookieSpy } = setup();
+
     const response = await testLambda(loginHandler, {
       body: { password: 'next-karma!', username: 'ljosberinn' },
       catchAllName,
@@ -107,10 +117,9 @@ describe('api/login', () => {
       middleware,
       url,
     });
-    const setSessionCookie = jest.spyOn(cookieHandling, 'setSessionCookie');
 
     await waitFor(() => {
-      expect(setSessionCookie).toHaveBeenCalledWith(
+      expect(setSessionCookieSpy).toHaveBeenCalledWith(
         expect.any(String),
         expect.any(Object)
       );

@@ -12,13 +12,16 @@ import {
 import * as cookieUtils from '../../server/auth/cookie';
 import { FOUND_MOVED_TEMPORARILY, UNAUTHORIZED } from '../../utils/statusCodes';
 
-const mockGetServerSideProps = jest
-  .fn()
-  .mockImplementation((_ctx: GetServerSidePropsContext, session: User) => ({
-    props: {
-      session,
-    },
-  }));
+const createMockGetServerSideProps = () =>
+  jest
+    .fn()
+    .mockImplementationOnce(
+      (_ctx: GetServerSidePropsContext, session: User) => ({
+        props: {
+          session,
+        },
+      })
+    );
 
 type CreateContextMockParam = {
   query?: ParsedUrlQuery;
@@ -42,7 +45,7 @@ describe('withSession()', () => {
     const getSessionSpy = jest.spyOn(cookieUtils, 'getSession');
     const mockContext = createContextMock();
 
-    const augmentedHandler = withSession(mockGetServerSideProps);
+    const augmentedHandler = withSession(createMockGetServerSideProps());
     const response = await augmentedHandler(mockContext);
 
     expect(getSessionSpy).toHaveBeenCalledWith(mockContext.req);
@@ -55,7 +58,7 @@ describe('withSession()', () => {
   test('given no session, bails with a redirect header & status', async () => {
     const mockContext = createContextMock();
 
-    const augmentedHandler = withSession(mockGetServerSideProps);
+    const augmentedHandler = withSession(createMockGetServerSideProps());
     await augmentedHandler(mockContext);
 
     expect(mockContext.res.writeHead).toHaveBeenCalledWith(
@@ -67,7 +70,7 @@ describe('withSession()', () => {
   test('given no session, bails with given header & status', async () => {
     const mockContext = createContextMock();
 
-    const augmentedHandler = withSession(mockGetServerSideProps, {
+    const augmentedHandler = withSession(createMockGetServerSideProps(), {
       headers: {},
       status: UNAUTHORIZED,
     });
@@ -87,6 +90,8 @@ describe('withSession()', () => {
         },
       },
     });
+
+    const mockGetServerSideProps = createMockGetServerSideProps();
 
     const augmentedHandler = withSession(mockGetServerSideProps);
 

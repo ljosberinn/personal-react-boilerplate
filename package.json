@@ -113,6 +113,9 @@
     "watchPlugins": [
       "jest-watch-typeahead/filename",
       "jest-watch-typeahead/testname"
-    ]
+    ],
+    "clearMocks": true,
+    "restoreMocks": true,
+    "resetMocks": true
   }
 }
