@@ -12,18 +12,6 @@ import * as cookieHandling from '../auth/cookie';
 import { loginHandler } from '../auth/routes/login';
 import { expectJSONBodyMiddleware } from '../middlewares';
 
-const setup = () => {
-  const encryptSessionSpy = jest
-    .spyOn(cookieHandling, 'encryptSession')
-    .mockImplementationOnce((user) => JSON.stringify(user));
-  const setSessionCookieSpy = jest.spyOn(cookieHandling, 'setSessionCookie');
-
-  return {
-    encryptSessionSpy,
-    setSessionCookieSpy,
-  };
-};
-
 const url = '/api/v1/auth/login';
 const catchAllName = 'authRouter';
 const middleware = expectJSONBodyMiddleware;
@@ -90,7 +78,9 @@ describe('api/login', () => {
   });
 
   test('attempts to encrypt session on a POST request with valid body', async () => {
-    const { encryptSessionSpy } = setup();
+    const encryptSessionSpy = jest
+      .spyOn(cookieHandling, 'encryptSession')
+      .mockImplementationOnce((user) => JSON.stringify(user));
 
     await testLambda(loginHandler, {
       body: { password: 'next-karma!', username: 'ljosberinn' },
@@ -108,7 +98,7 @@ describe('api/login', () => {
   });
 
   test('attempts to setSessionCookie on a POST request with valid body', async () => {
-    const { setSessionCookieSpy } = setup();
+    const setSessionCookieSpy = jest.spyOn(cookieHandling, 'setSessionCookie');
 
     const response = await testLambda(loginHandler, {
       body: { password: 'next-karma!', username: 'ljosberinn' },
