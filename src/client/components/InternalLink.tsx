@@ -103,7 +103,7 @@ export const InternalLink = forwardRef<HTMLAnchorElement, InternalLinkProps>(
       ...rest
     },
     ref
-  ): JSX.Element => {
+  ) => {
     const {
       i18n: { language },
     } = useTranslation();

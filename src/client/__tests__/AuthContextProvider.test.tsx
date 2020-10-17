@@ -1,7 +1,6 @@
 /* eslint-disable jest/require-top-level-describe */
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
-import React from 'react';
 
 import { render, screen, waitFor } from '../../../testUtils';
 import { createUseRouterMock } from '../../../testUtils/router';

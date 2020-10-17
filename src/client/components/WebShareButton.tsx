@@ -1,6 +1,6 @@
 import type { IconButtonProps } from '@chakra-ui/core';
 import { IconButton, Icon } from '@chakra-ui/core';
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { MdShare } from 'react-icons/md';
 
 import { IS_BROWSER } from '../../constants';

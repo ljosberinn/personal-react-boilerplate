@@ -1,6 +1,5 @@
 import * as sentryReact from '@sentry/react';
 import type { GetStaticPropsContext } from 'next';
-import React from 'react';
 
 import { render } from '../../../testUtils';
 import { i18nCache } from '../../../testUtils/i18n';

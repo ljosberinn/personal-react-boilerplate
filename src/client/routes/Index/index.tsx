@@ -113,7 +113,13 @@ function Hero() {
               size="lg"
               ml={4}
               href={gitUrl}
-              leftIcon={<Icon d="flex" as={FaGithub} size="2xl" />}
+              sx={{
+                '.chakra-button__icon > svg': {
+                  height: 5,
+                  width: 5,
+                },
+              }}
+              leftIcon={<Icon d="flex" as={FaGithub} />}
             >
               GitHub
             </Button>

@@ -1,7 +1,6 @@
 import * as sentryReact from '@sentry/react';
 import { render, screen } from '@testing-library/react';
 import { Router } from 'next/router';
-import React from 'react';
 
 import 'whatwg-fetch';
 
@@ -10,10 +9,12 @@ import App, { reportWebVitals } from '../../../pages/_app';
 import { MockRouterContext } from '../../../testUtils/router';
 import { createMockScope } from '../../../testUtils/sentry';
 import * as sentryUtils from '../../utils/sentry/client';
-import type { WithLayoutHandler } from '../Karma';
+import type { LayoutCreator } from '../Karma';
+
+const title = 'next-karma';
 
 const defaultProps: AppRenderProps = {
-  Component: () => null,
+  Component: () => <h1>{title}</h1>,
   pageProps: {
     karma: {
       auth: {
@@ -45,6 +46,8 @@ describe('<App />', () => {
         <MockRouterContext>{children}</MockRouterContext>
       ),
     });
+
+    expect(screen.getByText(title)).toBeInTheDocument();
   });
 
   it('supports persistent layouts', () => {
@@ -55,7 +58,7 @@ describe('<App />', () => {
       return <h1>{content}</h1>;
     }
 
-    const withLayout: WithLayoutHandler = (page) => (
+    const withLayout: LayoutCreator = (page) => (
       <main data-testid={layoutTestId}>{page}</main>
     );
 

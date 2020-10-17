@@ -12,7 +12,7 @@ import type {
 import { useRouter } from 'next/router';
 import type { ParsedUrlQuery } from 'querystring';
 import type { ReactNode, ReactElement } from 'react';
-import { useEffect, isValidElement } from 'react';
+import { useEffect } from 'react';
 import { I18nextProvider } from 'react-i18next';
 
 import { MetaThemeColorSynchronizer } from '../../src/client/components/MetaThemeColorSynchronizer';
@@ -44,40 +44,54 @@ export type WithChildren<Props = {}> = Props & {
  * withLayout support
  *********************/
 
+type IsomorphicKarmaProps = KarmaSSGProps | KarmaSSRProps;
+
 /**
- * Patched `NextComponentType` to support `.withLayout function in `_app`
+ * Patched `NextComponentType` to support attaching `.Layout` component in `_app`
  *
  * @see https://adamwathan.me/2019/10/17/persistent-layout-patterns-in-nextjs/
  */
-export type NextComponentWithKarma = NextComponentType<
+export type KarmaComponent = NextComponentType<
   NextPageContext,
-  object,
-  object
+  Record<string, unknown>,
+  Record<string, unknown>
 > & {
-  withLayout?: WithLayoutHandler;
+  withLayout?: (
+    page: ReactElement,
+    karma?: IsomorphicKarmaProps
+  ) => JSX.Element;
 };
 
-export type WithLayoutHandler = (page: ReactElement) => JSX.Element;
+export type LayoutCreator = (page: ReactElement) => JSX.Element;
 
-export const layoutPassthrough: WithLayoutHandler = (page) => page;
-
-export const getKarmaProvider = (
-  karmaProps?: KarmaSSGProps | KarmaSSRProps
-) => {
-  return function IsomorphicKarma({
-    children,
-  }: WithChildren): JSX.Element | ReactElement | null {
-    if (karmaProps) {
-      if ('cookies' in karmaProps) {
-        return <KarmaSSR {...karmaProps}>{children}</KarmaSSR>;
-      }
-
-      return <KarmaSSG {...karmaProps}>{children}</KarmaSSG>;
-    }
-
-    return isValidElement(children) ? children : null;
+export const withKarma = (createLayout: LayoutCreator) => {
+  return (page: ReactElement, karma: IsomorphicKarmaProps): JSX.Element => {
+    return (
+      <IsomorphicKarma karma={karma}>{createLayout(page)}</IsomorphicKarma>
+    );
   };
 };
+
+type PropsWithKarma<Props extends Record<string, unknown> = {}> = Props & {
+  karma?: IsomorphicKarmaProps;
+};
+
+export function IsomorphicKarma({
+  children,
+  karma,
+}: PropsWithKarma<WithChildren>): JSX.Element {
+  if (karma) {
+    if ('cookies' in karma) {
+      return <KarmaSSR {...karma}>{children}</KarmaSSR>;
+    }
+
+    return <KarmaSSG {...karma}>{children}</KarmaSSG>;
+  }
+
+  // @ts-expect-error children might not be valid, but this is user error and
+  // should throw
+  return children;
+}
 
 /**********************
  * KarmaCore

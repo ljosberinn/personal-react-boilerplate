@@ -2,11 +2,10 @@ import type { NextWebVitalsMetric } from 'next/app';
 import type { NextRouter } from 'next/router';
 
 import type {
-  NextComponentWithKarma,
+  KarmaComponent,
   KarmaSSGProps,
   KarmaSSRProps,
 } from '../src/client/Karma';
-import { getKarmaProvider, layoutPassthrough } from '../src/client/Karma';
 import {
   attachRoutingContext,
   ErrorBoundary as TopLevelErrorBoundary,
@@ -14,9 +13,9 @@ import {
 } from '../src/utils/sentry/client';
 
 export type AppRenderProps = {
-  pageProps: object & { karma?: KarmaSSGProps | KarmaSSRProps };
+  pageProps: unknown & { karma?: KarmaSSGProps | KarmaSSRProps };
   err?: Error;
-  Component: NextComponentWithKarma;
+  Component: KarmaComponent;
   router: NextRouter;
 };
 
@@ -28,16 +27,16 @@ export default function App({
 }: AppRenderProps): JSX.Element | null {
   attachRoutingContext(router, Component);
 
-  const { withLayout = layoutPassthrough } = Component;
+  const { withLayout } = Component;
   const { karma, ...rest } = pageProps;
-
-  const IsomorphicKarma = getKarmaProvider(karma);
 
   return (
     <TopLevelErrorBoundary showDialog>
-      <IsomorphicKarma {...karma}>
-        {withLayout(<Component {...rest} />)}
-      </IsomorphicKarma>
+      {withLayout ? (
+        withLayout(<Component {...rest} />, karma)
+      ) : (
+        <Component {...pageProps} />
+      )}
     </TopLevelErrorBoundary>
   );
 }

@@ -4,10 +4,12 @@ import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaInfoCircle } from 'react-icons/fa';
 
-import { IS_PROD } from '../../../src/constants';
+import { IS_PROD, IS_TEST } from '../../../src/constants';
+import { info } from '../../utils/console';
 import { attachComponentBreadcrumb } from '../../utils/sentry/client';
 
 const sw = '/service-worker.js';
+let hasWarned = false;
 
 type RefreshToastProps = {
   t: TFunction;
@@ -51,7 +53,16 @@ export function ServiceWorker(): null {
   const attemptedRegistration = useRef(false);
 
   useEffect(() => {
-    if ('serviceWorker' in navigator && !attemptedRegistration.current) {
+    const isDev = !IS_PROD && !IS_TEST;
+
+    if (isDev) {
+      if (!hasWarned) {
+        info(
+          `[Karma/ServiceWorker] inactive during devopment! Change "ServiceWorker.tsx" as well as "next.config.js > offlineConfig > generateInDevMode" to enable.`
+        );
+        hasWarned = true;
+      }
+    } else if ('serviceWorker' in navigator && !attemptedRegistration.current) {
       attachComponentBreadcrumb('ServiceWorker');
       attemptedRegistration.current = true;
 
@@ -68,15 +79,6 @@ export function ServiceWorker(): null {
           registration.addEventListener('updatefound', onUpdateFound);
         })
         .catch((error) => {
-          if (!IS_PROD && error instanceof TypeError) {
-            // eslint-disable-next-line no-console
-            console.info(
-              'ServiceWorker is currently deactivated.\nIf this is unintentional, please change `next.config.js.offlineConfig.generateInDevMode` to `true`.'
-            );
-
-            return;
-          }
-
           // eslint-disable-next-line no-console
           console.error(error);
         });

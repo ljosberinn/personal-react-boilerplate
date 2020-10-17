@@ -7,7 +7,6 @@ import {
   Text,
   Box,
 } from '@chakra-ui/core';
-import React from 'react';
 import { FaLinkedin, FaTwitter, FaGithub } from 'react-icons/fa';
 
 import type { WithChildren } from '../Karma';
