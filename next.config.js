@@ -26,6 +26,13 @@ const offlineConfig = {
       /^(?!.*\.module\.js$).*\.js$/,
       // don't cache source maps
       /\.js\.map$/,
+      /**
+       * default values from next-offline which aren't merged in and aren't
+       * exported either
+       * @see https://github.com/hanford/next-offline/blob/master/packages/next-offline/index.js#L10
+       */
+      'react-loadable-manifest.json',
+      'build-manifest.json',
     ],
     runtimeCaching: [
       {
