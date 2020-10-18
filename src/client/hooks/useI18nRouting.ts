@@ -20,6 +20,7 @@ export function useI18nRouting(): UseI18nRoutingType {
   const changeLocale = useCallback(
     async (locale: string) => {
       if (!ENABLED_LANGUAGES.includes(locale)) {
+        /* istanbul ignore next */
         if (!IS_PROD) {
           // eslint-disable-next-line no-console
           console.warn(

@@ -3,9 +3,9 @@ import type { ReactNode } from 'react';
 
 import type { Namespace } from '../../constants';
 import type { User } from '../context/AuthContext/AuthContext';
-import type { I18nextResourceLocale } from '../i18n';
 import type { KarmaSSGProps } from './SSG';
 import type { KarmaSSRProps } from './SSR';
+import type { I18nextResourceLocale } from './i18n';
 
 export type WithChildren<Props = {}> = Props & {
   children: ReactNode;

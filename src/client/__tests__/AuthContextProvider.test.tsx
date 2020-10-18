@@ -100,6 +100,28 @@ describe('<AuthContextProvider />', () => {
       expect(screen.getByTestId('user')).toHaveTextContent('null');
     });
 
+    test('fails gracefully if request fails', async () => {
+      jest.spyOn(window, 'fetch').mockImplementationOnce(() => {
+        throw new Error('test');
+      });
+
+      render(
+        <AuthContextProvider
+          mode="ssg"
+          session={null}
+          shouldAttemptReauthentication
+        >
+          <MockComponent />
+        </AuthContextProvider>,
+        {
+          omitKarmaProvider: true,
+        }
+      );
+
+      expect(screen.getByText(notAuthenticated)).toBeInTheDocument();
+      expect(screen.getByTestId('user')).toHaveTextContent('null');
+    });
+
     describe('given redirectDestinationIfUnauthenticated', () => {
       test('redirects on failure via useRouter', async () => {
         const mockPush = jest.fn().mockResolvedValueOnce(true);

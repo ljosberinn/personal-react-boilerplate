@@ -7,13 +7,13 @@ import {
   FALLBACK_LANGUAGE,
   ENABLED_LANGUAGES,
 } from '../../constants';
-import * as i18n from '../i18n';
 import {
   createGetStaticProps,
   createStaticI18nPaths,
   getStaticProps,
   withKarmaSSGProps,
 } from '../karma/getStaticProps';
+import * as i18n from '../karma/i18n';
 
 const mockCtx: GetStaticPropsContext = {};
 

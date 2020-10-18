@@ -1,7 +1,7 @@
 import { serialize } from 'cookie';
 
 import { createIncomingRequestMock } from '../../../testUtils/api';
-import { i18nCookieName } from '../../client/i18n';
+import { i18nCookieName } from '../../client/karma/i18n';
 import { FALLBACK_LANGUAGE } from '../../constants';
 import {
   detectLanguage,

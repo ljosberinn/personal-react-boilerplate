@@ -4,7 +4,7 @@ import { waitFor } from '@testing-library/react';
 import 'whatwg-fetch';
 import { FALLBACK_LANGUAGE, namespaces } from '../../../src/constants';
 import { i18nCache } from '../../../testUtils/i18n';
-import { getI18n, initI18Next } from '../i18n';
+import { getI18n, initI18Next } from '../karma/i18n';
 
 describe('initI18Next', () => {
   test('creates an i18nInstance without crashing given prod arguments', () => {

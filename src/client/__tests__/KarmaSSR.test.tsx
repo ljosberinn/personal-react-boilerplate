@@ -1,9 +1,9 @@
 import { waitFor, render, screen } from '../../../testUtils';
 import { i18nCache } from '../../../testUtils/i18n';
 import { createUseRouterMock } from '../../../testUtils/router';
-import * as i18n from '../i18n';
 import type { KarmaSSRProps } from '../karma/SSR';
 import { KarmaSSR } from '../karma/SSR';
+import * as i18n from '../karma/i18n';
 
 describe('<KarmaSSR />', () => {
   const defaultProps: KarmaSSRProps = {

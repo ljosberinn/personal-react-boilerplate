@@ -2,7 +2,7 @@ import { readFileSync, readdirSync } from 'fs';
 import type { ResourceStore, i18n } from 'i18next';
 import { resolve } from 'path';
 
-import type { I18nextResources } from '../src/client/i18n';
+import type { I18nextResources } from '../src/client/karma/i18n';
 
 /**
  * reads top level `locales` folder, retrieving all! locales, namespaces and

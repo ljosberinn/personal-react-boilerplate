@@ -4,7 +4,7 @@ import { I18nextProvider } from 'react-i18next';
 import { MetaThemeColorSynchronizer } from '../components/MetaThemeColorSynchronizer';
 import { ServiceWorker } from '../components/ServiceWorker';
 import { AuthContextProvider } from '../context/AuthContext';
-import { initI18Next } from '../i18n';
+import { initI18Next } from './i18n';
 import type { KarmaCoreProps, WithChildren } from './types';
 
 export function KarmaCore({

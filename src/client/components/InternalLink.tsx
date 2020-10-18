@@ -33,20 +33,13 @@ const localizeHref = (
   href: NextLinkProps['href'],
   language: string
 ): NextLinkProps['href'] => {
-  if (!href) {
-    return href;
-  }
-
   if (typeof href === 'string') {
     return `/${language}${href}`;
   }
 
-  if (!href.pathname) {
-    return href;
-  }
-
   return {
     ...href,
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
     pathname: `/${language}${href.pathname}`,
   };
 };

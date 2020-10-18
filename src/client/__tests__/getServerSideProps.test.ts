@@ -21,13 +21,13 @@ import * as sentryUtils from '../../utils/sentry/client';
 import * as sentryUtilsServer from '../../utils/sentry/server';
 import { FOUND_MOVED_TEMPORARILY } from '../../utils/statusCodes';
 import type { User } from '../context/AuthContext/AuthContext';
-import * as i18n from '../i18n';
 import {
   getServerSideProps,
   withKarmaSSRProps,
   createGetServerSideProps,
   getServerSideIndexRedirect,
 } from '../karma/getServerSideProps';
+import * as i18n from '../karma/i18n';
 
 const mockCtx: GetServerSidePropsContext = {
   query: {},

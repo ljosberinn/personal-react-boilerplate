@@ -1,9 +1,8 @@
-// contains lots of inspiration from https://github.com/UnlyEd/next-right-now/blob/v1-ssr-mst-aptd-gcms-lcz-sty/src/utils/i18nextLocize.ts
 import type { i18n as I18nInstance } from 'i18next';
 import i18next from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
-import type { Namespace } from '../../src/constants';
+import type { Namespace } from '../../constants';
 import {
   IS_PROD,
   ENABLED_LANGUAGES,
@@ -11,8 +10,8 @@ import {
   IS_TEST,
   FALLBACK_LANGUAGE,
   namespaces as allNamespaces,
-} from '../../src/constants';
-import type { KarmaCoreProps } from './karma/types';
+} from '../../constants';
+import type { KarmaCoreProps } from './types';
 
 export const i18nCookieName = 'i18next';
 
@@ -127,7 +126,9 @@ export const getI18n = async (
   const bundles = await Promise.all<[Namespace, I18nextNamespace]>(
     namespacesToLoad.map(async (namespace) => {
       // eslint-disable-next-line import/dynamic-import-chunkname
-      const json = await import(`../../locales/${language}/${namespace}.json`);
+      const json = await import(
+        `../../../locales/${language}/${namespace}.json`
+      );
 
       return [namespace, json.default];
     })

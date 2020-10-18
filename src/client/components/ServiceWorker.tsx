@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next';
 import { FaInfoCircle } from 'react-icons/fa';
 
 import { IS_PROD, IS_TEST } from '../../../src/constants';
-import { info } from '../../utils/console';
 
 const sw = '/service-worker.js';
 let hasWarned = false;
@@ -56,8 +55,10 @@ export function ServiceWorker(): null {
 
     if (isDev) {
       if (!hasWarned) {
-        info(
-          `[Karma/ServiceWorker] inactive during devopment! Change "ServiceWorker.tsx" as well as "next.config.js > offlineConfig > generateInDevMode" to enable.`
+        // eslint-disable-next-line no-console
+        console.info(
+          '%c⚠️ [Karma/ServiceWorker] inactive during devopment! Change "ServiceWorker.tsx" as well as "next.config.js > offlineConfig > generateInDevMode" to enable.',
+          'color: orange;'
         );
         hasWarned = true;
       }

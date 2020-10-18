@@ -1,8 +1,8 @@
 import { render } from '../../../testUtils';
 import { i18nCache } from '../../../testUtils/i18n';
-import * as i18n from '../i18n';
 import type { KarmaSSGProps } from '../karma/SSG';
 import { KarmaSSG } from '../karma/SSG';
+import * as i18n from '../karma/i18n';
 
 const defaultProps: KarmaSSGProps = {
   auth: {

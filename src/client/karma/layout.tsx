@@ -22,10 +22,9 @@ export type KarmaComponent = NextComponentType<
 
 export type LayoutCreator = (page: ReactElement) => JSX.Element;
 
-export const layoutWithKarma = (createLayout: LayoutCreator) => {
-  return (page: ReactElement, karma: IsomorphicKarmaProps): JSX.Element => {
-    const layout = createLayout(page);
-
-    return <IsomorphicKarma karma={karma}>{layout}</IsomorphicKarma>;
-  };
-};
+export const layoutWithKarma = (createLayout: LayoutCreator) => (
+  page: ReactElement,
+  karma: IsomorphicKarmaProps
+): JSX.Element => (
+  <IsomorphicKarma karma={karma}>{createLayout(page)}</IsomorphicKarma>
+);

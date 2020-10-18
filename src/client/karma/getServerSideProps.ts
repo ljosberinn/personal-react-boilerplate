@@ -10,8 +10,8 @@ import { detectLanguage } from '../../server/i18n/detectLanguage';
 import { attachInitialContext } from '../../utils/sentry/client';
 import { attachLambdaContext } from '../../utils/sentry/server';
 import { FOUND_MOVED_TEMPORARILY } from '../../utils/statusCodes';
-import { getI18n } from '../i18n';
 import type { KarmaSSRProps } from './SSR';
+import { getI18n } from './i18n';
 import type { IsomorphicI18nRequirements, KarmaCoreProps } from './types';
 
 type NextGetServerSidePropsResultWithoutProps = Omit<

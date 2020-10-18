@@ -10,8 +10,8 @@ import {
   FALLBACK_LANGUAGE,
   ENABLED_LANGUAGES,
 } from '../../constants';
-import { getI18n } from '../i18n';
 import type { KarmaSSGProps } from './SSG';
+import { getI18n } from './i18n';
 import type { IsomorphicI18nRequirements, KarmaCoreProps } from './types';
 
 type NextGetStaticPropsResultWithoutProps = Omit<
