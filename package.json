@@ -22,7 +22,7 @@
     "i18next": "19.8.2",
     "next": "9.5.5",
     "next-connect": "0.9.0",
-    "preact": "10.5.4",
+    "preact": "10.5.5",
     "preact-render-to-string": "5.1.10",
     "preact-ssr-prepass": "1.1.2",
     "react-flag-kit": "0.3.1",
