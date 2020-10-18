@@ -9,7 +9,7 @@ import { getSession } from '../../server/auth/cookie';
 import { detectLanguage } from '../../server/i18n/detectLanguage';
 import { attachInitialContext } from '../../utils/sentry/client';
 import { attachLambdaContext } from '../../utils/sentry/server';
-import { FOUND_MOVED_TEMPORARILY } from '../../utils/statusCodes';
+import { TEMPORARY_REDIRECT } from '../../utils/statusCodes';
 import type { KarmaSSRProps } from './SSR';
 import { getI18n } from './i18n';
 import type { IsomorphicI18nRequirements, KarmaCoreProps } from './types';
@@ -74,7 +74,7 @@ export const getServerSideIndexRedirect: GetServerSidePropsHandler = ({
 }: GetServerSidePropsContext) => {
   const language = detectLanguage(req);
 
-  res.writeHead(FOUND_MOVED_TEMPORARILY, {
+  res.writeHead(TEMPORARY_REDIRECT, {
     Location: `/${language}`,
   });
 
@@ -105,7 +105,7 @@ export const getServerSideProps = async (
   if (!session && authOptions?.redirectDestinationIfUnauthenticated) {
     // client-side routing, see https://github.com/vercel/next.js/discussions/11281#discussioncomment-2384
     if (!req.headers.referer) {
-      res.writeHead(FOUND_MOVED_TEMPORARILY, {
+      res.writeHead(TEMPORARY_REDIRECT, {
         Location: authOptions.redirectDestinationIfUnauthenticated,
       });
 
