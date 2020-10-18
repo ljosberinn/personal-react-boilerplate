@@ -6,7 +6,6 @@ import { useRouter } from 'next/router';
 import { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { DEFAULT_DYNAMIC_ROUTE_I18N_FOLDER_NAME } from '../../constants';
 import type { WithChildren } from '../Karma';
 
 export type InternalLinkProps =
@@ -20,35 +19,9 @@ export type InternalLinkProps =
   }> &
     // `href` is included in `NextLinkProps`, `children` are taken care of
     Omit<ChakraLinkProps, 'href' | 'children'> &
-    // `passHref` must be passed, `as` is proxied to not collide with chakras as
-    Omit<NextLinkProps, 'passHref' | 'as'> & {
-      linkAs?: NextLinkProps['as'];
-    };
-
-/**
- * helper function to safely localize `NextLink.as` prop which can be
- * - undefined
- * - a string
- * - an `Url` object containing the new path in `as.pathname`
- */
-const localizeAs = (as: NextLinkProps['as']): NextLinkProps['as'] => {
-  if (!as) {
-    return as;
-  }
-
-  if (typeof as === 'string') {
-    return `/[${DEFAULT_DYNAMIC_ROUTE_I18N_FOLDER_NAME}]${as}`;
-  }
-
-  if (!as.pathname) {
-    return as;
-  }
-
-  return {
-    ...as,
-    pathname: `/[${DEFAULT_DYNAMIC_ROUTE_I18N_FOLDER_NAME}]${as.pathname}`,
-  };
-};
+    // - `passHref` is internally taken care of
+    // - `as` is outdated since 9.5.3
+    Omit<NextLinkProps, 'passHref' | 'as'>;
 
 /**
  * helper function to safely localize `NextLink.href` prop which can be
@@ -97,7 +70,6 @@ export const InternalLink = forwardRef<HTMLAnchorElement, InternalLinkProps>(
       prefetch,
       replace,
       scroll,
-      linkAs,
       omitTextDecoration,
       localized = true,
       ...rest
@@ -118,11 +90,9 @@ export const InternalLink = forwardRef<HTMLAnchorElement, InternalLinkProps>(
       'aria-current': ariaCurrent,
     };
 
-    const localizedAs = localized ? localizeAs(linkAs) : linkAs;
     const localizedHref = localized ? localizeHref(href, language) : href;
 
     const linkProps: NextLinkProps = {
-      as: localizedAs,
       href: localizedHref,
       prefetch,
       replace,

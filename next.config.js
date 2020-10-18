@@ -49,7 +49,7 @@ const withSentry = (config, options) => {
    * enable this if you do _NOT_ use the Vercel Sentry integration
    * but still want to fully use Sentry
    *
-   * @see @see https://docs.sentry.io/product/integrations/vercel/
+   * @see https://docs.sentry.io/product/integrations/vercel/
    */
 
   // const hasSentry =
@@ -86,7 +86,7 @@ const withPreact = (config, options) => {
 
     if (splitChunks) {
       const cacheGroups = splitChunks.cacheGroups;
-      const test = /[\\/]node_modules[\\/](preact|preact-render-to-string|preact-context-provider)[\\/]/;
+      const test = /[\\/]node_modules[\\/](preact|preact-render-to-string|preact-context-provider)[\\/]/u;
       if (cacheGroups.framework) {
         cacheGroups.preact = {
           ...cacheGroups.framework,

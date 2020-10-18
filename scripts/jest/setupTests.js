@@ -30,7 +30,6 @@ loadEnvConfig(__dirname);
 // eslint-disable-next-line jest/require-top-level-describe
 afterEach(() => {
   window.localStorage.clear();
-  jest.clearAllMocks();
 
   Object.keys(parse(document.cookie)).forEach((key) => {
     document.cookie = serialize(key, '', {
