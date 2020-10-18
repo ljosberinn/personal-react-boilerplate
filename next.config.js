@@ -13,7 +13,6 @@ const offlineConfig = {
   target: 'serverless',
   // add the homepage to the cache
   transformManifest: (manifest) => ['/'].concat(manifest),
-  // turn on the SW in dev mode so that we can actually test it
   generateInDevMode: false,
   dontAutoRegisterSw: true,
   workboxOpts: {
@@ -46,34 +45,30 @@ const withSentry = (config, options) => {
   }
 
   /**
-   * enable this if you do _NOT_ use the Vercel Sentry integration
-   * but still want to fully use Sentry
-   *
    * @see https://docs.sentry.io/product/integrations/vercel/
    */
+  const hasSentry =
+    process.env.NEXT_PUBLIC_SENTRY_DSN &&
+    process.env.SENTRY_ORG &&
+    process.env.SENTRY_PROJECT &&
+    process.env.SENTRY_AUTH_TOKEN &&
+    process.env.VERCEL_GITHUB_COMMIT_SHA;
 
-  // const hasSentry =
-  //   process.env.NEXT_PUBLIC_SENTRY_DSN &&
-  //   process.env.SENTRY_ORG &&
-  //   process.env.SENTRY_PROJECT &&
-  //   process.env.SENTRY_AUTH_TOKEN &&
-  //   process.env.VERCEL_GITHUB_COMMIT_SHA;
-  //
-  // if (hasSentry) {
-  //   const SentryWebpackPlugin = require('@sentry/webpack-plugin');
-  //
-  //   config.plugins.push(
-  //     /**
-  //      * @see https://github.com/getsentry/sentry-webpack-plugin#options
-  //      */
-  //     new SentryWebpackPlugin({
-  //       include: '.next',
-  //       ignore: ['node_modules'],
-  //       urlPrefix: '~/_next',
-  //       release: process.env.VERCEL_GITHUB_COMMIT_SHA,
-  //     })
-  //   );
-  // }
+  if (hasSentry && !options.isServer) {
+    const SentryWebpackPlugin = require('@sentry/webpack-plugin');
+
+    config.plugins.push(
+      /**
+       * @see https://github.com/getsentry/sentry-webpack-plugin#options
+       */
+      new SentryWebpackPlugin({
+        include: '.next',
+        ignore: ['node_modules'],
+        urlPrefix: '~/_next',
+        release: process.env.VERCEL_GITHUB_COMMIT_SHA,
+      })
+    );
+  }
 };
 
 /**

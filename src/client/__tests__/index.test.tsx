@@ -1,6 +1,6 @@
-import Index from '../../../pages/[locale]';
 import { render } from '../../../testUtils';
 import { mockConsoleMethods } from '../../../testUtils/console';
+import Index from '../../pages/[locale]';
 
 describe('<Index />', () => {
   let restoreConsole: ReturnType<typeof mockConsoleMethods>['restoreConsole'];

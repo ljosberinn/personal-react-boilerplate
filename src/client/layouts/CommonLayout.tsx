@@ -9,11 +9,11 @@ import {
 } from '@chakra-ui/core';
 import { FaLinkedin, FaTwitter, FaGithub } from 'react-icons/fa';
 
-import type { WithChildren } from '../Karma';
 import { ColorModeSwitch } from '../components/ColorModeSwitch';
 import { ExternalLink } from '../components/ExternalLink';
 import { LanguageSwitch } from '../components/LanguageSwitch';
 import { WebShareButton } from '../components/WebShareButton';
+import type { WithChildren } from '../karma/types';
 import { KarmaIcon } from '../routes/Index/icons';
 
 export const gitUrl = '//github.com/ljosberinn/next-karma';

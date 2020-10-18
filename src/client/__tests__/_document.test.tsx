@@ -3,10 +3,9 @@ import NextDocument from 'next/document';
 import { isValidElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 
-import Document from '../../../pages/_document';
 import { i18nCache } from '../../../testUtils/i18n';
-import * as sentryUtils from '../../utils/sentry/client';
-import type { KarmaSSRProps } from '../Karma';
+import Document from '../../pages/_document';
+import type { KarmaSSRProps } from '../karma/SSR';
 
 const pageProps: KarmaSSRProps = {
   auth: { session: null },
@@ -69,21 +68,6 @@ describe('<Document />', () => {
 
   it('uses renderDocument of NextDocument', () => {
     expect(Document.renderDocument).toBe(NextDocument.renderDocument);
-  });
-
-  it('attaches a breadcrumb to Sentry', () => {
-    const attachComponentBreadcrumbSpy = jest.spyOn(
-      sentryUtils,
-      'attachComponentBreadcrumb'
-    );
-
-    renderToStaticMarkup(
-      // @ts-expect-error next types are not entirely compatible with a Document
-      // function component
-      Document.renderDocument(Document, defaultProps)
-    );
-
-    expect(attachComponentBreadcrumbSpy).toHaveBeenCalledWith('document');
   });
 
   /**

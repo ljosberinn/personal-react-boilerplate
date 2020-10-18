@@ -4,12 +4,12 @@ import { Router } from 'next/router';
 
 import 'whatwg-fetch';
 
-import type { AppRenderProps } from '../../../pages/_app';
-import App, { reportWebVitals } from '../../../pages/_app';
 import { MockRouterContext } from '../../../testUtils/router';
 import { createMockScope } from '../../../testUtils/sentry';
+import type { AppRenderProps } from '../../pages/_app';
+import App, { reportWebVitals } from '../../pages/_app';
 import * as sentryUtils from '../../utils/sentry/client';
-import type { LayoutCreator } from '../Karma';
+import type { LayoutCreator } from '../karma/layout';
 
 const title = 'next-karma';
 
@@ -101,10 +101,7 @@ describe('<App />', () => {
     });
 
     expect(attachRoutingContextSpy).toHaveBeenCalledTimes(1);
-    expect(attachRoutingContextSpy).toHaveBeenCalledWith(
-      expect.any(Router),
-      defaultProps.Component
-    );
+    expect(attachRoutingContextSpy).toHaveBeenCalledWith(expect.any(Router));
 
     expect(configureScopeSpy).toHaveBeenCalledTimes(1);
     expect(setContextSpy).toHaveBeenCalledWith(

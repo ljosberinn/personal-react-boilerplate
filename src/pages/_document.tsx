@@ -2,8 +2,6 @@ import { ColorModeScript } from '@chakra-ui/core';
 import { captureException } from '@sentry/node';
 import NextDocument, { Html, Head, Main, NextScript } from 'next/document';
 
-import { attachComponentBreadcrumb } from '../src/utils/sentry/client';
-
 /**
  * Send to Sentry all uncaught exceptions.
  *
@@ -24,8 +22,6 @@ const description =
 
 // eslint-disable-next-line import/no-default-export
 export default function CustomDocument(): JSX.Element {
-  attachComponentBreadcrumb('document');
-
   return (
     <Html dir="auto">
       <Head>

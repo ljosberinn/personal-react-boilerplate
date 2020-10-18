@@ -3,9 +3,9 @@ import { render } from '@testing-library/react';
 import type { NextPageContext } from 'next';
 import NextErrorComponent from 'next/error';
 
-import type { ErrorProps } from '../../../pages/_error';
-import ErrorPage, { getInitialProps } from '../../../pages/_error';
 import { createServerResponseMock } from '../../../testUtils/api';
+import type { ErrorProps } from '../../pages/_error';
+import ErrorPage, { getInitialProps } from '../../pages/_error';
 import { NOT_FOUND, INTERNAL_SERVER_ERROR } from '../../utils/statusCodes';
 
 const defaultProps: ErrorProps = {

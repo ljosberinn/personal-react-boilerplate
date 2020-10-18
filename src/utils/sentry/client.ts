@@ -1,10 +1,9 @@
 import type { BrowserOptions } from '@sentry/react';
 import { addBreadcrumb, Severity, init, configureScope } from '@sentry/react';
 import type { IncomingMessage } from 'http';
-import type { NextComponentType } from 'next';
 import type { NextRouter } from 'next/router';
 
-import type { KarmaSSRProps } from '../../client/Karma';
+import type { KarmaSSRProps } from '../../client/karma/SSR';
 import { IS_BROWSER } from '../../constants';
 import { isomorphicSentryInit, defaultOptions } from './shared';
 
@@ -52,10 +51,12 @@ export const attachInitialContext = ({
  *
  * @see https://github.com/UnlyEd/next-right-now/blob/v1-ssr-mst-aptd-gcms-lcz-sty/src/pages/_app.tsx#L158
  */
-export const attachRoutingContext = (
-  { route, pathname, query, asPath }: NextRouter,
-  { displayName, name }: NextComponentType
-): void => {
+export const attachRoutingContext = ({
+  route,
+  pathname,
+  query,
+  asPath,
+}: NextRouter): void => {
   configureScope((scope) => {
     scope.setContext('router', {
       asPath,
@@ -63,16 +64,5 @@ export const attachRoutingContext = (
       query,
       route,
     });
-  });
-
-  // in prod, this will make components show up with their minified name!
-  // however, those names seem to match with the react devtools
-  attachComponentBreadcrumb(displayName ?? name ?? 'unknown');
-};
-
-export const attachComponentBreadcrumb = (name: string): void => {
-  addBreadcrumb({
-    level: Severity.Debug,
-    message: `Preparing "${name}" (${IS_BROWSER ? 'in browser' : 'on server'})`,
   });
 };

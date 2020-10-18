@@ -17,10 +17,10 @@ import {
 import { FaGithub, FaArrowRight } from 'react-icons/fa';
 import { FcSettings } from 'react-icons/fc';
 
-import type { WithChildren } from '../../Karma';
 import { ExternalLink } from '../../components/ExternalLink';
 import { InternalLink } from '../../components/InternalLink';
 import { useMotionAwareAnimation } from '../../hooks/useMotionAwareAnimation';
+import type { WithChildren } from '../../karma/types';
 import { gitUrl } from '../../layouts/CommonLayout';
 import { Feature } from './Feature';
 import {

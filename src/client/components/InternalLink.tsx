@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import type { WithChildren } from '../Karma';
+import type { WithChildren } from '../karma/types';
 
 export type InternalLinkProps =
   // enforce having children

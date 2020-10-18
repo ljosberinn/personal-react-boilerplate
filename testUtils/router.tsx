@@ -2,7 +2,7 @@ import { RouterContext } from 'next/dist/next-server/lib/router-context';
 import type { NextRouter } from 'next/router';
 import * as nextRouter from 'next/router';
 
-import type { WithChildren } from '../src/client/Karma';
+import type { WithChildren } from '../src/client/karma/types';
 
 type MockRouterContextProps = WithChildren<{
   router?: Partial<NextRouter>;

@@ -12,7 +12,7 @@ import {
   FALLBACK_LANGUAGE,
   namespaces as allNamespaces,
 } from '../../src/constants';
-import type { KarmaCoreProps } from './Karma';
+import type { KarmaCoreProps } from './karma/types';
 
 export const i18nCookieName = 'i18next';
 

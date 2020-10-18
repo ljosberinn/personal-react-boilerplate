@@ -6,7 +6,6 @@ import { FaInfoCircle } from 'react-icons/fa';
 
 import { IS_PROD, IS_TEST } from '../../../src/constants';
 import { info } from '../../utils/console';
-import { attachComponentBreadcrumb } from '../../utils/sentry/client';
 
 const sw = '/service-worker.js';
 let hasWarned = false;
@@ -63,7 +62,6 @@ export function ServiceWorker(): null {
         hasWarned = true;
       }
     } else if ('serviceWorker' in navigator && !attemptedRegistration.current) {
-      attachComponentBreadcrumb('ServiceWorker');
       attemptedRegistration.current = true;
 
       navigator.serviceWorker

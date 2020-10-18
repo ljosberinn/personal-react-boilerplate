@@ -1,19 +1,17 @@
 import type { NextWebVitalsMetric } from 'next/app';
 import type { NextRouter } from 'next/router';
+import React, { useEffect } from 'react';
 
-import type {
-  KarmaComponent,
-  KarmaSSGProps,
-  KarmaSSRProps,
-} from '../src/client/Karma';
+import type { KarmaComponent } from '../client/karma/layout';
+import type { IsomorphicKarmaProps } from '../client/karma/types';
 import {
   attachRoutingContext,
   ErrorBoundary as TopLevelErrorBoundary,
   configureScope,
-} from '../src/utils/sentry/client';
+} from '../utils/sentry/client';
 
 export type AppRenderProps = {
-  pageProps: unknown & { karma?: KarmaSSGProps | KarmaSSRProps };
+  pageProps: unknown & { karma?: IsomorphicKarmaProps };
   err?: Error;
   Component: KarmaComponent;
   router: NextRouter;
@@ -25,7 +23,9 @@ export default function App({
   pageProps,
   router,
 }: AppRenderProps): JSX.Element | null {
-  attachRoutingContext(router, Component);
+  useEffect(() => {
+    attachRoutingContext(router);
+  }, [router]);
 
   const { withLayout } = Component;
   const { karma, ...rest } = pageProps;
