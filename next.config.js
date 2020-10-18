@@ -20,12 +20,12 @@ const offlineConfig = {
     clientsClaim: true,
     skipWaiting: true,
     exclude: [
-      {
-        // clients that support service workers most likely support modules too
-        // so it makes no sense to cache non-modules for them as they wouldn't
-        // even load them in the first place
-        test: /^(?!.*\.module\.js$).*\.js$/,
-      },
+      // clients that support service workers most likely support modules too
+      // so it makes no sense to cache non-modules for them as they wouldn't
+      // even load them in the first place
+      /^(?!.*\.module\.js$).*\.js$/,
+      // don't cache source maps
+      /\.js\.map$/,
     ],
     runtimeCaching: [
       {
