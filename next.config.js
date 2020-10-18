@@ -19,6 +19,14 @@ const offlineConfig = {
     swDest: '../public/service-worker.js',
     clientsClaim: true,
     skipWaiting: true,
+    exclude: [
+      {
+        // clients that support service workers most likely support modules too
+        // so it makes no sense to cache non-modules for them as they wouldn't
+        // even load them in the first place
+        test: /^(?!.*\.module\.js$).*\.js$/,
+      },
+    ],
     runtimeCaching: [
       {
         urlPattern: /^https?.*/,
@@ -28,7 +36,8 @@ const offlineConfig = {
           networkTimeoutSeconds: 15,
           expiration: {
             maxEntries: 150,
-            maxAgeSeconds: 30 * 24 * 60 * 60, // 1 month
+            // 1 month
+            maxAgeSeconds: 30 * 24 * 60 * 60,
           },
           cacheableResponse: {
             statuses: [0, 200],
