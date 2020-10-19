@@ -12,13 +12,13 @@ import {
   IconButton,
   Icon,
 } from '@chakra-ui/core';
-import type { TFunction } from 'i18next';
 import type { FlagIconCode } from 'react-flag-kit';
 import { FlagIcon } from 'react-flag-kit';
-import { useTranslation } from 'react-i18next';
 import { MdTranslate } from 'react-icons/md';
 
 import { ENABLED_LANGUAGES } from '../../constants';
+import type { TFunction } from '../context/I18NContext';
+import { useTranslation } from '../context/I18NContext';
 import { useI18nRouting } from '../hooks/useI18nRouting';
 import { ExternalLink } from './ExternalLink';
 
@@ -32,7 +32,7 @@ const flagMap: FlapMap = {
 export type LanguageSwitchAltProps = Omit<MenuProps, 'children' | 'isLazy'>;
 
 export function LanguageSwitch(props: LanguageSwitchAltProps): JSX.Element {
-  const { i18n, t } = useTranslation('i18n');
+  const { t, language } = useTranslation('i18n');
   const backgroundColor = useColorModeValue('gray.100', 'whiteAlpha.100');
   const buttonColor = useColorModeValue('gray.900', 'gray.100');
 
@@ -52,11 +52,11 @@ export function LanguageSwitch(props: LanguageSwitchAltProps): JSX.Element {
           <MenuList sx={styles}>
             <MenuOptionGroup
               title={t('available-languages')}
-              defaultValue={i18n.language}
+              defaultValue={language}
               type="radio"
             >
               {ENABLED_LANGUAGES.map((slug) => {
-                const isCurrentLanguage = slug === i18n.language;
+                const isCurrentLanguage = slug === language;
 
                 const onClick = isCurrentLanguage
                   ? undefined

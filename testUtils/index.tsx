@@ -11,12 +11,15 @@ import type { ConfigData } from 'html-validate/build/config';
 import { axe } from 'jest-axe';
 import type { NextRouter } from 'next/router';
 import { cloneElement, isValidElement } from 'react';
-import { I18nextProvider, useTranslation } from 'react-i18next';
 
 import { AuthContextProvider } from '../src/client/context/AuthContext';
 import type { AuthContextDefinition } from '../src/client/context/AuthContext/AuthContext';
-import { initI18Next } from '../src/client/karma/i18n';
+import {
+  I18NContextProvider,
+  useTranslation,
+} from '../src/client/context/I18NContext';
 import type { WithChildren } from '../src/client/karma/types';
+import type { Namespace } from '../src/constants';
 import { FALLBACK_LANGUAGE } from '../src/constants';
 import { i18nCache } from './i18n';
 import { MockRouterContext } from './router';
@@ -30,17 +33,14 @@ export { act as hookAct } from '@testing-library/react-hooks';
 export { default as userEvent } from '@testing-library/user-event';
 
 type UI = Parameters<typeof rtlRender>[0];
-type Namespace = Parameters<typeof useTranslation>[0];
 type I18NPropAlias = {
-  i18n?: string;
-  ready?: string;
   t?: string;
 };
 
 export type TestOptions = Omit<RenderOptions, 'wrapper'> & {
   /**
-   * allows using `t={jest.fn()} i18n={new MockI18n()} ready={true}` in tests for components
-   * that receive `t`, `i18n` and|or `ready` via props
+   * allows using `t={jest.fn()} ` in tests for components
+   * that receive `t` via props
    *
    * @example
    * ```jsx
@@ -52,11 +52,10 @@ export type TestOptions = Omit<RenderOptions, 'wrapper'> & {
    * });
    *
    * // using aliases in case i18n would overwrite existing props
-   * import { TFunction, i18n } from 'react-i18next';
+   * import { TFunction } from 'react-i18next';
    *
    * interface ComponentProps {
    *   translate: TFunction;
-   *   i18nInstance: i18n;
    * }
    *
    * render(<Component translate={jest.fn()} />, {
@@ -64,7 +63,6 @@ export type TestOptions = Omit<RenderOptions, 'wrapper'> & {
    *    namespace: 'namespace',
    *    alias: {
    *      t: 'translate',
-   *      i18n: 'i18nInstance'
    *    }
    *  }
    * });
@@ -129,23 +127,14 @@ function I18nTestMiddleware({
   namespace,
   alias = {},
 }: I18nTestMiddlewareProps) {
-  const { t, i18n, ready } = useTranslation(namespace);
+  const { t } = useTranslation(namespace);
 
   const props = {
-    [alias.i18n ?? 'i18n']: i18n,
-    [alias.ready ?? 'ready']: ready,
     [alias.t ?? 't']: t,
   };
 
   return isValidElement(children) ? cloneElement(children, props) : null;
 }
-
-// as singleton, else you will see lots of `act` warnings in tests which are
-// technically unrelated to the tested component
-const i18nInstance = initI18Next({
-  i18nCache,
-  language: FALLBACK_LANGUAGE,
-});
 
 type KarmaTestSetupProps = WithChildren &
   Pick<
@@ -166,7 +155,7 @@ function KarmaTestSetup({
       {omitKarmaProvider ? (
         <Wrapper>{children}</Wrapper>
       ) : (
-        <I18nextProvider i18n={i18nInstance}>
+        <I18NContextProvider language={FALLBACK_LANGUAGE} resources={i18nCache}>
           <AuthContextProvider mode="ssr" session={session}>
             <ChakraProvider portalZIndex={40}>
               <Wrapper>
@@ -178,7 +167,7 @@ function KarmaTestSetup({
               </Wrapper>
             </ChakraProvider>
           </AuthContextProvider>
-        </I18nextProvider>
+        </I18NContextProvider>
       )}
     </MockRouterContext>
   );
@@ -344,7 +333,8 @@ type HTMLValidationRules =
   | 'unrecognized-char-ref'
   | 'void'
   | 'void-content'
-  | 'void-style';
+  | 'void-style'
+  | 'no-multiple-main';
 
 // copied from node_modules/html-validate/build/config/config.data.d.ts
 type RuleSeverity = 'off' | 'warn' | 'error' | number;

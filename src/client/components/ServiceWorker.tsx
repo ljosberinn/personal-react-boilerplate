@@ -1,12 +1,15 @@
 import { Box, useToast, Flex, Text, Icon } from '@chakra-ui/core';
-import type { TFunction } from 'i18next';
 import { useEffect, useRef } from 'react';
-import { useTranslation } from 'react-i18next';
 import { FaInfoCircle } from 'react-icons/fa';
 
 import { IS_PROD, IS_TEST } from '../../../src/constants';
+import type { TFunction } from '../context/I18NContext';
+import { useTranslation } from '../context/I18NContext';
 
 const sw = '/service-worker.js';
+/**
+ * intentionally module-scoped to not warn all the time across hot-reloader
+ */
 let hasWarned = false;
 
 type RefreshToastProps = {

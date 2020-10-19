@@ -4,8 +4,8 @@ import type { LinkProps as NextLinkProps } from 'next/dist/client/link';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import { forwardRef } from 'react';
-import { useTranslation } from 'react-i18next';
 
+import { useTranslation } from '../context/I18NContext';
 import type { WithChildren } from '../karma/types';
 
 export type InternalLinkProps =
@@ -69,9 +69,7 @@ export const InternalLink = forwardRef<HTMLAnchorElement, InternalLinkProps>(
     },
     ref
   ) => {
-    const {
-      i18n: { language },
-    } = useTranslation();
+    const { language } = useTranslation();
 
     const ariaCurrent = useLinkAria(href);
 

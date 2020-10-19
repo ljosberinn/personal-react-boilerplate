@@ -93,13 +93,13 @@ export const getStaticProps = async (
   const { auth: authOptions, i18n: i18nOptions, ...rest } = options ?? {};
 
   const language = determinPreferredStaticLanguage(ctx, i18nOptions);
-  const bundle = await getI18n(language, {
+  const resources = await getI18n(language, {
     namespaces: i18nOptions?.namespaces,
   });
 
   const i18n: KarmaSSGProps['i18n'] = {
-    bundle,
     language,
+    resources,
   };
 
   const shouldAttemptReauthentication =

@@ -19,7 +19,7 @@ import * as cookieUtils from '../../server/auth/cookie';
 import * as detectLanguageUtils from '../../server/i18n/detectLanguage';
 import * as sentryUtils from '../../utils/sentry/client';
 import * as sentryUtilsServer from '../../utils/sentry/server';
-import { FOUND_MOVED_TEMPORARILY } from '../../utils/statusCodes';
+import { TEMPORARY_REDIRECT } from '../../utils/statusCodes';
 import type { User } from '../context/AuthContext/AuthContext';
 import {
   getServerSideProps,
@@ -28,6 +28,7 @@ import {
   getServerSideIndexRedirect,
 } from '../karma/getServerSideProps';
 import * as i18n from '../karma/i18n';
+import type { I18nextResourceLocale } from '../karma/i18n';
 
 const mockCtx: GetServerSidePropsContext = {
   query: {},
@@ -36,8 +37,6 @@ const mockCtx: GetServerSidePropsContext = {
   resolvedUrl: '',
 };
 
-const mockBundle = i18nCache[FALLBACK_LANGUAGE];
-
 const setupSpies = () => {
   const getSessionSpy = jest
     .spyOn(cookieUtils, 'getSession')
@@ -45,21 +44,21 @@ const setupSpies = () => {
 
   const getI18nSpy = jest
     .spyOn(i18n, 'getI18n')
-    .mockImplementationOnce((_, { namespaces } = {}) => {
+    .mockImplementationOnce((language, { namespaces } = {}) => {
       if (Array.isArray(namespaces) && namespaces.length > 0) {
-        return Promise.resolve(
-          namespaces.reduce<Partial<i18n.I18nextResourceLocale>>(
+        return Promise.resolve({
+          [language]: namespaces.reduce<Partial<I18nextResourceLocale>>(
             (carry, namespace) => {
-              carry[namespace] = mockBundle[namespace];
+              carry[namespace] = i18nCache[language][namespace];
 
               return carry;
             },
             {}
-          )
-        );
+          ),
+        });
       }
 
-      return Promise.resolve(mockBundle);
+      return Promise.resolve({ [language]: i18nCache[language] });
     });
 
   const detectLanguageSpy = jest
@@ -200,7 +199,7 @@ describe('getServerSideProps', () => {
 
         expect(mockCtx.res.writeHead).toHaveBeenCalledTimes(1);
         expect(mockCtx.res.writeHead).toHaveBeenCalledWith(
-          FOUND_MOVED_TEMPORARILY,
+          TEMPORARY_REDIRECT,
           expect.objectContaining({
             Location: url,
           })
@@ -216,8 +215,8 @@ describe('getServerSideProps', () => {
                 session: null,
               },
               i18n: {
-                bundle: {},
                 language: FALLBACK_LANGUAGE,
+                resources: {},
               },
             },
           },
@@ -252,8 +251,8 @@ describe('getServerSideProps', () => {
                 session: null,
               },
               i18n: {
-                bundle: {},
                 language: FALLBACK_LANGUAGE,
+                resources: {},
               },
             },
           },
@@ -269,7 +268,7 @@ describe('getServerSideProps', () => {
       expect(detectLanguageSpy).toHaveBeenCalledWith(mockCtx.req);
     });
 
-    test('loads i18n bundle', async () => {
+    test('loads i18n resources', async () => {
       const { getI18nSpy } = await setup();
 
       expect(getI18nSpy).toHaveBeenCalledWith(FALLBACK_LANGUAGE, {
@@ -289,8 +288,10 @@ describe('getServerSideProps', () => {
           },
           cookies: '',
           i18n: {
-            bundle: mockBundle,
             language: FALLBACK_LANGUAGE,
+            resources: {
+              [FALLBACK_LANGUAGE]: i18nCache[FALLBACK_LANGUAGE],
+            },
           },
         },
       },
@@ -328,9 +329,9 @@ describe('createGetServerSideProps', () => {
         },
       })(mockCtx);
 
-      expect(result.props.karma.i18n.bundle).toMatchObject(
-        i18nCache[FALLBACK_LANGUAGE]
-      );
+      expect(result.props.karma.i18n.resources).toMatchObject({
+        [FALLBACK_LANGUAGE]: i18nCache[FALLBACK_LANGUAGE],
+      });
     });
 
     test('given a single namespace, loads only that one', async () => {
@@ -340,8 +341,10 @@ describe('createGetServerSideProps', () => {
         mockCtx
       );
 
-      expect(result.props.karma.i18n.bundle).toStrictEqual({
-        [namespaces[0]]: expect.any(Object),
+      expect(result.props.karma.i18n.resources).toStrictEqual({
+        [FALLBACK_LANGUAGE]: {
+          [namespaces[0]]: expect.any(Object),
+        },
       });
     });
   });
@@ -397,8 +400,10 @@ describe('withServerSideKarmaProps', () => {
           },
           cookies: '',
           i18n: {
-            bundle: mockBundle,
             language: FALLBACK_LANGUAGE,
+            resources: {
+              [FALLBACK_LANGUAGE]: i18nCache[FALLBACK_LANGUAGE],
+            },
           },
         },
         ...mockProps,
@@ -456,7 +461,7 @@ describe('getServerSideIndexRedirect', () => {
     await getServerSideIndexRedirect({ query, req, res, resolvedUrl });
 
     expect(writeHead).toHaveBeenCalledTimes(1);
-    expect(writeHead).toHaveBeenCalledWith(FOUND_MOVED_TEMPORARILY, {
+    expect(writeHead).toHaveBeenCalledWith(TEMPORARY_REDIRECT, {
       Location: expect.stringContaining(mockLanguage),
     });
 

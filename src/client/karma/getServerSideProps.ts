@@ -28,7 +28,7 @@ type NextGetServerSidePropsResultWithoutProps = Omit<
  */
 type SSRRedirectPropSubset = Pick<KarmaSSRProps, 'auth'> & {
   i18n: {
-    bundle: {};
+    resources: {};
     language: string;
   };
 };
@@ -122,8 +122,8 @@ export const getServerSideProps = async (
             session: null,
           },
           i18n: {
-            bundle: {},
             language: FALLBACK_LANGUAGE,
+            resources: {},
           },
         },
       },
@@ -131,7 +131,7 @@ export const getServerSideProps = async (
   }
 
   const language = detectLanguage(req);
-  const bundle = await getI18n(language, {
+  const resources = await getI18n(language, {
     namespaces: i18nOptions?.namespaces,
   });
   const cookies = req?.headers.cookie ?? '';
@@ -145,8 +145,8 @@ export const getServerSideProps = async (
   });
 
   const i18n: KarmaSSRProps['i18n'] = {
-    bundle,
     language,
+    resources,
   };
 
   const auth: KarmaSSRProps['auth'] = {

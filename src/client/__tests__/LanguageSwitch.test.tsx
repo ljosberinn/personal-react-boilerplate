@@ -1,5 +1,3 @@
-import i18n from 'i18next';
-
 import {
   render,
   userEvent,
@@ -9,7 +7,7 @@ import {
 } from '../../../testUtils';
 import { mockConsoleMethods } from '../../../testUtils/console';
 import { i18nCache } from '../../../testUtils/i18n';
-import { ENABLED_LANGUAGES } from '../../constants';
+import { ENABLED_LANGUAGES, FALLBACK_LANGUAGE } from '../../constants';
 import { LanguageSwitch } from '../components/LanguageSwitch';
 import * as i18nRoutingHook from '../hooks/useI18nRouting';
 
@@ -22,7 +20,7 @@ const setup = () => {
   userEvent.click(button);
 
   const currentLanguage = ENABLED_LANGUAGES.find(
-    (slug) => i18n.language === slug
+    (slug) => FALLBACK_LANGUAGE === slug
   )!;
 
   const otherLanguages = ENABLED_LANGUAGES.filter(
@@ -82,7 +80,7 @@ describe('<LanguageSwitch />', () => {
     const { currentLanguage } = setup();
 
     const cta = screen.getByRole('menuitem', {
-      name: i18nCache[currentLanguage].i18n['help-cta'],
+      name: i18nCache[currentLanguage].i18n!['help-cta'],
     });
 
     expect(cta).toBeInTheDocument();
@@ -105,7 +103,7 @@ describe('<LanguageSwitch />', () => {
 
     // e.g. i18n.en.i18n.de
     const otherLanguageElement = screen.getByRole('menuitemradio', {
-      name: i18nCache[currentLanguage].i18n[randomOtherLanguage],
+      name: i18nCache[currentLanguage].i18n![randomOtherLanguage],
     });
 
     userEvent.click(otherLanguageElement);

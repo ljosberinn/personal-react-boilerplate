@@ -7,7 +7,9 @@ export function useAuth(): AuthContextDefinition {
   const ctx = useContext(AuthContext);
 
   if (!ctx) {
-    throw new Error('useAuth was called outside of an AuthContextProvider.');
+    throw new Error(
+      '[Karma/useAuth] was called outside of an AuthContextProvider.'
+    );
   }
 
   return ctx;

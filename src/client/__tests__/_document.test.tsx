@@ -4,6 +4,7 @@ import { isValidElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 
 import { i18nCache } from '../../../testUtils/i18n';
+import { FALLBACK_LANGUAGE } from '../../constants';
 import Document from '../../pages/_document';
 import type { KarmaSSRProps } from '../karma/SSR';
 
@@ -11,8 +12,8 @@ const pageProps: KarmaSSRProps = {
   auth: { session: null },
   cookies: '',
   i18n: {
-    bundle: i18nCache.en,
-    language: 'en',
+    language: FALLBACK_LANGUAGE,
+    resources: i18nCache,
   },
 };
 

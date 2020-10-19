@@ -31,8 +31,10 @@ describe('getStaticProps', () => {
               shouldAttemptReauthentication: false,
             },
             i18n: {
-              bundle: i18nCache[FALLBACK_LANGUAGE],
               language: FALLBACK_LANGUAGE,
+              resources: {
+                [FALLBACK_LANGUAGE]: i18nCache[FALLBACK_LANGUAGE],
+              },
             },
           },
         },
@@ -52,10 +54,12 @@ describe('getStaticProps', () => {
               shouldAttemptReauthentication: false,
             },
             i18n: {
-              bundle: {
-                theme: i18nCache[FALLBACK_LANGUAGE].theme,
-              },
               language: FALLBACK_LANGUAGE,
+              resources: {
+                [FALLBACK_LANGUAGE]: {
+                  theme: i18nCache[FALLBACK_LANGUAGE].theme,
+                },
+              },
             },
           },
         },
@@ -82,8 +86,10 @@ describe('getStaticProps', () => {
               shouldAttemptReauthentication: false,
             },
             i18n: {
-              bundle: i18nCache[language],
               language,
+              resources: {
+                [language]: i18nCache[language],
+              },
             },
           },
         },
@@ -112,10 +118,12 @@ describe('getStaticProps', () => {
               shouldAttemptReauthentication: false,
             },
             i18n: {
-              bundle: {
-                theme: i18nCache[language].theme,
-              },
               language,
+              resources: {
+                [language]: {
+                  theme: i18nCache[language].theme,
+                },
+              },
             },
           },
         },
@@ -254,8 +262,10 @@ describe('withKarmaSSGProps', () => {
             shouldAttemptReauthentication: false,
           },
           i18n: {
-            bundle: i18nCache[FALLBACK_LANGUAGE],
             language: FALLBACK_LANGUAGE,
+            resources: {
+              [FALLBACK_LANGUAGE]: i18nCache[FALLBACK_LANGUAGE],
+            },
           },
         },
         ...mockProps,

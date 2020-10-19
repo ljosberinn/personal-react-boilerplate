@@ -5,7 +5,7 @@ import type { Namespace } from '../../constants';
 import type { User } from '../context/AuthContext/AuthContext';
 import type { KarmaSSGProps } from './SSG';
 import type { KarmaSSRProps } from './SSR';
-import type { I18nextResourceLocale } from './i18n';
+import type { I18nextResources } from './i18n';
 
 export type WithChildren<Props = {}> = Props & {
   children: ReactNode;
@@ -49,7 +49,7 @@ export type KarmaCoreProps = {
     /**
      * The initial bundle to initialize i18n with
      */
-    bundle: I18nextResourceLocale | Partial<I18nextResourceLocale>;
+    resources: I18nextResources;
   };
 
   auth: {

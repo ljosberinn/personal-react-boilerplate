@@ -6,8 +6,9 @@ import {
   forwardRef,
   Icon as ChakraIcon,
 } from '@chakra-ui/core';
-import { useTranslation } from 'react-i18next';
 import { FaSun, FaMoon } from 'react-icons/fa';
+
+import { useTranslation } from '../context/I18NContext';
 
 const gray = 'gray.500';
 const yellow = 'yellow.500';

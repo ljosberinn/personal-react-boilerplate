@@ -40,7 +40,7 @@ describe('hooks/useAuth', () => {
     });
 
     expect(result.error.message).toBe(
-      'useAuth was called outside of an AuthContextProvider.'
+      '[Karma/useAuth] was called outside of an AuthContextProvider.'
     );
   });
 

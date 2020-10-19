@@ -17,8 +17,8 @@ const ssgProps: KarmaSSGProps = {
     shouldAttemptReauthentication: false,
   },
   i18n: {
-    bundle: i18nCache[FALLBACK_LANGUAGE],
     language: FALLBACK_LANGUAGE,
+    resources: i18nCache,
   },
 };
 

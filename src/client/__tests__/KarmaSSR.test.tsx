@@ -1,33 +1,15 @@
 import { waitFor, render, screen } from '../../../testUtils';
 import { i18nCache } from '../../../testUtils/i18n';
 import { createUseRouterMock } from '../../../testUtils/router';
+import { FALLBACK_LANGUAGE } from '../../constants';
 import type { KarmaSSRProps } from '../karma/SSR';
 import { KarmaSSR } from '../karma/SSR';
-import * as i18n from '../karma/i18n';
 
 describe('<KarmaSSR />', () => {
-  const defaultProps: KarmaSSRProps = {
-    auth: {
-      session: null,
-    },
-    cookies: '',
-    i18n: {
-      bundle: i18nCache.de,
-      language: 'en',
-    },
+  const defaultI18n: KarmaSSRProps['i18n'] = {
+    language: FALLBACK_LANGUAGE,
+    resources: i18nCache,
   };
-
-  test('Core initializes i18next', () => {
-    const initI18NSpy = jest.spyOn(i18n, 'initI18Next');
-
-    render(<KarmaSSR {...defaultProps}>next-karma</KarmaSSR>, {
-      omitKarmaProvider: true,
-    });
-
-    expect(initI18NSpy).toHaveBeenCalledWith(
-      expect.objectContaining(defaultProps.i18n)
-    );
-  });
 
   describe('client side redirect given no session and redirectDestinationIfUnauthenticated', () => {
     const realLocation = window.location;
@@ -54,7 +36,7 @@ describe('<KarmaSSR />', () => {
           session: null,
         },
         cookies: '',
-        i18n: defaultProps.i18n,
+        i18n: defaultI18n,
       };
 
       render(<KarmaSSR {...props}>next-karma</KarmaSSR>, {
@@ -84,7 +66,7 @@ describe('<KarmaSSR />', () => {
           session: null,
         },
         cookies: '',
-        i18n: defaultProps.i18n,
+        i18n: defaultI18n,
       };
 
       render(<KarmaSSR {...props}>next-karma</KarmaSSR>, {

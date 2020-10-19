@@ -1,5 +1,3 @@
-import i18n from 'i18next';
-
 import { hookAct, renderHook } from '../../../testUtils';
 import { mockConsoleMethods } from '../../../testUtils/console';
 import {
@@ -11,8 +9,6 @@ import { useI18nRouting } from '../hooks/useI18nRouting';
 
 const setup = ({ replace = jest.fn(), locale = FALLBACK_LANGUAGE }) => {
   jest.spyOn(window.location, 'assign');
-
-  const changeLocaleSpy = jest.spyOn(i18n, 'changeLanguage');
 
   const mockRoute = `[${DEFAULT_DYNAMIC_ROUTE_I18N_FOLDER_NAME}]/foo/bar/baz`;
   const expectedRoute = mockRoute.replace(
@@ -29,7 +25,6 @@ const setup = ({ replace = jest.fn(), locale = FALLBACK_LANGUAGE }) => {
   });
 
   return {
-    changeLocaleSpy,
     expectedRoute,
     mockRoute,
     replace,
@@ -99,22 +94,11 @@ describe('hooks/useI18nRouting', () => {
         expect(window.location.assign).toHaveBeenCalledTimes(1);
         expect(window.location.assign).toHaveBeenCalledWith(expectedRoute);
       });
-
-      test('changes i18n instance language on changeLocale execution', async () => {
-        const { changeLocaleSpy, result } = setup({ locale });
-
-        await hookAct(async () => {
-          await result.current.changeLocale(locale);
-        });
-
-        expect(changeLocaleSpy).toHaveBeenCalledTimes(1);
-        expect(changeLocaleSpy).toHaveBeenCalledWith(locale);
-      });
     });
 
     describe('createChangeLocaleHandler', () => {
       test('resulting function changes locale', async () => {
-        const { result, changeLocaleSpy, replace, expectedRoute } = setup({
+        const { result, replace, expectedRoute } = setup({
           locale,
         });
 
@@ -123,9 +107,6 @@ describe('hooks/useI18nRouting', () => {
         await hookAct(async () => {
           await handler();
         });
-
-        expect(changeLocaleSpy).toHaveBeenCalledTimes(1);
-        expect(changeLocaleSpy).toHaveBeenCalledWith(locale);
 
         expect(replace).toHaveBeenCalledTimes(1);
         expect(replace).toHaveBeenCalledWith(expectedRoute);

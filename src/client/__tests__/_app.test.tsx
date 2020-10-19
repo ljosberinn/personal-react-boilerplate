@@ -6,6 +6,7 @@ import 'whatwg-fetch';
 
 import { MockRouterContext } from '../../../testUtils/router';
 import { createMockScope } from '../../../testUtils/sentry';
+import { FALLBACK_LANGUAGE } from '../../constants';
 import type { AppRenderProps } from '../../pages/_app';
 import App, { reportWebVitals } from '../../pages/_app';
 import * as sentryUtils from '../../utils/sentry/client';
@@ -22,8 +23,8 @@ const defaultProps: AppRenderProps = {
       },
       cookies: '',
       i18n: {
-        bundle: {},
-        language: 'en',
+        language: FALLBACK_LANGUAGE,
+        resources: {},
       },
     },
   },
