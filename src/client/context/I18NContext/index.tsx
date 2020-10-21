@@ -2,6 +2,7 @@ import { useCallback, useContext, useEffect } from 'react';
 
 import type { Namespace } from '../../../constants';
 import { IS_BROWSER, IS_PROD } from '../../../constants';
+import { i18nCookieName } from '../../karma/i18n';
 import type { WithChildren } from '../../karma/types';
 import type { I18NContextDefinition } from './I18NContext';
 import { I18NContext } from './I18NContext';
@@ -43,23 +44,56 @@ const normalize = ({
   return [undefined, key];
 };
 
-const warnCache = IS_PROD ? undefined : new Set<string>();
-
 const warn = IS_PROD
   ? undefined
-  : (key: string) => {
-      if (!warnCache?.has(key)) {
-        // eslint-disable-next-line no-console
-        console.warn(
-          `%c⚠️ [Karma/t] unknown i18n key "${key}"`,
-          'color: orange;'
-        );
+  : (() => {
+      const caches = {
+        exists: new Set<string>(),
+        interpolation: new Set<string>(),
+      };
 
-        warnCache?.add(key);
-      }
-    };
+      return {
+        add: (cache: keyof typeof caches, key: string) => {
+          if (!caches[cache].has(key)) {
+            const message =
+              cache === 'exists'
+                ? `unknown i18n key "${key}"`
+                : `invalid interpolation for "${key}"`;
 
-export type TFunction = (key: string | [Namespace, string]) => string;
+            // eslint-disable-next-line no-console
+            console.warn(`%c⚠️ [Karma/t] ${message}`, 'color: orange;');
+
+            caches[cache].add(key);
+          }
+        },
+      };
+    })();
+
+type Interpolation = Record<string, string | number>;
+
+const interpolate = (
+  match: string,
+  interpolation: Interpolation,
+  { namespace, key }: { namespace: string; key: string }
+): string => {
+  return Object.entries(interpolation).reduce((carry, [placeholder, value]) => {
+    const ph = `{{${placeholder}}}`;
+    const exists = carry.includes(ph);
+
+    if (exists) {
+      return carry.replace(ph, `${value}`);
+    }
+
+    warn?.add('interpolation', `${ph}@${namespace}:${key}`);
+
+    return carry;
+  }, match);
+};
+
+export type TFunction = (
+  key: string | [Namespace, string],
+  interpolation?: Interpolation
+) => string;
 export type UseTranslationReturn = {
   language: string;
   t: TFunction;
@@ -69,31 +103,36 @@ export function useTranslation(namespace?: Namespace): UseTranslationReturn {
   const ctx = useContext(I18NContext);
 
   const t: TFunction = useCallback(
-    (key: string | [Namespace, string]): string => {
+    (key, interpolation): string => {
       // no bundle, only cry
       if (!ctx?.resources || !ctx?.language) {
         return Array.isArray(key) ? key.join(':') : key;
       }
 
-      const { language, resources } = ctx;
-
       const [safeNamespace, safeKey] = normalize({ key, namespace });
 
       if (safeNamespace) {
-        const match = resources[language][safeNamespace]?.[safeKey];
+        const match = ctx.resources[ctx.language][safeNamespace]?.[safeKey];
 
         if (match) {
+          if (interpolation) {
+            return interpolate(match, interpolation, {
+              key: safeKey,
+              namespace: safeNamespace,
+            });
+          }
+
           return match;
         }
 
         const merged = `${safeNamespace}:${safeKey}`;
 
-        warn?.(merged);
+        warn?.add('exists', merged);
 
         return merged;
       }
 
-      warn?.(safeKey);
+      warn?.add('exists', safeKey);
 
       return safeKey;
     },
@@ -108,7 +147,6 @@ export function useTranslation(namespace?: Namespace): UseTranslationReturn {
 
   return { language: ctx.language, t };
 }
-
 export type I18NContextProvider = WithChildren<I18NContextDefinition>;
 
 export function I18NContextProvider({
@@ -143,7 +181,7 @@ export function I18NContextProvider({
 
         html.setAttribute('dir', RTL_LANGUAGES.has(language) ? 'rtl' : 'ltr');
 
-        document.cookie = `$NEXT_LOCALE=${language}; max-age=31536000; path=/`;
+        document.cookie = `${i18nCookieName}=${language}; max-age=31536000; path=/`;
 
         // set initially aswell
         html.setAttribute('lang', language);

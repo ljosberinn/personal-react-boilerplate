@@ -2,8 +2,10 @@ import { render, screen } from '@testing-library/react';
 
 import { mockConsoleMethods } from '../../../testUtils/console';
 import { i18nCache } from '../../../testUtils/i18n';
+import type { Namespace } from '../../constants';
 import { FALLBACK_LANGUAGE } from '../../constants';
 import { I18NContextProvider, useTranslation } from '../context/I18NContext';
+import type { I18nextResources } from '../karma/i18n';
 
 const ns = 'i18n';
 const key = 'language-toggle';
@@ -138,6 +140,92 @@ describe('<I18NContextProvder />', () => {
 
     expect(screen.getAllByText(invalidKey1)).toHaveLength(2);
     expect(screen.getAllByText(invalidKey2)).toHaveLength(2);
+
+    restoreConsole();
+  });
+
+  test('interpolates variables', () => {
+    const ns: Namespace = 'serviceWorker';
+    const placeholder = '{{randomNumber}}';
+    const value = `coming up - a random number: ${placeholder}`;
+
+    const randomNumber = Math.random();
+
+    const mockCache: I18nextResources = {
+      [FALLBACK_LANGUAGE]: {
+        [ns]: {
+          [key]: value,
+        },
+      },
+    };
+
+    function MockComponent() {
+      const { t } = useTranslation(ns);
+
+      return (
+        <h1>
+          {t(key, {
+            randomNumber,
+          })}
+        </h1>
+      );
+    }
+
+    render(
+      <I18NContextProvider language={FALLBACK_LANGUAGE} resources={mockCache}>
+        <MockComponent />
+      </I18NContextProvider>
+    );
+
+    const expected = value.replace(placeholder, `${randomNumber}`);
+
+    expect(screen.getByText(expected)).toBeInTheDocument();
+  });
+
+  test('warns when trying to interpolate a nonexistant variable', () => {
+    const { restoreConsole } = mockConsoleMethods('warn');
+
+    const ns: Namespace = 'serviceWorker';
+    const placeholder = '{{placeholder}}';
+    const value = `coming up - a random number: ${placeholder}`;
+
+    const randomNumber = Math.random();
+
+    const mockCache: I18nextResources = {
+      [FALLBACK_LANGUAGE]: {
+        [ns]: {
+          [key]: value,
+        },
+      },
+    };
+
+    function MockComponent() {
+      const { t } = useTranslation(ns);
+
+      return (
+        <h1>
+          {t(key, {
+            randomNumber,
+          })}
+          {t(key, {
+            randomNumber,
+          })}
+        </h1>
+      );
+    }
+
+    render(
+      <I18NContextProvider language={FALLBACK_LANGUAGE} resources={mockCache}>
+        <MockComponent />
+      </I18NContextProvider>
+    );
+
+    const unexpected = value.replace(placeholder, `${randomNumber}`);
+
+    expect(screen.queryByText(unexpected)).not.toBeInTheDocument();
+
+    // eslint-disable-next-line no-console
+    expect(console.warn).toHaveBeenCalledTimes(1);
 
     restoreConsole();
   });
