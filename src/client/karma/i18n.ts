@@ -5,7 +5,7 @@ import {
   namespaces as allNamespaces,
 } from '../../constants';
 
-export const i18nCookieName = 'i18next';
+export const i18nCookieName = 'NEXT_LOCALE';
 
 export declare type I18nextNamespace = Record<string, string>;
 
