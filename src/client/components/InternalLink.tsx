@@ -75,9 +75,7 @@ export const InternalLink = forwardRef<HTMLAnchorElement, InternalLinkProps>(
 
     const chakraLinkProps: ChakraLinkProps = {
       ...rest,
-      _hover: {
-        textDecoration: omitTextDecoration ? 'none' : 'initial',
-      },
+      ...(omitTextDecoration ? { _hover: { textDecoration: 'none' } } : null),
       'aria-current': ariaCurrent,
     };
 
