@@ -135,13 +135,12 @@ const defaultConfig = {
     config.plugins.push(new options.webpack.IgnorePlugin(/\/__tests__\//));
 
     withSentry(config, options);
-    withPreact(config, options);
+    // withPreact(config, options);
 
     return config;
   },
   reactStrictMode: true,
   experimental: {
-    modern: true,
     // bugged with Sentry, see https://github.com/vercel/next.js/issues/17073
     // scrollRestoration: true,
     productionBrowserSourceMaps: true,
