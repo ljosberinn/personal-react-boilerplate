@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect } from 'react';
+import { useCallback, useContext, useEffect, useMemo } from 'react';
 
 import type { Namespace } from '../../../constants';
 import { IS_BROWSER, IS_PROD } from '../../../constants';
@@ -99,44 +99,42 @@ export type UseTranslationReturn = {
   t: TFunction;
 };
 
-export function useTranslation(namespace?: Namespace): UseTranslationReturn {
+export function useTranslation(ns?: Namespace): UseTranslationReturn {
   const ctx = useContext(I18NContext);
 
   const t: TFunction = useCallback(
-    (key, interpolation): string => {
+    (maybeKey, interpolation): string => {
       // no bundle, only cry
       if (!ctx?.resources || !ctx?.language) {
-        return Array.isArray(key) ? key.join(':') : key;
+        return Array.isArray(maybeKey) ? maybeKey.join(':') : maybeKey;
       }
 
-      const [safeNamespace, safeKey] = normalize({ key, namespace });
+      const [namespace, key] = normalize({ key: maybeKey, namespace: ns });
 
-      if (safeNamespace) {
-        const match = ctx.resources[ctx.language][safeNamespace]?.[safeKey];
+      if (namespace) {
+        const match = ctx.resources[ctx.language][namespace]?.[key];
 
         if (match) {
-          if (interpolation) {
-            return interpolate(match, interpolation, {
-              key: safeKey,
-              namespace: safeNamespace,
-            });
-          }
-
-          return match;
+          return interpolation
+            ? interpolate(match, interpolation, {
+                key,
+                namespace,
+              })
+            : match;
         }
 
-        const merged = `${safeNamespace}:${safeKey}`;
+        const merged = `${namespace}:${key}`;
 
         warn?.add('exists', merged);
 
         return merged;
       }
 
-      warn?.add('exists', safeKey);
+      warn?.add('exists', key);
 
-      return safeKey;
+      return key;
     },
-    [ctx, namespace]
+    [ctx, ns]
   );
 
   if (!ctx) {
@@ -145,7 +143,13 @@ export function useTranslation(namespace?: Namespace): UseTranslationReturn {
     );
   }
 
-  return { language: ctx.language, t };
+  return useMemo(
+    () => ({
+      language: ctx.language,
+      t,
+    }),
+    [ctx.language, t]
+  );
 }
 export type I18NContextProvider = WithChildren<I18NContextDefinition>;
 

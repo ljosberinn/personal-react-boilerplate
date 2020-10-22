@@ -33,15 +33,25 @@ const localizeHref = (
   href: NextLinkProps['href'],
   language: string
 ): NextLinkProps['href'] => {
+  // forward `undefined` because `next/link` will throw anyways
+  if (!href) {
+    return href;
+  }
+
   if (typeof href === 'string') {
     return `/${language}${href}`;
   }
 
-  return {
-    ...href,
-    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-    pathname: `/${language}${href.pathname}`,
-  };
+  if (href.pathname) {
+    return {
+      ...href,
+      pathname: `/${language}${href.pathname}`,
+    };
+  }
+
+  // forward `href.pathname` being `undefined` because `next/link` will
+  // throw anyways
+  return href;
 };
 
 function useLinkAria(href: NextLinkProps['href']): 'page' | undefined {
