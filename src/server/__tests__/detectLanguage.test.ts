@@ -1,8 +1,7 @@
 import { serialize } from 'cookie';
 
 import { createIncomingRequestMock } from '../../../testUtils/api';
-import { i18nCookieName } from '../../client/karma/i18n';
-import { FALLBACK_LANGUAGE } from '../../constants';
+import { FALLBACK_LANGUAGE, I18N_COOKIE_NAME } from '../../constants';
 import {
   detectLanguage,
   findLanguageByAcceptLanguageHeader,
@@ -18,12 +17,12 @@ jest.mock('../../../src/constants', () => {
 });
 
 describe('detectLanguage', () => {
-  test('given relevant cookies, uses i18nCookieName to extract', () => {
+  test('given relevant cookies, uses I18N_COOKIE_NAME to extract', () => {
     const expectedLanguage = 'de';
 
     const mockContext = createIncomingRequestMock({
       headers: {
-        cookie: serialize(i18nCookieName, expectedLanguage),
+        cookie: serialize(I18N_COOKIE_NAME, expectedLanguage),
       },
     });
 
@@ -35,7 +34,7 @@ describe('detectLanguage', () => {
 
     const mockContext = createIncomingRequestMock({
       headers: {
-        cookie: serialize(i18nCookieName, expectedLanguage),
+        cookie: serialize(I18N_COOKIE_NAME, expectedLanguage),
       },
     });
 

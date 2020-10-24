@@ -1,8 +1,11 @@
 import { parse } from 'cookie';
 import type { IncomingMessage } from 'http';
 
-import { ENABLED_LANGUAGES, FALLBACK_LANGUAGE } from '../../../src/constants';
-import { i18nCookieName } from '../../client/karma/i18n';
+import {
+  ENABLED_LANGUAGES,
+  FALLBACK_LANGUAGE,
+  I18N_COOKIE_NAME,
+} from '../../../src/constants';
 
 // eslint-disable-next-line unicorn/no-unsafe-regex
 const regExp = /(?<language>[a-z]{2})(?:-[a-z]{2,4}){0,2}(?:;q=(?<quality>\d(?:\.\d+)?)?)?/giu;
@@ -46,7 +49,7 @@ export const findLanguageByAcceptLanguageHeader = (header: string): string =>
  */
 export const detectLanguage = ({ headers }: IncomingMessage): string => {
   const serverCookies = headers.cookie ? parse(headers.cookie) : {};
-  const languageByCookie = serverCookies[i18nCookieName];
+  const languageByCookie = serverCookies[I18N_COOKIE_NAME];
 
   // previous visit, acknowledge
   if (languageByCookie && ENABLED_LANGUAGES.includes(languageByCookie)) {

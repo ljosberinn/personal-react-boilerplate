@@ -1,8 +1,7 @@
 import { useCallback, useContext, useEffect, useMemo } from 'react';
 
 import type { Namespace } from '../../../constants';
-import { IS_BROWSER, IS_PROD } from '../../../constants';
-import { i18nCookieName } from '../../karma/i18n';
+import { IS_BROWSER, IS_PROD, I18N_COOKIE_NAME } from '../../../constants';
 import type { WithChildren } from '../../karma/types';
 import type { I18NContextDefinition } from './I18NContext';
 import { I18NContext } from './I18NContext';
@@ -185,7 +184,7 @@ export function I18NContextProvider({
 
         html.setAttribute('dir', RTL_LANGUAGES.has(language) ? 'rtl' : 'ltr');
 
-        document.cookie = `${i18nCookieName}=${language}; max-age=31536000; path=/`;
+        document.cookie = `${I18N_COOKIE_NAME}=${language}; max-age=31536000; path=/`;
 
         // set initially aswell
         html.setAttribute('lang', language);

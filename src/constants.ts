@@ -50,6 +50,11 @@ export const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET!;
  *********************/
 
 /**
+ * default cookie name next uses
+ */
+export const I18N_COOKIE_NAME = 'NEXT_LOCALE' as const;
+
+/**
  * string joined by `,` - containing all currently enabled languages
  *
  * @default en,de
