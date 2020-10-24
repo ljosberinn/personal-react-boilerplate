@@ -146,8 +146,8 @@ const defaultConfig = {
     productionBrowserSourceMaps: true,
     // i18n: {
     //   localeDetection: true,
-    //   defaultLocale: 'de',
-    //   locales: ['de', 'en'],
+    //   defaultLocale: process.env.NEXT_PUBLIC_FALLBACK_LANGUAGE,
+    //   locales: process.env.NEXT_PUBLIC_ENABLED_LANGUAGES.split(','),
     // },
   },
 };
