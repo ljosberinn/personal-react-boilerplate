@@ -2,7 +2,7 @@ import type { IconButtonProps } from '@chakra-ui/core';
 import { useColorMode, IconButton, Icon } from '@chakra-ui/core';
 import { FaSun, FaMoon } from 'react-icons/fa';
 
-import { useTranslation } from '../context/I18NContext';
+import { useTranslation } from '../hooks/useTranslation';
 
 export type ColorModeSwitchProps = Omit<
   IconButtonProps,

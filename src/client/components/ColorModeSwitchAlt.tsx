@@ -8,7 +8,7 @@ import {
 } from '@chakra-ui/core';
 import { FaSun, FaMoon } from 'react-icons/fa';
 
-import { useTranslation } from '../context/I18NContext';
+import { useTranslation } from '../hooks/useTranslation';
 
 const gray = 'gray.500';
 const yellow = 'yellow.500';

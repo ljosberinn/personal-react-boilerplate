@@ -3,8 +3,8 @@ import { useEffect, useRef } from 'react';
 import { FaInfoCircle } from 'react-icons/fa';
 
 import { IS_PROD, IS_TEST } from '../../../src/constants';
-import type { TFunction } from '../context/I18NContext';
-import { useTranslation } from '../context/I18NContext';
+import type { TFunction } from '../hooks/useTranslation';
+import { useTranslation } from '../hooks/useTranslation';
 
 const sw = '/service-worker.js';
 /**

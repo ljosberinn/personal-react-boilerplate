@@ -5,7 +5,7 @@ import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import { forwardRef } from 'react';
 
-import { useTranslation } from '../context/I18NContext';
+import { useTranslation } from '../hooks/useTranslation';
 import type { WithChildren } from '../karma/types';
 
 export type InternalLinkProps =

@@ -1,6 +1,6 @@
 import type { NextWebVitalsMetric } from 'next/app';
 import type { NextRouter } from 'next/router';
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 
 import type { KarmaComponent } from '../client/karma/layout';
 import type { IsomorphicKarmaProps } from '../client/karma/types';

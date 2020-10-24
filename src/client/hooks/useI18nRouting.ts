@@ -22,7 +22,8 @@ export function useI18nRouting(): UseI18nRoutingType {
         if (!IS_PROD) {
           // eslint-disable-next-line no-console
           console.warn(
-            `[Karma/useI18nRouting]: passed locale "${locale}" to "changeLocale" but it's not included in ENABLED_LANGUAGES. As a result, nothing happens!`
+            `%c⚠️ [Karma/useI18nRouting]: passed locale "${locale}" to "changeLocale" but it's not included in ENABLED_LANGUAGES. As a result, nothing happens!`,
+            'color: orange;'
           );
         }
         return;

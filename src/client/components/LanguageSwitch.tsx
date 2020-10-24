@@ -17,9 +17,9 @@ import { FlagIcon } from 'react-flag-kit';
 import { MdTranslate } from 'react-icons/md';
 
 import { ENABLED_LANGUAGES } from '../../constants';
-import type { TFunction } from '../context/I18NContext';
-import { useTranslation } from '../context/I18NContext';
 import { useI18nRouting } from '../hooks/useI18nRouting';
+import type { TFunction } from '../hooks/useTranslation';
+import { useTranslation } from '../hooks/useTranslation';
 import { ExternalLink } from './ExternalLink';
 
 type FlapMap = Record<string, FlagIconCode>;

@@ -14,10 +14,8 @@ import { cloneElement, isValidElement } from 'react';
 
 import { AuthContextProvider } from '../src/client/context/AuthContext';
 import type { AuthContextDefinition } from '../src/client/context/AuthContext/types';
-import {
-  I18NContextProvider,
-  useTranslation,
-} from '../src/client/context/I18NContext';
+import { I18NContextProvider } from '../src/client/context/I18NContext';
+import { useTranslation } from '../src/client/hooks/useTranslation';
 import type { WithChildren } from '../src/client/karma/types';
 import type { Namespace } from '../src/constants';
 import { FALLBACK_LANGUAGE } from '../src/constants';
