@@ -1,4 +1,4 @@
-import type { ExternalProvider } from '../../client/context/AuthContext/AuthContext';
+import type { ExternalProvider } from '../../client/context/AuthContext/types';
 import {
   DISCORD_CLIENT_ID,
   DISCORD_CLIENT_SECRET,

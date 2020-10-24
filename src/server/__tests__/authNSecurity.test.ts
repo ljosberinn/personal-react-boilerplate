@@ -3,7 +3,7 @@ import nextConnect from 'next-connect';
 
 import { waitFor } from '../../../testUtils';
 import { testLambda } from '../../../testUtils/lambda';
-import type { User } from '../../client/context/AuthContext/AuthContext';
+import type { User } from '../../client/context/AuthContext/types';
 import { SESSION_COOKIE_NAME } from '../../constants';
 import { RequestMethods } from '../../utils/requestMethods';
 import { OK, UNAUTHORIZED } from '../../utils/statusCodes';

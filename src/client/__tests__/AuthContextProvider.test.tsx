@@ -6,7 +6,7 @@ import { render, screen, waitFor } from '../../../testUtils';
 import { createUseRouterMock } from '../../../testUtils/router';
 import { UNAUTHORIZED } from '../../utils/statusCodes';
 import { AuthContextProvider, endpoints } from '../context/AuthContext';
-import type { User } from '../context/AuthContext/AuthContext';
+import type { User } from '../context/AuthContext/types';
 import { useAuth } from '../hooks/useAuth';
 
 const authenticated = 'authenticated';

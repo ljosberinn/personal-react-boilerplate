@@ -1,6 +1,4 @@
-import { createContext } from 'react';
-
-type GoogleProfile = {
+export type GoogleProfile = {
   sub: string;
   name: string;
   given_name: string;
@@ -11,7 +9,7 @@ type GoogleProfile = {
   locale: string;
 };
 
-type GithubProfile = {
+export type GithubProfile = {
   login: string;
   id: number;
   node_id: string;
@@ -57,12 +55,12 @@ type GithubProfile = {
   };
 };
 
-type FacebookProfile = {
+export type FacebookProfile = {
   id: string;
   name: string;
 };
 
-type DiscordProfile = {
+export type DiscordProfile = {
   avatar: string;
   discriminator: string;
   email: string;
@@ -82,7 +80,6 @@ export type User =
   | DiscordProfile;
 
 export type Provider = 'github' | 'google' | 'facebook' | 'discord' | 'local';
-
 export type ExternalProvider = Exclude<Provider, 'local'>;
 
 export type ExternalLoginOptions = {
@@ -103,5 +100,3 @@ export type AuthContextDefinition = {
   logout: () => Promise<void>;
   isAuthenticated: boolean;
 };
-
-export const AuthContext = createContext<AuthContextDefinition | null>(null);

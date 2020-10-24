@@ -1,6 +1,6 @@
 import { mockConsoleMethods } from '../../../testUtils/console';
 import { testLambda } from '../../../testUtils/lambda';
-import type { ExternalProvider } from '../../client/context/AuthContext/AuthContext';
+import type { ExternalProvider } from '../../client/context/AuthContext/types';
 import { ENABLED_PROVIDER } from '../../constants';
 import { RequestMethods } from '../../utils/requestMethods';
 import type { RequestInitMethod } from '../../utils/requestMethods';

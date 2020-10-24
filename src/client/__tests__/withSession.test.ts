@@ -2,7 +2,6 @@ import type { IncomingMessage, ServerResponse } from 'http';
 import type { GetServerSidePropsContext } from 'next';
 import type { ParsedUrlQuery } from 'querystring';
 
-import type { User } from '../../../src/client/context/AuthContext/AuthContext';
 import { withSession } from '../../../src/client/utils/withSession';
 import { SESSION_COOKIE_NAME } from '../../../src/constants';
 import {
@@ -11,6 +10,7 @@ import {
 } from '../../../testUtils/api';
 import * as cookieUtils from '../../server/auth/cookie';
 import { FOUND_MOVED_TEMPORARILY, UNAUTHORIZED } from '../../utils/statusCodes';
+import type { User } from '../context/AuthContext/types';
 
 const createMockGetServerSideProps = () =>
   jest

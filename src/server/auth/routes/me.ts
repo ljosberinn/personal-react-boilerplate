@@ -1,6 +1,6 @@
 import nextConnect from 'next-connect';
 
-import type { User } from '../../../client/context/AuthContext/AuthContext';
+import type { User } from '../../../client/context/AuthContext/types';
 import { UNAUTHORIZED } from '../../../utils/statusCodes';
 import type { RequestHandler } from '../../types';
 import { getSession } from '../cookie';

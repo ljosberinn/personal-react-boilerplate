@@ -13,7 +13,7 @@ import type { NextRouter } from 'next/router';
 import { cloneElement, isValidElement } from 'react';
 
 import { AuthContextProvider } from '../src/client/context/AuthContext';
-import type { AuthContextDefinition } from '../src/client/context/AuthContext/AuthContext';
+import type { AuthContextDefinition } from '../src/client/context/AuthContext/types';
 import {
   I18NContextProvider,
   useTranslation,

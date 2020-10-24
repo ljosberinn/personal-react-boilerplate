@@ -1,12 +1,22 @@
 import { useRouter } from 'next/router';
 import type { SetStateAction, Dispatch } from 'react';
-import { useState, useEffect, useMemo, useCallback } from 'react';
+import {
+  useState,
+  useEffect,
+  useMemo,
+  useCallback,
+  createContext,
+} from 'react';
 
 import { ENABLED_PROVIDER } from '../../../constants';
 import { INTERNAL_SERVER_ERROR } from '../../../utils/statusCodes';
 import type { WithChildren, KarmaMode } from '../../karma/types';
-import type { User, LoginOptions, LocalLoginOptions } from './AuthContext';
-import { AuthContext } from './AuthContext';
+import type {
+  User,
+  LoginOptions,
+  LocalLoginOptions,
+  AuthContextDefinition,
+} from './types';
 
 export type AuthContextProviderProps = WithChildren<{
   session: User | null;
@@ -36,6 +46,8 @@ export const endpoints = {
     url: '/api/v1/auth/register',
   },
 };
+
+export const AuthContext = createContext<AuthContextDefinition | null>(null);
 
 export function AuthContextProvider({
   children,

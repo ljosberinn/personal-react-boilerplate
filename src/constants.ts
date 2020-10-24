@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion, spaced-comment */
-import type { Provider } from './client/context/AuthContext/AuthContext';
+import type { Provider } from './client/context/AuthContext/types';
 
 /**********************
  * utilities

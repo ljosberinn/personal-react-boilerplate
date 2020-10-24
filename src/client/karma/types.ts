@@ -2,7 +2,7 @@ import type { ChakraProviderProps, StorageManager } from '@chakra-ui/core';
 import type { ReactNode } from 'react';
 
 import type { Namespace } from '../../constants';
-import type { User } from '../context/AuthContext/AuthContext';
+import type { User } from '../context/AuthContext/types';
 import type { KarmaSSGProps } from './SSG';
 import type { KarmaSSRProps } from './SSR';
 import type { I18nextResources } from './i18n';

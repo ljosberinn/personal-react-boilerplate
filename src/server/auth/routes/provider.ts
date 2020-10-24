@@ -1,7 +1,7 @@
 import type { IncomingMessage } from 'http';
 import nextConnect from 'next-connect';
 
-import type { ExternalProvider } from '../../../client/context/AuthContext/AuthContext';
+import type { ExternalProvider } from '../../../client/context/AuthContext/types';
 import { ENABLED_PROVIDER } from '../../../constants';
 import {
   FOUND_MOVED_TEMPORARILY,

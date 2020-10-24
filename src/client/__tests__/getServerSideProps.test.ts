@@ -20,7 +20,7 @@ import * as detectLanguageUtils from '../../server/i18n/detectLanguage';
 import * as sentryUtils from '../../utils/sentry/client';
 import * as sentryUtilsServer from '../../utils/sentry/server';
 import { TEMPORARY_REDIRECT } from '../../utils/statusCodes';
-import type { User } from '../context/AuthContext/AuthContext';
+import type { User } from '../context/AuthContext/types';
 import {
   getServerSideProps,
   withKarmaSSRProps,
