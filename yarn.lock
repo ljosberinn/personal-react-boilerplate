@@ -5282,10 +5282,10 @@ eslint-ast-utils@^1.1.0:
     lodash.get "^4.4.2"
     lodash.zip "^4.2.0"
 
-eslint-config-galex@2.5.13:
-  version "2.5.13"
-  resolved "https://registry.yarnpkg.com/eslint-config-galex/-/eslint-config-galex-2.5.13.tgz#6d0407c9022fee7cf152c7f11f19fb7c8b96bd41"
-  integrity sha512-MLwGuSuf8ozHG03H4jPkaTWqGLgjD8xvF+kGbB3QxXl3Kp6Z24922H2kEeLv8b9eA9jQQvBUiHXsZJ33DXDcDQ==
+eslint-config-galex@2.5.14:
+  version "2.5.14"
+  resolved "https://registry.yarnpkg.com/eslint-config-galex/-/eslint-config-galex-2.5.14.tgz#6c7d5244b759596283a78517ccb4a68c6949fe91"
+  integrity sha512-FobqZp8p1aggFwlcpUVWuP1zUv27YAU0u5JnhK+RYihcKphhGWK4c4/7qFpChMafFG6NjPFT+mP7roSrfMlu7g==
   dependencies:
     "@next/eslint-plugin-next" "^9.5.3"
     "@typescript-eslint/eslint-plugin" "4.5.0"
@@ -5296,7 +5296,7 @@ eslint-config-galex@2.5.13:
     eslint-plugin-import "2.22.1"
     eslint-plugin-inclusive-language "1.2.1"
     eslint-plugin-jest "24.1.0"
-    eslint-plugin-jest-dom "3.2.3"
+    eslint-plugin-jest-dom "3.2.4"
     eslint-plugin-jest-formatting "2.0.0"
     eslint-plugin-jsx-a11y "6.3.1"
     eslint-plugin-prettier "3.1.4"
@@ -5357,10 +5357,10 @@ eslint-plugin-inclusive-language@1.2.1:
   resolved "https://registry.yarnpkg.com/eslint-plugin-inclusive-language/-/eslint-plugin-inclusive-language-1.2.1.tgz#57229372d21779ec11803b7353ac969a29583910"
   integrity sha512-WFXME2g/rEm/ex9HCfptZXJVm6/IrBks4+0rZft24zve4RH196PPuCFvd36aidc2IaHrvVAZHeyahODc7ueoNw==
 
-eslint-plugin-jest-dom@3.2.3:
-  version "3.2.3"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-jest-dom/-/eslint-plugin-jest-dom-3.2.3.tgz#2ee4ef409484b9d175f169e5fc12caf8be854b4e"
-  integrity sha512-3eEne+h1JsTV4ExZ022xJALKKgWwjYTakRzXZ575CzB6kOZ3No5cvW9XVdF0CfgHt+4ZaMq2AFgm2BiA3sHmRg==
+eslint-plugin-jest-dom@3.2.4:
+  version "3.2.4"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-jest-dom/-/eslint-plugin-jest-dom-3.2.4.tgz#78e95c48755240a4d1e9d6c3bdcd87ea4af242b9"
+  integrity sha512-CRR5rMMJgLKjxHHuio/oy4tt5gnUohgGNMzLM0p0THoyRYewzV/PE+8qUUHSyTO+iexCvgnHukdRfckdyi+5tg==
   dependencies:
     "@babel/runtime" "^7.9.6"
     requireindex "^1.2.0"
