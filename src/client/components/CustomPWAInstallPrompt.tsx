@@ -78,38 +78,17 @@ export function CustomPWAInstallPrompt(): null | JSX.Element {
   }
 
   return (
-    <Slide placement="top" in={isOpen}>
-      {({
-        left,
-        right,
-        top,
-        maxWidth,
-        willChange,
-        position,
-        transition,
-        transform,
-      }) => (
-        <Modal onClose={onClose} isOpen>
-          <ModalOverlay />
-          <ModalContent
-            pb={5}
-            left={left}
-            right={right}
-            top={top}
-            maxWidth={maxWidth}
-            willChange={willChange}
-            position={position}
-            transition={transition}
-            transform={transform}
-          >
-            <ModalHeader>Install now</ModalHeader>
-            <ModalCloseButton onClick={onClose} />
-            <ModalBody>
-              <Button onClick={install}>install</Button>
-            </ModalBody>
-          </ModalContent>
-        </Modal>
-      )}
+    <Slide direction="top" in={isOpen}>
+      <Modal onClose={onClose} isOpen>
+        <ModalOverlay />
+        <ModalContent pb={5}>
+          <ModalHeader>Install now</ModalHeader>
+          <ModalCloseButton onClick={onClose} />
+          <ModalBody>
+            <Button onClick={install}>install</Button>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
     </Slide>
   );
 }

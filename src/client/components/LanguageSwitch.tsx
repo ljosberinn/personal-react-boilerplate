@@ -8,7 +8,6 @@ import {
   MenuItemOption,
   MenuDivider,
   useColorModeValue,
-  MenuTransition,
   IconButton,
   Icon,
 } from '@chakra-ui/core';
@@ -47,48 +46,44 @@ export function LanguageSwitch(props: LanguageSwitchAltProps): JSX.Element {
         color={buttonColor}
         background="none"
       />
-      <MenuTransition>
-        {(styles) => (
-          <MenuList sx={styles}>
-            <MenuOptionGroup
-              title={t('available-languages')}
-              defaultValue={language}
-              type="radio"
-            >
-              {ENABLED_LANGUAGES.map((slug) => {
-                const isCurrentLanguage = slug === language;
+      <MenuList>
+        <MenuOptionGroup
+          title={t('available-languages')}
+          defaultValue={language}
+          type="radio"
+        >
+          {ENABLED_LANGUAGES.map((slug) => {
+            const isCurrentLanguage = slug === language;
 
-                const onClick = isCurrentLanguage
-                  ? undefined
-                  : createChangeLocaleHandler(slug);
+            const onClick = isCurrentLanguage
+              ? undefined
+              : createChangeLocaleHandler(slug);
 
-                return (
-                  <LanguageOption
-                    t={t}
-                    disabled={isCurrentLanguage}
-                    isChecked={isCurrentLanguage}
-                    slug={slug}
-                    onClick={onClick}
-                    key={slug}
-                  />
-                );
-              })}
-            </MenuOptionGroup>
-            <MenuDivider />
-            <MenuItem
-              as={ExternalLink}
-              _focus={{
-                backgroundColor,
-                boxShadow: 'unset',
-              }}
-              omitTextDecoration
-              href="//github.com/ljosberinn/next-karma-docs"
-            >
-              {t('help-cta')}
-            </MenuItem>
-          </MenuList>
-        )}
-      </MenuTransition>
+            return (
+              <LanguageOption
+                t={t}
+                disabled={isCurrentLanguage}
+                isChecked={isCurrentLanguage}
+                slug={slug}
+                onClick={onClick}
+                key={slug}
+              />
+            );
+          })}
+        </MenuOptionGroup>
+        <MenuDivider />
+        <MenuItem
+          as={ExternalLink}
+          _focus={{
+            backgroundColor,
+            boxShadow: 'unset',
+          }}
+          omitTextDecoration
+          href="//github.com/ljosberinn/next-karma-docs"
+        >
+          {t('help-cta')}
+        </MenuItem>
+      </MenuList>
     </Menu>
   );
 }

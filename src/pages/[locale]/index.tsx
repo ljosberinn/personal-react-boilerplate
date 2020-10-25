@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import Head from 'next/head';
 
 import {

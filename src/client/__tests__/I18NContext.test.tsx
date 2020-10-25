@@ -262,16 +262,23 @@ describe('<I18NContextProvder />', () => {
     // const dir = language === 'en' ? 'ltr' : 'rtl';
 
     test.todo(
-      `always changes the html.dir attribute onLanguageChanged (language: ${language})` // ,
-      // async () => {
+      `always changes the html.dir attribute onLanguageChanged (language: ${language})` // async () => {
       // const qsSpy = jest.spyOn(document, 'querySelector');
       // const setAttributeSpy = jest.spyOn(HTMLElement.prototype, 'setAttribute');
-      // const instance = initI18Next({
-      //   bundle: i18nCache[language],
-      //   language,
+
+      // const { rerender } = render(<h1>test</h1>, {
+      //   wrapper: ({ children }) => (
+      //     <I18NContextProvider
+      //       language={FALLBACK_LANGUAGE}
+      //       resources={i18nCache}
+      //     >
+      //       {children}
+      //     </I18NContextProvider>
+      //   ),
       // });
-      // await instance.changeLanguage(language);
+
       // await waitFor(() => expect(qsSpy).toHaveBeenLastCalledWith('html'));
+
       // expect(setAttributeSpy).toHaveBeenCalledWith('dir', dir);
       // }
     );

@@ -5,7 +5,7 @@ import { useMotionAwareAnimation } from '../hooks/useMotionAwareAnimation';
 
 describe('hooks/useMotionAwareAnimation', () => {
   test('returns given animation given no media-query match', () => {
-    jest.spyOn(chakra, 'useAnimationPreference').mockReturnValueOnce(false);
+    jest.spyOn(chakra, 'usePrefersReducedMotion').mockReturnValueOnce(false);
 
     const mockAnimation = 'animation';
 
@@ -15,7 +15,7 @@ describe('hooks/useMotionAwareAnimation', () => {
   });
 
   test('returns given animation given a media-query match', () => {
-    jest.spyOn(chakra, 'useAnimationPreference').mockReturnValueOnce(true);
+    jest.spyOn(chakra, 'usePrefersReducedMotion').mockReturnValueOnce(true);
 
     const mockAnimation = 'animation';
 

@@ -2,6 +2,7 @@ import type { NextWebVitalsMetric } from 'next/app';
 import type { NextRouter } from 'next/router';
 import { useEffect } from 'react';
 
+import { useScrollRestoration } from '../client/hooks/useScrollRestoration';
 import type { KarmaComponent } from '../client/karma/layout';
 import type { IsomorphicKarmaProps } from '../client/karma/types';
 import {
@@ -26,6 +27,8 @@ export default function App({
   useEffect(() => {
     attachRoutingContext(router);
   }, [router]);
+
+  useScrollRestoration(router);
 
   const { withLayout } = Component;
   const { karma, ...rest } = pageProps;
