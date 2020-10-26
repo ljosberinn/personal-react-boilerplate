@@ -19,15 +19,15 @@ export const ExternalLink = forwardRef<HTMLAnchorElement, ExternalLinkProps>(
     const color = useColorModeValue('teal.700', 'teal.400');
 
     const _hover = {
-      ...rest._hover,
       color: 'teal.500',
+      ...rest._hover,
       textDecoration: omitTextDecoration ? 'none' : 'underline',
     };
 
     return (
       <Link
-        {...rest}
         color={color}
+        {...rest}
         isExternal
         ref={ref}
         whiteSpace="nowrap"

@@ -14,8 +14,10 @@ import {
   chakra,
   Container,
 } from '@chakra-ui/core';
+import { BsLayoutWtf } from 'react-icons/bs';
 import { FaGithub, FaArrowRight } from 'react-icons/fa';
 import { FcSettings } from 'react-icons/fc';
+import { MdTranslate } from 'react-icons/md';
 
 import { ExternalLink } from '../../components/ExternalLink';
 import { InternalLink } from '../../components/InternalLink';
@@ -27,7 +29,6 @@ import {
   ChakraIcon,
   ESLintIcon,
   GithubActionsLogo,
-  I18NextIcon,
   JestIcon,
   KarmaIcon,
   NextIcon,
@@ -53,7 +54,7 @@ function Hero() {
     <Box bg={bg} borderBottom="1px solid" borderColor="gray.700">
       <Container
         d="flex"
-        maxWidth={{ base: '100%', md: '85%' }}
+        maxWidth={{ base: '100%', md: '86em' }}
         pt={40}
         pb={12}
         mx="auto"
@@ -80,9 +81,13 @@ function Hero() {
             </Text>
           </Heading>
 
-          <Divider role={undefined} aria-orientation={undefined} mt={2} />
+          <Divider
+            role={undefined}
+            aria-orientation={undefined}
+            mt={{ base: 6, sm: 6 }}
+          />
 
-          <Box bg={bg} p={6} mt={6} mb={6} borderRadius={8}>
+          <Box bg={bg} p={6} mt={{ base: 0, sm: 6 }} mb={6} borderRadius={8}>
             <Text as="span" fontSize="xl" lineHeight="tall">
               Stop worrying about nitty gritty low-level details in an
               ever-growing, ever more complex ecosystem. Focus on what's
@@ -130,11 +135,11 @@ function Hero() {
   );
 }
 
-function Title() {
+function Title({ shade }: { shade?: keyof typeof karmaShades }) {
   const color = useColorModeValue(karmaShades.regular, 'red.300');
 
   return (
-    <Text as="b" whiteSpace="nowrap" color={color}>
+    <Text as="b" whiteSpace="nowrap" color={shade ? karmaShades[shade] : color}>
       Karma
     </Text>
   );
@@ -175,7 +180,7 @@ function StackOverview() {
           point for new projects, but of course may provide inspiration for
           existing projects. <Title /> is built entirely on top of{' '}
           <Code>getStaticPaths</Code> / <Code>getStaticProps</Code> /
-          <Code>getServerSideProps</Code> and thus supports both{' '}
+          <Code>getServerSideProps</Code> and thus supports all variants of both{' '}
           <Code>SSG</Code> & <Code>SSR</Code>!
         </Feature>
 
@@ -200,20 +205,28 @@ function StackOverview() {
         </Feature>
 
         <Feature
-          icon={<I18NextIcon height={iconSize} width={iconSize} />}
-          title="react-i18next"
-          href="//react.i18next.com/"
+          icon={<Icon as={MdTranslate} height={iconSize} width={iconSize} />}
+          title="Internationalization"
           learnMoreHref="/docs/i18n"
         >
-          A Serverless- & SSR-compatible, JSON-based i18n solution is
-          implemented via{' '}
-          <ExternalLink href="//react.i18next.com/">react-i18next</ExternalLink>
-          . Similar to{' '}
+          Since Next.js 10 natively supports i18n, so does <Title />! A
+          lightweight custom implementation based on local JSONs is included.
+          Similar to{' '}
           <ExternalLink href="//github.com/vinissimus/next-translate">
             next-translate
           </ExternalLink>
-          , locales can be included/omitted on a per-page basis and exchanged on
-          the fly.
+          , assets can be included/omitted on a per-page & per-namespace basis.
+        </Feature>
+
+        <Feature
+          icon={<Icon as={BsLayoutWtf} height={iconSize} width={iconSize} />}
+          href="//adamwathan.me/2019/10/17/persistent-layout-patterns-in-nextjs/"
+          title="Persistent Layouts"
+          learnMoreHref="/docs/layout"
+        >
+          <Title /> embraced persistent layouts as one of its core features and
+          makes of the trickier things to setup in a Next.js project
+          dead-simple.
         </Feature>
 
         <Feature
@@ -225,6 +238,10 @@ function StackOverview() {
           Support for 4 external providers is included out of the box as well as
           means to implement homegrown authentication, all based on a httpOnly
           cookie.
+          <br />
+          <Title /> supports various approaches, e.g. auto-reauthentication on
+          SSG, automatic redirecting on failure and naturally SSR - all
+          config-based per page, while keeping your flexibility.
         </Feature>
 
         <Feature
@@ -277,11 +294,11 @@ function StackOverview() {
           <ExternalLink href="//html-validate.org/frameworks/jest.html">
             html-validate/jest
           </ExternalLink>
-          , all example components are well tested. A{' '}
+          , all components and hooks are well tested. Flexible{' '}
           <ExternalLink href="//testing-library.com/docs/react-testing-library/setup#custom-render">
-            custom render
+            custom render functions
           </ExternalLink>{' '}
-          function with sensible & extensible defaults is included.
+          for both components and hooks are already set up!
         </Feature>
 
         <Feature
@@ -292,13 +309,14 @@ function StackOverview() {
           href="//github.com/features/actions"
           learnMoreHref="/getting-started/#github-actions"
         >
-          Before deploying,{' '}
-          <ExternalLink href="//github.com/features/actions">
-            Github Actions
-          </ExternalLink>{' '}
-          will ensure your linting setup, typecheck, execute tests as well as
-          upload code coverage to{' '}
+          <Title /> comes with 3 tailored GitHub workflows:
+          <br />
+          Before deploying to production, an Action will ensure types, linting,
+          tests and post-deploy run Lighthouse. Simultanously, code coverage
+          will be uploaded to{' '}
           <ExternalLink href="//codeclimate.com/">CodeClimate</ExternalLink>.
+          <br />
+          Pull Requests will skip uploading code coverage.
         </Feature>
 
         <Feature
@@ -372,10 +390,82 @@ function StackOverview() {
   );
 }
 
+function Intro() {
+  // eslint-disable-next-line unicorn/no-useless-undefined
+  const color = useColorModeValue('teal.500', undefined);
+
+  return (
+    <Box bgColor="teal.800" color="white">
+      <Container as="article" p={16} maxWidth="86em">
+        <Heading as="h2" textAlign="center" mb={4}>
+          <Title shade="lighter" /> is truly open!
+        </Heading>
+        <Heading as="h3" fontSize="lg" textAlign="center" mb={12}>
+          Don't need authentication? Delete it! Don't need internationalization?
+          Throw it away!
+        </Heading>
+        <Text fontSize="xl" lineHeight="tall">
+          There is no vendor lock-in - starting a <Title shade="lighter" />{' '}
+          project means getting all the source code, right into your project.
+          There is no waiting for new features or bugfixes. There are no
+          breaking changes you have to follow because you're too deep in.
+        </Text>
+        <Text fontSize="xl" lineHeight="tall" pt={4}>
+          <Title shade="lighter" /> contains what most larger projects will have
+          anyways, not more, not less. A future upgrade path simply means: check
+          the commit history the repository and pluck what you need.
+        </Text>
+        <Text fontSize="xl" lineHeight="tall" pt={4}>
+          This necessarily requires a bit of a different mindset:
+        </Text>
+        <Text fontSize="xl" lineHeight="tall">
+          on the one hand, you get solid defaults and can fix any potentially
+          arising issues yourself, right when you need it.
+        </Text>
+        <Text fontSize="xl" lineHeight="tall">
+          Which is nice! No eternal wait until{' '}
+          <chakra.span fontStyle="italic">that annoying bug</chakra.span> is
+          finally fixed.{' '}
+          <chakra.strong fontStyle="italic">
+            You actually can fix it yourself
+          </chakra.strong>
+          . <Title shade="lighter" /> isn't buried in your node_modules.
+        </Text>
+        <Text fontSize="xl" lineHeight="tall" pt={4}>
+          But it also means: you might have to fix urgent issues yourself -{' '}
+          <Title shade="lighter" /> is just here to lay the foundation. Getting
+          familiar with at least some of the <Title shade="lighter" /> code will
+          thus be a long-term necessity. You will want to extend or cut
+          features. For most users, the defaults however will be perfectly fine!
+        </Text>
+
+        <Text fontSize="xl" lineHeight="tall" pt={8}>
+          Where's the catch?
+        </Text>
+
+        <Text fontSize="xl" lineHeight="tall" pt={4}>
+          <Title shade="lighter" /> is built with{' '}
+          <ExternalLink color={color} href="//vercel.com">
+            Vercel
+          </ExternalLink>{' '}
+          and{' '}
+          <ExternalLink color={color} href="//github.com">
+            GitHub
+          </ExternalLink>{' '}
+          in mind. If you don't plan on using either of them, some additional
+          setup work will be required - but all features are generally
+          compatible with any other hosting & CI/CD solution.
+        </Text>
+      </Container>
+    </Box>
+  );
+}
+
 export function Index(): JSX.Element {
   return (
     <main>
       <Hero />
+      <Intro />
       <StackOverview />
     </main>
   );

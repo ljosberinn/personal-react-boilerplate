@@ -25,7 +25,6 @@ export default function CustomDocument(): JSX.Element {
   return (
     <Html dir="auto">
       <Head>
-        <meta charSet="utf-8" />
         <link rel="manifest" href="/manifest.json" />
         <link
           rel="apple-touch-icon"

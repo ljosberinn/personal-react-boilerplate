@@ -55,7 +55,7 @@ export function Feature({
       rounded={8}
       shadow="base"
       p={10}
-      boxShadow="rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px"
+      boxShadow="md"
       flexDirection="column"
       justifyContent="space-between"
       pb={8}
