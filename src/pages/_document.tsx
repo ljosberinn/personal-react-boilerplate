@@ -1,6 +1,6 @@
 import { ColorModeScript } from '@chakra-ui/core';
 import { captureException } from '@sentry/node';
-import NextDocument, { Html, Head, Main, NextScript } from 'next/document';
+import Document, { Html, Head, Main, NextScript } from 'next/document';
 
 /**
  * Send to Sentry all uncaught exceptions.
@@ -72,6 +72,6 @@ export default function CustomDocument(): JSX.Element {
 }
 
 // eslint-disable-next-line @typescript-eslint/unbound-method
-CustomDocument.renderDocument = NextDocument.renderDocument;
+CustomDocument.renderDocument = Document.renderDocument;
 // eslint-disable-next-line @typescript-eslint/unbound-method
-CustomDocument.getInitialProps = NextDocument.getInitialProps;
+CustomDocument.getInitialProps = Document.getInitialProps;

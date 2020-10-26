@@ -17,6 +17,7 @@ import {
 import { BsLayoutWtf } from 'react-icons/bs';
 import { FaGithub, FaArrowRight } from 'react-icons/fa';
 import { FcSettings } from 'react-icons/fc';
+import { GiFeather } from 'react-icons/gi';
 import { MdTranslate } from 'react-icons/md';
 
 import { ExternalLink } from '../../components/ExternalLink';
@@ -54,9 +55,9 @@ function Hero() {
     <Box bg={bg} borderBottom="1px solid" borderColor="gray.700">
       <Container
         d="flex"
-        maxWidth={{ base: '100%', md: '86em' }}
+        maxWidth={{ base: '100%', md: '100em' }}
         pt={40}
-        pb={12}
+        pb={16}
         mx="auto"
         justifyContent="center"
         alignContent="center"
@@ -167,7 +168,7 @@ function StackOverview() {
           sm: 'repeat(1, 1fr)',
         }}
         gap={10}
-        maxWidth="86em"
+        maxWidth="100em"
         ml="auto"
         mr="auto"
       >
@@ -182,6 +183,14 @@ function StackOverview() {
           <Code>getStaticPaths</Code> / <Code>getStaticProps</Code> /
           <Code>getServerSideProps</Code> and thus supports all variants of both{' '}
           <Code>SSG</Code> & <Code>SSR</Code>!
+        </Feature>
+
+        <Feature
+          title="Lightweight Core"
+          icon={<Icon as={GiFeather} height={iconSize} width={iconSize} />}
+        >
+          Orchestrating features comes with a price, but a small one - <Title />{' '}
+          at its core is only ~4kB gzipped.
         </Feature>
 
         <Feature
@@ -395,8 +404,8 @@ function Intro() {
   const color = useColorModeValue('teal.500', undefined);
 
   return (
-    <Box bgColor="teal.800" color="white">
-      <Container as="article" p={16} maxWidth="86em">
+    <Box as="article" bgColor="teal.800" color="white">
+      <Container p={16} maxWidth="100em">
         <Heading as="h2" textAlign="center" mb={4}>
           <Title shade="lighter" /> is truly open!
         </Heading>
