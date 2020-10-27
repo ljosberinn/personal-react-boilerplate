@@ -144,12 +144,12 @@ const defaultConfig = {
     // bugged with Sentry, see https://github.com/vercel/next.js/issues/17073
     // scrollRestoration: true,
     productionBrowserSourceMaps: true,
-    // i18n: {
-    //   localeDetection: true,
-    //   defaultLocale: process.env.NEXT_PUBLIC_FALLBACK_LANGUAGE,
-    //   locales: process.env.NEXT_PUBLIC_ENABLED_LANGUAGES.split(','),
-    // },
   },
+  // i18n: {
+  //   localeDetection: true,
+  //   defaultLocale: process.env.NEXT_PUBLIC_FALLBACK_LANGUAGE,
+  //   locales: process.env.NEXT_PUBLIC_ENABLED_LANGUAGES.split(','),
+  // },
 };
 
 module.exports = withPlugins(
