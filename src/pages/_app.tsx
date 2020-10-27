@@ -1,5 +1,4 @@
 import type { NextWebVitalsMetric } from 'next/app';
-import NextApp from 'next/app';
 import type { NextRouter } from 'next/router';
 import { useEffect } from 'react';
 
