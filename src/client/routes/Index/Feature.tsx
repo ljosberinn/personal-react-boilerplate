@@ -44,7 +44,7 @@ export function Feature({
   icon,
   learnMoreHref,
 }: FeatureProps): JSX.Element {
-  const bg = useColorModeValue('white', 'gray.700');
+  const bg = useColorModeValue('gray.50', 'gray.700');
 
   return (
     <Flex

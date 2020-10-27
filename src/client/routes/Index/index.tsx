@@ -49,15 +49,15 @@ function FadedText({ children }: WithChildren) {
 }
 
 function Hero() {
-  const bg = useColorModeValue('cyan.50', 'gray.800');
+  const bg = useColorModeValue('white', 'gray.800');
 
   return (
     <Box bg={bg} borderBottom="1px solid" borderColor="gray.700">
       <Container
         d="flex"
         maxWidth={{ base: '100%', md: '100em' }}
-        pt={40}
-        pb={16}
+        pt={60}
+        pb={44}
         mx="auto"
         justifyContent="center"
         alignContent="center"
