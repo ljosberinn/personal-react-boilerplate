@@ -100,7 +100,7 @@ const links = [
 ];
 
 function Footer() {
-  const bg = useColorModeValue('cyan.50', 'gray.800');
+  const bg = useColorModeValue('gray.100', 'gray.700');
 
   return (
     <chakra.footer
