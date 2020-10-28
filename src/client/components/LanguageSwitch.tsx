@@ -15,6 +15,7 @@ import { useRouter } from 'next/router';
 import { MdTranslate } from 'react-icons/md';
 
 import { ENABLED_LANGUAGES } from '../../constants';
+import type { TFunction } from '../hooks/useTranslation';
 import { useTranslation } from '../hooks/useTranslation';
 import { ExternalLink } from './ExternalLink';
 import { InternalLink } from './InternalLink';
@@ -42,28 +43,15 @@ export function LanguageSwitch(props: LanguageSwitchAltProps): JSX.Element {
           value={currentLocale}
           type="radio"
         >
-          {ENABLED_LANGUAGES.map((locale) => {
-            const isCurrentLocale = locale === currentLocale;
-
-            return (
-              <MenuItemOption
-                as={InternalLink}
-                locale={locale}
-                href={currentPath}
-                omitTextDecoration
-                sx={{
-                  ':focus': {
-                    boxShadow: 'initial',
-                  },
-                }}
-                isDisabled={isCurrentLocale}
-                value={locale}
-                key={locale}
-              >
-                {t(locale)}
-              </MenuItemOption>
-            );
-          })}
+          {ENABLED_LANGUAGES.map((locale) => (
+            <LanguageOption
+              currentPath={currentPath}
+              isCurrentLocale={locale === currentLocale}
+              locale={locale}
+              t={t}
+              key={locale}
+            />
+          ))}
         </MenuOptionGroup>
         <MenuDivider role={undefined} />
         <MenuItem
@@ -79,5 +67,39 @@ export function LanguageSwitch(props: LanguageSwitchAltProps): JSX.Element {
         </MenuItem>
       </MenuList>
     </Menu>
+  );
+}
+
+type LanguageOptionProps = {
+  locale: string;
+  currentPath: string;
+  isCurrentLocale: boolean;
+  t: TFunction;
+};
+
+const staticMenuItemOptionStyles = {
+  ':focus': {
+    boxShadow: 'initial',
+  },
+};
+
+function LanguageOption({
+  currentPath,
+  isCurrentLocale,
+  locale,
+  t,
+}: LanguageOptionProps) {
+  return (
+    <MenuItemOption
+      as={InternalLink}
+      locale={locale}
+      href={currentPath}
+      omitTextDecoration
+      sx={staticMenuItemOptionStyles}
+      isDisabled={isCurrentLocale}
+      value={locale}
+    >
+      {t(locale)}
+    </MenuItemOption>
   );
 }

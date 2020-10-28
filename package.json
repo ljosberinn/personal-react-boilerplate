@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "analyze": "set ANALYZE=true&&yarn build",
-    "build": "next build && next export",
+    "build": "next build",
     "install:clean": "rm -rf node_modules && rm yarn.lock && yarn",
     "dev": "next",
     "lint:code": "eslint src",
