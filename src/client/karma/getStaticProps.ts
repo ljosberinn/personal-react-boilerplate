@@ -1,15 +1,10 @@
 import type {
   GetStaticPropsResult as NextGetStaticPropsResult,
   GetStaticPropsContext,
-  GetStaticPathsResult,
 } from 'next';
 import type { ParsedUrlQuery } from 'querystring';
 
-import {
-  DEFAULT_DYNAMIC_ROUTE_I18N_FOLDER_NAME,
-  FALLBACK_LANGUAGE,
-  ENABLED_LANGUAGES,
-} from '../../constants';
+import { FALLBACK_LANGUAGE } from '../../constants';
 import type { KarmaSSGProps } from './SSG';
 import { getI18n } from './i18n';
 import type { IsomorphicI18nRequirements, KarmaCoreProps } from './types';
@@ -52,31 +47,6 @@ export const createGetStaticProps = (options: CreateGetStaticPropsOptions) => (
   context: GetStaticPropsContext
 ): GetStaticPropsResult => getStaticProps(context, options);
 
-type CreateStaticI18nPathsArgs = {
-  parameterName?: string;
-};
-
-/**
- * creates a `getStaticPaths` handler to be used in `/pages/[locale]/index`
- * with the possibility to change the parameter name should you wish to rename
- * `[locale]` to something else
- *
- * @example
- * ```js
- * export const getStaticPaths = createStaticI18nPaths()
- * // with renamed folder
- * export const getStaticPaths = createStaticI18nPaths({ parameterName: 'lang' })
- * ```
- */
-export const createStaticI18nPaths = ({
-  parameterName = DEFAULT_DYNAMIC_ROUTE_I18N_FOLDER_NAME,
-}: CreateStaticI18nPathsArgs = {}) => (): GetStaticPathsResult => ({
-  fallback: false,
-  paths: ENABLED_LANGUAGES.map((language) => ({
-    params: { [parameterName]: language },
-  })),
-});
-
 /**
  * only use if you don't care about loading all i18n namespaces on this route
  *
@@ -91,14 +61,14 @@ export const getStaticProps = async (
   options?: CreateGetStaticPropsOptions
 ): GetStaticPropsResult => {
   const { auth: authOptions, i18n: i18nOptions, ...rest } = options ?? {};
+  const { locale = FALLBACK_LANGUAGE } = ctx;
 
-  const language = determinPreferredStaticLanguage(ctx, i18nOptions);
-  const resources = await getI18n(language, {
+  const resources = await getI18n(locale, {
     namespaces: i18nOptions?.namespaces,
   });
 
   const i18n: KarmaSSGProps['i18n'] = {
-    language,
+    locale,
     resources,
   };
 
@@ -122,28 +92,6 @@ export const getStaticProps = async (
     },
     ...rest,
   };
-};
-
-const determinPreferredStaticLanguage = (
-  { params }: GetStaticPropsContext,
-  i18n?: CreateGetStaticPropsOptions['i18n']
-): string => {
-  // prefer explicitly declared language
-  if (i18n?.language) {
-    return i18n.language;
-  }
-
-  // parse static params if present
-  const i18nDynamicLanguageName =
-    i18n?.parameterName ?? DEFAULT_DYNAMIC_ROUTE_I18N_FOLDER_NAME;
-  const languageViaParameter = params?.[i18nDynamicLanguageName];
-
-  /* istanbul ignore next */
-  if (languageViaParameter && !Array.isArray(languageViaParameter)) {
-    return languageViaParameter;
-  }
-
-  return FALLBACK_LANGUAGE;
 };
 
 /**

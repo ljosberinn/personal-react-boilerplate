@@ -7,7 +7,7 @@ import { KarmaSSR } from '../karma/SSR';
 
 describe('<KarmaSSR />', () => {
   const defaultI18n: KarmaSSRProps['i18n'] = {
-    language: FALLBACK_LANGUAGE,
+    locale: FALLBACK_LANGUAGE,
     resources: i18nCache,
   };
 

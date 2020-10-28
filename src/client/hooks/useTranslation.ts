@@ -93,7 +93,7 @@ export type TFunction = (
 ) => string;
 
 export type UseTranslationReturn = {
-  language: string;
+  locale: string;
   t: TFunction;
 };
 
@@ -103,14 +103,14 @@ export function useTranslation(ns?: Namespace): UseTranslationReturn {
   const t: TFunction = useCallback(
     (maybeKey, interpolation): string => {
       // no bundle, only cry
-      if (!ctx?.resources || !ctx?.language) {
+      if (!ctx?.resources || !ctx?.locale) {
         return Array.isArray(maybeKey) ? maybeKey.join(':') : maybeKey;
       }
 
       const [namespace, key] = normalize({ key: maybeKey, namespace: ns });
 
       if (namespace) {
-        const match = ctx.resources[ctx.language][namespace]?.[key];
+        const match = ctx.resources[ctx.locale][namespace]?.[key];
 
         if (match) {
           return interpolation
@@ -143,9 +143,9 @@ export function useTranslation(ns?: Namespace): UseTranslationReturn {
 
   return useMemo(
     () => ({
-      language: ctx.language,
+      locale: ctx.locale,
       t,
     }),
-    [ctx.language, t]
+    [ctx.locale, t]
   );
 }

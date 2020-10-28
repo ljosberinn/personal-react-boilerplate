@@ -26,7 +26,7 @@ describe('<I18NContextProvder />', () => {
 
     render(
       // @ts-expect-error intentional omission of `bundle`
-      <I18NContextProvider language={FALLBACK_LANGUAGE}>
+      <I18NContextProvider locale={FALLBACK_LANGUAGE}>
         <MockComponent />
       </I18NContextProvider>
     );
@@ -48,7 +48,7 @@ describe('<I18NContextProvder />', () => {
     }
 
     render(
-      <I18NContextProvider language={FALLBACK_LANGUAGE} resources={i18nCache}>
+      <I18NContextProvider locale={FALLBACK_LANGUAGE} resources={i18nCache}>
         <MockComponent />
       </I18NContextProvider>
     );
@@ -70,7 +70,7 @@ describe('<I18NContextProvder />', () => {
     }
 
     render(
-      <I18NContextProvider language={FALLBACK_LANGUAGE} resources={i18nCache}>
+      <I18NContextProvider locale={FALLBACK_LANGUAGE} resources={i18nCache}>
         <MockComponent />
       </I18NContextProvider>
     );
@@ -97,7 +97,7 @@ describe('<I18NContextProvder />', () => {
     }
 
     render(
-      <I18NContextProvider language={FALLBACK_LANGUAGE} resources={i18nCache}>
+      <I18NContextProvider locale={FALLBACK_LANGUAGE} resources={i18nCache}>
         <MockComponent />
       </I18NContextProvider>
     );
@@ -131,7 +131,7 @@ describe('<I18NContextProvder />', () => {
     }
 
     render(
-      <I18NContextProvider language={FALLBACK_LANGUAGE} resources={i18nCache}>
+      <I18NContextProvider locale={FALLBACK_LANGUAGE} resources={i18nCache}>
         <MockComponent />
       </I18NContextProvider>
     );
@@ -173,7 +173,7 @@ describe('<I18NContextProvder />', () => {
     }
 
     render(
-      <I18NContextProvider language={FALLBACK_LANGUAGE} resources={mockCache}>
+      <I18NContextProvider locale={FALLBACK_LANGUAGE} resources={mockCache}>
         <MockComponent />
       </I18NContextProvider>
     );
@@ -216,7 +216,7 @@ describe('<I18NContextProvder />', () => {
     }
 
     render(
-      <I18NContextProvider language={FALLBACK_LANGUAGE} resources={mockCache}>
+      <I18NContextProvider locale={FALLBACK_LANGUAGE} resources={mockCache}>
         <MockComponent />
       </I18NContextProvider>
     );
@@ -235,7 +235,7 @@ describe('<I18NContextProvder />', () => {
     const setAttributeSpy = jest.spyOn(HTMLElement.prototype, 'setAttribute');
 
     render(
-      <I18NContextProvider language={FALLBACK_LANGUAGE} resources={i18nCache}>
+      <I18NContextProvider locale={FALLBACK_LANGUAGE} resources={i18nCache}>
         <h1>test</h1>
       </I18NContextProvider>
     );

@@ -9,7 +9,6 @@ import { mockConsoleMethods } from '../../../testUtils/console';
 import { i18nCache } from '../../../testUtils/i18n';
 import { ENABLED_LANGUAGES, FALLBACK_LANGUAGE } from '../../constants';
 import { LanguageSwitch } from '../components/LanguageSwitch';
-import * as i18nRoutingHook from '../hooks/useI18nRouting';
 
 const setup = () => {
   const { container } = render(<LanguageSwitch />);
@@ -34,14 +33,19 @@ const setup = () => {
 };
 
 describe('<LanguageSwitch />', () => {
+  const realLocation = window.location;
   let restoreConsole: ReturnType<typeof mockConsoleMethods>['restoreConsole'];
 
   beforeAll(() => {
+    // @ts-expect-error jest does not support location to be spied on
+    delete window.location;
+    window.location = { ...realLocation, assign: jest.fn() };
     // eslint-disable-next-line prefer-destructuring
     restoreConsole = mockConsoleMethods('error').restoreConsole;
   });
 
   afterAll(() => {
+    window.location = realLocation;
     restoreConsole();
   });
 
@@ -85,29 +89,5 @@ describe('<LanguageSwitch />', () => {
 
     expect(cta).toBeInTheDocument();
     expect(cta).toHaveAttribute('href');
-  });
-
-  it('attempts to redirect to another locale route on click', async () => {
-    const mockChangeLocale = jest.fn();
-
-    jest.spyOn(i18nRoutingHook, 'useI18nRouting').mockImplementation(() => {
-      return {
-        changeLocale: mockChangeLocale,
-        createChangeLocaleHandler: jest
-          .fn()
-          .mockImplementation(() => mockChangeLocale),
-      };
-    });
-
-    const { currentLanguage, randomOtherLanguage } = setup();
-
-    // e.g. i18n.en.i18n.de
-    const otherLanguageElement = screen.getByRole('menuitemradio', {
-      name: i18nCache[currentLanguage].i18n![randomOtherLanguage],
-    });
-
-    userEvent.click(otherLanguageElement);
-
-    expect(mockChangeLocale).toHaveBeenCalledTimes(1);
   });
 });

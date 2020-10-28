@@ -2,25 +2,24 @@ import type { GetStaticPropsContext } from 'next';
 
 import { i18nCache } from '../../../testUtils/i18n';
 import type { Namespace } from '../../constants';
-import {
-  DEFAULT_DYNAMIC_ROUTE_I18N_FOLDER_NAME,
-  FALLBACK_LANGUAGE,
-  ENABLED_LANGUAGES,
-} from '../../constants';
+import { FALLBACK_LANGUAGE, ENABLED_LANGUAGES } from '../../constants';
 import {
   createGetStaticProps,
-  createStaticI18nPaths,
   getStaticProps,
   withKarmaSSGProps,
 } from '../karma/getStaticProps';
 import * as i18n from '../karma/i18n';
 
-const mockCtx: GetStaticPropsContext = {};
+const locale = ENABLED_LANGUAGES.find((lng) => lng !== FALLBACK_LANGUAGE)!;
+
+const mockCtx: GetStaticPropsContext = {
+  locale,
+};
 
 describe('getStaticProps', () => {
   describe('i18n', () => {
     test('defaults to FALLBACK_LANGUAGE and the full bundle without namespaces', async () => {
-      const result = await getStaticProps(mockCtx);
+      const result = await getStaticProps({});
 
       expect(result).toStrictEqual({
         props: {
@@ -31,7 +30,7 @@ describe('getStaticProps', () => {
               shouldAttemptReauthentication: false,
             },
             i18n: {
-              language: FALLBACK_LANGUAGE,
+              locale: FALLBACK_LANGUAGE,
               resources: {
                 [FALLBACK_LANGUAGE]: i18nCache[FALLBACK_LANGUAGE],
               },
@@ -43,7 +42,7 @@ describe('getStaticProps', () => {
 
     test('defaults to FALLBACK_LANGUAGE and a partial bundle given namespaces', async () => {
       const namespaces: Namespace[] = ['theme'];
-      const result = await getStaticProps(mockCtx, { i18n: { namespaces } });
+      const result = await getStaticProps({}, { i18n: { namespaces } });
 
       expect(result).toStrictEqual({
         props: {
@@ -54,7 +53,7 @@ describe('getStaticProps', () => {
               shouldAttemptReauthentication: false,
             },
             i18n: {
-              language: FALLBACK_LANGUAGE,
+              locale: FALLBACK_LANGUAGE,
               resources: {
                 [FALLBACK_LANGUAGE]: {
                   theme: i18nCache[FALLBACK_LANGUAGE].theme,
@@ -67,14 +66,8 @@ describe('getStaticProps', () => {
     });
 
     test('given a language, loads the entire bundle given no namespaces', async () => {
-      const language = ENABLED_LANGUAGES.find(
-        (lng) => lng !== FALLBACK_LANGUAGE
-      )!;
-
-      const result = await getStaticProps(mockCtx, {
-        i18n: {
-          language,
-        },
+      const result = await getStaticProps({
+        locale,
       });
 
       expect(result).toStrictEqual({
@@ -86,9 +79,9 @@ describe('getStaticProps', () => {
               shouldAttemptReauthentication: false,
             },
             i18n: {
-              language,
+              locale,
               resources: {
-                [language]: i18nCache[language],
+                [locale]: i18nCache[locale],
               },
             },
           },
@@ -97,14 +90,10 @@ describe('getStaticProps', () => {
     });
 
     test('given a language, loads a bundle given namespaces', async () => {
-      const language = ENABLED_LANGUAGES.find(
-        (lng) => lng !== FALLBACK_LANGUAGE
-      )!;
       const namespaces: Namespace[] = ['theme'];
 
       const result = await getStaticProps(mockCtx, {
         i18n: {
-          language,
           namespaces,
         },
       });
@@ -118,10 +107,10 @@ describe('getStaticProps', () => {
               shouldAttemptReauthentication: false,
             },
             i18n: {
-              language,
+              locale,
               resources: {
-                [language]: {
-                  theme: i18nCache[language].theme,
+                [locale]: {
+                  theme: i18nCache[locale].theme,
                 },
               },
             },
@@ -187,7 +176,7 @@ describe('createGetStaticProps', () => {
         i18n: {
           namespaces: [],
         },
-      })(mockCtx);
+      })({});
 
       expect(getI18nSpy).toHaveBeenCalledWith(
         FALLBACK_LANGUAGE,
@@ -195,24 +184,6 @@ describe('createGetStaticProps', () => {
           namespaces: [],
         })
       );
-    });
-
-    test('forwards language onto getI18n', async () => {
-      const language = ENABLED_LANGUAGES.find(
-        (lng) => lng !== FALLBACK_LANGUAGE
-      )!;
-
-      const getI18nSpy = jest.spyOn(i18n, 'getI18n');
-
-      await createGetStaticProps({
-        i18n: {
-          language,
-        },
-      })(mockCtx);
-
-      expect(getI18nSpy).toHaveBeenCalledWith(language, {
-        namespaces: undefined,
-      });
     });
   });
 });
@@ -251,7 +222,7 @@ describe('withKarmaSSGProps', () => {
   test('merges karma getStaticProps with handlers result', async () => {
     const mockHandler = jest.fn().mockResolvedValueOnce({ props: mockProps });
     const getStaticProps = withKarmaSSGProps(mockHandler);
-    const result = await getStaticProps(mockCtx);
+    const result = await getStaticProps({});
 
     expect(result).toStrictEqual({
       props: {
@@ -262,7 +233,7 @@ describe('withKarmaSSGProps', () => {
             shouldAttemptReauthentication: false,
           },
           i18n: {
-            language: FALLBACK_LANGUAGE,
+            locale: FALLBACK_LANGUAGE,
             resources: {
               [FALLBACK_LANGUAGE]: i18nCache[FALLBACK_LANGUAGE],
             },
@@ -270,39 +241,6 @@ describe('withKarmaSSGProps', () => {
         },
         ...mockProps,
       },
-    });
-  });
-});
-
-describe('createStaticI18nPaths', () => {
-  test('matches snapshot given no custom parameterName', () => {
-    const getStaticPaths = createStaticI18nPaths();
-
-    expect(getStaticPaths()).toStrictEqual({
-      fallback: false,
-      paths: expect.arrayContaining([
-        expect.objectContaining({
-          params: expect.objectContaining({
-            [DEFAULT_DYNAMIC_ROUTE_I18N_FOLDER_NAME]: expect.any(String),
-          }),
-        }),
-      ]),
-    });
-  });
-
-  test('matches snapshot given custom parameterName', () => {
-    const parameterName = 'karma';
-    const getStaticPaths = createStaticI18nPaths({ parameterName });
-
-    expect(getStaticPaths()).toStrictEqual({
-      fallback: false,
-      paths: expect.arrayContaining([
-        expect.objectContaining({
-          params: expect.objectContaining({
-            [parameterName]: expect.any(String),
-          }),
-        }),
-      ]),
     });
   });
 });

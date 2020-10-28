@@ -6,11 +6,10 @@ import { IS_BROWSER } from '../../constants';
 
 const isSupported = IS_BROWSER
   ? (() => {
-      if (!('scrollRestoration' in window.history)) {
-        return false;
-      }
-
-      if (!('sessionStorage' in window)) {
+      if (
+        !('scrollRestoration' in window.history) ||
+        !('sessionStorage' in window)
+      ) {
         return false;
       }
 
@@ -52,45 +51,49 @@ const restoreScrollPos = (url: string) => {
  * @see https://github.com/alanqchen/Bear-Blog-Engine/blob/master/frontend/components/utils/useScrollRestoration.js
  */
 export function useScrollRestoration(router: NextRouter): void {
-  useEffect(() => {
-    if (!isSupported) {
-      return;
-    }
-
-    let shouldScrollRestore = false;
-
-    window.history.scrollRestoration = 'manual';
-    restoreScrollPos(router.asPath);
-
-    const onBeforeUnload = (event: BeforeUnloadEvent) => {
-      saveScrollPos(router.asPath);
-      delete event.returnValue;
-    };
-
-    const onRouteChangeStart = () => {
-      saveScrollPos(router.asPath);
-    };
-
-    const onRouteChangeComplete = (url: string) => {
-      if (shouldScrollRestore) {
-        shouldScrollRestore = false;
-        restoreScrollPos(url);
+  useEffect(
+    // eslint-disable-next-line prefer-arrow-callback
+    function ensureScrollRestoration() {
+      if (!isSupported) {
+        return;
       }
-    };
 
-    window.addEventListener('beforeunload', onBeforeUnload);
-    Router.events.on('routeChangeStart', onRouteChangeStart);
-    Router.events.on('routeChangeComplete', onRouteChangeComplete);
-    Router.beforePopState(() => {
-      shouldScrollRestore = true;
-      return true;
-    });
+      let shouldScrollRestore = false;
 
-    return () => {
-      window.removeEventListener('beforeunload', onBeforeUnload);
-      Router.events.off('routeChangeStart', onRouteChangeStart);
-      Router.events.off('routeChangeComplete', onRouteChangeComplete);
-      Router.beforePopState(() => true);
-    };
-  }, [router]);
+      window.history.scrollRestoration = 'manual';
+      restoreScrollPos(router.asPath);
+
+      const onBeforeUnload = (event: BeforeUnloadEvent) => {
+        saveScrollPos(router.asPath);
+        delete event.returnValue;
+      };
+
+      const onRouteChangeStart = () => {
+        saveScrollPos(router.asPath);
+      };
+
+      const onRouteChangeComplete = (url: string) => {
+        if (shouldScrollRestore) {
+          shouldScrollRestore = false;
+          restoreScrollPos(url);
+        }
+      };
+
+      window.addEventListener('beforeunload', onBeforeUnload);
+      Router.events.on('routeChangeStart', onRouteChangeStart);
+      Router.events.on('routeChangeComplete', onRouteChangeComplete);
+      Router.beforePopState(() => {
+        shouldScrollRestore = true;
+        return true;
+      });
+
+      return () => {
+        window.removeEventListener('beforeunload', onBeforeUnload);
+        Router.events.off('routeChangeStart', onRouteChangeStart);
+        Router.events.off('routeChangeComplete', onRouteChangeComplete);
+        Router.beforePopState(() => true);
+      };
+    },
+    [router]
+  );
 }

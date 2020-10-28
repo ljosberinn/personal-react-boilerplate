@@ -192,50 +192,54 @@ function useSSGReauthentication({
 }: UseSSGReauthenticationArgs) {
   const { push } = useRouter();
 
-  useEffect(() => {
-    if (mode !== 'ssg' || !shouldAttemptReauthentication) {
-      return;
-    }
-
-    async function redirectOnFailure() {
-      if (!redirectDestinationIfUnauthenticated) {
+  useEffect(
+    // eslint-disable-next-line prefer-arrow-callback
+    function SSGReauthenticationEffect() {
+      if (mode !== 'ssg' || !shouldAttemptReauthentication) {
         return;
       }
 
-      try {
-        await push(redirectDestinationIfUnauthenticated);
-      } catch {
-        window.location.assign(redirectDestinationIfUnauthenticated);
+      async function redirectOnFailure() {
+        if (!redirectDestinationIfUnauthenticated) {
+          return;
+        }
+
+        try {
+          await push(redirectDestinationIfUnauthenticated);
+        } catch {
+          window.location.assign(redirectDestinationIfUnauthenticated);
+        }
       }
-    }
 
-    async function reauthenticate() {
-      try {
-        const { url, method } = endpoints.me;
+      async function reauthenticate() {
+        try {
+          const { url, method } = endpoints.me;
 
-        const response = await fetch(url, { method });
+          const response = await fetch(url, { method });
 
-        if (response.ok) {
-          const json = await response.json();
+          if (response.ok) {
+            const json = await response.json();
 
-          setUser(json);
-        } else {
+            setUser(json);
+          } else {
+            // eslint-disable-next-line @typescript-eslint/no-floating-promises
+            redirectOnFailure();
+          }
+        } catch {
           // eslint-disable-next-line @typescript-eslint/no-floating-promises
           redirectOnFailure();
         }
-      } catch {
-        // eslint-disable-next-line @typescript-eslint/no-floating-promises
-        redirectOnFailure();
       }
-    }
 
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    reauthenticate();
-  }, [
-    mode,
-    shouldAttemptReauthentication,
-    redirectDestinationIfUnauthenticated,
-    push,
-    setUser,
-  ]);
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
+      reauthenticate();
+    },
+    [
+      mode,
+      shouldAttemptReauthentication,
+      redirectDestinationIfUnauthenticated,
+      push,
+      setUser,
+    ]
+  );
 }

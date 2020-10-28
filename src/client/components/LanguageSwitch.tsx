@@ -1,4 +1,4 @@
-import type { MenuItemOptionProps, MenuProps } from '@chakra-ui/core';
+import type { MenuProps } from '@chakra-ui/core';
 import {
   Menu,
   MenuButton,
@@ -11,31 +11,21 @@ import {
   IconButton,
   Icon,
 } from '@chakra-ui/core';
-import type { FlagIconCode } from 'react-flag-kit';
-import { FlagIcon } from 'react-flag-kit';
+import { useRouter } from 'next/router';
 import { MdTranslate } from 'react-icons/md';
 
 import { ENABLED_LANGUAGES } from '../../constants';
-import { useI18nRouting } from '../hooks/useI18nRouting';
-import type { TFunction } from '../hooks/useTranslation';
 import { useTranslation } from '../hooks/useTranslation';
 import { ExternalLink } from './ExternalLink';
-
-type FlapMap = Record<string, FlagIconCode>;
-
-const flagMap: FlapMap = {
-  de: 'DE',
-  en: 'GB',
-};
+import { InternalLink } from './InternalLink';
 
 export type LanguageSwitchAltProps = Omit<MenuProps, 'children' | 'isLazy'>;
 
 export function LanguageSwitch(props: LanguageSwitchAltProps): JSX.Element {
-  const { t, language } = useTranslation('i18n');
+  const { t, locale: currentLocale } = useTranslation('i18n');
   const backgroundColor = useColorModeValue('gray.100', 'whiteAlpha.100');
   const buttonColor = useColorModeValue('gray.900', 'gray.100');
-
-  const { createChangeLocaleHandler } = useI18nRouting();
+  const { asPath: currentPath } = useRouter();
 
   return (
     <Menu {...props} isLazy>
@@ -49,29 +39,33 @@ export function LanguageSwitch(props: LanguageSwitchAltProps): JSX.Element {
       <MenuList>
         <MenuOptionGroup
           title={t('available-languages')}
-          defaultValue={language}
+          value={currentLocale}
           type="radio"
         >
-          {ENABLED_LANGUAGES.map((slug) => {
-            const isCurrentLanguage = slug === language;
-
-            const onClick = isCurrentLanguage
-              ? undefined
-              : createChangeLocaleHandler(slug);
+          {ENABLED_LANGUAGES.map((locale) => {
+            const isCurrentLocale = locale === currentLocale;
 
             return (
-              <LanguageOption
-                t={t}
-                disabled={isCurrentLanguage}
-                isChecked={isCurrentLanguage}
-                slug={slug}
-                onClick={onClick}
-                key={slug}
-              />
+              <MenuItemOption
+                as={InternalLink}
+                locale={locale}
+                href={currentPath}
+                omitTextDecoration
+                sx={{
+                  ':focus': {
+                    boxShadow: 'initial',
+                  },
+                }}
+                isDisabled={isCurrentLocale}
+                value={locale}
+                key={locale}
+              >
+                {t(locale)}
+              </MenuItemOption>
             );
           })}
         </MenuOptionGroup>
-        <MenuDivider />
+        <MenuDivider role={undefined} />
         <MenuItem
           as={ExternalLink}
           _focus={{
@@ -85,31 +79,5 @@ export function LanguageSwitch(props: LanguageSwitchAltProps): JSX.Element {
         </MenuItem>
       </MenuList>
     </Menu>
-  );
-}
-
-type LanguageOptionProps = Omit<
-  MenuItemOptionProps,
-  'disabled' | 'isChecked' | 'onClick'
-> & {
-  isChecked: boolean;
-  disabled: boolean;
-  onClick?: () => Promise<void>;
-  slug: string;
-  t: TFunction;
-};
-
-function LanguageOption({ t, slug, ...rest }: LanguageOptionProps) {
-  return (
-    <MenuItemOption {...rest} value={slug}>
-      <Icon
-        as={FlagIcon}
-        aria-hidden
-        code={flagMap[slug]}
-        mr={2}
-        display="inline-block"
-      />
-      {t(slug)}
-    </MenuItemOption>
   );
 }

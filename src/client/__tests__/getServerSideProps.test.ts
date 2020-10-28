@@ -4,11 +4,7 @@ import { serialize } from 'cookie';
 import type { GetServerSidePropsContext } from 'next';
 
 import type { Namespace } from '../../../src/constants';
-import {
-  FALLBACK_LANGUAGE,
-  SESSION_COOKIE_NAME,
-  ENABLED_LANGUAGES,
-} from '../../../src/constants';
+import { FALLBACK_LANGUAGE, SESSION_COOKIE_NAME } from '../../../src/constants';
 import {
   createIncomingRequestMock,
   createServerResponseMock,
@@ -16,7 +12,6 @@ import {
 import { i18nCache } from '../../../testUtils/i18n';
 import { createMockScope } from '../../../testUtils/sentry';
 import * as cookieUtils from '../../server/auth/cookie';
-import * as detectLanguageUtils from '../../server/i18n/detectLanguage';
 import * as sentryUtils from '../../utils/sentry/client';
 import * as sentryUtilsServer from '../../utils/sentry/server';
 import { TEMPORARY_REDIRECT } from '../../utils/statusCodes';
@@ -25,7 +20,6 @@ import {
   getServerSideProps,
   withKarmaSSRProps,
   createGetServerSideProps,
-  getServerSideIndexRedirect,
 } from '../karma/getServerSideProps';
 import * as i18n from '../karma/i18n';
 import type { I18nextResourceLocale } from '../karma/i18n';
@@ -61,10 +55,6 @@ const setupSpies = () => {
       return Promise.resolve({ [language]: i18nCache[language] });
     });
 
-  const detectLanguageSpy = jest
-    .spyOn(detectLanguageUtils, 'detectLanguage')
-    .mockReturnValueOnce(FALLBACK_LANGUAGE);
-
   const attachInitialContextSpy = jest.spyOn(
     sentryUtils,
     'attachInitialContext'
@@ -92,7 +82,6 @@ const setupSpies = () => {
     attachInitialContextSpy,
     attachLambdaContextSpy,
     configureScopeSpy,
-    detectLanguageSpy,
     getI18nSpy,
     getSessionSpy,
     setContextSpy,
@@ -140,7 +129,7 @@ describe('getServerSideProps', () => {
 
     expect(attachInitialContextSpy).toHaveBeenCalledWith(
       expect.objectContaining({
-        language: FALLBACK_LANGUAGE,
+        locale: FALLBACK_LANGUAGE,
         req: mockCtx.req,
         session: mockSession,
       })
@@ -148,7 +137,7 @@ describe('getServerSideProps', () => {
 
     expect(configureScopeSpy).toHaveBeenCalledTimes(1);
 
-    expect(setExtraSpy).toHaveBeenCalledWith('language', FALLBACK_LANGUAGE);
+    expect(setExtraSpy).toHaveBeenCalledWith('locale', FALLBACK_LANGUAGE);
 
     expect(setContextSpy).toHaveBeenCalledWith('headers', headers);
     expect(setContextSpy).toHaveBeenCalledWith('session', mockSession);
@@ -215,7 +204,7 @@ describe('getServerSideProps', () => {
                 session: null,
               },
               i18n: {
-                language: FALLBACK_LANGUAGE,
+                locale: FALLBACK_LANGUAGE,
                 resources: {},
               },
             },
@@ -251,7 +240,7 @@ describe('getServerSideProps', () => {
                 session: null,
               },
               i18n: {
-                language: FALLBACK_LANGUAGE,
+                locale: FALLBACK_LANGUAGE,
                 resources: {},
               },
             },
@@ -262,12 +251,6 @@ describe('getServerSideProps', () => {
   });
 
   describe('i18n', () => {
-    test('detects language', async () => {
-      const { detectLanguageSpy } = await setup();
-
-      expect(detectLanguageSpy).toHaveBeenCalledWith(mockCtx.req);
-    });
-
     test('loads i18n resources', async () => {
       const { getI18nSpy } = await setup();
 
@@ -288,7 +271,7 @@ describe('getServerSideProps', () => {
           },
           cookies: '',
           i18n: {
-            language: FALLBACK_LANGUAGE,
+            locale: FALLBACK_LANGUAGE,
             resources: {
               [FALLBACK_LANGUAGE]: i18nCache[FALLBACK_LANGUAGE],
             },
@@ -400,7 +383,7 @@ describe('withServerSideKarmaProps', () => {
           },
           cookies: '',
           i18n: {
-            language: FALLBACK_LANGUAGE,
+            locale: FALLBACK_LANGUAGE,
             resources: {
               [FALLBACK_LANGUAGE]: i18nCache[FALLBACK_LANGUAGE],
             },
@@ -409,62 +392,5 @@ describe('withServerSideKarmaProps', () => {
         ...mockProps,
       },
     });
-  });
-});
-
-describe('getServerSideIndexRedirect', () => {
-  const resolvedUrl = '';
-  const query = {};
-
-  test('matches snapshot', async () => {
-    const req = createIncomingRequestMock();
-    const res = createServerResponseMock();
-
-    const result = await getServerSideIndexRedirect({
-      query,
-      req,
-      res,
-      resolvedUrl,
-    });
-
-    expect(result).toMatchInlineSnapshot(`
-        Object {
-          "props": Object {},
-        }
-      `);
-  });
-
-  test('detects language', async () => {
-    const detectLanguageSpy = jest.spyOn(detectLanguageUtils, 'detectLanguage');
-
-    const req = createIncomingRequestMock();
-    const res = createServerResponseMock();
-
-    await getServerSideIndexRedirect({ query, req, res, resolvedUrl });
-
-    expect(detectLanguageSpy).toHaveBeenCalledTimes(1);
-    expect(detectLanguageSpy).toHaveBeenCalledWith(req);
-  });
-
-  test('will redirect to found language', async () => {
-    const [mockLanguage] = ENABLED_LANGUAGES;
-    jest
-      .spyOn(detectLanguageUtils, 'detectLanguage')
-      .mockReturnValueOnce(mockLanguage);
-
-    const writeHead = jest.fn();
-    const end = jest.fn();
-
-    const req = createIncomingRequestMock();
-    const res = createServerResponseMock({ end, writeHead });
-
-    await getServerSideIndexRedirect({ query, req, res, resolvedUrl });
-
-    expect(writeHead).toHaveBeenCalledTimes(1);
-    expect(writeHead).toHaveBeenCalledWith(TEMPORARY_REDIRECT, {
-      Location: expect.stringContaining(mockLanguage),
-    });
-
-    expect(end).toBeCalledTimes(1);
   });
 });

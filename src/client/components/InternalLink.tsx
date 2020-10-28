@@ -5,7 +5,6 @@ import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import { forwardRef } from 'react';
 
-import { useTranslation } from '../hooks/useTranslation';
 import type { WithChildren } from '../karma/types';
 
 export type InternalLinkProps =
@@ -23,45 +22,18 @@ export type InternalLinkProps =
     // - `as` is outdated since 9.5.3
     Omit<NextLinkProps, 'passHref' | 'as'>;
 
-/**
- * helper function to safely localize `NextLink.href` prop which can be
- * - undefined
- * - a string
- * - an `Url` object containing the new path in `href.pathname`
- */
-const localizeHref = (
-  href: NextLinkProps['href'],
-  language: string
-): NextLinkProps['href'] => {
-  // forward `undefined` because `next/link` will throw anyways
-  if (!href) {
-    return href;
-  }
+function useLinkAria({
+  href,
+  locale: targetLocale,
+}: Pick<NextLinkProps, 'href' | 'locale'>): 'page' | undefined {
+  const { pathname, locale: currentLocale } = useRouter();
+  const isCurrentLocale = currentLocale === targetLocale;
 
   if (typeof href === 'string') {
-    return `/${language}${href}`;
+    return isCurrentLocale && pathname === href ? 'page' : undefined;
   }
 
-  if (href.pathname) {
-    return {
-      ...href,
-      pathname: `/${language}${href.pathname}`,
-    };
-  }
-
-  // forward `href.pathname` being `undefined` because `next/link` will
-  // throw anyways
-  return href;
-};
-
-function useLinkAria(href: NextLinkProps['href']): 'page' | undefined {
-  const { pathname } = useRouter();
-
-  if (typeof href === 'string') {
-    return pathname === href ? 'page' : undefined;
-  }
-
-  return pathname === href.pathname ? 'page' : undefined;
+  return isCurrentLocale && pathname === href.pathname ? 'page' : undefined;
 }
 
 export const InternalLink = forwardRef<HTMLAnchorElement, InternalLinkProps>(
@@ -73,15 +45,13 @@ export const InternalLink = forwardRef<HTMLAnchorElement, InternalLinkProps>(
       prefetch,
       replace,
       scroll,
+      locale,
       omitTextDecoration,
-      localized = true,
       ...rest
     },
     ref
   ) => {
-    const { language } = useTranslation();
-
-    const ariaCurrent = useLinkAria(href);
+    const ariaCurrent = useLinkAria({ href, locale });
 
     const chakraLinkProps: ChakraLinkProps = {
       ...rest,
@@ -89,10 +59,9 @@ export const InternalLink = forwardRef<HTMLAnchorElement, InternalLinkProps>(
       'aria-current': ariaCurrent,
     };
 
-    const localizedHref = localized ? localizeHref(href, language) : href;
-
     const linkProps: NextLinkProps = {
-      href: localizedHref,
+      href,
+      locale,
       prefetch,
       replace,
       scroll,

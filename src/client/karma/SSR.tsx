@@ -50,20 +50,24 @@ function useDetermineShouldRedirect({
    */
   const shouldRedirect = !session && !!redirectDestinationIfUnauthenticated;
 
-  useEffect(() => {
-    if (!shouldRedirect || !redirectDestinationIfUnauthenticated) {
-      return;
-    }
-
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    (async () => {
-      try {
-        await replace(redirectDestinationIfUnauthenticated);
-      } catch {
-        window.location.assign(redirectDestinationIfUnauthenticated);
+  useEffect(
+    // eslint-disable-next-line prefer-arrow-callback
+    function SSRReauthenticationRedirect() {
+      if (!shouldRedirect || !redirectDestinationIfUnauthenticated) {
+        return;
       }
-    })();
-  }, [shouldRedirect, redirectDestinationIfUnauthenticated, replace]);
+
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
+      (async () => {
+        try {
+          await replace(redirectDestinationIfUnauthenticated);
+        } catch {
+          window.location.assign(redirectDestinationIfUnauthenticated);
+        }
+      })();
+    },
+    [shouldRedirect, redirectDestinationIfUnauthenticated, replace]
+  );
 
   return shouldRedirect;
 }

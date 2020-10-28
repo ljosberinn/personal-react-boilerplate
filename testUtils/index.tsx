@@ -153,7 +153,7 @@ function KarmaTestSetup({
       {omitKarmaProvider ? (
         <Wrapper>{children}</Wrapper>
       ) : (
-        <I18NContextProvider language={FALLBACK_LANGUAGE} resources={i18nCache}>
+        <I18NContextProvider locale={FALLBACK_LANGUAGE} resources={i18nCache}>
           <AuthContextProvider mode="ssr" session={session}>
             <ChakraProvider portalZIndex={40}>
               <Wrapper>

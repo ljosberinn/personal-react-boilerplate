@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "analyze": "set ANALYZE=true&&yarn build",
-    "build": "next build",
+    "build": "next build && next export",
     "install:clean": "rm -rf node_modules && rm yarn.lock && yarn",
     "dev": "next",
     "lint:code": "eslint src",
@@ -25,7 +25,6 @@
     "preact": "10.5.5",
     "preact-render-to-string": "5.1.11",
     "preact-ssr-prepass": "1.1.2",
-    "react-flag-kit": "0.3.1",
     "react-icons": "3.11.0",
     "web-vitals": "0.2.4"
   },
@@ -42,9 +41,9 @@
     "@testing-library/user-event": "12.1.10",
     "@types/jest": "26.0.15",
     "@types/jest-axe": "3.5.1",
-    "@types/node": "14.14.5",
+    "@types/node": "14.14.6",
     "@types/node-fetch": "2.5.7",
-    "@types/react": "16.9.54",
+    "@types/react": "16.9.55",
     "@types/react-dom": "16.9.9",
     "@types/test-listen": "1.1.0",
     "babel-jest": "26.6.1",
@@ -67,12 +66,12 @@
     "react-test-renderer": "17.0.1",
     "test-listen": "1.1.0",
     "typescript": "4.0.5",
-    "webpack": "5.3.0",
+    "webpack": "5.3.1",
     "whatwg-fetch": "3.4.1",
     "yarn-deduplicate": "3.1.0"
   },
   "resolutions": {
-    "webpack": "5.3.0"
+    "webpack": "5.3.1"
   },
   "license": "MIT",
   "author": "Gerrit Alex",

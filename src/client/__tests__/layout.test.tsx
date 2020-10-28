@@ -21,7 +21,7 @@ const mockProps: IsomorphicKarmaProps = {
   },
   cookies: '',
   i18n: {
-    language: FALLBACK_LANGUAGE,
+    locale: FALLBACK_LANGUAGE,
     resources: i18nCache,
   },
 };

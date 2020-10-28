@@ -145,11 +145,11 @@ const defaultConfig = {
     // scrollRestoration: true,
     productionBrowserSourceMaps: true,
   },
-  // i18n: {
-  //   localeDetection: true,
-  //   defaultLocale: process.env.NEXT_PUBLIC_FALLBACK_LANGUAGE,
-  //   locales: process.env.NEXT_PUBLIC_ENABLED_LANGUAGES.split(','),
-  // },
+  i18n: {
+    localeDetection: true,
+    defaultLocale: process.env.NEXT_PUBLIC_FALLBACK_LANGUAGE,
+    locales: process.env.NEXT_PUBLIC_ENABLED_LANGUAGES.split(','),
+  },
 };
 
 module.exports = withPlugins(

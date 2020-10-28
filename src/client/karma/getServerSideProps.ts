@@ -6,7 +6,6 @@ import type { ParsedUrlQuery } from 'querystring';
 
 import { FALLBACK_LANGUAGE } from '../../constants';
 import { getSession } from '../../server/auth/cookie';
-import { detectLanguage } from '../../server/i18n/detectLanguage';
 import { attachInitialContext } from '../../utils/sentry/client';
 import { attachLambdaContext } from '../../utils/sentry/server';
 import { TEMPORARY_REDIRECT } from '../../utils/statusCodes';
@@ -29,7 +28,7 @@ type NextGetServerSidePropsResultWithoutProps = Omit<
 type SSRRedirectPropSubset = Pick<KarmaSSRProps, 'auth'> & {
   i18n: {
     resources: {};
-    language: string;
+    locale: string;
   };
 };
 
@@ -65,27 +64,6 @@ export const createGetServerSideProps = (
   getServerSideProps(context, options);
 
 /**
- * Redirects from `/` to the detected language, or FALLBACK_LANGUAGE if none
- * applies
- */
-export const getServerSideIndexRedirect: GetServerSidePropsHandler = ({
-  req,
-  res,
-}: GetServerSidePropsContext) => {
-  const language = detectLanguage(req);
-
-  res.writeHead(TEMPORARY_REDIRECT, {
-    Location: `/${language}`,
-  });
-
-  res.end();
-
-  return {
-    props: {},
-  };
-};
-
-/**
  * only use if you don't care about loading all i18n namespaces on this route
  *
  * @see `createGetServerSideProps`
@@ -95,7 +73,7 @@ export const getServerSideIndexRedirect: GetServerSidePropsHandler = ({
  * ```
  */
 export const getServerSideProps = async (
-  { req, res }: GetServerSidePropsContext,
+  { req, res, locale = FALLBACK_LANGUAGE }: GetServerSidePropsContext,
   options?: CreateGetServerSidePropsOptions
 ): GetServerSidePropsResult => {
   const { i18n: i18nOptions, auth: authOptions, ...rest } = options ?? {};
@@ -122,7 +100,7 @@ export const getServerSideProps = async (
             session: null,
           },
           i18n: {
-            language: FALLBACK_LANGUAGE,
+            locale: FALLBACK_LANGUAGE,
             resources: {},
           },
         },
@@ -130,8 +108,7 @@ export const getServerSideProps = async (
     };
   }
 
-  const language = detectLanguage(req);
-  const resources = await getI18n(language, {
+  const resources = await getI18n(locale, {
     namespaces: i18nOptions?.namespaces,
   });
   const cookies = req?.headers.cookie ?? '';
@@ -139,13 +116,13 @@ export const getServerSideProps = async (
   attachLambdaContext(req);
 
   attachInitialContext({
-    language,
+    locale,
     req,
     session,
   });
 
   const i18n: KarmaSSRProps['i18n'] = {
-    language,
+    locale,
     resources,
   };
 

@@ -24,9 +24,13 @@ export default function App({
   pageProps,
   router,
 }: AppRenderProps): JSX.Element {
-  useEffect(() => {
-    attachRoutingContext(router);
-  }, [router]);
+  useEffect(
+    // eslint-disable-next-line prefer-arrow-callback
+    function routingMonitoring() {
+      attachRoutingContext(router);
+    },
+    [router]
+  );
 
   useScrollRestoration(router);
 

@@ -23,7 +23,7 @@ const defaultProps: AppRenderProps = {
       },
       cookies: '',
       i18n: {
-        language: FALLBACK_LANGUAGE,
+        locale: FALLBACK_LANGUAGE,
         resources: {},
       },
     },

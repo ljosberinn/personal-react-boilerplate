@@ -1,20 +1,13 @@
 import type { LinkProps } from 'next/link';
 
 import { screen, render, testA11Y, validateHtml } from '../../../testUtils';
-import { FALLBACK_LANGUAGE } from '../../constants';
 import { InternalLink } from '../components/InternalLink';
 
 const ariaAttr = 'aria-current';
-const pathname: LinkProps['href'] = '/docs';
+const pathname: LinkProps['href'] = 'docs';
 
 const href: LinkProps['href'] = {
   pathname,
-};
-
-const prefixedPathname: LinkProps['href'] = `/${FALLBACK_LANGUAGE}${pathname}`;
-
-const prefixedHref: LinkProps['href'] = {
-  pathname: prefixedPathname,
 };
 
 describe('<InternalLink />', () => {
@@ -58,36 +51,6 @@ describe('<InternalLink />', () => {
       render(<InternalLink href="/docs">Docs</InternalLink>);
 
       expect(screen.getByRole('link')).not.toHaveAttribute(ariaAttr);
-    });
-  });
-
-  describe('i18n', () => {
-    it('does not prefix if localized is false', () => {
-      render(
-        <InternalLink localized={false} href={pathname}>
-          Docs
-        </InternalLink>
-      );
-
-      expect(screen.getByRole('link')).toHaveAttribute('href', pathname);
-    });
-
-    it('prefixes if "href" is a string', () => {
-      render(<InternalLink href={pathname}>Docs</InternalLink>);
-
-      expect(screen.getByRole('link')).toHaveAttribute(
-        'href',
-        prefixedPathname
-      );
-    });
-
-    it('prefixes if "href" is an object', () => {
-      render(<InternalLink href={href}>Docs</InternalLink>);
-
-      expect(screen.getByRole('link')).toHaveAttribute(
-        'href',
-        prefixedHref.pathname
-      );
     });
   });
 });

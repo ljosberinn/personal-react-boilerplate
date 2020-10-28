@@ -16,7 +16,7 @@ const options: BrowserOptions = {
 isomorphicSentryInit({ configureScope, init, options });
 
 type InitialContextArgs = Pick<KarmaSSRProps['auth'], 'session'> &
-  Pick<KarmaSSRProps['i18n'], 'language'> & {
+  Pick<KarmaSSRProps['i18n'], 'locale'> & {
     req?: IncomingMessage;
   };
 
@@ -25,7 +25,7 @@ type InitialContextArgs = Pick<KarmaSSRProps['auth'], 'session'> &
  */
 export const attachInitialContext = ({
   req,
-  language,
+  locale,
   session,
 }: InitialContextArgs): void => {
   addBreadcrumb({
@@ -34,7 +34,7 @@ export const attachInitialContext = ({
   });
 
   configureScope((scope) => {
-    scope.setExtra('language', language);
+    scope.setExtra('locale', locale);
 
     if (req) {
       scope.setContext('headers', req.headers);

@@ -27,7 +27,6 @@ export type WithKarmaProps<KarmaProps, Props = {}> = {
 } & Props;
 
 export type IsomorphicI18nRequirements = {
-  language?: string;
   namespaces?: Namespace[];
 };
 
@@ -45,7 +44,7 @@ export type KarmaCoreProps = {
     /**
      * The language to initialize i18n with
      */
-    language: string;
+    locale: string;
     /**
      * The initial bundle to initialize i18n with
      */

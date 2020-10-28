@@ -44,10 +44,12 @@ type GetI18nOptions = {
  * retrieves currently demanded i18nBundle
  */
 export const getI18n = async (
-  lang: string,
+  locale: string,
   { namespaces }: GetI18nOptions = {}
 ): Promise<I18nextResources> => {
-  const language = ENABLED_LANGUAGES.includes(lang) ? lang : FALLBACK_LANGUAGE;
+  const language = ENABLED_LANGUAGES.includes(locale)
+    ? locale
+    : FALLBACK_LANGUAGE;
   const namespacesToLoad = namespaces ?? [...new Set(allNamespaces)];
 
   const bundles = await Promise.all<[Namespace, I18nextNamespace]>(

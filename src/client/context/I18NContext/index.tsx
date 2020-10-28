@@ -1,6 +1,6 @@
 import { createContext, useEffect } from 'react';
 
-import { IS_BROWSER, I18N_COOKIE_NAME } from '../../../constants';
+import { I18N_COOKIE_NAME } from '../../../constants';
 import type { WithChildren } from '../../karma/types';
 import type { I18NContextDefinition } from './types';
 
@@ -10,15 +10,16 @@ export const I18NContext = createContext<I18NContextDefinition | null>(null);
 
 export function I18NContextProvider({
   children,
-  language,
+  locale,
   resources,
 }: I18NContextProviderProps): JSX.Element {
-  useEffect(() => {
-    if (IS_BROWSER) {
+  useEffect(
+    // eslint-disable-next-line prefer-arrow-callback
+    function changeHtmlLangTag() {
       const html = document.querySelector('html');
 
       if (html) {
-        html.setAttribute('lang', language);
+        html.setAttribute('lang', locale);
 
         /**
          * @see https://meta.wikimedia.org/wiki/Template:List_of_language_names_ordered_by_code
@@ -38,20 +39,27 @@ export function I18NContextProvider({
           'yi', // Yiddish
         ]);
 
-        html.setAttribute('dir', RTL_LANGUAGES.has(language) ? 'rtl' : 'ltr');
-
-        document.cookie = `${I18N_COOKIE_NAME}=${language}; max-age=31536000; path=/`;
+        html.setAttribute('dir', RTL_LANGUAGES.has(locale) ? 'rtl' : 'ltr');
 
         // set initially aswell
-        html.setAttribute('lang', language);
+        html.setAttribute('lang', locale);
       }
-    }
-  }, [language]);
+    },
+    [locale]
+  );
 
-  // no need to memoize - whenever language changes, resources change too
+  useEffect(
+    // eslint-disable-next-line prefer-arrow-callback
+    function syncNextI18nCookie() {
+      document.cookie = `${I18N_COOKIE_NAME}=${locale}; max-age=31536000; path=/`;
+    },
+    [locale]
+  );
+
+  // no need to memoize - whenever locale changes, resources change too
   // which only ever happens during navigation
   const value = {
-    language,
+    locale,
     resources,
   };
 

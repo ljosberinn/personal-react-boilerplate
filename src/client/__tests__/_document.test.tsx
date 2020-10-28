@@ -12,7 +12,7 @@ const pageProps: KarmaSSRProps = {
   auth: { session: null },
   cookies: '',
   i18n: {
-    language: FALLBACK_LANGUAGE,
+    locale: FALLBACK_LANGUAGE,
     resources: i18nCache,
   },
 };
