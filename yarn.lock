@@ -2189,10 +2189,10 @@
   resolved "https://registry.yarnpkg.com/@next/env/-/env-10.0.0.tgz#eb0239062226a9c8b604d58d4a4204e26c22eb16"
   integrity sha512-59+6BnOxPoMY64Qy2crDGHtvQgHwIL1SIkWeNiEud1V6ASs59SM9oDGN+Bo/EswII1nn+wQRpMvax0IIN2j+VQ==
 
-"@next/eslint-plugin-next@9.5.5":
-  version "9.5.5"
-  resolved "https://registry.yarnpkg.com/@next/eslint-plugin-next/-/eslint-plugin-next-9.5.5.tgz#b381b4a97c20e8a40a3730a11417f15bb9387467"
-  integrity sha512-OTg0vxAHvWB02mYgWRVTzjLAx3/IY2x7FjNnUUrPfhHS5UUVq4z/xw3rjcCEXCNuKPcJAuA4B4stqllELNId7w==
+"@next/eslint-plugin-next@10.0.0":
+  version "10.0.0"
+  resolved "https://registry.yarnpkg.com/@next/eslint-plugin-next/-/eslint-plugin-next-10.0.0.tgz#bf31db554774eab0770aae26cfd542b452083272"
+  integrity sha512-4YwtYRqD0F6GheYPcuvv2WfRz+WOvwaDsIbp6XYYlM2l3TOGsAMnVP+sPsal3i6d2qaIxqYsJb04U4GtEc6J4w==
 
 "@next/polyfill-module@10.0.0":
   version "10.0.0"
@@ -5225,17 +5225,17 @@ eslint-ast-utils@^1.1.0:
     lodash.get "^4.4.2"
     lodash.zip "^4.2.0"
 
-eslint-config-galex@2.6.0:
-  version "2.6.0"
-  resolved "https://registry.yarnpkg.com/eslint-config-galex/-/eslint-config-galex-2.6.0.tgz#317c250c2934cc120bde937f0e730fb5ee932877"
-  integrity sha512-ard8t3RxYFHAcJ+jlH7zzET3HldHKmkRGDSRIzyWOzQZtQ5AuQLrSsQJEc8lVPMTtxBTv/VxwZzDTxYnNMjCNQ==
+eslint-config-galex@2.6.1:
+  version "2.6.1"
+  resolved "https://registry.yarnpkg.com/eslint-config-galex/-/eslint-config-galex-2.6.1.tgz#eecb08ea454990b07f40e7b3e0d34a082115b56c"
+  integrity sha512-stXIUzMIMNi+2i4Ndcz561f+GSjJPfOSfH5bp2w4Yu93vKKP8Hvpq14Rkzo5p7cBWlY7QB0y3lC5QZ+Iy83Sqg==
   dependencies:
-    "@next/eslint-plugin-next" "9.5.5"
+    "@next/eslint-plugin-next" "10.0.0"
     "@typescript-eslint/eslint-plugin" "4.6.0"
     "@typescript-eslint/parser" "4.6.0"
     babel-eslint "10.1.0"
     confusing-browser-globals "1.0.10"
-    eslint-config-prettier "6.14.0"
+    eslint-config-prettier "6.15.0"
     eslint-plugin-import "2.22.1"
     eslint-plugin-inclusive-language "1.2.1"
     eslint-plugin-jest "24.1.0"
@@ -5253,10 +5253,10 @@ eslint-config-galex@2.6.0:
     read-pkg-up "7.0.1"
     typescript "4.0.5"
 
-eslint-config-prettier@6.14.0:
-  version "6.14.0"
-  resolved "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-6.14.0.tgz#390e7863a8ae99970981933826476169285b3a27"
-  integrity sha512-DbVwh0qZhAC7CNDWcq8cBdK6FcVHiMTKmCypOPWeZkp9hJ8xYwTaWSa6bb6cjfi8KOeJy0e9a8Izxyx+O4+gCQ==
+eslint-config-prettier@6.15.0:
+  version "6.15.0"
+  resolved "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-6.15.0.tgz#7f93f6cb7d45a92f1537a70ecc06366e1ac6fed9"
+  integrity sha512-a1+kOYLR8wMGustcgAjdydMsQ2A/2ipRPwRKUmfYaSxc9ZPcrku080Ctl6zrZzZNs/U82MjSv+qKREkoq3bJaw==
   dependencies:
     get-stdin "^6.0.0"
 
