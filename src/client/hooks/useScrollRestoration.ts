@@ -51,49 +51,45 @@ const restoreScrollPos = (url: string) => {
  * @see https://github.com/alanqchen/Bear-Blog-Engine/blob/master/frontend/components/utils/useScrollRestoration.js
  */
 export function useScrollRestoration(router: NextRouter): void {
-  useEffect(
-    // eslint-disable-next-line prefer-arrow-callback
-    function ensureScrollRestoration() {
-      if (!isSupported) {
-        return;
+  useEffect(() => {
+    if (!isSupported) {
+      return;
+    }
+
+    let shouldScrollRestore = false;
+
+    window.history.scrollRestoration = 'manual';
+    restoreScrollPos(router.asPath);
+
+    const onBeforeUnload = (event: BeforeUnloadEvent) => {
+      saveScrollPos(router.asPath);
+      delete event.returnValue;
+    };
+
+    const onRouteChangeStart = () => {
+      saveScrollPos(router.asPath);
+    };
+
+    const onRouteChangeComplete = (url: string) => {
+      if (shouldScrollRestore) {
+        shouldScrollRestore = false;
+        restoreScrollPos(url);
       }
+    };
 
-      let shouldScrollRestore = false;
+    window.addEventListener('beforeunload', onBeforeUnload);
+    Router.events.on('routeChangeStart', onRouteChangeStart);
+    Router.events.on('routeChangeComplete', onRouteChangeComplete);
+    Router.beforePopState(() => {
+      shouldScrollRestore = true;
+      return true;
+    });
 
-      window.history.scrollRestoration = 'manual';
-      restoreScrollPos(router.asPath);
-
-      const onBeforeUnload = (event: BeforeUnloadEvent) => {
-        saveScrollPos(router.asPath);
-        delete event.returnValue;
-      };
-
-      const onRouteChangeStart = () => {
-        saveScrollPos(router.asPath);
-      };
-
-      const onRouteChangeComplete = (url: string) => {
-        if (shouldScrollRestore) {
-          shouldScrollRestore = false;
-          restoreScrollPos(url);
-        }
-      };
-
-      window.addEventListener('beforeunload', onBeforeUnload);
-      Router.events.on('routeChangeStart', onRouteChangeStart);
-      Router.events.on('routeChangeComplete', onRouteChangeComplete);
-      Router.beforePopState(() => {
-        shouldScrollRestore = true;
-        return true;
-      });
-
-      return () => {
-        window.removeEventListener('beforeunload', onBeforeUnload);
-        Router.events.off('routeChangeStart', onRouteChangeStart);
-        Router.events.off('routeChangeComplete', onRouteChangeComplete);
-        Router.beforePopState(() => true);
-      };
-    },
-    [router]
-  );
+    return () => {
+      window.removeEventListener('beforeunload', onBeforeUnload);
+      Router.events.off('routeChangeStart', onRouteChangeStart);
+      Router.events.off('routeChangeComplete', onRouteChangeComplete);
+      Router.beforePopState(() => true);
+    };
+  }, [router]);
 }

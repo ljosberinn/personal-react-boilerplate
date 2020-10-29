@@ -13,48 +13,40 @@ export function I18NContextProvider({
   locale,
   resources,
 }: I18NContextProviderProps): JSX.Element {
-  useEffect(
-    // eslint-disable-next-line prefer-arrow-callback
-    function changeHtmlLangTag() {
-      const html = document.querySelector('html');
+  useEffect(() => {
+    const html = document.querySelector('html');
 
-      if (html) {
-        html.setAttribute('lang', locale);
+    if (html) {
+      html.setAttribute('lang', locale);
 
-        /**
-         * @see https://meta.wikimedia.org/wiki/Template:List_of_language_names_ordered_by_code
-         */
-        const RTL_LANGUAGES = new Set([
-          'ar', // Arabic
-          'arc', // Aramaic
-          'dv', // Divehi
-          'fa', // Persian
-          'ha', // Hakka Chinese
-          'he', // Hebrew
-          'khw', // Khowar
-          'ks', // Kashmiri
-          'ku', // Kurdish
-          'ps', // Pashto
-          'ur', // Urdu
-          'yi', // Yiddish
-        ]);
+      /**
+       * @see https://meta.wikimedia.org/wiki/Template:List_of_language_names_ordered_by_code
+       */
+      const RTL_LANGUAGES = new Set([
+        'ar', // Arabic
+        'arc', // Aramaic
+        'dv', // Divehi
+        'fa', // Persian
+        'ha', // Hakka Chinese
+        'he', // Hebrew
+        'khw', // Khowar
+        'ks', // Kashmiri
+        'ku', // Kurdish
+        'ps', // Pashto
+        'ur', // Urdu
+        'yi', // Yiddish
+      ]);
 
-        html.setAttribute('dir', RTL_LANGUAGES.has(locale) ? 'rtl' : 'ltr');
+      html.setAttribute('dir', RTL_LANGUAGES.has(locale) ? 'rtl' : 'ltr');
 
-        // set initially aswell
-        html.setAttribute('lang', locale);
-      }
-    },
-    [locale]
-  );
+      // set initially aswell
+      html.setAttribute('lang', locale);
+    }
+  }, [locale]);
 
-  useEffect(
-    // eslint-disable-next-line prefer-arrow-callback
-    function syncNextI18nCookie() {
-      document.cookie = `${I18N_COOKIE_NAME}=${locale}; max-age=31536000; path=/`;
-    },
-    [locale]
-  );
+  useEffect(() => {
+    document.cookie = `${I18N_COOKIE_NAME}=${locale}; max-age=31536000; path=/`;
+  }, [locale]);
 
   // no need to memoize - whenever locale changes, resources change too
   // which only ever happens during navigation
