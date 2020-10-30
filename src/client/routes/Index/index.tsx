@@ -56,15 +56,15 @@ function Hero() {
       <Container
         d="flex"
         maxWidth={{ base: '100%', md: '100em' }}
-        pt={60}
-        pb={44}
+        pt={{ base: 28, lg: 60 }}
+        pb={{ base: 20, lg: 44 }}
         mx="auto"
         justifyContent="center"
         alignContent="center"
         flexDirection={{ base: 'column', lg: 'row' }}
         textAlign={{ base: 'center', lg: 'initial' }}
       >
-        <Flex justifyContent="center">
+        <Flex justifyContent="center" pb={{ base: 10, lg: 0 }}>
           <KarmaIcon size="24em" animated />
         </Flex>
         <Box>
