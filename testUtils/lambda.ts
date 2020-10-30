@@ -11,6 +11,7 @@ import fetch from 'node-fetch';
 import listen from 'test-listen';
 import { URL } from 'url';
 
+import { FALLBACK_LANGUAGE } from '../src/constants';
 import type { Middleware } from '../src/server/types';
 import type { RequestInitMethod } from '../src/utils/requestMethods';
 
@@ -193,6 +194,7 @@ const determineUrl = (
    */
   const query = [
     params.toString(),
+    `__nextLocale=${FALLBACK_LANGUAGE}`,
     // order is important - key with value must come before key without value
     `${catchAllName}=${lastSegment}`,
     catchAllName,

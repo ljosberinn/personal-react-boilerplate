@@ -48,8 +48,10 @@ const useExternalProvider: RequestHandler = async (req, res, next) => {
     const origin = getOrigin(req);
     const redirect_uri = `${origin}/api/v1/auth/${provider}`;
 
+    const { __nextLocale: _, ...queryParams } = req.query;
+
     // prepare redirect to provider - no get params given
-    if (Object.keys(req.query).length === 1) {
+    if (Object.keys(queryParams).length === 1) {
       const url = getRedirectUrl(authorizationUrl, redirect_uri, provider);
 
       res.status(FOUND_MOVED_TEMPORARILY).setHeader('Location', url);
