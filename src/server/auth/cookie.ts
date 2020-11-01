@@ -10,6 +10,8 @@ import {
   SESSION_COOKIE_NAME,
 } from '../../constants';
 
+const SET_COOKIE_HEADER = 'Set-Cookie';
+
 type SSRCompatibleRequest = NextApiRequest | IncomingMessage;
 
 export const encryptSession = (session: object): string =>
@@ -39,15 +41,25 @@ type NewCookieOptions = {
 };
 
 /**
- * Sets new cookies on the res object via `Set-Cookie`.
+ * Sets new cookies on the res object via `Set-Cookie`, respecting
+ * previously set value(s)
  */
 export const setCookie = (
   { name, value, options }: NewCookieOptions,
   res: NextApiResponse
 ): void => {
-  const header = serialize(name, value, options);
+  const next = serialize(name, value, options);
+  const previous = res.getHeader(SET_COOKIE_HEADER);
 
-  res.setHeader('Set-Cookie', header);
+  if (!previous || typeof previous === 'number') {
+    return res.setHeader(SET_COOKIE_HEADER, next);
+  }
+
+  if (typeof previous === 'string') {
+    return res.setHeader(SET_COOKIE_HEADER, [previous, next]);
+  }
+
+  res.setHeader(SET_COOKIE_HEADER, previous.concat(next));
 };
 
 export const setSessionCookie = (token: string, res: NextApiResponse): void => {
@@ -72,12 +84,14 @@ export const setSessionCookie = (token: string, res: NextApiResponse): void => {
 };
 
 export const removeCookie = (name: string, res: NextApiResponse): void => {
-  const value = serialize(name, '', {
+  const options = {
     maxAge: -1,
     path: '/',
-  });
+  };
 
-  res.setHeader('Set-Cookie', value);
+  const value = '';
+
+  setCookie({ name, options, value }, res);
 };
 
 export const parseCookies = (

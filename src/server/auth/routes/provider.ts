@@ -1,68 +1,76 @@
-import type { IncomingMessage } from 'http';
-import nextConnect from 'next-connect';
-
-import type { ExternalProvider } from '../../../client/context/AuthContext/types';
+import type {
+  ExternalProvider,
+  OAuthRedirectHandler,
+  OAuthCallbackHandler,
+} from '../../../client/context/AuthContext/types';
 import { ENABLED_PROVIDER } from '../../../constants';
 import {
+  BAD_REQUEST,
   FOUND_MOVED_TEMPORARILY,
   INTERNAL_SERVER_ERROR,
 } from '../../../utils/statusCodes';
 import type { RequestHandler } from '../../types';
 import { encryptSession, setSessionCookie } from '../cookie';
+import type { BattleNetRegion } from '../strategies/battlenet';
 import {
-  config,
-  getRedirectUrl,
-  getOAuthData,
-  getProfileData,
-} from '../oauth2';
+  redirectToBattleNet,
+  processBattleNetCallback,
+} from '../strategies/battlenet';
+import {
+  redirectToDiscord,
+  processDiscordCallback,
+} from '../strategies/discord';
+import {
+  redirectToFacebook,
+  processFacebookCallback,
+} from '../strategies/facebook';
+import { redirectToGitHub, processGitHubCallback } from '../strategies/github';
+import { redirectToGoogle, processGoogleCallback } from '../strategies/google';
+import { buildBaseRedirectUrl, getOrigin } from '../utils';
 
-// eslint-disable-next-line inclusive-language/use-inclusive-words
-/**
- * @see https://github.com/jekrb/next-absolute-url/blob/master/index.ts
- */
-const getOrigin = (req: IncomingMessage) => {
-  const host = (() => {
-    const xForwardedHost = req.headers['x-forwarded-host'];
-
-    if (xForwardedHost && !Array.isArray(xForwardedHost)) {
-      return xForwardedHost;
-    }
-
-    return req.headers.host ?? 'localhost:3000';
-  })();
-
-  const protocol =
-    req.headers['x-forwarded-proto'] ?? host.includes('localhost')
-      ? 'http:'
-      : 'https:';
-
-  return `${protocol}//${host}`;
+const redirectHandlerMap: Record<ExternalProvider, OAuthRedirectHandler> = {
+  battlenet: redirectToBattleNet,
+  discord: redirectToDiscord,
+  facebook: redirectToFacebook,
+  github: redirectToGitHub,
+  google: redirectToGoogle,
 };
 
-const useExternalProvider: RequestHandler = async (req, res, next) => {
-  const [provider] = req.query.authRouter as ExternalProvider[];
+const callbackHandlerMap: Record<ExternalProvider, OAuthCallbackHandler> = {
+  battlenet: processBattleNetCallback,
+  discord: processDiscordCallback,
+  facebook: processFacebookCallback,
+  github: processGitHubCallback,
+  google: processGoogleCallback,
+};
 
-  if (ENABLED_PROVIDER.includes(provider)) {
-    const { authorizationUrl, tokenUrl, profileDataUrl } = config[provider];
+type ExpectedQueryParams = {
+  init?: string;
+  __nextLocale: string;
+  type: ExternalProvider;
+  region?: BattleNetRegion;
+  // only present if in callback from external provider
+  code?: string;
+  error?: string;
+  prompt?: string;
+};
 
+export const providerHandler: RequestHandler = async (req, res, next) => {
+  const { type, code, error } = req.query as ExpectedQueryParams;
+
+  if (ENABLED_PROVIDER.includes(type)) {
     const origin = getOrigin(req);
-    const redirect_uri = `${origin}/api/v1/auth/${provider}`;
+    const meta = {
+      baseRedirectUrl: buildBaseRedirectUrl(origin, type),
+      origin,
+    };
 
-    const { __nextLocale: _, ...queryParams } = req.query;
-
-    // prepare redirect to provider - no get params given
-    if (Object.keys(queryParams).length === 1) {
-      const url = getRedirectUrl(authorizationUrl, redirect_uri, provider);
-
-      res.status(FOUND_MOVED_TEMPORARILY).setHeader('Location', url);
+    if ('init' in req.query) {
+      const redirectHandler = redirectHandlerMap[type];
+      redirectHandler(req, res, meta);
 
       return res.end();
     }
-
-    // get params given; must be callback from provider
-    const { code, error, prompt } = req.query as {
-      [key: string]: string;
-    };
 
     if (!code || Array.isArray(code) || error) {
       if (error) {
@@ -70,31 +78,25 @@ const useExternalProvider: RequestHandler = async (req, res, next) => {
         console.error(error);
       }
 
-      return res.status(INTERNAL_SERVER_ERROR).end();
+      return res.status(BAD_REQUEST).end();
     }
 
-    const oauthResponse = await getOAuthData(tokenUrl, {
-      code,
-      prompt,
-      provider,
-      redirect_uri,
-    });
+    const enhancedMeta = { ...meta, code };
 
-    const profileJson = await getProfileData(
-      profileDataUrl,
-      provider,
-      oauthResponse
-    );
+    const callbackHandler = callbackHandlerMap[type];
+    const profile = await callbackHandler(req, res, enhancedMeta);
 
-    const token = encryptSession(profileJson);
-    setSessionCookie(token, res);
+    res.status(profile ? FOUND_MOVED_TEMPORARILY : INTERNAL_SERVER_ERROR);
 
-    res.status(FOUND_MOVED_TEMPORARILY).setHeader('Location', origin);
+    if (profile) {
+      const token = encryptSession(profile);
+      setSessionCookie(token, res);
+
+      res.setHeader('Location', origin);
+    }
 
     return res.end();
   }
 
   next();
 };
-
-export const externalProviderHandler = nextConnect().get(useExternalProvider);

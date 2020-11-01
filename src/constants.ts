@@ -38,12 +38,18 @@ export const SESSION_LIFETIME =
 
 export const DISCORD_CLIENT_SECRET = process.env.DISCORD_CLIENT_SECRET!;
 export const DISCORD_CLIENT_ID = process.env.DISCORD_CLIENT_ID!;
+
 export const FACEBOOK_CLIENT_ID = process.env.FACEBOOK_CLIENT_ID!;
 export const FACEBOOK_CLIENT_SECRET = process.env.FACEBOOK_CLIENT_SECRET!;
+
 export const GITHUB_CLIENT_ID = process.env.GITHUB_CLIENT_ID!;
 export const GITHUB_CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET!;
+
 export const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID!;
 export const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET!;
+
+export const BATTLENET_CLIENT_ID = process.env.BATTLENET_CLIENT_ID!;
+export const BATTLENET_CLIENT_SECRET = process.env.BATTLENET_CLIENT_SECRET!;
 
 /**********************
  * i18n

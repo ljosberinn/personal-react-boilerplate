@@ -44,14 +44,6 @@ function Header() {
           <Text fontWeight="500" pl="2">
             Karma
           </Text>
-          <HStack
-            as="nav"
-            spacing="4"
-            ml="12"
-            display={{ base: 'none', md: 'flex' }}
-          >
-            Docs (coming soon)
-          </HStack>
         </Flex>
 
         <Flex width="auto" maxW="720px" align="center" color="gray.500">
