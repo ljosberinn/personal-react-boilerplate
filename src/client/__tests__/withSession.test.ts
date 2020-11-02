@@ -56,7 +56,11 @@ describe('withSession()', () => {
   });
 
   test('given no session, bails with a redirect header & status', async () => {
-    const mockContext = createContextMock();
+    const mockContext = createContextMock({
+      res: {
+        writeHead: jest.fn().mockReturnThis(),
+      },
+    });
 
     const augmentedHandler = withSession(createMockGetServerSideProps());
     await augmentedHandler(mockContext);
@@ -68,7 +72,11 @@ describe('withSession()', () => {
   });
 
   test('given no session, bails with given header & status', async () => {
-    const mockContext = createContextMock();
+    const mockContext = createContextMock({
+      res: {
+        writeHead: jest.fn().mockReturnThis(),
+      },
+    });
 
     const augmentedHandler = withSession(createMockGetServerSideProps(), {
       headers: {},
@@ -89,12 +97,14 @@ describe('withSession()', () => {
           cookie: `${SESSION_COOKIE_NAME}=${fakeCookie}`,
         },
       },
+      res: {
+        writeHead: jest.fn(),
+      },
     });
 
     const mockGetServerSideProps = createMockGetServerSideProps();
 
     const augmentedHandler = withSession(mockGetServerSideProps);
-
     const response = await augmentedHandler(mockContext);
 
     expect(getSessionSpy).toHaveBeenCalledWith(mockContext.req);

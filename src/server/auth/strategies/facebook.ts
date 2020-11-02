@@ -1,27 +1,23 @@
 import type {
-  OAuthRedirectHandler,
-  OAuthCallbackHandler,
+  OAuth2RedirectHandler,
+  OAuth2CallbackHandler,
 } from '../../../client/context/AuthContext/types';
 import { FACEBOOK_CLIENT_ID, FACEBOOK_CLIENT_SECRET } from '../../../constants';
-import { FOUND_MOVED_TEMPORARILY } from '../../../utils/statusCodes';
-import type { OAuth2GetParams, OAuth2Response } from '../types';
-import { getOAuth2Data } from '../utils';
+import type { OAuth2Response } from '../types';
+import { getOAuth2Data, redirect } from '../utils';
 
 export type FacebookProfile = {
   id: string;
   name: string;
 };
 
-const buildRedirectUrl = (redirect_uri: string) => {
-  const params = new URLSearchParams({
-    client_id: FACEBOOK_CLIENT_ID,
-    redirect_uri,
-    response_type: 'code',
-    scope: '',
-  }).toString();
+const client_id = FACEBOOK_CLIENT_ID;
+const client_secret = FACEBOOK_CLIENT_SECRET;
 
-  return `https://www.facebook.com/v7.0/dialog/oauth?${params}`;
-};
+const authorizationUrl = 'https://www.facebook.com/v7.0/dialog/oauth';
+const accessTokenUrl = 'https://graph.facebook.com/v7.0/oauth/access_token';
+const profileDataUrl = 'https://graph.facebook.com/v7.0/me';
+const scope = '';
 
 const getProfileData = async ({
   token_type,
@@ -31,7 +27,7 @@ const getProfileData = async ({
     access_token,
   }).toString();
 
-  const url = `https://graph.facebook.com/v7.0/me?${params}`;
+  const url = `${profileDataUrl}?${params}`;
   const authorization = `${token_type} ${access_token}`;
 
   const response = await fetch(url, {
@@ -43,31 +39,30 @@ const getProfileData = async ({
   return response.json();
 };
 
-export const redirectToFacebook: OAuthRedirectHandler = (
+export const redirectToFacebook: OAuth2RedirectHandler = (
   _,
   res,
-  { baseRedirectUrl }
+  { redirect_uri }
 ): void => {
-  res
-    .status(FOUND_MOVED_TEMPORARILY)
-    .setHeader('Location', buildRedirectUrl(baseRedirectUrl));
+  redirect(res, authorizationUrl, {
+    client_id,
+    redirect_uri,
+    scope,
+  });
 };
 
-export const processFacebookCallback: OAuthCallbackHandler = async (
+export const processFacebookCallback: OAuth2CallbackHandler<FacebookProfile> = async (
   _,
   __,
-  { baseRedirectUrl: redirect_uri, code }
+  { redirect_uri, code }
 ) => {
-  const url = 'https://graph.facebook.com/v7.0/oauth/access_token';
-  const params: OAuth2GetParams = {
-    client_id: FACEBOOK_CLIENT_ID,
-    client_secret: FACEBOOK_CLIENT_SECRET,
-    code,
-    redirect_uri,
-  };
-
   try {
-    const oauthResponse = await getOAuth2Data(url, params);
+    const oauthResponse = await getOAuth2Data(accessTokenUrl, {
+      client_id,
+      client_secret,
+      code,
+      redirect_uri,
+    });
 
     return await getProfileData(oauthResponse);
   } catch {

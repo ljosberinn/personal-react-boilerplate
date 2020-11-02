@@ -27,7 +27,10 @@ import type { I18nextResourceLocale } from '../karma/i18n';
 const mockCtx: GetServerSidePropsContext = {
   query: {},
   req: createIncomingRequestMock(),
-  res: createServerResponseMock(),
+  res: createServerResponseMock({
+    end: jest.fn(),
+    writeHead: jest.fn(),
+  }),
   resolvedUrl: '',
 };
 
@@ -215,14 +218,14 @@ describe('getServerSideProps', () => {
       test('forwards url for client side redirect given a referrer', async () => {
         const url = '/foo';
 
-        const mockReq = createIncomingRequestMock({
+        const req = createIncomingRequestMock({
           headers: {
             referer: '/',
           },
         });
 
         const { result } = await setup(
-          { ...mockCtx, req: mockReq },
+          { ...mockCtx, req },
           {
             auth: { redirectDestinationIfUnauthenticated: url },
             i18n: {},

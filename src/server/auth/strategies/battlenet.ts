@@ -1,24 +1,24 @@
 import type { CookieSerializeOptions } from 'cookie';
 
 import type {
-  OAuthRedirectHandler,
-  OAuthCallbackHandler,
+  OAuth2RedirectHandler,
+  OAuth2CallbackHandler,
 } from '../../../client/context/AuthContext/types';
 import {
   BATTLENET_CLIENT_ID,
   BATTLENET_CLIENT_SECRET,
   IS_PROD,
 } from '../../../constants';
-import {
-  BAD_REQUEST,
-  FOUND_MOVED_TEMPORARILY,
-} from '../../../utils/statusCodes';
-import { parseCookies, removeCookie, setCookie } from '../cookie';
-import type { OAuth2GetParams, OAuth2Response } from '../types';
-import { getOAuth2Data } from '../utils';
+import { BAD_REQUEST } from '../../../utils/statusCodes';
+import { removeCookie, setCookie } from '../cookie';
+import type { OAuth2Response } from '../types';
+import { getOAuth2Data, redirect } from '../utils';
 
-const scope = 'wow.profile' as const;
-const BATTLE_NET_STATE_COOKIE_NAME = 'bnetstateref';
+const client_id = BATTLENET_CLIENT_ID;
+const client_secret = BATTLENET_CLIENT_SECRET;
+
+const scope = ['wow.profile'].join(' ');
+export const BATTLE_NET_STATE_COOKIE_NAME = 'bnetstateref';
 
 // type CrossLink = {
 //   href: string;
@@ -99,27 +99,7 @@ export type BattleNetRegion = 'eu' | 'us' | 'apac' | 'cn';
 const isValidRegion = (region: string): region is BattleNetRegion =>
   ['eu', 'us', 'apac', 'cn'].includes(region);
 
-const buildRedirectUrl = (
-  redirect_uri: string,
-  region: BattleNetRegion,
-  state: string
-) => {
-  const params = new URLSearchParams({
-    client_id: BATTLENET_CLIENT_ID,
-    redirect_uri,
-    response_type: 'code',
-    scope,
-    state,
-  }).toString();
-
-  if (region === 'cn') {
-    return `https://www.battlenet.com.cn/oauth/authorize?${params}`;
-  }
-
-  return `https://${region}.battle.net/oauth/authorize?${params}`;
-};
-
-const getTokenUrl = (region: BattleNetRegion) => {
+const getAccessTokenUrl = (region: BattleNetRegion) => {
   if (region === 'cn') {
     return 'https://www.battlenet.com.cn/oauth/token';
   }
@@ -127,7 +107,7 @@ const getTokenUrl = (region: BattleNetRegion) => {
   return `https://${region}.battle.net/oauth/token`;
 };
 
-// const getProfileUrl = (region: BattleNetRegion) =>
+// const getProfileDataUrl = (region: BattleNetRegion) =>
 //   `https://${region}.api.blizzard.com/profile/user/wow`;
 
 // const getProfileData = async (
@@ -140,7 +120,7 @@ const getTokenUrl = (region: BattleNetRegion) => {
 //     region,
 //   }).toString();
 
-//   const url = getProfileUrl(region);
+//   const url = getProfileDataUrl(region);
 //   const authorization = `${token_type} ${access_token}`;
 
 //   const response = await fetch(`${url}?${params}`, {
@@ -158,10 +138,10 @@ const getTokenUrl = (region: BattleNetRegion) => {
 //   return level50Characters;
 // };
 
-export const redirectToBattleNet: OAuthRedirectHandler = (
+export const redirectToBattleNet: OAuth2RedirectHandler = (
   req,
   res,
-  { baseRedirectUrl }
+  { redirect_uri }
 ) => {
   const { region } = req.query;
 
@@ -172,7 +152,7 @@ export const redirectToBattleNet: OAuthRedirectHandler = (
   const state = `${region}-${Math.floor(Math.random() * 100 ** Math.PI)}`;
 
   const options: CookieSerializeOptions = {
-    expires: new Date(Date.now() + 600),
+    expires: new Date(Date.now() + 60),
     httpOnly: true,
     maxAge: 600,
     path: '/',
@@ -190,18 +170,26 @@ export const redirectToBattleNet: OAuthRedirectHandler = (
     res
   );
 
-  const url = buildRedirectUrl(baseRedirectUrl, region, state);
+  const url =
+    region === 'cn'
+      ? 'https://www.battlenet.com.cn/oauth/authorize'
+      : `https://${region}.battle.net/oauth/authorize`;
 
-  res.status(FOUND_MOVED_TEMPORARILY).setHeader('Location', url);
+  redirect(res, url, {
+    client_id,
+    redirect_uri,
+    scope,
+    state,
+  });
 };
 
-export const processBattleNetCallback: OAuthCallbackHandler = async (
+export const processBattleNetCallback: OAuth2CallbackHandler<BattleNetProfile> = async (
   req,
   res,
-  { baseRedirectUrl, code }
+  { redirect_uri, code }
 ) => {
   const [region, persistedState] =
-    parseCookies(req)[BATTLE_NET_STATE_COOKIE_NAME]?.split('-') ?? '';
+    req.cookies[BATTLE_NET_STATE_COOKIE_NAME]?.split('-') ?? '';
   const { state } = req.query;
 
   if (
@@ -224,17 +212,16 @@ export const processBattleNetCallback: OAuthCallbackHandler = async (
 
   removeCookie(BATTLE_NET_STATE_COOKIE_NAME, res);
 
-  const url = getTokenUrl(region);
-  const params: OAuth2GetParams<{ region: string }> = {
-    client_id: BATTLENET_CLIENT_ID,
-    client_secret: BATTLENET_CLIENT_SECRET,
-    code,
-    redirect_uri: baseRedirectUrl,
-    region,
-  };
+  const url = getAccessTokenUrl(region);
 
   try {
-    const oauthResponse = await getOAuth2Data(url, params);
+    const oauthResponse = await getOAuth2Data<{ region: string }>(url, {
+      client_id,
+      client_secret,
+      code,
+      redirect_uri,
+      region,
+    });
 
     return {
       ...oauthResponse,

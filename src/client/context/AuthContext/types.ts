@@ -42,14 +42,14 @@ export type AuthContextDefinition = {
   isAuthenticated: boolean;
 };
 
-export type OAuthCallbackHandler = (
+export type OAuth2CallbackHandler<ProfileType> = (
   req: NextApiRequest,
   res: NextApiResponse,
-  meta: { origin: string; baseRedirectUrl: string; code: string }
-) => Promise<User | null>;
+  meta: { redirect_uri: string; code: string }
+) => Promise<ProfileType | null>;
 
-export type OAuthRedirectHandler = (
+export type OAuth2RedirectHandler = (
   req: NextApiRequest,
   res: NextApiResponse,
-  meta: { origin: string; baseRedirectUrl: string }
+  meta: { origin: string; redirect_uri: string }
 ) => void;

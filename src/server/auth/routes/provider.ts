@@ -1,7 +1,8 @@
 import type {
   ExternalProvider,
-  OAuthRedirectHandler,
-  OAuthCallbackHandler,
+  OAuth2RedirectHandler,
+  OAuth2CallbackHandler,
+  User,
 } from '../../../client/context/AuthContext/types';
 import { ENABLED_PROVIDER } from '../../../constants';
 import {
@@ -28,7 +29,7 @@ import { redirectToGitHub, processGitHubCallback } from '../strategies/github';
 import { redirectToGoogle, processGoogleCallback } from '../strategies/google';
 import { buildBaseRedirectUrl, getOrigin } from '../utils';
 
-const redirectHandlerMap: Record<ExternalProvider, OAuthRedirectHandler> = {
+const redirectHandlerMap: Record<ExternalProvider, OAuth2RedirectHandler> = {
   battlenet: redirectToBattleNet,
   discord: redirectToDiscord,
   facebook: redirectToFacebook,
@@ -36,7 +37,10 @@ const redirectHandlerMap: Record<ExternalProvider, OAuthRedirectHandler> = {
   google: redirectToGoogle,
 };
 
-const callbackHandlerMap: Record<ExternalProvider, OAuthCallbackHandler> = {
+const callbackHandlerMap: Record<
+  ExternalProvider,
+  OAuth2CallbackHandler<User>
+> = {
   battlenet: processBattleNetCallback,
   discord: processDiscordCallback,
   facebook: processFacebookCallback,
@@ -60,14 +64,14 @@ export const providerHandler: RequestHandler = async (req, res, next) => {
 
   if (ENABLED_PROVIDER.includes(type)) {
     const origin = getOrigin(req);
-    const meta = {
-      baseRedirectUrl: buildBaseRedirectUrl(origin, type),
-      origin,
-    };
+    const redirect_uri = buildBaseRedirectUrl(origin, type);
 
     if ('init' in req.query) {
       const redirectHandler = redirectHandlerMap[type];
-      redirectHandler(req, res, meta);
+      redirectHandler(req, res, {
+        origin,
+        redirect_uri,
+      });
 
       return res.end();
     }
@@ -81,10 +85,11 @@ export const providerHandler: RequestHandler = async (req, res, next) => {
       return res.status(BAD_REQUEST).end();
     }
 
-    const enhancedMeta = { ...meta, code };
-
     const callbackHandler = callbackHandlerMap[type];
-    const profile = await callbackHandler(req, res, enhancedMeta);
+    const profile = await callbackHandler(req, res, {
+      code,
+      redirect_uri,
+    });
 
     res.status(profile ? FOUND_MOVED_TEMPORARILY : INTERNAL_SERVER_ERROR);
 

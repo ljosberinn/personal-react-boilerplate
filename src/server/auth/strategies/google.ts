@@ -1,14 +1,11 @@
 import type {
-  OAuthRedirectHandler,
-  OAuthCallbackHandler,
+  OAuth2RedirectHandler,
+  OAuth2CallbackHandler,
 } from '../../../client/context/AuthContext/types';
 import { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } from '../../../constants';
-import {
-  BAD_REQUEST,
-  FOUND_MOVED_TEMPORARILY,
-} from '../../../utils/statusCodes';
-import type { OAuth2GetParams, OAuth2Response } from '../types';
-import { getOAuth2Data } from '../utils';
+import { BAD_REQUEST } from '../../../utils/statusCodes';
+import type { OAuth2Response } from '../types';
+import { getOAuth2Data, redirect } from '../utils';
 
 export type GoogleProfile = {
   sub: string;
@@ -21,16 +18,13 @@ export type GoogleProfile = {
   locale: string;
 };
 
-const buildRedirectUrl = (redirect_uri: string) => {
-  const params = new URLSearchParams({
-    client_id: GOOGLE_CLIENT_ID,
-    redirect_uri,
-    response_type: 'code',
-    scope: ['openid', 'profile', 'email'].join(' '),
-  }).toString();
+const client_id = GOOGLE_CLIENT_ID;
+const client_secret = GOOGLE_CLIENT_SECRET;
 
-  return `https://accounts.google.com/o/oauth2/v2/auth?${params}`;
-};
+const authorizationUrl = 'https://accounts.google.com/o/oauth2/v2/auth';
+const accessTokenUrl = 'https://www.googleapis.com/oauth2/v4/token';
+const profileDataUrl = 'https://www.googleapis.com/oauth2/v3/userinfo';
+const scope = ['openid', 'profile', 'email'].join(' ');
 
 const getProfileData = async ({
   token_type,
@@ -40,7 +34,7 @@ const getProfileData = async ({
     access_token,
   }).toString();
 
-  const url = `https://www.googleapis.com/oauth2/v3/userinfo?${params}`;
+  const url = `${profileDataUrl}?${params}`;
   const authorization = `${token_type} ${access_token}`;
 
   const response = await fetch(url, {
@@ -52,39 +46,42 @@ const getProfileData = async ({
   return response.json();
 };
 
-export const redirectToGoogle: OAuthRedirectHandler = (
+export const redirectToGoogle: OAuth2RedirectHandler = (
   _,
   res,
-  { baseRedirectUrl }
+  { redirect_uri }
 ): void => {
-  res
-    .status(FOUND_MOVED_TEMPORARILY)
-    .setHeader('Location', buildRedirectUrl(baseRedirectUrl));
+  redirect(res, authorizationUrl, {
+    client_id,
+    redirect_uri,
+    scope,
+  });
 };
 
-export const processGoogleCallback: OAuthCallbackHandler = async (
+export const processGoogleCallback: OAuth2CallbackHandler<GoogleProfile> = async (
   req,
   res,
-  { baseRedirectUrl: redirect_uri, code }
+  { redirect_uri, code }
 ) => {
   const { prompt } = req.query;
 
   if (!prompt || Array.isArray(prompt)) {
     res.status(BAD_REQUEST);
+
     return null;
   }
 
-  const url = 'https://www.googleapis.com/oauth2/v4/token';
-  const params: OAuth2GetParams<{ prompt: string }> = {
-    client_id: GOOGLE_CLIENT_ID,
-    client_secret: GOOGLE_CLIENT_SECRET,
-    code,
-    prompt,
-    redirect_uri,
-  };
-
   try {
-    const oauthResponse = await getOAuth2Data(url, params);
+    const oauthResponse = await getOAuth2Data<{ prompt: string }>(
+      accessTokenUrl,
+      {
+        client_id,
+        client_secret,
+        code,
+        prompt,
+        redirect_uri,
+      }
+    );
 
     return await getProfileData(oauthResponse);
   } catch {

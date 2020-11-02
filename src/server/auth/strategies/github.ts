@@ -1,11 +1,10 @@
 import type {
-  OAuthCallbackHandler,
-  OAuthRedirectHandler,
+  OAuth2CallbackHandler,
+  OAuth2RedirectHandler,
 } from '../../../client/context/AuthContext/types';
 import { GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET } from '../../../constants';
-import { FOUND_MOVED_TEMPORARILY } from '../../../utils/statusCodes';
 import type { OAuth2Response } from '../types';
-import { getOAuth2Data } from '../utils';
+import { getOAuth2Data, redirect } from '../utils';
 
 export type GitHubProfile = {
   login: string;
@@ -53,6 +52,14 @@ export type GitHubProfile = {
   };
 };
 
+const client_id = GITHUB_CLIENT_ID;
+const client_secret = GITHUB_CLIENT_SECRET;
+
+const authorizationUrl = 'https://github.com/login/oauth/authorize';
+const accessTokenUrl = 'https://github.com/login/oauth/access_token';
+const profileDataUrl = 'https://api.github.com/user';
+const scope = ['user'].join(' ');
+
 const getProfileData = async ({
   access_token,
 }: OAuth2Response): Promise<GitHubProfile> => {
@@ -60,7 +67,7 @@ const getProfileData = async ({
     access_token,
   }).toString();
 
-  const url = `https://api.github.com/user?${params}`;
+  const url = `${profileDataUrl}?${params}`;
   const authorization = `token ${access_token}`;
 
   const response = await fetch(url, {
@@ -72,43 +79,36 @@ const getProfileData = async ({
   return response.json();
 };
 
-export const redirectToGitHub: OAuthRedirectHandler = (
+export const redirectToGitHub: OAuth2RedirectHandler = (
   _,
   res,
-  { baseRedirectUrl }
+  { redirect_uri }
 ): void => {
-  const params = new URLSearchParams({
-    client_id: GITHUB_CLIENT_ID,
-    redirect_uri: baseRedirectUrl,
-    response_type: 'code',
-    scope: 'user',
-  }).toString();
-
-  const location = `https://github.com/login/oauth/authorize?${params}`;
-
-  res.status(FOUND_MOVED_TEMPORARILY).setHeader('Location', location);
+  redirect(res, authorizationUrl, {
+    client_id,
+    redirect_uri,
+    scope,
+  });
 };
 
-export const processGitHubCallback: OAuthCallbackHandler = async (
+export const processGitHubCallback: OAuth2CallbackHandler<GitHubProfile> = async (
   _,
   __,
-  { baseRedirectUrl: redirect_uri, code }
+  { redirect_uri, code }
 ) => {
-  const url = 'https://github.com/login/oauth/access_token';
-
-  const params = {
-    client_id: GITHUB_CLIENT_ID,
-    client_secret: GITHUB_CLIENT_SECRET,
-    code,
-    redirect_uri,
-  };
-
-  const headers = {
-    Accept: 'application/json',
-  };
-
   try {
-    const oauthResponse = await getOAuth2Data(url, params, headers);
+    const oauthResponse = await getOAuth2Data(
+      accessTokenUrl,
+      {
+        client_id,
+        client_secret,
+        code,
+        redirect_uri,
+      },
+      {
+        Accept: 'application/json',
+      }
+    );
 
     return await getProfileData(oauthResponse);
   } catch {

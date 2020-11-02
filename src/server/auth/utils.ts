@@ -1,8 +1,10 @@
 // eslint-disable-next-line inclusive-language/use-inclusive-words
 
 import type { IncomingMessage } from 'http';
+import type { NextApiResponse } from 'next';
 
 import type { ExternalProvider } from '../../client/context/AuthContext/types';
+import { FOUND_MOVED_TEMPORARILY } from '../../utils/statusCodes';
 import type { OAuth2GetParams, OAuth2Response } from './types';
 
 // eslint-disable-next-line inclusive-language/use-inclusive-words
@@ -63,4 +65,19 @@ export const getOAuth2Data = async <Params>(
   });
 
   return response.json();
+};
+
+export const redirect = (
+  res: NextApiResponse,
+  baseUrl: string,
+  additionalParams: Record<string, string>
+): void => {
+  const params = new URLSearchParams({
+    ...additionalParams,
+    response_type: 'code',
+  }).toString();
+
+  const location = `${baseUrl}?${params}`;
+
+  res.status(FOUND_MOVED_TEMPORARILY).setHeader('Location', location);
 };

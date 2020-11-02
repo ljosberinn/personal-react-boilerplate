@@ -1,11 +1,10 @@
 import type {
-  OAuthCallbackHandler,
-  OAuthRedirectHandler,
+  OAuth2CallbackHandler,
+  OAuth2RedirectHandler,
 } from '../../../client/context/AuthContext/types';
 import { DISCORD_CLIENT_ID, DISCORD_CLIENT_SECRET } from '../../../constants';
-import { FOUND_MOVED_TEMPORARILY } from '../../../utils/statusCodes';
-import type { OAuth2GetParams, OAuth2Response } from '../types';
-import { getOAuth2Data } from '../utils';
+import type { OAuth2Response } from '../types';
+import { getOAuth2Data, redirect } from '../utils';
 
 export type DiscordProfile = {
   avatar: string;
@@ -20,16 +19,13 @@ export type DiscordProfile = {
   verified: boolean;
 };
 
-const buildRedirectUrl = (redirect_uri: string) => {
-  const params = new URLSearchParams({
-    client_id: DISCORD_CLIENT_ID,
-    redirect_uri,
-    response_type: 'code',
-    scope: 'identify email',
-  }).toString();
+const client_id = DISCORD_CLIENT_ID;
+const client_secret = DISCORD_CLIENT_SECRET;
 
-  return `https://discord.com/api/oauth2/authorize?${params}`;
-};
+const authorizationUrl = 'https://discord.com/api/oauth2/authorize';
+const accessTokenUrl = 'https://discord.com/api/oauth2/token';
+const profileDataUrl = 'https://discord.com/api/users/@me';
+const scope = ['identify', 'email'].join(' ');
 
 const getProfileData = async ({
   token_type,
@@ -39,7 +35,7 @@ const getProfileData = async ({
     access_token,
   }).toString();
 
-  const url = `https://discord.com/api/users/@me?${params}`;
+  const url = `${profileDataUrl}?${params}`;
   const authorization = `${token_type} ${access_token}`;
 
   const response = await fetch(url, {
@@ -51,31 +47,30 @@ const getProfileData = async ({
   return response.json();
 };
 
-export const redirectToDiscord: OAuthRedirectHandler = (
+export const redirectToDiscord: OAuth2RedirectHandler = (
   _,
   res,
-  { baseRedirectUrl }
+  { redirect_uri }
 ): void => {
-  res
-    .status(FOUND_MOVED_TEMPORARILY)
-    .setHeader('Location', buildRedirectUrl(baseRedirectUrl));
+  redirect(res, authorizationUrl, {
+    client_id,
+    redirect_uri,
+    scope,
+  });
 };
 
-export const processDiscordCallback: OAuthCallbackHandler = async (
+export const processDiscordCallback: OAuth2CallbackHandler<DiscordProfile> = async (
   _,
   __,
-  { baseRedirectUrl: redirect_uri, code }
+  { redirect_uri, code }
 ) => {
-  const url = 'https://discord.com/api/oauth2/token';
-  const params: OAuth2GetParams = {
-    client_id: DISCORD_CLIENT_ID,
-    client_secret: DISCORD_CLIENT_SECRET,
-    code,
-    redirect_uri,
-  };
-
   try {
-    const oauthResponse = await getOAuth2Data(url, params);
+    const oauthResponse = await getOAuth2Data(accessTokenUrl, {
+      client_id,
+      client_secret,
+      code,
+      redirect_uri,
+    });
 
     return await getProfileData(oauthResponse);
   } catch (error) {
