@@ -1,132 +1,99 @@
-import type { IncomingMessage, ServerResponse } from 'http';
+import { parse } from 'cookie';
+import { IncomingMessage, ServerResponse } from 'http';
 import { Socket } from 'net';
+import type { NextApiRequest, NextApiResponse } from 'next';
+import { parseBody } from 'next/dist/next-server/server/api-utils';
+
+export class NextApiResponseMock
+  extends ServerResponse
+  implements NextApiResponse {
+  send = jest.fn();
+
+  json = jest.fn();
+
+  redirect = jest.fn();
+
+  setPreviewData = jest.fn();
+
+  clearPreviewData = jest.fn();
+
+  status(code: number): this {
+    this.statusCode = code;
+
+    return this;
+  }
+}
+
+export class NextApiRequestMock
+  extends IncomingMessage
+  implements NextApiRequest {
+  body = {};
+
+  env = {};
+
+  query = {};
+
+  cookies = {};
+
+  constructor(req: IncomingMessage) {
+    super(req.socket);
+
+    this.cookies = req?.headers?.cookie ? parse(req.headers.cookie) : {};
+  }
+}
+
+export const createNextApiRequestMock = (
+  req: Partial<NextApiRequest> = {}
+): NextApiRequest => {
+  const { body, ...rest } = req;
+
+  const request = new NextApiRequestMock(new IncomingMessage(new Socket()));
+
+  Object.entries(rest).forEach(([key, value]) => {
+    Object.defineProperty(request, key, { value });
+  });
+
+  if (body) {
+    request.body = parseBody(request, Infinity);
+  }
+
+  return request;
+};
 
 export const createIncomingRequestMock = (
-  req?: Partial<IncomingMessage>
+  req: Partial<IncomingMessage> = {}
 ): IncomingMessage => {
-  const socket = new Socket();
+  const request = new IncomingMessage(new Socket());
 
-  return {
-    _destroy: jest.fn(),
-    _read: jest.fn(),
-    aborted: false,
-    addListener: jest.fn(),
-    complete: false,
-    connection: socket,
-    destroy: jest.fn(),
-    destroyed: false,
-    emit: jest.fn(),
-    eventNames: jest.fn(),
-    getMaxListeners: jest.fn(),
-    headers: {},
-    httpVersion: '1.1',
-    httpVersionMajor: 1,
-    httpVersionMinor: 1,
-    isPaused: jest.fn(),
-    listenerCount: jest.fn(),
-    listeners: jest.fn(),
-    off: jest.fn(),
-    on: jest.fn(),
-    once: jest.fn(),
-    pause: jest.fn(),
-    pipe: jest.fn(),
-    prependListener: jest.fn(),
-    prependOnceListener: jest.fn(),
-    push: jest.fn(),
-    rawHeaders: [],
-    rawListeners: jest.fn(),
-    rawTrailers: [],
-    read: jest.fn(),
-    readable: true,
-    readableEncoding: 'utf-8',
-    readableEnded: false,
-    readableFlowing: null,
-    readableHighWaterMark: 0,
-    readableLength: 0,
-    readableObjectMode: false,
-    removeAllListeners: jest.fn(),
-    removeListener: jest.fn(),
-    resume: jest.fn(),
-    setEncoding: jest.fn(),
-    setMaxListeners: jest.fn(),
-    setTimeout: jest.fn(),
-    socket,
-    trailers: {},
-    unpipe: jest.fn(),
-    unshift: jest.fn(),
-    wrap: jest.fn(),
-    [Symbol.asyncIterator]: () =>
-      (jest.fn() as unknown) as AsyncIterableIterator<unknown>,
-    ...req,
-  };
+  Object.entries(req).forEach(([key, value]) => {
+    Object.defineProperty(request, key, { value });
+  });
+
+  return request;
+};
+
+export const createNextApiResponse = (
+  res: Partial<NextApiResponse> = {}
+): NextApiResponse => {
+  const apiResponseMock = new NextApiResponseMock(
+    new IncomingMessage(new Socket())
+  );
+
+  Object.entries(res).forEach(([key, value]) => {
+    Object.defineProperty(apiResponseMock, key, { value });
+  });
+
+  return apiResponseMock;
 };
 
 export const createServerResponseMock = (
-  res?: Partial<ServerResponse>
+  res: Partial<ServerResponse> = {}
 ): ServerResponse => {
-  const socket = new Socket();
+  const response = new ServerResponse(new IncomingMessage(new Socket()));
 
-  return {
-    _destroy: jest.fn(),
-    _final: jest.fn(),
-    _write: jest.fn(),
-    addListener: jest.fn(),
-    addTrailers: jest.fn(),
-    assignSocket: jest.fn(),
-    chunkedEncoding: false,
-    connection: socket,
-    cork: jest.fn(),
-    destroy: jest.fn(),
-    destroyed: false,
-    detachSocket: jest.fn(),
-    emit: jest.fn(),
-    end: jest.fn(),
-    eventNames: jest.fn(),
-    finished: false,
-    flushHeaders: jest.fn(),
-    getHeader: jest.fn(),
-    getHeaderNames: jest.fn(),
-    getHeaders: jest.fn(),
-    getMaxListeners: jest.fn(),
-    hasHeader: jest.fn(),
-    headersSent: false,
-    listenerCount: jest.fn(),
-    listeners: jest.fn(),
-    off: jest.fn(),
-    on: jest.fn(),
-    once: jest.fn(),
-    pipe: jest.fn(),
-    prependListener: jest.fn(),
-    prependOnceListener: jest.fn(),
-    rawListeners: jest.fn(),
-    removeAllListeners: jest.fn(),
-    removeHeader: jest.fn(),
-    removeListener: jest.fn(),
-    sendDate: false,
-    setDefaultEncoding: jest.fn(),
-    setHeader: jest.fn(),
-    setMaxListeners: jest.fn(),
-    setTimeout: jest.fn(),
-    shouldKeepAlive: false,
-    socket,
-    statusCode: 200,
-    statusMessage: 'OK',
-    uncork: jest.fn(),
-    upgrading: false,
-    useChunkedEncodingByDefault: false,
-    writable: true,
-    writableCorked: 0,
-    writableEnded: false,
-    writableFinished: false,
-    writableHighWaterMark: 0,
-    writableLength: 0,
-    writableObjectMode: true,
-    write: jest.fn(),
-    writeContinue: jest.fn(),
-    writeHead: jest.fn().mockImplementation(() => ({
-      end: jest.fn(),
-    })),
-    writeProcessing: jest.fn(),
-    ...res,
-  };
+  Object.entries(res).forEach(([key, value]) => {
+    Object.defineProperty(response, key, { value });
+  });
+
+  return response;
 };
