@@ -44,16 +44,22 @@ type Options = {
   once?: boolean;
 };
 
-export const createUseRouterMock = ({
-  once = true,
-  ...value
-}: Partial<ReturnType<typeof nextRouter.useRouter>> &
-  Options = {}): jest.SpyInstance<nextRouter.NextRouter, []> => {
-  const mock = {
+export const createRouterMock = (
+  partial?: Partial<nextRouter.NextRouter>
+): NextRouter => {
+  let beforePopStateCallback: Function;
+
+  return {
     asPath: '',
     back: jest.fn(),
     basePath: '',
-    beforePopState: jest.fn(),
+    beforePopState: jest
+      .fn()
+      // eslint-disable-next-line promise/prefer-await-to-callbacks
+      .mockImplementationOnce((callback: Function) => {
+        beforePopStateCallback = callback;
+      })
+      .mockImplementationOnce(() => beforePopStateCallback()),
     events: {
       emit: jest.fn(),
       off: jest.fn(),
@@ -67,8 +73,16 @@ export const createUseRouterMock = ({
     reload: jest.fn(),
     replace: jest.fn(),
     route: '',
-    ...value,
+    ...partial,
   };
+};
+
+export const createUseRouterMock = ({
+  once = true,
+  ...partial
+}: Partial<ReturnType<typeof nextRouter.useRouter>> &
+  Options = {}): jest.SpyInstance<nextRouter.NextRouter, []> => {
+  const mock = createRouterMock(partial);
 
   if (once) {
     return jest.spyOn(nextRouter, 'useRouter').mockReturnValueOnce(mock);

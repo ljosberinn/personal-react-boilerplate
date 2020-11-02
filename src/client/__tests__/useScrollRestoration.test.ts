@@ -1,48 +1,169 @@
 import { renderHook } from '../../../testUtils';
+import { mockConsoleMethods } from '../../../testUtils/console';
+import { createRouterMock } from '../../../testUtils/router';
 import { useScrollRestoration } from '../hooks/useScrollRestoration';
 
+const asPath = '/karma';
+const renderOptions = { omitKarmaProvider: true };
+
 describe('hooks/useScrollRestoration', () => {
-  describe('if unsupported', () => {
-    test('does nothing without scrollRestoration', () => {
-      const sessionStorageGetSpy = jest.spyOn(window, 'sessionStorage', 'get');
+  beforeEach(() => {
+    jest.spyOn(Storage.prototype, 'setItem');
+    jest.spyOn(Storage.prototype, 'getItem');
+    jest.spyOn(Storage.prototype, 'removeItem');
 
-      renderHook(useScrollRestoration);
+    jest.spyOn(window, 'addEventListener');
 
-      expect(sessionStorageGetSpy).not.toHaveBeenCalled();
+    Object.defineProperty(window, 'history', {
+      value: {
+        ...window.history,
+        scrollRestoration: 'manual',
+      },
     });
-
-    test.todo('does nothing without sessionStorage');
-
-    test.todo("does nothing if sessionStorage isn't writable");
   });
 
-  describe('if supported', () => {
-    test.skip('initially looks up sessionStorage', () => {
-      Object.defineProperty(window, 'history', {
-        value: {
-          ...window.history,
-          scrollRestoration: 'manual',
-        },
-      });
+  afterEach(() => {
+    sessionStorage.clear();
 
-      const sessionStorageGetSpy = jest.spyOn(window, 'sessionStorage', 'get');
-      renderHook(useScrollRestoration);
+    Object.defineProperty(window, 'history', {
+      value: {
+        ...window.history,
+        scrollRestoration: undefined,
+      },
+    });
+  });
 
-      expect(sessionStorageGetSpy).toHaveBeenCalledTimes(1);
-      expect(sessionStorageGetSpy).toHaveBeenCalledWith(expect.any(String));
-
-      Object.defineProperty(window, 'history', {
-        value: {
-          ...window.history,
-          scrollRestoration: undefined,
-        },
-      });
+  test('initially looks up sessionStorage', () => {
+    const router = createRouterMock({
+      asPath,
     });
 
-    test.todo('adds eventListener to beforeunload');
+    renderHook(() => useScrollRestoration(router), renderOptions);
 
-    test.todo('onRouteChangeStart, saves position');
+    expect(Storage.prototype.setItem).toHaveBeenCalledTimes(1);
 
-    test.todo('onRouteChangeComplete, retrieves position and scrolls');
+    expect(Storage.prototype.getItem).toHaveBeenCalledTimes(1);
+    expect(Storage.prototype.getItem).toHaveBeenCalledWith(asPath);
+  });
+
+  test('intially restores stored scroll position', () => {
+    const { restoreConsole } = mockConsoleMethods('error');
+
+    const coordinates = { x: 10, y: 10 };
+
+    jest
+      .spyOn(Storage.prototype, 'getItem')
+      .mockReturnValueOnce(JSON.stringify(coordinates));
+    const scrollToSpy = jest.spyOn(window, 'scrollTo');
+
+    const router = createRouterMock({
+      asPath,
+    });
+
+    renderHook(() => useScrollRestoration(router), renderOptions);
+
+    expect(Storage.prototype.getItem).toHaveBeenCalledWith(asPath);
+
+    expect(scrollToSpy).toHaveBeenCalledTimes(1);
+    expect(scrollToSpy).toHaveBeenCalledWith(coordinates.x, coordinates.y);
+
+    // eslint-disable-next-line no-console
+    expect(console.error).toHaveBeenCalledTimes(1);
+    // eslint-disable-next-line no-console
+    expect(console.error).toHaveBeenCalledWith(
+      expect.stringContaining('Not implemented: window.scrollTo'),
+      // eslint-disable-next-line unicorn/no-useless-undefined
+      undefined
+    );
+
+    restoreConsole();
+  });
+
+  test('saves scroll position "beforeunload"', () => {
+    const router = createRouterMock({
+      asPath,
+    });
+
+    renderHook(() => useScrollRestoration(router), renderOptions);
+
+    expect(window.addEventListener).toHaveBeenCalledWith(
+      'beforeunload',
+      expect.any(Function)
+    );
+
+    window.dispatchEvent(new Event('beforeunload'));
+
+    expect(Storage.prototype.setItem).toHaveBeenCalledWith(
+      asPath,
+      JSON.stringify({ x: 0, y: 0 })
+    );
+  });
+
+  test('on "routeChangeStart", saves position', () => {
+    const router = createRouterMock({
+      asPath,
+    });
+
+    renderHook(() => useScrollRestoration(router), renderOptions);
+
+    expect(router.events.on).toHaveBeenCalledWith(
+      'routeChangeStart',
+      expect.any(Function)
+    );
+
+    // @ts-expect-error ts doent know router is mocked
+    const [[, listener]] = router.events.on.mock.calls;
+
+    listener();
+
+    expect(Storage.prototype.setItem).toHaveBeenCalledWith(
+      router.asPath,
+      JSON.stringify({ x: 0, y: 0 })
+    );
+  });
+
+  test('on "routeChangeComplete", retrieves position and scrolls', () => {
+    const router = createRouterMock({
+      asPath,
+    });
+
+    const { restoreConsole } = mockConsoleMethods('error');
+    const coordinates = { x: 10, y: 10 };
+
+    jest
+      .spyOn(Storage.prototype, 'getItem')
+      .mockReturnValueOnce(JSON.stringify(coordinates));
+    const scrollToSpy = jest.spyOn(window, 'scrollTo');
+
+    renderHook(() => useScrollRestoration(router), renderOptions);
+
+    expect(router.events.on).toHaveBeenCalledWith(
+      'routeChangeComplete',
+      expect.any(Function)
+    );
+
+    // @ts-expect-error custom mock implementation to allow triggering popState
+    router.beforePopState();
+
+    // @ts-expect-error ts doesnt know router is mocked
+    const [, [, listener]] = router.events.on.mock.calls;
+
+    listener(asPath);
+
+    expect(Storage.prototype.getItem).toHaveBeenCalledWith(asPath);
+
+    expect(scrollToSpy).toHaveBeenCalledTimes(1);
+    expect(scrollToSpy).toHaveBeenCalledWith(coordinates.x, coordinates.y);
+
+    // eslint-disable-next-line no-console
+    expect(console.error).toHaveBeenCalledTimes(1);
+    // eslint-disable-next-line no-console
+    expect(console.error).toHaveBeenCalledWith(
+      expect.stringContaining('Not implemented: window.scrollTo'),
+      // eslint-disable-next-line unicorn/no-useless-undefined
+      undefined
+    );
+
+    restoreConsole();
   });
 });
