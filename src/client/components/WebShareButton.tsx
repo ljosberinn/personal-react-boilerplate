@@ -1,10 +1,9 @@
 import type { IconButtonProps } from '@chakra-ui/core';
 import { IconButton, Icon } from '@chakra-ui/core';
-import { useState, useEffect } from 'react';
 import { MdShare } from 'react-icons/md';
 
-import { IS_BROWSER } from '../../constants';
 import { captureException } from '../../utils/sentry/client';
+import { usePageIsHydrated } from '../hooks/usePageIsHydrated';
 
 export type WebShareButtonProps = Omit<
   IconButtonProps,
@@ -26,8 +25,6 @@ export type WebShareButtonProps = Omit<
   text?: string;
 };
 
-export const canShare = IS_BROWSER && !!navigator.share;
-
 /**
  * @see https://web.dev/web-share/
  */
@@ -38,11 +35,7 @@ export function WebShareButton({
   ...rest
 }: WebShareButtonProps): JSX.Element | null {
   // required to omit the element during SSR
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    setVisible(true);
-  }, []);
+  const isHydrated = usePageIsHydrated();
 
   async function handleShare() {
     try {
@@ -52,19 +45,20 @@ export function WebShareButton({
         url: url ?? window.location.origin,
       });
     } catch (error) {
-      // canceling a share throws, like AbortController, an AbortError
+      // istanbul ignore next
+      // canceling a share throws, like `AbortController`, an `AbortError`
       // we most likely don't care about that
       if (error.name !== 'AbortError') {
         captureException(error);
       }
 
+      // istanbul ignore next
       // eslint-disable-next-line no-console
       console.error(error);
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-  if (!visible || !IS_BROWSER || !navigator.share) {
+  if (!isHydrated || !navigator.share) {
     return null;
   }
 
