@@ -20,7 +20,7 @@
     "@sentry/react": "5.27.2",
     "cookie": "0.4.1",
     "framer-motion": "2.9.4",
-    "next": "10.0.0",
+    "next": "10.0.1",
     "next-connect": "0.9.1",
     "preact": "10.5.5",
     "preact-render-to-string": "5.1.11",
@@ -31,12 +31,12 @@
   "devDependencies": {
     "@commitlint/cli": "11.0.0",
     "@commitlint/config-conventional": "11.0.0",
-    "@next/bundle-analyzer": "10.0.0",
-    "@next/env": "10.0.0",
+    "@next/bundle-analyzer": "10.0.1",
+    "@next/env": "10.0.1",
     "@sentry/types": "5.27.2",
     "@sentry/webpack-plugin": "1.13.0",
     "@testing-library/jest-dom": "5.11.5",
-    "@testing-library/react": "11.1.0",
+    "@testing-library/react": "11.1.1",
     "@testing-library/react-hooks": "3.4.2",
     "@testing-library/user-event": "12.1.10",
     "@types/jest": "26.0.15",
@@ -66,12 +66,12 @@
     "react-test-renderer": "17.0.1",
     "test-listen": "1.1.0",
     "typescript": "4.0.5",
-    "webpack": "5.3.2",
+    "webpack": "5.4.0",
     "whatwg-fetch": "3.4.1",
     "yarn-deduplicate": "3.1.0"
   },
   "resolutions": {
-    "webpack": "5.3.2"
+    "webpack": "5.4.0"
   },
   "license": "MIT",
   "author": "Gerrit Alex",
