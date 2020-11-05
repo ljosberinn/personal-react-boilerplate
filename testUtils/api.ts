@@ -60,7 +60,7 @@ export const createNextApiRequestMock = (
   return request;
 };
 
-export const createIncomingRequestMock = (
+export const createIncomingMessageMock = (
   req: Partial<IncomingMessage> = {}
 ): IncomingMessage => {
   const request = new IncomingMessage(new Socket());

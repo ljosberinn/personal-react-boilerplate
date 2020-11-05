@@ -5,7 +5,7 @@ import type { ParsedUrlQuery } from 'querystring';
 import { withSession } from '../../../src/client/utils/withSession';
 import { SESSION_COOKIE_NAME } from '../../../src/constants';
 import {
-  createIncomingRequestMock,
+  createIncomingMessageMock,
   createServerResponseMock,
 } from '../../../testUtils/api';
 import * as cookieUtils from '../../server/auth/cookie';
@@ -35,7 +35,7 @@ const createContextMock = ({
   res = {},
 }: CreateContextMockParam = {}): GetServerSidePropsContext => ({
   query: { ...query },
-  req: createIncomingRequestMock(req),
+  req: createIncomingMessageMock(req),
   res: createServerResponseMock(res),
   resolvedUrl: '',
 });

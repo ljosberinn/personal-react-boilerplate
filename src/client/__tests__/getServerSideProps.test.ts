@@ -6,7 +6,7 @@ import type { GetServerSidePropsContext } from 'next';
 import type { Namespace } from '../../../src/constants';
 import { FALLBACK_LANGUAGE, SESSION_COOKIE_NAME } from '../../../src/constants';
 import {
-  createIncomingRequestMock,
+  createIncomingMessageMock,
   createServerResponseMock,
 } from '../../../testUtils/api';
 import { i18nCache } from '../../../testUtils/i18n';
@@ -26,7 +26,7 @@ import type { I18nextResourceLocale } from '../karma/i18n';
 
 const mockCtx: GetServerSidePropsContext = {
   query: {},
-  req: createIncomingRequestMock(),
+  req: createIncomingMessageMock(),
   res: createServerResponseMock({
     end: jest.fn(),
     writeHead: jest.fn(),
@@ -116,7 +116,7 @@ describe('getServerSideProps', () => {
 
     const mockCtx: GetServerSidePropsContext = {
       query: {},
-      req: createIncomingRequestMock({ headers }),
+      req: createIncomingMessageMock({ headers }),
       res: createServerResponseMock(),
       resolvedUrl: '',
     };
@@ -218,7 +218,7 @@ describe('getServerSideProps', () => {
       test('forwards url for client side redirect given a referrer', async () => {
         const url = '/foo';
 
-        const req = createIncomingRequestMock({
+        const req = createIncomingMessageMock({
           headers: {
             referer: '/',
           },

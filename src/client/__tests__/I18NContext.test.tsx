@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 
 import { mockConsoleMethods } from '../../../testUtils/console';
 import { i18nCache } from '../../../testUtils/i18n';
@@ -231,56 +231,38 @@ describe('<I18NContextProvder />', () => {
     restoreConsole();
   });
 
-  test('initially sets html.lang attribute', () => {
-    const setAttributeSpy = jest.spyOn(HTMLElement.prototype, 'setAttribute');
-
-    render(
-      <I18NContextProvider locale={FALLBACK_LANGUAGE} resources={i18nCache}>
-        <h1>test</h1>
-      </I18NContextProvider>
-    );
-
-    expect(setAttributeSpy).toHaveBeenCalledWith('lang', FALLBACK_LANGUAGE);
-  });
-
-  test.todo(
-    'always changes html.lang attribute on language change' // , () => {
-    // const qsSpy = jest.spyOn(document, 'querySelector');
-    // const setAttributeSpy = jest.spyOn(HTMLElement.prototype, 'setAttribute');
-    // const instance = initI18Next({
-    //   bundle: i18nCache[FALLBACK_LANGUAGE],
-    //   language: FALLBACK_LANGUAGE,
-    // });
-    // const otherLanguage = 'de';
-    // await instance.changeLanguage(otherLanguage);
-    // await waitFor(() => expect(qsSpy).toHaveBeenLastCalledWith('html'));
-    // expect(setAttributeSpy).toHaveBeenCalledWith('lang', otherLanguage);
-    // }
-  );
-
   ['en', 'ar'].forEach((language) => {
-    // const dir = language === 'en' ? 'ltr' : 'rtl';
+    const dir = language === 'en' ? 'ltr' : 'rtl';
 
-    test.todo(
-      `always changes the html.dir attribute onLanguageChanged (language: ${language})` // async () => {
-      // const qsSpy = jest.spyOn(document, 'querySelector');
-      // const setAttributeSpy = jest.spyOn(HTMLElement.prototype, 'setAttribute');
+    const setup = () => {
+      const qsSpy = jest.spyOn(document, 'querySelector');
+      const setAttributeSpy = jest.spyOn(HTMLElement.prototype, 'setAttribute');
 
-      // const { rerender } = render(<h1>test</h1>, {
-      //   wrapper: ({ children }) => (
-      //     <I18NContextProvider
-      //       language={FALLBACK_LANGUAGE}
-      //       resources={i18nCache}
-      //     >
-      //       {children}
-      //     </I18NContextProvider>
-      //   ),
-      // });
+      render(<h1>test</h1>, {
+        wrapper: ({ children }) => (
+          <I18NContextProvider locale={language} resources={i18nCache}>
+            {children}
+          </I18NContextProvider>
+        ),
+      });
 
-      // await waitFor(() => expect(qsSpy).toHaveBeenLastCalledWith('html'));
+      return { qsSpy, setAttributeSpy };
+    };
 
-      // expect(setAttributeSpy).toHaveBeenCalledWith('dir', dir);
-      // }
-    );
+    test(`always sets html.lang attribute (language: ${language})`, async () => {
+      const { qsSpy, setAttributeSpy } = setup();
+
+      await waitFor(() => expect(qsSpy).toHaveBeenLastCalledWith('html'));
+
+      expect(setAttributeSpy).toHaveBeenCalledWith('lang', language);
+    });
+
+    test(`always sets the html.dir attribute (language: ${language})`, async () => {
+      const { qsSpy, setAttributeSpy } = setup();
+
+      await waitFor(() => expect(qsSpy).toHaveBeenLastCalledWith('html'));
+
+      expect(setAttributeSpy).toHaveBeenCalledWith('dir', dir);
+    });
   });
 });
