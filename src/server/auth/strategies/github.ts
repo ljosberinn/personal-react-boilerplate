@@ -82,7 +82,7 @@ const getProfileData = async ({
 export const redirectToGitHub: OAuth2RedirectHandler = (
   _,
   res,
-  { redirect_uri }
+  redirect_uri
 ): void => {
   redirect(res, authorizationUrl, {
     client_id,

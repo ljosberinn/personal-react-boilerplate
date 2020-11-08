@@ -141,7 +141,7 @@ const getAccessTokenUrl = (region: BattleNetRegion) => {
 export const redirectToBattleNet: OAuth2RedirectHandler = (
   req,
   res,
-  { redirect_uri }
+  redirect_uri
 ) => {
   const { region } = req.query;
 
@@ -215,13 +215,16 @@ export const processBattleNetCallback: OAuth2CallbackHandler<BattleNetProfile> =
   const url = getAccessTokenUrl(region);
 
   try {
-    const oauthResponse = await getOAuth2Data<{ region: string }>(url, {
-      client_id,
-      client_secret,
-      code,
-      redirect_uri,
-      region,
-    });
+    const oauthResponse = await getOAuth2Data<{ region: BattleNetRegion }>(
+      url,
+      {
+        client_id,
+        client_secret,
+        code,
+        redirect_uri,
+        region,
+      }
+    );
 
     return {
       ...oauthResponse,

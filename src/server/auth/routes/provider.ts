@@ -68,10 +68,7 @@ export const providerHandler: RequestHandler = async (req, res, next) => {
 
     if ('init' in req.query) {
       const redirectHandler = redirectHandlerMap[type];
-      redirectHandler(req, res, {
-        origin,
-        redirect_uri,
-      });
+      redirectHandler(req, res, redirect_uri);
 
       return res.end();
     }

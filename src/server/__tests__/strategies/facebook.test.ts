@@ -17,10 +17,11 @@ describe('auth - facebook', () => {
       const redirectSpy = jest.spyOn(oauth2Utils, 'redirect');
       const redirect_uri = 'karma';
 
-      redirectToFacebook(createNextApiRequestMock(), createNextApiResponse(), {
-        origin: '',
-        redirect_uri,
-      });
+      redirectToFacebook(
+        createNextApiRequestMock(),
+        createNextApiResponse(),
+        redirect_uri
+      );
 
       expect(redirectSpy).toHaveBeenCalledTimes(1);
 

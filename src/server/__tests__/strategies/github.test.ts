@@ -17,10 +17,11 @@ describe('auth - github', () => {
       const redirectSpy = jest.spyOn(oauth2Utils, 'redirect');
       const redirect_uri = 'karma';
 
-      redirectToGitHub(createNextApiRequestMock(), createNextApiResponse(), {
-        origin: '',
-        redirect_uri,
-      });
+      redirectToGitHub(
+        createNextApiRequestMock(),
+        createNextApiResponse(),
+        redirect_uri
+      );
 
       expect(redirectSpy).toHaveBeenCalledTimes(1);
 

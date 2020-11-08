@@ -7,7 +7,7 @@ import type {
 } from '@testing-library/react-hooks';
 import { renderHook as rtlRenderHook } from '@testing-library/react-hooks';
 import type { RunOptions } from 'axe-core';
-import type { ConfigData } from 'html-validate/build/config';
+import type { ConfigData } from 'html-validate';
 import { axe } from 'jest-axe';
 import type { NextRouter } from 'next/router';
 import { cloneElement, isValidElement } from 'react';

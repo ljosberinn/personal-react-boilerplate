@@ -51,5 +51,5 @@ export type OAuth2CallbackHandler<ProfileType> = (
 export type OAuth2RedirectHandler = (
   req: NextApiRequest,
   res: NextApiResponse,
-  meta: { origin: string; redirect_uri: string }
+  redirect_uri: string
 ) => void;

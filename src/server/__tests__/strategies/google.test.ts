@@ -18,10 +18,11 @@ describe('auth - google', () => {
       const redirectSpy = jest.spyOn(oauth2Utils, 'redirect');
       const redirect_uri = 'karma';
 
-      redirectToGoogle(createNextApiRequestMock(), createNextApiResponse(), {
-        origin: '',
-        redirect_uri,
-      });
+      redirectToGoogle(
+        createNextApiRequestMock(),
+        createNextApiResponse(),
+        redirect_uri
+      );
 
       expect(redirectSpy).toHaveBeenCalledTimes(1);
 

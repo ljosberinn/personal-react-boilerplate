@@ -20,10 +20,11 @@ describe('auth - discord', () => {
       const redirectSpy = jest.spyOn(oauth2Utils, 'redirect');
       const redirect_uri = 'karma';
 
-      redirectToDiscord(createNextApiRequestMock(), createNextApiResponse(), {
-        origin: '',
-        redirect_uri,
-      });
+      redirectToDiscord(
+        createNextApiRequestMock(),
+        createNextApiResponse(),
+        redirect_uri
+      );
 
       expect(redirectSpy).toHaveBeenCalledTimes(1);
 

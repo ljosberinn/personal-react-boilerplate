@@ -28,10 +28,11 @@ describe('auth - battlenet', () => {
 
       const redirectSpy = jest.spyOn(oauth2Utils, 'redirect');
 
-      redirectToBattleNet(createNextApiRequestMock(), mockResponse, {
-        origin: '',
-        redirect_uri,
-      });
+      redirectToBattleNet(
+        createNextApiRequestMock(),
+        mockResponse,
+        redirect_uri
+      );
 
       expect(redirectSpy).not.toHaveBeenCalled();
 
@@ -56,10 +57,7 @@ describe('auth - battlenet', () => {
           },
         }),
         mockResponse,
-        {
-          origin: '',
-          redirect_uri,
-        }
+        redirect_uri
       );
 
       expect(redirectSpy).not.toHaveBeenCalled();
@@ -82,10 +80,7 @@ describe('auth - battlenet', () => {
             },
           }),
           res,
-          {
-            origin: '',
-            redirect_uri,
-          }
+          redirect_uri
         );
 
         expect(setCookieSpy).toHaveBeenCalledTimes(1);
@@ -109,10 +104,7 @@ describe('auth - battlenet', () => {
             },
           }),
           createNextApiResponse(),
-          {
-            origin: '',
-            redirect_uri,
-          }
+          redirect_uri
         );
 
         expect(redirectSpy).toHaveBeenCalledTimes(1);

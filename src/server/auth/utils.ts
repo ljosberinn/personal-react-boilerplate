@@ -1,5 +1,3 @@
-// eslint-disable-next-line inclusive-language/use-inclusive-words
-
 import type { IncomingMessage } from 'http';
 import type { NextApiResponse } from 'next';
 
