@@ -27,7 +27,9 @@ describe('hooks/useAuth', () => {
     window.location = { ...realLocation, assign: jest.fn() };
   });
 
-  afterEach(() => server.resetHandlers());
+  afterEach(() => {
+    server.resetHandlers();
+  });
 
   afterAll(() => {
     server.close();
@@ -87,7 +89,9 @@ describe('hooks/useAuth', () => {
       method,
     });
 
-    await waitFor(() => expect(result.current.user).toBeNull());
+    await waitFor(() => {
+      expect(result.current.user).toBeNull();
+    });
   });
 
   describe('register', () => {
@@ -115,7 +119,9 @@ describe('hooks/useAuth', () => {
 
       expect(response).toMatchObject(user);
 
-      await waitFor(() => expect(result.current.user).toMatchObject(user));
+      await waitFor(() => {
+        expect(result.current.user).toMatchObject(user);
+      });
     });
 
     test(`fails gracefully given invalid response data`, async () => {
@@ -255,7 +261,9 @@ describe('hooks/useAuth', () => {
         method,
       });
 
-      await waitFor(() => expect(result.current.user).toMatchObject(user));
+      await waitFor(() => {
+        expect(result.current.user).toMatchObject(user);
+      });
     });
 
     test(`fails gracefully given invalid response data`, async () => {

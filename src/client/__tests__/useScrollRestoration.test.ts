@@ -38,7 +38,9 @@ describe('hooks/useScrollRestoration', () => {
       asPath,
     });
 
-    renderHook(() => useScrollRestoration(router), renderOptions);
+    renderHook(() => {
+      useScrollRestoration(router);
+    }, renderOptions);
 
     expect(Storage.prototype.setItem).toHaveBeenCalledTimes(1);
 
@@ -60,7 +62,9 @@ describe('hooks/useScrollRestoration', () => {
       asPath,
     });
 
-    renderHook(() => useScrollRestoration(router), renderOptions);
+    renderHook(() => {
+      useScrollRestoration(router);
+    }, renderOptions);
 
     expect(Storage.prototype.getItem).toHaveBeenCalledWith(asPath);
 
@@ -84,7 +88,9 @@ describe('hooks/useScrollRestoration', () => {
       asPath,
     });
 
-    renderHook(() => useScrollRestoration(router), renderOptions);
+    renderHook(() => {
+      useScrollRestoration(router);
+    }, renderOptions);
 
     expect(window.addEventListener).toHaveBeenCalledWith(
       'beforeunload',
@@ -104,7 +110,9 @@ describe('hooks/useScrollRestoration', () => {
       asPath,
     });
 
-    renderHook(() => useScrollRestoration(router), renderOptions);
+    renderHook(() => {
+      useScrollRestoration(router);
+    }, renderOptions);
 
     expect(router.events.on).toHaveBeenCalledWith(
       'routeChangeStart',
@@ -135,7 +143,9 @@ describe('hooks/useScrollRestoration', () => {
       .mockReturnValueOnce(JSON.stringify(coordinates));
     const scrollToSpy = jest.spyOn(window, 'scrollTo');
 
-    renderHook(() => useScrollRestoration(router), renderOptions);
+    renderHook(() => {
+      useScrollRestoration(router);
+    }, renderOptions);
 
     expect(router.events.on).toHaveBeenCalledWith(
       'routeChangeComplete',

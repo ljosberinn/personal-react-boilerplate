@@ -52,11 +52,13 @@ export const setCookie = (
   const previous = res.getHeader(SET_COOKIE_HEADER);
 
   if (!previous || typeof previous === 'number') {
-    return res.setHeader(SET_COOKIE_HEADER, next);
+    res.setHeader(SET_COOKIE_HEADER, next);
+    return;
   }
 
   if (typeof previous === 'string') {
-    return res.setHeader(SET_COOKIE_HEADER, [previous, next]);
+    res.setHeader(SET_COOKIE_HEADER, [previous, next]);
+    return;
   }
 
   res.setHeader(SET_COOKIE_HEADER, previous.concat(next));

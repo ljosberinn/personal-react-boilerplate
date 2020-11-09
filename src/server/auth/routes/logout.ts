@@ -11,7 +11,8 @@ const useLogout: RequestHandler = ({ query: { authRouter } }, res, next) => {
   if (action === 'logout') {
     removeCookie(SESSION_COOKIE_NAME, res);
 
-    return res.status(OK).end();
+    res.status(OK).end();
+    return;
   }
 
   next();

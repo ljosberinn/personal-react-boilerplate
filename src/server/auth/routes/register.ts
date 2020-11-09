@@ -12,10 +12,12 @@ const useRegistration: RequestHandler<{}, { username: string }> = (
 
   if (action === 'register') {
     if (!username || !password) {
-      return res.status(BAD_REQUEST).end();
+      res.status(BAD_REQUEST).end();
+      return;
     }
 
-    return res.status(CREATED).json({ username });
+    res.status(CREATED).json({ username });
+    return;
   }
 
   next();

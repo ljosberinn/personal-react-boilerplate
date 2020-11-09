@@ -146,7 +146,8 @@ export const redirectToBattleNet: OAuth2RedirectHandler = (
   const { region } = req.query;
 
   if (!region || Array.isArray(region) || !isValidRegion(region)) {
-    return res.status(BAD_REQUEST).end();
+    res.status(BAD_REQUEST).end();
+    return;
   }
 
   const state = `${region}-${Math.floor(Math.random() * 100 ** Math.PI)}`;

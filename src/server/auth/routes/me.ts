@@ -13,12 +13,15 @@ const useMe: RequestHandler<{}, User> = (req, res, next) => {
       const session = getSession(req);
 
       if (session) {
-        return res.json(session);
+        res.json(session);
+        return;
       }
 
-      return res.status(UNAUTHORIZED).end();
+      res.status(UNAUTHORIZED).end();
+      return;
     } catch {
-      return res.status(UNAUTHORIZED).end();
+      res.status(UNAUTHORIZED).end();
+      return;
     }
   }
 

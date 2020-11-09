@@ -74,12 +74,12 @@ const setupSpies = () => {
   const configureScopeSpy = jest
     .spyOn(sentryReact, 'configureScope')
     // eslint-disable-next-line promise/prefer-await-to-callbacks
-    .mockImplementationOnce((callback) =>
+    .mockImplementationOnce((callback) => {
       // eslint-disable-next-line promise/prefer-await-to-callbacks
       callback(
         createMockScope({ setContext: setContextSpy, setExtra: setExtraSpy })
-      )
-    );
+      );
+    });
 
   return {
     attachInitialContextSpy,
@@ -153,12 +153,12 @@ describe('getServerSideProps', () => {
     const configureScopeSpy = jest
       .spyOn(sentryNode, 'configureScope')
       // eslint-disable-next-line promise/prefer-await-to-callbacks
-      .mockImplementationOnce((callback) =>
+      .mockImplementationOnce((callback) => {
         // eslint-disable-next-line promise/prefer-await-to-callbacks
         callback(
           createMockScope({ setContext: setContextSpy, setTag: setTagSpy })
-        )
-      );
+        );
+      });
 
     const { attachLambdaContextSpy } = await setup();
 

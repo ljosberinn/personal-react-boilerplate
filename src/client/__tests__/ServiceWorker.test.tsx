@@ -28,9 +28,9 @@ describe('<ServiceWorker />', () => {
 
     render(<ServiceWorker />);
 
-    await waitFor(() =>
-      expect(registerSpy).toHaveBeenCalledWith(expect.any(String))
-    );
+    await waitFor(() => {
+      expect(registerSpy).toHaveBeenCalledWith(expect.any(String));
+    });
 
     // eslint-disable-next-line no-console
     expect(console.error).toHaveBeenCalledWith(errorMessage);
@@ -55,12 +55,12 @@ describe('<ServiceWorker />', () => {
 
     render(<ServiceWorker />);
 
-    await waitFor(() =>
+    await waitFor(() => {
       expect(addEventListenerSpy).toHaveBeenCalledWith(
         'updatefound',
         expect.any(Function)
-      )
-    );
+      );
+    });
   });
 
   it('listens to an installing workers statechange', async () => {
@@ -87,12 +87,12 @@ describe('<ServiceWorker />', () => {
 
     render(<ServiceWorker />);
 
-    await waitFor(() =>
+    await waitFor(() => {
       expect(addEventListenerSpy).toHaveBeenCalledWith(
         'statechange',
         expect.any(Function)
-      )
-    );
+      );
+    });
   });
 
   it('renders a toast onupdatefound', async () => {

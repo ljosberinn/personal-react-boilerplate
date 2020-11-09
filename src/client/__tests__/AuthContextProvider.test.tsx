@@ -24,7 +24,9 @@ beforeAll(() => {
   window.location = { ...realLocation, assign: jest.fn() };
 });
 
-afterEach(() => server.resetHandlers());
+afterEach(() => {
+  server.resetHandlers();
+});
 
 afterAll(() => {
   server.close();
@@ -67,9 +69,9 @@ describe('<AuthContextProvider />', () => {
       expect(screen.getByText(notAuthenticated)).toBeInTheDocument();
       expect(screen.getByTestId('user')).toHaveTextContent('null');
 
-      await waitFor(() =>
-        expect(screen.getByText(authenticated)).toBeInTheDocument()
-      );
+      await waitFor(() => {
+        expect(screen.getByText(authenticated)).toBeInTheDocument();
+      });
 
       expect(screen.getByTestId('user')).toHaveTextContent(
         JSON.stringify(mockUser)
@@ -148,7 +150,9 @@ describe('<AuthContextProvider />', () => {
           }
         );
 
-        await waitFor(() => expect(mockPush).toHaveBeenCalledTimes(1));
+        await waitFor(() => {
+          expect(mockPush).toHaveBeenCalledTimes(1);
+        });
 
         expect(mockPush).toHaveBeenCalledWith(url);
       });
@@ -182,7 +186,9 @@ describe('<AuthContextProvider />', () => {
           }
         );
 
-        await waitFor(() => expect(mockPush).toHaveBeenCalledTimes(1));
+        await waitFor(() => {
+          expect(mockPush).toHaveBeenCalledTimes(1);
+        });
 
         expect(window.location.assign).toHaveBeenCalledTimes(1);
         expect(window.location.assign).toHaveBeenCalledWith(url);

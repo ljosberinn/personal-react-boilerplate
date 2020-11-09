@@ -53,25 +53,29 @@ const useLogin: RequestHandler<{}, Partial<LocalDBDataset>> = (
   if (action === 'login') {
     try {
       if (body.toString().length === 0) {
-        return res.status(BAD_REQUEST).end();
+        res.status(BAD_REQUEST).end();
+        return;
       }
 
       const user = verify(body);
 
       if (!user) {
-        return res.status(UNAUTHORIZED).end();
+        res.status(UNAUTHORIZED).end();
+        return;
       }
 
       const token = encryptSession(user);
 
       setSessionCookie(token, res);
 
-      return res.status(OK).json(user);
+      res.status(OK).json(user);
+      return;
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error(error);
 
-      return res.status(UNAUTHORIZED).end();
+      res.status(UNAUTHORIZED).end();
+      return;
     }
   }
 

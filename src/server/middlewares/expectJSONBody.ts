@@ -10,7 +10,8 @@ export const expectJSONBodyMiddleware: Middleware = (req, res, next) => {
       const body = JSON.parse(req.body);
 
       if (!(body instanceof Object)) {
-        return res.status(BAD_REQUEST).end();
+        res.status(BAD_REQUEST).end();
+        return;
       }
 
       req.body = body;
@@ -18,7 +19,8 @@ export const expectJSONBodyMiddleware: Middleware = (req, res, next) => {
       // eslint-disable-next-line no-console
       console.error(error);
 
-      return res.status(BAD_REQUEST).end();
+      res.status(BAD_REQUEST).end();
+      return;
     }
   }
 

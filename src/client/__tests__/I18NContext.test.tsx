@@ -252,7 +252,9 @@ describe('<I18NContextProvder />', () => {
     test(`always sets html.lang attribute (language: ${language})`, async () => {
       const { qsSpy, setAttributeSpy } = setup();
 
-      await waitFor(() => expect(qsSpy).toHaveBeenLastCalledWith('html'));
+      await waitFor(() => {
+        expect(qsSpy).toHaveBeenLastCalledWith('html');
+      });
 
       expect(setAttributeSpy).toHaveBeenCalledWith('lang', language);
     });
@@ -260,7 +262,9 @@ describe('<I18NContextProvder />', () => {
     test(`always sets the html.dir attribute (language: ${language})`, async () => {
       const { qsSpy, setAttributeSpy } = setup();
 
-      await waitFor(() => expect(qsSpy).toHaveBeenLastCalledWith('html'));
+      await waitFor(() => {
+        expect(qsSpy).toHaveBeenLastCalledWith('html');
+      });
 
       expect(setAttributeSpy).toHaveBeenCalledWith('dir', dir);
     });

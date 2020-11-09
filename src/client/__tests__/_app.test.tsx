@@ -90,10 +90,10 @@ describe('<App />', () => {
     const configureScopeSpy = jest
       .spyOn(sentryReact, 'configureScope')
       // eslint-disable-next-line promise/prefer-await-to-callbacks
-      .mockImplementationOnce((callback) =>
+      .mockImplementationOnce((callback) => {
         // eslint-disable-next-line promise/prefer-await-to-callbacks
-        callback(createMockScope({ setContext: setContextSpy }))
-      );
+        callback(createMockScope({ setContext: setContextSpy }));
+      });
 
     render(<App {...defaultProps} />, {
       wrapper: ({ children }) => (
@@ -131,10 +131,10 @@ describe('reportWebVitals', () => {
     const configureScopeSpy = jest
       .spyOn(sentryReact, 'configureScope')
       // eslint-disable-next-line promise/prefer-await-to-callbacks
-      .mockImplementationOnce((callback) =>
+      .mockImplementationOnce((callback) => {
         // eslint-disable-next-line promise/prefer-await-to-callbacks
-        callback(createMockScope({ setContext: setContextSpy }))
-      );
+        callback(createMockScope({ setContext: setContextSpy }));
+      });
 
     reportWebVitals(mockMetric);
 

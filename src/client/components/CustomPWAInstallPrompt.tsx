@@ -56,9 +56,10 @@ export function CustomPWAInstallPrompt(): null | JSX.Element {
     // @ts-expect-error event not available in all browsers
     window.addEventListener('beforeinstallprompt', onBeforeInstall);
 
-    return () =>
+    return () => {
       // @ts-expect-error event not available in all browsers
       window.removeEventListener('beforeinstallprompt', onBeforeInstall);
+    };
   }, [onOpen]);
 
   /* async */ function install() {

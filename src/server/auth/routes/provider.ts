@@ -70,7 +70,8 @@ export const providerHandler: RequestHandler = async (req, res, next) => {
       const redirectHandler = redirectHandlerMap[type];
       redirectHandler(req, res, redirect_uri);
 
-      return res.end();
+      res.end();
+      return;
     }
 
     if (!code || Array.isArray(code) || error) {
@@ -79,7 +80,8 @@ export const providerHandler: RequestHandler = async (req, res, next) => {
         console.error(error);
       }
 
-      return res.status(BAD_REQUEST).end();
+      res.status(BAD_REQUEST).end();
+      return;
     }
 
     const callbackHandler = callbackHandlerMap[type];
@@ -97,7 +99,8 @@ export const providerHandler: RequestHandler = async (req, res, next) => {
       res.setHeader('Location', origin);
     }
 
-    return res.end();
+    res.end();
+    return;
   }
 
   next();

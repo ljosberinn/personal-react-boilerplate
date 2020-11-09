@@ -9,7 +9,7 @@ import { sentryMiddleware } from '../middlewares/sentry';
 import type { RequestHandler } from '../types';
 
 const dummyHandler: RequestHandler = (_req, res) => {
-  return res.status(OK).end();
+  res.status(OK).end();
 };
 
 describe('middleware/sentryMiddleware', () => {

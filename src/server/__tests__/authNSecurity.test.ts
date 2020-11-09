@@ -13,7 +13,7 @@ import { authNSecurityMiddleware } from '../middlewares/authNSecurity';
 import type { RequestHandler } from '../types';
 
 const dummyHandler: RequestHandler<User, AuthenticatedRequest> = (req, res) => {
-  return res.status(OK).json(req[SESSION_COOKIE_NAME]);
+  res.status(OK).json(req[SESSION_COOKIE_NAME]);
 };
 
 describe('middleware/authNSecurity', () => {
@@ -48,9 +48,9 @@ describe('middleware/authNSecurity', () => {
         url: '/',
       });
 
-      await waitFor(() =>
-        expect(getSessionSpy).toHaveBeenCalledWith(expect.any(IncomingMessage))
-      );
+      await waitFor(() => {
+        expect(getSessionSpy).toHaveBeenCalledWith(expect.any(IncomingMessage));
+      });
 
       expect(response.status).toBe(UNAUTHORIZED);
 

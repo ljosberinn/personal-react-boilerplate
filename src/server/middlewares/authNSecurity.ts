@@ -24,13 +24,14 @@ export const authNSecurityMiddleware: Middleware<
     const session = getSession(req);
 
     if (!session) {
-      return res.status(UNAUTHORIZED).json({ error });
+      res.status(UNAUTHORIZED).json({ error });
+      return;
     }
 
     req[SESSION_COOKIE_NAME] = session;
 
     next();
   } catch {
-    return res.status(UNAUTHORIZED).json({ error });
+    res.status(UNAUTHORIZED).json({ error });
   }
 };

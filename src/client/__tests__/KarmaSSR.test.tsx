@@ -74,7 +74,9 @@ describe('<KarmaSSR />', () => {
 
       expect(screen.queryByText('next-karma')).not.toBeInTheDocument();
 
-      await waitFor(() => expect(mockReplace).toHaveBeenCalledTimes(1));
+      await waitFor(() => {
+        expect(mockReplace).toHaveBeenCalledTimes(1);
+      });
 
       expect(mockReplace).toHaveBeenCalledWith(
         redirectDestinationIfUnauthenticated
@@ -102,7 +104,9 @@ describe('<KarmaSSR />', () => {
         omitKarmaProvider: true,
       });
 
-      await waitFor(() => expect(mockReplace).toHaveBeenCalledTimes(1));
+      await waitFor(() => {
+        expect(mockReplace).toHaveBeenCalledTimes(1);
+      });
 
       expect(window.location.assign).toHaveBeenCalledTimes(1);
       expect(window.location.assign).toHaveBeenCalledWith(
