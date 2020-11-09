@@ -1,9 +1,9 @@
 /* eslint-disable jest/require-top-level-describe */
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
+import Router from 'next/router';
 
 import { render, screen, waitFor } from '../../../testUtils';
-import { createUseRouterMock } from '../../../testUtils/router';
 import { UNAUTHORIZED } from '../../utils/statusCodes';
 import { AuthContextProvider, endpoints } from '../context/AuthContext';
 import type { User } from '../context/AuthContext/types';
@@ -123,9 +123,8 @@ describe('<AuthContextProvider />', () => {
     });
 
     describe('given redirectDestinationIfUnauthenticated', () => {
-      test('redirects on failure via useRouter', async () => {
-        const mockPush = jest.fn().mockResolvedValueOnce(true);
-        createUseRouterMock({ push: mockPush });
+      test('redirects on failure via "Router.push"', async () => {
+        const mockPush = jest.spyOn(Router, 'push').mockResolvedValueOnce(true);
 
         const url = '/foo';
 
@@ -154,12 +153,12 @@ describe('<AuthContextProvider />', () => {
         expect(mockPush).toHaveBeenCalledWith(url);
       });
 
-      test('redirects via location if useRouter fails', async () => {
-        const mockPush = jest.fn().mockImplementationOnce(() => {
-          throw new Error('error');
-        });
-
-        createUseRouterMock({ push: mockPush });
+      test('redirects via location if "Router.push" fails', async () => {
+        const mockPush = jest
+          .spyOn(Router, 'push')
+          .mockImplementationOnce(() => {
+            throw new Error('error');
+          });
 
         const url = '/foo';
 
