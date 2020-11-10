@@ -6436,10 +6436,10 @@ html-escaper@^2.0.0:
   resolved "https://registry.yarnpkg.com/html-escaper/-/html-escaper-2.0.2.tgz#dfd60027da36a36dfcbe236262c00a5822681453"
   integrity sha512-H2iMtd0I4Mt5eYiapRdIDjp+XzelXQ0tFE4JS7YFwFevXXMmOp9myNrUvCg0D6ws8iqkRPBfKHgbwig1SmlLfg==
 
-html-validate@4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/html-validate/-/html-validate-4.0.0.tgz#ace7972e54999c2aa6c88b4cca3ef8790762c468"
-  integrity sha512-41NJrkbg9UO1fqFn/mKmtGFIJr0FWa90hXWDkR8G+L/sASg51DNHkFjUXfVVzoOSONPRUJK/Iq18fmlHVVV5Rg==
+html-validate@4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/html-validate/-/html-validate-4.0.1.tgz#3ed5d99179e57357a392756b8c845871dc20cad3"
+  integrity sha512-/ECV5lWkXWoEXpEBv+PBFeC2KfNAtuZRsP3xhUfYmYvbgUwbIRHmEaJnBswAUhljLjM9K2gSzL4KEz7/J2MDwA==
   dependencies:
     "@babel/code-frame" "^7.10.4"
     "@sidvind/better-ajv-errors" "^0.6.10"
