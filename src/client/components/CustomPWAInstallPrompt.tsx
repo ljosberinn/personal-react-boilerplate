@@ -8,7 +8,7 @@ import {
   ModalCloseButton,
   ModalBody,
   useDisclosure,
-} from '@chakra-ui/core';
+} from '@chakra-ui/react';
 import { useEffect, useRef } from 'react';
 
 /**

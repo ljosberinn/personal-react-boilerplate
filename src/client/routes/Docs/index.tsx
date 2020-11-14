@@ -1,4 +1,4 @@
-// import { Tab, chakra, TabList, Icon, Tabs } from '@chakra-ui/core';
+// import { Tab, chakra, TabList, Icon, Tabs } from '@chakra-ui/react';
 // import { AiOutlineStock } from 'react-icons/ai';
 // import { FaReact, FaPaintBrush, FaLock } from 'react-icons/fa';
 // import { GiLifeTap } from 'react-icons/gi';
@@ -7,7 +7,7 @@
 // import { SiTypescript } from 'react-icons/si';
 
 // import { InternalLink } from '../../components/InternalLink';
-import { Box, Container, Heading, useColorModeValue } from '@chakra-ui/core';
+import { Box, Container, Heading, useColorModeValue } from '@chakra-ui/react';
 
 export function DocsIndex(): JSX.Element {
   const bg = useColorModeValue('cyan.50', 'gray.800');

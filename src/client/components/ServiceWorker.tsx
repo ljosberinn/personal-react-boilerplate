@@ -1,4 +1,4 @@
-import { Box, useToast, Flex, Text, Icon } from '@chakra-ui/core';
+import { Box, useToast, Flex, Text, Icon } from '@chakra-ui/react';
 import { useEffect, useRef } from 'react';
 import { FaInfoCircle } from 'react-icons/fa';
 

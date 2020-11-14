@@ -1,5 +1,5 @@
-import type { IconButtonProps } from '@chakra-ui/core';
-import { IconButton, Icon } from '@chakra-ui/core';
+import type { IconButtonProps } from '@chakra-ui/react';
+import { IconButton, Icon } from '@chakra-ui/react';
 import { MdShare } from 'react-icons/md';
 
 import { captureException } from '../../utils/sentry/client';

@@ -13,7 +13,7 @@ import {
   Code,
   chakra,
   Container,
-} from '@chakra-ui/core';
+} from '@chakra-ui/react';
 import { BsLayoutWtf } from 'react-icons/bs';
 import { FaGithub, FaArrowRight } from 'react-icons/fa';
 import { FcSettings } from 'react-icons/fc';

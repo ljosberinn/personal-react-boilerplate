@@ -1,5 +1,5 @@
-import type { LinkProps } from '@chakra-ui/core';
-import { Link, useColorModeValue, Icon } from '@chakra-ui/core';
+import type { LinkProps } from '@chakra-ui/react';
+import { Link, useColorModeValue, Icon } from '@chakra-ui/react';
 import { forwardRef } from 'react';
 import { FaExternalLinkAlt } from 'react-icons/fa';
 

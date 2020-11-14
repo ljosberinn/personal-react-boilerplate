@@ -6,7 +6,7 @@ import {
   Icon,
   Text,
   Box,
-} from '@chakra-ui/core';
+} from '@chakra-ui/react';
 import { FaLinkedin, FaTwitter, FaGithub } from 'react-icons/fa';
 
 import { ColorModeSwitch } from '../components/ColorModeSwitch';

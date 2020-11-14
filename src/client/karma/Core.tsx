@@ -1,4 +1,4 @@
-import { ChakraProvider } from '@chakra-ui/core';
+import { ChakraProvider } from '@chakra-ui/react';
 
 import { MetaThemeColorSynchronizer } from '../components/MetaThemeColorSynchronizer';
 import { ServiceWorker } from '../components/ServiceWorker';

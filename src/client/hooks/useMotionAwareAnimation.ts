@@ -1,4 +1,4 @@
-import { usePrefersReducedMotion } from '@chakra-ui/core';
+import { usePrefersReducedMotion } from '@chakra-ui/react';
 
 export function useMotionAwareAnimation(animation: string): string | undefined {
   const prefersReducedMotion = usePrefersReducedMotion();

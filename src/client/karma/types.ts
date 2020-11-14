@@ -1,4 +1,4 @@
-import type { ChakraProviderProps, StorageManager } from '@chakra-ui/core';
+import type { ChakraProviderProps, StorageManager } from '@chakra-ui/react';
 import type { ReactNode } from 'react';
 
 import type { Namespace } from '../../constants';

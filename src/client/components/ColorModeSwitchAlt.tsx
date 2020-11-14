@@ -1,11 +1,11 @@
-import type { FlexProps, IconProps } from '@chakra-ui/core';
+import type { FlexProps, IconProps } from '@chakra-ui/react';
 import {
   Switch,
   useColorMode,
   Flex,
   forwardRef,
   Icon as ChakraIcon,
-} from '@chakra-ui/core';
+} from '@chakra-ui/react';
 import { FaSun, FaMoon } from 'react-icons/fa';
 
 import { useTranslation } from '../hooks/useTranslation';

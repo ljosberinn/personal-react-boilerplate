@@ -1,4 +1,4 @@
-import { cookieStorageManager } from '@chakra-ui/core';
+import { cookieStorageManager } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 

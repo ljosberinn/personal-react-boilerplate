@@ -1,4 +1,4 @@
-import { ColorModeScript } from '@chakra-ui/core';
+import { ColorModeScript } from '@chakra-ui/react';
 import { captureException } from '@sentry/node';
 import Document, { Html, Head, Main, NextScript } from 'next/document';
 

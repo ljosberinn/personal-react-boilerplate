@@ -3,7 +3,7 @@ import {
   Icon,
   keyframes,
   useColorModeValue,
-} from '@chakra-ui/core';
+} from '@chakra-ui/react';
 
 import { useMotionAwareAnimation } from '../../hooks/useMotionAwareAnimation';
 

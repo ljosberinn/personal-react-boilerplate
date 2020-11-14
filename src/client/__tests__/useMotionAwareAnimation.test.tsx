@@ -1,4 +1,4 @@
-import * as chakra from '@chakra-ui/core';
+import * as chakra from '@chakra-ui/react';
 
 import { renderHook } from '../../../testUtils';
 import { useMotionAwareAnimation } from '../hooks/useMotionAwareAnimation';

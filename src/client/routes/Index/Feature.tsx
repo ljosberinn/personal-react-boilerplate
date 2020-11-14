@@ -5,7 +5,7 @@ import {
   useColorModeValue,
   Icon,
   Flex,
-} from '@chakra-ui/core';
+} from '@chakra-ui/react';
 import type { ReactNode, MouseEvent } from 'react';
 import { FaArrowRight } from 'react-icons/fa';
 

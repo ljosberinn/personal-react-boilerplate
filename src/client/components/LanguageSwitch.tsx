@@ -1,16 +1,16 @@
-import type { MenuProps } from '@chakra-ui/core';
+import type { MenuProps } from '@chakra-ui/react';
 import {
   Menu,
   MenuButton,
   MenuList,
   MenuItem,
   MenuOptionGroup,
-  chakra,
+  MenuItemOption,
   MenuDivider,
   useColorModeValue,
   IconButton,
   Icon,
-} from '@chakra-ui/core';
+} from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { MdTranslate } from 'react-icons/md';
 
@@ -77,11 +77,11 @@ type LanguageOptionProps = {
   t: TFunction;
 };
 
-// const staticMenuItemOptionStyles = {
-//   ':focus': {
-//     boxShadow: 'initial',
-//   },
-// };
+const staticMenuItemOptionStyles = {
+  ':focus': {
+    boxShadow: 'initial',
+  },
+};
 
 function LanguageOption({
   currentPath,
@@ -90,57 +90,16 @@ function LanguageOption({
   t,
 }: LanguageOptionProps) {
   return (
-    <InternalLink
+    <MenuItemOption
+      as={InternalLink}
       locale={locale}
-      omitTextDecoration
       href={currentPath}
-      aria-disabled={isCurrentLocale}
-      role="menuitemradio"
-      textDecoration="none"
-      color="inherit"
-      userSelect="none"
-      display="flex"
-      width="100%"
-      alignItems="center"
-      textAlign="left"
-      flex="0 0 auto"
-      outline="0"
-      transition="background 50ms ease-in 0s"
-      px="0.4rem"
-      py="0.8rem"
+      omitTextDecoration
+      sx={staticMenuItemOptionStyles}
+      isDisabled={isCurrentLocale}
+      value={locale}
     >
-      <chakra.span flexShrink={0} fontSize="smaller" mr="3">
-        {isCurrentLocale && (
-          <svg
-            viewBox="0 0 14 14"
-            width="1em"
-            height="1em"
-            focusable="false"
-            aria-hidden="true"
-            className="chakra-menu__icon"
-          >
-            <polygon
-              fill="currentColor"
-              points="5.5 11.9993304 14 3.49933039 12.5 2 5.5 8.99933039 1.5 4.9968652 0 6.49933039"
-            />
-          </svg>
-        )}
-      </chakra.span>
-      <chakra.span flex="1">{t(locale)}</chakra.span>
-    </InternalLink>
+      {t(locale)}
+    </MenuItemOption>
   );
-
-  // return (
-  //   <MenuItemOption
-  //     as={InternalLink}
-  //     locale={locale}
-  //     href={currentPath}
-  //     omitTextDecoration
-  //     sx={staticMenuItemOptionStyles}
-  //     isDisabled={isCurrentLocale}
-  //     value={locale}
-  //   >
-  //     {t(locale)}
-  //   </MenuItemOption>
-  // );
 }

@@ -1,4 +1,4 @@
-import { ChakraProvider } from '@chakra-ui/core';
+import { ChakraProvider } from '@chakra-ui/react';
 import type { RenderResult, RenderOptions } from '@testing-library/react';
 import { render as rtlRender } from '@testing-library/react';
 import type {
