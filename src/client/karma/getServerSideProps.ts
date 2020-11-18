@@ -1,10 +1,12 @@
 import type {
   GetServerSidePropsContext,
   GetServerSidePropsResult as NextGetServerSidePropsResult,
+  Redirect,
 } from 'next';
 import type { ParsedUrlQuery } from 'querystring';
 
 import { FALLBACK_LANGUAGE } from '../../constants';
+import type NotFound from '../../pages/404';
 import { getSession } from '../../server/auth/cookie';
 import { attachInitialContext } from '../../utils/sentry/client';
 import { attachLambdaContext } from '../../utils/sentry/server';
@@ -12,11 +14,6 @@ import { TEMPORARY_REDIRECT } from '../../utils/statusCodes';
 import type { KarmaSSRProps } from './SSR';
 import { getI18n } from './i18n';
 import type { IsomorphicI18nRequirements, KarmaCoreProps } from './types';
-
-type NextGetServerSidePropsResultWithoutProps = Omit<
-  NextGetServerSidePropsResult<{}>,
-  'props'
->;
 
 /**
  * Return value of `(create)GetServerSideProps` if redirecting server side.
@@ -32,16 +29,28 @@ type SSRRedirectPropSubset = Pick<KarmaSSRProps, 'auth'> & {
   };
 };
 
-type GetServerSidePropsResult = Promise<{
-  props: {
-    karma: KarmaSSRProps | SSRRedirectPropSubset;
-  } & NextGetServerSidePropsResultWithoutProps;
-}>;
+type UnknownObject<T extends string> = Record<T, unknown>;
+
+type NotFound = Exclude<
+  NextGetServerSidePropsResult<unknown>,
+  UnknownObject<'props'> | UnknownObject<'redirect'>
+>;
+
+type NextServerSidePropsResultWithoutProps = Exclude<
+  NextGetServerSidePropsResult<unknown>,
+  Record<'props', unknown>
+>;
 
 export type CreateGetServerSidePropsOptions = {
   i18n: IsomorphicI18nRequirements;
   auth?: Pick<KarmaCoreProps['auth'], 'redirectDestinationIfUnauthenticated'>;
-} & NextGetServerSidePropsResultWithoutProps;
+};
+
+export type GetServerSidePropsResult<Props = {}> =
+  | { props: { karma: SSRRedirectPropSubset } }
+  | Promise<{
+      props: { karma: KarmaSSRProps & Props };
+    }>;
 
 /**
  * @example
@@ -54,7 +63,6 @@ export type CreateGetServerSidePropsOptions = {
  *   auth: {
  *     redirectDestinationIfUnauthenticated: '/login',
  *   },
- *   revalidate: 180
  * })
  * ```
  */
@@ -72,28 +80,28 @@ export const createGetServerSideProps = (
  * export { getServerSideProps } from '../karma/client/Karma';
  * ```
  */
-export const getServerSideProps = async (
+export const getServerSideProps = (
   { req, res, locale = FALLBACK_LANGUAGE }: GetServerSidePropsContext,
   options?: CreateGetServerSidePropsOptions
 ): GetServerSidePropsResult => {
-  const { i18n: i18nOptions, auth: authOptions, ...rest } = options ?? {};
-
+  const { i18n: i18nOptions, auth: authOptions } = options ?? {};
   const session = getSession(req);
 
   if (!session && authOptions?.redirectDestinationIfUnauthenticated) {
+    const { redirectDestinationIfUnauthenticated } = authOptions;
+
     // client-side routing, see https://github.com/vercel/next.js/discussions/11281#discussioncomment-2384
     if (!req.headers.referer) {
       res.writeHead(TEMPORARY_REDIRECT, {
-        Location: authOptions.redirectDestinationIfUnauthenticated,
+        Location: redirectDestinationIfUnauthenticated,
       });
 
       res.end();
     }
 
-    const { redirectDestinationIfUnauthenticated } = authOptions;
-
     return {
       props: {
+        // type SSRRedirectPropSubset
         karma: {
           auth: {
             redirectDestinationIfUnauthenticated,
@@ -108,11 +116,6 @@ export const getServerSideProps = async (
     };
   }
 
-  const resources = await getI18n(locale, {
-    namespaces: i18nOptions?.namespaces,
-  });
-  const cookies = req?.headers.cookie ?? '';
-
   attachLambdaContext(req);
 
   attachInitialContext({
@@ -121,25 +124,31 @@ export const getServerSideProps = async (
     session,
   });
 
-  const i18n: KarmaSSRProps['i18n'] = {
-    locale,
-    resources,
-  };
-
   const auth: KarmaSSRProps['auth'] = {
     session,
   };
 
-  return {
-    props: {
-      karma: {
-        auth,
-        cookies,
-        i18n,
+  const cookies = req?.headers.cookie ?? '';
+
+  return getI18n(locale, {
+    namespaces: i18nOptions?.namespaces,
+    // eslint-disable-next-line promise/prefer-await-to-then
+  }).then((resources) => {
+    const i18n: KarmaSSRProps['i18n'] = {
+      locale,
+      resources,
+    };
+
+    return {
+      props: {
+        karma: {
+          auth,
+          cookies,
+          i18n,
+        },
       },
-    },
-    ...rest,
-  };
+    };
+  });
 };
 
 /**
@@ -149,20 +158,22 @@ export const getServerSideProps = async (
  * should use `createGetServerSideProps` instead.
  */
 export type GetServerSidePropsHandler<
-  Props = {},
+  Props extends Record<string, unknown>,
   Query extends ParsedUrlQuery = ParsedUrlQuery
 > = (
   ctx: GetServerSidePropsContext<Query>
 ) =>
-  | Promise<{ props: Props } & NextGetServerSidePropsResultWithoutProps>
-  | ({ props: Props } & NextGetServerSidePropsResultWithoutProps);
+  | Promise<{ props: Props }>
+  | { props: Props }
+  | { redirect: Redirect }
+  | NotFound;
 
 /**
  * the type of the result of `withKarmaSSRProps`
  */
-export type WithKarmaSSRProps<Props = {}> = Promise<{
-  props: { karma: KarmaSSRProps | {} } & Props;
-}>;
+export type WithKarmaSSRProps<Props = {}> =
+  | NextServerSidePropsResultWithoutProps
+  | GetServerSidePropsResult<Props>;
 
 /**
  * Higher order function to allow custom getServersideProps logic to be used
@@ -180,7 +191,7 @@ export type WithKarmaSSRProps<Props = {}> = Promise<{
  * ```
  */
 export const withKarmaSSRProps = <
-  Props,
+  Props extends Record<string, unknown>,
   Query extends ParsedUrlQuery = ParsedUrlQuery
 >(
   handler: GetServerSidePropsHandler<Props, Query>,
@@ -188,15 +199,20 @@ export const withKarmaSSRProps = <
 ) => {
   return async (
     ctx: GetServerSidePropsContext<Query>
-  ): WithKarmaSSRProps<Props> => {
-    const { props } = await handler(ctx);
+  ): Promise<WithKarmaSSRProps<Props>> => {
+    const handlerResult = await handler(ctx);
+
+    if ('notFound' in handlerResult || 'redirect' in handlerResult) {
+      return handlerResult;
+    }
+
     const {
       props: { karma },
     } = await getServerSideProps(ctx, options);
 
     return {
       props: {
-        ...props,
+        ...handlerResult.props,
         karma,
       },
     };
