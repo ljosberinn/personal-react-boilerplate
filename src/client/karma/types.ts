@@ -83,3 +83,5 @@ export type KarmaCoreProps = {
    */
   mode: KarmaMode;
 };
+
+export type UnknownObjectValues<T extends string> = Record<T, unknown>;

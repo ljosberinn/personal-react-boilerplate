@@ -13,7 +13,11 @@ import { attachLambdaContext } from '../../utils/sentry/server';
 import { TEMPORARY_REDIRECT } from '../../utils/statusCodes';
 import type { KarmaSSRProps } from './SSR';
 import { getI18n } from './i18n';
-import type { IsomorphicI18nRequirements, KarmaCoreProps } from './types';
+import type {
+  IsomorphicI18nRequirements,
+  KarmaCoreProps,
+  UnknownObjectValues,
+} from './types';
 
 /**
  * Return value of `(create)GetServerSideProps` if redirecting server side.
@@ -29,16 +33,14 @@ type SSRRedirectPropSubset = Pick<KarmaSSRProps, 'auth'> & {
   };
 };
 
-type UnknownObject<T extends string> = Record<T, unknown>;
-
-type NotFound = Exclude<
-  NextGetServerSidePropsResult<unknown>,
-  UnknownObject<'props'> | UnknownObject<'redirect'>
->;
-
 type NextServerSidePropsResultWithoutProps = Exclude<
   NextGetServerSidePropsResult<unknown>,
-  Record<'props', unknown>
+  UnknownObjectValues<'props'>
+>;
+
+type NotFound = Exclude<
+  NextServerSidePropsResultWithoutProps,
+  UnknownObjectValues<'redirect'>
 >;
 
 export type CreateGetServerSidePropsOptions = {

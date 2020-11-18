@@ -7,18 +7,30 @@ import type { ParsedUrlQuery } from 'querystring';
 import { FALLBACK_LANGUAGE } from '../../constants';
 import type { KarmaSSGProps } from './SSG';
 import { getI18n } from './i18n';
-import type { IsomorphicI18nRequirements, KarmaCoreProps } from './types';
+import type {
+  IsomorphicI18nRequirements,
+  KarmaCoreProps,
+  UnknownObjectValues,
+} from './types';
 
-type NextGetStaticPropsResultWithoutProps = Omit<
-  NextGetStaticPropsResult<{}>,
-  'props'
+type NextGetStaticPropsResultWithoutProps = Exclude<
+  NextGetStaticPropsResult<unknown>,
+  UnknownObjectValues<'props'>
 >;
 
-export type GetStaticPropsResult = Promise<
-  {
-    props: { karma: KarmaSSGProps };
-  } & NextGetStaticPropsResultWithoutProps
+type RedirectRevalidate = Exclude<
+  NextGetStaticPropsResultWithoutProps,
+  UnknownObjectValues<'notFound'>
 >;
+
+type NotFound = Exclude<
+  NextGetStaticPropsResultWithoutProps,
+  RedirectRevalidate
+>;
+
+export type GetStaticPropsResult = Promise<{
+  props: { karma: KarmaSSGProps };
+}>;
 
 export type CreateGetStaticPropsOptions = {
   i18n?: IsomorphicI18nRequirements & { parameterName?: string };
@@ -26,7 +38,7 @@ export type CreateGetStaticPropsOptions = {
     KarmaCoreProps['auth'],
     'redirectDestinationIfUnauthenticated' | 'shouldAttemptReauthentication'
   >;
-} & NextGetStaticPropsResultWithoutProps;
+};
 
 /**
  * @example
@@ -60,7 +72,7 @@ export const getStaticProps = async (
   ctx: GetStaticPropsContext,
   options?: CreateGetStaticPropsOptions
 ): GetStaticPropsResult => {
-  const { auth: authOptions, i18n: i18nOptions, ...rest } = options ?? {};
+  const { auth: authOptions, i18n: i18nOptions } = options ?? {};
   const { locale = FALLBACK_LANGUAGE } = ctx;
 
   const resources = await getI18n(locale, {
@@ -90,7 +102,6 @@ export const getStaticProps = async (
         i18n,
       },
     },
-    ...rest,
   };
 };
 
@@ -106,17 +117,19 @@ export type GetStaticPropsHandler<
 > = (
   ctx: GetStaticPropsContext<Query>
 ) =>
-  | Promise<{ props: Props } & NextGetStaticPropsResultWithoutProps>
-  | ({ props: Props } & NextGetStaticPropsResultWithoutProps);
+  | Promise<{ props: Props }>
+  | { props: Props }
+  | RedirectRevalidate
+  | NotFound;
 
 /**
  * the type of the result of `withKarmaSSGProps`
  */
-export type WithKarmaSSGProps<Props = {}> = Promise<
-  {
-    props: { karma: KarmaSSGProps } & Props;
-  } & NextGetStaticPropsResultWithoutProps
->;
+export type WithKarmaSSGProps<Props = {}> =
+  | NextGetStaticPropsResultWithoutProps
+  | {
+      props: { karma: KarmaSSGProps } & Props;
+    };
 
 /**
  * Higher order function to allow custom getStaticProps logic to be used
@@ -142,22 +155,26 @@ export const withKarmaSSGProps = <
   Query extends ParsedUrlQuery = ParsedUrlQuery
 >(
   handler: GetStaticPropsHandler<Props, Query>,
-  options?: Omit<CreateGetStaticPropsOptions, 'revalidate'>
+  options?: CreateGetStaticPropsOptions
 ) => {
   return async (
     ctx: GetStaticPropsContext<Query>
-  ): WithKarmaSSGProps<Props> => {
-    const { props, ...rest } = await handler(ctx);
+  ): Promise<WithKarmaSSGProps<Props>> => {
+    const handlerResult = await handler(ctx);
+
+    if ('notFound' in handlerResult || 'redirect' in handlerResult) {
+      return handlerResult;
+    }
+
     const {
       props: { karma },
     } = await getStaticProps(ctx, options);
 
     return {
       props: {
-        ...props,
+        ...handlerResult.props,
         karma,
       },
-      ...rest,
     };
   };
 };
