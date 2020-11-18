@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@chakra-ui/react": "1.0.0",
-    "@emotion/react": "11.0.0",
+    "@emotion/react": "11.1.1",
     "@emotion/styled": "11.0.0",
     "@sentry/minimal": "5.27.4",
     "@sentry/node": "5.27.4",
@@ -25,10 +25,10 @@
     "next": "10.0.1",
     "next-connect": "0.9.1",
     "preact": "10.5.7",
-    "preact-render-to-string": "5.1.11",
+    "preact-render-to-string": "5.1.12",
     "preact-ssr-prepass": "1.1.2",
     "react-icons": "3.11.0",
-    "web-vitals": "0.2.4"
+    "web-vitals": "1.0.1"
   },
   "devDependencies": {
     "@commitlint/cli": "11.0.0",
@@ -43,14 +43,14 @@
     "@testing-library/user-event": "12.2.2",
     "@types/jest": "26.0.15",
     "@types/jest-axe": "3.5.1",
-    "@types/node": "14.14.7",
+    "@types/node": "14.14.8",
     "@types/node-fetch": "2.5.7",
     "@types/react": "16.9.56",
     "@types/react-dom": "16.9.9",
     "@types/test-listen": "1.1.0",
     "babel-jest": "26.6.3",
     "eslint": "7.13.0",
-    "eslint-config-galex": "2.7.3",
+    "eslint-config-galex": "2.7.5",
     "html-validate": "4.0.1",
     "husky": "4.3.0",
     "identity-obj-proxy": "3.0.0",
@@ -58,7 +58,7 @@
     "jest-axe": "4.1.0",
     "jest-watch-typeahead": "0.6.1",
     "lint-staged": "10.5.1",
-    "msw": "0.21.3",
+    "msw": "0.22.0",
     "next-compose-plugins": "2.2.1",
     "next-offline": "5.0.3",
     "node-fetch": "2.6.1",
@@ -68,12 +68,12 @@
     "react-test-renderer": "17.0.1",
     "test-listen": "1.1.0",
     "typescript": "4.0.5",
-    "webpack": "5.4.0",
+    "webpack": "5.5.0",
     "whatwg-fetch": "3.5.0",
     "yarn-deduplicate": "3.1.0"
   },
   "resolutions": {
-    "webpack": "5.4.0"
+    "webpack": "5.5.0"
   },
   "license": "MIT",
   "author": "Gerrit Alex",
