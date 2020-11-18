@@ -24,7 +24,9 @@ export function MockRouterContext({
     },
     isFallback: false,
     pathname: '/',
-    prefetch: jest.fn(),
+    prefetch: jest.fn().mockReturnValue({
+      catch: jest.fn(),
+    }),
     push: jest.fn(),
     query: {},
     reload: jest.fn(),
