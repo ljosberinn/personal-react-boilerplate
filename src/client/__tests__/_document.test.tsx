@@ -21,7 +21,6 @@ const defaultProps: DocumentProps = {
   __NEXT_DATA__: {
     appGip: true,
     buildId: Math.floor(Math.random() * 1000).toString(),
-    head: [],
     page: '/',
     props: { pageProps },
     query: {},

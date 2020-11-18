@@ -32,7 +32,6 @@ const defaultProps: AppRenderProps = {
     App: () => null,
     Component: () => null,
     initialProps: {},
-    initialStyleSheets: [],
     isFallback: false,
     pageLoader: undefined,
     subscription: jest.fn(),
