@@ -1923,10 +1923,10 @@
   resolved "https://registry.yarnpkg.com/@next/env/-/env-10.0.2.tgz#b0479a0d4d962f9f85a577298cee260c310dfa3f"
   integrity sha512-1fMsLplRXJjSmOfdaeP91fbTgnsbmZSvX6BjeKXSksccg5JT9W1XkOCerTrbQLpUNZIi0sVfwBrHrwJRMCqGBA==
 
-"@next/eslint-plugin-next@10.0.1":
-  version "10.0.1"
-  resolved "https://registry.yarnpkg.com/@next/eslint-plugin-next/-/eslint-plugin-next-10.0.1.tgz#82fb73f48ff8989d6f82eb90cc0584b5d6637137"
-  integrity sha512-VYZfnO6S4BOa6YjBv1zyvlZumotQ2GcYrQ8N9jOR54jreYn2pytCJbdozLiEPZaKz+sQFdhSEl2RzEPbSbIEeg==
+"@next/eslint-plugin-next@10.0.2":
+  version "10.0.2"
+  resolved "https://registry.yarnpkg.com/@next/eslint-plugin-next/-/eslint-plugin-next-10.0.2.tgz#7332f1b51bb8fcd1cc0eee09d3dc5394bff7edb5"
+  integrity sha512-+KHG5uT4Xonj7x9SCK9hFMDHGQmfFneovHWU2xlzYwLs99YIIMSvWO4JF5Va/OcBeJ9woFc8u+7zx5EJ9UHFsg==
 
 "@next/polyfill-module@10.0.2":
   version "10.0.2"
@@ -4927,12 +4927,12 @@ eslint-ast-utils@^1.1.0:
     lodash.get "^4.4.2"
     lodash.zip "^4.2.0"
 
-eslint-config-galex@2.7.5:
-  version "2.7.5"
-  resolved "https://registry.yarnpkg.com/eslint-config-galex/-/eslint-config-galex-2.7.5.tgz#ab99e3764dc15e93719f958cbfba1ffb54e71076"
-  integrity sha512-m8QmrbaF7BGd69k7njDtCTgSBDSvXG0TGFVoLtEIJQvzALYAvX/PjJsw6a9I9dl307KUnrpVWsaMlKKUX+5c/w==
+eslint-config-galex@2.7.6:
+  version "2.7.6"
+  resolved "https://registry.yarnpkg.com/eslint-config-galex/-/eslint-config-galex-2.7.6.tgz#7e1678296c21a705a2ff9a94188238d9a81a167a"
+  integrity sha512-1osQQA8mR2z+nD+jfg532+v/ortnziKci5e0t6Ubd+tcK6gYlYb6V/3GNntBCgiBBBxMTsto97hSZ52X2IqfIQ==
   dependencies:
-    "@next/eslint-plugin-next" "10.0.1"
+    "@next/eslint-plugin-next" "10.0.2"
     "@typescript-eslint/eslint-plugin" "4.8.1"
     "@typescript-eslint/parser" "4.8.1"
     babel-eslint "10.1.0"
@@ -4950,7 +4950,7 @@ eslint-config-galex@2.7.5:
     eslint-plugin-react-hooks "4.2.0"
     eslint-plugin-sonarjs "0.5.0"
     eslint-plugin-sort-keys-fix "1.1.1"
-    eslint-plugin-testing-library "3.10.0"
+    eslint-plugin-testing-library "3.10.1"
     eslint-plugin-unicorn "23.0.0"
     read-pkg-up "7.0.1"
     typescript "4.0.5"
@@ -5085,10 +5085,10 @@ eslint-plugin-sort-keys-fix@1.1.1:
   dependencies:
     requireindex "~1.2.0"
 
-eslint-plugin-testing-library@3.10.0:
-  version "3.10.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-testing-library/-/eslint-plugin-testing-library-3.10.0.tgz#8c3c9c475bb4e5794446920d363403ae5bcf7f1c"
-  integrity sha512-zqITQ9qS9tdTG5hY+JnY4k3osolg4sGMD9gTnJr0L1xKB8CvPXXts7tp331ZjQ6qL37kRgH0288/XtsG+bcsxQ==
+eslint-plugin-testing-library@3.10.1:
+  version "3.10.1"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-testing-library/-/eslint-plugin-testing-library-3.10.1.tgz#4dd02306d601c3238fdabf1d1dbc5f2a8e85d531"
+  integrity sha512-nQIFe2muIFv2oR2zIuXE4vTbcFNx8hZKRzgHZqJg8rfopIWwoTwtlbCCNELT/jXzVe1uZF68ALGYoDXjLczKiQ==
   dependencies:
     "@typescript-eslint/experimental-utils" "^3.10.1"
 
