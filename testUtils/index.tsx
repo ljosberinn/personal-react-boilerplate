@@ -263,7 +263,7 @@ type TestA11YOptions = TestOptions & { axeOptions?: RunOptions };
  * @see https://github.com/nickcolley/jest-axe#testing-react-with-react-testing-library
  */
 export const testA11Y = async (
-  ui: UI | HTMLElement,
+  ui: UI | Element,
   { axeOptions, ...options }: TestA11YOptions = {}
 ): Promise<void> => {
   const element = isValidElement(ui) ? render(ui, options).container : ui;
@@ -380,7 +380,7 @@ type ValidateHtmlOptions = TestOptions & { htmlValidate?: HTMLValidateOptions };
  * @see https://html-validate.org/frameworks/jest.html
  */
 export const validateHtml = (
-  ui: UI | HTMLElement,
+  ui: UI | Element,
   { htmlValidate, ...options }: ValidateHtmlOptions = {}
 ): void => {
   const merged: ConfigData = {
