@@ -1724,6 +1724,15 @@
   dependencies:
     "@hapi/hoek" "^8.3.0"
 
+"@html-validate/stylish@1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@html-validate/stylish/-/stylish-1.0.0.tgz#f8700775d8863e7de50564f8d3e6908a5f40ab9d"
+  integrity sha512-NW6TZ7/GA+Z+1fNGDqkxutHQEsDivuN6ZM9ALMqSsDuO1QHJ4Ws1hAecwzvDezwSEXArLcqXd1RqZCYi3GA6KQ==
+  dependencies:
+    chalk "^4.0.0"
+    strip-ansi "^6.0.0"
+    text-table "^0.2.0"
+
 "@istanbuljs/load-nyc-config@^1.0.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@istanbuljs/load-nyc-config/-/load-nyc-config-1.1.0.tgz#fd3db1d59ecf7cf121e80650bb86712f9b55eced"
@@ -5146,7 +5155,7 @@ eslint-visitor-keys@^2.0.0:
   resolved "https://registry.yarnpkg.com/eslint-visitor-keys/-/eslint-visitor-keys-2.0.0.tgz#21fdc8fbcd9c795cc0321f0563702095751511a8"
   integrity sha512-QudtT6av5WXels9WjIM7qz1XD1cWGvX4gGXvp/zBn9nXG02D0utdU3Em2m/QjTnrsk6bBjmCygl3rmj118msQQ==
 
-eslint@7.13.0, eslint@^7.11.0:
+eslint@7.13.0:
   version "7.13.0"
   resolved "https://registry.yarnpkg.com/eslint/-/eslint-7.13.0.tgz#7f180126c0dcdef327bfb54b211d7802decc08da"
   integrity sha512-uCORMuOO8tUzJmsdRtrvcGq5qposf7Rw0LwkTJkoDbOycVQtQjmnhZSuLQnozLE4TmAzlMVV45eCHmQ1OpDKUQ==
@@ -6114,18 +6123,18 @@ html-escaper@^2.0.0:
   resolved "https://registry.yarnpkg.com/html-escaper/-/html-escaper-2.0.2.tgz#dfd60027da36a36dfcbe236262c00a5822681453"
   integrity sha512-H2iMtd0I4Mt5eYiapRdIDjp+XzelXQ0tFE4JS7YFwFevXXMmOp9myNrUvCg0D6ws8iqkRPBfKHgbwig1SmlLfg==
 
-html-validate@4.0.1:
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/html-validate/-/html-validate-4.0.1.tgz#3ed5d99179e57357a392756b8c845871dc20cad3"
-  integrity sha512-/ECV5lWkXWoEXpEBv+PBFeC2KfNAtuZRsP3xhUfYmYvbgUwbIRHmEaJnBswAUhljLjM9K2gSzL4KEz7/J2MDwA==
+html-validate@4.0.2:
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/html-validate/-/html-validate-4.0.2.tgz#c4948a56f052952561cf44b5232e25bc02315b06"
+  integrity sha512-gx7f0zHvKCZtHz1K5mgXdu+1zyc6swfH/f2psfXWhz6KtO35iPYOdh2qo2T3kQDjx3DX5dTHKEW7b+CtdXmXLg==
   dependencies:
     "@babel/code-frame" "^7.10.4"
+    "@html-validate/stylish" "1.0.0"
     "@sidvind/better-ajv-errors" "^0.6.10"
     acorn-walk "^8.0.0"
     ajv "^6.12.6"
     chalk "^4.0.0"
     deepmerge "^4.2.2"
-    eslint "^7.11.0"
     espree "^7.3.0"
     glob "^7.1.6"
     inquirer "^7.3.3"
