@@ -73,7 +73,7 @@
     "yarn-deduplicate": "3.1.0"
   },
   "resolutions": {
-    "webpack": "5.0.0"
+    "webpack": "5.9.0"
   },
   "license": "MIT",
   "author": "Gerrit Alex",
