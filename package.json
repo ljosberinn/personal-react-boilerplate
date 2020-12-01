@@ -21,7 +21,7 @@
     "@sentry/node": "5.27.6",
     "@sentry/react": "5.27.6",
     "cookie": "0.4.1",
-    "framer-motion": "2.9.4",
+    "framer-motion": "2.9.5",
     "next": "10.0.3",
     "next-connect": "0.9.1",
     "preact": "10.5.7",
