@@ -3,6 +3,7 @@ import {
   createNextApiResponse,
   NextApiResponseMock,
 } from '../../../../testUtils/api';
+import type { GitHubProfile } from '../../auth/strategies/github';
 import {
   redirectToGitHub,
   processGitHubCallback,
@@ -55,8 +56,46 @@ describe('auth - github', () => {
     };
 
     test('retrieves oauth2 response', async () => {
-      const expectedResponse = {
-        karma: 'karma',
+      const expectedResponse: GitHubProfile = {
+        avatar_url: '',
+        bio: '',
+        blog: '',
+        collaborators: 0,
+        company: '',
+        created_at: '',
+        disk_usage: 1,
+        email: null,
+        events_url: '',
+        followers: 1,
+        followers_url: '',
+        following: 1,
+        following_url: '',
+        gists_url: '',
+        gravatar_id: '',
+        hireable: null,
+        html_url: '',
+        id: 1,
+        location: '',
+        login: '',
+        name: '',
+        node_id: '',
+        organizations_url: '',
+        owned_private_repos: 1,
+        plan: { collaborators: 0, name: 'free', private_repos: 0 },
+        private_gists: 0,
+        public_gists: 0,
+        public_repos: 0,
+        received_events_url: '',
+        repos_url: '',
+        site_admin: false,
+        starred_url: '',
+        subscriptions_url: '',
+        total_private_repos: 0,
+        twitter_username: '',
+        two_factor_authentication: true,
+        type: 'User',
+        updated_at: '',
+        url: '',
       };
 
       const fetchSpy = jest

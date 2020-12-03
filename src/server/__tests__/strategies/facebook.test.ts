@@ -3,6 +3,7 @@ import {
   createNextApiResponse,
   NextApiResponseMock,
 } from '../../../../testUtils/api';
+import type { FacebookProfile } from '../../auth/strategies/facebook';
 import {
   redirectToFacebook,
   processFacebookCallback,
@@ -55,8 +56,9 @@ describe('auth - facebook', () => {
     };
 
     test('retrieves oauth2 response', async () => {
-      const expectedResponse = {
-        karma: 'karma',
+      const expectedResponse: FacebookProfile = {
+        id: '',
+        name: '',
       };
 
       const fetchSpy = jest

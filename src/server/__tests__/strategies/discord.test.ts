@@ -7,6 +7,7 @@ import {
   createNextApiResponse,
   NextApiResponseMock,
 } from '../../../../testUtils/api';
+import type { DiscordProfile } from '../../auth/strategies/discord';
 import {
   processDiscordCallback,
   redirectToDiscord,
@@ -58,8 +59,17 @@ describe('auth - discord', () => {
     };
 
     test('retrieves oauth2 response', async () => {
-      const expectedResponse = {
-        karma: 'karma',
+      const expectedResponse: DiscordProfile = {
+        avatar: '',
+        discriminator: '',
+        email: '',
+        flags: 1,
+        id: '',
+        locale: '',
+        mfa_enabled: true,
+        public_flags: 1,
+        username: '',
+        verified: true,
       };
 
       const fetchSpy = jest

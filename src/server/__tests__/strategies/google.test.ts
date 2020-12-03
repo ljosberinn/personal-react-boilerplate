@@ -4,6 +4,7 @@ import {
   NextApiResponseMock,
 } from '../../../../testUtils/api';
 import { BAD_REQUEST } from '../../../utils/statusCodes';
+import type { GoogleProfile } from '../../auth/strategies/google';
 import {
   redirectToGoogle,
   processGoogleCallback,
@@ -109,8 +110,15 @@ describe('auth - google', () => {
     });
 
     test('retrieves oauth2 response', async () => {
-      const expectedResponse = {
-        karma: 'karma',
+      const expectedResponse: GoogleProfile = {
+        email: '',
+        email_verified: true,
+        family_name: '',
+        given_name: '',
+        locale: '',
+        name: '',
+        picture: '',
+        sub: '',
       };
 
       const fetchSpy = jest
