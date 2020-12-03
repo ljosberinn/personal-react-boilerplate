@@ -4930,10 +4930,10 @@ eslint-ast-utils@^1.1.0:
     lodash.get "^4.4.2"
     lodash.zip "^4.2.0"
 
-eslint-config-galex@2.8.2:
-  version "2.8.2"
-  resolved "https://registry.yarnpkg.com/eslint-config-galex/-/eslint-config-galex-2.8.2.tgz#2f2d90730ba07294b441ffe761c50ea007dd8a9e"
-  integrity sha512-E8AJIgx12Vhf101DwSVT7jrU/7UR5mmVCAmay2+IeQaSVsl9+v9EVdMqHXHpyGuiWX+jAEjAnqONR7O0FfHjFw==
+eslint-config-galex@2.8.3:
+  version "2.8.3"
+  resolved "https://registry.yarnpkg.com/eslint-config-galex/-/eslint-config-galex-2.8.3.tgz#bca9b9ceaca471cd54a663f04f07456f1e94e09f"
+  integrity sha512-54S3Q1sYZe+qI7KjeyB2S7UDAipXaKhgkvdhggkSexuqRZN+vLcaVCrHPzm8kcbd+tci92MppJ6F5yZ9sevlbg==
   dependencies:
     "@next/eslint-plugin-next" "10.0.3"
     "@typescript-eslint/eslint-plugin" "4.9.0"
@@ -4947,7 +4947,7 @@ eslint-config-galex@2.8.2:
     eslint-plugin-jest-dom "3.4.0"
     eslint-plugin-jest-formatting "2.0.0"
     eslint-plugin-jsx-a11y "6.4.1"
-    eslint-plugin-prettier "3.1.4"
+    eslint-plugin-prettier "3.2.0"
     eslint-plugin-promise "4.2.1"
     eslint-plugin-react "7.21.5"
     eslint-plugin-react-hooks "4.2.0"
@@ -5043,10 +5043,10 @@ eslint-plugin-jsx-a11y@6.4.1:
     jsx-ast-utils "^3.1.0"
     language-tags "^1.0.5"
 
-eslint-plugin-prettier@3.1.4:
-  version "3.1.4"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-prettier/-/eslint-plugin-prettier-3.1.4.tgz#168ab43154e2ea57db992a2cd097c828171f75c2"
-  integrity sha512-jZDa8z76klRqo+TdGDTFJSavwbnWK2ZpqGKNZ+VvweMW516pDUMmQ2koXvxEE4JhzNvTv+radye/bWGBmA6jmg==
+eslint-plugin-prettier@3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-prettier/-/eslint-plugin-prettier-3.2.0.tgz#af391b2226fa0e15c96f36c733f6e9035dbd952c"
+  integrity sha512-kOUSJnFjAUFKwVxuzy6sA5yyMx6+o9ino4gCdShzBNx4eyFRudWRYKCFolKjoM40PEiuU6Cn7wBLfq3WsGg7qg==
   dependencies:
     prettier-linter-helpers "^1.0.0"
 
