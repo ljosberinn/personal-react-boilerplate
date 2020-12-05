@@ -52,7 +52,7 @@
     "eslint": "7.14.0",
     "eslint-config-galex": "2.8.3",
     "html-validate": "4.0.2",
-    "husky": "4.3.0",
+    "husky": "4.3.4",
     "identity-obj-proxy": "3.0.0",
     "jest": "26.6.3",
     "jest-axe": "4.1.0",
