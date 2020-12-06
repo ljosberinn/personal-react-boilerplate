@@ -59,12 +59,11 @@ describe('layoutWithKarma', () => {
 
     expect(isoSpy).toHaveBeenCalledTimes(1);
     expect(isoSpy).toHaveBeenCalledWith(
-      // props
       {
         children: mockLayout(<MockPage />),
         karma: mockProps,
       },
-      // ref
+      // @ts-expect-error ref
       {}
     );
   });

@@ -32,6 +32,7 @@ describe('<KarmaSSG />', () => {
         children,
         mode: 'ssg',
       },
+      // @ts-expect-error ref
       {}
     );
   });
