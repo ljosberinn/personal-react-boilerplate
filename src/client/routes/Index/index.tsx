@@ -15,13 +15,12 @@ import {
   Container,
 } from '@chakra-ui/react';
 import { BsLayoutWtf } from 'react-icons/bs';
-import { FaGithub, FaArrowRight } from 'react-icons/fa';
+import { FaGithub } from 'react-icons/fa';
 import { FcSettings } from 'react-icons/fc';
 import { GiFeather } from 'react-icons/gi';
 import { MdTranslate } from 'react-icons/md';
 
 import { ExternalLink } from '../../components/ExternalLink';
-import { InternalLink } from '../../components/InternalLink';
 import { useMotionAwareAnimation } from '../../hooks/useMotionAwareAnimation';
 import type { WithChildren } from '../../karma/types';
 import { gitUrl } from '../../layouts/CommonLayout';
@@ -95,23 +94,9 @@ function Hero() {
               important: creating awesome features for your users in a fast and
               reliable way, yet retain all flexibility you might (n)ever need.
             </Text>
-
-            <Text fontStyle="italic" mt={6}>
-              _still wip_ & docs coming soon
-            </Text>
           </Box>
 
           <Box mt={6}>
-            <Button
-              as={InternalLink}
-              omitTextDecoration
-              href="/docs"
-              size="lg"
-              colorScheme="teal"
-              rightIcon={<Icon as={FaArrowRight} fontSize="sm" />}
-            >
-              Get Started
-            </Button>
             <Button
               as={ExternalLink}
               omitIcon

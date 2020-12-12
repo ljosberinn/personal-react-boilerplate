@@ -16,7 +16,7 @@ import { WebShareButton } from '../components/WebShareButton';
 import type { WithChildren } from '../karma/types';
 import { KarmaIcon } from '../routes/Index/icons';
 
-export const gitUrl = '//github.com/ljosberinn/next-karma';
+export const gitUrl = '//github.com/ljosberinn/personal-react-boilerplate';
 
 function Header() {
   const bg = useColorModeValue('gray.100', 'gray.700');
