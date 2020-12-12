@@ -63,7 +63,6 @@ describe('layoutWithKarma', () => {
         children: mockLayout(<MockPage />),
         karma: mockProps,
       },
-      // @ts-expect-error ref
       {}
     );
   });

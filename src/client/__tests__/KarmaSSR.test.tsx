@@ -36,7 +36,6 @@ describe('<KarmaSSR />', () => {
         i18n: mockProps.i18n,
         mode: 'ssr',
       },
-      // @ts-expect-error ref
       {}
     );
   });
