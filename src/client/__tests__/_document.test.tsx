@@ -52,6 +52,7 @@ const defaultProps: DocumentProps = {
   hybridAmp: false,
   inAmpMode: false,
   isDevelopment: false,
+  scriptLoader: {},
 };
 
 describe('<Document />', () => {
