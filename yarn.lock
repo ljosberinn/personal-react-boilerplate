@@ -7608,10 +7608,10 @@ ms@2.1.2:
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.1.2.tgz#d09d1f357b443f493382a8eb3ccd183872ae6009"
   integrity sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==
 
-msw@0.24.2:
-  version "0.24.2"
-  resolved "https://registry.yarnpkg.com/msw/-/msw-0.24.2.tgz#6c630400e0be7f5ea5ad6334af5806bac4d82977"
-  integrity sha512-lQubV+wer9Wa08sTxzEEzyxew+f8vQiOtXIKvy+hvrK+pD/G55NSqzzs6wkY3mHcsCVcPuac8Zssg2uvkvyREQ==
+msw@0.24.4:
+  version "0.24.4"
+  resolved "https://registry.yarnpkg.com/msw/-/msw-0.24.4.tgz#e1f918862146a2bb39be005e52b24905c8c6108e"
+  integrity sha512-RKPAyfOrEVwritMn6RL5QROYhZMeRVApGuj4JdIQh/uyV0ASx349wsARJVI4VAXGEKu4B1TBvJZf0P0iVMsheg==
   dependencies:
     "@open-draft/until" "^1.0.3"
     "@types/cookie" "^0.4.0"
@@ -7624,7 +7624,7 @@ msw@0.24.2:
     node-match-path "^0.6.0"
     node-request-interceptor "^0.5.3"
     statuses "^2.0.0"
-    yargs "^16.1.1"
+    yargs "^16.2.0"
 
 multimap@^1.1.0:
   version "1.1.0"
@@ -10992,7 +10992,7 @@ yargs@^15.1.0, yargs@^15.4.1:
     y18n "^4.0.0"
     yargs-parser "^18.1.2"
 
-yargs@^16.1.1:
+yargs@^16.2.0:
   version "16.2.0"
   resolved "https://registry.yarnpkg.com/yargs/-/yargs-16.2.0.tgz#1c82bf0f6b6a66eafce7ef30e376f49a12477f66"
   integrity sha512-D1mvvtDG0L5ft/jGWkLpG1+m0eQxOfaBvTNELraWj22wSVUMWxZUvYgJYcKh6jGGIkJFhH4IZPQhR4TKpc8mBw==
