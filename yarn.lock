@@ -1944,10 +1944,10 @@
   resolved "https://registry.yarnpkg.com/@next/env/-/env-10.0.4.tgz#ac759094d021853616af56a7bd6720e44a92a303"
   integrity sha512-U+XIL75XM1pCmY4+9kYbst/0IptlfDnkFfKdgADBZulQlfng4RB3zirdzkoBtod0lVcrGgDryzOi1mM23RiiVQ==
 
-"@next/eslint-plugin-next@10.0.4":
-  version "10.0.4"
-  resolved "https://registry.yarnpkg.com/@next/eslint-plugin-next/-/eslint-plugin-next-10.0.4.tgz#fc37686798871dbab905d929b185be5b64d7eed7"
-  integrity sha512-vSN0TlGoB8MfFVmqYcyQPhbdNO+W1C+GYDupSgrPOWFYEZ5m2f17cLqjOBL0N7n56H7FV3wAjhK5Dsbo70Gp9A==
+"@next/eslint-plugin-next@10.0.5":
+  version "10.0.5"
+  resolved "https://registry.yarnpkg.com/@next/eslint-plugin-next/-/eslint-plugin-next-10.0.5.tgz#4cfd5cae7603c7471a7d09c1524151d2f3071f5b"
+  integrity sha512-6S/6F9nqPPKwKN9MnbaItia4tjpCNyKjjrKgl0g7KVSxSmwJ/LbVsV+ZdhEfOAsQUS0oftP6UfEuW2s3OV5chQ==
 
 "@next/polyfill-module@10.0.4":
   version "10.0.4"
@@ -4839,12 +4839,12 @@ eslint-ast-utils@^1.1.0:
     lodash.get "^4.4.2"
     lodash.zip "^4.2.0"
 
-eslint-config-galex@2.10.1:
-  version "2.10.1"
-  resolved "https://registry.yarnpkg.com/eslint-config-galex/-/eslint-config-galex-2.10.1.tgz#4c3bdd3f5257d986b11ed0dd5c148c9bc620b36c"
-  integrity sha512-SR+6ghzIaa5pxlkfvdNOx+ImzVNL4f0LTMW38GC+Z0MZW1rkjLdbQmXYVpZqrOrIaYsvM6awxmoPCji5lN3AkQ==
+eslint-config-galex@2.10.2:
+  version "2.10.2"
+  resolved "https://registry.yarnpkg.com/eslint-config-galex/-/eslint-config-galex-2.10.2.tgz#696042ee2b260e14c7b5fe9de8774975b41188da"
+  integrity sha512-7vrY0x66ZXO3sN7qKIf1GEF/GB9pGtABzJ8hz3J3dI6PGb/EO0ryEkpSFXryEjMj96NP/NcwErGfznToAPrebg==
   dependencies:
-    "@next/eslint-plugin-next" "10.0.4"
+    "@next/eslint-plugin-next" "10.0.5"
     "@typescript-eslint/eslint-plugin" "4.12.0"
     "@typescript-eslint/parser" "4.12.0"
     babel-eslint "10.1.0"
