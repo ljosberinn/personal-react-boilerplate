@@ -1,10 +1,6 @@
 import { ChakraProvider } from '@chakra-ui/react';
 import type { RenderResult, RenderOptions } from '@testing-library/react';
 import { render as rtlRender } from '@testing-library/react';
-import type {
-  RenderHookOptions,
-  RenderHookResult,
-} from '@testing-library/react-hooks';
 import { renderHook as rtlRenderHook } from '@testing-library/react-hooks';
 import type { RunOptions } from 'axe-core';
 import type { ConfigData } from 'html-validate';
@@ -205,14 +201,14 @@ export function render(
   });
 }
 
-type HookTestOptions<P> = Omit<RenderHookOptions<P>, 'wrapper'> &
-  Pick<
-    TestOptions,
-    'i18n' | 'wrapper' | 'omitKarmaProvider' | 'router' | 'session'
-  >;
+type HookTestOptions = Pick<
+  TestOptions,
+  'i18n' | 'wrapper' | 'omitKarmaProvider' | 'router' | 'session'
+>;
 
-export function renderHook<P, R>(
-  callback: (props: P) => R,
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export function renderHook<Props, Result>(
+  callback: (props: Props) => Result,
   {
     i18n,
     wrapper,
@@ -220,8 +216,8 @@ export function renderHook<P, R>(
     router,
     omitKarmaProvider,
     ...rest
-  }: HookTestOptions<P> = {}
-): RenderHookResult<P, R> {
+  }: HookTestOptions = {}
+) {
   const setupProps = {
     i18n,
     omitKarmaProvider,
@@ -230,7 +226,7 @@ export function renderHook<P, R>(
     wrapper,
   };
 
-  return rtlRenderHook(callback, {
+  return rtlRenderHook<Props, Result>(callback, {
     ...rest,
     wrapper: ({ children }) => (
       <KarmaTestSetup {...setupProps}>{children}</KarmaTestSetup>
@@ -385,11 +381,11 @@ export const validateHtml = (
 ): void => {
   const merged: ConfigData = {
     ...htmlValidate,
-    // @ts-expect-error required to be able to provide autocompletion
+    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
     rules: {
       ...htmlValidate?.rules,
       ...defaultConfig.rules,
-    },
+    } as Record<string, RuleSeverity>,
   };
 
   const element = isValidElement(ui) ? render(ui, options).container : ui;

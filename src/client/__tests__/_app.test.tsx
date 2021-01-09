@@ -14,7 +14,7 @@ import type { LayoutCreator } from '../karma/layout';
 
 const title = 'next-karma';
 
-const defaultProps: AppRenderProps = {
+const createDefaultProps = (): AppRenderProps => ({
   Component: () => <h1>{title}</h1>,
   pageProps: {
     karma: {
@@ -37,11 +37,27 @@ const defaultProps: AppRenderProps = {
     subscription: jest.fn(),
     wrapApp: jest.fn(),
   }),
-};
+});
 
 describe('<App />', () => {
+  beforeEach(() => {
+    window.__NEXT_DATA__ = {
+      gssp: true,
+      gip: false,
+      buildId: 'foo',
+      page: '/',
+      props: {},
+      query: {},
+    };
+  });
+
+  afterAll(() => {
+    // @ts-expect-error required for nextjs router to boot
+    delete window.__NEXT_DATA__;
+  });
+
   it('renders without crashing given default props', () => {
-    render(<App {...defaultProps} />, {
+    render(<App {...createDefaultProps()} />, {
       wrapper: ({ children }) => (
         <MockRouterContext>{children}</MockRouterContext>
       ),
@@ -64,7 +80,7 @@ describe('<App />', () => {
 
     DummyComponent.withLayout = withLayout;
 
-    render(<App {...defaultProps} Component={DummyComponent} />, {
+    render(<App {...createDefaultProps()} Component={DummyComponent} />, {
       wrapper: ({ children }) => (
         <MockRouterContext>{children}</MockRouterContext>
       ),
@@ -94,7 +110,7 @@ describe('<App />', () => {
         callback(createMockScope({ setContext: setContextSpy }));
       });
 
-    render(<App {...defaultProps} />, {
+    render(<App {...createDefaultProps()} />, {
       wrapper: ({ children }) => (
         <MockRouterContext>{children}</MockRouterContext>
       ),

@@ -12,6 +12,7 @@ export function MockRouterContext({
   children,
   router,
 }: MockRouterContextProps): JSX.Element {
+  // eslint-disable-next-line react/jsx-no-constructed-context-values
   const mockRouter: NextRouter = {
     asPath: '/',
     back: jest.fn(),
@@ -32,6 +33,7 @@ export function MockRouterContext({
     reload: jest.fn(),
     replace: jest.fn(),
     route: '/',
+    isReady: true,
     ...router,
   };
 
@@ -75,6 +77,7 @@ export const createRouterMock = (
     reload: jest.fn(),
     replace: jest.fn(),
     route: '',
+    isReady: true,
     ...partial,
   };
 };
