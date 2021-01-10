@@ -11,10 +11,6 @@ export type InternalLinkProps =
   // enforce having children
   WithChildren<{
     omitTextDecoration?: boolean;
-    /**
-     * whether the link should automatically prepend the current language
-     */
-    localized?: boolean;
   }> &
     // `href` is included in `NextLinkProps`, `children` are taken care of
     Omit<ChakraLinkProps, 'href' | 'children'> &
