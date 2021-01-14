@@ -28,7 +28,7 @@
     "preact-render-to-string": "5.1.12",
     "preact-ssr-prepass": "1.1.2",
     "react-icons": "4.1.0",
-    "web-vitals": "1.0.1"
+    "web-vitals": "1.1.0"
   },
   "devDependencies": {
     "@commitlint/cli": "11.0.0",
