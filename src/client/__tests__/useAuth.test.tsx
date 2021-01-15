@@ -3,7 +3,6 @@ import { setupServer } from 'msw/node';
 
 import { ENABLED_PROVIDER } from '../../../src/constants';
 import { hookAct, renderHook, waitFor } from '../../../testUtils';
-import { mockConsoleMethods } from '../../../testUtils/console';
 import {
   OK,
   INTERNAL_SERVER_ERROR,
@@ -127,8 +126,6 @@ describe('hooks/useAuth', () => {
     test(`fails gracefully given invalid response data`, async () => {
       const fetchSpy = jest.spyOn(window, 'fetch');
 
-      const { restoreConsole } = mockConsoleMethods('error');
-
       const user = { username: 'ljosberinn' };
       const userWithPassword = { ...user, password };
       const { url, method } = endpoints.register;
@@ -151,11 +148,6 @@ describe('hooks/useAuth', () => {
         body: JSON.stringify(userWithPassword),
         method,
       });
-
-      // eslint-disable-next-line no-console
-      expect(console.error).toHaveBeenCalledTimes(1);
-
-      restoreConsole();
     });
 
     test('fails gracefully when rejected', async () => {
@@ -269,8 +261,6 @@ describe('hooks/useAuth', () => {
     test(`fails gracefully given invalid response data`, async () => {
       const fetchSpy = jest.spyOn(window, 'fetch');
 
-      const { restoreConsole } = mockConsoleMethods('error');
-
       const user = { username: 'ljosberinn' };
       const userWithPassword = { ...user, password };
 
@@ -294,11 +284,6 @@ describe('hooks/useAuth', () => {
         body: JSON.stringify(userWithPassword),
         method,
       });
-
-      // eslint-disable-next-line no-console
-      expect(console.error).toHaveBeenCalledTimes(1);
-
-      restoreConsole();
     });
 
     test(`fails gracefully given invalid login data`, async () => {

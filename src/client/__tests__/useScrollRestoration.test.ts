@@ -1,5 +1,4 @@
 import { renderHook } from '../../../testUtils';
-import { mockConsoleMethods } from '../../../testUtils/console';
 import { createRouterMock } from '../../../testUtils/router';
 import { useScrollRestoration } from '../hooks/useScrollRestoration';
 
@@ -49,8 +48,6 @@ describe('hooks/useScrollRestoration', () => {
   });
 
   test('intially restores stored scroll position', () => {
-    const { restoreConsole } = mockConsoleMethods('error');
-
     const coordinates = { x: 10, y: 10 };
 
     jest
@@ -70,17 +67,6 @@ describe('hooks/useScrollRestoration', () => {
 
     expect(scrollToSpy).toHaveBeenCalledTimes(1);
     expect(scrollToSpy).toHaveBeenCalledWith(coordinates.x, coordinates.y);
-
-    // eslint-disable-next-line no-console
-    expect(console.error).toHaveBeenCalledTimes(1);
-    // eslint-disable-next-line no-console
-    expect(console.error).toHaveBeenCalledWith(
-      expect.stringContaining('Not implemented: window.scrollTo'),
-      // eslint-disable-next-line unicorn/no-useless-undefined
-      undefined
-    );
-
-    restoreConsole();
   });
 
   test('saves scroll position "beforeunload"', () => {
@@ -135,7 +121,6 @@ describe('hooks/useScrollRestoration', () => {
       asPath,
     });
 
-    const { restoreConsole } = mockConsoleMethods('error');
     const coordinates = { x: 10, y: 10 };
 
     jest
@@ -164,16 +149,5 @@ describe('hooks/useScrollRestoration', () => {
 
     expect(scrollToSpy).toHaveBeenCalledTimes(1);
     expect(scrollToSpy).toHaveBeenCalledWith(coordinates.x, coordinates.y);
-
-    // eslint-disable-next-line no-console
-    expect(console.error).toHaveBeenCalledTimes(1);
-    // eslint-disable-next-line no-console
-    expect(console.error).toHaveBeenCalledWith(
-      expect.stringContaining('Not implemented: window.scrollTo'),
-      // eslint-disable-next-line unicorn/no-useless-undefined
-      undefined
-    );
-
-    restoreConsole();
   });
 });
