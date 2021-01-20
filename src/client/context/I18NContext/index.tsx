@@ -50,6 +50,7 @@ export function I18NContextProvider({
 
   // no need to memoize - whenever locale changes, resources change too
   // which only ever happens during navigation
+  // eslint-disable-next-line react/jsx-no-constructed-context-values
   const value = {
     locale,
     resources,
