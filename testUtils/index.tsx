@@ -1,6 +1,7 @@
 import { ChakraProvider } from '@chakra-ui/react';
 import type { RenderResult, RenderOptions } from '@testing-library/react';
 import { render as rtlRender } from '@testing-library/react';
+import type { RenderHookResult } from '@testing-library/react-hooks';
 import { renderHook as rtlRenderHook } from '@testing-library/react-hooks';
 import type { RunOptions } from 'axe-core';
 import type { ConfigData } from 'html-validate';
@@ -206,7 +207,6 @@ type HookTestOptions = Pick<
   'i18n' | 'wrapper' | 'omitKarmaProvider' | 'router' | 'session'
 >;
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function renderHook<Props, Result>(
   callback: (props: Props) => Result,
   {
@@ -217,7 +217,7 @@ export function renderHook<Props, Result>(
     omitKarmaProvider,
     ...rest
   }: HookTestOptions = {}
-) {
+): RenderHookResult<Props, Result> {
   const setupProps = {
     i18n,
     omitKarmaProvider,
