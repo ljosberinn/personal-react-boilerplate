@@ -20,7 +20,7 @@ jobs:
     timeout-minutes: 1
     steps:
       - name: Installing node.js
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v2
         with:
           # Use the same node.js version as the one Vercel's uses (currently node12.x)
           node-version: '12.x'
@@ -28,7 +28,7 @@ jobs:
   lint:
     name: ESLint
     runs-on: ubuntu-latest
-    timeout-minutes: 2
+    timeout-minutes: 3
     steps:
       - name: Get Yarn cache path
         id: yarn-cache
@@ -69,7 +69,7 @@ jobs:
   test:
     name: Test
     runs-on: ubuntu-latest
-    timeout-minutes: 2
+    timeout-minutes: 3
     # only run after lint and tsc completed successfully
     needs: [lint, types]
     steps:
@@ -156,8 +156,8 @@ jobs:
         uses: foo-software/lighthouse-check-status-action@master
         with:
           lighthouseCheckResults: ${{ steps.lighthouseCheck.outputs.lighthouseCheckResults }}
-          minAccessibilityScore: "85"
-          minBestPracticesScore: "85"
-          minPerformanceScore: "85"
-          minProgressiveWebAppScore: "85"
-          minSeoScore: "85"
+          minAccessibilityScore: "75"
+          minBestPracticesScore: "75"
+          minPerformanceScore: "75"
+          minProgressiveWebAppScore: "75"
+          minSeoScore: "75"
