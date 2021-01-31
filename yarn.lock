@@ -2178,13 +2178,13 @@
   dependencies:
     "@sentry/cli" "^1.58.0"
 
-"@sidvind/better-ajv-errors@^0.6.10":
-  version "0.6.10"
-  resolved "https://registry.yarnpkg.com/@sidvind/better-ajv-errors/-/better-ajv-errors-0.6.10.tgz#825aa57e601e3145df493742a73a5e70b5d910d8"
-  integrity sha512-vPv8ks6J1KQW1LPYgxmANxcHniE6LFuekxNpcoUUkotJ2srxP4qXZ+y9qpo5LAXhnLoNP0AH8cninimK68gS6A==
+"@sidvind/better-ajv-errors@^0.8.0":
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/@sidvind/better-ajv-errors/-/better-ajv-errors-0.8.0.tgz#b173358ad318d42f779b8f7b062115968996796d"
+  integrity sha512-GHNHkyHpCWjMENEJZ1ScsGOUvy41GVPd9SSSK/h7d9hYdKbpzSgFeXCB2g7XTswNKJD/G5GU5KLlZspLkb/Myg==
   dependencies:
     "@babel/code-frame" "^7.0.0"
-    chalk "^2.4.1"
+    chalk "^4.0.0"
     json-to-ast "^2.0.3"
     jsonpointer "^4.0.1"
     leven "^3.1.0"
@@ -3640,7 +3640,7 @@ caseless@~0.12.0:
   resolved "https://registry.yarnpkg.com/caseless/-/caseless-0.12.0.tgz#1b681c21ff84033c826543090689420d187151dc"
   integrity sha1-G2gcIf+EAzyCZUMJBolCDRhxUdw=
 
-chalk@2.4.2, chalk@^2.0.0, chalk@^2.4.1, chalk@^2.4.2:
+chalk@2.4.2, chalk@^2.0.0, chalk@^2.4.2:
   version "2.4.2"
   resolved "https://registry.yarnpkg.com/chalk/-/chalk-2.4.2.tgz#cd42541677a54333cf541a49108c1432b44c9424"
   integrity sha512-Mti+f9lpJNcwF4tWV8/OrTTtF1gZi+f8FqlyAdouralcFWFQWF2+NgCHShjkCb+IFBLq9buZwE1xckQU4peSuQ==
@@ -5926,14 +5926,14 @@ html-escaper@^2.0.0:
   resolved "https://registry.yarnpkg.com/html-escaper/-/html-escaper-2.0.2.tgz#dfd60027da36a36dfcbe236262c00a5822681453"
   integrity sha512-H2iMtd0I4Mt5eYiapRdIDjp+XzelXQ0tFE4JS7YFwFevXXMmOp9myNrUvCg0D6ws8iqkRPBfKHgbwig1SmlLfg==
 
-html-validate@4.3.0:
-  version "4.3.0"
-  resolved "https://registry.yarnpkg.com/html-validate/-/html-validate-4.3.0.tgz#d558a2d7452949aa0de69426a51308b26578b079"
-  integrity sha512-NjvfeE9EOTYKEFz5wS3QxylpJ4b1IvuUAEhm1nI0Jkl8E/EtlNZcvPphgEN2FnCjOYU8QMZLC4tMpHVsylJ+Zw==
+html-validate@4.4.0:
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/html-validate/-/html-validate-4.4.0.tgz#9d6d33e083e4d394004b7f49d90afd82ff6a0e1d"
+  integrity sha512-pyCqeL2iPYG95wqGvQhkA4nUy7XNe1sf5ABxqika5/mCPcPbnnpEzHkJ+2t8jcQghf4DrMcBipGxyDTRtwklIQ==
   dependencies:
     "@babel/code-frame" "^7.10.4"
     "@html-validate/stylish" "1.0.0"
-    "@sidvind/better-ajv-errors" "^0.6.10"
+    "@sidvind/better-ajv-errors" "^0.8.0"
     acorn-walk "^8.0.0"
     ajv "^7.0.0"
     chalk "^4.0.0"
