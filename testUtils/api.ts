@@ -7,17 +7,17 @@ import { parseBody } from 'next/dist/next-server/server/api-utils';
 export class NextApiResponseMock
   extends ServerResponse
   implements NextApiResponse {
-  send = jest.fn();
+  public send = jest.fn();
 
-  json = jest.fn();
+  public json = jest.fn();
 
-  redirect = jest.fn();
+  public redirect = jest.fn();
 
-  setPreviewData = jest.fn();
+  public setPreviewData = jest.fn();
 
-  clearPreviewData = jest.fn();
+  public clearPreviewData = jest.fn();
 
-  status(code: number): this {
+  public status(code: number): this {
     this.statusCode = code;
 
     return this;
@@ -27,18 +27,20 @@ export class NextApiResponseMock
 export class NextApiRequestMock
   extends IncomingMessage
   implements NextApiRequest {
-  body = {};
+  public body = {};
 
-  env = {};
+  public env = {};
 
-  query = {};
+  public query = {};
 
-  cookies = {};
+  public cookies = {};
 
-  constructor(req: IncomingMessage) {
+  public req = createIncomingMessageMock();
+
+  public constructor(req: IncomingMessage) {
     super(req.socket);
 
-    this.cookies = req?.headers?.cookie ? parse(req.headers.cookie) : {};
+    this.cookies = req.headers.cookie ? parse(req.headers.cookie) : {};
   }
 }
 
@@ -47,14 +49,14 @@ export const createNextApiRequestMock = (
 ): NextApiRequest => {
   const { body, ...rest } = req;
 
-  const request = new NextApiRequestMock(new IncomingMessage(new Socket()));
+  const request = new NextApiRequestMock(createIncomingMessageMock(req));
 
   Object.entries(rest).forEach(([key, value]) => {
     Object.defineProperty(request, key, { value });
   });
 
   if (body) {
-    request.body = parseBody(request, Infinity);
+    request.body = parseBody(request, Number.POSITIVE_INFINITY);
   }
 
   return request;

@@ -1,11 +1,11 @@
-import type { IncomingMessage, ServerResponse } from 'http';
-import type { GetServerSidePropsContext } from 'next';
+import type { ServerResponse } from 'http';
+import type { GetServerSidePropsContext, NextApiRequest } from 'next';
 import type { ParsedUrlQuery } from 'querystring';
 
 import { withSession } from '../../../src/client/utils/withSession';
 import { SESSION_COOKIE_NAME } from '../../../src/constants';
 import {
-  createIncomingMessageMock,
+  createNextApiRequestMock,
   createServerResponseMock,
 } from '../../../testUtils/api';
 import * as cookieUtils from '../../server/auth/cookie';
@@ -25,7 +25,7 @@ const createMockGetServerSideProps = () =>
 
 type CreateContextMockParam = {
   query?: ParsedUrlQuery;
-  req?: Partial<IncomingMessage>;
+  req?: Partial<NextApiRequest>;
   res?: Partial<ServerResponse>;
 };
 
@@ -35,7 +35,7 @@ const createContextMock = ({
   res = {},
 }: CreateContextMockParam = {}): GetServerSidePropsContext => ({
   query: { ...query },
-  req: createIncomingMessageMock(req),
+  req: createNextApiRequestMock(req),
   res: createServerResponseMock(res),
   resolvedUrl: '',
 });
@@ -98,7 +98,7 @@ describe('withSession()', () => {
         },
       },
       res: {
-        writeHead: jest.fn(),
+        writeHead: jest.fn().mockReturnValue({ end: jest.fn() }),
       },
     });
 
