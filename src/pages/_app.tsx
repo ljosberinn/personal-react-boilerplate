@@ -2,7 +2,6 @@ import type { NextWebVitalsMetric } from 'next/app';
 import type { NextRouter } from 'next/router';
 import { useEffect } from 'react';
 
-import { useScrollRestoration } from '../client/hooks/useScrollRestoration';
 import type { KarmaComponent } from '../client/karma/layout';
 import type { IsomorphicKarmaProps } from '../client/karma/types';
 import {
@@ -18,7 +17,6 @@ export type AppRenderProps = {
   router: NextRouter;
 };
 
-// eslint-disable-next-line import/no-default-export
 export default function App({
   Component,
   pageProps,
@@ -27,8 +25,6 @@ export default function App({
   useEffect(() => {
     attachRoutingContext(router);
   }, [router]);
-
-  useScrollRestoration(router);
 
   const { withLayout } = Component;
   const { karma, ...rest } = pageProps;

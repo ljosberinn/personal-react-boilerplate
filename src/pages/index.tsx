@@ -9,7 +9,6 @@ import { CommonLayout } from '../client/layouts/CommonLayout';
 import { Index } from '../client/routes/Index';
 import type { Namespace } from '../constants';
 
-// eslint-disable-next-line import/no-default-export
 export default function IndexPage(): JSX.Element {
   return (
     <>

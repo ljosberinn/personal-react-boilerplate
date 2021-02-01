@@ -20,7 +20,6 @@ const title = 'Karma | is to Next.js what React is to Javascript';
 const description =
   'Karma provides sane, opinionated, yet flexible solutions for Next.js';
 
-// eslint-disable-next-line import/no-default-export
 export default function CustomDocument(): JSX.Element {
   return (
     <Html dir="auto">

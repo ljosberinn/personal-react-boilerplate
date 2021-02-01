@@ -87,39 +87,6 @@ const withSentry = (config, options) => {
   }
 };
 
-/**
- * replaces React with Preact in prod
- * this reduces the bundle size by approx. 32 kB
- */
-const withPreact = (config, options) => {
-  if (!options.dev) {
-    const splitChunks = config.optimization && config.optimization.splitChunks;
-
-    if (splitChunks) {
-      const cacheGroups = splitChunks.cacheGroups;
-      const test = /[\\/]node_modules[\\/](preact|preact-render-to-string|preact-context-provider)[\\/]/u;
-      if (cacheGroups.framework) {
-        cacheGroups.preact = {
-          ...cacheGroups.framework,
-          test,
-        };
-
-        cacheGroups.commons.name = 'framework';
-      } else {
-        cacheGroups.preact = {
-          name: 'commons',
-          chunks: 'all',
-          test,
-        };
-      }
-    }
-
-    const aliases = config.resolve.alias || (config.resolve.alias = {});
-    aliases.react = aliases['react-dom'] = 'preact/compat';
-    aliases['react-ssr-prepass'] = 'preact-ssr-prepass';
-  }
-};
-
 const defaultConfig = {
   typescript: {
     /**
@@ -135,14 +102,12 @@ const defaultConfig = {
     config.plugins.push(new options.webpack.IgnorePlugin(/\/__tests__\//));
 
     withSentry(config, options);
-    // withPreact(config, options);
 
     return config;
   },
   reactStrictMode: true,
   experimental: {
-    // bugged with Sentry, see https://github.com/vercel/next.js/issues/17073
-    // scrollRestoration: true,
+    scrollRestoration: true,
     productionBrowserSourceMaps: true,
   },
   i18n: {

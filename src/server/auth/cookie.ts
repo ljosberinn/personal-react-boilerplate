@@ -61,7 +61,7 @@ export const setCookie = (
     return;
   }
 
-  res.setHeader(SET_COOKIE_HEADER, previous.concat(next));
+  res.setHeader(SET_COOKIE_HEADER, [...previous, next]);
 };
 
 export const setSessionCookie = (token: string, res: NextApiResponse): void => {
