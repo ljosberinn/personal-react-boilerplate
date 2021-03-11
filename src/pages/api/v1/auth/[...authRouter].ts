@@ -10,7 +10,6 @@ import {
   expectJSONBodyMiddleware,
 } from '../../../../server/middlewares';
 
-// eslint-disable-next-line import/no-default-export
 export default nextConnect()
   .use(sentryMiddleware)
   .use(expectJSONBodyMiddleware)

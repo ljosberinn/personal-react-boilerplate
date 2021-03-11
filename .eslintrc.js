@@ -18,7 +18,7 @@ const customNextJsOverride = {
   rules: {
     'import/no-default-export': 'off',
   },
-  files: ['src/pages/*.tsx'],
+  files: ['src/pages/**/*.?(t|j)s?(x)', 'pages/**/*.?(t|j)s?(x)'],
 };
 
 /**
