@@ -2218,10 +2218,10 @@
     "@sentry/utils" "6.2.2"
     tslib "^1.9.3"
 
-"@sentry/cli@^1.58.0":
-  version "1.62.0"
-  resolved "https://registry.yarnpkg.com/@sentry/cli/-/cli-1.62.0.tgz#2e2d8cacb5ec494f86c188ef95b41745605be028"
-  integrity sha512-MCkx+zjetdIWhAVaFuEuoD4MOAFlb3/GLR5B5uFZ1AcegcsggasLo/3rb2gq6jYIic/pubtRjH4ltmOL/s3cag==
+"@sentry/cli@^1.63.1":
+  version "1.63.1"
+  resolved "https://registry.yarnpkg.com/@sentry/cli/-/cli-1.63.1.tgz#306a0591190432574082d4ce4a72363201972461"
+  integrity sha512-qksIcrnObkGvtubs1FmW4EMXLo7R43Dobgzuxnyoebo1Y5KfRLziiw6H+ux8D4c1Nui4SuvDGDq0ObAfO5oE6Q==
   dependencies:
     https-proxy-agent "^5.0.0"
     mkdirp "^0.5.5"
@@ -2309,12 +2309,12 @@
     "@sentry/types" "6.2.2"
     tslib "^1.9.3"
 
-"@sentry/webpack-plugin@1.14.1":
-  version "1.14.1"
-  resolved "https://registry.yarnpkg.com/@sentry/webpack-plugin/-/webpack-plugin-1.14.1.tgz#f7aceac17820677f6064293d1f5d01ac72012d14"
-  integrity sha512-Elxs21Z9hHNd+s9dCFVkbr/xLa+7Pb8zfqSCzvPOraHCBseE2onyzM7gostmxLtInboEwO0yRTQ5ohmfhhpa2A==
+"@sentry/webpack-plugin@1.14.2":
+  version "1.14.2"
+  resolved "https://registry.yarnpkg.com/@sentry/webpack-plugin/-/webpack-plugin-1.14.2.tgz#4faf3b048f24c7e615e2970199206466202adce8"
+  integrity sha512-kYiDoGyDvfkMftcfI44HMLVe/Oqj8gQEf80gpB7Dv5HE4PJO5ttEwv24zD9QFRuoebEdsuh12jHli/DqLUYZiA==
   dependencies:
-    "@sentry/cli" "^1.58.0"
+    "@sentry/cli" "^1.63.1"
 
 "@sidvind/better-ajv-errors@^0.8.0":
   version "0.8.0"
