@@ -34,6 +34,8 @@ export function MockRouterContext({
     replace: jest.fn(),
     route: '/',
     isReady: true,
+    isLocaleDomain: false,
+    isPreview: false,
     ...router,
   };
 
@@ -78,6 +80,8 @@ export const createRouterMock = (
     replace: jest.fn(),
     route: '',
     isReady: true,
+    isLocaleDomain: false,
+    isPreview: false,
     ...partial,
   };
 };
