@@ -23,7 +23,7 @@
     "cookie": "0.4.1",
     "framer-motion": "3.10.5",
     "next": "10.0.9",
-    "next-connect": "0.10.0",
+    "next-connect": "0.10.1",
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-icons": "4.2.0",
