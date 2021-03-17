@@ -4565,10 +4565,10 @@ escodegen@^2.0.0:
   optionalDependencies:
     source-map "~0.6.1"
 
-eslint-config-galex@2.12.0:
-  version "2.12.0"
-  resolved "https://registry.yarnpkg.com/eslint-config-galex/-/eslint-config-galex-2.12.0.tgz#0e0748942a597d64412fa306188067d98e6fb6ef"
-  integrity sha512-uV3SghMbJrDSgYqvrJkmgnbz61uApVc4CMg23kyYmGGxiGhghhNkhF9OkI9JIgJo88qL0j8A2u1eYU5QyIMRGw==
+eslint-config-galex@2.12.1:
+  version "2.12.1"
+  resolved "https://registry.yarnpkg.com/eslint-config-galex/-/eslint-config-galex-2.12.1.tgz#42e17c9f647b0fb225be13018a75c9522f78acc1"
+  integrity sha512-kDzgMNK636pgfWfpWRBdyJOJCaREr2lbN2amTpTBXtCR219DJXNIWhxviNHVghxVEWSY5YRWjss2jtAIQNDsmQ==
   dependencies:
     "@babel/core" "7.13.10"
     "@next/eslint-plugin-next" "10.0.9"
@@ -4579,7 +4579,7 @@ eslint-config-galex@2.12.0:
     eslint-config-prettier "8.1.0"
     eslint-plugin-import "2.22.1"
     eslint-plugin-inclusive-language "2.1.1"
-    eslint-plugin-jest "24.3.1"
+    eslint-plugin-jest "24.3.2"
     eslint-plugin-jest-dom "3.6.5"
     eslint-plugin-jest-formatting "2.0.1"
     eslint-plugin-jsx-a11y "6.4.1"
@@ -4653,10 +4653,10 @@ eslint-plugin-jest-formatting@2.0.1:
   resolved "https://registry.yarnpkg.com/eslint-plugin-jest-formatting/-/eslint-plugin-jest-formatting-2.0.1.tgz#8f4297bf5b6c2cdd9b2c20a57892f0302b52c20a"
   integrity sha512-t6oc6GcXqzQ4lwatnVoKxGTLqo8kFIdA5kpaS3mrkwnTNxhsgFo9reMFdrtNtllx72ohNUsXsay7RJR/LLLk3Q==
 
-eslint-plugin-jest@24.3.1:
-  version "24.3.1"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-jest/-/eslint-plugin-jest-24.3.1.tgz#c8df037847b83397940bef7fbc2cc168ab466bcc"
-  integrity sha512-RQt59rfMSHyvedImT72iaf8JcvCcR4P7Uq499dALtjY8mrCjbwWrFi1UceG4sid2wVIeDi+0tjxXZ8CZEVO7Zw==
+eslint-plugin-jest@24.3.2:
+  version "24.3.2"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-jest/-/eslint-plugin-jest-24.3.2.tgz#30a8b2dea6278d0da1d6fb9d6cd530aaf58050a1"
+  integrity sha512-cicWDr+RvTAOKS3Q/k03+Z3odt3VCiWamNUHWd6QWbVQWcYJyYgUTu8x0mx9GfeDEimawU5kQC+nQ3MFxIM6bw==
   dependencies:
     "@typescript-eslint/experimental-utils" "^4.0.1"
 
