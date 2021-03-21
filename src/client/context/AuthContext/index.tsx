@@ -10,6 +10,7 @@ import {
 
 import { ENABLED_PROVIDER } from '../../../constants';
 import { INTERNAL_SERVER_ERROR } from '../../../utils/statusCodes';
+import { useIsMounted } from '../../hooks/useIsMounted';
 import type { WithChildren, KarmaMode } from '../../karma/types';
 import type {
   User,
@@ -58,7 +59,7 @@ export function AuthContextProvider({
 }: AuthContextProviderProps): JSX.Element {
   const [user, setUser] = useState<User | null>(session);
 
-  useSSGReauthentication({
+  const isReauthenticating = useSSGReauthentication({
     mode,
     redirectDestinationIfUnauthenticated,
     setUser,
@@ -66,17 +67,6 @@ export function AuthContextProvider({
     user,
   });
 
-  /**
-   * Given { provider: ENABLED_PROVIDER[number] }, will redirect.
-   *
-   * Given login data, will attempt to login.
-   *
-   * @returns
-   * - nothing when redirecting
-   * - the user when successfully authenticated
-   * - the response status code when failing to authenticate
-   * - INTERNAL_SERVER_ERROR when crashing
-   */
   const login = useCallback(async (options: LoginOptions): Promise<
     User | number | null
   > => {
@@ -115,16 +105,20 @@ export function AuthContextProvider({
     }
   }, []);
 
-  /**
-   * Dispatches a request to the logout endpoint which deletes the session cookie.
-   * Resets User object afterwards.
-   */
-  const logout = useCallback(async () => {
+  const logout = useCallback(async (redirectDestination?: string) => {
     const { url, method } = endpoints.logout;
 
     await fetch(url, { method });
 
     setUser(null);
+
+    if (redirectDestination) {
+      try {
+        await Router.push(redirectDestination);
+      } catch {
+        window.location.assign(redirectDestination);
+      }
+    }
   }, []);
 
   /**
@@ -169,8 +163,9 @@ export function AuthContextProvider({
       logout,
       register,
       user,
+      isReauthenticating,
     }),
-    [login, logout, register, user]
+    [login, logout, register, user, isReauthenticating]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
@@ -193,14 +188,19 @@ function useSSGReauthentication({
   setUser,
   user,
 }: UseSSGReauthenticationArgs) {
+  /**
+   * do not attempt to reauthenticate if:
+   * - mode is not ssg, should authenticate through SSR then
+   * - explicitly opted out of reauthentication
+   * - user already present
+   */
+  const [isReauthenticating, setIsReauthenticating] = useState(
+    mode === 'ssg' && !!shouldAttemptReauthentication && !user
+  );
+  const isMounted = useIsMounted();
+
   useEffect(() => {
-    /**
-     * do not attempt to reauthenticate if:
-     * - mode is not ssg, should authenticate through SSR then
-     * - explicitly opted out of reauthentication
-     * - user already present
-     */
-    if (mode !== 'ssg' || !shouldAttemptReauthentication || user) {
+    if (!isReauthenticating) {
       return;
     }
 
@@ -220,7 +220,9 @@ function useSSGReauthentication({
       try {
         const { url, method } = endpoints.me;
 
-        const response = await fetch(url, { method });
+        const response = await fetch(url, {
+          method,
+        });
 
         if (response.ok) {
           const json = await response.json();
@@ -233,16 +235,21 @@ function useSSGReauthentication({
       } catch {
         // eslint-disable-next-line @typescript-eslint/no-floating-promises
         redirectOnFailure();
+      } finally {
+        if (isMounted.current) {
+          setIsReauthenticating(false);
+        }
       }
     }
 
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
     reauthenticate();
   }, [
-    mode,
-    shouldAttemptReauthentication,
+    isMounted,
+    isReauthenticating,
     redirectDestinationIfUnauthenticated,
-    user,
     setUser,
   ]);
+
+  return isReauthenticating;
 }

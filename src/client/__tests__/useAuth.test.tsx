@@ -67,29 +67,57 @@ describe('hooks/useAuth', () => {
     expect(current.isAuthenticated).toBeTruthy();
   });
 
-  test(`on logout, dispatches a ${endpoints.logout.method} request`, async () => {
-    const { url, method } = endpoints.logout;
+  describe('logout', () => {
+    test(`dispatches a ${endpoints.logout.method} request`, async () => {
+      const { url, method } = endpoints.logout;
 
-    const fetchSpy = jest.spyOn(window, 'fetch');
+      const fetchSpy = jest.spyOn(window, 'fetch');
 
-    server.use(rest.delete(url, (_, res, ctx) => res(ctx.status(OK))));
+      server.use(rest.delete(url, (_, res, ctx) => res(ctx.status(OK))));
 
-    const user: User = { id: '1', name: 'ljosberinn' };
+      const user: User = { id: '1', name: 'ljosberinn' };
 
-    const { result } = renderHook(useAuth, {
-      session: user,
+      const { result } = renderHook(useAuth, {
+        session: user,
+      });
+
+      expect(result.current.user).toBe(user);
+
+      await hookAct(result.current.logout);
+
+      expect(fetchSpy).toHaveBeenCalledWith(url, {
+        method,
+      });
+
+      await waitFor(() => {
+        expect(result.current.user).toBeNull();
+      });
     });
 
-    expect(result.current.user).toBe(user);
+    test('redirects given a destination if next/router fails', async () => {
+      jest.spyOn(window.location, 'assign');
+      const mockPush = jest.fn().mockImplementation(() => {
+        throw new Error('foo');
+      });
 
-    await hookAct(result.current.logout);
+      const { url } = endpoints.logout;
 
-    expect(fetchSpy).toHaveBeenCalledWith(url, {
-      method,
-    });
+      server.use(rest.delete(url, (_, res, ctx) => res(ctx.status(OK))));
 
-    await waitFor(() => {
-      expect(result.current.user).toBeNull();
+      const user: User = { id: '1', name: 'ljosberinn' };
+
+      const { result } = renderHook(useAuth, {
+        session: user,
+        router: {
+          push: mockPush,
+        },
+      });
+
+      const destination = '/foo';
+
+      await hookAct(() => result.current.logout(destination));
+
+      expect(window.location.assign).toHaveBeenCalledWith(destination);
     });
   });
 

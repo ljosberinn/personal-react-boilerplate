@@ -11,6 +11,10 @@ import { useAuth } from '../hooks/useAuth';
 
 const authenticated = 'authenticated';
 const notAuthenticated = 'not-authenticated';
+
+const reauthenticating = 'reauthenticating';
+const notReauthenticating = 'not-reauthenticating';
+
 const mockUser: User = { id: '1', name: 'ljosberinn' };
 const realLocation = window.location;
 
@@ -34,11 +38,12 @@ afterAll(() => {
 });
 
 function MockComponent() {
-  const { isAuthenticated, user } = useAuth();
+  const { isAuthenticated, user, isReauthenticating } = useAuth();
 
   return (
     <>
       <h1>{isAuthenticated ? authenticated : notAuthenticated}</h1>
+      <h1>{isReauthenticating ? reauthenticating : notReauthenticating}</h1>
       <code data-testid="user">{JSON.stringify(user)}</code>
     </>
   );
@@ -100,6 +105,33 @@ describe('<AuthContextProvider />', () => {
 
       expect(screen.getByText(notAuthenticated)).toBeInTheDocument();
       expect(screen.getByTestId('user')).toHaveTextContent('null');
+    });
+
+    test('provides reauthentication progress through boolean', async () => {
+      server.use(
+        rest.get(mockEndpoint, (_req, res, ctx) =>
+          res(ctx.status(UNAUTHORIZED))
+        )
+      );
+
+      render(
+        <AuthContextProvider
+          mode="ssg"
+          session={null}
+          shouldAttemptReauthentication
+        >
+          <MockComponent />
+        </AuthContextProvider>,
+        {
+          omitKarmaProvider: true,
+        }
+      );
+
+      expect(screen.getByText(reauthenticating)).toBeInTheDocument();
+
+      await waitFor(() => {
+        expect(screen.getByText(notReauthenticating)).toBeInTheDocument();
+      });
     });
 
     test('fails gracefully if request fails', async () => {
