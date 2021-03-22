@@ -107,7 +107,6 @@ const createOnStateChangeListener = ({
   }
 
   toast({
-    // eslint-disable-next-line react/display-name
     render: () => <RefreshToast t={t} />,
   });
 };

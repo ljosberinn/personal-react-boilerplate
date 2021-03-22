@@ -64,10 +64,12 @@ describe('<Document />', () => {
   });
 
   it('uses getInitialProps of NextDocument', () => {
+    // eslint-disable-next-line jest/unbound-method
     expect(Document.getInitialProps).toBe(NextDocument.getInitialProps);
   });
 
   it('uses renderDocument of NextDocument', () => {
+    // eslint-disable-next-line jest/unbound-method
     expect(Document.renderDocument).toBe(NextDocument.renderDocument);
   });
 

@@ -35,7 +35,6 @@ describe('<I18NContextProvder />', () => {
   });
 
   test('allows nested lookups when not passing a namespace to useTranslation', () => {
-    // eslint-disable-next-line sonarjs/no-identical-functions
     function MockComponent() {
       const { t } = useTranslation();
 
