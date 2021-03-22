@@ -4563,10 +4563,10 @@ escodegen@^2.0.0:
   optionalDependencies:
     source-map "~0.6.1"
 
-eslint-config-galex@2.13.1:
-  version "2.13.1"
-  resolved "https://registry.yarnpkg.com/eslint-config-galex/-/eslint-config-galex-2.13.1.tgz#ade7f84d4d55eb46868e39170431041f0f1ebab3"
-  integrity sha512-p+wkRAIa01DyFhcfDwA5IsjmvGkPudt5aZazn3c9aI6YQnpPNyxlqmGhXS5tI+AxJaH9ekzimUT7aZjueXyB5g==
+eslint-config-galex@2.13.2:
+  version "2.13.2"
+  resolved "https://registry.yarnpkg.com/eslint-config-galex/-/eslint-config-galex-2.13.2.tgz#2ddbe6960c1d548be5ed0ddf9fe5841124344089"
+  integrity sha512-aMGMR+7yzmJ8MyiAz3bbbHztF0MwynhxTBSpRvSKn5oNq9mlrgjkEDHChL0PIkTcOXEmXlA4boR5YU6+vy0v6A==
   dependencies:
     "@babel/core" "7.13.10"
     "@next/eslint-plugin-next" "10.0.9"
