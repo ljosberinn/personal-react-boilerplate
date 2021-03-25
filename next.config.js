@@ -24,8 +24,6 @@ const offlineConfig = {
       // so it makes no sense to cache non-modules for them as they wouldn't
       // even load them in the first place
       /^(?!.*\.module\.js$).*\.js$/,
-      // don't cache source maps
-      /\.js\.map$/,
       /**
        * default values from next-offline which aren't merged in and aren't
        * exported either
@@ -33,10 +31,12 @@ const offlineConfig = {
        */
       'react-loadable-manifest.json',
       'build-manifest.json',
+      /\.map$/,
     ],
     runtimeCaching: [
       {
-        urlPattern: /^https?.*/,
+        // we do not want localhost to be served from service worker
+        urlPattern: /https:\/\/personal-react-boilerplate.now.sh/,
         handler: 'NetworkFirst',
         options: {
           cacheName: 'https-calls',
@@ -60,6 +60,14 @@ const withSentry = (config, options) => {
     config.resolve.alias['@sentry/node'] = '@sentry/react';
   }
 
+  // Define an environment variable so source code can check whether or not
+  // it's running on the server so we can correctly initialize Sentry
+  config.plugins.push(
+    new options.webpack.DefinePlugin({
+      'process.env.NEXT_IS_SERVER': JSON.stringify(options.isServer.toString()),
+    })
+  );
+
   /**
    * @see https://docs.sentry.io/product/integrations/vercel/
    */
@@ -70,7 +78,7 @@ const withSentry = (config, options) => {
     process.env.SENTRY_AUTH_TOKEN &&
     process.env.VERCEL_GITHUB_COMMIT_SHA;
 
-  if (hasSentry && !options.isServer) {
+  if (hasSentry && !options.isServer && process.env.NODE_ENV === 'production') {
     const SentryWebpackPlugin = require('@sentry/webpack-plugin');
 
     config.plugins.push(
@@ -80,6 +88,7 @@ const withSentry = (config, options) => {
       new SentryWebpackPlugin({
         include: '.next',
         ignore: ['node_modules'],
+        stripPrefix: ['webpack://_N_E/'],
         urlPrefix: '~/_next',
         release: process.env.VERCEL_GITHUB_COMMIT_SHA,
       })
@@ -108,12 +117,22 @@ const defaultConfig = {
   reactStrictMode: true,
   experimental: {
     scrollRestoration: true,
-    productionBrowserSourceMaps: true,
   },
   i18n: {
     localeDetection: true,
     defaultLocale: process.env.NEXT_PUBLIC_FALLBACK_LANGUAGE,
     locales: process.env.NEXT_PUBLIC_ENABLED_LANGUAGES.split(','),
+  },
+  eslint: {
+    dev: false,
+    build: false,
+  },
+  productionBrowserSourceMaps: true,
+  env: {
+    // Make the COMMIT_SHA available to the client so that Sentry events can be
+    // marked for the release they belong to. It may be undefined if running
+    // outside of Vercel
+    NEXT_PUBLIC_COMMIT_SHA: process.env.VERCEL_GIT_COMMIT_SHA,
   },
 };
 

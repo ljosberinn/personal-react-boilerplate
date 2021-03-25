@@ -70,7 +70,5 @@ export default function CustomDocument(): JSX.Element {
   );
 }
 
-// eslint-disable-next-line @typescript-eslint/unbound-method
 CustomDocument.renderDocument = Document.renderDocument;
-// eslint-disable-next-line @typescript-eslint/unbound-method
 CustomDocument.getInitialProps = Document.getInitialProps;

@@ -37,6 +37,10 @@ export function WebShareButton({
   // required to omit the element during SSR
   const isHydrated = usePageIsHydrated();
 
+  if (!isHydrated || !navigator.share) {
+    return null;
+  }
+
   async function handleShare() {
     try {
       await navigator.share({
@@ -46,9 +50,9 @@ export function WebShareButton({
       });
     } catch (error) {
       // istanbul ignore next
-      // canceling a share throws, like `AbortController`, an `AbortError`
+      // canceling a share throws an `AbortError` or `InvalidStateError`
       // we most likely don't care about that
-      if (error.name !== 'AbortError') {
+      if (error.name !== 'InvalidStateError' && error.name !== 'AbortError') {
         captureException(error);
       }
 
@@ -56,10 +60,6 @@ export function WebShareButton({
       // eslint-disable-next-line no-console
       console.error(error);
     }
-  }
-
-  if (!isHydrated || !navigator.share) {
-    return null;
   }
 
   return (

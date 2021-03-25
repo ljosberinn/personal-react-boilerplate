@@ -1,4 +1,3 @@
-// import { Debug } from '@sentry/integrations';
 import type {
   init as nodeInit,
   NodeOptions,
@@ -7,7 +6,7 @@ import type {
 import type { init as browserInit, BrowserOptions } from '@sentry/react';
 import type { Options } from '@sentry/types';
 
-import { BUILD_TIME, IS_BROWSER, IS_PROD, SENTRY_DSN } from '../../constants';
+import { BUILD_TIME, IS_PROD, SENTRY_DSN } from '../../constants';
 
 export const defaultOptions: Options = {
   attachStacktrace: true,
@@ -20,6 +19,7 @@ type BootParameters = {
   init: typeof browserInit | typeof nodeInit;
   options: NodeOptions | BrowserOptions;
   configureScope: typeof configureScope;
+  integrations?: unknown[];
 };
 
 export const isomorphicSentryInit = ({
@@ -29,21 +29,11 @@ export const isomorphicSentryInit = ({
 }: BootParameters): void => {
   if (!IS_PROD) {
     options.beforeSend = () => null;
-    // options.integrations = [
-    //   new Debug({
-    //     // set to true if you want to use `debugger;` instead
-    //     debugger: false,
-    //   }),
-    // ];
   }
 
   init(options);
 
   configureScope((scope) => {
     scope.setTag('buildTime', BUILD_TIME);
-
-    if (!IS_BROWSER) {
-      scope.setTag('nodejs', process.version);
-    }
   });
 };

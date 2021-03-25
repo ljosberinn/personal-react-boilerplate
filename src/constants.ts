@@ -90,6 +90,11 @@ export type Namespace = typeof namespaces[number];
  * Sentry API endpoint for this project
  */
 export const SENTRY_DSN = process.env.NEXT_PUBLIC_SENTRY_DSN!;
+/**
+ * @see https://github.com/vercel/next.js/blob/canary/examples/with-sentry/.env.local.example
+ */
+export const SENTRY_SERVER_ROOT_DIR = process.env
+  .NEXT_PUBLIC_SENTRY_SERVER_ROOT_DIR!;
 
 /**********************
  * meta
