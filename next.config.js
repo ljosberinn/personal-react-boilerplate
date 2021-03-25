@@ -11,8 +11,6 @@ console.debug(`> Building on NODE_ENV="${process.env.NODE_ENV}"`);
  */
 const offlineConfig = {
   target: 'serverless',
-  // add the homepage to the cache
-  transformManifest: (manifest) => ['/'].concat(manifest),
   generateInDevMode: false,
   dontAutoRegisterSw: true,
   workboxOpts: {
