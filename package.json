@@ -37,7 +37,7 @@
     "@next/env": "10.0.10-canary.11",
     "@sentry/types": "6.2.3",
     "@sentry/webpack-plugin": "1.14.2",
-    "@testing-library/jest-dom": "5.11.9",
+    "@testing-library/jest-dom": "5.11.10",
     "@testing-library/react": "11.2.5",
     "@testing-library/react-hooks": "5.1.0",
     "@testing-library/user-event": "13.0.15",
