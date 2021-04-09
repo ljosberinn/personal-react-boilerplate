@@ -31,8 +31,6 @@ export const createMockScope = ({
 
     _fingerprint = [];
 
-    _level: undefined;
-
     _notifyEventProcessors = jest.fn();
 
     _notifyScopeListeners = jest.fn();
