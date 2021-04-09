@@ -4675,10 +4675,10 @@ escodegen@^2.0.0:
   optionalDependencies:
     source-map "~0.6.1"
 
-eslint-config-galex@2.13.10:
-  version "2.13.10"
-  resolved "https://registry.yarnpkg.com/eslint-config-galex/-/eslint-config-galex-2.13.10.tgz#78bd9683134ab198ee9a0a0166b431386f85a535"
-  integrity sha512-gyrF2VGYcsb5ecXqHW+tA+JKTuV76yuA3mxnRD+1hJjIPvGcHrBEbWEkG94655MVKnxsBAwb905712No6kCqVw==
+eslint-config-galex@2.13.11:
+  version "2.13.11"
+  resolved "https://registry.yarnpkg.com/eslint-config-galex/-/eslint-config-galex-2.13.11.tgz#c4cf6ecdc48d6b73a59630adfc790664ab276a77"
+  integrity sha512-AU4wtF2rrNDsw6nOqFK9gzlrrjnzwJDOonUtTyJjDhOFScNTOPMNaK9shousg5nJGVRO/Qhli3bnhAjHzqCGLw==
   dependencies:
     "@babel/core" "7.13.15"
     "@babel/eslint-parser" "7.13.14"
@@ -4693,7 +4693,7 @@ eslint-config-galex@2.13.10:
     eslint-plugin-jest-dom "3.7.0"
     eslint-plugin-jest-formatting "2.0.1"
     eslint-plugin-jsx-a11y "6.4.1"
-    eslint-plugin-promise "4.3.1"
+    eslint-plugin-promise "5.0.0"
     eslint-plugin-react "7.23.2"
     eslint-plugin-react-hooks "4.2.0"
     eslint-plugin-sonarjs "0.6.0"
@@ -4787,10 +4787,10 @@ eslint-plugin-jsx-a11y@6.4.1:
     jsx-ast-utils "^3.1.0"
     language-tags "^1.0.5"
 
-eslint-plugin-promise@4.3.1:
-  version "4.3.1"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-promise/-/eslint-plugin-promise-4.3.1.tgz#61485df2a359e03149fdafc0a68b0e030ad2ac45"
-  integrity sha512-bY2sGqyptzFBDLh/GMbAxfdJC+b0f23ME63FOE4+Jao0oZ3E1LEwFtWJX/1pGMJLiTtrSSern2CRM/g+dfc0eQ==
+eslint-plugin-promise@5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-promise/-/eslint-plugin-promise-5.0.0.tgz#676d1d1555e34976b4a9bd42663f70353ddb8fef"
+  integrity sha512-6ZoHypc/CbcB3sicGMGro4YmQLbcmoHL5KhDAtE/Gw5p8TrME7fbAlyD6rH+XN/knndMHKpXdk4A4Bq+njzeSQ==
 
 eslint-plugin-react-hooks@4.2.0:
   version "4.2.0"
