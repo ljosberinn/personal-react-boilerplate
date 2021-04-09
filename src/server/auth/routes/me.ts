@@ -5,7 +5,14 @@ import { UNAUTHORIZED } from '../../../utils/statusCodes';
 import type { RequestHandler } from '../../types';
 import { getSession } from '../cookie';
 
-const useMe: RequestHandler<{}, User> = (req, res, next) => {
+type Response = User;
+type Request = {
+  query: {
+    authRouter: string[]
+  }
+}
+
+const useMe: RequestHandler<Response, Request > = (req, res, next) => {
   const [action] = req.query.authRouter;
 
   if (action === 'me') {

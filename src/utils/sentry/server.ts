@@ -44,7 +44,6 @@ export const attachLambdaContext = (
     if ('query' in req) {
       scope.setContext('query', req.query);
       scope.setContext('cookies', req.cookies);
-      scope.setContext('body', req.body);
     }
   });
 };

@@ -20,15 +20,10 @@ const localDB: LocalDBDataset[] = [
   },
 ];
 
-type VerifyArg = {
-  username: string;
-  password: string;
-};
-
 const verify = ({
   username,
   password,
-}: VerifyArg): Partial<LocalDBDataset> | null => {
+}: Record<string, unknown>): Partial<LocalDBDataset> | null => {
   // custom logic for your db goes here!
   const user = localDB.find(
     (user) => user.username === username && user.password === password
@@ -43,7 +38,15 @@ const verify = ({
   return response;
 };
 
-const useLogin: RequestHandler<{}, Partial<LocalDBDataset>> = (
+type Response = Partial<LocalDBDataset>;
+type Request = {
+  query: {
+    authRouter: string[];
+  };
+  body: Record<string, unknown>;
+};
+
+const useLogin: RequestHandler<Response, Request> = (
   { query: { authRouter = [] }, body },
   res,
   next
@@ -52,7 +55,7 @@ const useLogin: RequestHandler<{}, Partial<LocalDBDataset>> = (
 
   if (action === 'login') {
     try {
-      if (body.toString().length === 0) {
+      if (JSON.stringify(body).length === 0) {
         res.status(BAD_REQUEST).end();
         return;
       }

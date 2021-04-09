@@ -59,7 +59,17 @@ type ExpectedQueryParams = {
   prompt?: string;
 };
 
-export const providerHandler: RequestHandler = async (req, res, next) => {
+type Request = {
+  query: {
+    init?: string;
+  };
+};
+
+export const providerHandler: RequestHandler<undefined, Request> = async (
+  req,
+  res,
+  next
+) => {
   const { type, code, error } = req.query as ExpectedQueryParams;
 
   if (ENABLED_PROVIDER.includes(type)) {

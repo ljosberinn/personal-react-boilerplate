@@ -7,7 +7,7 @@ import type { KarmaSSGProps } from './SSG';
 import type { KarmaSSRProps } from './SSR';
 import type { I18nextResources } from './i18n';
 
-export type WithChildren<Props = {}> = Props & {
+export type WithChildren<Props = Record<string, unknown>> = Props & {
   children: ReactNode;
 };
 
@@ -22,7 +22,7 @@ export type WithChildren<Props = {}> = Props & {
  * @see `KarmaSSRProps`
  * @see `KarmaSSGProps`
  */
-export type WithKarmaProps<KarmaProps, Props = {}> = {
+export type WithKarmaProps<KarmaProps, Props = Record<string, unknown>> = {
   karma: KarmaProps;
 } & Props;
 

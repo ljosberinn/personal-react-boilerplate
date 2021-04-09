@@ -66,9 +66,9 @@ describe('<ServiceWorker />', () => {
   it('listens to an installing workers statechange', async () => {
     const addEventListenerSpy = jest
       .fn()
-      .mockImplementationOnce((_event: string, listener: Function) =>
-        listener()
-      );
+      .mockImplementationOnce((_event: string, listener: () => void) => {
+        listener();
+      });
 
     const registerSpy = jest.fn().mockResolvedValueOnce({
       addEventListener: addEventListenerSpy,
@@ -98,7 +98,9 @@ describe('<ServiceWorker />', () => {
   it('renders a toast onupdatefound', async () => {
     const addEventListenerSpy = jest
       .fn()
-      .mockImplementation((_event: string, listener: Function) => listener());
+      .mockImplementation((_event: string, listener: () => void) => {
+        listener();
+      });
 
     const registerSpy = jest.fn().mockResolvedValueOnce({
       addEventListener: addEventListenerSpy,
@@ -127,7 +129,9 @@ describe('<ServiceWorker />', () => {
 
     const addEventListenerSpy = jest
       .fn()
-      .mockImplementation((_event: string, listener: Function) => listener());
+      .mockImplementation((_event: string, listener: () => void) => {
+        listener();
+      });
 
     const registerSpy = jest.fn().mockResolvedValueOnce({
       addEventListener: addEventListenerSpy,

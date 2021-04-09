@@ -6,7 +6,7 @@ export type AuthenticatedRequest = {
   [SESSION_COOKIE_NAME]: User;
 };
 
-export type OAuth2GetParams<Params = {}> = Params & {
+export type OAuth2GetParams<Params = Record<string, unknown>> = Params & {
   redirect_uri: string;
   code: string;
   client_id: string;

@@ -2,7 +2,9 @@ import { KarmaSSG } from './SSG';
 import { KarmaSSR } from './SSR';
 import type { IsomorphicKarmaProps, WithChildren } from './types';
 
-type PropsWithKarma<Props extends Record<string, unknown> = {}> = Props & {
+type PropsWithKarma<
+  Props extends Record<string, unknown> = Record<string, unknown>
+> = Props & {
   karma?: IsomorphicKarmaProps;
 };
 

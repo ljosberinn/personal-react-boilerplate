@@ -2,12 +2,7 @@ import { waitFor } from '../../../testUtils';
 import { testLambda } from '../../../testUtils/lambda';
 import type { RequestInitMethod } from '../../utils/requestMethods';
 import { RequestMethods } from '../../utils/requestMethods';
-import {
-  NOT_FOUND,
-  BAD_REQUEST,
-  OK,
-  UNAUTHORIZED,
-} from '../../utils/statusCodes';
+import { NOT_FOUND, OK, UNAUTHORIZED } from '../../utils/statusCodes';
 import * as cookieHandling from '../auth/cookie';
 import { loginHandler } from '../auth/routes/login';
 import { expectJSONBodyMiddleware } from '../middlewares';
@@ -50,7 +45,7 @@ describe('api/login', () => {
       url,
     });
 
-    expect(response.status).toBe(BAD_REQUEST);
+    expect(response.status).toBe(UNAUTHORIZED);
   });
 
   test('responds with UNAUTHORIZED on a POST request with invalid body', async () => {

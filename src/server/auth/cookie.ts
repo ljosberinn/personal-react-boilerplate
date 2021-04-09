@@ -14,7 +14,7 @@ const SET_COOKIE_HEADER = 'Set-Cookie';
 
 type SSRCompatibleRequest = NextApiRequest | IncomingMessage;
 
-export const encryptSession = (session: object): string =>
+export const encryptSession = (session: Record<string, unknown>): string =>
   JSON.stringify(session);
 
 /**
@@ -23,15 +23,15 @@ export const encryptSession = (session: object): string =>
 export const getSession = (req: SSRCompatibleRequest): User | null => {
   const token = getSessionCookie(req);
 
-  if (token) {
-    try {
-      return JSON.parse(token);
-    } catch {
-      return null;
-    }
+  if (!token) {
+    return null;
   }
 
-  return null;
+  try {
+    return JSON.parse(token);
+  } catch {
+    return null;
+  }
 };
 
 type NewCookieOptions = {

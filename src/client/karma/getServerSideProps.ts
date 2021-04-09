@@ -28,7 +28,7 @@ import type {
  */
 type SSRRedirectPropSubset = Pick<KarmaSSRProps, 'auth'> & {
   i18n: {
-    resources: {};
+    resources: Record<string, unknown>;
     locale: string;
   };
 };
@@ -48,7 +48,7 @@ export type CreateGetServerSidePropsOptions = {
   auth?: Pick<KarmaCoreProps['auth'], 'redirectDestinationIfUnauthenticated'>;
 };
 
-export type GetServerSidePropsResult<Props = {}> =
+export type GetServerSidePropsResult<Props = Record<string, unknown>> =
   | { props: { karma: SSRRedirectPropSubset } }
   | Promise<{
       props: { karma: KarmaSSRProps & Props };
@@ -173,7 +173,7 @@ export type GetServerSidePropsHandler<
 /**
  * the type of the result of `withKarmaSSRProps`
  */
-export type WithKarmaSSRProps<Props = {}> =
+export type WithKarmaSSRProps<Props = Record<string, unknown>> =
   | NextServerSidePropsResultWithoutProps
   | GetServerSidePropsResult<Props>;
 

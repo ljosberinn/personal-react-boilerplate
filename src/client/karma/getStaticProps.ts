@@ -112,7 +112,7 @@ export const getStaticProps = async (
  * should use `createGetStaticProps` instead.
  */
 export type GetStaticPropsHandler<
-  Props = {},
+  Props = Record<string, unknown>,
   Query extends ParsedUrlQuery = ParsedUrlQuery
 > = (
   ctx: GetStaticPropsContext<Query>
@@ -125,7 +125,7 @@ export type GetStaticPropsHandler<
 /**
  * the type of the result of `withKarmaSSGProps`
  */
-export type WithKarmaSSGProps<Props = {}> =
+export type WithKarmaSSGProps<Props = Record<string, unknown>> =
   | NextGetStaticPropsResultWithoutProps
   | {
       props: { karma: KarmaSSGProps } & Props;

@@ -89,7 +89,7 @@ export function AuthContextProvider({
       });
 
       if (response.ok) {
-        const json = await response.json();
+        const json: User = await response.json();
 
         setUser(json);
 
@@ -141,7 +141,7 @@ export function AuthContextProvider({
       });
 
       if (response.ok) {
-        const json = await response.json();
+        const json: User = await response.json();
         setUser(json);
 
         return json;
@@ -225,7 +225,7 @@ function useSSGReauthentication({
         });
 
         if (response.ok) {
-          const json = await response.json();
+          const json: User = await response.json();
 
           setUser(json);
         } else {

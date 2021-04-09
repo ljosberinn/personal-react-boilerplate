@@ -1,10 +1,16 @@
 import { SESSION_COOKIE_NAME } from '../../../src/constants';
-import { UNAUTHORIZED } from '../../utils/statusCodes';
+import { BAD_REQUEST, UNAUTHORIZED } from '../../utils/statusCodes';
 import { getSession } from '../auth/cookie';
 import type { AuthenticatedRequest } from '../auth/types';
 import type { Middleware } from '../types';
 
-const error = 'You must be authorized to access this resource.';
+const errors = {
+  missingAuthentication: 'You must be authorized to access this resource.',
+  invalidBody: 'Malformed payload.',
+};
+
+type Response = { error: string };
+type Request = AuthenticatedRequest;
 
 /**
  * Authorization Middleware ensuring the request is authenticated via
@@ -15,23 +21,28 @@ const error = 'You must be authorized to access this resource.';
  * Patches `req`, adding property `SESSION_COOKIE_NAME` with the decrypted
  * cookie.
  */
-export const authNSecurityMiddleware: Middleware<
-  { error: string },
-  AuthenticatedRequest
-> = (req, res, next) => {
+export const authNSecurityMiddleware: Middleware<Response, Request> = (
+  req,
+  res,
+  next
+) => {
   try {
     // verify & decrypt the cookie
     const session = getSession(req);
 
     if (!session) {
-      res.status(UNAUTHORIZED).json({ error });
+      res.status(UNAUTHORIZED).json({ error: errors.missingAuthentication });
       return;
+    }
+
+    if (req[SESSION_COOKIE_NAME]) {
+      res.status(BAD_REQUEST).json({ error: errors.invalidBody });
     }
 
     req[SESSION_COOKIE_NAME] = session;
 
     next();
   } catch {
-    res.status(UNAUTHORIZED).json({ error });
+    res.status(UNAUTHORIZED).json({ error: errors.missingAuthentication });
   }
 };

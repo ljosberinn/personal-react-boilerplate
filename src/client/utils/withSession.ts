@@ -33,7 +33,7 @@ type WithSessionReturn =
       props: Record<string, unknown>;
     }>
   | {
-      props: {};
+      props: Record<string, unknown>;
     };
 
 /**

@@ -5,7 +5,17 @@ import { OK } from '../../../utils/statusCodes';
 import type { RequestHandler } from '../../types';
 import { removeCookie } from '../cookie';
 
-const useLogout: RequestHandler = ({ query: { authRouter } }, res, next) => {
+type Request = {
+  query: {
+    authRouter: string[];
+  };
+};
+
+const useLogout: RequestHandler<undefined, Request> = (
+  { query: { authRouter } },
+  res,
+  next
+) => {
   const [action] = authRouter;
 
   if (action === 'logout') {
