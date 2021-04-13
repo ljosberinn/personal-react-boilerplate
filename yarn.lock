@@ -4638,10 +4638,10 @@ escodegen@^2.0.0:
   optionalDependencies:
     source-map "~0.6.1"
 
-eslint-config-galex@2.14.0:
-  version "2.14.0"
-  resolved "https://registry.yarnpkg.com/eslint-config-galex/-/eslint-config-galex-2.14.0.tgz#7e3390f962d67e9d56e4fa53503f08264bd2d13d"
-  integrity sha512-wnM/rs4yS9UXNqIjHCMNapWRI707n4Y7CDt2iu8AG9F3JUzXBse2qWWQRCQms6gm+UJpRy65uNlRs5iB+5Sg2g==
+eslint-config-galex@2.14.1:
+  version "2.14.1"
+  resolved "https://registry.yarnpkg.com/eslint-config-galex/-/eslint-config-galex-2.14.1.tgz#06f8779a86c6463e377853fe3d2c8386da108acd"
+  integrity sha512-a2HOb8OZN1Kkkz6cP0MDUcbNKlODBaOYd4Jv+L+MPvurUjdm6CR/WskhYqfkg3VVitxlTv2wBR2W0t4QVRDeKA==
   dependencies:
     "@babel/core" "7.13.15"
     "@babel/eslint-parser" "7.13.14"
@@ -4649,7 +4649,7 @@ eslint-config-galex@2.14.0:
     "@typescript-eslint/eslint-plugin" "4.22.0"
     "@typescript-eslint/parser" "4.22.0"
     confusing-browser-globals "1.0.10"
-    eslint-config-prettier "8.1.0"
+    eslint-config-prettier "8.2.0"
     eslint-plugin-import "2.22.1"
     eslint-plugin-inclusive-language "2.1.1"
     eslint-plugin-jest "24.3.5"
@@ -4665,10 +4665,10 @@ eslint-config-galex@2.14.0:
     read-pkg-up "7.0.1"
     typescript "4.2.4"
 
-eslint-config-prettier@8.1.0:
-  version "8.1.0"
-  resolved "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-8.1.0.tgz#4ef1eaf97afe5176e6a75ddfb57c335121abc5a6"
-  integrity sha512-oKMhGv3ihGbCIimCAjqkdzx2Q+jthoqnXSP+d86M9tptwugycmTFdVR4IpLgq2c4SHifbwO90z2fQ8/Aio73yw==
+eslint-config-prettier@8.2.0:
+  version "8.2.0"
+  resolved "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-8.2.0.tgz#78de77d63bca8e9e59dae75a614b5299925bb7b3"
+  integrity sha512-dWV9EVeSo2qodOPi1iBYU/x6F6diHv8uujxbxr77xExs3zTAlNXvVZKiyLsQGNz7yPV2K49JY5WjPzNIuDc2Bw==
 
 eslint-import-resolver-node@^0.3.4:
   version "0.3.4"
