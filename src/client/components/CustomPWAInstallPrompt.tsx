@@ -64,7 +64,7 @@ export function CustomPWAInstallPrompt(): null | JSX.Element {
 
   /* async */ function install() {
     if (promptEvent.current) {
-      // eslint-disable-next-line no-console
+      // eslint-disable-next-line no-console, promise/prefer-await-to-then
       promptEvent.current.prompt().catch(console.error);
 
       // const { outcome, platform } = await promptEvent.current.userChoice;

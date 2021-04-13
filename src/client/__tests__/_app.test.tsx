@@ -92,6 +92,7 @@ describe('<App />', () => {
     expect(contentElement).toBeInTheDocument();
     expect(layoutElement).toBeInTheDocument();
 
+    // eslint-disable-next-line testing-library/no-node-access
     expect(contentElement.parentElement).toBe(layoutElement);
   });
 

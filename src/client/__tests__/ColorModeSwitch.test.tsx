@@ -1,3 +1,4 @@
+/* eslint-disable testing-library/no-container, testing-library/no-node-access */
 import { FaSun, FaMoon } from 'react-icons/fa';
 
 import {
@@ -32,11 +33,11 @@ describe('<ColorModeSwitchAlt />', () => {
    */
   it('indicates the current theme visually', () => {
     render(<ColorModeSwitch />);
-    const sun = render(<FaSun />);
-    const moon = render(<FaMoon />);
+    const { container: sunContainer } = render(<FaSun />);
+    const { container: moonContainer } = render(<FaMoon />);
 
-    const sunPath = sun.container.querySelector('path')!.outerHTML;
-    const moonPath = moon.container.querySelector('path')!.outerHTML;
+    const sunPath = sunContainer.querySelector('path')!.outerHTML;
+    const moonPath = moonContainer.querySelector('path')!.outerHTML;
 
     const button = screen.getByRole('checkbox');
 

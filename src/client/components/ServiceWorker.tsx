@@ -80,7 +80,7 @@ export function ServiceWorker(): null {
 
           registration.addEventListener('updatefound', onUpdateFound);
         })
-        // eslint-disable-next-line no-console
+        // eslint-disable-next-line no-console, promise/prefer-await-to-then
         .catch(console.error);
     }
   }, [toast, t, attemptedRegistration]);
