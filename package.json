@@ -66,12 +66,12 @@
     "react-test-renderer": "17.0.2",
     "test-listen": "1.1.0",
     "typescript": "4.3.0-dev.20210419",
-    "webpack": "5.33.2",
+    "webpack": "5.34.0",
     "whatwg-fetch": "3.6.2",
     "yarn-deduplicate": "3.1.0"
   },
   "resolutions": {
-    "webpack": "5.33.2"
+    "webpack": "5.34.0"
   },
   "license": "MIT",
   "author": "Gerrit Alex",
