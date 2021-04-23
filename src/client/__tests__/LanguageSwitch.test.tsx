@@ -4,6 +4,7 @@ import {
   screen,
   testA11Y,
   validateHtml,
+  waitFor,
 } from '../../../testUtils';
 import { mockConsoleMethods } from '../../../testUtils/console';
 import { i18nCache } from '../../../testUtils/i18n';
@@ -80,10 +81,10 @@ describe('<LanguageSwitch />', () => {
     validateHtml(container);
   });
 
-  it('includes a request for translation help', () => {
+  it('includes a request for translation help', async () => {
     const { currentLanguage } = setup();
 
-    const cta = screen.getByRole('menuitem', {
+    const cta = await screen.findByRole('menuitem', {
       name: i18nCache[currentLanguage].i18n!['help-cta'],
     });
 
