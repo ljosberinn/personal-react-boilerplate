@@ -4,7 +4,6 @@ import {
   screen,
   testA11Y,
   validateHtml,
-  waitFor,
 } from '../../../testUtils';
 import { mockConsoleMethods } from '../../../testUtils/console';
 import { i18nCache } from '../../../testUtils/i18n';
