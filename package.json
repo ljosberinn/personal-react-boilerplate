@@ -65,7 +65,7 @@
     "prettier": "2.2.1",
     "react-test-renderer": "17.0.2",
     "test-listen": "1.1.0",
-    "typescript": "4.3.0-dev.20210426",
+    "typescript": "4.3.0-dev.20210427",
     "webpack": "5.35.1",
     "whatwg-fetch": "3.6.2",
     "yarn-deduplicate": "3.1.0"
