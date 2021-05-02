@@ -103,6 +103,9 @@ const defaultConfig = {
      */
     ignoreBuildErrors: true,
   },
+  future: {
+    webpack5: true,
+  },
   webpack: (config, options) => {
     // disables transpiling all `__tests__` files, speeding up build process
     // in case of a barebones karma install, this reduces build time by ~ 25%
@@ -115,15 +118,13 @@ const defaultConfig = {
   reactStrictMode: true,
   experimental: {
     scrollRestoration: true,
+    turboMode: true,
+    eslint: true,
   },
   i18n: {
     localeDetection: true,
     defaultLocale: process.env.NEXT_PUBLIC_FALLBACK_LANGUAGE,
     locales: process.env.NEXT_PUBLIC_ENABLED_LANGUAGES.split(','),
-  },
-  eslint: {
-    dev: false,
-    build: false,
   },
   productionBrowserSourceMaps: true,
   env: {
