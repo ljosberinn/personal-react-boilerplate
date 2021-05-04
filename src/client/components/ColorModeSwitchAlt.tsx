@@ -23,17 +23,12 @@ function useThemeMeta() {
   const switchLabel = isLightTheme ? 'set-dark-theme' : 'set-light-theme';
 
   const sunColor = isLightTheme ? yellow : gray;
-  const sunLabel = isLightTheme ? 'is-light-theme' : 'set-light-theme';
-
   const moonColor = isLightTheme ? gray : yellow;
-  const moonLabel = isLightTheme ? 'set-dark-theme' : 'is-dark-theme';
 
   return {
     isChecked,
     moonColor,
-    moonLabel,
     sunColor,
-    sunLabel,
     switchLabel,
     t,
     toggleColorMode,
@@ -49,10 +44,8 @@ export function ColorModeSwitchAlt(
     toggleColorMode,
     isChecked,
     sunColor,
-    sunLabel,
     switchLabel,
     moonColor,
-    moonLabel,
     t,
   } = useThemeMeta();
 
@@ -63,7 +56,6 @@ export function ColorModeSwitchAlt(
         color={sunColor}
         data-testid="theme-switch-sun"
         onClick={toggleColorMode}
-        aria-label={t(sunLabel)}
       />
       <Switch
         aria-label={t(switchLabel)}
@@ -79,7 +71,6 @@ export function ColorModeSwitchAlt(
         color={moonColor}
         data-testid="theme-switch-moon"
         onClick={toggleColorMode}
-        aria-label={t(moonLabel)}
       />
     </Flex>
   );
