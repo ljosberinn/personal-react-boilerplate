@@ -4747,10 +4747,10 @@ escodegen@^2.0.0:
   optionalDependencies:
     source-map "~0.6.1"
 
-eslint-config-galex@2.15.3:
-  version "2.15.3"
-  resolved "https://registry.yarnpkg.com/eslint-config-galex/-/eslint-config-galex-2.15.3.tgz#c6ead5c1e0921ca495150ba7b6f42cdb308c74d9"
-  integrity sha512-4ShUnrRCSzyk9tqsUIEMNJNqq/MJFez6xxX3vUIdaGOxVyRdASaw9Hft1/AzT1xCBHDC3AaDzhIyC32c+kxptQ==
+eslint-config-galex@2.15.4:
+  version "2.15.4"
+  resolved "https://registry.yarnpkg.com/eslint-config-galex/-/eslint-config-galex-2.15.4.tgz#2a99277c88a4d0fc3162f79e2f25a7bf55803d5e"
+  integrity sha512-+jBRaUz2+XNoGaN+j/ULV4qa65n0TtLC1D5efw5g56kioZKgUORfXkWkpKI8qfG0DQgPuiYHeTCuJHmA0pjZFQ==
   dependencies:
     "@babel/core" "7.14.0"
     "@babel/eslint-parser" "7.13.14"
@@ -4763,13 +4763,13 @@ eslint-config-galex@2.15.3:
     eslint-plugin-inclusive-language "2.1.1"
     eslint-plugin-jest "24.3.6"
     eslint-plugin-jest-dom "3.8.1"
-    eslint-plugin-jest-formatting "2.0.1"
+    eslint-plugin-jest-formatting "3.0.0"
     eslint-plugin-jsx-a11y "6.4.1"
     eslint-plugin-promise "5.1.0"
     eslint-plugin-react "7.23.2"
     eslint-plugin-react-hooks "4.2.0"
     eslint-plugin-sonarjs "0.7.0"
-    eslint-plugin-testing-library "4.1.2"
+    eslint-plugin-testing-library "4.2.0"
     eslint-plugin-unicorn "31.0.0"
     read-pkg-up "7.0.1"
     typescript "4.2.4"
@@ -4835,10 +4835,10 @@ eslint-plugin-jest-dom@3.8.1:
     "@testing-library/dom" "^7.28.1"
     requireindex "^1.2.0"
 
-eslint-plugin-jest-formatting@2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-jest-formatting/-/eslint-plugin-jest-formatting-2.0.1.tgz#8f4297bf5b6c2cdd9b2c20a57892f0302b52c20a"
-  integrity sha512-t6oc6GcXqzQ4lwatnVoKxGTLqo8kFIdA5kpaS3mrkwnTNxhsgFo9reMFdrtNtllx72ohNUsXsay7RJR/LLLk3Q==
+eslint-plugin-jest-formatting@3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-jest-formatting/-/eslint-plugin-jest-formatting-3.0.0.tgz#a9f45c7d8eabfb72692ec3899998613a3e63f868"
+  integrity sha512-XM1CHe1jX6j+t/NeppcVnm/1zgDAFqwiSLJEyLB7HDpcqBEGbbTFLSayCW2Q9y7VwcXrJbDAKRoO6vZ7jCmRFw==
 
 eslint-plugin-jest@24.3.6:
   version "24.3.6"
@@ -4897,10 +4897,10 @@ eslint-plugin-sonarjs@0.7.0:
   resolved "https://registry.yarnpkg.com/eslint-plugin-sonarjs/-/eslint-plugin-sonarjs-0.7.0.tgz#2dbad45e03a6a4de687756b659e88bf3f977383f"
   integrity sha512-vi6zGkd5Eznc32AQlleWUOMrMeDiUih9wR7nPPfrDCyVRmwYNHIBRPZGv1EgXwELwaPghCSvoAoHoR7uSbBF/Q==
 
-eslint-plugin-testing-library@4.1.2:
-  version "4.1.2"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-testing-library/-/eslint-plugin-testing-library-4.1.2.tgz#f986bea35059118f3f37fb750b230b6a0fb0aa52"
-  integrity sha512-eJR1drH2yFcGM9As3C5Q17lyOolMPKalQA3l8pD61sAIt8+8w/KjHe7u9Sa4eYy7r76UikCoP9CAtVkGdGCZ/w==
+eslint-plugin-testing-library@4.2.0:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-testing-library/-/eslint-plugin-testing-library-4.2.0.tgz#80a95b86538901ce256aafef9090320bfbc42a1c"
+  integrity sha512-do+F2gQPLHjzXRl8E4/5WwXZSAOvSvuewxCO/Km6aLk4g0UVFDy5CtlpmDT83q3Hx2urR9Cvb02ai9cPQbbXHQ==
   dependencies:
     "@typescript-eslint/experimental-utils" "^4.21.0"
 
