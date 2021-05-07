@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@chakra-ui/react": "1.6.1",
-    "@emotion/react": "11.1.5",
+    "@emotion/react": "11.4.0",
     "@emotion/styled": "11.3.0",
     "@sentry/integrations": "6.3.5",
     "@sentry/minimal": "6.3.5",
