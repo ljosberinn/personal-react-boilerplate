@@ -2008,10 +2008,10 @@
     headers-utils "^3.0.2"
     strict-event-emitter "^0.2.0"
 
-"@next/bundle-analyzer@10.2.1-canary.3":
-  version "10.2.1-canary.3"
-  resolved "https://registry.yarnpkg.com/@next/bundle-analyzer/-/bundle-analyzer-10.2.1-canary.3.tgz#2ce75b44752d015a0491bf2fc0a8053fea83b9ce"
-  integrity sha512-FwABLZ5H5+Zuw1yVGYza1iGPP0OivQYyxOo7st3Ewt5GycrvlqPCQZO4bsY7zQnAAbEOMQbFDeD+gmXn5qaydA==
+"@next/bundle-analyzer@10.2.1-canary.4":
+  version "10.2.1-canary.4"
+  resolved "https://registry.yarnpkg.com/@next/bundle-analyzer/-/bundle-analyzer-10.2.1-canary.4.tgz#f5de7455906751de8c60229e25c2d3c561161db9"
+  integrity sha512-dtyaZo4BVJ1eeX6xwvquq3qPRCXOMYbH1v7PCY4VhTkqj4fZGCFZcpVnNHYY95tVxr9jyav/S6IyEcxyruUthA==
   dependencies:
     webpack-bundle-analyzer "4.3.0"
 
@@ -2019,6 +2019,11 @@
   version "10.2.1-canary.3"
   resolved "https://registry.yarnpkg.com/@next/env/-/env-10.2.1-canary.3.tgz#d85799fb4bf6646008eed8c1ab9f4be73ff7a7d5"
   integrity sha512-y+hVDuNpS02uNtWe2JCTuvkfNer1RgC7kB9PHWpgAq/GzgK0LNV/Hfcb5bmnpiXrvjrt3s9WQYuO+492gUGZ0w==
+
+"@next/env@10.2.1-canary.4":
+  version "10.2.1-canary.4"
+  resolved "https://registry.yarnpkg.com/@next/env/-/env-10.2.1-canary.4.tgz#3165726c3e2a1a1da98d4b031247f4d193cad5d8"
+  integrity sha512-5sXqfVnv9TnHbZ3w14mxBSnqgXF11/1zlCP6pFmWYkhXMSJzeLGY18Oso1x6R5AEJYSLLQd56aw6EGCc9nyzUw==
 
 "@next/eslint-plugin-next@10.2.0":
   version "10.2.0"
