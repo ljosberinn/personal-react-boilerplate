@@ -31,8 +31,8 @@
     "web-vitals": "1.1.2"
   },
   "devDependencies": {
-    "@commitlint/cli": "12.1.3",
-    "@commitlint/config-conventional": "12.1.3",
+    "@commitlint/cli": "12.1.4",
+    "@commitlint/config-conventional": "12.1.4",
     "@next/bundle-analyzer": "10.2.1-canary.5",
     "@next/env": "10.2.1-canary.5",
     "@sentry/types": "6.3.6",
