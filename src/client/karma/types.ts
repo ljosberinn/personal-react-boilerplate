@@ -1,11 +1,10 @@
-import type { ChakraProviderProps, StorageManager } from '@chakra-ui/react';
-import type { ReactNode } from 'react';
-
 import type { Namespace } from '../../constants';
 import type { User } from '../context/AuthContext/types';
 import type { KarmaSSGProps } from './SSG';
 import type { KarmaSSRProps } from './SSR';
 import type { I18nextResources } from './i18n';
+import type { ChakraProviderProps, StorageManager } from '@chakra-ui/react';
+import type { ReactNode } from 'react';
 
 export type WithChildren<Props = Record<string, unknown>> = Props & {
   children: ReactNode;

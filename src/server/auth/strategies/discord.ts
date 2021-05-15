@@ -1,10 +1,11 @@
+import { DISCORD_CLIENT_ID, DISCORD_CLIENT_SECRET } from '../../../constants';
+import { getOAuth2Data, redirect } from '../utils';
+
 import type {
   OAuth2CallbackHandler,
   OAuth2RedirectHandler,
 } from '../../../client/context/AuthContext/types';
-import { DISCORD_CLIENT_ID, DISCORD_CLIENT_SECRET } from '../../../constants';
 import type { OAuth2Response } from '../types';
-import { getOAuth2Data, redirect } from '../utils';
 
 export type DiscordProfile = {
   avatar: string;
@@ -59,23 +60,20 @@ export const redirectToDiscord: OAuth2RedirectHandler = (
   });
 };
 
-export const processDiscordCallback: OAuth2CallbackHandler<DiscordProfile> = async (
-  _,
-  __,
-  { redirect_uri, code }
-) => {
-  try {
-    const oauthResponse = await getOAuth2Data(accessTokenUrl, {
-      client_id,
-      client_secret,
-      code,
-      redirect_uri,
-    });
+export const processDiscordCallback: OAuth2CallbackHandler<DiscordProfile> =
+  async (_, __, { redirect_uri, code }) => {
+    try {
+      const oauthResponse = await getOAuth2Data(accessTokenUrl, {
+        client_id,
+        client_secret,
+        code,
+        redirect_uri,
+      });
 
-    return await getProfileData(oauthResponse);
-  } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error(error);
-    return null;
-  }
-};
+      return await getProfileData(oauthResponse);
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error(error);
+      return null;
+    }
+  };

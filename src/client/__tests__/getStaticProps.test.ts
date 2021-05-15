@@ -1,7 +1,4 @@
-import type { GetStaticPropsContext } from 'next';
-
 import { i18nCache } from '../../../testUtils/i18n';
-import type { Namespace } from '../../constants';
 import { FALLBACK_LANGUAGE, ENABLED_LANGUAGES } from '../../constants';
 import {
   createGetStaticProps,
@@ -9,6 +6,9 @@ import {
   withKarmaSSGProps,
 } from '../karma/getStaticProps';
 import * as i18n from '../karma/i18n';
+
+import type { Namespace } from '../../constants';
+import type { GetStaticPropsContext } from 'next';
 
 const locale = ENABLED_LANGUAGES.find((lng) => lng !== FALLBACK_LANGUAGE)!;
 

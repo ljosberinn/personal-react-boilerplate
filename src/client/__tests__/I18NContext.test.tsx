@@ -2,10 +2,11 @@ import { render, screen, waitFor } from '@testing-library/react';
 
 import { mockConsoleMethods } from '../../../testUtils/console';
 import { i18nCache } from '../../../testUtils/i18n';
-import type { Namespace } from '../../constants';
 import { FALLBACK_LANGUAGE } from '../../constants';
 import { I18NContextProvider } from '../context/I18NContext';
 import { useTranslation } from '../hooks/useTranslation';
+
+import type { Namespace } from '../../constants';
 import type { I18nextResources } from '../karma/i18n';
 
 const ns = 'i18n';

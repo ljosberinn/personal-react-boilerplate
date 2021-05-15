@@ -3,13 +3,15 @@ import {
   createNextApiResponse,
   NextApiResponseMock,
 } from '../../../../testUtils/api';
-import type { GitHubProfile } from '../../auth/strategies/github';
 import {
   redirectToGitHub,
   processGitHubCallback,
 } from '../../auth/strategies/github';
-import type { OAuth2Response } from '../../auth/types';
 import * as oauth2Utils from '../../auth/utils';
+
+import type { GitHubProfile } from '../../auth/strategies/github';
+import type { OAuth2Response } from '../../auth/types';
+
 import 'whatwg-fetch';
 
 describe('auth - github', () => {

@@ -1,17 +1,17 @@
-import type {
-  GetStaticPropsResult as NextGetStaticPropsResult,
-  GetStaticPropsContext,
-} from 'next';
-import type { ParsedUrlQuery } from 'querystring';
-
 import { FALLBACK_LANGUAGE } from '../../constants';
-import type { KarmaSSGProps } from './SSG';
 import { getI18n } from './i18n';
+
+import type { KarmaSSGProps } from './SSG';
 import type {
   IsomorphicI18nRequirements,
   KarmaCoreProps,
   UnknownObjectValues,
 } from './types';
+import type {
+  GetStaticPropsResult as NextGetStaticPropsResult,
+  GetStaticPropsContext,
+} from 'next';
+import type { ParsedUrlQuery } from 'querystring';
 
 type NextGetStaticPropsResultWithoutProps = Exclude<
   NextGetStaticPropsResult<unknown>,
@@ -55,9 +55,10 @@ export type CreateGetStaticPropsOptions = {
  * })
  * ```
  */
-export const createGetStaticProps = (options: CreateGetStaticPropsOptions) => (
-  context: GetStaticPropsContext
-): GetStaticPropsResult => getStaticProps(context, options);
+export const createGetStaticProps =
+  (options: CreateGetStaticPropsOptions) =>
+  (context: GetStaticPropsContext): GetStaticPropsResult =>
+    getStaticProps(context, options);
 
 /**
  * only use if you don't care about loading all i18n namespaces on this route

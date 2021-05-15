@@ -4,6 +4,7 @@ import { MetaThemeColorSynchronizer } from '../components/MetaThemeColorSynchron
 import { ServiceWorker } from '../components/ServiceWorker';
 import { AuthContextProvider } from '../context/AuthContext';
 import { I18NContextProvider } from '../context/I18NContext';
+
 import type { KarmaCoreProps, WithChildren } from './types';
 
 export function KarmaCore({

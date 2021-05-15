@@ -1,9 +1,10 @@
 import { testLambda } from '../../../testUtils/lambda';
-import type { RequestInitMethod } from '../../utils/requestMethods';
 import { RequestMethods } from '../../utils/requestMethods';
 import { NOT_FOUND, BAD_REQUEST, CREATED } from '../../utils/statusCodes';
 import { registrationHandler } from '../auth/routes/register';
 import { expectJSONBodyMiddleware } from '../middlewares';
+
+import type { RequestInitMethod } from '../../utils/requestMethods';
 
 const url = '/api/v1/auth/register';
 const catchAllName = 'authRouter';
@@ -36,10 +37,9 @@ describe('api/register', () => {
     }
   );
 
-  ([{ username: 'foo' }, { password: 'foo' }] as Record<
-    string,
-    string
-  >[]).forEach((body) => {
+  (
+    [{ username: 'foo' }, { password: 'foo' }] as Record<string, string>[]
+  ).forEach((body) => {
     const affix = `(missing ${'password' in body ? 'username' : 'passsword'})`;
 
     test(`responds with BAD_REQUEST given an incomplete dataset ${affix}`, async () => {

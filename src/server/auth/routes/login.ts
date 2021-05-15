@@ -1,8 +1,9 @@
 import nextConnect from 'next-connect';
 
 import { OK, UNAUTHORIZED, BAD_REQUEST } from '../../../utils/statusCodes';
-import type { RequestHandler } from '../../types';
 import { encryptSession, setSessionCookie } from '../cookie';
+
+import type { RequestHandler } from '../../types';
 
 type LocalDBDataset = {
   password: string;

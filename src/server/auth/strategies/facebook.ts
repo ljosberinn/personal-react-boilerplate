@@ -1,10 +1,11 @@
+import { FACEBOOK_CLIENT_ID, FACEBOOK_CLIENT_SECRET } from '../../../constants';
+import { getOAuth2Data, redirect } from '../utils';
+
 import type {
   OAuth2RedirectHandler,
   OAuth2CallbackHandler,
 } from '../../../client/context/AuthContext/types';
-import { FACEBOOK_CLIENT_ID, FACEBOOK_CLIENT_SECRET } from '../../../constants';
 import type { OAuth2Response } from '../types';
-import { getOAuth2Data, redirect } from '../utils';
 
 export type FacebookProfile = {
   id: string;
@@ -51,21 +52,18 @@ export const redirectToFacebook: OAuth2RedirectHandler = (
   });
 };
 
-export const processFacebookCallback: OAuth2CallbackHandler<FacebookProfile> = async (
-  _,
-  __,
-  { redirect_uri, code }
-) => {
-  try {
-    const oauthResponse = await getOAuth2Data(accessTokenUrl, {
-      client_id,
-      client_secret,
-      code,
-      redirect_uri,
-    });
+export const processFacebookCallback: OAuth2CallbackHandler<FacebookProfile> =
+  async (_, __, { redirect_uri, code }) => {
+    try {
+      const oauthResponse = await getOAuth2Data(accessTokenUrl, {
+        client_id,
+        client_secret,
+        code,
+        redirect_uri,
+      });
 
-    return await getProfileData(oauthResponse);
-  } catch {
-    return null;
-  }
-};
+      return await getProfileData(oauthResponse);
+    } catch {
+      return null;
+    }
+  };

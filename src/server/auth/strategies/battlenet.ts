@@ -1,9 +1,3 @@
-import type { CookieSerializeOptions } from 'cookie';
-
-import type {
-  OAuth2RedirectHandler,
-  OAuth2CallbackHandler,
-} from '../../../client/context/AuthContext/types';
 import {
   BATTLENET_CLIENT_ID,
   BATTLENET_CLIENT_SECRET,
@@ -11,8 +5,14 @@ import {
 } from '../../../constants';
 import { BAD_REQUEST } from '../../../utils/statusCodes';
 import { removeCookie, setCookie } from '../cookie';
-import type { OAuth2Response } from '../types';
 import { getOAuth2Data, redirect } from '../utils';
+
+import type {
+  OAuth2RedirectHandler,
+  OAuth2CallbackHandler,
+} from '../../../client/context/AuthContext/types';
+import type { OAuth2Response } from '../types';
+import type { CookieSerializeOptions } from 'cookie';
 
 const client_id = BATTLENET_CLIENT_ID;
 const client_secret = BATTLENET_CLIENT_SECRET;
@@ -184,58 +184,55 @@ export const redirectToBattleNet: OAuth2RedirectHandler = (
   });
 };
 
-export const processBattleNetCallback: OAuth2CallbackHandler<BattleNetProfile> = async (
-  req,
-  res,
-  { redirect_uri, code }
-) => {
-  const [region, persistedState] =
-    req.cookies[BATTLE_NET_STATE_COOKIE_NAME]?.split('-') ?? '';
-  const { state } = req.query;
+export const processBattleNetCallback: OAuth2CallbackHandler<BattleNetProfile> =
+  async (req, res, { redirect_uri, code }) => {
+    const [region, persistedState] =
+      req.cookies[BATTLE_NET_STATE_COOKIE_NAME]?.split('-') ?? '';
+    const { state } = req.query;
 
-  if (
-    !region ||
-    Array.isArray(region) ||
-    !isValidRegion(region) ||
-    // state must be present
-    !state ||
-    Array.isArray(state) ||
-    // just like persisted state
-    !persistedState ||
-    // and match
-    !state.startsWith(region) ||
-    !state.endsWith(persistedState)
-  ) {
-    res.status(BAD_REQUEST);
+    if (
+      !region ||
+      Array.isArray(region) ||
+      !isValidRegion(region) ||
+      // state must be present
+      !state ||
+      Array.isArray(state) ||
+      // just like persisted state
+      !persistedState ||
+      // and match
+      !state.startsWith(region) ||
+      !state.endsWith(persistedState)
+    ) {
+      res.status(BAD_REQUEST);
 
-    return null;
-  }
+      return null;
+    }
 
-  removeCookie(BATTLE_NET_STATE_COOKIE_NAME, res);
+    removeCookie(BATTLE_NET_STATE_COOKIE_NAME, res);
 
-  const url = getAccessTokenUrl(region);
+    const url = getAccessTokenUrl(region);
 
-  try {
-    const oauthResponse = await getOAuth2Data<{ region: BattleNetRegion }>(
-      url,
-      {
-        client_id,
-        client_secret,
-        code,
-        redirect_uri,
-        region,
-      }
-    );
+    try {
+      const oauthResponse = await getOAuth2Data<{ region: BattleNetRegion }>(
+        url,
+        {
+          client_id,
+          client_secret,
+          code,
+          redirect_uri,
+          region,
+        }
+      );
 
-    return {
-      ...oauthResponse,
-      expires_at: Date.now() + oauthResponse.expires_in * 1000,
-    };
-  } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error(error);
-    return null;
-  }
-};
+      return {
+        ...oauthResponse,
+        expires_at: Date.now() + oauthResponse.expires_in * 1000,
+      };
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error(error);
+      return null;
+    }
+  };
 
 export type BattleNetProfile = OAuth2Response & { expires_at: number };

@@ -1,3 +1,5 @@
+import { BUILD_TIME, IS_PROD, SENTRY_DSN } from '../../constants';
+
 import type {
   init as nodeInit,
   NodeOptions,
@@ -5,8 +7,6 @@ import type {
 } from '@sentry/node';
 import type { init as browserInit, BrowserOptions } from '@sentry/react';
 import type { Options } from '@sentry/types';
-
-import { BUILD_TIME, IS_PROD, SENTRY_DSN } from '../../constants';
 
 export const defaultOptions: Options = {
   attachStacktrace: true,

@@ -1,23 +1,23 @@
+import { FALLBACK_LANGUAGE } from '../../constants';
+import { getSession } from '../../server/auth/cookie';
+import { attachInitialContext } from '../../utils/sentry/client';
+import { attachLambdaContext } from '../../utils/sentry/server';
+import { TEMPORARY_REDIRECT } from '../../utils/statusCodes';
+import { getI18n } from './i18n';
+
+import type NotFound from '../../pages/404';
+import type { KarmaSSRProps } from './SSR';
+import type {
+  IsomorphicI18nRequirements,
+  KarmaCoreProps,
+  UnknownObjectValues,
+} from './types';
 import type {
   GetServerSidePropsContext,
   GetServerSidePropsResult as NextGetServerSidePropsResult,
   Redirect,
 } from 'next';
 import type { ParsedUrlQuery } from 'querystring';
-
-import { FALLBACK_LANGUAGE } from '../../constants';
-import type NotFound from '../../pages/404';
-import { getSession } from '../../server/auth/cookie';
-import { attachInitialContext } from '../../utils/sentry/client';
-import { attachLambdaContext } from '../../utils/sentry/server';
-import { TEMPORARY_REDIRECT } from '../../utils/statusCodes';
-import type { KarmaSSRProps } from './SSR';
-import { getI18n } from './i18n';
-import type {
-  IsomorphicI18nRequirements,
-  KarmaCoreProps,
-  UnknownObjectValues,
-} from './types';
 
 /**
  * Return value of `(create)GetServerSideProps` if redirecting server side.
@@ -68,10 +68,10 @@ export type GetServerSidePropsResult<Props = Record<string, unknown>> =
  * })
  * ```
  */
-export const createGetServerSideProps = (
-  options: CreateGetServerSidePropsOptions
-) => (context: GetServerSidePropsContext): GetServerSidePropsResult =>
-  getServerSideProps(context, options);
+export const createGetServerSideProps =
+  (options: CreateGetServerSidePropsOptions) =>
+  (context: GetServerSidePropsContext): GetServerSidePropsResult =>
+    getServerSideProps(context, options);
 
 /**
  * only use if you don't care about loading all i18n namespaces on this route

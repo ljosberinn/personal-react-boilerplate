@@ -3,13 +3,15 @@ import {
   createNextApiResponse,
   NextApiResponseMock,
 } from '../../../../testUtils/api';
-import type { FacebookProfile } from '../../auth/strategies/facebook';
 import {
   redirectToFacebook,
   processFacebookCallback,
 } from '../../auth/strategies/facebook';
-import type { OAuth2Response } from '../../auth/types';
 import * as oauth2Utils from '../../auth/utils';
+
+import type { FacebookProfile } from '../../auth/strategies/facebook';
+import type { OAuth2Response } from '../../auth/types';
+
 import 'whatwg-fetch';
 
 describe('auth - facebook', () => {

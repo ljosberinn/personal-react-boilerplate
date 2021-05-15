@@ -9,8 +9,9 @@ import {
   UNPROCESSABLE_ENTITY,
 } from '../../utils/statusCodes';
 import { endpoints } from '../context/AuthContext';
-import type { Provider, User } from '../context/AuthContext/types';
 import { useAuth } from '../hooks/useAuth';
+
+import type { Provider, User } from '../context/AuthContext/types';
 
 const password = 'next-karma!';
 
@@ -223,7 +224,7 @@ describe('hooks/useAuth', () => {
 
       await hookAct(async () => {
         response = await result.current.login({
-          provider: (provider as unknown) as Provider,
+          provider: provider as unknown as Provider,
         });
       });
 

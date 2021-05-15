@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 
 import { KarmaCore } from './Core';
+
 import type { WithChildren, KarmaCoreProps } from './types';
 
 export type KarmaSSRProps = Omit<KarmaCoreProps, 'mode'> & {

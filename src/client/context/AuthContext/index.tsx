@@ -1,5 +1,4 @@
 import Router from 'next/router';
-import type { SetStateAction, Dispatch } from 'react';
 import {
   useState,
   useEffect,
@@ -11,6 +10,7 @@ import {
 import { ENABLED_PROVIDER } from '../../../constants';
 import { INTERNAL_SERVER_ERROR } from '../../../utils/statusCodes';
 import { useIsMounted } from '../../hooks/useIsMounted';
+
 import type { WithChildren, KarmaMode } from '../../karma/types';
 import type {
   User,
@@ -18,6 +18,7 @@ import type {
   LocalLoginOptions,
   AuthContextDefinition,
 } from './types';
+import type { SetStateAction, Dispatch } from 'react';
 
 export type AuthContextProviderProps = WithChildren<{
   session: User | null;

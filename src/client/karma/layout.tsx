@@ -1,8 +1,8 @@
+import { IsomorphicKarma } from './Isomorphic';
+
+import type { IsomorphicKarmaProps } from './types';
 import type { NextComponentType, NextPageContext } from 'next';
 import type { ReactElement } from 'react';
-
-import { IsomorphicKarma } from './Isomorphic';
-import type { IsomorphicKarmaProps } from './types';
 
 /**
  * Patched `NextComponentType` to support attaching `.Layout` component in `_app`
@@ -22,9 +22,7 @@ export type KarmaComponent = NextComponentType<
 
 export type LayoutCreator = (page: ReactElement) => JSX.Element;
 
-export const layoutWithKarma = (createLayout: LayoutCreator) => (
-  page: ReactElement,
-  karma: IsomorphicKarmaProps
-): JSX.Element => (
-  <IsomorphicKarma karma={karma}>{createLayout(page)}</IsomorphicKarma>
-);
+export const layoutWithKarma =
+  (createLayout: LayoutCreator) =>
+  (page: ReactElement, karma: IsomorphicKarmaProps): JSX.Element =>
+    <IsomorphicKarma karma={karma}>{createLayout(page)}</IsomorphicKarma>;

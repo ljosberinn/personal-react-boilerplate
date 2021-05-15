@@ -1,10 +1,10 @@
+import { getSession } from '../../server/auth/cookie';
+import { FOUND_MOVED_TEMPORARILY } from '../../utils/statusCodes';
+
+import type { User } from '../context/AuthContext/types';
 import type { OutgoingHttpHeaders } from 'http';
 import type { GetServerSidePropsContext } from 'next';
 import type { ParsedUrlQuery } from 'querystring';
-
-import { getSession } from '../../server/auth/cookie';
-import { FOUND_MOVED_TEMPORARILY } from '../../utils/statusCodes';
-import type { User } from '../context/AuthContext/types';
 
 export type WithSessionOptions = {
   /**
@@ -40,22 +40,24 @@ type WithSessionReturn =
  * Protects a route using getServerSideProps by expection a session
  * Given no session, redirects to options.headers.Location, defaulting to /
  */
-export const withSession = (
-  handler: AuthenticatedGetServerSideProps,
-  {
-    headers = { Location: '/' },
-    status = FOUND_MOVED_TEMPORARILY,
-  }: WithSessionOptions = {}
-) => (ctx: GetServerSidePropsContext): WithSessionReturn => {
-  const session = getSession(ctx.req);
+export const withSession =
+  (
+    handler: AuthenticatedGetServerSideProps,
+    {
+      headers = { Location: '/' },
+      status = FOUND_MOVED_TEMPORARILY,
+    }: WithSessionOptions = {}
+  ) =>
+  (ctx: GetServerSidePropsContext): WithSessionReturn => {
+    const session = getSession(ctx.req);
 
-  if (!session) {
-    ctx.res.writeHead(status, headers).end();
+    if (!session) {
+      ctx.res.writeHead(status, headers).end();
 
-    return Promise.resolve({
-      props: {},
-    });
-  }
+      return Promise.resolve({
+        props: {},
+      });
+    }
 
-  return handler(ctx, session);
-};
+    return handler(ctx, session);
+  };

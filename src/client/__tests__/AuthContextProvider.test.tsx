@@ -6,8 +6,9 @@ import Router from 'next/router';
 import { render, screen, waitFor } from '../../../testUtils';
 import { UNAUTHORIZED } from '../../utils/statusCodes';
 import { AuthContextProvider, endpoints } from '../context/AuthContext';
-import type { User } from '../context/AuthContext/types';
 import { useAuth } from '../hooks/useAuth';
+
+import type { User } from '../context/AuthContext/types';
 
 const authenticated = 'authenticated';
 const notAuthenticated = 'not-authenticated';

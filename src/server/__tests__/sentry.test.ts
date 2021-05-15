@@ -6,6 +6,7 @@ import { RequestMethods } from '../../utils/requestMethods';
 import * as sentryUtils from '../../utils/sentry/server';
 import { OK } from '../../utils/statusCodes';
 import { sentryMiddleware } from '../middlewares/sentry';
+
 import type { RequestHandler } from '../types';
 
 const dummyHandler: RequestHandler = (_req, res) => {

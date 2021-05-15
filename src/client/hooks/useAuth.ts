@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 
 import { AuthContext } from '../context/AuthContext';
+
 import type { AuthContextDefinition } from '../context/AuthContext/types';
 
 export function useAuth(): AuthContextDefinition {

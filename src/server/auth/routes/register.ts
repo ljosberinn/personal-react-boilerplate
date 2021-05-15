@@ -1,6 +1,7 @@
 import nextConnect from 'next-connect';
 
 import { BAD_REQUEST, CREATED } from '../../../utils/statusCodes';
+
 import type { RequestHandler } from '../../types';
 
 type Response = { username: string };

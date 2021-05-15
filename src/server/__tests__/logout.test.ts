@@ -1,10 +1,11 @@
 import { testLambda } from '../../../testUtils/lambda';
 import { SESSION_COOKIE_NAME } from '../../constants';
-import type { RequestInitMethod } from '../../utils/requestMethods';
 import { RequestMethods } from '../../utils/requestMethods';
 import { NOT_FOUND, OK } from '../../utils/statusCodes';
 import * as cookieHandling from '../auth/cookie';
 import { logoutHandler } from '../auth/routes/logout';
+
+import type { RequestInitMethod } from '../../utils/requestMethods';
 
 const url = '/api/v1/auth/logout';
 const catchAllName = 'authRouter';

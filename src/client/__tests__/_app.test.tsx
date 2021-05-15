@@ -7,9 +7,10 @@ import 'whatwg-fetch';
 import { MockRouterContext } from '../../../testUtils/router';
 import { createMockScope } from '../../../testUtils/sentry';
 import { FALLBACK_LANGUAGE } from '../../constants';
-import type { AppRenderProps } from '../../pages/_app';
 import App, { reportWebVitals } from '../../pages/_app';
 import * as sentryUtils from '../../utils/sentry/client';
+
+import type { AppRenderProps } from '../../pages/_app';
 import type { LayoutCreator } from '../karma/layout';
 
 const title = 'next-karma';

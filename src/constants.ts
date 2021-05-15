@@ -65,9 +65,8 @@ export const I18N_COOKIE_NAME = 'NEXT_LOCALE' as const;
  *
  * @default en,de
  */
-export const ENABLED_LANGUAGES = process.env.NEXT_PUBLIC_ENABLED_LANGUAGES!.split(
-  ','
-);
+export const ENABLED_LANGUAGES =
+  process.env.NEXT_PUBLIC_ENABLED_LANGUAGES!.split(',');
 
 /**
  * the fallback language used if:
@@ -93,8 +92,8 @@ export const SENTRY_DSN = process.env.NEXT_PUBLIC_SENTRY_DSN!;
 /**
  * @see https://github.com/vercel/next.js/blob/canary/examples/with-sentry/.env.local.example
  */
-export const SENTRY_SERVER_ROOT_DIR = process.env
-  .NEXT_PUBLIC_SENTRY_SERVER_ROOT_DIR!;
+export const SENTRY_SERVER_ROOT_DIR =
+  process.env.NEXT_PUBLIC_SENTRY_SERVER_ROOT_DIR!;
 
 /**********************
  * meta

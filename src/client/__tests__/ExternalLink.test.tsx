@@ -1,7 +1,8 @@
 /* eslint-disable testing-library/no-container, testing-library/no-node-access */
 import { render, screen, testA11Y, validateHtml } from '../../../testUtils';
-import type { ExternalLinkProps } from '../components/ExternalLink';
 import { ExternalLink } from '../components/ExternalLink';
+
+import type { ExternalLinkProps } from '../components/ExternalLink';
 
 const defaultProps: ExternalLinkProps = {
   children: 'test',

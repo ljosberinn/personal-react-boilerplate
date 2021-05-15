@@ -1,10 +1,11 @@
 import { Box, useToast, Flex, Text, Icon } from '@chakra-ui/react';
-import { useEffect, useRef } from 'react';
 import { FaInfoCircle } from 'react-icons/fa';
+import { useEffect, useRef } from 'react';
 
 import { IS_PROD, IS_TEST } from '../../../src/constants';
-import type { TFunction } from '../hooks/useTranslation';
 import { useTranslation } from '../hooks/useTranslation';
+
+import type { TFunction } from '../hooks/useTranslation';
 
 const sw = '/service-worker.js';
 /**
@@ -94,22 +95,20 @@ type CreateOnStateChangeListenerParams = {
   installingWorker: ServiceWorker;
 };
 
-const createOnStateChangeListener = ({
-  toast,
-  t,
-  installingWorker,
-}: CreateOnStateChangeListenerParams) => () => {
-  if (
-    installingWorker.state !== 'installed' ||
-    !navigator.serviceWorker.controller
-  ) {
-    return;
-  }
+const createOnStateChangeListener =
+  ({ toast, t, installingWorker }: CreateOnStateChangeListenerParams) =>
+  () => {
+    if (
+      installingWorker.state !== 'installed' ||
+      !navigator.serviceWorker.controller
+    ) {
+      return;
+    }
 
-  toast({
-    render: () => <RefreshToast t={t} />,
-  });
-};
+    toast({
+      render: () => <RefreshToast t={t} />,
+    });
+  };
 
 type CreateOnUpdateFoundListenerParams = {
   toast: ReturnType<typeof useToast>;
@@ -117,22 +116,20 @@ type CreateOnUpdateFoundListenerParams = {
   t: TFunction;
 };
 
-const createOnUpdateFoundListener = ({
-  toast,
-  registration,
-  t,
-}: CreateOnUpdateFoundListenerParams) => () => {
-  const installingWorker = registration.installing;
+const createOnUpdateFoundListener =
+  ({ toast, registration, t }: CreateOnUpdateFoundListenerParams) =>
+  () => {
+    const installingWorker = registration.installing;
 
-  if (!installingWorker) {
-    return;
-  }
+    if (!installingWorker) {
+      return;
+    }
 
-  const onStateChange = createOnStateChangeListener({
-    installingWorker,
-    t,
-    toast,
-  });
+    const onStateChange = createOnStateChangeListener({
+      installingWorker,
+      t,
+      toast,
+    });
 
-  installingWorker.addEventListener('statechange', onStateChange);
-};
+    installingWorker.addEventListener('statechange', onStateChange);
+  };

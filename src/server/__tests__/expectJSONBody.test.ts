@@ -4,6 +4,7 @@ import { testLambda } from '../../../testUtils/lambda';
 import { RequestMethods } from '../../utils/requestMethods';
 import { OK, BAD_REQUEST } from '../../utils/statusCodes';
 import { expectJSONBodyMiddleware } from '../middlewares/expectJSONBody';
+
 import type { RequestHandler } from '../types';
 
 const dummyHandler: RequestHandler<{ isObject: boolean }> = (req, res) => {

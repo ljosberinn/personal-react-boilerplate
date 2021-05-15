@@ -22,7 +22,6 @@ import { MdTranslate } from 'react-icons/md';
 
 import { ExternalLink } from '../../components/ExternalLink';
 import { useMotionAwareAnimation } from '../../hooks/useMotionAwareAnimation';
-import type { WithChildren } from '../../karma/types';
 import { gitUrl } from '../../layouts/CommonLayout';
 import { Feature } from './Feature';
 import {
@@ -38,6 +37,8 @@ import {
   SentryIcon,
   karmaShades,
 } from './icons';
+
+import type { WithChildren } from '../../karma/types';
 
 function FadedText({ children }: WithChildren) {
   return (

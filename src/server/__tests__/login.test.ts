@@ -1,11 +1,12 @@
 import { waitFor } from '../../../testUtils';
 import { testLambda } from '../../../testUtils/lambda';
-import type { RequestInitMethod } from '../../utils/requestMethods';
 import { RequestMethods } from '../../utils/requestMethods';
 import { NOT_FOUND, OK, UNAUTHORIZED } from '../../utils/statusCodes';
 import * as cookieHandling from '../auth/cookie';
 import { loginHandler } from '../auth/routes/login';
 import { expectJSONBodyMiddleware } from '../middlewares';
+
+import type { RequestInitMethod } from '../../utils/requestMethods';
 
 const url = '/api/v1/auth/login';
 const catchAllName = 'authRouter';

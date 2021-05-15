@@ -4,13 +4,15 @@ import {
   NextApiResponseMock,
 } from '../../../../testUtils/api';
 import { BAD_REQUEST } from '../../../utils/statusCodes';
-import type { GoogleProfile } from '../../auth/strategies/google';
 import {
   redirectToGoogle,
   processGoogleCallback,
 } from '../../auth/strategies/google';
-import type { OAuth2Response } from '../../auth/types';
 import * as oauth2Utils from '../../auth/utils';
+
+import type { GoogleProfile } from '../../auth/strategies/google';
+import type { OAuth2Response } from '../../auth/types';
+
 import 'whatwg-fetch';
 
 describe('auth - google', () => {

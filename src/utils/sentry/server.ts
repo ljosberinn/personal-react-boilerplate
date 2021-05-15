@@ -1,10 +1,11 @@
 import { RewriteFrames } from '@sentry/integrations';
 import { init, configureScope } from '@sentry/node';
-import type { IncomingMessage } from 'http';
-import type { NextApiRequest } from 'next';
 
 import { SENTRY_SERVER_ROOT_DIR } from '../../constants';
 import { isomorphicSentryInit, defaultOptions as options } from './shared';
+
+import type { IncomingMessage } from 'http';
+import type { NextApiRequest } from 'next';
 
 export * from '@sentry/node';
 

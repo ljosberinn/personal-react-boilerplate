@@ -1,4 +1,3 @@
-import type { FlexProps, IconProps } from '@chakra-ui/react';
 import {
   Switch,
   useColorMode,
@@ -9,6 +8,8 @@ import {
 import { FaSun, FaMoon } from 'react-icons/fa';
 
 import { useTranslation } from '../hooks/useTranslation';
+
+import type { FlexProps, IconProps } from '@chakra-ui/react';
 
 const gray = 'gray.500';
 const yellow = 'yellow.500';
@@ -40,14 +41,8 @@ export type ColorModeSwitchAltProps = FlexProps;
 export function ColorModeSwitchAlt(
   props: ColorModeSwitchAltProps
 ): JSX.Element {
-  const {
-    toggleColorMode,
-    isChecked,
-    sunColor,
-    switchLabel,
-    moonColor,
-    t,
-  } = useThemeMeta();
+  const { toggleColorMode, isChecked, sunColor, switchLabel, moonColor, t } =
+    useThemeMeta();
 
   return (
     <Flex cursor="pointer" d="inline-flex" {...props}>

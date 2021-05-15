@@ -5,13 +5,14 @@ import {
 } from '../../../../testUtils/api';
 import { BAD_REQUEST } from '../../../utils/statusCodes';
 import * as cookieUtils from '../../auth/cookie';
-import type { BattleNetRegion } from '../../auth/strategies/battlenet';
 import {
   redirectToBattleNet,
   processBattleNetCallback,
   BATTLE_NET_STATE_COOKIE_NAME,
 } from '../../auth/strategies/battlenet';
 import * as oauth2Utils from '../../auth/utils';
+
+import type { BattleNetRegion } from '../../auth/strategies/battlenet';
 import 'whatwg-fetch';
 
 const regions: BattleNetRegion[] = ['apac', 'us', 'eu', 'cn'];

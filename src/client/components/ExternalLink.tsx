@@ -1,9 +1,9 @@
-import type { LinkProps } from '@chakra-ui/react';
 import { Link, useColorModeValue, Icon } from '@chakra-ui/react';
-import { forwardRef } from 'react';
 import { FaExternalLinkAlt } from 'react-icons/fa';
+import { forwardRef } from 'react';
 
 import type { WithChildren } from '../karma/types';
+import type { LinkProps } from '@chakra-ui/react';
 
 export type ExternalLinkProps = LinkProps &
   WithChildren & {

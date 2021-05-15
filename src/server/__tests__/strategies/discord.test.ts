@@ -5,13 +5,14 @@ import {
   createNextApiResponse,
   NextApiResponseMock,
 } from '../../../../testUtils/api';
-import type { DiscordProfile } from '../../auth/strategies/discord';
 import {
   processDiscordCallback,
   redirectToDiscord,
 } from '../../auth/strategies/discord';
-import type { OAuth2Response } from '../../auth/types';
 import * as oauth2Utils from '../../auth/utils';
+
+import type { DiscordProfile } from '../../auth/strategies/discord';
+import type { OAuth2Response } from '../../auth/types';
 
 describe('auth - discord', () => {
   describe('redirect', () => {

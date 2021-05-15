@@ -1,4 +1,5 @@
 import { KarmaCore } from './Core';
+
 import type { WithChildren, KarmaCoreProps } from './types';
 
 export type KarmaSSGProps = Omit<KarmaCoreProps, 'mode'>;
