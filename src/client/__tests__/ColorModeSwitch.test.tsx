@@ -1,4 +1,4 @@
-/* eslint-disable testing-library/no-container, testing-library/no-node-access */
+/* eslint-disable testing-library/no-container */
 import { FaSun, FaMoon } from 'react-icons/fa';
 
 import {

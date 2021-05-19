@@ -46,6 +46,7 @@ export function I18NContextProvider({
   }, [locale]);
 
   useEffect(() => {
+    // eslint-disable-next-line unicorn/no-document-cookie
     document.cookie = `${I18N_COOKIE_NAME}=${locale}; max-age=31536000; path=/`;
   }, [locale]);
 

@@ -1,4 +1,4 @@
-/* eslint-disable testing-library/no-container, testing-library/no-node-access */
+/* eslint-disable testing-library/no-container */
 import { render, screen, testA11Y, validateHtml } from '../../../testUtils';
 import { ExternalLink } from '../components/ExternalLink';
 

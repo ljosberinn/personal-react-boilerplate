@@ -1,6 +1,6 @@
 import { Box, useToast, Flex, Text, Icon } from '@chakra-ui/react';
-import { FaInfoCircle } from 'react-icons/fa';
 import { useEffect, useRef } from 'react';
+import { FaInfoCircle } from 'react-icons/fa';
 
 import { IS_PROD, IS_TEST } from '../../../src/constants';
 import { useTranslation } from '../hooks/useTranslation';

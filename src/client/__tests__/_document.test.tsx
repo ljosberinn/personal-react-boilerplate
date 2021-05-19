@@ -1,6 +1,6 @@
 import NextDocument from 'next/document';
-import { renderToStaticMarkup } from 'react-dom/server';
 import { isValidElement } from 'react';
+import { renderToStaticMarkup } from 'react-dom/server';
 
 import { i18nCache } from '../../../testUtils/i18n';
 import { FALLBACK_LANGUAGE } from '../../constants';

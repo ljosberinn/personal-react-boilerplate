@@ -52,7 +52,6 @@ describe('<WebShareButton />', () => {
     const button = screen.getByRole('button');
 
     expect(button).not.toBeEmptyDOMElement();
-    // eslint-disable-next-line testing-library/no-node-access
     expect(button.firstChild).toBeInstanceOf(SVGSVGElement);
   });
 
