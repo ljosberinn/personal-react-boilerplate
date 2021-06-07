@@ -6,7 +6,6 @@ import {
   validateHtml,
 } from '../../../testUtils';
 import { WebShareButton } from '../components/WebShareButton';
-
 import type { WebShareButtonProps } from '../components/WebShareButton';
 
 const defaultProps: WebShareButtonProps = {

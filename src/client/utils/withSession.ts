@@ -1,10 +1,10 @@
-import { getSession } from '../../server/auth/cookie';
-import { FOUND_MOVED_TEMPORARILY } from '../../utils/statusCodes';
-
-import type { User } from '../context/AuthContext/types';
 import type { OutgoingHttpHeaders } from 'http';
 import type { GetServerSidePropsContext } from 'next';
 import type { ParsedUrlQuery } from 'querystring';
+
+import { getSession } from '../../server/auth/cookie';
+import { FOUND_MOVED_TEMPORARILY } from '../../utils/statusCodes';
+import type { User } from '../context/AuthContext/types';
 
 export type WithSessionOptions = {
   /**

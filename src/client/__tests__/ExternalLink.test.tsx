@@ -1,7 +1,6 @@
 /* eslint-disable testing-library/no-container */
 import { render, screen, testA11Y, validateHtml } from '../../../testUtils';
 import { ExternalLink } from '../components/ExternalLink';
-
 import type { ExternalLinkProps } from '../components/ExternalLink';
 
 const defaultProps: ExternalLinkProps = {

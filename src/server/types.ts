@@ -1,12 +1,13 @@
 /* istanbul ignore file */
-import type { User } from '../client/context/AuthContext/types';
-import type { SESSION_COOKIE_NAME } from '../constants';
 import type { IncomingMessage } from 'http';
 import type { NextApiResponse, NextApiRequest } from 'next';
 import type {
   RequestHandler as NextConnectRequestHandler,
   Middleware as NextConnectMiddleware,
 } from 'next-connect';
+
+import type { User } from '../client/context/AuthContext/types';
+import type { SESSION_COOKIE_NAME } from '../constants';
 
 type EnhancedNextApiRequest = NextApiRequest & {
   [SESSION_COOKIE_NAME]: User;

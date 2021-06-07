@@ -1,11 +1,10 @@
-import { FACEBOOK_CLIENT_ID, FACEBOOK_CLIENT_SECRET } from '../../../constants';
-import { getOAuth2Data, redirect } from '../utils';
-
 import type {
   OAuth2RedirectHandler,
   OAuth2CallbackHandler,
 } from '../../../client/context/AuthContext/types';
+import { FACEBOOK_CLIENT_ID, FACEBOOK_CLIENT_SECRET } from '../../../constants';
 import type { OAuth2Response } from '../types';
+import { getOAuth2Data, redirect } from '../utils';
 
 export type FacebookProfile = {
   id: string;

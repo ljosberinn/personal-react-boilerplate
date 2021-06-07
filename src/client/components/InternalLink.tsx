@@ -1,11 +1,11 @@
 import { Link as ChakraLink } from '@chakra-ui/react';
+import type { LinkProps as ChakraLinkProps } from '@chakra-ui/react';
+import type { LinkProps as NextLinkProps } from 'next/dist/client/link';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import { forwardRef } from 'react';
 
 import type { WithChildren } from '../karma/types';
-import type { LinkProps as ChakraLinkProps } from '@chakra-ui/react';
-import type { LinkProps as NextLinkProps } from 'next/dist/client/link';
 
 export type InternalLinkProps =
   // enforce having children

@@ -1,12 +1,11 @@
-import { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } from '../../../constants';
-import { BAD_REQUEST } from '../../../utils/statusCodes';
-import { getOAuth2Data, redirect } from '../utils';
-
 import type {
   OAuth2RedirectHandler,
   OAuth2CallbackHandler,
 } from '../../../client/context/AuthContext/types';
+import { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } from '../../../constants';
+import { BAD_REQUEST } from '../../../utils/statusCodes';
 import type { OAuth2Response } from '../types';
+import { getOAuth2Data, redirect } from '../utils';
 
 export type GoogleProfile = {
   sub: string;

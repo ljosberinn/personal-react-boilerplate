@@ -3,7 +3,6 @@ import {
   FALLBACK_LANGUAGE,
   namespaces as allNamespaces,
 } from '../../constants';
-
 import type { Namespace } from '../../constants';
 
 export declare type I18nextNamespace = Record<string, string>;

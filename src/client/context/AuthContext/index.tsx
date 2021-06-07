@@ -6,11 +6,11 @@ import {
   useCallback,
   createContext,
 } from 'react';
+import type { SetStateAction, Dispatch } from 'react';
 
 import { ENABLED_PROVIDER } from '../../../constants';
 import { INTERNAL_SERVER_ERROR } from '../../../utils/statusCodes';
 import { useIsMounted } from '../../hooks/useIsMounted';
-
 import type { WithChildren, KarmaMode } from '../../karma/types';
 import type {
   User,
@@ -18,7 +18,6 @@ import type {
   LocalLoginOptions,
   AuthContextDefinition,
 } from './types';
-import type { SetStateAction, Dispatch } from 'react';
 
 export type AuthContextProviderProps = WithChildren<{
   session: User | null;
@@ -68,43 +67,44 @@ export function AuthContextProvider({
     user,
   });
 
-  const login = useCallback(async (options: LoginOptions): Promise<
-    User | number | null
-  > => {
-    if ('provider' in options) {
-      if (ENABLED_PROVIDER.includes(options.provider)) {
-        window.location.assign(
-          endpoints.provider.url.replace('provider', options.provider)
-        );
+  const login = useCallback(
+    async (options: LoginOptions): Promise<User | number | null> => {
+      if ('provider' in options) {
+        if (ENABLED_PROVIDER.includes(options.provider)) {
+          window.location.assign(
+            endpoints.provider.url.replace('provider', options.provider)
+          );
+        }
+
+        return null;
       }
 
-      return null;
-    }
+      try {
+        const { url, method } = endpoints.login;
 
-    try {
-      const { url, method } = endpoints.login;
+        const response = await fetch(url, {
+          body: JSON.stringify(options),
+          method,
+        });
 
-      const response = await fetch(url, {
-        body: JSON.stringify(options),
-        method,
-      });
+        if (response.ok) {
+          const json: User = await response.json();
 
-      if (response.ok) {
-        const json: User = await response.json();
+          setUser(json);
 
-        setUser(json);
+          return json;
+        }
 
-        return json;
+        return response.status;
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.error(error);
+
+        return INTERNAL_SERVER_ERROR;
       }
-
-      return response.status;
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error(error);
-
-      return INTERNAL_SERVER_ERROR;
-    }
-  }, []);
+    },
+    []
+  );
 
   const logout = useCallback(async (redirectDestination?: string) => {
     const { url, method } = endpoints.logout;
@@ -130,32 +130,33 @@ export function AuthContextProvider({
    * - the response status code when failing to register
    * - INTERNAL_SERVER_ERROR when crashing
    */
-  const register = useCallback(async (options: LocalLoginOptions): Promise<
-    User | number
-  > => {
-    try {
-      const { url, method } = endpoints.register;
+  const register = useCallback(
+    async (options: LocalLoginOptions): Promise<User | number> => {
+      try {
+        const { url, method } = endpoints.register;
 
-      const response = await fetch(url, {
-        body: JSON.stringify(options),
-        method,
-      });
+        const response = await fetch(url, {
+          body: JSON.stringify(options),
+          method,
+        });
 
-      if (response.ok) {
-        const json: User = await response.json();
-        setUser(json);
+        if (response.ok) {
+          const json: User = await response.json();
+          setUser(json);
 
-        return json;
+          return json;
+        }
+
+        return response.status;
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.error(error);
+
+        return INTERNAL_SERVER_ERROR;
       }
-
-      return response.status;
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error(error);
-
-      return INTERNAL_SERVER_ERROR;
-    }
-  }, []);
+    },
+    []
+  );
 
   const value = useMemo(
     () => ({

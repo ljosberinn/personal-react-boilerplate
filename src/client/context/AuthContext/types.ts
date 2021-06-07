@@ -1,9 +1,10 @@
+import type { NextApiRequest, NextApiResponse } from 'next';
+
 import type { BattleNetProfile } from '../../../server/auth/strategies/battlenet';
 import type { DiscordProfile } from '../../../server/auth/strategies/discord';
 import type { FacebookProfile } from '../../../server/auth/strategies/facebook';
 import type { GitHubProfile } from '../../../server/auth/strategies/github';
 import type { GoogleProfile } from '../../../server/auth/strategies/google';
-import type { NextApiRequest, NextApiResponse } from 'next';
 
 export type User =
   | GitHubProfile

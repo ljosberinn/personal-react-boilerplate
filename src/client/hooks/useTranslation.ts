@@ -1,9 +1,8 @@
 import { useCallback, useContext, useMemo } from 'react';
 
 import { IS_PROD } from '../../constants';
-import { I18NContext } from '../context/I18NContext';
-
 import type { Namespace } from '../../constants';
+import { I18NContext } from '../context/I18NContext';
 
 type NormalizeArgs = {
   namespace?: Namespace;

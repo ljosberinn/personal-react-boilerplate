@@ -1,9 +1,8 @@
 import { captureException } from '@sentry/node';
+import type { NextPageContext } from 'next';
 import NextErrorComponent from 'next/error';
 
 import { INTERNAL_SERVER_ERROR, NOT_FOUND } from '../utils/statusCodes';
-
-import type { NextPageContext } from 'next';
 
 export type ErrorProps = {
   statusCode: number | null | undefined;

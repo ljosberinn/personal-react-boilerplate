@@ -3,7 +3,6 @@ import { i18nCache } from '../../../testUtils/i18n';
 import { FALLBACK_LANGUAGE } from '../../constants';
 import * as Core from '../karma/Core';
 import { KarmaSSG } from '../karma/SSG';
-
 import type { KarmaSSGProps } from '../karma/SSG';
 
 describe('<KarmaSSG />', () => {

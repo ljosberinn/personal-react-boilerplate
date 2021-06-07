@@ -10,16 +10,15 @@ import {
   IconButton,
   Icon,
 } from '@chakra-ui/react';
+import type { MenuProps } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { MdTranslate } from 'react-icons/md';
 
 import { ENABLED_LANGUAGES } from '../../constants';
 import { useTranslation } from '../hooks/useTranslation';
+import type { TFunction } from '../hooks/useTranslation';
 import { ExternalLink } from './ExternalLink';
 import { InternalLink } from './InternalLink';
-
-import type { TFunction } from '../hooks/useTranslation';
-import type { MenuProps } from '@chakra-ui/react';
 
 export type LanguageSwitchAltProps = Omit<MenuProps, 'children' | 'isLazy'>;
 

@@ -4,7 +4,6 @@ import { createUseRouterMock } from '../../../testUtils/router';
 import { FALLBACK_LANGUAGE } from '../../constants';
 import * as Core from '../karma/Core';
 import { KarmaSSR } from '../karma/SSR';
-
 import type { KarmaSSRProps } from '../karma/SSR';
 
 describe('<KarmaSSR />', () => {

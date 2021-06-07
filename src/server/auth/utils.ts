@@ -1,9 +1,9 @@
-import { FOUND_MOVED_TEMPORARILY } from '../../utils/statusCodes';
-
-import type { ExternalProvider } from '../../client/context/AuthContext/types';
-import type { OAuth2GetParams, OAuth2Response } from './types';
 import type { IncomingMessage } from 'http';
 import type { NextApiResponse } from 'next';
+
+import type { ExternalProvider } from '../../client/context/AuthContext/types';
+import { FOUND_MOVED_TEMPORARILY } from '../../utils/statusCodes';
+import type { OAuth2GetParams, OAuth2Response } from './types';
 
 // eslint-disable-next-line inclusive-language/use-inclusive-words
 /**

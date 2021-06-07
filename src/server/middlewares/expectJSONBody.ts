@@ -1,5 +1,4 @@
 import { BAD_REQUEST } from '../../utils/statusCodes';
-
 import type { Middleware } from '../types';
 
 type Request = {

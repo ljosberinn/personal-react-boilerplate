@@ -4,10 +4,9 @@ import Head from 'next/head';
 // import { createGetServerSideProps } from '../../src/client/karma/getServerSideProps';
 import { createGetStaticProps } from '../client/karma/getStaticProps';
 import { layoutWithKarma } from '../client/karma/layout';
+import type { LayoutCreator } from '../client/karma/layout';
 import { CommonLayout } from '../client/layouts/CommonLayout';
 import { Index } from '../client/routes/Index';
-
-import type { LayoutCreator } from '../client/karma/layout';
 import type { Namespace } from '../constants';
 
 export default function IndexPage(): JSX.Element {

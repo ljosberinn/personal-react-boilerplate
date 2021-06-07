@@ -13,9 +13,8 @@ import { ColorModeSwitch } from '../components/ColorModeSwitch';
 import { ExternalLink } from '../components/ExternalLink';
 import { LanguageSwitch } from '../components/LanguageSwitch';
 import { WebShareButton } from '../components/WebShareButton';
-import { KarmaIcon } from '../routes/Index/icons';
-
 import type { WithChildren } from '../karma/types';
+import { KarmaIcon } from '../routes/Index/icons';
 
 export const gitUrl = '//github.com/ljosberinn/personal-react-boilerplate';
 

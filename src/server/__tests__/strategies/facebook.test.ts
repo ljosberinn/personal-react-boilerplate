@@ -7,10 +7,9 @@ import {
   redirectToFacebook,
   processFacebookCallback,
 } from '../../auth/strategies/facebook';
-import * as oauth2Utils from '../../auth/utils';
-
 import type { FacebookProfile } from '../../auth/strategies/facebook';
 import type { OAuth2Response } from '../../auth/types';
+import * as oauth2Utils from '../../auth/utils';
 
 import 'whatwg-fetch';
 

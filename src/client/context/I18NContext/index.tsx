@@ -1,7 +1,6 @@
 import { createContext, useEffect } from 'react';
 
 import { I18N_COOKIE_NAME } from '../../../constants';
-
 import type { WithChildren } from '../../karma/types';
 import type { I18NContextDefinition } from './types';
 

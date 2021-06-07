@@ -7,10 +7,9 @@ import {
   redirectToGitHub,
   processGitHubCallback,
 } from '../../auth/strategies/github';
-import * as oauth2Utils from '../../auth/utils';
-
 import type { GitHubProfile } from '../../auth/strategies/github';
 import type { OAuth2Response } from '../../auth/types';
+import * as oauth2Utils from '../../auth/utils';
 
 import 'whatwg-fetch';
 

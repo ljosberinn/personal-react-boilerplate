@@ -5,11 +5,10 @@ import {
   forwardRef,
   Icon as ChakraIcon,
 } from '@chakra-ui/react';
+import type { FlexProps, IconProps } from '@chakra-ui/react';
 import { FaSun, FaMoon } from 'react-icons/fa';
 
 import { useTranslation } from '../hooks/useTranslation';
-
-import type { FlexProps, IconProps } from '@chakra-ui/react';
 
 const gray = 'gray.500';
 const yellow = 'yellow.500';

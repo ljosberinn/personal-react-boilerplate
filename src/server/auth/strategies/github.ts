@@ -1,11 +1,10 @@
-import { GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET } from '../../../constants';
-import { getOAuth2Data, redirect } from '../utils';
-
 import type {
   OAuth2CallbackHandler,
   OAuth2RedirectHandler,
 } from '../../../client/context/AuthContext/types';
+import { GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET } from '../../../constants';
 import type { OAuth2Response } from '../types';
+import { getOAuth2Data, redirect } from '../utils';
 
 export type GitHubProfile = {
   login: string;

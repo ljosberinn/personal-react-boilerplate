@@ -3,9 +3,8 @@ import { i18nCache } from '../../../testUtils/i18n';
 import { FALLBACK_LANGUAGE } from '../../constants';
 import { IsomorphicKarma } from '../karma/Isomorphic';
 import * as SSG from '../karma/SSG';
-import * as SSR from '../karma/SSR';
-
 import type { KarmaSSGProps } from '../karma/SSG';
+import * as SSR from '../karma/SSR';
 import type { KarmaSSRProps } from '../karma/SSR';
 
 const children = 'next-karma';

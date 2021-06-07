@@ -9,9 +9,8 @@ import {
   UNPROCESSABLE_ENTITY,
 } from '../../utils/statusCodes';
 import { endpoints } from '../context/AuthContext';
-import { useAuth } from '../hooks/useAuth';
-
 import type { Provider, User } from '../context/AuthContext/types';
+import { useAuth } from '../hooks/useAuth';
 
 const password = 'next-karma!';
 

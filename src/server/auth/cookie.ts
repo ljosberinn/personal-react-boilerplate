@@ -1,15 +1,14 @@
 import { serialize, parse } from 'cookie';
+import type { CookieSerializeOptions } from 'cookie';
+import type { IncomingMessage } from 'http';
+import type { NextApiRequest, NextApiResponse } from 'next';
 
+import type { User } from '../../client/context/AuthContext/types';
 import {
   SESSION_LIFETIME,
   IS_PROD,
   SESSION_COOKIE_NAME,
 } from '../../constants';
-
-import type { User } from '../../client/context/AuthContext/types';
-import type { CookieSerializeOptions } from 'cookie';
-import type { IncomingMessage } from 'http';
-import type { NextApiRequest, NextApiResponse } from 'next';
 
 const SET_COOKIE_HEADER = 'Set-Cookie';
 

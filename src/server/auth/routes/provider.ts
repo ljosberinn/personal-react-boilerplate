@@ -1,14 +1,22 @@
+import type {
+  ExternalProvider,
+  OAuth2RedirectHandler,
+  OAuth2CallbackHandler,
+  User,
+} from '../../../client/context/AuthContext/types';
 import { ENABLED_PROVIDER } from '../../../constants';
 import {
   BAD_REQUEST,
   FOUND_MOVED_TEMPORARILY,
   INTERNAL_SERVER_ERROR,
 } from '../../../utils/statusCodes';
+import type { RequestHandler } from '../../types';
 import { encryptSession, setSessionCookie } from '../cookie';
 import {
   redirectToBattleNet,
   processBattleNetCallback,
 } from '../strategies/battlenet';
+import type { BattleNetRegion } from '../strategies/battlenet';
 import {
   redirectToDiscord,
   processDiscordCallback,
@@ -20,15 +28,6 @@ import {
 import { redirectToGitHub, processGitHubCallback } from '../strategies/github';
 import { redirectToGoogle, processGoogleCallback } from '../strategies/google';
 import { buildBaseRedirectUrl, getOrigin } from '../utils';
-
-import type {
-  ExternalProvider,
-  OAuth2RedirectHandler,
-  OAuth2CallbackHandler,
-  User,
-} from '../../../client/context/AuthContext/types';
-import type { RequestHandler } from '../../types';
-import type { BattleNetRegion } from '../strategies/battlenet';
 
 const redirectHandlerMap: Record<ExternalProvider, OAuth2RedirectHandler> = {
   battlenet: redirectToBattleNet,

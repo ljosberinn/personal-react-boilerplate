@@ -3,14 +3,13 @@ import nextConnect from 'next-connect';
 
 import { waitFor } from '../../../testUtils';
 import { testLambda } from '../../../testUtils/lambda';
+import type { User } from '../../client/context/AuthContext/types';
 import { SESSION_COOKIE_NAME } from '../../constants';
 import { RequestMethods } from '../../utils/requestMethods';
 import { OK, UNAUTHORIZED } from '../../utils/statusCodes';
 import * as cookieUtils from '../auth/cookie';
-import { authNSecurityMiddleware } from '../middlewares/authNSecurity';
-
-import type { User } from '../../client/context/AuthContext/types';
 import type { AuthenticatedRequest } from '../auth/types';
+import { authNSecurityMiddleware } from '../middlewares/authNSecurity';
 import type { RequestHandler } from '../types';
 
 type Request = AuthenticatedRequest;

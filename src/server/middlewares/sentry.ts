@@ -1,5 +1,4 @@
 import { attachLambdaContext } from '../../utils/sentry/server';
-
 import type { Middleware } from '../types';
 
 /**

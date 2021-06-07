@@ -1,3 +1,9 @@
+import type { CookieSerializeOptions } from 'cookie';
+
+import type {
+  OAuth2RedirectHandler,
+  OAuth2CallbackHandler,
+} from '../../../client/context/AuthContext/types';
 import {
   BATTLENET_CLIENT_ID,
   BATTLENET_CLIENT_SECRET,
@@ -5,14 +11,8 @@ import {
 } from '../../../constants';
 import { BAD_REQUEST } from '../../../utils/statusCodes';
 import { removeCookie, setCookie } from '../cookie';
-import { getOAuth2Data, redirect } from '../utils';
-
-import type {
-  OAuth2RedirectHandler,
-  OAuth2CallbackHandler,
-} from '../../../client/context/AuthContext/types';
 import type { OAuth2Response } from '../types';
-import type { CookieSerializeOptions } from 'cookie';
+import { getOAuth2Data, redirect } from '../utils';
 
 const client_id = BATTLENET_CLIENT_ID;
 const client_secret = BATTLENET_CLIENT_SECRET;

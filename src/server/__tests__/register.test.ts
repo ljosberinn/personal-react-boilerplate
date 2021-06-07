@@ -1,10 +1,9 @@
 import { testLambda } from '../../../testUtils/lambda';
 import { RequestMethods } from '../../utils/requestMethods';
+import type { RequestInitMethod } from '../../utils/requestMethods';
 import { NOT_FOUND, BAD_REQUEST, CREATED } from '../../utils/statusCodes';
 import { registrationHandler } from '../auth/routes/register';
 import { expectJSONBodyMiddleware } from '../middlewares';
-
-import type { RequestInitMethod } from '../../utils/requestMethods';
 
 const url = '/api/v1/auth/register';
 const catchAllName = 'authRouter';

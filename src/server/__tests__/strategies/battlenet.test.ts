@@ -10,9 +10,9 @@ import {
   processBattleNetCallback,
   BATTLE_NET_STATE_COOKIE_NAME,
 } from '../../auth/strategies/battlenet';
+import type { BattleNetRegion } from '../../auth/strategies/battlenet';
 import * as oauth2Utils from '../../auth/utils';
 
-import type { BattleNetRegion } from '../../auth/strategies/battlenet';
 import 'whatwg-fetch';
 
 const regions: BattleNetRegion[] = ['apac', 'us', 'eu', 'cn'];

@@ -4,7 +4,6 @@ import { FaInfoCircle } from 'react-icons/fa';
 
 import { IS_PROD, IS_TEST } from '../../../src/constants';
 import { useTranslation } from '../hooks/useTranslation';
-
 import type { TFunction } from '../hooks/useTranslation';
 
 const sw = '/service-worker.js';

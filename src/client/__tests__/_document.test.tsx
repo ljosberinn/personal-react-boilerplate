@@ -1,13 +1,12 @@
 import NextDocument from 'next/document';
+import type { DocumentProps } from 'next/document';
 import { isValidElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 
 import { i18nCache } from '../../../testUtils/i18n';
 import { FALLBACK_LANGUAGE } from '../../constants';
 import Document from '../../pages/_document';
-
 import type { KarmaSSRProps } from '../karma/SSR';
-import type { DocumentProps } from 'next/document';
 
 const pageProps: KarmaSSRProps = {
   auth: { session: null },

@@ -1,8 +1,10 @@
 import * as sentryNode from '@sentry/node';
 import * as sentryReact from '@sentry/react';
 import { serialize } from 'cookie';
+import type { GetServerSidePropsContext } from 'next';
 
 import { FALLBACK_LANGUAGE, SESSION_COOKIE_NAME } from '../../../src/constants';
+import type { Namespace } from '../../../src/constants';
 import {
   createNextApiRequestMock,
   createServerResponseMock,
@@ -13,17 +15,14 @@ import * as cookieUtils from '../../server/auth/cookie';
 import * as sentryUtils from '../../utils/sentry/client';
 import * as sentryUtilsServer from '../../utils/sentry/server';
 import { TEMPORARY_REDIRECT } from '../../utils/statusCodes';
+import type { User } from '../context/AuthContext/types';
 import {
   getServerSideProps,
   withKarmaSSRProps,
   createGetServerSideProps,
 } from '../karma/getServerSideProps';
 import * as i18n from '../karma/i18n';
-
-import type { Namespace } from '../../../src/constants';
-import type { User } from '../context/AuthContext/types';
 import type { I18nextResourceLocale } from '../karma/i18n';
-import type { GetServerSidePropsContext } from 'next';
 
 const mockCtx: GetServerSidePropsContext = {
   query: {},

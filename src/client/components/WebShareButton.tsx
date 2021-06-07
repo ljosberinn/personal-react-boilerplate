@@ -1,10 +1,9 @@
 import { IconButton, Icon } from '@chakra-ui/react';
+import type { IconButtonProps } from '@chakra-ui/react';
 import { MdShare } from 'react-icons/md';
 
 import { captureException } from '../../utils/sentry/client';
 import { usePageIsHydrated } from '../hooks/usePageIsHydrated';
-
-import type { IconButtonProps } from '@chakra-ui/react';
 
 export type WebShareButtonProps = Omit<
   IconButtonProps,

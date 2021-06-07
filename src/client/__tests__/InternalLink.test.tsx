@@ -1,7 +1,7 @@
+import type { LinkProps } from 'next/link';
+
 import { screen, render, testA11Y, validateHtml } from '../../../testUtils';
 import { InternalLink } from '../components/InternalLink';
-
-import type { LinkProps } from 'next/link';
 
 const ariaAttr = 'aria-current';
 const pathname: LinkProps['href'] = 'docs';

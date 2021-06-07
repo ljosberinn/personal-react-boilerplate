@@ -1,10 +1,9 @@
 import nextConnect from 'next-connect';
 
-import { UNAUTHORIZED } from '../../../utils/statusCodes';
-import { getSession } from '../cookie';
-
 import type { User } from '../../../client/context/AuthContext/types';
+import { UNAUTHORIZED } from '../../../utils/statusCodes';
 import type { RequestHandler } from '../../types';
+import { getSession } from '../cookie';
 
 type Response = User;
 type Request = {

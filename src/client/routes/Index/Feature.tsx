@@ -6,13 +6,12 @@ import {
   Icon,
   Flex,
 } from '@chakra-ui/react';
+import type { ReactNode, MouseEvent } from 'react';
 import { FaArrowRight } from 'react-icons/fa';
 
 import { ExternalLink } from '../../components/ExternalLink';
 import { InternalLink } from '../../components/InternalLink';
-
 import type { WithChildren } from '../../karma/types';
-import type { ReactNode, MouseEvent } from 'react';
 
 export type FeatureProps = WithChildren<{
   title: string;

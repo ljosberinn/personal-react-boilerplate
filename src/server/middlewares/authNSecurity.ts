@@ -1,7 +1,6 @@
 import { SESSION_COOKIE_NAME } from '../../../src/constants';
 import { BAD_REQUEST, UNAUTHORIZED } from '../../utils/statusCodes';
 import { getSession } from '../auth/cookie';
-
 import type { AuthenticatedRequest } from '../auth/types';
 import type { Middleware } from '../types';
 

@@ -1,17 +1,17 @@
-import { FALLBACK_LANGUAGE } from '../../constants';
-import { getI18n } from './i18n';
-
-import type { KarmaSSGProps } from './SSG';
-import type {
-  IsomorphicI18nRequirements,
-  KarmaCoreProps,
-  UnknownObjectValues,
-} from './types';
 import type {
   GetStaticPropsResult as NextGetStaticPropsResult,
   GetStaticPropsContext,
 } from 'next';
 import type { ParsedUrlQuery } from 'querystring';
+
+import { FALLBACK_LANGUAGE } from '../../constants';
+import type { KarmaSSGProps } from './SSG';
+import { getI18n } from './i18n';
+import type {
+  IsomorphicI18nRequirements,
+  KarmaCoreProps,
+  UnknownObjectValues,
+} from './types';
 
 type NextGetStaticPropsResultWithoutProps = Exclude<
   NextGetStaticPropsResult<unknown>,
