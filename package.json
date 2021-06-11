@@ -37,7 +37,7 @@
     "@next/env": "10.2.3",
     "@sentry/types": "6.6.0",
     "@sentry/webpack-plugin": "1.15.1",
-    "@testing-library/jest-dom": "5.13.0",
+    "@testing-library/jest-dom": "5.14.0",
     "@testing-library/react": "11.2.7",
     "@testing-library/react-hooks": "7.0.0",
     "@testing-library/user-event": "13.1.9",
