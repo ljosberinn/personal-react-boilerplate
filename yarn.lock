@@ -5502,10 +5502,10 @@ html-escaper@^2.0.0:
   resolved "https://registry.yarnpkg.com/html-escaper/-/html-escaper-2.0.2.tgz#dfd60027da36a36dfcbe236262c00a5822681453"
   integrity sha512-H2iMtd0I4Mt5eYiapRdIDjp+XzelXQ0tFE4JS7YFwFevXXMmOp9myNrUvCg0D6ws8iqkRPBfKHgbwig1SmlLfg==
 
-html-validate@4.13.1:
-  version "4.13.1"
-  resolved "https://registry.yarnpkg.com/html-validate/-/html-validate-4.13.1.tgz#b4cbe9a3e9b7f7591586f219e42f92cebadad314"
-  integrity sha512-HCx9saspLiI9uL1XHpqEpV+yc/td5A4HR9HHNffuody4WNDuLDpLe4Sx6PXoBMIjdgozoiBrFSJqKMa3vwprBg==
+html-validate@4.14.0:
+  version "4.14.0"
+  resolved "https://registry.yarnpkg.com/html-validate/-/html-validate-4.14.0.tgz#b70f49cbada3fe7642491b25583dad1d9b9fc5b6"
+  integrity sha512-+QXML6W1ulLl6F98PqnBvscm1kqmfYzPpB2WgBsRHEKI5J6xDGvoyrPC7nb3yS5fKL354wHRZ0vQDCp6s50cVg==
   dependencies:
     "@babel/code-frame" "^7.10.0"
     "@html-validate/stylish" "^1.0.0"
