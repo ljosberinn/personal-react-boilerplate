@@ -103,9 +103,7 @@ const defaultConfig = {
      */
     ignoreBuildErrors: true,
   },
-  future: {
-    webpack5: true,
-  },
+  webpack5: true,
   webpack: (config, options) => {
     // disables transpiling all `__tests__` files, speeding up build process
     // in case of a barebones karma install, this reduces build time by ~ 25%
