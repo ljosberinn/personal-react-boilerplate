@@ -116,6 +116,7 @@ const defaultConfig = {
   reactStrictMode: true,
   experimental: {
     scrollRestoration: true,
+    reactRoot: true,
   },
   eslint: {
     ignoreDuringBuilds: true,

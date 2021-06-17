@@ -25,8 +25,8 @@
     "framer-motion": "4.1.17",
     "next": "11.0.0",
     "next-connect": "0.10.1",
-    "react": "17.0.2",
-    "react-dom": "17.0.2",
+    "react": "18.0.0-alpha-e6be2d531",
+    "react-dom": "18.0.0-alpha-e6be2d531",
     "react-icons": "4.2.0",
     "web-vitals": "2.0.1"
   },
