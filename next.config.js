@@ -116,8 +116,9 @@ const defaultConfig = {
   reactStrictMode: true,
   experimental: {
     scrollRestoration: true,
-    turboMode: true,
-    eslint: true,
+  },
+  eslint: {
+    ignoreDuringBuilds: true,
   },
   i18n: {
     localeDetection: true,
