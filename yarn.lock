@@ -1794,10 +1794,10 @@
   dependencies:
     "@hapi/hoek" "^8.3.0"
 
-"@html-validate/stylish@^1.0.0":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@html-validate/stylish/-/stylish-1.0.1.tgz#67cbb2084d67d4af443e00f856f069aaba640ba1"
-  integrity sha512-fx1eJv6N00JYxYXxR3yP53jm33ZBoLGEwv2x6Q2KIg7Uz3I9/+Bpl5tJtja7CdxD+ueq1SDNhsiYZ4KDwuHe8Q==
+"@html-validate/stylish@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@html-validate/stylish/-/stylish-2.0.0.tgz#14ca637038700fee220c4e99c79ac13a800db18c"
+  integrity sha512-lmI4sUZGHpxfWyPtKKrcIbwBbDLXSb+XPEYS1USc46ZzXx/VsnsVqbk3pPIUdEPhd4v72xGS8HDAy/+8wZzlbQ==
   dependencies:
     kleur "^4.0.0"
     text-table "^0.2.0"
@@ -5537,13 +5537,13 @@ html-escaper@^2.0.0:
   resolved "https://registry.yarnpkg.com/html-escaper/-/html-escaper-2.0.2.tgz#dfd60027da36a36dfcbe236262c00a5822681453"
   integrity sha512-H2iMtd0I4Mt5eYiapRdIDjp+XzelXQ0tFE4JS7YFwFevXXMmOp9myNrUvCg0D6ws8iqkRPBfKHgbwig1SmlLfg==
 
-html-validate@5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/html-validate/-/html-validate-5.0.0.tgz#04531a6ca4bb9d11b3cef0f8d59bc5e88c491ce3"
-  integrity sha512-NfZ8hXq6uZQtMrM4cHmG2hp+YTNtkDAnatrqOADwZYmZWPziDn43wRyQOQ5IjwAbgGZnkoDhB2EnFaNoz6cxvA==
+html-validate@5.0.1:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/html-validate/-/html-validate-5.0.1.tgz#ed8097b558f4f6923f092b68e6d4a6dff530ffa4"
+  integrity sha512-s2sHskOlobnhim2seVTkAvt0MPMDSetJLUuARgqSiSxF5J3yYzGIeN3+wgpw1XlpYdNRBs7C2EM1wZJtzHlhNg==
   dependencies:
     "@babel/code-frame" "^7.10.0"
-    "@html-validate/stylish" "^1.0.0"
+    "@html-validate/stylish" "^2.0.0"
     "@sidvind/better-ajv-errors" "^0.9.0"
     acorn-walk "^8.0.0"
     ajv "^8.0.0"
