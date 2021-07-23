@@ -59,7 +59,7 @@
     "jest-axe": "5.0.1",
     "jest-watch-typeahead": "0.6.4",
     "lint-staged": "11.1.0",
-    "msw": "0.32.2",
+    "msw": "0.32.3",
     "next-compose-plugins": "2.2.1",
     "next-offline": "5.0.5",
     "node-fetch": "2.6.1",
