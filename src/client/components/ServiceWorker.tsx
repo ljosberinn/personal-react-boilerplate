@@ -65,7 +65,11 @@ export function ServiceWorker(): null {
         );
         hasWarned = true;
       }
-    } else if ('serviceWorker' in navigator && !attemptedRegistration.current) {
+
+      return;
+    }
+
+    if ('serviceWorker' in navigator && !attemptedRegistration.current) {
       attemptedRegistration.current = true;
 
       navigator.serviceWorker

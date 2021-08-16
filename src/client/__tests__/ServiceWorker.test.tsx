@@ -121,7 +121,9 @@ describe('<ServiceWorker />', () => {
 
     render(<ServiceWorker />);
 
-    await screen.findByRole('alert');
+    await waitFor(() => {
+      expect(screen.getByRole('alert')).toBeInTheDocument();
+    });
   });
 
   it('reloads the page on toast click', async () => {

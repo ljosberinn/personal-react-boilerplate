@@ -2,11 +2,12 @@ import { parse } from 'cookie';
 import { IncomingMessage, ServerResponse } from 'http';
 import { Socket } from 'net';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { parseBody } from 'next/dist/next-server/server/api-utils';
+import { parseBody } from 'next/dist/server/api-utils';
 
 export class NextApiResponseMock
   extends ServerResponse
-  implements NextApiResponse {
+  implements NextApiResponse
+{
   public send = jest.fn();
 
   public json = jest.fn();
@@ -26,7 +27,8 @@ export class NextApiResponseMock
 
 export class NextApiRequestMock
   extends IncomingMessage
-  implements NextApiRequest {
+  implements NextApiRequest
+{
   public body = {};
 
   public env = {};

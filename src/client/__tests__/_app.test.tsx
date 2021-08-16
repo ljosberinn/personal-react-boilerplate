@@ -1,5 +1,6 @@
 import * as sentryReact from '@sentry/react';
 import { render, screen } from '@testing-library/react';
+import type { NextWebVitalsMetric } from 'next/app';
 import { Router } from 'next/router';
 
 import 'whatwg-fetch';
@@ -135,12 +136,12 @@ describe('<App />', () => {
 
 describe('reportWebVitals', () => {
   it('attaches context on @sentry/browser', () => {
-    const mockMetric = {
+    const mockMetric: NextWebVitalsMetric = {
       id: '',
-      label: '',
-      name: '',
       startTime: Date.now(),
       value: 1,
+      label: 'custom',
+      name: 'Next.js-route-change-to-render',
     };
 
     const setContextSpy = jest.fn();

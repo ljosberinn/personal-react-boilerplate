@@ -22,7 +22,6 @@ import {
   createGetServerSideProps,
 } from '../karma/getServerSideProps';
 import * as i18n from '../karma/i18n';
-import type { I18nextResourceLocale } from '../karma/i18n';
 
 const mockCtx: GetServerSidePropsContext = {
   query: {},
@@ -44,13 +43,11 @@ const setupSpies = () => {
     .mockImplementationOnce((language, { namespaces } = {}) => {
       if (Array.isArray(namespaces) && namespaces.length > 0) {
         return Promise.resolve({
-          [language]: namespaces.reduce<Partial<I18nextResourceLocale>>(
-            (carry, namespace) => {
-              carry[namespace] = i18nCache[language][namespace];
-
-              return carry;
-            },
-            {}
+          [language]: Object.fromEntries(
+            namespaces.map((namespace) => [
+              namespace,
+              i18nCache[language][namespace],
+            ])
           ),
         });
       }
