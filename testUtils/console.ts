@@ -26,6 +26,7 @@ export const mockConsoleMethods = (
   return {
     restoreConsole: () => {
       mocks.forEach(({ method }, index) => {
+        // @ts-expect-error false positive
         // eslint-disable-next-line no-console
         console[method] = source[index];
       });

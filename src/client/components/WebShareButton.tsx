@@ -52,7 +52,11 @@ export function WebShareButton({
       // istanbul ignore next
       // canceling a share throws an `AbortError` or `InvalidStateError`
       // we most likely don't care about that
-      if (error.name !== 'InvalidStateError' && error.name !== 'AbortError') {
+      if (
+        error instanceof Error &&
+        error.name !== 'InvalidStateError' &&
+        error.name !== 'AbortError'
+      ) {
         captureException(error);
       }
 
