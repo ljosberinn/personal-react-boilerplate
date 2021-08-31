@@ -1,6 +1,6 @@
 import { ColorModeScript } from '@chakra-ui/react';
 import { captureException } from '@sentry/node';
-import Document, { Html, Head, Main, NextScript } from 'next/document';
+import { Html, Head, Main, NextScript } from 'next/document';
 
 /**
  * Send to Sentry all uncaught exceptions.
@@ -70,5 +70,3 @@ export default function CustomDocument(): JSX.Element {
   );
 }
 
-CustomDocument.renderDocument = Document.renderDocument;
-CustomDocument.getInitialProps = Document.getInitialProps;
