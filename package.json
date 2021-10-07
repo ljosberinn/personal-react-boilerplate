@@ -28,7 +28,7 @@
     "react": "18.0.0-alpha-e6be2d531",
     "react-dom": "18.0.0-alpha-e6be2d531",
     "react-icons": "4.3.1",
-    "web-vitals": "2.1.0"
+    "web-vitals": "2.1.1"
   },
   "devDependencies": {
     "@commitlint/cli": "13.2.0",
