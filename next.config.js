@@ -1,3 +1,4 @@
+// @ts-check
 const withOffline = require('next-offline');
 const { withPlugins } = require('next-compose-plugins');
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
@@ -94,6 +95,11 @@ const withSentry = (config, options) => {
   }
 };
 
+const date = new Date();
+
+/**
+ * @type {import('next/dist/server/config-shared').NextConfig}
+ **/
 const defaultConfig = {
   typescript: {
     /**
@@ -103,7 +109,6 @@ const defaultConfig = {
      */
     ignoreBuildErrors: true,
   },
-  webpack5: true,
   webpack: (config, options) => {
     // disables transpiling all `__tests__` files, speeding up build process
     // in case of a barebones karma install, this reduces build time by ~ 25%
@@ -116,13 +121,11 @@ const defaultConfig = {
   reactStrictMode: true,
   experimental: {
     scrollRestoration: true,
-    reactRoot: true,
   },
   eslint: {
     ignoreDuringBuilds: true,
   },
   i18n: {
-    localeDetection: true,
     defaultLocale: process.env.NEXT_PUBLIC_FALLBACK_LANGUAGE,
     locales: process.env.NEXT_PUBLIC_ENABLED_LANGUAGES.split(','),
   },
@@ -132,6 +135,16 @@ const defaultConfig = {
     // marked for the release they belong to. It may be undefined if running
     // outside of Vercel
     NEXT_PUBLIC_COMMIT_SHA: process.env.VERCEL_GIT_COMMIT_SHA,
+    NEXT_PUBLIC_BUILD_TIME: date.toISOString(),
+    NEXT_PUBLIC_BUILD_TIMESTAMP: Number(date).toString(),
+  },
+  headers: async () => {
+    return [
+      {
+        source: '/(.*)',
+        headers: securityHeaders,
+      },
+    ];
   },
 };
 
@@ -139,3 +152,54 @@ module.exports = withPlugins(
   [withBundleAnalyzer, [withOffline, offlineConfig]],
   defaultConfig
 );
+
+// https://securityheaders.com
+const ContentSecurityPolicy = `
+  default-src 'self';
+  script-src 'self' 'unsafe-eval' 'unsafe-inline' *.youtube.com *.twitter.com;
+  child-src *.youtube.com *.google.com *.twitter.com;
+  style-src 'self' 'unsafe-inline' *.googleapis.com;
+  img-src * blob: data:;
+  media-src 'none';
+  connect-src *;
+  font-src 'self' fonts.gstatic.com;
+`;
+
+const securityHeaders = [
+  // https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP
+  {
+    key: 'Content-Security-Policy',
+    value: ContentSecurityPolicy.replace(/\n/gu, ''),
+  },
+  // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referrer-Policy
+  {
+    key: 'Referrer-Policy',
+    value: 'origin-when-cross-origin',
+  },
+  // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options
+  {
+    key: 'X-Frame-Options',
+    value: 'DENY',
+  },
+  // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Content-Type-Options
+  {
+    key: 'X-Content-Type-Options',
+    value: 'nosniff',
+  },
+  // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-DNS-Prefetch-Control
+  {
+    key: 'X-DNS-Prefetch-Control',
+    value: 'on',
+  },
+  // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security
+  {
+    key: 'Strict-Transport-Security',
+    value: 'max-age=31536000; includeSubDomains; preload',
+  },
+  // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Feature-Policy
+  // Opt-out of Google FLoC: https://amifloced.org/
+  {
+    key: 'Permissions-Policy',
+    value: 'camera=(), microphone=(), geolocation=(), interest-cohort=()',
+  },
+];
