@@ -36,7 +36,7 @@
     "@next/bundle-analyzer": "11.1.2",
     "@next/env": "11.1.2",
     "@sentry/types": "6.13.3",
-    "@sentry/webpack-plugin": "1.18.0",
+    "@sentry/webpack-plugin": "1.18.1",
     "@testing-library/jest-dom": "5.14.1",
     "@testing-library/react": "12.1.2",
     "@testing-library/react-hooks": "7.0.2",
