@@ -2377,10 +2377,10 @@
     "@sentry/types" "6.13.3"
     tslib "^1.9.3"
 
-"@sentry/webpack-plugin@1.18.0":
-  version "1.18.0"
-  resolved "https://registry.yarnpkg.com/@sentry/webpack-plugin/-/webpack-plugin-1.18.0.tgz#45bc0c2afe1bbabac777f51af6a634c557ea4888"
-  integrity sha512-wO6QECiRkvh66TQh1/qUgxCwi8WSB4XF8o5fGTZS+jzOye4TKOGHwnzNQ3ZkIW14U6yTq2cr1e8nRfcGXm+EyA==
+"@sentry/webpack-plugin@1.18.1":
+  version "1.18.1"
+  resolved "https://registry.yarnpkg.com/@sentry/webpack-plugin/-/webpack-plugin-1.18.1.tgz#0fa24297043305057111d85a7154d4b8b24d43a6"
+  integrity sha512-maEnHC0nxRnVgAz0qvKvhTGy+SxneR8MFjpgNMvh9CyAB6GEM9VQI1hzxTcAd7Qk90qGW8W4eUmB+ZX8nMrM1w==
   dependencies:
     "@sentry/cli" "^1.68.0"
 
