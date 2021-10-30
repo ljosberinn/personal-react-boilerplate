@@ -10,7 +10,7 @@ describe('getI18n', () => {
     const resources = await getI18n(language, { namespaces: [...namespaces] });
 
     namespaces.forEach((namespace) => {
-      expect(resources[FALLBACK_LANGUAGE][namespace]).not.toBeUndefined();
+      expect(resources[FALLBACK_LANGUAGE][namespace]).toBeDefined();
     });
   });
 
@@ -20,7 +20,7 @@ describe('getI18n', () => {
 
     const resources = await getI18n(language, { namespaces: [firstNamespace] });
 
-    expect(resources[language][firstNamespace]).not.toBeUndefined();
+    expect(resources[language][firstNamespace]).toBeDefined();
     expect(resources[language][secondNamespace]).toBeUndefined();
   });
 

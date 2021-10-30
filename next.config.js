@@ -112,7 +112,9 @@ const defaultConfig = {
   webpack: (config, options) => {
     // disables transpiling all `__tests__` files, speeding up build process
     // in case of a barebones karma install, this reduces build time by ~ 25%
-    config.plugins.push(new options.webpack.IgnorePlugin(/\/__tests__\//));
+    config.plugins.push(
+      new options.webpack.IgnorePlugin({ resourceRegExp: /\/__tests__\//u })
+    );
 
     withSentry(config, options);
 
@@ -121,6 +123,9 @@ const defaultConfig = {
   reactStrictMode: true,
   experimental: {
     scrollRestoration: true,
+    reactRoot: true,
+    concurrentFeatures: true,
+    esmExternals: false,
   },
   eslint: {
     ignoreDuringBuilds: true,
@@ -146,6 +151,7 @@ const defaultConfig = {
       },
     ];
   },
+  swcMinify: true,
 };
 
 module.exports = withPlugins(

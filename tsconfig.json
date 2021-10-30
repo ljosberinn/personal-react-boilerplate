@@ -5,7 +5,10 @@
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "lib": ["dom", "esnext"],
+    "lib": [
+      "dom",
+      "esnext"
+    ],
     "module": "esnext",
     "target": "esnext",
     "moduleResolution": "node",
@@ -16,8 +19,14 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": true,
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "incremental": true
   },
-  "exclude": ["node_modules"],
-  "include": ["**/*.ts", "**/*.tsx"]
+  "exclude": [
+    "node_modules"
+  ],
+  "include": [
+    "**/*.ts",
+    "**/*.tsx"
+  ]
 }

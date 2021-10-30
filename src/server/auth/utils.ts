@@ -5,7 +5,6 @@ import type { ExternalProvider } from '../../client/context/AuthContext/types';
 import { FOUND_MOVED_TEMPORARILY } from '../../utils/statusCodes';
 import type { OAuth2GetParams, OAuth2Response } from './types';
 
-// eslint-disable-next-line inclusive-language/use-inclusive-words
 /**
  * @see https://github.com/jekrb/next-absolute-url/blob/master/index.ts
  */
