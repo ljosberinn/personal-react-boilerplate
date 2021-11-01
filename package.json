@@ -31,8 +31,8 @@
     "web-vitals": "2.1.2"
   },
   "devDependencies": {
-    "@commitlint/cli": "13.2.1",
-    "@commitlint/config-conventional": "13.2.0",
+    "@commitlint/cli": "14.1.0",
+    "@commitlint/config-conventional": "14.1.0",
     "@next/bundle-analyzer": "12.0.0",
     "@next/env": "12.0.0",
     "@sentry/types": "6.13.3",
