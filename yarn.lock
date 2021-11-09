@@ -4785,10 +4785,10 @@ escodegen@^2.0.0:
   optionalDependencies:
     source-map "~0.6.1"
 
-eslint-config-galex@3.3.0:
-  version "3.3.0"
-  resolved "https://registry.yarnpkg.com/eslint-config-galex/-/eslint-config-galex-3.3.0.tgz#602a663e454de64be5684b06e8f1df5b429daeb0"
-  integrity sha512-dWwK3tQ7JWL3fSTHaYmktxpIfdyep/3xcwBsZzjIwnmPSLHkPBfOpumOGcLvLqB0EibyD2uE7w9HwWuzuJxC7w==
+eslint-config-galex@3.3.1:
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/eslint-config-galex/-/eslint-config-galex-3.3.1.tgz#82812e1fa7a209e44a617232819fe46c33002746"
+  integrity sha512-NDLhhnTcW4+0TzA0Z+Wgalbn/pdPqqOsscl6LgYDYkj96Q/WbeOLT8XBjFPwKPTqLGPyYJ1816QAXpkTUoGkYg==
   dependencies:
     "@babel/core" "7.16.0"
     "@babel/eslint-parser" "7.16.0"
@@ -4804,7 +4804,7 @@ eslint-config-galex@3.3.0:
     eslint-plugin-jsx-a11y "6.4.1"
     eslint-plugin-promise "5.1.1"
     eslint-plugin-react "7.26.1"
-    eslint-plugin-react-hooks "4.2.0"
+    eslint-plugin-react-hooks "4.3.0"
     eslint-plugin-sonarjs "0.10.0"
     eslint-plugin-testing-library "5.0.0"
     eslint-plugin-unicorn "38.0.1"
@@ -4921,7 +4921,12 @@ eslint-plugin-promise@5.1.1:
   resolved "https://registry.yarnpkg.com/eslint-plugin-promise/-/eslint-plugin-promise-5.1.1.tgz#9674d11c056d1bafac38e4a3a9060be740988d90"
   integrity sha512-XgdcdyNzHfmlQyweOPTxmc7pIsS6dE4MvwhXWMQ2Dxs1XAL2GJDilUsjWen6TWik0aSI+zD/PqocZBblcm9rdA==
 
-eslint-plugin-react-hooks@4.2.0, eslint-plugin-react-hooks@^4.2.0:
+eslint-plugin-react-hooks@4.3.0:
+  version "4.3.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-react-hooks/-/eslint-plugin-react-hooks-4.3.0.tgz#318dbf312e06fab1c835a4abef00121751ac1172"
+  integrity sha512-XslZy0LnMn+84NEG9jSGR6eGqaZB3133L8xewQo3fQagbQuGt7a63gf+P1NGKZavEYEC3UXaWEAA/AqDkuN6xA==
+
+eslint-plugin-react-hooks@^4.2.0:
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/eslint-plugin-react-hooks/-/eslint-plugin-react-hooks-4.2.0.tgz#8c229c268d468956334c943bb45fc860280f5556"
   integrity sha512-623WEiZJqxR7VdxFCKLI6d6LLpwJkGPYKODnkH3D7WpOG5KM8yWueBd8TLsNAetEJNF5iJmolaAKO3F8yzyVBQ==
