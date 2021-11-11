@@ -14,7 +14,7 @@
     "postinstall": "yarn-deduplicate -l && husky install"
   },
   "dependencies": {
-    "@chakra-ui/react": "1.6.12",
+    "@chakra-ui/react": "1.7.0",
     "@emotion/react": "11.5.0",
     "@emotion/styled": "11.3.0",
     "@sentry/integrations": "6.14.1",
