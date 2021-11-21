@@ -45,7 +45,7 @@
     "@types/jest-axe": "3.5.3",
     "@types/node": "16.11.9",
     "@types/node-fetch": "2.5.12",
-    "@types/react": "17.0.35",
+    "@types/react": "17.0.36",
     "@types/react-dom": "17.0.11",
     "@types/test-listen": "1.1.0",
     "babel-jest": "27.3.1",
