@@ -10,94 +10,30 @@ on:
 # https://github.com/actions/cache - caches build deps
 # https://github.com/actions/checkout - checks out repo
 # https://github.com/amondnet/vercel-action - initiates deploy to vercel
-# https://github.com/foo-software/lighthouse-check-action - lighthouse post-deploy
-# https://github.com/foo-software/lighthouse-check-status-action - lighthouse check
 
 jobs:
-  setup-environment:
-    name: Setup environment
+  build:
     runs-on: ubuntu-latest
-    timeout-minutes: 1
     steps:
+      - uses: actions/checkout@v2
       - name: Installing node.js
         uses: actions/setup-node@v2
         with:
-          # Use the same node.js version as the one Vercel's uses (currently node12.x)
-          node-version: '12.x'
-
-  lint:
-    name: ESLint
-    runs-on: ubuntu-latest
-    timeout-minutes: 3
-    steps:
-      - name: Get Yarn cache path
-        id: yarn-cache
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-      - uses: actions/checkout@master
-      - name: Load Yarn cache
-        uses: actions/cache@master
-        with:
-          path: ${{ steps.yarn-cache.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
-      - name: Installing dependencies
-        if: steps.cache-modules.outputs.cache-hit != 'true'
+          node-version: lts/*
+          cache: 'yarn'
+      - name: Install dependencies
         run: yarn --frozen-lockfile
-      - run: yarn lint:code
-
-  types:
-    name: TypeScript
-    runs-on: ubuntu-latest
-    steps:
-      - name: Get Yarn cache path
-        id: yarn-cache
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-      - uses: actions/checkout@master
-      - name: Load Yarn cache
-        uses: actions/cache@master
-        with:
-          path: ${{ steps.yarn-cache.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
-      - name: Installing dependencies
-        if: steps.cache-modules.outputs.cache-hit != 'true'
-        run: yarn --frozen-lockfile
-      - run: yarn lint:types
-
-  test:
-    name: Test
-    runs-on: ubuntu-latest
-    timeout-minutes: 3
-    # only run after lint and tsc completed successfully
-    needs: [lint, types]
-    steps:
-      - name: Get Yarn cache path
-        id: yarn-cache
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-      - uses: actions/checkout@master
-      - name: Load Yarn cache
-        uses: actions/cache@master
-        with:
-          path: ${{ steps.yarn-cache.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
-      - name: Installing dependencies
-        if: steps.cache-modules.outputs.cache-hit != 'true'
-        run: yarn --frozen-lockfile
-      - name: Running tests
+      - name: Lint
+        timeout-minutes: 4
+        run: yarn lint
+      - name: TypeScript
+        timeout-minutes: 3
+        run: yarn types
+      - name: Test
+        timeout-minutes: 4
         run: yarn test --ci --coverage
-
-  deploy:
-    name: Deploy to Production
-    runs-on: ubuntu-latest
-    # only deploy given successful tests
-    needs: test
-    steps:
-      - uses: actions/checkout@master
-      - uses: amondnet/vercel-action@v20
+      - name: Deploy
+        uses: amondnet/vercel-action@v20
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID}}
@@ -107,58 +43,3 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           github-comment: true
           vercel-args: "--prod"
-
-  # Run Lighthouse reports
-  # based on https://github.com/UnlyEd/next-right-now/blob/v2-mst-aptd-gcms-lcz-sty/.github/workflows/deploy-zeit-production.yml#L95
-  run-lighthouse-tests:
-    name: Run LightHouse
-    runs-on: ubuntu-latest
-    needs: deploy
-    steps:
-      - uses: actions/checkout@master
-      - name: Resolving deployment url from Vercel
-        # The following workflow is:
-        #  - getting the most recent production deployment data
-        #  - then extract the url (in Node.js it corresponds as `response.deployments[0].url`)
-        #  - and then we remove the `"` character to pre-format url
-        # We need to set env the url for next step
-        run: |
-          apt update -y >/dev/null && apt install -y jq >/dev/null
-          VERCEL_DEPLOYMENT=`curl -H 'Accept: application/json' -H 'Content-Type: application/json' -H 'Authorization: Bearer ${{ secrets.VERCEL_TOKEN }}' "https://api.zeit.co/v5/now/deployments?limit=1&meta-githubCommitRef=refs/heads/master" | jq '.deployments [0].url' | tr -d \"`
-          echo "VERCEL_DEPLOYMENT_URL=https://$VERCEL_DEPLOYMENT" >> $GITHUB_ENV
-        env:
-          # Passing github's secret to the worker
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-      # In order to store reports and then upload it, we need to create the folder before any tests
-      - name: Create temporary folder for artifacts storage
-        run: mkdir /tmp/lighthouse-artifacts
-
-      - name: Run Lighthouse
-        uses: foo-software/lighthouse-check-action@master
-        id: lighthouseCheck
-        with:
-          # See https://github.com/marketplace/actions/lighthouse-check#inputs for all options
-          accessToken: ${{ secrets.GITHUB_TOKEN }}
-          # Used to upload artifacts.
-          outputDirectory: /tmp/lighthouse-artifacts
-          # Run LightHouse against "mobile", "desktop", or "all" devices
-          emulatedFormFactor: all
-          urls: ${{ env.VERCEL_DEPLOYMENT_URL }}
-          prCommentEnabled: true
-
-      # Upload HTML report create by lighthouse
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: Lighthouse reports
-          path: /tmp/lighthouse-artifacts
-
-      - name: Handle Lighthouse Check results
-        uses: foo-software/lighthouse-check-status-action@master
-        with:
-          lighthouseCheckResults: ${{ steps.lighthouseCheck.outputs.lighthouseCheckResults }}
-          minAccessibilityScore: "75"
-          minBestPracticesScore: "75"
-          minPerformanceScore: "75"
-          minProgressiveWebAppScore: "75"
-          minSeoScore: "75"
