@@ -33,8 +33,8 @@
   "devDependencies": {
     "@commitlint/cli": "15.0.0",
     "@commitlint/config-conventional": "15.0.0",
-    "@next/bundle-analyzer": "12.0.0",
-    "@next/env": "12.0.0",
+    "@next/bundle-analyzer": "12.0.7",
+    "@next/env": "12.0.7",
     "@sentry/types": "6.16.1",
     "@sentry/webpack-plugin": "1.18.3",
     "@testing-library/jest-dom": "5.16.1",
