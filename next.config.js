@@ -122,9 +122,7 @@ const defaultConfig = {
   },
   reactStrictMode: true,
   experimental: {
-    scrollRestoration: true,
     reactRoot: true,
-    concurrentFeatures: true,
     esmExternals: false,
   },
   eslint: {

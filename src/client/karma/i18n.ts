@@ -52,10 +52,10 @@ export const getI18n = async (
     : FALLBACK_LANGUAGE;
   const namespacesToLoad = namespaces ?? [...new Set(allNamespaces)];
 
-  const bundles = await Promise.all<[Namespace, I18nextNamespace]>(
+  const bundles = await Promise.all(
     namespacesToLoad.map(async (namespace) => {
       // eslint-disable-next-line import/dynamic-import-chunkname
-      const json = await import(
+      const json: { default: Record<string, string> } = await import(
         `../../../locales/${language}/${namespace}.json`
       );
 
@@ -63,5 +63,7 @@ export const getI18n = async (
     })
   );
 
-  return { [language]: Object.fromEntries(bundles) };
+  return {
+    [language]: Object.fromEntries(bundles),
+  };
 };
