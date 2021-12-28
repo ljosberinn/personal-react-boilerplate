@@ -25,10 +25,10 @@ jobs:
         run: yarn --frozen-lockfile
       - name: Lint
         timeout-minutes: 4
-        run: yarn lint
+        run: yarn lint:code
       - name: TypeScript
         timeout-minutes: 3
-        run: yarn types
+        run: yarn lint:types
       - name: Test
         timeout-minutes: 4
         run: yarn test --ci --coverage
