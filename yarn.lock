@@ -4794,10 +4794,10 @@ escodegen@^2.0.0:
   optionalDependencies:
     source-map "~0.6.1"
 
-eslint-config-galex@3.5.3:
-  version "3.5.3"
-  resolved "https://registry.yarnpkg.com/eslint-config-galex/-/eslint-config-galex-3.5.3.tgz#cd03f66df7e56d027d24298b4311faf8a4ae6e7c"
-  integrity sha512-jbsTqZxAJfPHef82HHvLJ2EBw9LfQz+Ka3d3UTi6upEnqlEDtk4C6f/sdOyJV9fvOJcNigoFZyPIm/2wJmECHQ==
+eslint-config-galex@3.5.4:
+  version "3.5.4"
+  resolved "https://registry.yarnpkg.com/eslint-config-galex/-/eslint-config-galex-3.5.4.tgz#17f62ee94d99798804ac8294a3a69e3147b53a36"
+  integrity sha512-Fj90p5mJc7L+H4PFPEl2KOGATv1sFuexswIHM/C6sM8UHyBkAGqRCiNtjzszbJsJixs9cIRgxu0FWGNokNw6Pw==
   dependencies:
     "@babel/core" "7.16.5"
     "@babel/eslint-parser" "7.16.5"
