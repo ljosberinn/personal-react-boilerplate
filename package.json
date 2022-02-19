@@ -23,7 +23,7 @@
     "@sentry/react": "6.17.9",
     "cookie": "0.4.2",
     "framer-motion": "6.2.6",
-    "next": "12.0.10",
+    "next": "12.1.0",
     "next-connect": "0.12.1",
     "react": "npm:react@next",
     "react-dom": "npm:react-dom@next",
