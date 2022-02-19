@@ -4,7 +4,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import type { NextConnect } from 'next-connect';
 import nextConnect from 'next-connect';
 import type { NextApiRequestQuery } from 'next/dist/server/api-utils';
-import { apiResolver } from 'next/dist/server/api-utils';
+import { apiResolver } from 'next/dist/server/api-utils/node';
 import { route } from 'next/dist/server/router';
 import type { Response } from 'node-fetch';
 import fetch from 'node-fetch';

@@ -2,11 +2,11 @@ import { parse } from 'cookie';
 import { IncomingMessage, ServerResponse } from 'http';
 import { Socket } from 'net';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { parseBody } from 'next/dist/server/api-utils';
+import { parseBody } from 'next/dist/server/api-utils/node';
 
-export class NextApiResponseMock
+export class NextApiResponseMock<T = unknown>
   extends ServerResponse
-  implements NextApiResponse
+  implements NextApiResponse<T>
 {
   public send = jest.fn();
 
@@ -17,6 +17,12 @@ export class NextApiResponseMock
   public setPreviewData = jest.fn();
 
   public clearPreviewData = jest.fn();
+
+  public unstable_revalidate = (urlPath: string): Promise<void> => {
+    // eslint-disable-next-line no-console
+    console.info(`called unstable_revalidate with ${urlPath}`);
+    return Promise.resolve();
+  };
 
   public status(code: number): this {
     this.statusCode = code;
