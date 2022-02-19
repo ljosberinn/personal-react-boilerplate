@@ -2060,10 +2060,10 @@
   resolved "https://registry.yarnpkg.com/@emotion/memoize/-/memoize-0.7.5.tgz#2c40f81449a4e554e9fc6396910ed4843ec2be50"
   integrity sha512-igX9a37DR2ZPGYtV6suZ6whr8pTFtyHL3K/oLUotxpSVO2ASaprmAe2Dkq7tBo7CRY7MMDrAa9nuQP9/YG8FxQ==
 
-"@emotion/react@11.8.0":
-  version "11.8.0"
-  resolved "https://registry.yarnpkg.com/@emotion/react/-/react-11.8.0.tgz#4a48008efa14d7d3628c48fcf287e4df47817b33"
-  integrity sha512-q3Cz0LyO/GGhtXW/dvrf+vFA3o6OlyNttQqgI1mNvtQ5zzJ9Bb1aWQqm1uXOHXpNYvyMaQZWC7eI1cemaSyVRw==
+"@emotion/react@11.8.1":
+  version "11.8.1"
+  resolved "https://registry.yarnpkg.com/@emotion/react/-/react-11.8.1.tgz#5358b8c78367063881e26423057c030c57ce52eb"
+  integrity sha512-XGaie4nRxmtP1BZYBXqC5JGqMYF2KRKKI7vjqNvQxyRpekVAZhb6QqrElmZCAYXH1L90lAelADSVZC4PFsrJ8Q==
   dependencies:
     "@babel/runtime" "^7.13.10"
     "@emotion/babel-plugin" "^11.7.1"
@@ -2090,10 +2090,10 @@
   resolved "https://registry.yarnpkg.com/@emotion/sheet/-/sheet-1.1.0.tgz#56d99c41f0a1cda2726a05aa6a20afd4c63e58d2"
   integrity sha512-u0AX4aSo25sMAygCuQTzS+HsImZFuS8llY8O7b9MDRzbJM0kVJlAz6KNDqcG7pOuQZJmj/8X/rAW+66kMnMW+g==
 
-"@emotion/styled@11.8.0":
-  version "11.8.0"
-  resolved "https://registry.yarnpkg.com/@emotion/styled/-/styled-11.8.0.tgz#49b48dfa158a6cf387dd0537fd325728d5dcea4f"
-  integrity sha512-MqHX7qqJesa9X36u3bBvzaK0HmnyclFewSK4uhHl+8s9TFpRMqpakbeHeSGqWCl7QkMhqvPA7oJijZYRsF7nUA==
+"@emotion/styled@11.8.1":
+  version "11.8.1"
+  resolved "https://registry.yarnpkg.com/@emotion/styled/-/styled-11.8.1.tgz#856f6f63aceef0eb783985fa2322e2bf66d04e17"
+  integrity sha512-OghEVAYBZMpEquHZwuelXcRjRJQOVayvbmNR0zr174NHdmMgrNkLC6TljKC5h9lZLkN5WGrdUcrKlOJ4phhoTQ==
   dependencies:
     "@babel/runtime" "^7.13.10"
     "@emotion/babel-plugin" "^11.7.1"
