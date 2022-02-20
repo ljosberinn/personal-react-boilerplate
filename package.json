@@ -14,7 +14,7 @@
     "postinstall": "yarn-deduplicate -l && husky install && node fix-react-package-json.js"
   },
   "dependencies": {
-    "@chakra-ui/react": "1.8.3",
+    "@chakra-ui/react": "1.8.5",
     "@emotion/react": "11.8.1",
     "@emotion/styled": "11.8.1",
     "@sentry/integrations": "6.17.9",
