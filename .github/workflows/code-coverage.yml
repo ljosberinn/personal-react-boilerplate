@@ -16,7 +16,7 @@ jobs:
     timeout-minutes: 1
     steps:
       - name: Installing node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           # Use the same node.js version as the one Vercel's uses (currently node12.x)
           node-version: '12.x'
