@@ -38,7 +38,7 @@
     "@sentry/types": "6.19.6",
     "@sentry/webpack-plugin": "1.18.8",
     "@testing-library/jest-dom": "5.16.4",
-    "@testing-library/react": "12.1.4",
+    "@testing-library/react": "12.1.5",
     "@testing-library/react-hooks": "8.0.0",
     "@testing-library/user-event": "13.5.0",
     "@types/jest": "27.4.1",
