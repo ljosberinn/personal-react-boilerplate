@@ -30,6 +30,7 @@ export default function App({
   const { karma, ...rest } = pageProps;
 
   return (
+    // @ts-expect-error sentry <-> react 18 type incompat
     <TopLevelErrorBoundary showDialog>
       {withLayout ? (
         withLayout(<Component {...rest} />, karma)

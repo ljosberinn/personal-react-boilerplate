@@ -207,7 +207,7 @@ type HookTestOptions = Pick<
   'i18n' | 'wrapper' | 'omitKarmaProvider' | 'router' | 'session'
 >;
 
-export function renderHook<Props, Result>(
+export function renderHook<Props extends { children: JSX.Element }, Result>(
   callback: (props: Props) => Result,
   {
     i18n,
@@ -263,6 +263,7 @@ export const testA11Y = async (
   { axeOptions, ...options }: TestA11YOptions = {}
 ): Promise<void> => {
   const element = isValidElement(ui) ? render(ui, options).container : ui;
+  // @ts-expect-error version, and thus type incompat
   const results = await axe(element, axeOptions);
 
   expect(results).toHaveNoViolations();
