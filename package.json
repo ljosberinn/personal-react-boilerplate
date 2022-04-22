@@ -49,7 +49,7 @@
     "@types/react-dom": "18.0.0",
     "@types/test-listen": "1.1.0",
     "babel-jest": "27.5.1",
-    "eslint": "8.13.0",
+    "eslint": "8.14.0",
     "eslint-config-galex": "3.6.5",
     "html-validate": "6.7.1",
     "husky": "7.0.4",
