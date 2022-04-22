@@ -50,7 +50,7 @@
     "@types/test-listen": "1.1.0",
     "babel-jest": "27.5.1",
     "eslint": "8.13.0",
-    "eslint-config-galex": "3.6.5",
+    "eslint-config-galex": "4.1.0",
     "html-validate": "6.7.1",
     "husky": "7.0.4",
     "identity-obj-proxy": "3.0.0",
